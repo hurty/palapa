@@ -1,7 +1,10 @@
 defmodule Palapa.Accounts do
   import Ecto.Query, warn: false
   alias Palapa.Repo
-  alias Palapa.Accounts.User
+  alias Palapa.Accounts.{User, Organization}
+
+
+  # USERS
 
   def list_users do
     Repo.all(User)
@@ -27,16 +30,39 @@ defmodule Palapa.Accounts do
     Repo.delete(user)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking user changes.
-
-  ## Examples
-
-      iex> change_user(user)
-      %Ecto.Changeset{source: %User{}}
-
-  """
   def change_user(%User{} = user) do
     User.changeset(user, %{})
+  end
+
+
+
+  # ORGANIZATIONS
+
+  def list_organizations do
+    Repo.all(Organization)
+  end
+
+  def get_organization!(id) do
+    Repo.get!(Organization, id)
+  end
+
+  def create_organization(attrs \\ %{}) do
+    %Organization{}
+    |> Organization.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_organization(%Organization{} = organization, attrs) do
+    organization
+    |> Organization.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_organization(%Organization{} = organization) do
+    Repo.delete(organization)
+  end
+
+  def change_organization(%Organization{} = organization) do
+    Organization.changeset(organization, %{})
   end
 end
