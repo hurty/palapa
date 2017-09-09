@@ -2,7 +2,7 @@ defmodule Palapa.Accounts.User do
   use Ecto.Schema
 
   import Ecto.Changeset
-  alias Palapa.Accounts.User
+  alias Palapa.Accounts.{User, Membership}
 
   schema "users" do
     field :email, :string
@@ -10,6 +10,9 @@ defmodule Palapa.Accounts.User do
     field :password_hash, :string
     field :password, :string, virtual: true
     timestamps()
+
+    has_many :memberships, Membership
+    has_many :organizations, through: [:memberships, :organization]
   end
 
   @doc false
