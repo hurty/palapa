@@ -1,0 +1,3 @@
+<h1>Palapa!</h1>
+
+<%= link "Sign up", to: registration_path(@conn, :new) %>
