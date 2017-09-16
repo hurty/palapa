@@ -1,35 +1,40 @@
-<%= if @changeset.action do %>
-  <p class="notice notice--error">Oops something went wrong! Check the errors below :</p>
-<% end %>
-
-<div class="form form--stacked">
+<div class="pa4 bg-white purple br2-ns ba b--black-10 measure center">
   <%= form_for @changeset, registration_path(@conn, :create), [as: :registration], fn f -> %>
-    <div class="form__field">
-      <%= label f, :name, "Your full name" %>
-      <%= error_tag f, :name %>
-      <%= text_input f, :name, placeholder: "Jared Dunn", class: "" %>
-    </div>
 
-    <div class="form__field">
-      <%= label f, :organization_name, "Company/organization name" %>
-      <%= error_tag f, :organization_name %>
-      <%= text_input f, :organization_name, placeholder: "Pied Piper", class: "" %>
-    </div>
+    <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
+      <legend class="f3 fw6 ph0 mh0">Sign Up</legend>
 
-    <div class="form__field">
-      <%= label f, :email, "Your Email address" %>
-      <%= error_tag f, :email %>
-      <%= email_input f, :email, placeholder: "jared@piedpiper.com", class: "" %>
-    </div>
+      <%= if @changeset.action do %>
+        <p class="db fw6 lh-copy f6 dark-pink">Oops something went wrong! Check the errors below :</p>
+      <% end %>
 
-    <div class="form__field">
-      <%= label f, :email, "Choose a password" %>
-      <%= error_tag f, :password %>
-      <%= password_input f, :password, placeholder: "8 chars minimum", class: "" %>
-    </div>
+      <div class="mt3">
+        <%= label f, :name, "Your full name", class: "pv1 db fw6 lh-copy f6" %>
+        <%= error_tag f, :name, "db pb1 fw6 lh-copy f6 dark-pink" %>
+        <%= text_input f, :name, placeholder: "Jared Dunn", class: "pa2 input-reset ba b--black-10 bg-white br2-ns w-100" %>
+      </div>
 
-    <div class="form__actions">
-      <%= submit "Create a new account", class: "button button--primary" %>
+      <div class="mt3">
+        <%= label f, :organization_name, "Company/organization name", class: "pv1 db fw6 lh-copy f6" %>
+        <%= error_tag f, :organization_name, "db pb1 fw6 lh-copy f6 dark-pink" %>
+        <%= text_input f, :organization_name, placeholder: "Pied Piper", class: "pa2 input-reset ba b--black-10 bg-white br2-ns w-100" %>
+      </div>
+
+      <div class="mt3">
+        <%= label f, :email, "Your Email address", class: "pv1 db fw6 lh-copy f6" %>
+        <%= error_tag f, :email, "db pb1 fw6 lh-copy f6 dark-pink" %>
+        <%= email_input f, :email, placeholder: "jared@piedpiper.com", class: "pa2 input-reset ba b--black-10 bg-white br2-ns w-100" %>
+      </div>
+
+      <div class="mt3">
+        <%= label f, :email, "Choose a password", class: "pv1 db fw6 lh-copy f6" %>
+        <%= error_tag f, :password, "db pb1 fw6 lh-copy f6 dark-pink" %>
+        <%= password_input f, :password, placeholder: "8 chars minimum", class: "pa2 input-reset ba b--black-10 bg-white br2-ns w-100" %>
+      </div>
+    </fieldset>
+
+    <div class="mt3">
+      <%= submit "Create a new account", class: "input-reset white ph3 pv2 br2 mb2 dim bn bg-purple pointer f6 dib" %>
     </div>
   <% end %>
 </div>
