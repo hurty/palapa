@@ -49,10 +49,11 @@ exports.config = {
       ignore: [/vendor/]
     },
 
-    sass: {
-      options: {
-        includePaths: ['node_modules/tachyons/css']
-      }
+    postcss: {
+      processors: [
+        require('autoprefixer')(['last 8 versions']),
+        require('tailwindcss')('./tailwind.js')
+      ]
     }
   },
 
