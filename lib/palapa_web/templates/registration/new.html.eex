@@ -1,40 +1,46 @@
-<div class="pa4 bg-white purple br2-ns ba b--black-10 measure center">
-  <%= form_for @changeset, registration_path(@conn, :create), [as: :registration], fn f -> %>
+<div class="flex justify-center bg-yellow-lightest py-4">
+  <div class="flex-3 py-8 bg-white shadow rounded-lg">
+    <%= form_for @changeset, registration_path(@conn, :create), [as: :registration], fn f -> %>
 
-    <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
-      <legend class="f3 fw6 ph0 mh0">Sign Up</legend>
+      <fieldset id="sign_up">
+        <h2 class="text-xl uppercase text-center text-purple-light font-extrabold border border-purple-light py-4 mb-6">
+          Sign Up
+        </h2>
 
-      <%= if @changeset.action do %>
-        <p class="db fw6 lh-copy f6 dark-pink">Oops something went wrong! Check the errors below :</p>
-      <% end %>
+        <div class="px-6">
+          <%= if @changeset.action do %>
+            <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+          <% end %>
 
-      <div class="mt3">
-        <%= label f, :name, "Your full name", class: "pv1 db fw6 lh-copy f6" %>
-        <%= error_tag f, :name, "db pb1 fw6 lh-copy f6 dark-pink" %>
-        <%= text_input f, :name, placeholder: "Jared Dunn", class: "pa2 input-reset ba b--black-10 bg-white br2-ns w-100" %>
+          <div class="mt-3">
+            <%= label f, :name, "Your full name", class: "inline-block text-grey-darker text-sm font-bold mb-2" %>
+            <%= error_tag f, :name, "text-white rounded-lg bg-white text-red-light text-sm font-bold mb-2 underline" %>
+            <%= text_input f, :name, placeholder: "Jared Dunn", class: "appearance-none border rounded w-full py-2 px-3 text-grey-darker text-sm" %>
+          </div>
+
+          <div class="mt-3">
+            <%= label f, :organization_name, "Company/organization name", class: "inline-block block text-grey-darker text-sm font-bold mb-2" %>
+            <%= error_tag f, :organization_name, "text-white rounded-lg bg-white text-red-light text-sm font-bold mb-2 underline" %>
+            <%= text_input f, :organization_name, placeholder: "Pied Piper", class: "appearance-none border rounded w-full py-2 px-3 text-grey-darker text-sm" %>
+          </div>
+
+          <div class="mt-3">
+            <%= label f, :email, "Your Email address", class: "inline-block block text-grey-darker text-sm font-bold mb-2" %>
+            <%= error_tag f, :email, "text-white rounded-lg bg-white text-red-light text-sm font-bold mb-2 underline" %>
+            <%= email_input f, :email, placeholder: "jared@piedpiper.com", class: "appearance-none border rounded w-full py-2 px-3 text-grey-darker text-sm" %>
+          </div>
+
+          <div class="mt-3">
+            <%= label f, :email, "Choose a password", class: "inline-block block text-grey-darker text-sm font-bold mb-2" %>
+            <%= error_tag f, :password, "text-white rounded-lg bg-white text-red-light text-sm font-bold mb-2 underline" %>
+            <%= password_input f, :password, placeholder: "8 chars minimum", class: "appearance-none border rounded w-full py-2 px-3 text-grey-darker text-sm" %>
+          </div>
+        </fieldset>
+
+        <div class="mt-6">
+          <%= submit "Create a new account", class: "btn btn-yellow" %>
+        </div>
       </div>
-
-      <div class="mt3">
-        <%= label f, :organization_name, "Company/organization name", class: "pv1 db fw6 lh-copy f6" %>
-        <%= error_tag f, :organization_name, "db pb1 fw6 lh-copy f6 dark-pink" %>
-        <%= text_input f, :organization_name, placeholder: "Pied Piper", class: "pa2 input-reset ba b--black-10 bg-white br2-ns w-100" %>
-      </div>
-
-      <div class="mt3">
-        <%= label f, :email, "Your Email address", class: "pv1 db fw6 lh-copy f6" %>
-        <%= error_tag f, :email, "db pb1 fw6 lh-copy f6 dark-pink" %>
-        <%= email_input f, :email, placeholder: "jared@piedpiper.com", class: "pa2 input-reset ba b--black-10 bg-white br2-ns w-100" %>
-      </div>
-
-      <div class="mt3">
-        <%= label f, :email, "Choose a password", class: "pv1 db fw6 lh-copy f6" %>
-        <%= error_tag f, :password, "db pb1 fw6 lh-copy f6 dark-pink" %>
-        <%= password_input f, :password, placeholder: "8 chars minimum", class: "pa2 input-reset ba b--black-10 bg-white br2-ns w-100" %>
-      </div>
-    </fieldset>
-
-    <div class="mt3">
-      <%= submit "Create a new account", class: "input-reset white ph3 pv2 br2 mb2 dim bn bg-purple pointer f6 dib" %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>

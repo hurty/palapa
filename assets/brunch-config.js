@@ -20,7 +20,7 @@ exports.config = {
       // }
     },
     stylesheets: {
-      joinTo: "css/app.css"
+      joinTo: 'css/app.css'
     },
     templates: {
       joinTo: "js/app.js"
@@ -51,6 +51,7 @@ exports.config = {
 
     postcss: {
       processors: [
+        require('postcss-import')(),
         require('autoprefixer')(['last 8 versions']),
         require('tailwindcss')('./tailwind.js')
       ]
