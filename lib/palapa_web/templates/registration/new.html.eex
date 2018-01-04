@@ -3,7 +3,7 @@
     <%= form_for @changeset, registration_path(@conn, :create), [as: :registration], fn f -> %>
 
       <fieldset id="sign_up">
-        <h2 class="text-xl uppercase text-center text-purple-light font-extrabold border border-purple-light py-4 mb-6">
+        <h2 class="text-xl uppercase text-center text-purple-light font-extrabold py-4 mb-6">
           Sign Up
         </h2>
 
