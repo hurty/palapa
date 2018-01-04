@@ -1,0 +1,11 @@
+.card {
+  @apply .py-8 .bg-white .shadow .rounded-lg;
+}
+
+.card-header {
+  @apply .text-xl .uppercase .text-center .text-purple-light .font-extrabold .py-4 .mb-6;
+}
+
+.card-footer {
+  @apply .flex .justify-center .mt-6;
+}

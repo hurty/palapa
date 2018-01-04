@@ -30,7 +30,9 @@
   * @import "components/forms";
   */
 
+@import "components/_containers";
 @import "components/_buttons";
+@import "components/_forms";
 
  /**
   * This injects all of Tailwind's utility classes, generated based on your
