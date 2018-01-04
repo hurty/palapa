@@ -38,7 +38,7 @@
         </fieldset>
 
         <div class="card-footer">
-          <%= submit "Create a new account", class: "btn btn-yellow" %>
+          <%= submit "Create a new account", class: "btn btn-blue" %>
         </div>
       </div>
     <% end %>
