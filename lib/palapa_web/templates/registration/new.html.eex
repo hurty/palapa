@@ -1,46 +1,43 @@
-<div class="flex justify-center bg-yellow-lightest py-4">
+<div class="flex justify-center py-4">
   <div class="flex-3 card">
     <%= form_for @changeset, registration_path(@conn, :create), [as: :registration], fn f -> %>
+      <h2 class="card-header">
+        Sign Up
+      </h2>
 
-      <fieldset id="sign_up">
-        <h2 class="card-header">
-          Sign Up
-        </h2>
+      <%= if @changeset.action do %>
+        <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+      <% end %>
 
-        <div class="px-6">
-          <%= if @changeset.action do %>
-            <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
-          <% end %>
-
-          <div class="field">
-            <%= label f, :name, "Your full name", class: "label" %>
-            <%= error_tag f, :name %>
-            <%= text_input f, :name, placeholder: "Jared Dunn", class: "input" %>
-          </div>
-
-          <div class="field">
-            <%= label f, :organization_name, "Company/organization name", class: "label" %>
-            <%= error_tag f, :organization_name %>
-            <%= text_input f, :organization_name, placeholder: "Pied Piper", class: "input" %>
-          </div>
-
-          <div class="field">
-            <%= label f, :email, "Your Email address", class: "label" %>
-            <%= error_tag f, :email %>
-            <%= email_input f, :email, placeholder: "jared@piedpiper.com", class: "input" %>
-          </div>
-
-          <div class="field">
-            <%= label f, :email, "Choose a password", class: "label" %>
-            <%= error_tag f, :password %>
-            <%= password_input f, :password, placeholder: "8 chars minimum", class: "input" %>
-          </div>
-        </fieldset>
-
-        <div class="card-footer">
-          <%= submit "Create a new account", class: "btn btn-blue" %>
-        </div>
+      <div class="field">
+        <%= label f, :name, "Your full name", class: "label" %>
+        <%= error_tag f, :name %>
+        <%= text_input f, :name, placeholder: "Jared Dunn", class: "input" %>
       </div>
+
+      <div class="field">
+        <%= label f, :organization_name, "Company/organization name", class: "label" %>
+        <%= error_tag f, :organization_name %>
+        <%= text_input f, :organization_name, placeholder: "Pied Piper", class: "input" %>
+      </div>
+
+      <div class="field">
+        <%= label f, :email, "Your Email address", class: "label" %>
+        <%= error_tag f, :email %>
+        <%= email_input f, :email, placeholder: "jared@piedpiper.com", class: "input" %>
+      </div>
+
+      <div class="field">
+        <%= label f, :email, "Choose a password", class: "label" %>
+        <%= error_tag f, :password %>
+        <%= password_input f, :password, placeholder: "8 chars minimum", class: "input" %>
+      </div>
+
+      <div class="card-actions">
+        <%= submit "Create a new account", class: "btn btn-blue" %>
+      </div>
+  
+      <div class="card-footer">You already have an account? <%= link("Log in!", to: session_path(@conn, :new)) %></div>
     <% end %>
   </div>
 </div>

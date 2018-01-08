@@ -7,6 +7,7 @@ defmodule PalapaWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug PalapaWeb.Authentication
   end
 
   pipeline :api do
@@ -18,6 +19,8 @@ defmodule PalapaWeb.Router do
 
     get "/", HomeController, :index
     resources "/registrations", RegistrationController, only: [:new, :create]
+    resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
+    get "/dashboard", DashboardController, :index
   end
 
   # Other scopes may use custom stacks.

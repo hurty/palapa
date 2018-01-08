@@ -11,10 +11,9 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
-  <body class="font-sans bg-white">
+  <body class="font-sans bg-yellow-lightest">
     <%= render PalapaWeb.LayoutView, "_navigation.html", assigns %>
-    <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-    <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <%= render PalapaWeb.LayoutView, "_flash_notice.html", assigns %>
 
     <main role="main">
       <%= render @view_module, @view_template, assigns %>

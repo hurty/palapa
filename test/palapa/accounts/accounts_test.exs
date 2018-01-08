@@ -31,6 +31,12 @@ defmodule Palapa.AccountsTest do
       assert fetched_user.id == user.id
     end
 
+    test "get_user_by_email/1 returns the user with the given address" do
+      user = user_fixture()
+      fetched_user = Accounts.get_user_by_email(user.email)
+      assert fetched_user.id == user.id
+    end
+
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
       assert user.email == "some@email.com"

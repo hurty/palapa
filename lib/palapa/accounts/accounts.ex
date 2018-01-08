@@ -15,6 +15,13 @@ defmodule Palapa.Accounts do
     Repo.get!(User, id)
   end
 
+  @doc """
+  Gets a user by its email address.
+
+  Returns nil if the User does not exist.
+  """
+  def get_user_by_email(email), do: Repo.get_by(User, email: email)
+
   def create_user(attrs \\ %{}) do
     %User{}
     |> User.changeset(attrs)
@@ -65,6 +72,18 @@ defmodule Palapa.Accounts do
 
   def change_organization(%Organization{} = organization) do
     Organization.changeset(organization, %{})
+  end
+
+  @doc """
+  Gets the first Organization of user (in case he's part of many).
+  This organization will be considered his main one.
+  TODO: save the setting in DB later.
+  """
+  def get_user_main_organization!(%User{} = user) do
+    Organization
+    |> join(:inner, [o], m in Membership, o.id == m.organization_id and m.user_id == ^user.id)
+    |> first
+    |> Repo.one!
   end
 
 
