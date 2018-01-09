@@ -2,6 +2,8 @@ defmodule PalapaWeb.SessionController do
   use PalapaWeb, :controller
   alias PalapaWeb.Authentication
 
+  plug :put_layout, "public.html"
+  
   def new(conn, _params) do
     render conn, "new.html"
   end

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Hello Palapa!</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  </head>
+
+  <body class="font-sans bg-yellow-lightest">
+    <%= render PalapaWeb.LayoutView, "_public_navigation.html", assigns %>
+    <%= render PalapaWeb.LayoutView, "_flash_notice.html", assigns %>
+
+    <main role="main">
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>

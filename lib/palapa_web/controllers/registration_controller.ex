@@ -1,8 +1,9 @@
 defmodule PalapaWeb.RegistrationController do
   use PalapaWeb, :controller
-
   alias Palapa.Accounts
   alias Palapa.Accounts.Registration
+
+  plug :put_layout, "public.html"
 
   def new(conn, _params) do
     render conn, "new.html", changeset: Accounts.change_registration(%Registration{})

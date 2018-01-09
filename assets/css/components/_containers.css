@@ -3,7 +3,7 @@
 }
 
 .card-header {
-  @apply .text-xl .uppercase .text-center .text-purple-light .font-extrabold .py-4 .mb-6;
+  @apply .text-xl .uppercase .text-center .text-indigo .font-extrabold .py-4 .mb-6;
 }
 
 .card-actions {
