@@ -23,6 +23,7 @@ defmodule PalapaWeb do
       import Plug.Conn
       import PalapaWeb.Router.Helpers
       import PalapaWeb.Gettext
+      import PalapaWeb.Authentication, only: [current_user: 1, current_organization: 1]
     end
   end
 
@@ -48,6 +49,7 @@ defmodule PalapaWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      import PalapaWeb.Authentication, only: [authenticate_user: 2]
     end
   end
 

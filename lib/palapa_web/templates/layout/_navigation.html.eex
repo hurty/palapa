@@ -19,6 +19,9 @@
     </div>
     <div>
       <%= link("Sign up", to: registration_path(@conn, :new), class: "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-indigo hover:bg-white mt-4 lg:mt-0") %>
+      <%= if @current_user do %>
+        <%= link("Log out", to: session_path(@conn, :delete), method: :delete) %>
+      <% end %>
     </div>
   </div>
 </nav>
