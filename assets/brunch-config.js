@@ -63,7 +63,7 @@ exports.config = {
     }
   },
 
-  npm: {
-    enabled: false
-  }
+    npm: {
+      enabled: true
+    }
 };
