@@ -4,7 +4,6 @@ defmodule PalapaWeb.Authentication do
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   alias PalapaWeb.Router
   alias Palapa.Accounts
-  alias Palapa.Accounts.{User}
 
   def init(options) do
     options

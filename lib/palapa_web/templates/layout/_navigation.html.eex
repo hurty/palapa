@@ -10,7 +10,7 @@
         Messages
       </a>
       <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-indigo-lighter hover:text-white mr-4">
-        Teams
+        <%= link("The Team", to: user_path(@conn, :index)) %>
       </a>
     </div>
     <div>

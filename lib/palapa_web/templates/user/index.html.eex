@@ -1,0 +1,28 @@
+<div class="flex mx-auto mt-6 w-3/4">
+  <div class="w-1/4 mr-8">
+    <h2 class="text-teal text-sm font-bold uppercase border-b pb-2 mb-6">Teams</h2>
+    <ul class="list-reset">
+      <li class="text-lg text-teal-dark font-light mb-8 <%= unless @selected_team do %> font-bold <% end %>"><%= link("All teams", to: user_path(@conn, :index)) %></li>
+      <%= for team <- @teams do %>
+        <li class="text-lg text-teal-dark font-light mb-4 <%= if @selected_team && @selected_team.id == team.id do %> font-bold <% end %>">
+          <%= link(team.name, to: user_path(@conn, :index, team_id: team.id)) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="w-3/4">
+    <h2 class="text-indigo text-sm font-bold uppercase border-b pb-2 mb-6">
+      <%= if @selected_team do %> 
+        Members in <%= @selected_team.name %>
+      <% else %>
+        All Members
+      <% end %>
+    </h2>
+    <div class="flex flex-wrap -mb-4 -mx-2">
+      <%= for user <- @users do %> 
+        <%= render @view_module, "_user.html", %{user: user} %>
+      <% end %>
+    </div>
+  </div>
+</div>

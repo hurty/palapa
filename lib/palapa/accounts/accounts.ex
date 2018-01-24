@@ -2,14 +2,10 @@ defmodule Palapa.Accounts do
   import Ecto.Query, warn: false
   alias Palapa.Repo
   alias Palapa.Accounts
-  alias Palapa.Accounts.{User, Organization, Membership, Registration}
+  alias Palapa.Accounts.{User, Organization, Membership, Registration, Team}
 
 
   # USERS
-
-  def list_users do
-    Repo.all(User)
-  end
 
   def get_user!(id) do
     Repo.get!(User, id)
@@ -42,8 +38,6 @@ defmodule Palapa.Accounts do
     User.changeset(user, %{})
   end
 
-
-
   # ORGANIZATIONS
 
   def list_organizations do
@@ -72,6 +66,23 @@ defmodule Palapa.Accounts do
 
   def change_organization(%Organization{} = organization) do
     Organization.changeset(organization, %{})
+  end
+
+  @doc """
+  Lists all users from an organization
+  """
+  def list_organization_users(%Organization{} = organization) do
+    organization
+    |> Ecto.assoc(:users)
+    |> order_by(:name)
+    |> Repo.all
+  end
+
+  def list_team_users(%Team{} = team) do
+    team
+    |> Ecto.assoc(:users)
+    |> order_by(:name)
+    |> Repo.all
   end
 
   @doc """
@@ -151,5 +162,105 @@ defmodule Palapa.Accounts do
 
   def change_registration(%Registration{} = registration) do
     Registration.changeset(registration, %{})
+  end
+
+  # TEAMS
+
+  @doc """
+  Returns the list of teams in an organization.
+
+  ## Examples
+
+      iex> list_organization_teams()
+      [%Team{}, ...]
+
+  """
+  def list_organization_teams(%Organization{} = organization) do
+    query = from t in Team, 
+      where: t.organization_id == ^organization.id, 
+      order_by: :name
+
+    Repo.all(query)
+  end
+
+  @doc """
+  Gets a single team.
+
+  Raises `Ecto.NoResultsError` if the Team does not exist.
+
+  ## Examples
+
+      iex> get_team!(123)
+      %Team{}
+
+      iex> get_team!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_team!(id), do: Repo.get!(Team, id)
+
+  @doc """
+  Creates a team.
+
+  ## Examples
+
+      iex> create_team(%{field: value})
+      {:ok, %Team{}}
+
+      iex> create_team(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_team(%Organization{} = organization, attrs \\ %{}) do
+    %Team{}
+    |> Team.changeset(attrs |> Map.put(:organization_id, organization.id))
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a team.
+
+  ## Examples
+
+      iex> update_team(team, %{field: new_value})
+      {:ok, %Team{}}
+
+      iex> update_team(team, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_team(%Team{} = team, attrs) do
+    team
+    |> Team.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Team.
+
+  ## Examples
+
+      iex> delete_team(team)
+      {:ok, %Team{}}
+
+      iex> delete_team(team)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_team(%Team{} = team) do
+    Repo.delete(team)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking team changes.
+
+  ## Examples
+
+      iex> change_team(team)
+      %Ecto.Changeset{source: %Team{}}
+
+  """
+  def change_team(%Team{} = team) do
+    Team.changeset(team, %{})
   end
 end

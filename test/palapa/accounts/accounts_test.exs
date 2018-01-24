@@ -19,12 +19,6 @@ defmodule Palapa.AccountsTest do
       user
     end
 
-    test "list_users/0 returns all users" do
-      user = user_fixture()
-      first_user = Accounts.list_users() |> List.first
-      assert first_user.id  == user.id
-    end
-
     test "get_user!/1 returns the user with given id" do
       user = user_fixture()
       fetched_user = Accounts.get_user!(user.id)
@@ -131,6 +125,28 @@ defmodule Palapa.AccountsTest do
     test "change_organization/1 returns a organization changeset" do
       organization = organization_fixture()
       assert %Ecto.Changeset{} = Accounts.change_organization(organization)
+    end
+  end
+
+  describe "teams" do
+    alias Palapa.Accounts.Team, warn: false
+
+    @valid_attrs %{name: "Engineering", description: "People doing brillant stuff"}
+    @invalid_attrs %{name: nil}
+
+    test "invalid team without name" do
+      organization = organization_fixture()
+      assert {:error, _} = Accounts.create_team(organization, @invalid_attrs)
+    end
+
+    test "list all teams of an organization" do
+      organization = organization_fixture()
+      {:ok, _} = Accounts.create_team(organization, @valid_attrs)
+      {:ok, _} = Accounts.create_team(organization, %{name: "Sales"})
+      [team1, team2] = Accounts.list_organization_teams(organization)
+
+      assert team1.name == "Engineering"
+      assert team2.name == "Sales"
     end
   end
 end

@@ -1,7 +1,7 @@
 defmodule Palapa.Accounts.Organization do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Palapa.Accounts.{Organization, Membership}
+  alias Palapa.Accounts.{Organization, Membership, Team}
 
 
   schema "organizations" do
@@ -10,6 +10,7 @@ defmodule Palapa.Accounts.Organization do
 
     has_many :memberships, Membership
     has_many :users, through: [:memberships, :user]
+    has_many :teams, Team
   end
 
   @doc false

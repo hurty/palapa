@@ -32,6 +32,7 @@ defmodule PalapaWeb.Router do
     pipe_through [:browser, :enforce_authentication]
 
     get "/dashboard", DashboardController, :index
+    resources "/users", UserController
   end
 
   # Other scopes may use custom stacks.
