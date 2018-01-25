@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
-  <body class="font-sans bg-yellow-lightest">
+  <body class="font-sans bg-grey-lightest">
     <%= render PalapaWeb.LayoutView, "_navigation.html", assigns %>
     <%= render PalapaWeb.LayoutView, "_flash_notice.html", assigns %>
 
