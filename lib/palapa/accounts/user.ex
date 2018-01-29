@@ -2,7 +2,7 @@ defmodule Palapa.Accounts.User do
   use Ecto.Schema
 
   import Ecto.Changeset
-  alias Palapa.Accounts.{User, Membership, Team}
+  alias Palapa.Accounts.{User, Membership, Team, TeamUser}
 
   schema "users" do
     field :email, :string
@@ -14,7 +14,7 @@ defmodule Palapa.Accounts.User do
 
     has_many :memberships, Membership
     has_many :organizations, through: [:memberships, :organization]
-    many_to_many :teams, Team, join_through: "teams_users"
+    many_to_many :teams, Team, join_through: TeamUser
   end
 
   @doc false

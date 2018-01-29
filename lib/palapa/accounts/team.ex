@@ -1,16 +1,16 @@
 defmodule Palapa.Accounts.Team do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Palapa.Accounts.{Team, User, Organization}
-
+  alias Palapa.Accounts.{Team, User, Organization, TeamUser}
 
   schema "teams" do
     field :description, :string
     field :name, :string
+    field :users_count, :integer, default: 0
     timestamps()
 
     belongs_to :organization, Organization
-    many_to_many :users, User, join_through: "teams_users"
+    many_to_many :users, User, join_through: TeamUser
   end
 
   @doc false

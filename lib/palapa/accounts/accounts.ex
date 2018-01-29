@@ -1,9 +1,10 @@
 defmodule Palapa.Accounts do
   import Ecto.Query, warn: false
+  import Ecto.Changeset, warn: false
   alias Palapa.Repo
   alias Palapa.Accounts
-  alias Palapa.Accounts.{User, Organization, Membership, Registration, Team}
-
+  alias Palapa.Accounts.{User, Organization, Membership, Registration, Team, TeamUser}
+  require IEx
 
   # USERS
 
@@ -262,5 +263,37 @@ defmodule Palapa.Accounts do
   """
   def change_team(%Team{} = team) do
     Team.changeset(team, %{})
+  end
+
+  def add_user_to_team(%User{} = user, %Team{} = team) do
+    TeamUser.changeset(%TeamUser{}, %{user_id: user.id, team_id: team.id})
+    |> increment_counter_cache(team, :users_count)
+    |> Repo.insert
+  end
+
+  defp increment_counter_cache(changeset, struct, counter_name, value \\ 1) do
+    prepare_changes(changeset, fn prepared_changeset ->
+      prepared_changeset.repo.increment(struct, counter_name, value)
+      prepared_changeset
+    end)
+  end
+
+  def remove_user_from_team(%User{} = user, %Team{} = team) do
+    team_user_query = 
+      from tu in TeamUser, 
+      where: tu.user_id == ^user.id and tu.team_id == ^team.id
+
+    Ecto.Multi.new
+    |> Ecto.Multi.delete_all(:team_user, team_user_query)
+    |> Ecto.Multi.run(:counter_cache_decrement, fn changes_so_far ->
+      # Avoids having a negative counter by checking if the row has actually been deleted
+      %{team_user: {deleted_entries_count, nil}} = changes_so_far
+      if deleted_entries_count > 0 do
+        Repo.decrement(team, :users_count)
+      else
+        {:ok, team}
+      end
+    end)
+    |> Repo.transaction
   end
 end
