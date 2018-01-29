@@ -13,12 +13,10 @@ defmodule Palapa.Repo do
   def increment(struct, field, value \\ 1) do
     primary_key = Ecto.primary_key(struct)
 
-    result =
-      struct.__struct__
-      |> Ecto.Query.where(^primary_key)
-      |> update_all(inc: [{field, value}])
-
-    case result do
+    struct.__struct__
+    |> Ecto.Query.where(^primary_key)
+    |> update_all(inc: [{field, value}])
+    |> case do
       {1, _} -> {:ok, struct}
       _ -> {:error, struct}
     end
