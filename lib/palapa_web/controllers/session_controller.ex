@@ -2,10 +2,10 @@ defmodule PalapaWeb.SessionController do
   use PalapaWeb, :controller
   alias PalapaWeb.Authentication
 
-  plug :put_layout, "public.html"
-  
+  plug(:put_layout, "public.html")
+
   def new(conn, _params) do
-    render conn, "new.html"
+    render(conn, "new.html")
   end
 
   def create(conn, %{"session" => %{"email" => email, "password" => password}}) do
@@ -14,6 +14,7 @@ defmodule PalapaWeb.SessionController do
         conn
         |> put_flash(:success, "Authentication sucessful!")
         |> redirect(to: dashboard_path(conn, :index))
+
       {:error, _reason, conn} ->
         conn
         |> put_flash(:error, "Invalid email/password combination")

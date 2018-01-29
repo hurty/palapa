@@ -5,16 +5,16 @@ defmodule Palapa.Accounts.User do
   alias Palapa.Accounts.{User, Membership, Team, TeamUser}
 
   schema "users" do
-    field :email, :string
-    field :name, :string
-    field :password_hash, :string
-    field :password, :string, virtual: true
-    field :title, :string
+    field(:email, :string)
+    field(:name, :string)
+    field(:password_hash, :string)
+    field(:password, :string, virtual: true)
+    field(:title, :string)
     timestamps()
 
-    has_many :memberships, Membership
-    has_many :organizations, through: [:memberships, :organization]
-    many_to_many :teams, Team, join_through: TeamUser
+    has_many(:memberships, Membership)
+    has_many(:organizations, through: [:memberships, :organization])
+    many_to_many(:teams, Team, join_through: TeamUser)
   end
 
   @doc false
@@ -30,6 +30,7 @@ defmodule Palapa.Accounts.User do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
         put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(pass))
+
       _ ->
         changeset
     end

@@ -13,7 +13,7 @@ defmodule Palapa.Repo do
   def increment(struct, field, value \\ 1) do
     primary_key = Ecto.primary_key(struct)
 
-    result = 
+    result =
       struct.__struct__
       |> Ecto.Query.where(^primary_key)
       |> update_all(inc: [{field, value}])

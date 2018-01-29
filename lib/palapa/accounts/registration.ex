@@ -4,10 +4,10 @@ defmodule Palapa.Accounts.Registration do
   alias Palapa.Accounts.Registration
 
   embedded_schema do
-    field :name
-    field :organization_name
-    field :email
-    field :password
+    field(:name)
+    field(:organization_name)
+    field(:email)
+    field(:password)
   end
 
   def changeset(%Registration{} = registration, params) do
@@ -15,9 +15,9 @@ defmodule Palapa.Accounts.Registration do
     |> cast(params, [:name, :organization_name, :email, :password])
     |> validate_required([:name, :organization_name, :email, :password])
     |> validate_length(:password, min: 8, max: 100)
-    |> update_change(:name, &(String.trim(&1)))
-    |> update_change(:email, &(String.trim(&1)))
-    |> update_change(:organization_name, &(String.trim(&1)))
+    |> update_change(:name, &String.trim(&1))
+    |> update_change(:email, &String.trim(&1))
+    |> update_change(:organization_name, &String.trim(&1))
   end
 
   def validate(changeset) do

@@ -7,24 +7,24 @@ defmodule PalapaWeb.UserController do
     selected_team = Accounts.get_team!(team_id)
     users = Accounts.list_team_users(selected_team)
 
-    teams = 
+    teams =
       conn
       |> current_organization
-      |> Accounts.list_organization_teams
+      |> Accounts.list_organization_teams()
 
     render(conn, "index.html", %{users: users, teams: teams, selected_team: selected_team})
   end
 
   def index(conn, _params) do
-    users = 
+    users =
       conn
       |> current_organization
-      |> Accounts.list_organization_users
+      |> Accounts.list_organization_users()
 
-    teams = 
+    teams =
       conn
       |> current_organization
-      |> Accounts.list_organization_teams
+      |> Accounts.list_organization_teams()
 
     render(conn, "index.html", %{users: users, teams: teams, selected_team: nil})
   end

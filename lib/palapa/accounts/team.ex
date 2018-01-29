@@ -4,13 +4,13 @@ defmodule Palapa.Accounts.Team do
   alias Palapa.Accounts.{Team, User, Organization, TeamUser}
 
   schema "teams" do
-    field :description, :string
-    field :name, :string
-    field :users_count, :integer, default: 0
+    field(:description, :string)
+    field(:name, :string)
+    field(:users_count, :integer, default: 0)
     timestamps()
 
-    belongs_to :organization, Organization
-    many_to_many :users, User, join_through: TeamUser
+    belongs_to(:organization, Organization)
+    many_to_many(:users, User, join_through: TeamUser)
   end
 
   @doc false

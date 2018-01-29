@@ -3,14 +3,13 @@ defmodule Palapa.Accounts.Organization do
   import Ecto.Changeset
   alias Palapa.Accounts.{Organization, Membership, Team}
 
-
   schema "organizations" do
-    field :name, :string
+    field(:name, :string)
     timestamps()
 
-    has_many :memberships, Membership
-    has_many :users, through: [:memberships, :user]
-    has_many :teams, Team
+    has_many(:memberships, Membership)
+    has_many(:users, through: [:memberships, :user])
+    has_many(:teams, Team)
   end
 
   @doc false

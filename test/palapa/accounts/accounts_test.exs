@@ -7,7 +7,11 @@ defmodule Palapa.AccountsTest do
     alias Palapa.Accounts.User
 
     @valid_attrs %{email: "some@email.com", name: "some name", password: "somePassword"}
-    @update_attrs %{email: "some_updated@email.com", name: "some updated name", password: "someUpdatedPassword"}
+    @update_attrs %{
+      email: "some_updated@email.com",
+      name: "some updated name",
+      password: "someUpdatedPassword"
+    }
     @invalid_attrs %{email: nil, name: nil}
 
     def user_fixture(attrs \\ %{}) do
@@ -112,7 +116,10 @@ defmodule Palapa.AccountsTest do
 
     test "update_organization/2 with invalid data returns error changeset" do
       organization = organization_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_organization(organization, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Accounts.update_organization(organization, @invalid_attrs)
+
       assert organization == Accounts.get_organization!(organization.id)
     end
 

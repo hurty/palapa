@@ -16,12 +16,14 @@ defmodule PalapaWeb.Authentication do
     cond do
       user = conn.assigns[:current_user] ->
         conn
+
       user = user_id && organization_id && Accounts.get_user!(user_id) ->
         organization = Accounts.get_organization!(organization_id)
 
         conn
         |> assign(:current_user, user)
         |> assign(:current_organization, organization)
+
       true ->
         assign(conn, :current_user, nil)
     end
@@ -45,10 +47,12 @@ defmodule PalapaWeb.Authentication do
     user = Accounts.get_user_by_email(email)
 
     cond do
-      user && checkpw(password, user.password_hash) -> 
+      user && checkpw(password, user.password_hash) ->
         {:ok, login(conn, user)}
+
       true ->
-        dummy_checkpw() # Avoids timing attacks
+        # Avoids timing attacks
+        dummy_checkpw()
         {:error, :unauthorized, conn}
     end
   end

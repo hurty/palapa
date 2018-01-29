@@ -2,37 +2,39 @@ defmodule PalapaWeb.Router do
   use PalapaWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_flash
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
-    plug PalapaWeb.Authentication # sets current_user and current_organization if they are in session
+    plug(:accepts, ["html"])
+    plug(:fetch_session)
+    plug(:fetch_flash)
+    plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers)
+    # sets current_user and current_organization if they are in session
+    plug(PalapaWeb.Authentication)
   end
 
   pipeline :enforce_authentication do
-    plug :authenticate_user
+    plug(:authenticate_user)
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   # Public pages
   scope "/", PalapaWeb do
-    pipe_through :browser # Use the default browser stack
+    # Use the default browser stack
+    pipe_through(:browser)
 
-    get "/", HomeController, :index
-    resources "/registrations", RegistrationController, only: [:new, :create]
-    resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
+    get("/", HomeController, :index)
+    resources("/registrations", RegistrationController, only: [:new, :create])
+    resources("/sessions", SessionController, only: [:new, :create, :delete], singleton: true)
   end
-  
+
   # Private pages for logged in users only
   scope "/", PalapaWeb do
-    pipe_through [:browser, :enforce_authentication]
+    pipe_through([:browser, :enforce_authentication])
 
-    get "/dashboard", DashboardController, :index
-    resources "/users", UserController
+    get("/dashboard", DashboardController, :index)
+    resources("/users", UserController)
   end
 
   # Other scopes may use custom stacks.

@@ -25,13 +25,13 @@ defmodule PalapaWeb.ChannelCase do
     end
   end
 
-
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Palapa.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Palapa.Repo, {:shared, self()})
     end
+
     :ok
   end
-
 end

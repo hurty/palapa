@@ -3,10 +3,9 @@ defmodule Palapa.Accounts.Membership do
   import Ecto.Changeset
   alias Palapa.Accounts.{Membership, User, Organization}
 
-
   schema "memberships" do
-    belongs_to :organization, Organization
-    belongs_to :user, User
+    belongs_to(:organization, Organization)
+    belongs_to(:user, User)
 
     timestamps()
   end

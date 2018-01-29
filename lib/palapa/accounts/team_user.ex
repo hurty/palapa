@@ -6,8 +6,8 @@ defmodule Palapa.Accounts.TeamUser do
 
   @primary_key false
   schema "teams_users" do
-    belongs_to :team, Team
-    belongs_to :user, User
+    belongs_to(:team, Team)
+    belongs_to(:user, User)
     timestamps()
   end
 
