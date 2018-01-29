@@ -15,9 +15,9 @@ defmodule Palapa.Repo do
 
     struct.__struct__
     |> Ecto.Query.where(^primary_key)
-    |> update_all(inc: [{field, value}])
+    |> update_all([inc: [{field, value}]], returning: true)
     |> case do
-      {1, _} -> {:ok, struct}
+      {1, updated_struct} -> {:ok, updated_struct}
       _ -> {:error, struct}
     end
   end
