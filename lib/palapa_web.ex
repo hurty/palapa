@@ -23,10 +23,14 @@ defmodule PalapaWeb do
       import Plug.Conn
       import PalapaWeb.Router.Helpers
       import PalapaWeb.Gettext
-      # import PalapaWeb.Authentication, only: [current_user: 1, current_organization: 1]
 
       # Handle authorization failures
       action_fallback(PalapaWeb.FallbackController)
+
+      # Handy authorization functions
+      defdelegate(permit(policy, action, user, params \\ []), to: Bodyguard)
+      defdelegate(permit!(policy, action, user, params \\ []), to: Bodyguard)
+      defdelegate(permit?(policy, action, user, params \\ []), to: Bodyguard)
 
       # Redefine the actions parameters: we pass the current user and organization for each action
       def action(conn, _) do

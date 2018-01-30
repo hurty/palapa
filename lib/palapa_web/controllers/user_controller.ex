@@ -1,10 +1,9 @@
 defmodule PalapaWeb.UserController do
   use PalapaWeb, :controller
-
   alias Palapa.Accounts
 
   def index(conn, %{"team_id" => team_id}, current_user, current_organization) do
-    with :ok <- Bodyguard.permit(Accounts, :list_users_and_teams, current_user) do
+    with :ok <- permit(Accounts, :list_users_and_teams, current_user) do
       selected_team = Accounts.get_team!(team_id)
       users = Accounts.list_team_users(selected_team)
 
@@ -17,7 +16,7 @@ defmodule PalapaWeb.UserController do
   end
 
   def index(conn, _params, current_user, current_organization) do
-    with :ok <- Bodyguard.permit(Accounts, :list_users_and_teams, current_user) do
+    with :ok <- permit(Accounts, :list_users_and_teams, current_user) do
       users =
         current_organization
         |> Accounts.list_organization_users()
