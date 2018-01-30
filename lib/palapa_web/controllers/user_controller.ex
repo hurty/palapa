@@ -3,29 +3,30 @@ defmodule PalapaWeb.UserController do
 
   alias Palapa.Accounts
 
-  def index(conn, %{"team_id" => team_id}) do
-    selected_team = Accounts.get_team!(team_id)
-    users = Accounts.list_team_users(selected_team)
+  def index(conn, %{"team_id" => team_id}, current_user, current_organization) do
+    with :ok <- Bodyguard.permit(Accounts, :list_users_and_teams, current_user) do
+      selected_team = Accounts.get_team!(team_id)
+      users = Accounts.list_team_users(selected_team)
 
-    teams =
-      conn
-      |> current_organization
-      |> Accounts.list_organization_teams()
+      teams =
+        current_organization
+        |> Accounts.list_organization_teams()
 
-    render(conn, "index.html", %{users: users, teams: teams, selected_team: selected_team})
+      render(conn, "index.html", %{users: users, teams: teams, selected_team: selected_team})
+    end
   end
 
-  def index(conn, _params) do
-    users =
-      conn
-      |> current_organization
-      |> Accounts.list_organization_users()
+  def index(conn, _params, current_user, current_organization) do
+    with :ok <- Bodyguard.permit(Accounts, :list_users_and_teams, current_user) do
+      users =
+        current_organization
+        |> Accounts.list_organization_users()
 
-    teams =
-      conn
-      |> current_organization
-      |> Accounts.list_organization_teams()
+      teams =
+        current_organization
+        |> Accounts.list_organization_teams()
 
-    render(conn, "index.html", %{users: users, teams: teams, selected_team: nil})
+      render(conn, "index.html", %{users: users, teams: teams, selected_team: nil})
+    end
   end
 end

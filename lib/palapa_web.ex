@@ -23,7 +23,20 @@ defmodule PalapaWeb do
       import Plug.Conn
       import PalapaWeb.Router.Helpers
       import PalapaWeb.Gettext
-      import PalapaWeb.Authentication, only: [current_user: 1, current_organization: 1]
+      # import PalapaWeb.Authentication, only: [current_user: 1, current_organization: 1]
+
+      # Handle authorization failures
+      action_fallback(PalapaWeb.FallbackController)
+
+      # Redefine the actions parameters: we pass the current user and organization for each action
+      def action(conn, _) do
+        apply(__MODULE__, action_name(conn), [
+          conn,
+          conn.params,
+          Map.get(conn.assigns, :current_user),
+          Map.get(conn.assigns, :current_organization)
+        ])
+      end
     end
   end
 

@@ -4,12 +4,30 @@ defmodule Palapa.Accounts do
   alias Palapa.Repo
   alias Palapa.Accounts
   alias Palapa.Accounts.{User, Organization, Membership, Registration, Team, TeamUser}
-  require IEx
+
+  defdelegate(authorize(action, user, params), to: Palapa.Accounts.Policy)
+
+  import EctoEnum
+  defenum(RoleEnum, :role, [:owner, :admin, :member])
 
   # USERS
 
   def get_user!(id) do
     Repo.get!(User, id)
+  end
+
+  def get_user_with_membership_within_organization!(user_id, organization_id) do
+    user =
+      from(
+        u in User,
+        join: m in assoc(u, :memberships),
+        preload: [memberships: m],
+        where: m.user_id == ^user_id and m.organization_id == ^organization_id
+      )
+      |> Repo.one!()
+
+    org = Enum.at(user.memberships, 0)
+    User.put_role(user, org.role)
   end
 
   @doc """

@@ -2,7 +2,7 @@ defmodule Palapa.Accounts.User do
   use Ecto.Schema
 
   import Ecto.Changeset
-  alias Palapa.Accounts.{User, Membership, Team, TeamUser}
+  alias Palapa.Accounts.{User, Membership, Team, TeamUser, RoleEnum}
 
   schema "users" do
     field(:email, :string)
@@ -10,6 +10,7 @@ defmodule Palapa.Accounts.User do
     field(:password_hash, :string)
     field(:password, :string, virtual: true)
     field(:title, :string)
+    field(:role, RoleEnum, virtual: true)
     timestamps()
 
     has_many(:memberships, Membership)
@@ -33,6 +34,15 @@ defmodule Palapa.Accounts.User do
 
       _ ->
         changeset
+    end
+  end
+
+  def put_role(user, role) do
+    Ecto.Changeset.change(user, role: role)
+    |> Palapa.Repo.update()
+    |> case do
+      {:ok, user} -> user
+      _ -> {:error, "cannot put role into user struct"}
     end
   end
 end

@@ -4,11 +4,16 @@ defmodule PalapaWeb.SessionController do
 
   plug(:put_layout, "public.html")
 
-  def new(conn, _params) do
+  def new(conn, _params, _current_user, _current_organization) do
     render(conn, "new.html")
   end
 
-  def create(conn, %{"session" => %{"email" => email, "password" => password}}) do
+  def create(
+        conn,
+        %{"session" => %{"email" => email, "password" => password}},
+        _current_user,
+        _current_organization
+      ) do
     case Authentication.login_with_email_and_password(conn, email, password) do
       {:ok, conn} ->
         conn
@@ -22,7 +27,7 @@ defmodule PalapaWeb.SessionController do
     end
   end
 
-  def delete(conn, _params) do
+  def delete(conn, _params, _current_user, _current_organization) do
     conn
     |> Authentication.logout()
     |> redirect(to: home_path(conn, :index))

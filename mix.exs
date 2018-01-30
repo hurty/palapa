@@ -42,7 +42,9 @@ defmodule Palapa.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 4.0"},
-      {:bcrypt_elixir, "~> 1.0"}
+      {:bcrypt_elixir, "~> 1.0"},
+      {:bodyguard, "~> 2.2"},
+      {:ecto_enum, "~> 1.0"}
     ]
   end
 
