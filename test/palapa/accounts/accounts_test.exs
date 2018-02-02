@@ -201,14 +201,14 @@ defmodule Palapa.AccountsTest do
       assert 0 == updated_team.users_count
     end
 
-    test "user_in_team/2 returns true if the user is a team member" do
+    test "user_in_team?/2 returns true if the user is a team member" do
       user = insert!(:member)
       team = insert!(:team, users: [user])
 
       assert Accounts.user_in_team?(user, team)
     end
 
-    test "user_in_team/2 returns false if the user is not a team member" do
+    test "user_in_team?/2 returns false if the user is not a team member" do
       user = insert!(:member)
       team = insert!(:team, users: [])
 
