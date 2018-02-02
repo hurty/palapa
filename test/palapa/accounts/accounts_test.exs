@@ -178,6 +178,15 @@ defmodule Palapa.AccountsTest do
       assert 1 == Repo.aggregate(TeamUser, :count, :user_id)
     end
 
+    test "add_user_to_team/2 multiple times fails" do
+      team = insert!(:team)
+      user = insert!(:member, organization: team.organization)
+
+      {:ok, %Team{}} = Accounts.add_user_to_team(user, team)
+      assert {:error, %Ecto.Changeset{}} = Accounts.add_user_to_team(user, team)
+      assert 1 == Repo.aggregate(TeamUser, :count, :user_id)
+    end
+
     test "add_user_to_team/2 increments the team users count" do
       team = insert!(:team)
       user = insert!(:member, organization: team.organization)
