@@ -9,6 +9,7 @@ defmodule Palapa.AccountsTest do
     test "list_organizations/0" do
       insert!(:organization, name: "one")
       insert!(:organization, name: "two")
+
       organizations = Accounts.list_organizations()
       assert Enum.count(organizations) == 2
       assert Enum.at(organizations, 0).name == "one"
@@ -163,6 +164,7 @@ defmodule Palapa.AccountsTest do
       organization = insert!(:organization)
       insert!(:team, organization: organization, name: "Engineering")
       insert!(:team, organization: organization, name: "Sales")
+
       [team1, team2] = Accounts.list_teams(organization)
       assert team1.name == "Engineering"
       assert team2.name == "Sales"
@@ -171,6 +173,7 @@ defmodule Palapa.AccountsTest do
     test "add_user_to_team/2" do
       team = insert!(:team)
       user = insert!(:member, organization: team.organization)
+
       assert {:ok, %Team{}} = Accounts.add_user_to_team(user, team)
       assert 1 == Repo.aggregate(TeamUser, :count, :user_id)
     end
@@ -178,6 +181,7 @@ defmodule Palapa.AccountsTest do
     test "add_user_to_team/2 increments the team users count" do
       team = insert!(:team)
       user = insert!(:member, organization: team.organization)
+
       {:ok, %Team{} = team} = Accounts.add_user_to_team(user, team)
       assert 1 == team.users_count
     end
@@ -195,6 +199,20 @@ defmodule Palapa.AccountsTest do
 
       assert {:ok, %Team{} = updated_team} = Accounts.remove_user_from_team(user, team)
       assert 0 == updated_team.users_count
+    end
+
+    test "user_in_team/2 returns true if the user is a team member" do
+      user = insert!(:member)
+      team = insert!(:team, users: [user])
+
+      assert Accounts.user_in_team?(user, team)
+    end
+
+    test "user_in_team/2 returns false if the user is not a team member" do
+      user = insert!(:member)
+      team = insert!(:team, users: [])
+
+      refute Accounts.user_in_team?(user, team)
     end
   end
 end

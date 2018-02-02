@@ -295,6 +295,12 @@ defmodule Palapa.Accounts do
     end
   end
 
+  def user_in_team?(%User{} = user, %Team{} = team) do
+    TeamUser
+    |> where(user_id: ^user.id, team_id: ^team.id)
+    |> Repo.exists?()
+  end
+
   defp increment_counter_cache(changeset, struct, counter_name, value \\ 1) do
     prepare_changes(changeset, fn prepared_changeset ->
       prepared_changeset.repo.increment(struct, counter_name, value)
