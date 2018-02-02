@@ -1,159 +1,200 @@
 defmodule Palapa.AccountsTest do
   use Palapa.DataCase
 
+  import Palapa.Factory
   alias Palapa.Accounts
+  alias Palapa.Accounts.{Organization, User, Team, TeamUser}
+
+  describe "organizations" do
+    test "list_organizations/0" do
+      insert!(:organization, name: "one")
+      insert!(:organization, name: "two")
+      organizations = Accounts.list_organizations()
+      assert Enum.count(organizations) == 2
+      assert Enum.at(organizations, 0).name == "one"
+      assert Enum.at(organizations, 1).name == "two"
+    end
+
+    test "get_organization!/1 returns the organization with given id" do
+      organization = insert!(:organization)
+      assert Accounts.get_organization!(organization.id) == organization
+    end
+
+    test "create_organization/1 with valid data creates a organization" do
+      assert {:ok, %Organization{} = organization} =
+               Accounts.create_organization(%{name: "Hooli"})
+
+      assert organization.name == "Hooli"
+    end
+
+    test "create_organization/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_organization(%{name: ""})
+    end
+
+    test "update_organization/2 with valid data updates the organization" do
+      organization = insert!(:organization)
+
+      assert {:ok, %Organization{} = organization} =
+               Accounts.update_organization(organization, %{name: "Hooli"})
+
+      assert organization.name == "Hooli"
+    end
+
+    test "update_organization/2 with invalid data returns error changeset" do
+      organization = insert!(:organization)
+      assert {:error, %Ecto.Changeset{}} = Accounts.update_organization(organization, %{name: ""})
+    end
+
+    test "delete_organization/1" do
+      organization = insert!(:organization)
+      assert {:ok, %Organization{}} = Accounts.delete_organization(organization)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Accounts.get_organization!(organization.id)
+      end
+    end
+
+    test "change_organization/1 returns a organization changeset" do
+      organization = insert!(:organization)
+      assert %Ecto.Changeset{} = Accounts.change_organization(organization)
+    end
+  end
 
   describe "users" do
-    alias Palapa.Accounts.User
-
-    @valid_attrs %{email: "some@email.com", name: "some name", password: "somePassword"}
-    @update_attrs %{
-      email: "some_updated@email.com",
-      name: "some updated name",
-      password: "someUpdatedPassword"
-    }
-    @invalid_attrs %{email: nil, name: nil}
-
-    def user_fixture(attrs \\ %{}) do
-      {:ok, user} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Accounts.create_user()
-
-      user
-    end
-
     test "get_user!/1 returns the user with given id" do
-      user = user_fixture()
+      user = insert!(:member)
       fetched_user = Accounts.get_user!(user.id)
-      assert fetched_user.id == user.id
+      assert fetched_user.email == user.email
     end
 
-    test "get_user_by_email/1 returns the user with the given address" do
-      user = user_fixture()
-      fetched_user = Accounts.get_user_by_email(user.email)
+    test "get_user_by/1 returns the user with the given email address" do
+      user = insert!(:member)
+      fetched_user = %User{} = Accounts.get_user_by(email: "bertram.gilfoyle@piedpiper.com")
       assert fetched_user.id == user.id
     end
 
     test "create_user/1 with valid data creates a user" do
-      assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
-      assert user.email == "some@email.com"
-      assert user.name == "some name"
-      refute user.password_hash == nil
+      assert {:ok, %User{} = user} =
+               Accounts.create_user(%{name: "Gavin Belson", email: "gavin.belson@hooli.com"})
+
+      assert user.name == "Gavin Belson"
+      assert user.email == "gavin.belson@hooli.com"
     end
 
     test "create_user/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_user(@invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} =
+               Accounts.create_user(%{name: "Gavin Belson", email: ""})
     end
 
     test "update_user/2 with valid data updates the user" do
-      user = user_fixture()
-      assert {:ok, user} = Accounts.update_user(user, @update_attrs)
-      assert %User{} = user
-      assert user.email == "some_updated@email.com"
-      assert user.name == "some updated name"
-      refute user.password_hash == nil
+      user = insert!(:member)
+
+      assert {:ok, %User{} = user} =
+               Accounts.update_user(user, %{name: "Big Head", email: "big.head@hooli.com"})
+
+      assert user.name == "Big Head"
+      assert user.email == "big.head@hooli.com"
     end
 
     test "update_user/2 with invalid data returns error changeset" do
-      user = user_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, @invalid_attrs)
+      user = insert!(:member)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Accounts.update_user(user, %{name: "Big Head", email: ""})
     end
 
     test "delete_user/1 deletes the user" do
-      user = user_fixture()
+      user = insert!(:member)
       assert {:ok, %User{}} = Accounts.delete_user(user)
       assert_raise Ecto.NoResultsError, fn -> Accounts.get_user!(user.id) end
     end
 
     test "change_user/1 returns a user changeset" do
-      user = user_fixture()
+      user = insert!(:member)
       assert %Ecto.Changeset{} = Accounts.change_user(user)
     end
   end
 
-  describe "organizations" do
-    alias Palapa.Accounts.Organization
-
-    @valid_attrs %{name: "Hooli"}
-    @update_attrs %{name: "Pied Piper"}
-    @invalid_attrs %{name: nil}
-
-    def organization_fixture(attrs \\ %{}) do
-      {:ok, organization} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Accounts.create_organization()
-
-      organization
-    end
-
-    test "list_organizations/0 returns all organizations" do
-      organization = organization_fixture()
-      assert Accounts.list_organizations() == [organization]
-    end
-
-    test "get_organization!/1 returns the organization with given id" do
-      organization = organization_fixture()
-      assert Accounts.get_organization!(organization.id) == organization
-    end
-
-    test "create_organization/1 with valid data creates a organization" do
-      assert {:ok, %Organization{} = organization} = Accounts.create_organization(@valid_attrs)
-      assert organization.name == "Hooli"
-    end
-
-    test "create_organization/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_organization(@invalid_attrs)
-    end
-
-    test "update_organization/2 with valid data updates the organization" do
-      organization = organization_fixture()
-      assert {:ok, organization} = Accounts.update_organization(organization, @update_attrs)
-      assert %Organization{} = organization
-      assert organization.name == "Pied Piper"
-    end
-
-    test "update_organization/2 with invalid data returns error changeset" do
-      organization = organization_fixture()
-
-      assert {:error, %Ecto.Changeset{}} =
-               Accounts.update_organization(organization, @invalid_attrs)
-
-      assert organization == Accounts.get_organization!(organization.id)
-    end
-
-    test "delete_organization/1 deletes the organization" do
-      organization = organization_fixture()
-      assert {:ok, %Organization{}} = Accounts.delete_organization(organization)
-      assert_raise Ecto.NoResultsError, fn -> Accounts.get_organization!(organization.id) end
-    end
-
-    test "change_organization/1 returns a organization changeset" do
-      organization = organization_fixture()
-      assert %Ecto.Changeset{} = Accounts.change_organization(organization)
-    end
-  end
-
   describe "teams" do
-    alias Palapa.Accounts.Team, warn: false
+    test "create_team/2 with valid data creates the team" do
+      organization = insert!(:organization)
 
-    @valid_attrs %{name: "Engineering", description: "People doing brillant stuff"}
-    @invalid_attrs %{name: nil}
+      assert {:ok, %Team{} = team} =
+               Accounts.create_team(organization, %{
+                 name: "Sales",
+                 description: "The serious sales department"
+               })
 
-    test "invalid team without name" do
-      organization = organization_fixture()
-      assert {:error, _} = Accounts.create_team(organization, @invalid_attrs)
+      assert team.name == "Sales"
+      assert team.description == "The serious sales department"
     end
 
-    test "list all teams of an organization" do
-      organization = organization_fixture()
-      {:ok, _} = Accounts.create_team(organization, @valid_attrs)
-      {:ok, _} = Accounts.create_team(organization, %{name: "Sales"})
-      [team1, team2] = Accounts.list_organization_teams(organization)
+    test "create_team/2 with invalid data returns error changeset" do
+      organization = insert!(:organization)
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_team(organization, %{name: ""})
+    end
 
+    test "change_team/1 returns a changeset" do
+      team = insert!(:team)
+      assert %Ecto.Changeset{} = Accounts.change_team(team)
+    end
+
+    test "update_team/2 with valid data updates the team" do
+      team = insert!(:team)
+
+      assert {:ok, %Team{} = team} =
+               Accounts.update_team(team, %{name: "New Team", description: "A super new one"})
+
+      assert team.name == "New Team"
+      assert team.description == "A super new one"
+    end
+
+    test "update_team/2 with invalid data returns an error changeset" do
+      team = insert!(:team)
+      assert {:error, %Ecto.Changeset{}} = Accounts.update_team(team, %{name: ""})
+    end
+
+    test "delete_team/1" do
+      team = insert!(:team)
+      assert {:ok, %Team{}} = Accounts.delete_team(team)
+    end
+
+    test "list_teams/2 returns teams within the given organization" do
+      organization = insert!(:organization)
+      insert!(:team, organization: organization, name: "Engineering")
+      insert!(:team, organization: organization, name: "Sales")
+      [team1, team2] = Accounts.list_teams(organization)
       assert team1.name == "Engineering"
       assert team2.name == "Sales"
+    end
+
+    test "add_user_to_team/2" do
+      team = insert!(:team)
+      user = insert!(:member, organization: team.organization)
+      assert {:ok, %Team{}} = Accounts.add_user_to_team(user, team)
+      assert 1 == Repo.aggregate(TeamUser, :count, :user_id)
+    end
+
+    test "add_user_to_team/2 increments the team users count" do
+      team = insert!(:team)
+      user = insert!(:member, organization: team.organization)
+      {:ok, %Team{} = team} = Accounts.add_user_to_team(user, team)
+      assert 1 == team.users_count
+    end
+
+    test "remove_user_from_team/2" do
+      user = insert!(:member)
+      team = insert!(:team, users: [user])
+
+      assert {:ok, %Team{}} = Accounts.remove_user_from_team(user, team)
+    end
+
+    test "remove_user_from_team/2 decrements the team users count" do
+      user = insert!(:member)
+      team = insert!(:team, users: [user], users_count: 1)
+
+      assert {:ok, %Team{} = updated_team} = Accounts.remove_user_from_team(user, team)
+      assert 0 == updated_team.users_count
     end
   end
 end

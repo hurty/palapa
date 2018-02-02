@@ -44,7 +44,7 @@ defmodule PalapaWeb.Authentication do
   end
 
   def login_with_email_and_password(conn, email, password) do
-    user = Accounts.get_user_by_email(email)
+    user = Accounts.get_user_by(email: email)
 
     cond do
       user && checkpw(password, user.password_hash) ->

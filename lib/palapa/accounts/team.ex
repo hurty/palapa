@@ -13,11 +13,17 @@ defmodule Palapa.Accounts.Team do
     many_to_many(:users, User, join_through: TeamUser)
   end
 
-  @doc false
   def changeset(%Team{} = team, attrs) do
     team
-    |> cast(attrs, [:name, :description, :organization_id])
-    |> validate_required([:name, :organization_id])
+    |> cast(attrs, [:name, :description])
+    |> validate_required([:name])
+  end
+
+  def create_changeset(%Team{} = team, attrs) do
+    team
+    |> changeset(attrs)
+    |> cast(attrs, [:organization_id])
+    |> validate_required([:organization_id])
     |> foreign_key_constraint(:organization_id)
   end
 end

@@ -35,4 +35,9 @@ defmodule Palapa.Repo do
       [] -> false
     end
   end
+
+  @doc "Reload the given record"
+  def reload(%module{id: id}) do
+    get(module, id)
+  end
 end

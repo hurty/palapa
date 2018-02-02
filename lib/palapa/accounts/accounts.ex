@@ -12,30 +12,55 @@ defmodule Palapa.Accounts do
 
   # USERS
 
+  @doc """
+  Gets a user by its id.
+
+  Raises `Ecto.NoResultsError` if no user was found.
+  """
   def get_user!(id) do
     Repo.get!(User, id)
   end
 
-  def get_user_with_membership_within_organization!(user_id, organization_id) do
+  @doc """
+  Gets a user by its id and organization id.
+
+  Similar to `get_user!/1` but also loads the organization and 
+  the role into the user struct.
+
+  This function should be used in the context of a http request 
+  where we need to know what is the current role of the current user.
+  This is used for authorization checks.
+
+  Raises `Ecto.NoResultsError` if no user was found.
+  """
+  def get_user_within_organization!(user_id, organization) do
     user =
       from(
         u in User,
         join: m in assoc(u, :memberships),
         preload: [memberships: m],
-        where: m.user_id == ^user_id and m.organization_id == ^organization_id
+        where: m.user_id == ^user_id and m.organization_id == ^organization.id
       )
       |> Repo.one!()
 
-    org = Enum.at(user.memberships, 0)
-    User.put_role(user, org.role)
+    membership = Enum.at(user.memberships, 0)
+
+    user
+    |> Map.put(:membership, membership)
+    |> Map.put(:organization, organization)
+    |> Map.put(:role, membership.role)
   end
 
   @doc """
-  Gets a user by its email address.
+  Gets the first user matching the given conditions.
 
-  Returns nil if the User does not exist.
+  Returns nil if no User is found.
+
+  ## Example:
+
+    Accounts.get_user_by(email: "pierre.hurtevent@gmail.com")
   """
-  def get_user_by_email(email), do: Repo.get_by(User, email: email)
+  def get_user_by(conditions), do: Repo.get_by(User, conditions)
 
   def create_user(attrs \\ %{}) do
     %User{}
@@ -118,30 +143,10 @@ defmodule Palapa.Accounts do
 
   # MEMBERSHIPS
 
-  def list_memberships do
-    Repo.all(Membership)
-  end
-
-  def get_membership!(id), do: Repo.get!(Membership, id)
-
   def create_membership(attrs \\ %{}) do
     %Membership{}
     |> Membership.changeset(attrs)
     |> Repo.insert()
-  end
-
-  def update_membership(%Membership{} = membership, attrs) do
-    membership
-    |> Membership.changeset(attrs)
-    |> Repo.update()
-  end
-
-  def delete_membership(%Membership{} = membership) do
-    Repo.delete(membership)
-  end
-
-  def change_membership(%Membership{} = membership) do
-    Membership.changeset(membership, %{})
   end
 
   # REGISTRATIONS
@@ -191,11 +196,11 @@ defmodule Palapa.Accounts do
 
   ## Examples
 
-      iex> list_organization_teams()
+      iex> list_teams()
       [%Team{}, ...]
 
   """
-  def list_organization_teams(%Organization{} = organization) do
+  def list_teams(%Organization{} = organization) do
     query =
       from(
         t in Team,
@@ -222,21 +227,11 @@ defmodule Palapa.Accounts do
   """
   def get_team!(id), do: Repo.get!(Team, id)
 
-  @doc """
-  Creates a team.
-
-  ## Examples
-
-      iex> create_team(%{field: value})
-      {:ok, %Team{}}
-
-      iex> create_team(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_team(%Organization{} = organization, attrs \\ %{}) do
+    team_attrs = Map.merge(attrs, %{organization_id: organization.id})
+
     %Team{}
-    |> Team.changeset(attrs |> Map.put(:organization_id, organization.id))
+    |> Team.create_changeset(team_attrs)
     |> Repo.insert()
   end
 
@@ -291,6 +286,13 @@ defmodule Palapa.Accounts do
     TeamUser.changeset(%TeamUser{}, %{user_id: user.id, team_id: team.id})
     |> increment_counter_cache(team, :users_count)
     |> Repo.insert()
+    |> case do
+      {:ok, team_user} ->
+        {:ok, Repo.get(Team, team_user.team_id)}
+
+      {_, details} ->
+        {:error, details}
+    end
   end
 
   defp increment_counter_cache(changeset, struct, counter_name, value \\ 1) do
@@ -317,5 +319,12 @@ defmodule Palapa.Accounts do
       end
     end)
     |> Repo.transaction()
+    |> case do
+      {:ok, _} ->
+        {:ok, Repo.reload(team)}
+
+      {_, details} ->
+        {:error, details}
+    end
   end
 end

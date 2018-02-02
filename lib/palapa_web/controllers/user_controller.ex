@@ -9,7 +9,7 @@ defmodule PalapaWeb.UserController do
 
       teams =
         current_organization
-        |> Accounts.list_organization_teams()
+        |> Accounts.list_teams()
 
       render(conn, "index.html", %{users: users, teams: teams, selected_team: selected_team})
     end
@@ -23,7 +23,7 @@ defmodule PalapaWeb.UserController do
 
       teams =
         current_organization
-        |> Accounts.list_organization_teams()
+        |> Accounts.list_teams()
 
       render(conn, "index.html", %{users: users, teams: teams, selected_team: nil})
     end
