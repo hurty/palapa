@@ -76,7 +76,11 @@ defmodule Palapa.AccountsTest do
 
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} =
-               Accounts.create_user(%{name: "Gavin Belson", email: "gavin.belson@hooli.com"})
+               Accounts.create_user(%{
+                 name: "Gavin Belson",
+                 email: "gavin.belson@hooli.com",
+                 password: "password"
+               })
 
       assert user.name == "Gavin Belson"
       assert user.email == "gavin.belson@hooli.com"

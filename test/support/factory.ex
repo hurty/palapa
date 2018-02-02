@@ -19,6 +19,10 @@ defmodule Palapa.Factory do
     System.unique_integer([:positive])
   end
 
+  def password_hash do
+    Comeonin.Bcrypt.hashpwsalt("password")
+  end
+
   #
   # Factories
   #
@@ -41,6 +45,7 @@ defmodule Palapa.Factory do
     %User{
       name: "Richard Hendricks",
       email: "richard.hendricks@piedpiper.com",
+      password_hash: password_hash(),
       title: "CEO",
       role: :owner,
       memberships: [%Membership{organization: build(:organization), role: :owner}]
@@ -51,6 +56,7 @@ defmodule Palapa.Factory do
     %User{
       name: "Jared Dunn",
       email: "jared.dunn@piedpiper.com",
+      password_hash: password_hash(),
       title: "Head of Business Development",
       role: :admin
     }
@@ -60,6 +66,7 @@ defmodule Palapa.Factory do
     %User{
       name: "Bertram Gilfoyle",
       email: "bertram.gilfoyle@piedpiper.com",
+      password_hash: password_hash(),
       title: "Nerd",
       role: :member
     }
@@ -69,6 +76,7 @@ defmodule Palapa.Factory do
     %User{
       name: "John Doe #{random_integer()}",
       email: "john.doe_#{random_integer()}@piedpiper.com",
+      password_hash: password_hash(),
       title: "Random guy",
       role: :member
     }

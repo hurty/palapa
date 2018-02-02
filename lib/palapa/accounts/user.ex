@@ -25,7 +25,7 @@ defmodule Palapa.Accounts.User do
     user
     |> cast(attrs, [:email, :name, :password, :title])
     |> put_password_hash
-    |> validate_required([:email, :name])
+    |> validate_required([:email, :name, :password_hash])
     |> unique_constraint(:email)
   end
 
