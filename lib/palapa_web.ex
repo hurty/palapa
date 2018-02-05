@@ -23,6 +23,7 @@ defmodule PalapaWeb do
       import Plug.Conn
       import PalapaWeb.Router.Helpers
       import PalapaWeb.Gettext
+      import PalapaWeb.Current
 
       # Handle authorization failures
       action_fallback(PalapaWeb.FallbackController)
@@ -31,18 +32,6 @@ defmodule PalapaWeb do
       defdelegate(permit(policy, action, user, params \\ []), to: Bodyguard)
       defdelegate(permit!(policy, action, user, params \\ []), to: Bodyguard)
       defdelegate(permit?(policy, action, user, params \\ []), to: Bodyguard)
-
-      # Redefine the actions parameters: we pass the current user and organization for each action
-      def action(conn, _) do
-        current_user = Map.get(conn.assigns, :current_user)
-        current_organization = Map.get(conn.assigns, :current_organization)
-
-        apply(__MODULE__, action_name(conn), [
-          conn,
-          conn.params,
-          %{user: current_user, organization: current_organization}
-        ])
-      end
     end
   end
 

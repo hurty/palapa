@@ -5,11 +5,11 @@ defmodule PalapaWeb.RegistrationController do
 
   plug(:put_layout, "public.html")
 
-  def new(conn, _params, _current) do
+  def new(conn, _params) do
     render(conn, "new.html", changeset: Accounts.change_registration(%Registration{}))
   end
 
-  def create(conn, %{"registration" => registration_params}, _current) do
+  def create(conn, %{"registration" => registration_params}) do
     case Accounts.create_registration(registration_params) do
       {:ok, _} ->
         conn
