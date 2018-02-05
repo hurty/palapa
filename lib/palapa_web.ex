@@ -34,11 +34,13 @@ defmodule PalapaWeb do
 
       # Redefine the actions parameters: we pass the current user and organization for each action
       def action(conn, _) do
+        current_user = Map.get(conn.assigns, :current_user)
+        current_organization = Map.get(conn.assigns, :current_organization)
+
         apply(__MODULE__, action_name(conn), [
           conn,
           conn.params,
-          Map.get(conn.assigns, :current_user),
-          Map.get(conn.assigns, :current_organization)
+          %{user: current_user, organization: current_organization}
         ])
       end
     end
