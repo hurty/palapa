@@ -1,6 +1,6 @@
 defmodule Palapa.Factory do
   alias Palapa.Repo
-  alias Palapa.Accounts.{Organization, User, Membership, Team}
+  alias Palapa.Accounts.{Organization, User, Membership, Team, TeamUser}
 
   #
   # Convenience functions
@@ -19,13 +19,34 @@ defmodule Palapa.Factory do
     System.unique_integer([:positive])
   end
 
-  def password_hash do
-    Comeonin.Bcrypt.hashpwsalt("password")
-  end
+  @password_hash Comeonin.Bcrypt.hashpwsalt("password")
 
   #
   # Factories
   #
+
+  def insert_all do
+    # -- Organization
+    pied_piper = insert!(:organization)
+
+    # -- Users
+    richard = insert!(:owner)
+    insert!(:membership, organization: pied_piper, user: richard, role: :owner)
+
+    jared = insert!(:admin)
+    insert!(:membership, organization: pied_piper, user: jared, role: :admin)
+
+    gilfoyle = insert!(:member)
+    insert!(:membership, organization: pied_piper, user: gilfoyle, role: :member)
+
+    # -- Teams
+    tech_team = insert!(:team, organization: pied_piper)
+    management_team = insert!(:team, organization: pied_piper, name: "Management")
+
+    insert!(:team_user, team: tech_team, user: richard)
+    insert!(:team_user, team: tech_team, user: gilfoyle)
+    insert!(:team_user, team: management_team, user: jared)
+  end
 
   def build(:organization) do
     %Organization{
@@ -45,10 +66,9 @@ defmodule Palapa.Factory do
     %User{
       name: "Richard Hendricks",
       email: "richard.hendricks@piedpiper.com",
-      password_hash: password_hash(),
+      password_hash: @password_hash,
       title: "CEO",
-      role: :owner,
-      memberships: [%Membership{organization: build(:organization), role: :owner}]
+      role: :owner
     }
   end
 
@@ -56,7 +76,7 @@ defmodule Palapa.Factory do
     %User{
       name: "Jared Dunn",
       email: "jared.dunn@piedpiper.com",
-      password_hash: password_hash(),
+      password_hash: @password_hash,
       title: "Head of Business Development",
       role: :admin
     }
@@ -66,7 +86,7 @@ defmodule Palapa.Factory do
     %User{
       name: "Bertram Gilfoyle",
       email: "bertram.gilfoyle@piedpiper.com",
-      password_hash: password_hash(),
+      password_hash: @password_hash,
       title: "Nerd",
       role: :member
     }
@@ -76,7 +96,7 @@ defmodule Palapa.Factory do
     %User{
       name: "John Doe #{random_integer()}",
       email: "john.doe_#{random_integer()}@piedpiper.com",
-      password_hash: password_hash(),
+      password_hash: @password_hash,
       title: "Random guy",
       role: :member
     }
@@ -86,6 +106,13 @@ defmodule Palapa.Factory do
     %Team{
       name: "Tech",
       organization: build(:organization)
+    }
+  end
+
+  def build(:team_user) do
+    %TeamUser{
+      team: build(:organization),
+      user: build(:member)
     }
   end
 end
