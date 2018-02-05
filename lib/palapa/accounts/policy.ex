@@ -4,6 +4,10 @@ defmodule Palapa.Accounts.Policy do
   alias Palapa.Repo, warn: false
   import Ecto.Query, warn: false
 
+  def authorize(:switch_organization, %User{} = user, organization) do
+    organization in user.organizations
+  end
+
   # Owner can do anything
   def authorize(_, %User{role: :owner}, _), do: true
 

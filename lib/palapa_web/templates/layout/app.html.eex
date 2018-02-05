@@ -19,6 +19,14 @@
       <%= render @view_module, @view_template, assigns %>
     </main>
 
+    <ul>
+      <hr class="border">
+      <p>Current -> <%= @current_organization.name %> </p>
+      <%= for organization <- @current_user.organizations do %>
+        <li><%= link organization.name, to: session_path(@conn, :switch_organization, organization_id: organization.id) %></li>
+      <% end %>
+    </ul>
+
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

@@ -33,6 +33,7 @@ defmodule PalapaWeb.Router do
   scope "/", PalapaWeb do
     pipe_through([:browser, :enforce_authentication])
 
+    get("/sessions/switch_organization", SessionController, :switch_organization)
     get("/dashboard", DashboardController, :index)
     resources("/users", UserController)
   end

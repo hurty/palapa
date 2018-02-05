@@ -57,6 +57,14 @@ defmodule PalapaWeb.Authentication do
     end
   end
 
+  def switch_organization(conn, organization) do
+    conn
+    |> assign(:organization, organization)
+    |> put_session(:organization_id, organization.id)
+    |> configure_session(renew: true)
+    |> redirect(to: Router.Helpers.dashboard_path(conn, :index))
+  end
+
   def logout(conn) do
     configure_session(conn, drop: true)
   end

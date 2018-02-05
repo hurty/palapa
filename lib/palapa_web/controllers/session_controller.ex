@@ -1,6 +1,7 @@
 defmodule PalapaWeb.SessionController do
   use PalapaWeb, :controller
   alias PalapaWeb.Authentication
+  alias Palapa.Accounts
 
   plug(:put_layout, "public.html")
 
@@ -26,5 +27,13 @@ defmodule PalapaWeb.SessionController do
     conn
     |> Authentication.logout()
     |> redirect(to: home_path(conn, :index))
+  end
+
+  def switch_organization(conn, params) do
+    organization = Accounts.get_organization!(params["organization_id"])
+
+    with :ok <- permit(Accounts, :switch_organization, current_user(), organization) do
+      Authentication.switch_organization(conn, organization)
+    end
   end
 end

@@ -18,7 +18,9 @@ defmodule Palapa.Accounts do
   Raises `Ecto.NoResultsError` if no user was found.
   """
   def get_user!(id) do
-    Repo.get!(User, id)
+    User
+    |> preload(:organizations)
+    |> Repo.get!(id)
   end
 
   @doc """
@@ -209,6 +211,22 @@ defmodule Palapa.Accounts do
       )
 
     Repo.all(query)
+  end
+
+  @doc """
+  Returns the list of a user's teams within an organization.
+
+  ## Examples
+
+      iex> list_user_teams(organization, user)
+      [%Team{}, ...]
+
+  """
+  def list_user_teams(%Organization{} = organization, %User{} = user) do
+    Ecto.assoc(organization, :teams)
+    |> Bodyguard.scope(user)
+    |> order_by(:name)
+    |> Repo.all()
   end
 
   @doc """

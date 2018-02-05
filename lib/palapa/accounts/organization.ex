@@ -1,7 +1,9 @@
 defmodule Palapa.Accounts.Organization do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Palapa.Accounts.{Organization, Membership, Team}
+  import Ecto.Query
+  alias Palapa.Accounts.{Organization, User, Membership, Team}
+  @behaviour Bodyguard.Schema
 
   schema "organizations" do
     field(:name, :string)
@@ -17,5 +19,14 @@ defmodule Palapa.Accounts.Organization do
     organization
     |> cast(attrs, [:name])
     |> validate_required([:name])
+  end
+
+  def scope(query, %User{} = user, _) do
+    from(
+      t in query,
+      join: m in Membership,
+      on: [organization_id: t.id],
+      where: m.user_id == ^user.id
+    )
   end
 end
