@@ -1,4 +1,4 @@
-<nav class="flex items-center justify-between flex-wrap bg-white p-6 shadow">
+<nav data-controller="navigation" class="flex items-center justify-between flex-wrap bg-white p-6 shadow">
   <div class="block lg:hidden">
     <button class="flex items-center px-3 py-2 border rounded text-indigo-lighter border-indigo-light hover:text-white hover:border-white">
       <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
@@ -15,6 +15,18 @@
     </div>
     <div>
       <%= if @current_user do %>
+
+        <a href="#" data-action="navigation#showSwitcher">Switch</a>
+        <div data-target="navigation.switcher" class="absolute pin-r border z-50 p-4 bg-white shadow rounded opacity-0">
+          <ul class="">
+            <p>Current -> <%= @current_organization.name %> </p>
+            <hr class="border">
+            <%= for organization <- @current_user.organizations do %>
+              <li><%= link organization.name, to: session_path(@conn, :switch_organization, organization_id: organization.id) %></li>
+            <% end %>
+          </ul>
+        </div>
+
         <%= link("Log out", to: session_path(@conn, :delete), method: :delete, class: "btn btn-blue") %>
       <% end%>
     </div>

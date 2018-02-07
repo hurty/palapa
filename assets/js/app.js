@@ -19,3 +19,9 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+import { Application } from "stimulus"
+import NavigationController from "./controllers/navigation_controller"
+
+const application = Application.start()
+application.register("navigation", NavigationController)
