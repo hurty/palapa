@@ -28,4 +28,19 @@ defmodule PalapaWeb.UserController do
       render(conn, "index.html", %{users: users, teams: teams, selected_team: nil})
     end
   end
+
+  def show(conn, %{"id" => id}) do
+    user = Accounts.get_user!(id, current_organization())
+
+    with :ok <-
+           permit(
+             Accounts,
+             :get_user,
+             current_user(),
+             user: user,
+             organization: current_organization()
+           ) do
+      render(conn, "show.html", %{user: user})
+    end
+  end
 end

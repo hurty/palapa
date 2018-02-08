@@ -13,17 +13,6 @@ defmodule Palapa.Accounts do
   # USERS
 
   @doc """
-  Gets a user by its id.
-
-  Raises `Ecto.NoResultsError` if no user was found.
-  """
-  def get_user!(id) do
-    User
-    |> preload(:organizations)
-    |> Repo.get!(id)
-  end
-
-  @doc """
   Gets a user by its id and organization id.
 
   Similar to `get_user!/1` but also loads the organization and 
@@ -35,7 +24,7 @@ defmodule Palapa.Accounts do
 
   Raises `Ecto.NoResultsError` if no user was found.
   """
-  def get_user_within_organization!(user_id, organization) do
+  def get_user!(user_id, organization) do
     user =
       from(
         u in User,
@@ -131,6 +120,13 @@ defmodule Palapa.Accounts do
     |> Repo.all()
   end
 
+  def list_user_organizations(%User{} = user) do
+    user
+    |> Ecto.assoc(:organizations)
+    |> order_by(:name)
+    |> Repo.all()
+  end
+
   @doc """
   Gets the first Organization of user (in case he's part of many).
   This organization will be considered his main one.
@@ -141,6 +137,12 @@ defmodule Palapa.Accounts do
     |> join(:inner, [o], m in Membership, o.id == m.organization_id and m.user_id == ^user.id)
     |> first
     |> Repo.one!()
+  end
+
+  def user_in_organization?(%User{} = user, %Organization{} = organization) do
+    Membership
+    |> where(user_id: ^user.id, organization_id: ^organization.id)
+    |> Repo.exists?()
   end
 
   # MEMBERSHIPS

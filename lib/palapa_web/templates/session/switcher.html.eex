@@ -1,0 +1,7 @@
+<ul>
+  <p>Current -> <%= @current_organization.name %> </p>
+  <hr class="border">
+  <%= for organization <- @organizations do %>
+    <li><%= link organization.name, to: session_path(@conn, :switch_organization, organization_id: organization.id) %></li>
+  <% end %>
+</ul>

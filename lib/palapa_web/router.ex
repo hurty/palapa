@@ -34,6 +34,7 @@ defmodule PalapaWeb.Router do
     pipe_through([:browser, :enforce_authentication])
 
     get("/sessions/switch_organization", SessionController, :switch_organization)
+    get("/sessions/switcher", SessionController, :switcher)
     get("/dashboard", DashboardController, :index)
     resources("/users", UserController)
   end

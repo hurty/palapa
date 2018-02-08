@@ -17,8 +17,9 @@ defmodule PalapaWeb.Authentication do
       user = conn.assigns[:current_user] ->
         conn
 
-      user = user_id && organization_id && Accounts.get_user!(user_id) ->
+      user_id && organization_id ->
         organization = Accounts.get_organization!(organization_id)
+        user = Accounts.get_user!(user_id, organization)
 
         conn
         |> assign(:current_user, user)

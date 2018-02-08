@@ -25,7 +25,7 @@
     <div class="flex flex-wrap -mb-4 -mx-2">
       <%= if Enum.any?(@users) do %>
         <%= for user <- @users do %> 
-          <%= render @view_module, "_user.html", %{user: user} %>
+          <%= render @view_module, "_user.html", %{conn: @conn, user: user} %>
         <% end %>
       <% else %>
         <p>There is no member in this team yet.</p>
