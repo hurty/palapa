@@ -40,7 +40,8 @@ defmodule PalapaWeb.UserController do
              user: user,
              organization: current_organization()
            ) do
-      render(conn, "show.html", %{user: user})
+      user_teams = Accounts.list_user_teams(current_organization(), user)
+      render(conn, "show.html", %{user: user, user_teams: user_teams})
     end
   end
 end

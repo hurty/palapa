@@ -1,8 +1,23 @@
-<div class="w-full sm:w-1/3 card mx-auto">
-  <div class="text-indigo text-center text-lg font-bold capitalize mb-2"><%= link @user.name, to: user_path(@conn, :show, @user) %></div>
-  <div class="text-grey text-center text-sm font-light capitalize"><%= @user.title %></div>
+<div class="flex w-5/6 mx-auto">
+  <div class="card flex-initial w-1/3 mr-6">
+    <div class="mb-6">
+      <div class="text-indigo text-center text-lg font-bold capitalize mb-2"><%= link @user.name, to: user_path(@conn, :show, @user) %></div>
+      <div class="text-grey-dark text-center text-sm font-light capitalize"><%= @user.title %></div>
+    </div>
 
-  <div class="text-teal text-sm font-bold border-b pb-2 mb-6">Infos</div>
+    <div class="mb-6">
+      <div class="text-teal text-sm font-bold border-b pb-2 mb-4">Teams</div>
+      <%= for team <- @user_teams do %>
+        <%= PalapaWeb.TeamView.team_tag(@conn, team) %>
+      <% end %>
+    </div>
 
-  <div class="text-teal text-sm font-bold border-b pb-2 mb-6">Teams</div>
+    <div class="mb-6">    
+      <div class="text-teal text-sm font-bold border-b pb-2 mb-6">Personal information</div>
+    </div>
+  </div>
+
+  <div class="flex-auto">
+    <h2 class="text-indigo text-sm font-bold border-b pb-2 mb-6">Latest activity</h2>
+  </div>
 </div>
