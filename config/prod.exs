@@ -28,8 +28,7 @@ config :palapa, Palapa.Repo,
   username: System.get_env("POSTGRESQL_ADDON_USER"),
   database: System.get_env("POSTGRESQL_ADDON_DB"),
   password: System.get_env("POSTGRESQL_ADDON_PASSWORD"),
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-  ssl: true
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 # ## SSL Support
 #
