@@ -22,7 +22,7 @@ config :palapa, PalapaWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
-config :hello, Palapa.Repo,
+config :palapa, Palapa.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("POSTGRESQL_ADDON_URI"),
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
