@@ -9,10 +9,13 @@
   </div>
   <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
     <div class="text-sm lg:flex-grow">
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-indigo-lighter hover:text-white mr-4">
+      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-indigo mr-4 font-bold">
+        Palapa
+      </a>
+      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-indigo-lighter hover:text-indigo mr-4">
         Features
       </a>
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-indigo-lighter hover:text-white mr-4">
+      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-indigo-lighter hover:text-indigo mr-4">
         Pricing
       </a>
     </div>

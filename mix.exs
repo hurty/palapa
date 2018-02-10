@@ -45,7 +45,8 @@ defmodule Palapa.Mixfile do
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"},
       {:bodyguard, "~> 2.2"},
-      {:ecto_enum, "~> 1.0"}
+      {:ecto_enum, "~> 1.0"},
+      {:wallaby, "~> 0.19.2", [runtime: false, only: :test]}
     ]
   end
 
@@ -59,7 +60,17 @@ defmodule Palapa.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      "assets.compile": &compile_assets/1,
+      test: [
+        "assets.compile",
+        "ecto.create --quiet",
+        "ecto.migrate",
+        "test"
+      ]
     ]
+  end
+
+  defp compile_assets(_) do
+    Mix.shell().cmd("assets/node_modules/brunch/bin/brunch build assets/")
   end
 end

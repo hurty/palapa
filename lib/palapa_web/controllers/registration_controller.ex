@@ -1,3 +1,5 @@
+require IEx
+
 defmodule PalapaWeb.RegistrationController do
   use PalapaWeb, :controller
   alias Palapa.Accounts
@@ -11,11 +13,11 @@ defmodule PalapaWeb.RegistrationController do
 
   def create(conn, %{"registration" => registration_params}) do
     case Accounts.create_registration(registration_params) do
-      {:ok, _} ->
+      {:ok, result} ->
         conn
-        |> redirect(to: home_path(conn, :index))
+        |> PalapaWeb.Authentication.login(result.user, result.organization)
+        |> redirect(to: dashboard_path(conn, :index))
 
-      # |> Authentication.login(user, organization)
       {:error, _failed_operation, changeset, _changes_so_far} ->
         render(conn, "new.html", changeset: %{changeset | action: :insert})
     end

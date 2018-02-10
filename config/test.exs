@@ -4,7 +4,9 @@ use Mix.Config
 # you can enable the server option below.
 config :palapa, PalapaWeb.Endpoint,
   http: [port: 4001],
-  server: false
+  server: true
+
+config :palapa, :sql_sandbox, true
 
 # Print only warnings and errors during test
 config :logger, level: :warn
@@ -20,3 +22,4 @@ config :palapa, Palapa.Repo,
 
 # Reduce the complexity of the password hashing calculation for much faster tests
 config :bcrypt_elixir, :log_rounds, 4
+config :wallaby, driver: Wallaby.Experimental.Chrome

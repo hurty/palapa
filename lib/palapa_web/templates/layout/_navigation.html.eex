@@ -6,20 +6,18 @@
   </div>
   <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
     <div class="text-sm lg:flex-grow">
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-indigo-lighter hover:text-white mr-4">
-        <%= link("Dashboard", to: dashboard_path(@conn, :index)) %>
-      </a>
+      <h2 href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-indigo-lighter hover:text-white mr-4">
+        <%= link(@current_organization.name, to: dashboard_path(@conn, :index)) %>
+      </h2>
       <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-indigo-lighter hover:text-white mr-4">
         <%= link("The Team", to: user_path(@conn, :index)) %>
       </a>
     </div>
     <div data-controller="navigation" data-navigation-url="<%= session_path(@conn, :switcher) %>">
       <%= if @current_user do %>
-
         <a href="#" data-action="navigation#showSwitcher">Switch</a>
         <div data-target="navigation.switcher" class="absolute pin-r border z-50 p-4 bg-white shadow rounded opacity-0">
         </div>
-
         <%= link("Log out", to: session_path(@conn, :delete), method: :delete, class: "btn btn-blue") %>
       <% end%>
     </div>

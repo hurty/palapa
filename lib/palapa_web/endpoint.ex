@@ -1,6 +1,10 @@
 defmodule PalapaWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :palapa
 
+  if Application.get_env(:palapa, :sql_sandbox) do
+    plug(Phoenix.Ecto.SQL.Sandbox)
+  end
+
   socket("/socket", PalapaWeb.UserSocket)
 
   # Serve at "/" the static files from "priv/static" directory.
