@@ -11,6 +11,5 @@ defmodule PalapaWeb.RegistrationTest do
     |> fill_in(text_field("registration_password"), with: "password")
     |> click(button("Create a new account"))
     |> assert_text("Dashboard")
-    |> take_screenshot()
   end
 end

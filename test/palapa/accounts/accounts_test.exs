@@ -62,9 +62,11 @@ defmodule Palapa.AccountsTest do
   end
 
   describe "users" do
-    test "get_user!/1 returns the user with given id" do
+    test "get_user!/1 returns the user with given id within the given organization" do
+      organization = insert!(:organization)
       user = insert!(:member)
-      fetched_user = Accounts.get_user!(user.id)
+      insert!(:membership, organization: organization, user: user, role: :owner)
+      fetched_user = Accounts.get_user!(user.id, organization)
       assert fetched_user.email == user.email
     end
 
@@ -111,7 +113,7 @@ defmodule Palapa.AccountsTest do
     test "delete_user/1 deletes the user" do
       user = insert!(:member)
       assert {:ok, %User{}} = Accounts.delete_user(user)
-      assert_raise Ecto.NoResultsError, fn -> Accounts.get_user!(user.id) end
+      assert_raise Ecto.NoResultsError, fn -> Repo.get!(User, user.id) end
     end
 
     test "change_user/1 returns a user changeset" do
