@@ -11,8 +11,6 @@ defmodule Palapa.Accounts.User do
     field(:password, :string, virtual: true)
     field(:title, :string)
     field(:role, RoleEnum, virtual: true)
-    field(:membership, :map, virtual: true)
-    field(:organization, :map, virtual: true)
     timestamps()
 
     has_many(:memberships, Membership)

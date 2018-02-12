@@ -37,8 +37,6 @@ defmodule Palapa.Accounts do
     membership = Enum.at(user.memberships, 0)
 
     user
-    |> Map.put(:membership, membership)
-    |> Map.put(:organization, organization)
     |> Map.put(:role, membership.role)
   end
 

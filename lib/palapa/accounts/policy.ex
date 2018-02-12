@@ -6,6 +6,7 @@ defmodule Palapa.Accounts.Policy do
   import Ecto.Query, warn: false
 
   def authorize(:switch_organization, %User{} = user, organization) do
+    user = user |> Repo.preload(:organizations, force: true)
     organization in user.organizations
   end
 
