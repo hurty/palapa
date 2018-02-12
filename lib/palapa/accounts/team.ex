@@ -1,6 +1,6 @@
 defmodule Palapa.Accounts.Team do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Palapa.Schema
+
   import Ecto.Query
   alias Palapa.Accounts.{Team, User, Organization, TeamUser}
 

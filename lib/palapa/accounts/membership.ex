@@ -1,6 +1,6 @@
 defmodule Palapa.Accounts.Membership do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Palapa.Schema
+
   alias Palapa.Accounts.{Membership, User, Organization, RoleEnum}
 
   schema "memberships" do

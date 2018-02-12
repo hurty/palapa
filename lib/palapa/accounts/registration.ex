@@ -1,6 +1,6 @@
 defmodule Palapa.Accounts.Registration do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Palapa.Schema
+
   alias Palapa.Accounts.Registration
 
   embedded_schema do
