@@ -56,6 +56,10 @@ exports.config = {
         require('postcss-import')(),
         require('tailwindcss')('./tailwind.js')
       ]
+    },
+
+    uglify: {
+      mangle: false
     }
   },
 
