@@ -2,7 +2,7 @@ defmodule Palapa.Repo.Migrations.AddRoleToMemberships do
   use Ecto.Migration
 
   def up do
-    Palapa.Accounts.RoleEnum.create_type()
+    Palapa.Organizations.RoleEnum.create_type()
 
     alter table(:memberships) do
       add(:role, :role, default: "member")
@@ -14,6 +14,6 @@ defmodule Palapa.Repo.Migrations.AddRoleToMemberships do
       remove(:role)
     end
 
-    Palapa.Accounts.RoleEnum.drop_type()
+    Palapa.Organizations.RoleEnum.drop_type()
   end
 end

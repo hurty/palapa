@@ -1,18 +1,16 @@
-require IEx
-
 defmodule PalapaWeb.RegistrationController do
   use PalapaWeb, :controller
-  alias Palapa.Accounts
-  alias Palapa.Accounts.Registration
+  alias Palapa.Registrations
+  alias Palapa.Registrations.Registration
 
   plug(:put_layout, "public.html")
 
   def new(conn, _params) do
-    render(conn, "new.html", changeset: Accounts.change_registration(%Registration{}))
+    render(conn, "new.html", changeset: Registrations.change(%Registration{}))
   end
 
   def create(conn, %{"registration" => registration_params}) do
-    case Accounts.create_registration(registration_params) do
+    case Registrations.create(registration_params) do
       {:ok, result} ->
         conn
         |> PalapaWeb.Authentication.login(result.user, result.organization)

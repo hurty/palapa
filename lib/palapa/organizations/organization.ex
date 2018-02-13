@@ -1,8 +1,9 @@
-defmodule Palapa.Accounts.Organization do
+defmodule Palapa.Organizations.Organization do
   use Palapa.Schema
 
   import Ecto.Query
-  alias Palapa.Accounts.{Organization, User, Membership}
+  alias Palapa.Organizations.{Organization, Membership}
+  alias Palapa.Users.User
   alias Palapa.Teams.Team
   @behaviour Bodyguard.Schema
 

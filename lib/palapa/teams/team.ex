@@ -3,7 +3,8 @@ defmodule Palapa.Teams.Team do
 
   import Ecto.Query
   alias Palapa.Teams.{Team, TeamUser}
-  alias Palapa.Accounts.{User, Organization}
+  alias Palapa.Users.User
+  alias Palapa.Organizations.Organization
 
   schema "teams" do
     field(:description, :string)

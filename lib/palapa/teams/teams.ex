@@ -3,7 +3,8 @@ defmodule Palapa.Teams do
   import Ecto.Changeset, warn: false
   alias Palapa.Repo
   alias Palapa.Teams.{Team, TeamUser}
-  alias Palapa.Accounts.{User, Organization}
+  alias Palapa.Users.User
+  alias Palapa.Organizations.Organization
 
   defdelegate(authorize(action, user, params), to: Palapa.Teams.Policy)
 

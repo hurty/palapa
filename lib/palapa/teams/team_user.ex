@@ -2,7 +2,7 @@ defmodule Palapa.Teams.TeamUser do
   use Palapa.Schema
 
   alias Palapa.Teams.{Team, TeamUser}
-  alias Palapa.Accounts.{User}
+  alias Palapa.Users.User
 
   @primary_key false
   schema "teams_users" do

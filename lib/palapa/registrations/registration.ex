@@ -1,7 +1,7 @@
-defmodule Palapa.Accounts.Registration do
+defmodule Palapa.Registrations.Registration do
   use Palapa.Schema
 
-  alias Palapa.Accounts.Registration
+  alias Palapa.Registrations.Registration
 
   embedded_schema do
     field(:name)

@@ -1,7 +1,8 @@
-defmodule Palapa.Accounts.User do
+defmodule Palapa.Users.User do
   use Palapa.Schema
 
-  alias Palapa.Accounts.{User, Membership, RoleEnum}
+  alias Palapa.Users.{User}
+  alias Palapa.Organizations.{Membership, RoleEnum}
   alias Palapa.Teams.{Team, TeamUser}
 
   schema "users" do

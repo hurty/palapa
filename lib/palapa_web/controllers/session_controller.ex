@@ -1,7 +1,9 @@
 defmodule PalapaWeb.SessionController do
   use PalapaWeb, :controller
+
   alias PalapaWeb.Authentication
-  alias Palapa.Accounts
+  alias Palapa.Organizations
+  alias Palapa.Users
 
   plug(:put_layout, "public.html")
 
@@ -30,14 +32,14 @@ defmodule PalapaWeb.SessionController do
   end
 
   def switcher(conn, _params) do
-    organizations = Accounts.list_user_organizations(current_user())
+    organizations = Organizations.list_for_user(current_user())
     render(conn, "switcher.html", layout: false, organizations: organizations)
   end
 
   def switch_organization(conn, params) do
-    organization = Accounts.get_organization!(params["organization_id"])
+    organization = Organizations.get!(params["organization_id"])
 
-    with :ok <- permit(Accounts, :switch_organization, current_user(), organization) do
+    with :ok <- permit(Users, :switch_organization, current_user(), organization) do
       Authentication.switch_organization(conn, organization)
     end
   end

@@ -1,5 +1,3 @@
-require IEx
-
 defmodule PalapaWeb.AuthenticationTest do
   use PalapaWeb.ConnCase
   alias PalapaWeb.Authentication
@@ -28,14 +26,14 @@ defmodule PalapaWeb.AuthenticationTest do
   test "authenticate_user continues when the current_user exists", %{conn: conn} do
     conn =
       conn
-      |> assign(:current_user, %Palapa.Accounts.User{})
+      |> assign(:current_user, %Palapa.Users.User{})
       |> Authentication.authenticate_user([])
 
     refute conn.halted
   end
 
   test "login puts the user in the session", %{conn: conn} do
-    {:ok, %{user: user}} = Palapa.Accounts.create_registration(@registration)
+    {:ok, %{user: user}} = Palapa.Registrations.create(@registration)
 
     login_conn =
       conn
@@ -57,8 +55,7 @@ defmodule PalapaWeb.AuthenticationTest do
   end
 
   test "call places the current user into assigns", %{conn: conn} do
-    {:ok, %{user: user, organization: organization}} =
-      Palapa.Accounts.create_registration(@registration)
+    {:ok, %{user: user, organization: organization}} = Palapa.Registrations.create(@registration)
 
     conn =
       conn
@@ -75,7 +72,7 @@ defmodule PalapaWeb.AuthenticationTest do
   end
 
   test "login with valid email and password", %{conn: conn} do
-    {:ok, %{user: user}} = Palapa.Accounts.create_registration(@registration)
+    {:ok, %{user: user}} = Palapa.Registrations.create(@registration)
 
     {:ok, conn} =
       Authentication.login_with_email_and_password(conn, "pierre.hurtevent@gmail.com", "password")
@@ -89,7 +86,7 @@ defmodule PalapaWeb.AuthenticationTest do
   end
 
   test "login with password mismatch", %{conn: conn} do
-    {:ok, _} = Palapa.Accounts.create_registration(@registration)
+    {:ok, _} = Palapa.Registrations.create(@registration)
 
     assert {:error, :unauthorized, _conn} =
              Authentication.login_with_email_and_password(

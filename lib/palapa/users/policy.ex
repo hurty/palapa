@@ -1,7 +1,7 @@
-defmodule Palapa.Accounts.Policy do
+defmodule Palapa.Users.Policy do
   @behaviour Bodyguard.Policy
-  alias Palapa.Accounts
-  alias Palapa.Accounts.{User}
+  alias Palapa.Users.User
+  alias Palapa.Organizations
   alias Palapa.Repo
 
   def authorize(:switch_organization, %User{} = user, organization) do
@@ -23,7 +23,7 @@ defmodule Palapa.Accounts.Policy do
     if user.id == current_user.id do
       true
     else
-      Accounts.user_in_organization?(user, organization)
+      Organizations.member?(organization, user)
     end
   end
 

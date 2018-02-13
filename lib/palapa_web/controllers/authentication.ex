@@ -3,7 +3,8 @@ defmodule PalapaWeb.Authentication do
   import Phoenix.Controller
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   alias PalapaWeb.Router
-  alias Palapa.Accounts
+  alias Palapa.Organizations
+  alias Palapa.Users
 
   def init(options) do
     options
@@ -18,8 +19,8 @@ defmodule PalapaWeb.Authentication do
         conn
 
       user_id && organization_id ->
-        organization = Accounts.get_organization!(organization_id)
-        user = Accounts.get_user!(user_id, organization)
+        organization = Organizations.get!(organization_id)
+        user = Users.get!(user_id, organization)
 
         conn
         |> assign(:current_user, user)
@@ -40,12 +41,12 @@ defmodule PalapaWeb.Authentication do
   end
 
   def login(conn, user) do
-    organization = Accounts.get_user_main_organization!(user)
+    organization = Organizations.get_user_main_organization!(user)
     login(conn, user, organization)
   end
 
   def login_with_email_and_password(conn, email, password) do
-    user = Accounts.get_user_by(email: email)
+    user = Users.get_by(email: email)
 
     cond do
       user && checkpw(password, user.password_hash) ->

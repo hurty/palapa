@@ -1,7 +1,8 @@
-defmodule Palapa.Accounts.Membership do
+defmodule Palapa.Organizations.Membership do
   use Palapa.Schema
 
-  alias Palapa.Accounts.{Membership, User, Organization, RoleEnum}
+  alias Palapa.Organizations.{Membership, Organization, RoleEnum}
+  alias Palapa.Users.User
 
   schema "memberships" do
     belongs_to(:organization, Organization)

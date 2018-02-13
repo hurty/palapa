@@ -1,6 +1,6 @@
 defmodule Palapa.Dashboard.Policy do
   @behaviour Bodyguard.Policy
-  alias Palapa.Accounts.{Organization, User, Membership, Team, TeamUser}, warn: false
+  alias Palapa.Users.User
   alias Palapa.Repo, warn: false
   import Ecto.Query, warn: false
 
