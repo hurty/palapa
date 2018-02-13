@@ -1,7 +1,8 @@
 defmodule Palapa.Accounts.User do
   use Palapa.Schema
 
-  alias Palapa.Accounts.{User, Membership, Team, TeamUser, RoleEnum}
+  alias Palapa.Accounts.{User, Membership, RoleEnum}
+  alias Palapa.Teams.{Team, TeamUser}
 
   schema "users" do
     field(:email, :string)

@@ -1,9 +1,8 @@
 defmodule Palapa.Accounts do
-  import Ecto.Query, warn: false
-  import Ecto.Changeset, warn: false
+  import Ecto.Query
   alias Palapa.Repo
   alias Palapa.Accounts
-  alias Palapa.Accounts.{User, Organization, Membership, Registration, Team, TeamUser}
+  alias Palapa.Accounts.{User, Organization, Membership, Registration}
 
   defdelegate(authorize(action, user, params), to: Palapa.Accounts.Policy)
 
@@ -111,13 +110,6 @@ defmodule Palapa.Accounts do
     |> Repo.all()
   end
 
-  def list_team_users(%Team{} = team) do
-    team
-    |> Ecto.assoc(:users)
-    |> order_by(:name)
-    |> Repo.all()
-  end
-
   def list_user_organizations(%User{} = user) do
     user
     |> Ecto.assoc(:organizations)
@@ -189,166 +181,5 @@ defmodule Palapa.Accounts do
 
   def change_registration(%Registration{} = registration) do
     Registration.changeset(registration, %{})
-  end
-
-  # TEAMS
-
-  @doc """
-  Returns the list of teams in an organization.
-
-  ## Examples
-
-      iex> list_teams()
-      [%Team{}, ...]
-
-  """
-  def list_teams(%Organization{} = organization) do
-    query =
-      from(
-        t in Team,
-        where: t.organization_id == ^organization.id,
-        order_by: :name
-      )
-
-    Repo.all(query)
-  end
-
-  @doc """
-  Returns the list of a user's teams within an organization.
-
-  ## Examples
-
-      iex> list_user_teams(organization, user)
-      [%Team{}, ...]
-
-  """
-  def list_user_teams(%Organization{} = organization, %User{} = user) do
-    Ecto.assoc(organization, :teams)
-    |> Bodyguard.scope(user)
-    |> order_by(:name)
-    |> Repo.all()
-  end
-
-  @doc """
-  Gets a single team.
-
-  Raises `Ecto.NoResultsError` if the Team does not exist.
-
-  ## Examples
-
-      iex> get_team!(123)
-      %Team{}
-
-      iex> get_team!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_team!(id), do: Repo.get!(Team, id)
-
-  def create_team(%Organization{} = organization, attrs \\ %{}) do
-    team_attrs = Map.merge(attrs, %{organization_id: organization.id})
-
-    %Team{}
-    |> Team.create_changeset(team_attrs)
-    |> Repo.insert()
-  end
-
-  @doc """
-  Updates a team.
-
-  ## Examples
-
-      iex> update_team(team, %{field: new_value})
-      {:ok, %Team{}}
-
-      iex> update_team(team, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_team(%Team{} = team, attrs) do
-    team
-    |> Team.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a Team.
-
-  ## Examples
-
-      iex> delete_team(team)
-      {:ok, %Team{}}
-
-      iex> delete_team(team)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_team(%Team{} = team) do
-    Repo.delete(team)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking team changes.
-
-  ## Examples
-
-      iex> change_team(team)
-      %Ecto.Changeset{source: %Team{}}
-
-  """
-  def change_team(%Team{} = team) do
-    Team.changeset(team, %{})
-  end
-
-  def add_user_to_team(%User{} = user, %Team{} = team) do
-    TeamUser.changeset(%TeamUser{}, %{user_id: user.id, team_id: team.id})
-    |> increment_counter_cache(team, :users_count)
-    |> Repo.insert()
-    |> case do
-      {:ok, team_user} ->
-        {:ok, Repo.get(Team, team_user.team_id)}
-
-      {_, details} ->
-        {:error, details}
-    end
-  end
-
-  def user_in_team?(%User{} = user, %Team{} = team) do
-    TeamUser
-    |> where(user_id: ^user.id, team_id: ^team.id)
-    |> Repo.exists?()
-  end
-
-  defp increment_counter_cache(changeset, struct, counter_name, value \\ 1) do
-    prepare_changes(changeset, fn prepared_changeset ->
-      prepared_changeset.repo.increment(struct, counter_name, value)
-      prepared_changeset
-    end)
-  end
-
-  def remove_user_from_team(%User{} = user, %Team{} = team) do
-    team_user_query =
-      from(tu in TeamUser, where: tu.user_id == ^user.id and tu.team_id == ^team.id)
-
-    Ecto.Multi.new()
-    |> Ecto.Multi.delete_all(:team_user, team_user_query)
-    |> Ecto.Multi.run(:counter_cache_decrement, fn changes_so_far ->
-      # Avoids having a negative counter by checking if the row has actually been deleted
-      %{team_user: {deleted_entries_count, nil}} = changes_so_far
-
-      if deleted_entries_count > 0 do
-        Repo.decrement(team, :users_count)
-      else
-        {:ok, team}
-      end
-    end)
-    |> Repo.transaction()
-    |> case do
-      {:ok, _} ->
-        {:ok, Repo.reload(team)}
-
-      {_, details} ->
-        {:error, details}
-    end
   end
 end

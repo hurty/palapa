@@ -1,8 +1,9 @@
-defmodule Palapa.Accounts.Team do
+defmodule Palapa.Teams.Team do
   use Palapa.Schema
 
   import Ecto.Query
-  alias Palapa.Accounts.{Team, User, Organization, TeamUser}
+  alias Palapa.Teams.{Team, TeamUser}
+  alias Palapa.Accounts.{User, Organization}
 
   schema "teams" do
     field(:description, :string)

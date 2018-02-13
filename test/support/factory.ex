@@ -1,6 +1,7 @@
 defmodule Palapa.Factory do
   alias Palapa.Repo
-  alias Palapa.Accounts.{Organization, User, Membership, Team, TeamUser}
+  alias Palapa.Accounts.{Organization, User, Membership}
+  alias Palapa.Teams.{Team, TeamUser}
 
   #
   # Convenience functions

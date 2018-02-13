@@ -3,7 +3,7 @@ defmodule Palapa.AccountsTest do
 
   import Palapa.Factory
   alias Palapa.Accounts
-  alias Palapa.Accounts.{Organization, User, Team, TeamUser}
+  alias Palapa.Accounts.{Organization, User}
 
   describe "organizations" do
     test "list_organizations/0" do
@@ -119,115 +119,6 @@ defmodule Palapa.AccountsTest do
     test "change_user/1 returns a user changeset" do
       user = insert!(:member)
       assert %Ecto.Changeset{} = Accounts.change_user(user)
-    end
-  end
-
-  describe "teams" do
-    test "create_team/2 with valid data creates the team" do
-      organization = insert!(:organization)
-
-      assert {:ok, %Team{} = team} =
-               Accounts.create_team(organization, %{
-                 name: "Sales",
-                 description: "The serious sales department"
-               })
-
-      assert team.name == "Sales"
-      assert team.description == "The serious sales department"
-    end
-
-    test "create_team/2 with invalid data returns error changeset" do
-      organization = insert!(:organization)
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_team(organization, %{name: ""})
-    end
-
-    test "change_team/1 returns a changeset" do
-      team = insert!(:team)
-      assert %Ecto.Changeset{} = Accounts.change_team(team)
-    end
-
-    test "update_team/2 with valid data updates the team" do
-      team = insert!(:team)
-
-      assert {:ok, %Team{} = team} =
-               Accounts.update_team(team, %{name: "New Team", description: "A super new one"})
-
-      assert team.name == "New Team"
-      assert team.description == "A super new one"
-    end
-
-    test "update_team/2 with invalid data returns an error changeset" do
-      team = insert!(:team)
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_team(team, %{name: ""})
-    end
-
-    test "delete_team/1" do
-      team = insert!(:team)
-      assert {:ok, %Team{}} = Accounts.delete_team(team)
-    end
-
-    test "list_teams/2 returns teams within the given organization" do
-      organization = insert!(:organization)
-      insert!(:team, organization: organization, name: "Engineering")
-      insert!(:team, organization: organization, name: "Sales")
-
-      [team1, team2] = Accounts.list_teams(organization)
-      assert team1.name == "Engineering"
-      assert team2.name == "Sales"
-    end
-
-    test "add_user_to_team/2" do
-      team = insert!(:team)
-      user = insert!(:member, organization: team.organization)
-
-      assert {:ok, %Team{}} = Accounts.add_user_to_team(user, team)
-      assert 1 == Repo.aggregate(TeamUser, :count, :user_id)
-    end
-
-    test "add_user_to_team/2 multiple times fails" do
-      team = insert!(:team)
-      user = insert!(:member, organization: team.organization)
-
-      {:ok, %Team{}} = Accounts.add_user_to_team(user, team)
-      assert {:error, %Ecto.Changeset{}} = Accounts.add_user_to_team(user, team)
-      assert 1 == Repo.aggregate(TeamUser, :count, :user_id)
-    end
-
-    test "add_user_to_team/2 increments the team users count" do
-      team = insert!(:team)
-      user = insert!(:member, organization: team.organization)
-
-      {:ok, %Team{} = team} = Accounts.add_user_to_team(user, team)
-      assert 1 == team.users_count
-    end
-
-    test "remove_user_from_team/2" do
-      user = insert!(:member)
-      team = insert!(:team, users: [user])
-
-      assert {:ok, %Team{}} = Accounts.remove_user_from_team(user, team)
-    end
-
-    test "remove_user_from_team/2 decrements the team users count" do
-      user = insert!(:member)
-      team = insert!(:team, users: [user], users_count: 1)
-
-      assert {:ok, %Team{} = updated_team} = Accounts.remove_user_from_team(user, team)
-      assert 0 == updated_team.users_count
-    end
-
-    test "user_in_team?/2 returns true if the user is a team member" do
-      user = insert!(:member)
-      team = insert!(:team, users: [user])
-
-      assert Accounts.user_in_team?(user, team)
-    end
-
-    test "user_in_team?/2 returns false if the user is not a team member" do
-      user = insert!(:member)
-      team = insert!(:team, users: [])
-
-      refute Accounts.user_in_team?(user, team)
     end
   end
 end

@@ -1,8 +1,8 @@
-defmodule Palapa.Accounts.TeamUser do
+defmodule Palapa.Teams.TeamUser do
   use Palapa.Schema
 
-  require Ecto.Query
-  alias Palapa.Accounts.{TeamUser, Team, User}
+  alias Palapa.Teams.{Team, TeamUser}
+  alias Palapa.Accounts.{User}
 
   @primary_key false
   schema "teams_users" do
