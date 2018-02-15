@@ -1,7 +1,6 @@
 defmodule Palapa.Teams.Team do
   use Palapa.Schema
 
-  import Ecto.Query
   alias Palapa.Teams.{Team, TeamUser}
   alias Palapa.Users.User
   alias Palapa.Organizations.Organization
@@ -28,14 +27,5 @@ defmodule Palapa.Teams.Team do
     |> cast(attrs, [:organization_id])
     |> validate_required([:organization_id])
     |> foreign_key_constraint(:organization_id)
-  end
-
-  def scope(query, %User{} = user, _) do
-    from(
-      t in query,
-      join: tu in TeamUser,
-      on: [team_id: t.id],
-      where: tu.user_id == ^user.id
-    )
   end
 end

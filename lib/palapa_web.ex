@@ -24,14 +24,10 @@ defmodule PalapaWeb do
       import PalapaWeb.Router.Helpers
       import PalapaWeb.Gettext
       import PalapaWeb.Current
+      import Palapa.Access
 
       # Handle authorization failures
       action_fallback(PalapaWeb.FallbackController)
-
-      # Handy authorization functions
-      defdelegate(permit(policy, action, user, params \\ []), to: Bodyguard)
-      defdelegate(permit!(policy, action, user, params \\ []), to: Bodyguard)
-      defdelegate(permit?(policy, action, user, params \\ []), to: Bodyguard)
     end
   end
 

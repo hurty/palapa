@@ -1,15 +1,16 @@
 defmodule Palapa.Teams.Policy do
   @behaviour Bodyguard.Policy
   alias Palapa.Users.User
-  alias Palapa.Teams.Team
   alias Palapa.Repo, warn: false
   import Ecto.Query, warn: false
 
-  # Owner can do anything
-  def authorize(_, %User{role: :owner}, _), do: true
+  def authorize(:edit_user_teams, %User{role: role}, _params) do
+    role in [:owner, :admin]
+  end
 
-  # Admins can add a user to any team
-  def authorize(:add_user, %User{role: :admin}, %Team{}), do: true
+  def authorize(:update_user_teams, %User{role: role}, _params) do
+    role in [:owner, :admin]
+  end
 
   # Catch-all: deny everything else
   def authorize(_, _, _), do: false

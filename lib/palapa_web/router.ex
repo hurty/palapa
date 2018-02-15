@@ -36,7 +36,10 @@ defmodule PalapaWeb.Router do
     get("/sessions/switch_organization", SessionController, :switch_organization)
     get("/sessions/switcher", SessionController, :switcher)
     get("/dashboard", DashboardController, :index)
-    resources("/users", UserController)
+
+    resources "/users", UserController do
+      resources("/teams", UserTeamController, only: [:edit, :update], singleton: true)
+    end
   end
 
   # Other scopes may use custom stacks.

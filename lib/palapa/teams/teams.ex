@@ -1,8 +1,8 @@
 defmodule Palapa.Teams do
-  import Ecto.Query, warn: false
-  import Ecto.Changeset, warn: false
-  alias Palapa.Repo
+  use Palapa.Context
+
   alias Palapa.Teams.{Team, TeamUser}
+  alias Palapa.Users
   alias Palapa.Users.User
   alias Palapa.Organizations.Organization
 
@@ -10,15 +10,17 @@ defmodule Palapa.Teams do
 
   def get!(id), do: Repo.get!(Team, id)
 
-  def list(%Organization{} = organization) do
-    query =
-      from(
-        t in Team,
-        where: t.organization_id == ^organization.id,
-        order_by: :name
-      )
+  def list(queryable \\ Team, %Organization{} = organization) do
+    queryable
+    |> Access.scope(organization)
+    |> order_by(:name)
+    |> Repo.all()
+  end
 
-    Repo.all(query)
+  def list_by_ids(queryable \\ Team, %Organization{} = organization, teams_ids) do
+    queryable
+    |> where([t], t.id in ^teams_ids)
+    |> list(organization)
   end
 
   def list_users(%Team{} = team) do
@@ -29,8 +31,9 @@ defmodule Palapa.Teams do
   end
 
   def list_for_user(%Organization{} = organization, %User{} = user) do
-    Ecto.assoc(organization, :teams)
-    |> Bodyguard.scope(user)
+    user
+    |> Ecto.assoc(:teams)
+    |> Access.scope(organization)
     |> order_by(:name)
     |> Repo.all()
   end
@@ -100,6 +103,13 @@ defmodule Palapa.Teams do
     TeamUser
     |> where(user_id: ^user.id, team_id: ^team.id)
     |> Repo.exists?()
+  end
+
+  def update_for_user(%User{} = user, teams) do
+    Users.change(user)
+    |> Repo.preload(:teams)
+    |> Ecto.Changeset.put_assoc(:teams, teams)
+    |> Repo.update()
   end
 
   defp increment_counter_cache(changeset, struct, counter_name, value \\ 1) do
