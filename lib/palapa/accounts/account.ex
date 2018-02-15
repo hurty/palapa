@@ -1,31 +1,27 @@
-defmodule Palapa.Users.User do
+defmodule Palapa.Accounts.Account do
   use Palapa.Schema
 
-  alias Palapa.Users.{User}
-  alias Palapa.Organizations.{Membership, RoleEnum}
-  alias Palapa.Teams.{Team, TeamUser}
+  alias Palapa.Accounts
+  alias Palapa.Organizations
 
-  schema "users" do
+  schema "accounts" do
     field(:email, :string)
     field(:name, :string)
     field(:password_hash, :string)
     field(:password, :string, virtual: true)
-    field(:title, :string)
-    field(:role, RoleEnum, virtual: true)
     timestamps()
 
-    has_many(:memberships, Membership)
-    has_many(:organizations, through: [:memberships, :organization])
-    many_to_many(:teams, Team, join_through: TeamUser)
+    has_many(:members, Organizations.Member)
+    has_many(:organizations, through: [:members, :organization])
   end
 
   @doc false
-  def changeset(%User{} = user, attrs) do
+  def changeset(%Accounts.Account{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :name, :password, :title])
+    |> cast(attrs, [:email, :name, :password])
     |> put_password_hash
     |> validate_required([:email, :name, :password_hash])
-    |> unique_constraint(:email)
+    |> unique_constraint(:email, "accounts_email_index")
   end
 
   def put_password_hash(changeset) do

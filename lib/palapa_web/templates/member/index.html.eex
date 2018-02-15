@@ -3,12 +3,12 @@
     <h2 class="text-teal text-sm font-bold border-b pb-2 mb-6">Teams</h2>
     <ul class="list-reset">
       <li class="text-lg text-teal-dark font-light mb-8 <%= unless @selected_team do %> font-bold <% end %>">
-        <%= link("All members", to: user_path(@conn, :index)) %>
+        <%= link("All members", to: member_path(@conn, :index)) %>
       </li>
       
       <%= for team <- @teams do %>
         <li class="text-lg text-teal-dark font-light mb-4 <%= if @selected_team && @selected_team.id == team.id do %> font-bold <% end %>">
-          <%= link("# #{team.name} (#{team.users_count})", to: user_path(@conn, :index, team_id: team.id)) %>
+          <%= link("# #{team.name} (#{team.members_count})", to: member_path(@conn, :index, team_id: team.id)) %>
         </li>
       <% end %>
     </ul>
@@ -23,9 +23,9 @@
       <% end %>
     </h2>
     <div class="flex flex-wrap -mb-4 -mx-2">
-      <%= if Enum.any?(@users) do %>
-        <%= for user <- @users do %> 
-          <%= render @view_module, "_user.html", %{conn: @conn, user: user} %>
+      <%= if Enum.any?(@members) do %>
+        <%= for member <- @members do %> 
+          <%= render @view_module, "_member.html", %{conn: @conn, member: member} %>
         <% end %>
       <% else %>
         <p>There is no member in this team yet.</p>

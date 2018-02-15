@@ -13,7 +13,7 @@ defmodule PalapaWeb.RegistrationController do
     case Registrations.create(registration_params) do
       {:ok, result} ->
         conn
-        |> PalapaWeb.Authentication.login(result.user, result.organization)
+        |> PalapaWeb.Authentication.login(result.member, result.organization)
         |> redirect(to: dashboard_path(conn, :index))
 
       {:error, _failed_operation, changeset, _changes_so_far} ->

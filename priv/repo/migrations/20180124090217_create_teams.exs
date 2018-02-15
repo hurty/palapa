@@ -12,8 +12,7 @@ defmodule Palapa.Repo.Migrations.CreateTeams do
       )
 
       add(:name, :string, null: false)
-      add(:description, :text)
-
+      add(:members_count, :integer, null: false, default: 0)
       timestamps()
     end
 

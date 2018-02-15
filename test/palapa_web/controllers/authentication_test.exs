@@ -18,15 +18,15 @@ defmodule PalapaWeb.AuthenticationTest do
     {:ok, %{conn: conn}}
   end
 
-  test "authenticate_user halts when no current_user exists", %{conn: conn} do
+  test "authenticate_user halts when no current_account exists", %{conn: conn} do
     conn = Authentication.authenticate_user(conn, [])
     assert conn.halted
   end
 
-  test "authenticate_user continues when the current_user exists", %{conn: conn} do
+  test "authenticate_user continues when the current_account exists", %{conn: conn} do
     conn =
       conn
-      |> assign(:current_user, %Palapa.Users.User{})
+      |> assign(:current_account, %Palapa.Users.User{})
       |> Authentication.authenticate_user([])
 
     refute conn.halted
@@ -63,12 +63,12 @@ defmodule PalapaWeb.AuthenticationTest do
       |> put_session(:organization_id, organization.id)
       |> Authentication.call([])
 
-    assert conn.assigns.current_user.id == user.id
+    assert conn.assigns.current_account.id == user.id
   end
 
-  test "call with no session set current_user assign to nil", %{conn: conn} do
+  test "call with no session set current_account assign to nil", %{conn: conn} do
     conn = Authentication.call(conn, [])
-    assert conn.assigns.current_user == nil
+    assert conn.assigns.current_account == nil
   end
 
   test "login with valid email and password", %{conn: conn} do
@@ -77,12 +77,12 @@ defmodule PalapaWeb.AuthenticationTest do
     {:ok, conn} =
       Authentication.login_with_email_and_password(conn, "pierre.hurtevent@gmail.com", "password")
 
-    assert conn.assigns.current_user.id == user.id
+    assert conn.assigns.current_account.id == user.id
   end
 
   test "login with an unknown user", %{conn: conn} do
     assert {:error, :unauthorized, _conn} =
-             Authentication.login_with_email_and_password(conn, "unknown@user.com", "password")
+             Authentication.login_with_email_and_password(conn, "unknown@member.com", "password")
   end
 
   test "login with password mismatch", %{conn: conn} do

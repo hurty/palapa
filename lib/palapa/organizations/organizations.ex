@@ -1,15 +1,12 @@
 defmodule Palapa.Organizations do
   import Ecto.Query
   alias Palapa.Repo
-  alias Palapa.Users.User
-  alias Palapa.Organizations.{Organization, Membership}
+  alias Palapa.Organizations.{Organization, Member}, warn: false
 
   defdelegate(authorize(action, user, params), to: Palapa.Organizations.Policy)
 
   import EctoEnum
   defenum(RoleEnum, :role, [:owner, :admin, :member])
-
-  # ORGANIZATIONS
 
   def list(queryable \\ Organization) do
     queryable
@@ -40,41 +37,23 @@ defmodule Palapa.Organizations do
     Organization.changeset(organization, %{})
   end
 
-  def list_users(%Organization{} = organization) do
+  def list_members(%Organization{} = organization) do
     organization
-    |> Ecto.assoc(:users)
-    |> order_by(:name)
+    |> Ecto.assoc(:members)
+    |> preload(:account)
     |> Repo.all()
   end
 
-  def list_for_user(%User{} = user) do
-    user
-    |> Ecto.assoc(:organizations)
-    |> order_by(:name)
-    |> Repo.all()
+  def get_member!(%Organization{} = organization, member_id) do
+    organization
+    |> Ecto.assoc(:members)
+    |> preload(:account)
+    |> Repo.get!(member_id)
   end
 
-  @doc """
-  Gets the first Organization of user (in case he's part of many).
-  This organization will be considered his main one.
-  TODO: save the setting in DB later.
-  """
-  def get_user_main_organization!(%User{} = user) do
-    Organization
-    |> join(:inner, [o], m in Membership, o.id == m.organization_id and m.user_id == ^user.id)
-    |> first
-    |> Repo.one!()
-  end
-
-  def create_membership(attrs \\ %{}) do
-    %Membership{}
-    |> Membership.changeset(attrs)
+  def create_member(attrs \\ %{}) do
+    %Member{}
+    |> Member.changeset(attrs)
     |> Repo.insert()
-  end
-
-  def member?(%Organization{} = organization, %User{} = user) do
-    Membership
-    |> where(user_id: ^user.id, organization_id: ^organization.id)
-    |> Repo.exists?()
   end
 end

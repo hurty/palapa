@@ -21,7 +21,7 @@
     </div>
     <div>
       <%= link("Sign up", to: registration_path(@conn, :new), class: "btn btn-blue") %>
-      <%= if @current_user do %>
+      <%= if @current_member do %>
         <%= link("Log out", to: session_path(@conn, :delete), method: :delete, class: "btn btn-blue") %>
       <% else %>
         <%= link("Login", to: session_path(@conn, :new), class: "btn btn-blue") %>

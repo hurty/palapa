@@ -10,11 +10,11 @@
         <%= link(@current_organization.name, to: dashboard_path(@conn, :index)) %>
       </h2>
       <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-indigo-lighter hover:text-white mr-4">
-        <%= link("The Team", to: user_path(@conn, :index)) %>
+        <%= link("The Team", to: member_path(@conn, :index)) %>
       </a>
     </div>
     <div data-controller="navigation" data-navigation-url="<%= session_path(@conn, :switcher) %>">
-      <%= if @current_user do %>
+      <%= if @current_member do %>
         <a href="#" data-action="navigation#showSwitcher">Switch</a>
         <div data-target="navigation.switcher" class="absolute pin-r border z-50 p-4 bg-white shadow rounded opacity-0">
         </div>

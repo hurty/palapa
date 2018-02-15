@@ -1,23 +1,21 @@
 defmodule Palapa.Teams.Team do
   use Palapa.Schema
 
-  alias Palapa.Teams.{Team, TeamUser}
-  alias Palapa.Users.User
-  alias Palapa.Organizations.Organization
+  alias Palapa.Organizations
+  alias Palapa.Teams.{Team, TeamMember}
 
   schema "teams" do
-    field(:description, :string)
     field(:name, :string)
-    field(:users_count, :integer, default: 0)
+    field(:members_count, :integer, default: 0)
     timestamps()
 
-    belongs_to(:organization, Organization)
-    many_to_many(:users, User, join_through: TeamUser)
+    belongs_to(:organization, Organizations.Organization)
+    many_to_many(:members, Organizations.Member, join_through: TeamMember)
   end
 
   def changeset(%Team{} = team, attrs) do
     team
-    |> cast(attrs, [:name, :description])
+    |> cast(attrs, [:name])
     |> validate_required([:name])
   end
 

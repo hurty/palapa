@@ -1,7 +1,7 @@
 defmodule Palapa.Registrations do
   alias Palapa.Repo
   alias Palapa.Registrations.Registration
-  alias Palapa.Users
+  alias Palapa.Accounts
   alias Palapa.Organizations
 
   @doc """
@@ -16,23 +16,23 @@ defmodule Palapa.Registrations do
   def create(attrs \\ %{}) do
     changeset = Registration.changeset(%Registration{}, attrs)
 
-    user_attrs = Map.take(changeset.changes, [:name, :email, :password])
+    account_attrs = Map.take(changeset.changes, [:name, :email, :password])
     organization_attrs = %{name: Map.get(changeset.changes, :organization_name)}
 
     Ecto.Multi.new()
     |> Ecto.Multi.run(:registration, fn _ ->
       Registration.validate(changeset)
     end)
-    |> Ecto.Multi.run(:user, fn _changes ->
-      Users.create(user_attrs)
+    |> Ecto.Multi.run(:account, fn _changes ->
+      Accounts.create(account_attrs)
     end)
     |> Ecto.Multi.run(:organization, fn _changes ->
       Organizations.create(organization_attrs)
     end)
-    |> Ecto.Multi.run(:membership, fn changes ->
-      Organizations.create_membership(%{
+    |> Ecto.Multi.run(:member, fn changes ->
+      Organizations.create_member(%{
         organization_id: changes.organization.id,
-        user_id: changes.user.id
+        account_id: changes.account.id
       })
     end)
     |> Repo.transaction()

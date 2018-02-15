@@ -1,13 +1,19 @@
 defmodule PalapaWeb.Current do
+  defmacro current_account do
+    quote do
+      var!(conn).assigns.current_account
+    end
+  end
+
   defmacro current_organization do
     quote do
       var!(conn).assigns.current_organization
     end
   end
 
-  defmacro current_user do
+  defmacro current_member do
     quote do
-      var!(conn).assigns.current_user
+      var!(conn).assigns.current_member
     end
   end
 end

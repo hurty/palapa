@@ -1,8 +1,6 @@
 defmodule Palapa.Registrations.Registration do
   use Palapa.Schema
 
-  alias Palapa.Registrations.Registration
-
   embedded_schema do
     field(:name)
     field(:organization_name)
@@ -10,7 +8,7 @@ defmodule Palapa.Registrations.Registration do
     field(:password)
   end
 
-  def changeset(%Registration{} = registration, params) do
+  def changeset(%__MODULE__{} = registration, params) do
     registration
     |> cast(params, [:name, :organization_name, :email, :password])
     |> validate_required([:name, :organization_name, :email, :password])

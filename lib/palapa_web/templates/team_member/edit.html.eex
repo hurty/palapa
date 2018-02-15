@@ -1,15 +1,15 @@
 <div class="flex w-5/6 mx-auto">
   <div class="flex-initial w-1/4 mr-6 bg-white border-grey border rounded">
-    <%= render PalapaWeb.UserView, "_user_navigation.html", conn: @conn, user: @user %>
+    <%= render PalapaWeb.UserView, "_member_navigation.html", conn: @conn, user: @member %>
   </div>
 
   <div class="flex-auto">
     <div class="text-teal text-sm font-bold border-b pb-2 mb-6">Teams</div>
-    <%= form_for @conn, user_user_team_path(@conn, :update, @user), [method: :put, as: "teams_ids[]"], fn form -> %>
+    <%= form_for @conn, member_team_member_path(@conn, :update, @member), [method: :put, as: "teams_ids[]"], fn _ -> %>
       <ul class="list-reset">
         <%= for team <- @all_teams_in_organization do %>
           <li>
-            <input type="checkbox" name="teams_ids[]" id="team_<%= team.id %>" value="<%= team.id %>" <%= if team in @user_teams, do: "checked", else: "" %>>
+            <input type="checkbox" name="teams_ids[]" id="team_<%= team.id %>" value="<%= team.id %>" <%= if team in @member_teams, do: "checked", else: "" %>>
             <label for="team_<%= team.id %>"><%= team.name %></label>
           </li>
         <% end %>

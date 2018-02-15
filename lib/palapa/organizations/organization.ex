@@ -1,18 +1,15 @@
 defmodule Palapa.Organizations.Organization do
   use Palapa.Schema
 
-  import Ecto.Query
-  alias Palapa.Organizations.{Organization, Membership}
-  alias Palapa.Users.User
+  import Ecto.Query, warn: false
+  alias Palapa.Organizations.{Organization, Member}
   alias Palapa.Teams.Team
-  @behaviour Bodyguard.Schema
 
   schema "organizations" do
     field(:name, :string)
     timestamps()
 
-    has_many(:memberships, Membership)
-    has_many(:users, through: [:memberships, :user])
+    has_many(:members, Member)
     has_many(:teams, Team)
   end
 
@@ -21,14 +18,5 @@ defmodule Palapa.Organizations.Organization do
     organization
     |> cast(attrs, [:name])
     |> validate_required([:name])
-  end
-
-  def scope(query, %User{} = user, _) do
-    from(
-      t in query,
-      join: m in Membership,
-      on: [organization_id: t.id],
-      where: m.user_id == ^user.id
-    )
   end
 end

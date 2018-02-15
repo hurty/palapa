@@ -7,12 +7,12 @@ defmodule PalapaWeb.Router do
     plug(:fetch_flash)
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
-    # sets current_user and current_organization if they are in session
+    # sets current_member and current_organization if they are in session
     plug(PalapaWeb.Authentication)
   end
 
   pipeline :enforce_authentication do
-    plug(:authenticate_user)
+    plug(:authenticate_member)
   end
 
   pipeline :api do
@@ -29,7 +29,7 @@ defmodule PalapaWeb.Router do
     resources("/sessions", SessionController, only: [:new, :create, :delete], singleton: true)
   end
 
-  # Private pages for logged in users only
+  # Private pages for logged in members only
   scope "/", PalapaWeb do
     pipe_through([:browser, :enforce_authentication])
 
@@ -37,8 +37,8 @@ defmodule PalapaWeb.Router do
     get("/sessions/switcher", SessionController, :switcher)
     get("/dashboard", DashboardController, :index)
 
-    resources "/users", UserController do
-      resources("/teams", UserTeamController, only: [:edit, :update], singleton: true)
+    resources "/members", MemberController do
+      resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)
     end
   end
 

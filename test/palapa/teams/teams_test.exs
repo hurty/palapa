@@ -72,39 +72,39 @@ defmodule Palapa.TeamsTest do
     assert 1 == Repo.aggregate(TeamUser, :count, :user_id)
   end
 
-  test "add_user/2 increments the team users count" do
+  test "add_user/2 increments the team members count" do
     team = insert!(:team)
     user = insert!(:member, organization: team.organization)
 
     {:ok, %Team{} = team} = Teams.add_user(team, user)
-    assert 1 == team.users_count
+    assert 1 == team.members_count
   end
 
   test "remove_user/2" do
     user = insert!(:member)
-    team = insert!(:team, users: [user])
+    team = insert!(:team, members: [user])
 
     assert {:ok, %Team{}} = Teams.remove_user(team, user)
   end
 
-  test "remove_user/2 decrements the team users count" do
+  test "remove_user/2 decrements the team members count" do
     user = insert!(:member)
-    team = insert!(:team, users: [user], users_count: 1)
+    team = insert!(:team, members: [user], members_count: 1)
 
     assert {:ok, %Team{} = updated_team} = Teams.remove_user(team, user)
-    assert 0 == updated_team.users_count
+    assert 0 == updated_team.members_count
   end
 
   test "member?/2 returns true if the user is a team member" do
     user = insert!(:member)
-    team = insert!(:team, users: [user])
+    team = insert!(:team, members: [user])
 
     assert Teams.member?(team, user)
   end
 
   test "member?/2 returns false if the user is not a team member" do
     user = insert!(:member)
-    team = insert!(:team, users: [])
+    team = insert!(:team, members: [])
 
     refute Teams.member?(team, user)
   end

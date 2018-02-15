@@ -3,54 +3,54 @@ defmodule PalapaWeb.Authentication do
   import Phoenix.Controller
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   alias PalapaWeb.Router
-  alias Palapa.Organizations
-  alias Palapa.Users
 
   def init(options) do
     options
   end
 
   def call(conn, _options) do
-    user_id = get_session(conn, :user_id)
+    member_id = get_session(conn, :member_id)
     organization_id = get_session(conn, :organization_id)
 
     cond do
-      user = conn.assigns[:current_user] ->
+      member = conn.assigns[:current_member] ->
         conn
 
-      user_id && organization_id ->
-        organization = Organizations.get!(organization_id)
-        user = Users.get!(user_id, organization)
+      member_id && organization_id ->
+        organization = Palapa.Organizations.get!(organization_id)
+        member = Palapa.Organizations.get_member!(organization, member_id)
 
         conn
-        |> assign(:current_user, user)
+        |> assign(:current_member, member)
         |> assign(:current_organization, organization)
 
       true ->
-        assign(conn, :current_user, nil)
+        assign(conn, :current_member, nil)
     end
   end
 
-  def login(conn, user, organization) do
+  def login(conn, member, organization) do
     conn
-    |> assign(:current_user, user)
-    |> put_session(:user_id, user.id)
+    |> assign(:current_member, member)
+    |> put_session(:member_id, member.id)
     |> assign(:organization, organization)
     |> put_session(:organization_id, organization.id)
     |> configure_session(renew: true)
   end
 
-  def login(conn, user) do
-    organization = Organizations.get_user_main_organization!(user)
-    login(conn, user, organization)
+  def login(conn, account) do
+    organization = Palapa.Accounts.main_organization(account)
+    member = Palapa.Accounts.member_for_organization(account, organization)
+
+    login(conn, member, organization)
   end
 
   def login_with_email_and_password(conn, email, password) do
-    user = Users.get_by(email: email)
+    account = Palapa.Accounts.get_by(email: email)
 
     cond do
-      user && checkpw(password, user.password_hash) ->
-        {:ok, login(conn, user)}
+      account && checkpw(password, account.password_hash) ->
+        {:ok, login(conn, account)}
 
       true ->
         # Avoids timing attacks
@@ -71,8 +71,8 @@ defmodule PalapaWeb.Authentication do
     configure_session(conn, drop: true)
   end
 
-  def authenticate_user(conn, _options) do
-    if conn.assigns[:current_user] do
+  def authenticate_member(conn, _options) do
+    if conn.assigns[:current_member] do
       conn
     else
       conn
@@ -82,8 +82,8 @@ defmodule PalapaWeb.Authentication do
     end
   end
 
-  def current_user(conn) do
-    conn.assigns.current_user
+  def current_member(conn) do
+    conn.assigns.current_member
   end
 
   def current_organization(conn) do

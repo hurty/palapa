@@ -1,8 +1,8 @@
 defmodule Palapa.Factory do
   alias Palapa.Repo
-  alias Palapa.Organizations.{Organization, Membership}
-  alias Palapa.Users.User
-  alias Palapa.Teams.{Team, TeamUser}
+  alias Palapa.Organizations.{Organization, Member}
+  alias Palapa.Accounts.Account
+  alias Palapa.Teams.{Team}
 
   #
   # Convenience functions
@@ -32,22 +32,13 @@ defmodule Palapa.Factory do
     pied_piper = insert!(:organization)
 
     # -- Users
-    richard = insert!(:owner)
-    insert!(:membership, organization: pied_piper, user: richard, role: :owner)
-
-    jared = insert!(:admin)
-    insert!(:membership, organization: pied_piper, user: jared, role: :admin)
-
-    gilfoyle = insert!(:member)
-    insert!(:membership, organization: pied_piper, user: gilfoyle, role: :member)
+    richard = insert!(:owner, organization: pied_piper)
+    jared = insert!(:admin, organization: pied_piper)
+    gilfoyle = insert!(:member, organization: pied_piper)
 
     # -- Teams
-    tech_team = insert!(:team, organization: pied_piper)
-    management_team = insert!(:team, organization: pied_piper, name: "Management")
-
-    insert!(:team_user, team: tech_team, user: richard)
-    insert!(:team_user, team: tech_team, user: gilfoyle)
-    insert!(:team_user, team: management_team, user: jared)
+    insert!(:team, organization: pied_piper, members: [richard, gilfoyle])
+    insert!(:team, organization: pied_piper, name: "Management", members: [richard, jared])
   end
 
   def build(:organization) do
@@ -56,65 +47,61 @@ defmodule Palapa.Factory do
     }
   end
 
-  def build(:membership) do
-    %Membership{
+  def build(:member) do
+    %Member{
       organization: build(:organization),
-      user: build(:member),
-      role: :member
+      account: build(:gilfoyle),
+      role: :member,
+      title: "Nerd"
     }
   end
 
   def build(:owner) do
-    %User{
-      name: "Richard Hendricks",
-      email: "richard.hendricks@piedpiper.com",
-      password_hash: @password_hash,
-      title: "CEO",
-      role: :owner
+    %Member{
+      organization: build(:organization),
+      account: build(:richard),
+      role: :owner,
+      title: "CEO"
     }
   end
 
   def build(:admin) do
-    %User{
+    %Member{
+      organization: build(:organization),
+      account: build(:jared),
+      role: :admin,
+      title: "Head of Business Development"
+    }
+  end
+
+  def build(:richard) do
+    %Account{
+      name: "Richard Hendricks",
+      email: "richard.hendricks@piedpiper.com",
+      password_hash: @password_hash
+    }
+  end
+
+  def build(:jared) do
+    %Account{
       name: "Jared Dunn",
       email: "jared.dunn@piedpiper.com",
-      password_hash: @password_hash,
-      title: "Head of Business Development",
-      role: :admin
+      password_hash: @password_hash
     }
   end
 
-  def build(:member) do
-    %User{
+  def build(:gilfoyle) do
+    %Account{
       name: "Bertram Gilfoyle",
       email: "bertram.gilfoyle@piedpiper.com",
-      password_hash: @password_hash,
-      title: "Nerd",
-      role: :member
-    }
-  end
-
-  def build(:random_member) do
-    %User{
-      name: "John Doe #{random_integer()}",
-      email: "john.doe_#{random_integer()}@piedpiper.com",
-      password_hash: @password_hash,
-      title: "Random guy",
-      role: :member
+      password_hash: @password_hash
     }
   end
 
   def build(:team) do
     %Team{
-      name: "Tech",
-      organization: build(:organization)
-    }
-  end
-
-  def build(:team_user) do
-    %TeamUser{
-      team: build(:organization),
-      user: build(:member)
+      organization: build(:organization),
+      name: "Tech"
     }
   end
 end
