@@ -3,16 +3,12 @@ defmodule Palapa.TeamsTest do
 
   import Palapa.Factory
   alias Palapa.Teams
-  alias Palapa.Teams.{Team, TeamUser}
+  alias Palapa.Teams.{Team, TeamMember}
 
   test "create_team/2 with valid data creates the team" do
     organization = insert!(:organization)
 
-    assert {:ok, %Team{}} =
-             Teams.create(organization, %{
-               name: "Sales",
-               description: "The serious sales department"
-             })
+    assert {:ok, %Team{}} = Teams.create(organization, %{name: "Sales"})
   end
 
   test "create_team/2 with invalid data returns error changeset" do
@@ -28,11 +24,8 @@ defmodule Palapa.TeamsTest do
   test "update_team/2 with valid data updates the team" do
     team = insert!(:team)
 
-    assert {:ok, %Team{} = team} =
-             Teams.update(team, %{name: "New Team", description: "A super new one"})
-
+    assert {:ok, %Team{} = team} = Teams.update(team, %{name: "New Team"})
     assert team.name == "New Team"
-    assert team.description == "A super new one"
   end
 
   test "update_team/2 with invalid data returns an error changeset" do
@@ -55,57 +48,57 @@ defmodule Palapa.TeamsTest do
     assert team2.name == "Sales"
   end
 
-  test "add_user/2" do
+  test "add_member/2" do
     team = insert!(:team)
-    user = insert!(:member, organization: team.organization)
+    member = insert!(:member, organization: team.organization)
 
-    assert {:ok, %Team{}} = Teams.add_user(team, user)
-    assert 1 == Repo.aggregate(TeamUser, :count, :user_id)
+    assert {:ok, %Team{}} = Teams.add_member(team, member)
+    assert 1 == Repo.aggregate(TeamMember, :count, :member_id)
   end
 
-  test "add_user/2 multiple times fails" do
+  test "add_member/2 multiple times fails" do
     team = insert!(:team)
-    user = insert!(:member, organization: team.organization)
+    member = insert!(:member, organization: team.organization)
 
-    {:ok, %Team{}} = Teams.add_user(team, user)
-    assert {:error, %Ecto.Changeset{}} = Teams.add_user(team, user)
-    assert 1 == Repo.aggregate(TeamUser, :count, :user_id)
+    {:ok, %Team{}} = Teams.add_member(team, member)
+    assert {:error, %Ecto.Changeset{}} = Teams.add_member(team, member)
+    assert 1 == Repo.aggregate(TeamMember, :count, :member_id)
   end
 
-  test "add_user/2 increments the team members count" do
+  test "add_member/2 increments the team members count" do
     team = insert!(:team)
-    user = insert!(:member, organization: team.organization)
+    member = insert!(:member, organization: team.organization)
 
-    {:ok, %Team{} = team} = Teams.add_user(team, user)
+    {:ok, %Team{} = team} = Teams.add_member(team, member)
     assert 1 == team.members_count
   end
 
-  test "remove_user/2" do
-    user = insert!(:member)
-    team = insert!(:team, members: [user])
+  test "remove_member/2" do
+    member = insert!(:member)
+    team = insert!(:team, members: [member])
 
-    assert {:ok, %Team{}} = Teams.remove_user(team, user)
+    assert {:ok, %Team{}} = Teams.remove_member(team, member)
   end
 
-  test "remove_user/2 decrements the team members count" do
-    user = insert!(:member)
-    team = insert!(:team, members: [user], members_count: 1)
+  test "remove_member/2 decrements the team members count" do
+    member = insert!(:member)
+    team = insert!(:team, members: [member], members_count: 1)
 
-    assert {:ok, %Team{} = updated_team} = Teams.remove_user(team, user)
+    assert {:ok, %Team{} = updated_team} = Teams.remove_member(team, member)
     assert 0 == updated_team.members_count
   end
 
-  test "member?/2 returns true if the user is a team member" do
-    user = insert!(:member)
-    team = insert!(:team, members: [user])
+  test "member?/2 returns true if the member is a team member" do
+    member = insert!(:member)
+    team = insert!(:team, members: [member])
 
-    assert Teams.member?(team, user)
+    assert Teams.member?(team, member)
   end
 
-  test "member?/2 returns false if the user is not a team member" do
-    user = insert!(:member)
+  test "member?/2 returns false if the member is not a team member" do
+    member = insert!(:member)
     team = insert!(:team, members: [])
 
-    refute Teams.member?(team, user)
+    refute Teams.member?(team, member)
   end
 end
