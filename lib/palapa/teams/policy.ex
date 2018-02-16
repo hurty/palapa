@@ -5,11 +5,11 @@ defmodule Palapa.Teams.Policy do
   alias Palapa.Repo, warn: false
   import Ecto.Query, warn: false
 
-  def authorize(:edit_user_teams, %Member{role: role}, _params) do
+  def authorize(:edit_member_teams, %Member{role: role}, _params) do
     role in [:owner, :admin]
   end
 
-  def authorize(:update_user_teams, %Member{role: role}, _params) do
+  def authorize(:update_member_teams, %Member{role: role}, _params) do
     role in [:owner, :admin]
   end
 
