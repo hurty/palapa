@@ -3,76 +3,42 @@ defmodule PalapaWeb.Authentication do
   import Phoenix.Controller
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   alias PalapaWeb.Router
+  alias Palapa.Accounts
+  alias Palapa.Organizations
 
   def init(options) do
     options
   end
 
   def call(conn, _options) do
-    member_id = get_session(conn, :member_id)
+    account_id = get_session(conn, :account_id)
     organization_id = get_session(conn, :organization_id)
+    member_id = get_session(conn, :member_id)
 
     cond do
       member = conn.assigns[:current_member] ->
         conn
 
-      member_id && organization_id ->
-        organization = Palapa.Organizations.get!(organization_id)
-        member = Palapa.Organizations.get_member!(organization, member_id)
+      account_id && organization_id && member_id ->
+        account = Accounts.get!(account_id)
+        organization = Organizations.get!(organization_id)
+        member = Organizations.get_member!(organization, member_id)
 
         conn
-        |> assign(:current_member, member)
+        |> assign(:current_account, account)
         |> assign(:current_organization, organization)
+        |> assign(:current_member, member)
 
       true ->
-        assign(conn, :current_member, nil)
+        conn
+        |> assign(:current_account, nil)
+        |> assign(:current_organization, nil)
+        |> assign(:current_member, nil)
     end
   end
 
-  def login(conn, member, organization) do
-    conn
-    |> assign(:current_member, member)
-    |> put_session(:member_id, member.id)
-    |> assign(:organization, organization)
-    |> put_session(:organization_id, organization.id)
-    |> configure_session(renew: true)
-  end
-
-  def login(conn, account) do
-    organization = Palapa.Accounts.main_organization(account)
-    member = Palapa.Accounts.member_for_organization(account, organization)
-
-    login(conn, member, organization)
-  end
-
-  def login_with_email_and_password(conn, email, password) do
-    account = Palapa.Accounts.get_by(email: email)
-
-    cond do
-      account && checkpw(password, account.password_hash) ->
-        {:ok, login(conn, account)}
-
-      true ->
-        # Avoids timing attacks
-        dummy_checkpw()
-        {:error, :unauthorized, conn}
-    end
-  end
-
-  def switch_organization(conn, organization) do
-    conn
-    |> assign(:organization, organization)
-    |> put_session(:organization_id, organization.id)
-    |> configure_session(renew: true)
-    |> redirect(to: Router.Helpers.dashboard_path(conn, :index))
-  end
-
-  def logout(conn) do
-    configure_session(conn, drop: true)
-  end
-
-  def authenticate_member(conn, _options) do
-    if conn.assigns[:current_member] do
+  def authenticate_account(conn, _options) do
+    if conn.assigns[:current_account] do
       conn
     else
       conn
@@ -82,11 +48,53 @@ defmodule PalapaWeb.Authentication do
     end
   end
 
+  def login_with_email_and_password(conn, email, password) do
+    account = Accounts.get_by(email: email)
+
+    if account && checkpw(password, account.password_hash) do
+      {:ok, start_session(conn, account)}
+    else
+      # Avoids timing attacks
+      dummy_checkpw()
+      {:error, :unauthorized, conn}
+    end
+  end
+
+  def start_session(conn, account) do
+    organization = Accounts.main_organization(account)
+    member = Accounts.member_for_organization(account, organization)
+
+    start_session(conn, account, organization, member)
+  end
+
+  def start_session(conn, account, organization, member) do
+    conn
+    |> assign(:current_account, account)
+    |> put_session(:account_id, account.id)
+    |> assign(:current_organization, organization)
+    |> put_session(:organization_id, organization.id)
+    |> assign(:current_member, member)
+    |> put_session(:member_id, member.id)
+    |> configure_session(renew: true)
+  end
+
+  def logout(conn) do
+    configure_session(conn, drop: true)
+  end
+
   def current_member(conn) do
     conn.assigns.current_member
   end
 
   def current_organization(conn) do
     conn.assigns.current_organization
+  end
+
+  def switch_organization(conn, organization) do
+    conn
+    |> assign(:organization, organization)
+    |> put_session(:organization_id, organization.id)
+    |> configure_session(renew: true)
+    |> redirect(to: Router.Helpers.dashboard_path(conn, :index))
   end
 end

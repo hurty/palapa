@@ -12,7 +12,7 @@ defmodule PalapaWeb.Router do
   end
 
   pipeline :enforce_authentication do
-    plug(:authenticate_member)
+    plug(:authenticate_account)
   end
 
   pipeline :api do

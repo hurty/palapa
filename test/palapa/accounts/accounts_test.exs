@@ -2,8 +2,8 @@ defmodule Palapa.AccountsTest do
   use Palapa.DataCase
 
   import Palapa.Factory
-  alias Palapa.Users
-  alias Palapa.Users.User
+  alias Palapa.Accounts
+  alias Palapa.Accounts.Account
 
   test "get!/2 returns the user with given id within the given organization" do
     organization = insert!(:organization)
