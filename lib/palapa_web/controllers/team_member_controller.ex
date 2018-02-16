@@ -6,22 +6,28 @@ defmodule PalapaWeb.TeamMemberController do
   def edit(conn, %{"member_id" => member_id}) do
     with :ok <- permit(Teams, :edit_member_teams, current_member()) do
       member = Organizations.get_member!(current_organization(), member_id)
-      user_teams = Teams.list_for_member(member)
+      member_teams = Teams.list_for_member(member)
       all_teams_in_organization = Teams.list(current_organization())
 
       render(
         conn,
         :edit,
         member: member,
-        user_teams: user_teams,
+        member_teams: member_teams,
         all_teams_in_organization: all_teams_in_organization
       )
     end
   end
 
-  def update(conn, %{"member_id" => member_id, "teams_ids" => teams_ids}) do
-    member = Organizations.get_member!(current_organization(), member_id)
-    teams = Teams.list_by_ids(current_organization(), teams_ids)
+  def update(conn, params) do
+    member = Organizations.get_member!(current_organization(), params["member_id"])
+
+    new_teams =
+      if is_list(params["teams_ids"]) do
+        Teams.list_by_ids(current_organization(), params["teams_ids"])
+      else
+        []
+      end
 
     with :ok <-
            permit(
@@ -30,9 +36,9 @@ defmodule PalapaWeb.TeamMemberController do
              current_member(),
              organization: current_organization(),
              member: member,
-             teams: teams
+             teams: new_teams
            ) do
-      # Teams.update_for_user(member, teams)
+      Teams.update_all_teams_for_member(member, new_teams)
       redirect(conn, to: member_path(conn, :show, member))
     end
   end

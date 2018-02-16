@@ -13,7 +13,7 @@ defmodule Palapa.Organizations.Member do
     field(:title, :string)
     timestamps()
 
-    many_to_many(:teams, Team, join_through: TeamMember)
+    many_to_many(:teams, Team, join_through: TeamMember, on_replace: :delete)
   end
 
   def changeset(%Member{} = member, attrs) do

@@ -102,9 +102,10 @@ defmodule Palapa.Teams do
     |> Repo.exists?()
   end
 
-  def update_for_member(%Member{} = member, teams) do
-    Ecto.Changeset.change(member)
+  def update_all_teams_for_member(%Member{} = member, teams) when is_list(teams) do
+    member
     |> Repo.preload(:teams)
+    |> Ecto.Changeset.change()
     |> Ecto.Changeset.put_assoc(:teams, teams)
     |> Repo.update()
   end

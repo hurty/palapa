@@ -7,6 +7,9 @@
     <div class="mb-6">
       <div class="text-indigo text-center text-3xl font-bold capitalize mb-2"><%= @member.name %></div>
       <div class="text-grey-dark text-center text-xl font-light capitalize"><%= @member.title %></div>
+      <%= if @member.role in [:owner, :admin] do %>
+        <div class="text-pink-dark text-center text-sm font-light mt-2">This member is <%= @member.role %></div>
+      <% end %>
     </div>
 
     <div class="mb-6" data-controller="user_teams">

@@ -34,7 +34,7 @@ defmodule PalapaWeb.MemberController do
     member = Organizations.get_member!(current_organization(), id)
 
     with :ok <- permit(Organizations, :show_member, current_member()) do
-      member_teams = Teams.list_for_member(current_member())
+      member_teams = Teams.list_for_member(member)
       all_teams = Teams.list(current_organization())
 
       render(
