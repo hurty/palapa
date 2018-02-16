@@ -51,6 +51,7 @@ defmodule Palapa.Factory do
     %Member{
       organization: build(:organization),
       account: build(:gilfoyle),
+      name: "Bertram Gilfoyle",
       role: :member,
       title: "Nerd"
     }
@@ -60,6 +61,7 @@ defmodule Palapa.Factory do
     %Member{
       organization: build(:organization),
       account: build(:richard),
+      name: "Richard Hendricks",
       role: :owner,
       title: "CEO"
     }
@@ -69,6 +71,7 @@ defmodule Palapa.Factory do
     %Member{
       organization: build(:organization),
       account: build(:jared),
+      name: "Jared Dunn",
       role: :admin,
       title: "Head of Business Development"
     }
@@ -76,7 +79,6 @@ defmodule Palapa.Factory do
 
   def build(:richard) do
     %Account{
-      name: "Richard Hendricks",
       email: "richard.hendricks@piedpiper.com",
       password_hash: @password_hash
     }
@@ -84,7 +86,6 @@ defmodule Palapa.Factory do
 
   def build(:jared) do
     %Account{
-      name: "Jared Dunn",
       email: "jared.dunn@piedpiper.com",
       password_hash: @password_hash
     }
@@ -92,7 +93,6 @@ defmodule Palapa.Factory do
 
   def build(:gilfoyle) do
     %Account{
-      name: "Bertram Gilfoyle",
       email: "bertram.gilfoyle@piedpiper.com",
       password_hash: @password_hash
     }

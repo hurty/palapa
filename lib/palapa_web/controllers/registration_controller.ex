@@ -1,7 +1,6 @@
 defmodule PalapaWeb.RegistrationController do
   use PalapaWeb, :controller
-  alias Palapa.Registrations
-  alias Palapa.Registrations.Registration
+  alias Palapa.Accounts.{Registrations, Registration}
 
   plug(:put_layout, "public.html")
 

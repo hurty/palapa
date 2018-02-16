@@ -1,6 +1,6 @@
 <ul class="list-reset">
   <li class="block text-sm p-2 pl-4 pr-4 text-grey-darker border-b-2 border-grey-lighter">
-    <%= @member.account.name %>
+    <%= @member.name %>
   </li>
   <li class="border-b border-grey-lighter">
     <%= link "Profile", to: member_path(@conn, :show, @member), class: "block p-4 text-grey-darker font-bold border-purple hover:bg-grey-lighter border-r-4" %>

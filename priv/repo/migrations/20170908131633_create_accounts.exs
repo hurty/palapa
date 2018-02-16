@@ -5,7 +5,6 @@ defmodule Palapa.Repo.Migrations.CreateAccounts do
     create table(:accounts, primary_key: false) do
       add(:id, :uuid, primary_key: true)
       add(:email, :string, null: false)
-      add(:name, :string, null: false)
       add(:password_hash, :string)
 
       timestamps()

@@ -1,4 +1,4 @@
-defmodule Palapa.Registrations.Registration do
+defmodule Palapa.Accounts.Registration do
   use Palapa.Schema
 
   embedded_schema do

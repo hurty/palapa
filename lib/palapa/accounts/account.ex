@@ -6,7 +6,6 @@ defmodule Palapa.Accounts.Account do
 
   schema "accounts" do
     field(:email, :string)
-    field(:name, :string)
     field(:password_hash, :string)
     field(:password, :string, virtual: true)
     timestamps()
@@ -18,10 +17,10 @@ defmodule Palapa.Accounts.Account do
   @doc false
   def changeset(%Accounts.Account{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :name, :password])
+    |> cast(attrs, [:email, :password])
     |> put_password_hash
-    |> validate_required([:email, :name, :password_hash])
-    |> unique_constraint(:email, "accounts_email_index")
+    |> validate_required([:email, :password_hash])
+    |> unique_constraint(:email, name: "accounts_email_index")
   end
 
   def put_password_hash(changeset) do
@@ -31,15 +30,6 @@ defmodule Palapa.Accounts.Account do
 
       _ ->
         changeset
-    end
-  end
-
-  def put_role(user, role) do
-    Ecto.Changeset.change(user, role: role)
-    |> Palapa.Repo.update()
-    |> case do
-      {:ok, user} -> user
-      _ -> {:error, "cannot put role into user struct"}
     end
   end
 end
