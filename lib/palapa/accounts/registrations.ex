@@ -34,7 +34,8 @@ defmodule Palapa.Accounts.Registrations do
       Organizations.create_member(%{
         organization_id: changes.organization.id,
         account_id: changes.account.id,
-        name: member_attrs[:name]
+        name: member_attrs[:name],
+        role: :owner
       })
     end)
     |> Repo.transaction()
