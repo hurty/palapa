@@ -6,23 +6,23 @@
 .btn-blue {
   @apply bg-indigo-light;
   @apply text-white;
-}
 
-.btn-blue:hover {
-  @apply bg-indigo;
+  &:hover {
+    @apply bg-indigo;
+  }
 }
 
 .nav-btn {
   @apply px-4 py-2 mr-3;
   @apply bg-indigo rounded-full shadow;
   @apply text-xs uppercase text-white tracking-wide;
-}
 
-.nav-btn:hover {
-  @apply text-white no-underline;
-}
-
-.nav-btn:visited {
-  @apply bg-indigo-dark;
-  @apply text-white no-underline;
+  &:visited {
+    @apply text-white no-underline;
+  }
+  
+  &:hover {
+    @apply bg-indigo-dark;
+    @apply no-underline;
+  }
 }
