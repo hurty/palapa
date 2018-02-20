@@ -15,7 +15,7 @@
     <%= render PalapaWeb.LayoutView, "_navigation.html", assigns %>
     <%= render PalapaWeb.LayoutView, "_flash_notice.html", assigns %>
 
-    <main role="main" class="m-6">
+    <main role="main" class="p-6">
       <%= render @view_module, @view_template, assigns %>
     </main>
 

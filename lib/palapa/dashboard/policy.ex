@@ -1,11 +1,11 @@
 defmodule Palapa.Dashboard.Policy do
   @behaviour Bodyguard.Policy
-  alias Palapa.Users.User
+  alias Palapa.Organizations.Member
   alias Palapa.Repo, warn: false
   import Ecto.Query, warn: false
 
   # Owner can do anything
-  def authorize(_, %User{role: :owner}, _), do: true
+  def authorize(_, %Member{role: :owner}, _), do: true
 
   # Anybody can see the dashboard
   def authorize(:index_dashboard, _, _), do: true

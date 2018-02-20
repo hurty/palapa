@@ -1,9 +1,9 @@
 .card {
-  @apply .bg-white .rounded .p-6 .border-grey-light .border;
+  @apply .bg-white .rounded .p-8 .border-grey-light .border .shadow;
 }
 
 .card-header {
-  @apply .text-xl .uppercase .text-center .text-indigo .font-extrabold .py-4 .mb-6;
+  @apply .text-xl .tracking-wide .text-center .text-indigo .font-extrabold .p-4 mb-8 .bg-grey-lightest .rounded-full;
 }
 
 .card-actions {

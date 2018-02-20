@@ -14,7 +14,9 @@
 import "phoenix_html"
 import { Application } from "stimulus"
 
+import ChoiceController from "./controllers/choice_controller"
 import NavigationController from "./controllers/navigation_controller"
 
 const application = Application.start()
+application.register("choice", ChoiceController)
 application.register("navigation", NavigationController)

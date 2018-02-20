@@ -1,6 +1,7 @@
 defmodule PalapaWeb.MemberController do
   use PalapaWeb, :controller
   alias Palapa.Teams
+  alias Palapa.Teams.Team
   alias Palapa.Organizations
 
   def index(conn, %{"team_id" => team_id}) do
@@ -12,7 +13,16 @@ defmodule PalapaWeb.MemberController do
         current_organization()
         |> Teams.list()
 
-      render(conn, "index.html", members: members, teams: teams, selected_team: selected_team)
+      new_team_form = Teams.change(%Team{organization: current_organization()})
+
+      render(
+        conn,
+        "index.html",
+        members: members,
+        teams: teams,
+        selected_team: selected_team,
+        new_team_form: new_team_form
+      )
     end
   end
 
@@ -26,7 +36,16 @@ defmodule PalapaWeb.MemberController do
         current_organization()
         |> Teams.list()
 
-      render(conn, "index.html", members: members, teams: teams, selected_team: nil)
+      new_team_form = Teams.change(%Team{organization: current_organization()})
+
+      render(
+        conn,
+        "index.html",
+        members: members,
+        teams: teams,
+        selected_team: nil,
+        new_team_form: new_team_form
+      )
     end
   end
 

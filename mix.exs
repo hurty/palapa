@@ -62,7 +62,6 @@ defmodule Palapa.Mixfile do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "assets.compile": &compile_assets/1,
       test: [
-        "assets.compile",
         "ecto.create --quiet",
         "ecto.migrate",
         "test"

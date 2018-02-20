@@ -17,6 +17,11 @@ defmodule Palapa.Teams.Team do
     team
     |> cast(attrs, [:name])
     |> validate_required([:name])
+    |> unsafe_validate_unique(
+      [:name, :organization_id],
+      Palapa.Repo,
+      message: "This team already exists"
+    )
   end
 
   def create_changeset(%Team{} = team, attrs) do

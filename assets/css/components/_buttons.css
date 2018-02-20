@@ -9,3 +9,15 @@
 .btn-blue:hover {
   @apply .bg-indigo;
 }
+
+.nav-btn {
+  @apply .shadow .uppercase .text-white .tracking-wide .rounded-full .bg-indigo .px-4 .py-2 .text-xs .mr-3;
+}
+
+.nav-btn:hover {
+  @apply .text-white .no-underline;
+}
+
+.nav-btn:visited {
+  @apply .text-white .no-underline .bg-indigo-dark;
+}

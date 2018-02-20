@@ -40,6 +40,8 @@ defmodule PalapaWeb.Router do
     resources "/members", MemberController do
       resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)
     end
+
+    resources("/teams", TeamController, only: [:new, :create])
   end
 
   # Other scopes may use custom stacks.

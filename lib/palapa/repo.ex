@@ -36,6 +36,11 @@ defmodule Palapa.Repo do
     end
   end
 
+  def count(queryable) do
+    from(t in queryable, select: count(t.id))
+    |> one()
+  end
+
   @doc "Reload the given record"
   def reload(%module{id: id}) do
     get(module, id)

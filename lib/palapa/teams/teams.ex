@@ -36,10 +36,16 @@ defmodule Palapa.Teams do
   end
 
   def create(%Organization{} = organization, attrs \\ %{}) do
-    team_attrs = Map.merge(attrs, %{organization_id: organization.id})
+    whitelisted_members =
+      if is_list(attrs["members"]) do
+        Organizations.list_members_by_ids(organization, attrs["members"])
+      else
+        []
+      end
 
-    %Team{}
-    |> Team.create_changeset(team_attrs)
+    %Team{organization_id: organization.id}
+    |> Team.create_changeset(attrs)
+    |> put_assoc(:members, whitelisted_members)
     |> Repo.insert()
   end
 
@@ -54,7 +60,8 @@ defmodule Palapa.Teams do
   end
 
   def change(%Team{} = team) do
-    Team.changeset(team, %{})
+    Repo.preload(team, :members)
+    |> Team.changeset(%{})
   end
 
   def add_member(%Team{} = team, %Member{} = member) do

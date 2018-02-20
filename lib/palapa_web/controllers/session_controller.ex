@@ -15,7 +15,6 @@ defmodule PalapaWeb.SessionController do
     case Authentication.login_with_email_and_password(conn, email, password) do
       {:ok, conn} ->
         conn
-        |> put_flash(:success, "Authentication sucessful!")
         |> redirect(to: dashboard_path(conn, :index))
 
       {:error, _reason, conn} ->

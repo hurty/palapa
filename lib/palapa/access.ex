@@ -12,4 +12,9 @@ defmodule Palapa.Access do
     query
     |> where(organization_id: ^organization.id)
   end
+
+  def scope_by_ids(query, ids) when is_list(ids) do
+    query
+    |> where([q], q.id in ^ids)
+  end
 end

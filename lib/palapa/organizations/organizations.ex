@@ -1,7 +1,8 @@
 defmodule Palapa.Organizations do
-  import Ecto.Query
-  alias Palapa.Repo
-  alias Palapa.Organizations.{Organization, Member}, warn: false
+  use Palapa.Context
+
+  alias Organizations.Organization
+  alias Organizations.Member
 
   defdelegate(authorize(action, user, params), to: Palapa.Organizations.Policy)
 
@@ -37,10 +38,17 @@ defmodule Palapa.Organizations do
     Organization.changeset(organization, %{})
   end
 
-  def list_members(%Organization{} = organization) do
-    organization
+  def list_members(queryable \\ Organization) do
+    queryable
     |> Ecto.assoc(:members)
     |> preload(:account)
+    |> Repo.all()
+  end
+
+  def list_members_by_ids(%Organization{} = organization, ids) when is_list(ids) do
+    organization
+    |> Ecto.assoc(:members)
+    |> Access.scope_by_ids(ids)
     |> Repo.all()
   end
 
