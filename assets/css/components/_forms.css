@@ -1,15 +1,15 @@
 .field {
-  @apply .mt-3;
+  @apply mt-3;
 }
 
 .label {
-  @apply .inline-block .text-grey-darker .text-sm .font-bold .mb-2;
+  @apply inline-block text-grey-darker text-sm font-bold mb-2;
 }
 
 .input {
-  @apply .appearance-none .border .rounded .w-full .py-2 .leading-normal .text-grey-darker .text-sm;
+  @apply appearance-none border rounded w-full py-2 leading-normal text-grey-darker text-sm;
 }
 
 .error {
-  @apply .text-white .rounded-lg .bg-white .text-red-light .text-sm .font-bold .mb-2;
+  @apply text-white rounded-lg bg-white text-red-light text-sm font-bold mb-2;
 }

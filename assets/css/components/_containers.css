@@ -1,15 +1,15 @@
 .card {
-  @apply .bg-white .rounded .p-8 .border-grey-light .border .shadow;
+  @apply bg-white rounded p-8 border-grey-light border shadow;
 }
 
 .card-header {
-  @apply .text-xl .tracking-wide .text-center .text-indigo .font-extrabold .p-4 mb-8 .bg-grey-lightest .rounded-full;
+  @apply text-xl tracking-wide text-center text-indigo font-extrabold p-4 mb-8 bg-grey-lightest rounded-full;
 }
 
 .card-actions {
-  @apply .flex .justify-center .mt-6;
+  @apply flex justify-center mt-6;
 }
 
 .card-footer {
-  @apply .flex .justify-center .mt-6 .text-sm .text-grey-darker;
+  @apply flex justify-center mt-6 text-sm text-grey-darker;
 }

@@ -1,23 +1,23 @@
 .btn {
-  @apply .py-2 .px-4 .rounded;
+  @apply py-2 px-4 rounded;
 }
 
 .btn-blue {
-  @apply .bg-indigo-light .text-white;
+  @apply bg-indigo-light text-white;
 }
 
 .btn-blue:hover {
-  @apply .bg-indigo;
+  @apply bg-indigo;
 }
 
 .nav-btn {
-  @apply .shadow .uppercase .text-white .tracking-wide .rounded-full .bg-indigo .px-4 .py-2 .text-xs .mr-3;
+  @apply shadow uppercase text-white tracking-wide rounded-full bg-indigo px-4 py-2 text-xs mr-3;
 }
 
 .nav-btn:hover {
-  @apply .text-white .no-underline;
+  @apply text-white no-underline;
 }
 
 .nav-btn:visited {
-  @apply .text-white .no-underline .bg-indigo-dark;
+  @apply text-white no-underline bg-indigo-dark;
 }

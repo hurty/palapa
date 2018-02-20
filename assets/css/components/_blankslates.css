@@ -1,7 +1,5 @@
 .blankslate {
-  padding: 2rem;
-  @apply rounded-lg shadow-inner;
+  @apply p-4;
+  @apply bg-indigo-lightest rounded-lg shadow-inner;
   @apply text-grey-darkest text-lg text-center font-light;
-  
-  @apply bg-indigo-lightest;
 }
