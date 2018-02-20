@@ -3,13 +3,19 @@
 }
 
 .label {
-  @apply inline-block text-grey-darker text-sm font-bold mb-2;
+  @apply inline-block;
+  @apply mb-2;
+  @apply text-grey-darker text-sm font-bold;
 }
 
 .input {
-  @apply appearance-none border rounded w-full py-2 leading-normal text-grey-darker text-sm;
+  @apply w-full py-2;
+  @apply appearance-none border rounded leading-normal;
+  @apply text-grey-darker text-sm;
 }
 
 .error {
-  @apply text-white rounded-lg bg-white text-red-light text-sm font-bold mb-2;
+  @apply mb-2;
+  @apply rounded-lg bg-white;
+  @apply text-white text-red-light text-sm font-bold;
 }

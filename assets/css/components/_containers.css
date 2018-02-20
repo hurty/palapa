@@ -1,9 +1,12 @@
 .card {
-  @apply bg-white rounded p-8 border-grey-light border shadow;
+  @apply p-8;
+  @apply bg-white rounded border border-grey-light shadow;
 }
 
 .card-header {
-  @apply text-xl tracking-wide text-center text-indigo font-extrabold p-4 mb-8 bg-grey-lightest rounded-full;
+  @apply p-4 mb-8;
+  @apply bg-grey-lightest rounded-full;
+  @apply text-xl tracking-wide text-center text-indigo font-extrabold;
 }
 
 .card-actions {
@@ -11,5 +14,6 @@
 }
 
 .card-footer {
-  @apply flex justify-center mt-6 text-sm text-grey-darker;
+  @apply flex justify-center mt-6;
+  @apply text-sm text-grey-darker;
 }

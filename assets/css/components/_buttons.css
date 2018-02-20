@@ -1,9 +1,11 @@
 .btn {
-  @apply py-2 px-4 rounded;
+  @apply py-2 px-4;
+  @apply rounded;
 }
 
 .btn-blue {
-  @apply bg-indigo-light text-white;
+  @apply bg-indigo-light;
+  @apply text-white;
 }
 
 .btn-blue:hover {
@@ -11,7 +13,9 @@
 }
 
 .nav-btn {
-  @apply shadow uppercase text-white tracking-wide rounded-full bg-indigo px-4 py-2 text-xs mr-3;
+  @apply px-4 py-2 mr-3;
+  @apply bg-indigo rounded-full shadow;
+  @apply text-xs uppercase text-white tracking-wide;
 }
 
 .nav-btn:hover {
@@ -19,5 +23,6 @@
 }
 
 .nav-btn:visited {
-  @apply text-white no-underline bg-indigo-dark;
+  @apply bg-indigo-dark;
+  @apply text-white no-underline;
 }
