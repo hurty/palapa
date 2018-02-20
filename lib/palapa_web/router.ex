@@ -19,6 +19,10 @@ defmodule PalapaWeb.Router do
     plug(:accepts, ["json"])
   end
 
+  if Mix.env() == :dev do
+    forward("/sent_emails", Bamboo.SentEmailViewerPlug)
+  end
+
   # Public pages
   scope "/", PalapaWeb do
     # Use the default browser stack
