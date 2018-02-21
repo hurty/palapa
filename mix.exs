@@ -47,7 +47,7 @@ defmodule Palapa.Mixfile do
       {:bodyguard, "~> 2.2"},
       {:ecto_enum, "~> 1.0"},
       {:bamboo, github: "thoughtbot/bamboo"},
-      {:wallaby, "~> 0.19.2", [runtime: false, only: :test]}
+      {:wallaby, "~> 0.19.2", [runtime: false, only: [:dev, :test]]}
     ]
   end
 
