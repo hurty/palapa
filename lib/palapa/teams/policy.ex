@@ -5,7 +5,7 @@ defmodule Palapa.Teams.Policy do
   alias Palapa.Repo, warn: false
   import Ecto.Query, warn: false
 
-  def authorize(:create_team, %Member{role: role}, _params) do
+  def authorize(:create, %Member{role: role}, _params) do
     role in [:owner, :admin]
   end
 
