@@ -5,7 +5,7 @@
 
 .btn-blue {
   @apply bg-indigo-light;
-  @apply text-white;
+  @apply text-white !important;
 
   &:hover {
     @apply bg-indigo;

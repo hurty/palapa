@@ -1,4 +1,8 @@
 .tag {
   @apply px-2 py-1;
   @apply bg-grey-light rounded;
+
+  &-team {
+    @apply text-indigo;
+  }
 }

@@ -1,19 +1,19 @@
 a:link { 
-  color: inherit;
+  @apply text-blue-dark;
   text-decoration: none;
 }
 
 a:visited { 
-  color: inherit;
+  @apply text-blue-dark;
   text-decoration: none;
 }
 
 a:hover { 
-  color: inherit;
+  @apply text-blue-dark;
   text-decoration: underline;
 }
 
 a:active { 
-  color: inherit;
+  @apply text-blue-dark;
   text-decoration: underline;
 }

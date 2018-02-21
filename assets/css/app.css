@@ -13,7 +13,6 @@
  */
 
 @import "./_tailwind-preflight";
-@import "./common";
  
  /**
   * Here you would add any of your custom component classes; stuff that you'd
@@ -31,6 +30,7 @@
   * @import "components/forms";
   */
 
+@import "components/_common";
 @import "components/_blankslates";
 @import "components/_choices";
 @import "components/_containers";
