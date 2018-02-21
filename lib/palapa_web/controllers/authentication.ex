@@ -79,7 +79,11 @@ defmodule PalapaWeb.Authentication do
   end
 
   def logout(conn) do
-    configure_session(conn, drop: true)
+    conn
+    |> assign(:current_account, nil)
+    |> assign(:current_organization, nil)
+    |> assign(:current_member, nil)
+    |> configure_session(drop: true)
   end
 
   def current_member(conn) do
