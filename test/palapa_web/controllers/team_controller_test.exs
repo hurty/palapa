@@ -21,7 +21,7 @@ defmodule PalapaWeb.TeamControllerTest do
       assert html_response(conn, :forbidden)
     end
 
-    test "regular members cannot create new team" do
+    test "regular members cannot create new team", %{conn: conn} do
       conn =
         post(conn, team_path(conn, :create), %{
           "team" => %{

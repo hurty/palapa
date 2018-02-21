@@ -5,14 +5,14 @@ defmodule PalapaWeb.TeamController do
   alias Palapa.Teams.Team
 
   def new(conn, _params) do
-    with :ok <- permit(Teams, :create_team, current_member()) do
+    with :ok <- permit(Teams, :create, current_member()) do
       team = Teams.change(%Team{})
       render(conn, :new, team: team)
     end
   end
 
   def create(conn, %{"team" => team_params}) do
-    with :ok <- permit(Teams, :create_team, current_member()) do
+    with :ok <- permit(Teams, :create, current_member()) do
       case Teams.create(current_organization(), team_params) do
         {:ok, team} ->
           put_flash(conn, :success, "The team #{team.name} has been created!")
