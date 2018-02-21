@@ -3,6 +3,71 @@ defmodule PalapaWeb.TeamControllerTest do
   import Ecto.Query
   alias Palapa.Repo
 
+  describe "as regular member" do
+    setup do
+      member = insert!(:member)
+
+      conn =
+        build_conn()
+        |> assign(:current_member, member)
+        |> assign(:current_account, member.account)
+        |> assign(:current_organization, member.organization)
+
+      {:ok, conn: conn, member: member}
+    end
+
+    test "regular members cannot access the team creation form", %{conn: conn} do
+      conn = get(conn, team_path(conn, :new))
+      assert html_response(conn, :forbidden)
+    end
+
+    test "regular members cannot create new team" do
+      conn =
+        post(conn, team_path(conn, :create), %{
+          "team" => %{
+            "name" => "Sales"
+          }
+        })
+
+      assert html_response(conn, :forbidden)
+    end
+  end
+
+  describe "as admin" do
+    setup do
+      member = insert!(:admin)
+
+      conn =
+        build_conn()
+        |> assign(:current_member, member)
+        |> assign(:current_account, member.account)
+        |> assign(:current_organization, member.organization)
+
+      {:ok, conn: conn, member: member}
+    end
+
+    test "display the 'create a new team' form", %{conn: conn} do
+      conn = get(conn, team_path(conn, :new))
+      assert html_response(conn, 200) =~ ~r/Create a new team/
+    end
+
+    test "create an empty team successfully", %{conn: conn} do
+      count_teams_before = Repo.count("teams")
+
+      conn =
+        post(conn, team_path(conn, :create), %{
+          "team" => %{
+            "name" => "Sales"
+          }
+        })
+
+      count_teams_after = Repo.count("teams")
+
+      assert redirected_to(conn, 302) =~ member_path(conn, :index)
+      assert count_teams_after == count_teams_before + 1
+    end
+  end
+
   describe "as owner" do
     setup do
       member = insert!(:owner)
@@ -62,60 +127,6 @@ defmodule PalapaWeb.TeamControllerTest do
       assert redirected_to(conn, 302) =~ member_path(conn, :index)
       assert count_teams_after == count_teams_before + 1
       assert count_teams_members_after == count_teams_members_before + 2
-    end
-  end
-
-  describe "as admin" do
-    setup do
-      member = insert!(:admin)
-
-      conn =
-        build_conn()
-        |> assign(:current_member, member)
-        |> assign(:current_account, member.account)
-        |> assign(:current_organization, member.organization)
-
-      {:ok, conn: conn, member: member}
-    end
-
-    test "display the 'create a new team' form", %{conn: conn} do
-      conn = get(conn, team_path(conn, :new))
-      assert html_response(conn, 200) =~ ~r/Create a new team/
-    end
-
-    test "create an empty team successfully", %{conn: conn} do
-      count_teams_before = Repo.count("teams")
-
-      conn =
-        post(conn, team_path(conn, :create), %{
-          "team" => %{
-            "name" => "Sales"
-          }
-        })
-
-      count_teams_after = Repo.count("teams")
-
-      assert redirected_to(conn, 302) =~ member_path(conn, :index)
-      assert count_teams_after == count_teams_before + 1
-    end
-  end
-
-  describe "as regular member" do
-    setup do
-      member = insert!(:member)
-
-      conn =
-        build_conn()
-        |> assign(:current_member, member)
-        |> assign(:current_account, member.account)
-        |> assign(:current_organization, member.organization)
-
-      {:ok, conn: conn, member: member}
-    end
-
-    test "regular members cannot access the team creation form", %{conn: conn} do
-      conn = get(conn, team_path(conn, :new))
-      assert html_response(conn, :forbidden)
     end
   end
 
