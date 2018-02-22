@@ -20,13 +20,11 @@ defmodule PalapaWeb.Authentication do
         conn
 
       account_id && organization_id && member_id ->
-        account = Accounts.get!(account_id)
-        organization = Organizations.get!(organization_id)
-        member = Organizations.get_member!(organization, member_id)
+        member = Organizations.get_member_with_account!(member_id)
 
         conn
-        |> assign(:current_account, account)
-        |> assign(:current_organization, organization)
+        |> assign(:current_account, member.account)
+        |> assign(:current_organization, member.organization)
         |> assign(:current_member, member)
 
       true ->

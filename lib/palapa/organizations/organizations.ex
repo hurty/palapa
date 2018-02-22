@@ -59,6 +59,15 @@ defmodule Palapa.Organizations do
     |> Repo.get!(member_id)
   end
 
+  def get_member_with_account!(member_id) do
+    Member
+    |> join(:left, [m], o in assoc(m, :organization))
+    |> join(:left, [m], a in assoc(m, :account))
+    |> preload([_, o, _], organization: o)
+    |> preload([..., a], account: a)
+    |> Repo.get!(member_id)
+  end
+
   def create_member(attrs \\ %{}) do
     %Member{}
     |> Member.changeset(attrs)
