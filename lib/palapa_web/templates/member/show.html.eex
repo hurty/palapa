@@ -23,7 +23,9 @@
   <div class="flex-auto">
     <div class="mb-6" data-controller="user_teams">
       <h3 class="uppercase text-xl text-grey-darker mb-4">Teams</h3>
-      <%= link "Manage member's teams", to: member_team_member_path(@conn, :edit, @member) %>
+      <%= if Palapa.Access.permit? Palapa.Teams, :create, @current_member do %>
+        <%= link "Manage member's teams", to: member_team_member_path(@conn, :edit, @member) %>
+      <% end %>
       <div class="mt-4">
         <%= for team <- @member_teams do %>
           <%= PalapaWeb.TeamView.team_tag(@conn, team) %>
