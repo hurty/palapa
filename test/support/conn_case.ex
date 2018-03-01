@@ -24,6 +24,13 @@ defmodule PalapaWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint PalapaWeb.Endpoint
+
+      def login(member) do
+        build_conn()
+        |> assign(:current_member, member)
+        |> assign(:current_account, member.account)
+        |> assign(:current_organization, member.organization)
+      end
     end
   end
 

@@ -20,7 +20,7 @@ defmodule Palapa.Mixfile do
   def application do
     [
       mod: {Palapa.Application, []},
-      extra_applications: [:logger, :runtime_tools, :bamboo]
+      extra_applications: [:logger, :runtime_tools, :timex, :bamboo]
     ]
   end
 
@@ -47,7 +47,8 @@ defmodule Palapa.Mixfile do
       {:bodyguard, "~> 2.2"},
       {:ecto_enum, "~> 1.0"},
       {:bamboo, github: "thoughtbot/bamboo"},
-      {:wallaby, "~> 0.19.2", [runtime: false, only: [:dev, :test]]}
+      {:wallaby, "~> 0.19.2", [runtime: false, only: [:dev, :test]]},
+      {:timex, "~> 3.2"}
     ]
   end
 

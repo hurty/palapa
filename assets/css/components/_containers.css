@@ -1,6 +1,6 @@
 .card {
   @apply p-8;
-  @apply bg-white rounded border border-grey-light shadow;
+  @apply bg-white rounded border border-grey-light;
 }
 
 .card-header {

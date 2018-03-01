@@ -1,0 +1,11 @@
+<%= form_for @conn, invitation_path(@conn, :create), [as: :invitation], fn form -> %>
+  <p>Enter one email address per line:</p>
+  
+  <div class="field">
+    <%= textarea form, :email_addresses, value: @prefill, class: "w-full h-24 border" %>
+  </div>
+  
+  <div class="card-actions">
+    <%= submit "Invite these people", class: "btn btn-blue" %>
+  </div>
+<% end %>

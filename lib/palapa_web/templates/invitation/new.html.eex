@@ -1,0 +1,22 @@
+<div class="card lg:w-1/2 mx-auto">
+  <h2 class="card-header">
+    Invite people
+  </h2>
+
+  <%= render PalapaWeb.InvitationView, "_form.html", conn: @conn, prefill: nil %>
+
+  
+
+  <div class="mx-auto mt-8 text-grey-darkest">
+    <h2 class="text-base text-left tracking-wide font-bold text-grey-darker mb-6 uppercase">Pending invitations</h2>
+
+    <%= for invitation <- @invitations do %>
+      <div class="flex flex-wrap border-t border-blue-lightest">
+        <div class="flex-1 py-4 pr-2"><%= invitation.email %></div>
+        <div class="flex-2 py-4 pr-2"><%= time_from_now(invitation.email_sent_at) %></div>
+        <div class="flex-2 py-4 pr-2"><a href="#" class="rounded-full px-2 py-1  hover:bg-grey-light hover:no-underline">Send again</a></div>
+        <div class="flex-2 py-4 pr-2"><a href="#" class="rounded-full px-2 py-1  hover:bg-red-light hover:no-underline">Cancel</a></div>
+      </div>
+    <% end %>
+  </div>
+</div>

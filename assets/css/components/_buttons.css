@@ -20,7 +20,7 @@
   &:visited {
     @apply text-white no-underline;
   }
-  
+
   &:hover {
     @apply bg-indigo-dark;
     @apply no-underline;

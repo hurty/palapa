@@ -2,7 +2,7 @@
   <div class="w-3/4">
     <%= if Palapa.Access.permit? Palapa.Teams, :create, @current_member do %>
       <div class="mb-8">
-          <%= link("+ Add people", to: member_path(@conn, :index), class: "nav-btn") %>
+          <%= link("+ Add people", to: invitation_path(@conn, :new), class: "nav-btn") %>
           <%= link("+ Create a new team", to: team_path(@conn, :new), class: "nav-btn") %>
       </div>
     <% end %>

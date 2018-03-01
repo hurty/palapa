@@ -3,14 +3,16 @@ defmodule Palapa.Organizations.Organization do
 
   import Ecto.Query, warn: false
   alias Palapa.Organizations.{Organization, Member}
-  alias Palapa.Teams.Team
+  alias Palapa.Invitations
+  alias Palapa.Teams
 
   schema "organizations" do
     field(:name, :string)
     timestamps()
 
     has_many(:members, Member)
-    has_many(:teams, Team)
+    has_many(:invitations, Invitations.Invitation)
+    has_many(:teams, Teams.Team)
   end
 
   @doc false

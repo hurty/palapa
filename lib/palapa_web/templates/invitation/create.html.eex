@@ -1,0 +1,25 @@
+<%= if Enum.any? @emails do %>
+  <div class="card w-1/3 mx-auto">
+    <h2 class="card-header">
+      Invite people
+    </h2>
+    
+    <p class="text-green font-bold"><%= Enum.count @emails %> invitations have been sent successfully</p>
+    <ul class="list-reset bg-green-lightest rounded-lg h-24 p-2 m-2 overflow-scroll">
+      <%= for email <- @emails do %>
+        <li><%= email%></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="card w-1/3 mx-auto -mt-2">
+  <p class="text-orange font-bold"><%= Enum.count @ignored %> invitation(s) couldn't be sent</p> 
+  <p>Make sure addresses are correct and well formatted and try again.</p>
+
+  <%= render PalapaWeb.InvitationView, "_form.html", conn: @conn, prefill: Enum.join(@ignored, "\n") %>
+
+  <div class="text-center mt-2">
+  <%= link "or ignore these addresses", to: invitation_path(@conn, :new) %>
+  </div>
+</div>

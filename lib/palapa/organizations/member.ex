@@ -3,6 +3,7 @@ defmodule Palapa.Organizations.Member do
 
   alias Palapa.Accounts.Account
   alias Palapa.Organizations.{Member, Organization, RoleEnum}
+  alias Palapa.Invitations
   alias Palapa.Teams.{Team, TeamMember}
 
   schema "members" do
@@ -13,6 +14,7 @@ defmodule Palapa.Organizations.Member do
     field(:title, :string)
     timestamps()
 
+    has_many(:invitations, Invitations.Invitation, foreign_key: :creator_id)
     many_to_many(:teams, Team, join_through: TeamMember, on_replace: :delete)
   end
 

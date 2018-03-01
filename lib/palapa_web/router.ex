@@ -45,6 +45,7 @@ defmodule PalapaWeb.Router do
       resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)
     end
 
+    resources("/invitations", InvitationController)
     resources("/teams", TeamController, only: [:new, :create])
   end
 

@@ -17,3 +17,7 @@ a:active {
   @apply text-blue-dark;
   text-decoration: underline;
 }
+
+textarea {
+  @apply border rounded;
+}

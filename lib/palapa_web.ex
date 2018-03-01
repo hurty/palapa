@@ -46,6 +46,7 @@ defmodule PalapaWeb do
       import PalapaWeb.Router.Helpers
       import PalapaWeb.ErrorHelpers
       import PalapaWeb.Gettext
+      import PalapaWeb.Helpers
     end
   end
 
