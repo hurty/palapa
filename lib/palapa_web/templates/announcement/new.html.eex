@@ -1,0 +1,25 @@
+<link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+
+<div class="w-1/2 mx-auto" data-controller="text_editor">
+  <h2 class="text-grey-darker text-xl font-bold uppercase tracking-wide mb-8 pt-4 border-t-2 border-grey-lighter">
+    New announcement
+  </h2>
+
+  <%= form_for @announcement, announcement_path(@conn, :create), fn form -> %>
+    <div class="my-4">
+      <%= text_input form, :title, placeholder: "Title", class: "border p-2 w-full shadow font-bold text-xl text-grey-darkest" %>
+    </div>
+  
+    <div class="bg-white shadow text-grey-darkest" data-target="text_editor.content">
+      <h1>Bonjour tout le monde</h1>
+      <h2>C'est vraiment un plaisir</h2>
+      <p>Et blabla blafadazd ouaiche et bon c'set comme ca la vie et c'est pas autrement</p>
+    </div>
+
+    <%= hidden_input form, :content, "data-target": "text_editor.hiddenContent" %>
+
+    <div class="card-actions">
+      <%= submit "Post this announcement", class: "btn btn-blue", "data-action": "text_editor#submit" %>
+    </div>
+  <% end %>
+</div>

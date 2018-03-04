@@ -1,0 +1,14 @@
+<div class="mx-auto mt-8 w-1/2">
+    <h2 class="text-grey-darker text-xl font-bold uppercase tracking-wide mb-4 pt-4 border-t-2 border-grey-lighter">
+      Announcements
+    </h2>
+  <div class="flex mb-8">
+    <%= link("+ New announcement", to: announcement_path(@conn, :new), class: "nav-btn") %>
+  </div>
+
+  <ul>
+    <%= for announcement <- @announcements do %>
+      <li><%= announcement.title %></li>
+    <% end %>
+  </ul>
+</div>
