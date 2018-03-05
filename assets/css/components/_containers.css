@@ -1,6 +1,6 @@
 .card {
   @apply p-8;
-  @apply bg-white rounded border border-grey-light;
+  @apply bg-white rounded-lg border border-grey-light shadow;
 }
 
 .card-header {
@@ -16,4 +16,14 @@
 .card-footer {
   @apply flex justify-center mt-6;
   @apply text-sm text-grey-darker;
+}
+
+.card-member {
+  a {
+    @apply text-red;
+  }
+
+  a:visited {
+    @apply text-red-dark;
+  }
 }

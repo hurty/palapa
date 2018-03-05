@@ -11,11 +11,11 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
-  <body class="font-sans bg-grey-lightest">
+  <body class="font-sans bg-grey-lighter">
     <%= render PalapaWeb.LayoutView, "_navigation.html", assigns %>
     <%= render PalapaWeb.LayoutView, "_flash_notice.html", assigns %>
-
-    <main role="main" class="p-6">
+    
+    <main role="main">
       <%= render @view_module, @view_template, assigns %>
     </main>
 

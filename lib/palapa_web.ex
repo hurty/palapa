@@ -28,6 +28,10 @@ defmodule PalapaWeb do
 
       # Handle authorization failures
       action_fallback(PalapaWeb.FallbackController)
+
+      def put_navigation(conn, value) do
+        Plug.Conn.assign(conn, :navigation, value)
+      end
     end
   end
 

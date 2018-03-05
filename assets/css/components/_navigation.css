@@ -1,0 +1,34 @@
+.header-link {
+  @apply py-8 px-4;
+  @apply text-sm text-grey-darker;
+  @apply border-b-4 border-transparent;
+  
+  &:hover {
+    @apply text-grey-darkest;
+  }
+}
+
+.header-link--active {
+  @apply text-grey-darkest;
+}
+
+.nav-btn {
+  @apply px-2 py-2 mr-3 border-b-2 border-red-dark;
+  @apply text-xs uppercase text-charcoal font-bold tracking-wide;
+
+  &:hover {
+    @apply border-red-light;
+  }
+}
+
+.sidebar {
+  @apply bg-charcoal-lightest border rounded-lg -ml-2;
+  
+  a {
+    @apply text-purple ;
+  }
+
+  a:visited {
+    @apply text-purple;
+  }
+}

@@ -4,6 +4,8 @@ defmodule PalapaWeb.TeamController do
   alias Palapa.Teams
   alias Palapa.Teams.Team
 
+  plug(:put_navigation, "member")
+
   def new(conn, _params) do
     with :ok <- permit(Teams, :create, current_member()) do
       team = Teams.change(%Team{})

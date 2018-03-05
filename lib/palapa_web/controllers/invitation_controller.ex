@@ -3,6 +3,8 @@ defmodule PalapaWeb.InvitationController do
 
   alias Palapa.Invitations
 
+  plug(:put_navigation, "member")
+
   def new(conn, _params) do
     with :ok <- permit(Invitations, :create, current_member()) do
       invitations = Palapa.Invitations.list(current_organization())

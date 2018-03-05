@@ -1,7 +1,10 @@
 defmodule PalapaWeb.TeamMemberController do
   use PalapaWeb, :controller
+
   alias Palapa.Organizations
   alias Palapa.Teams
+
+  plug(:put_navigation, "member")
 
   def edit(conn, %{"member_id" => member_id}) do
     with :ok <- permit(Teams, :edit_member_teams, current_member()) do

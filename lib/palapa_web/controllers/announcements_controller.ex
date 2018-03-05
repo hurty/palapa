@@ -3,6 +3,8 @@ defmodule PalapaWeb.AnnouncementController do
   alias Palapa.Announcements
   alias Palapa.Announcements.Announcement
 
+  plug(:put_navigation, "announcement")
+
   def index(conn, _params) do
     announcements = Announcements.list(current_organization())
     render(conn, "index.html", announcements: announcements)
@@ -19,6 +21,14 @@ defmodule PalapaWeb.AnnouncementController do
         Announcements.create(current_organization(), current_member(), announcement_params)
 
       redirect(conn, to: announcement_path(conn, :index))
+    end
+  end
+
+  def show(conn, %{"id" => id}) do
+    announcement = Announcements.get(id)
+
+    with :ok <- permit(Announcements, :show, current_member()) do
+      render(conn, "show.html", announcement: announcement)
     end
   end
 end

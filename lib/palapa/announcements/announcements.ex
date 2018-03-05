@@ -9,7 +9,14 @@ defmodule Palapa.Announcements do
     queryable
     |> Access.scope(organization)
     |> order_by(desc: :inserted_at)
+    |> preload(:creator)
     |> Repo.all()
+  end
+
+  def get(id) do
+    Announcement
+    |> preload(:creator)
+    |> Repo.get(id)
   end
 
   def create(organization, creator, attrs) do

@@ -1,14 +1,20 @@
-<div class="mx-auto mt-8 w-1/2">
-    <h2 class="text-grey-darker text-xl font-bold uppercase tracking-wide mb-4 pt-4 border-t-2 border-grey-lighter">
-      Announcements
-    </h2>
-  <div class="flex mb-8">
-    <%= link("+ New announcement", to: announcement_path(@conn, :new), class: "nav-btn") %>
-  </div>
+<div class="flex justify-center flex-wrap">
+  <%= link("+ New announcement", to: announcement_path(@conn, :new), class: "nav-btn m-8 p-2 my-4") %>
+</div>
 
-  <ul>
-    <%= for announcement <- @announcements do %>
-      <li><%= announcement.title %></li>
-    <% end %>
-  </ul>
+<div class="mx-auto mt-8 w-1/2">
+  <%= for announcement <- @announcements do %>
+    <div class="bg-charcoal-lightest p-1 my-4 rounded">
+      <ul class="list-reset bg-white border border-grey">
+          <li class="p-2 m-4">
+            <h3 class="text-red-dark text-2xl"><%= link announcement.title, to: announcement_path(@conn, :show, announcement), class: "text-red-dark text-2xl hover:underline" %></h3>
+            <p class="text-sm font-bold text-grey-darker py-2">By <%= link announcement.creator.name, to: member_path(@conn, :show, announcement.creator.id), class: "text-grey-darker hover:underline" %>
+              <span class="text-xs text-grey-darker font-light"> | Announced <%= time_from_now(announcement.inserted_at) %> to #bla</span>
+            </p>
+            
+            <p class="text-xs text-grey-darker py-4 leading-loose"> <%= excerpt(announcement.content) %></p>
+          </li>
+      </ul>
+    </div>
+  <% end %>
 </div>

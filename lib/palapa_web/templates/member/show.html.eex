@@ -1,10 +1,10 @@
-<div class="flex w-5/6 mx-auto">
-  <div class="flex-initial w-1/3 mr-6">
-    <div class="bg-indigo-lightest p-4 rounded-lg pb-8">
+<div class="bg-grey-lighter pt-8">
+  <div class="w-1/3 mx-auto">
+    <div class="bg-purple p-4 rounded-lg pb-8">
       <div class="text-center">
         <img src="https://png.icons8.com/dotty/50/000000/cat-profile.png">  
       </div>
-      <div class="text-indigo text-center text-3xl font-bold capitalize mb-2"><%= @member.name %></div>
+      <div class="text-purple-lightest text-center text-3xl font-bold capitalize mb-2"><%= @member.name %></div>
       <div class="text-grey-dark text-center text-xl font-light capitalize"><%= @member.title %></div>
       <%= if @member.role in [:owner, :admin] do %>
         <div class="text-center text-sm font-light mt-6 mb-6">
@@ -13,14 +13,14 @@
       <% end %>
     </div>
 
-    <div class="bg-grey-lighter p-4 rounded-lg -mt-2 border-t-2 border-grey-light">
+    <div class="bg-grey-lightest p-4 -mt-2 border-t-2 border-grey-light">
       <div class="text-sm text-grey-darkest m-2"><%= link @member.account.email, to: "mailto:#{@member.account.email}" %></div>
       <div class="text-sm text-grey-darkest m-2"><a href="#">Github page</a></div>
       <div class="text-sm text-grey-darkest m-2"><a href="#">Twitter page</a></div>
     </div>
   </div>
 
-  <div class="flex-auto">
+  <div class="  ">
     <div class="mb-6" data-controller="user_teams">
       <h3 class="uppercase text-xl text-grey-darker mb-4">Teams</h3>
       <%= if Palapa.Access.permit? Palapa.Teams, :create, @current_member do %>

@@ -1,21 +1,17 @@
 a:link { 
-  @apply text-blue-dark;
   text-decoration: none;
 }
 
 a:visited { 
-  @apply text-blue-dark;
   text-decoration: none;
 }
 
 a:hover { 
-  @apply text-blue-dark;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:active { 
-  @apply text-blue-dark;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 textarea {

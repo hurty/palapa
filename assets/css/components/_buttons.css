@@ -11,18 +11,3 @@
     @apply bg-indigo;
   }
 }
-
-.nav-btn {
-  @apply px-4 py-2 mr-3;
-  @apply bg-indigo rounded-full shadow;
-  @apply text-xs uppercase text-white tracking-wide;
-
-  &:visited {
-    @apply text-white no-underline;
-  }
-
-  &:hover {
-    @apply bg-indigo-dark;
-    @apply no-underline;
-  }
-}
