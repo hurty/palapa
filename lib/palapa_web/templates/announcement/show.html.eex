@@ -1,6 +1,6 @@
 <div class="w-1/2 mx-auto">
   <div class="bg-charcoal-lightest p-1 my-4 rounded">
-    <article class="bg-white p-16 text-justify leading-normal">
+    <article class="bg-white p-16">
       <h1 class="mb-2 text-red-dark"><%= @announcement.title %></h1>
       
       <p class="text-sm font-bold text-grey-darker py-2">By <%= link @announcement.creator.name, to: member_path(@conn, :show, @announcement.creator.id), class: "text-grey-darker hover:underline" %>
@@ -8,7 +8,7 @@
             </p>
 
       <div class="border-t-4 border-grey-lighter w-1/6 my-4"></div>
-      <div class="">      
+      <div class="text-justify leading-normal">      
       <%= raw(@announcement.content) %>
       </div>
     </article>
