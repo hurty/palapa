@@ -5,6 +5,27 @@ defmodule Palapa.TeamsTest do
   alias Palapa.Teams
   alias Palapa.Teams.{Team, TeamMember}
 
+  test "where_organization/1 scopes teams by organization" do
+    organization1 = insert!(:organization)
+    insert!(:team, organization: organization1, name: "Engineering")
+    insert!(:team, organization: organization1, name: "Sales")
+
+    organization2 = insert!(:organization)
+    insert!(:team, organization: organization2, name: "Tech")
+
+    filtered_teams = Teams.where_organization(organization2) |> Repo.all()
+    assert [%Team{name: "Tech"}] = filtered_teams
+  end
+
+  test "where_ids scopes teams by ids" do
+    organization = insert!(:organization)
+    engineering = insert!(:team, organization: organization, name: "Engineering")
+    sales = insert!(:team, organization: organization, name: "Sales")
+
+    filtered_teams = Teams.where_ids([sales.id]) |> Repo.all()
+    assert [%Team{name: "Sales"}] = filtered_teams
+  end
+
   test "create_team/2 with valid data creates the team" do
     organization = insert!(:organization)
 
@@ -38,12 +59,12 @@ defmodule Palapa.TeamsTest do
     assert {:ok, %Team{}} = Teams.delete(team)
   end
 
-  test "list/2 returns teams within the given organization" do
+  test "list/2 returns all teams" do
     organization = insert!(:organization)
     insert!(:team, organization: organization, name: "Engineering")
     insert!(:team, organization: organization, name: "Sales")
 
-    [team1, team2] = Teams.list(organization)
+    [team1, team2] = Teams.list()
     assert team1.name == "Engineering"
     assert team2.name == "Sales"
   end
