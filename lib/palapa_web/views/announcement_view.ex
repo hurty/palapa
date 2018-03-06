@@ -19,4 +19,8 @@ defmodule PalapaWeb.AnnouncementView do
     |> String.replace(~r/<.*?>/, "")
     |> String.replace("&nbsp;", "")
   end
+
+  def show_publication_options?(member) do
+    member.role in [:owner, :admin]
+  end
 end

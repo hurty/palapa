@@ -10,7 +10,7 @@ defmodule PalapaWeb.TeamMemberController do
     with :ok <- permit(Teams, :edit_member_teams, current_member()) do
       member = Organizations.get_member!(current_organization(), member_id)
       member_teams = Teams.list_for_member(member)
-      all_teams_in_organization = Teams.list(current_organization())
+      all_teams_in_organization = Teams.where_organization(current_organization()) |> Teams.list()
 
       render(
         conn,
@@ -27,7 +27,9 @@ defmodule PalapaWeb.TeamMemberController do
 
     new_teams =
       if is_list(params["teams_ids"]) do
-        Teams.list_by_ids(current_organization(), params["teams_ids"])
+        Teams.where_organization(current_organization())
+        |> Teams.where_ids(params["teams_ids"])
+        |> Teams.list()
       else
         []
       end

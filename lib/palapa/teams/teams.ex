@@ -4,21 +4,30 @@ defmodule Palapa.Teams do
   alias Palapa.Teams.{Team, TeamMember}
   alias Palapa.Organizations.{Organization, Member}
 
+  # --- Authorization ---
+
   defdelegate(authorize(action, member, params), to: Palapa.Teams.Policy)
+
+  # --- Scopes ---
+
+  def where_organization(queryable \\ Team, %Organization{} = organization) do
+    queryable
+    |> where(organization_id: ^organization.id)
+  end
+
+  def where_ids(queryable \\ Team, ids) when is_list(ids) do
+    queryable
+    |> where([t], t.id in ^ids)
+  end
+
+  # --- Actions ---
 
   def get!(id), do: Repo.get!(Team, id)
 
-  def list(queryable \\ Team, %Organization{} = organization) do
+  def list(queryable \\ Team) do
     queryable
-    |> Access.scope(organization)
     |> order_by(:name)
     |> Repo.all()
-  end
-
-  def list_by_ids(queryable \\ Team, %Organization{} = organization, teams_ids) do
-    queryable
-    |> where([t], t.id in ^teams_ids)
-    |> list(organization)
   end
 
   def list_members(%Team{} = team) do

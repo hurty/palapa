@@ -1,3 +1,7 @@
+body {
+  @apply text-grey-darkest;
+}
+
 a:link { 
   text-decoration: none;
 }

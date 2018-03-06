@@ -3,11 +3,11 @@ defmodule Palapa.Announcements.Policy do
 
   alias Palapa.Organizations.Member
 
-  def authorize(:create, %Member{role: _role}, _) do
+  def authorize(:create, %Member{}, _) do
     true
   end
 
-  def authorize(:show, %Member{role: _role}, _) do
+  def authorize(:show, %Member{}, _) do
     true
   end
 end
