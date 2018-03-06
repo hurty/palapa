@@ -1,9 +1,5 @@
 defmodule Palapa.Teams.Policy do
-  @behaviour Bodyguard.Policy
-
-  alias Palapa.Organizations.Member
-  alias Palapa.Repo, warn: false
-  import Ecto.Query, warn: false
+  use Palapa.Policy
 
   def authorize(:create, %Member{role: role}, _params) do
     role in [:owner, :admin]

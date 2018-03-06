@@ -1,7 +1,5 @@
 defmodule Palapa.Organizations.Policy do
-  @behaviour Bodyguard.Policy
-
-  alias Palapa.Organizations.Member
+  use Palapa.Policy
 
   # Owner can do anything
   def authorize(_, %Member{role: :owner}, _), do: true

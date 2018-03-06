@@ -1,8 +1,5 @@
 defmodule Palapa.Users.Policy do
-  @behaviour Bodyguard.Policy
-
-  alias Palapa.Accounts
-  alias Palapa.Repo
+  use Palapa.Policy
 
   def authorize(:switch_organization, %Accounts.Account{} = account, organization) do
     account = account |> Repo.preload(:organizations, force: true)

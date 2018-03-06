@@ -1,8 +1,5 @@
 defmodule Palapa.Dashboard.Policy do
-  @behaviour Bodyguard.Policy
-  alias Palapa.Organizations.Member
-  alias Palapa.Repo, warn: false
-  import Ecto.Query, warn: false
+  use Palapa.Policy
 
   # Owner can do anything
   def authorize(_, %Member{role: :owner}, _), do: true

@@ -1,7 +1,5 @@
 defmodule Palapa.Announcements.Policy do
-  @behaviour Bodyguard.Policy
-
-  alias Palapa.Organizations.Member
+  use Palapa.Policy
 
   def authorize(:create, %Member{}, _) do
     true
@@ -10,4 +8,7 @@ defmodule Palapa.Announcements.Policy do
   def authorize(:show, %Member{}, _) do
     true
   end
+
+  # Catch-all: deny everything else
+  def authorize(_, _, _), do: false
 end
