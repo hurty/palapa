@@ -30,6 +30,7 @@
   * @import "components/forms";
   */
 
+@import "components/_announcement";
 @import "components/_common";
 @import "components/_blankslates";
 @import "components/_choices";

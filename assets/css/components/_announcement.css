@@ -1,0 +1,33 @@
+.announcement-content {
+  @apply leading-normal;
+  
+  h1 {
+    @apply text-xl;
+    @apply mt-2;
+  }
+
+  h2 {
+    @apply text-lg;
+    @apply mt-4;
+  }
+
+  p {
+    @apply my-1;
+  }
+
+  a {
+    @apply text-grey-darkest;
+    text-decoration: underline !important;
+
+    &:visited {
+      @apply text-grey-darkest;
+    }
+  }
+
+  blockquote {
+    @apply text-purple-dark italic;
+    @apply border-l-2 border-purple-light;
+    @apply bg-purple-lightest;
+    @apply my-4 py-4 px-4;
+  }
+}
