@@ -1,5 +1,6 @@
 body {
-  @apply text-grey-darkest;
+  @apply bg-grey-lightest;
+  @apply font-sans text-grey-darkest leading-normal;
 }
 
 a:link { 
@@ -20,4 +21,8 @@ a:active {
 
 textarea {
   @apply border rounded;
+}
+
+.hidden {
+  display: none;
 }

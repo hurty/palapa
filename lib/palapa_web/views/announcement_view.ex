@@ -20,7 +20,18 @@ defmodule PalapaWeb.AnnouncementView do
     |> String.replace("&nbsp;", "")
   end
 
-  def show_publication_options?(member) do
-    member.role in [:owner, :admin]
+  def announcement_teams_tags(conn, announcement) do
+    teams =
+      announcement
+      |> Palapa.Repo.preload(:teams)
+      |> Map.get(:teams)
+
+    if Enum.any?(teams) do
+      Enum.map(teams, fn team ->
+        PalapaWeb.TeamView.team_tag(conn, team)
+      end)
+    else
+      "everyone"
+    end
   end
 end

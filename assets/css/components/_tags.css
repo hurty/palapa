@@ -1,8 +1,12 @@
 .tag {
-  @apply px-2 py-1;
+  @apply px-2 py-1 mr-1;
   @apply bg-grey-light rounded;
 
-  &-team {
-    @apply text-indigo;
+  &:visited {
+    @apply text-grey-darker;
+  }
+
+  &:hover {
+    text-decoration: underline;
   }
 }

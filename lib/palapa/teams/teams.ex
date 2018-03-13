@@ -10,9 +10,19 @@ defmodule Palapa.Teams do
 
   # --- Scopes ---
 
-  def where_organization(queryable \\ Team, %Organization{} = organization) do
+  def where_organization(queryable \\ Team, organization) do
+    if %Organization{} = organization do
+      queryable
+      |> where(organization_id: ^organization.id)
+    else
+      queryable
+      |> where(organization_id: ^organization)
+    end
+  end
+
+  def where_organization_id(queryable \\ Team, organization_id) do
     queryable
-    |> where(organization_id: ^organization.id)
+    |> where(organization_id: ^organization_id)
   end
 
   def where_ids(queryable \\ Team, ids) when is_list(ids) do
@@ -37,11 +47,26 @@ defmodule Palapa.Teams do
     |> Repo.all()
   end
 
+  # Owner and admins can publish announcements to any team.
+  # Regular members can only publish to teams they're member of.
   def list_for_member(%Member{} = member) do
+    if member.role in [:owner, :admin] do
+      where_organization_id(member.organization_id)
+    else
+      Ecto.assoc(member, :teams)
+    end
+    |> list()
+  end
+
+  def organization_has_teams?(%Organization{} = organization) do
+    where_organization(organization)
+    |> Repo.exists?()
+  end
+
+  def member_has_teams?(%Member{} = member) do
     member
     |> Ecto.assoc(:teams)
-    |> order_by(:name)
-    |> Repo.all()
+    |> Repo.exists?()
   end
 
   def create(%Organization{} = organization, attrs \\ %{}) do

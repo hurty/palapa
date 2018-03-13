@@ -1,28 +1,38 @@
 <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
 
-<div class="w-1/2 mx-auto" data-controller="text_editor">
-  <div class="bg-charcoal-lightest p-1 my-4 rounded">
-    <div class="bg-white p-4">
+<div class="w-1/2 mx-auto" data-controller="announcement">
+  <div class="bg-white p-1 my-4 rounded shadow">
+    <div class="p-4" data-controller="text_editor">
       <%= form_for @announcement, announcement_path(@conn, :create), fn form -> %>
         <div class="my-4">
           <%= text_input form, :title, placeholder: "Title", class: "border p-2 w-full font-bold text-xl text-grey-darkest" %>
+          <%= error_tag form, :title %>
         </div>
       
         <div class="bg-white text-grey-darkest" data-target="text_editor.content">
+          <%= raw(input_value form, :content) %>
         </div>
-
         <%= hidden_input form, :content, "data-target": "text_editor.hiddenContent" %>
 
-      
-        <%= if show_publication_options?(@current_member) do %>
-          <h4 class="mt-4 mb-2">Publish to</h4>
-          <div class="flex flex-wrap">
+        <%= if Enum.any?(@teams) do %>
+          <div class="mt-4 mb-2">
+            <%= radio_button form, :publish_to, "everyone", "data-action": "announcement#publishToEveryone", "data-target": "announcement.publishToEveryone", checked: true %>
+            <%= label form, :publish_to_everyone, "Publish this message to everyone" %>
+          </div>
+          
+          <div class="mt-4 mb-2">
+            <%= radio_button form, :publish_to, "specific_teams", "data-action": "announcement#publishToSpecificTeams", "data-target": "announcement.publishToSpecificTeams" %>
+            <%= label form, :publish_to_specific_teams, "Restrict to specific teams" %>
+          </div>
+          
+          <div class="ml-4 hidden" data-target="announcement.teamsList">
             <ul class="list-reset">
               <%= for team <- @teams do %>
-              <li class="field">
-                <input type="checkbox" class="h-4 w-4" name="announcement[teams_ids][]" id="team_<%= team.id %>" value="<%= team.id %>" >
-                <label class="bg-grey rounded py-1 px-2" for="team_<%= team.id %>"><%= team.name %></label>
-              </li>
+                <li class="field">
+                  <input type="checkbox" class="h-4 w-4" name="announcement[publish_teams_ids][]" id="team_<%= team.id %>" 
+                    value="<%= team.id %>" <%= if input_value(form, :publish_teams_ids) && (team.id in input_value(form, :publish_teams_ids)) do %>checked<% end%>>
+                  <label class="bg-grey-light rounded py-1 px-2" for="team_<%= team.id %>"><%= team.name %></label>
+                </li>
               <% end %>
             </ul>
           </div>

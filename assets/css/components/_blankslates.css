@@ -1,5 +1,5 @@
 .blankslate {
-  @apply p-4;
-  @apply bg-indigo-lightest rounded-lg shadow-inner;
-  @apply text-grey-darkest text-lg text-center font-light;
+  @apply w-1/2 p-2 mx-auto;
+  @apply bg-white rounded-lg border;
+  @apply text-grey-dark text-center;
 }

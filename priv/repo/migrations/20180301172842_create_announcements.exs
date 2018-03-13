@@ -15,7 +15,7 @@ defmodule Palapa.Repo.Migrations.CreateAnnouncements do
       timestamps()
       add(:title, :string, null: false)
       add(:content, :text)
-      add(:global, :boolean, null: false, default: true)
+      add(:published_to_everyone, :boolean, null: false, default: true)
     end
 
     create(index(:announcements, [:organization_id]))

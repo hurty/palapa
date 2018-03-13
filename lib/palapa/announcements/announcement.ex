@@ -10,11 +10,16 @@ defmodule Palapa.Announcements.Announcement do
     timestamps()
     field(:title, :string)
     field(:content, :string)
+    field(:published_to_everyone, :boolean)
     many_to_many(:teams, Team, join_through: "announcements_teams")
+
+    field(:publish_to, :string, virtual: true)
+    field(:publish_teams_ids, {:array, :binary}, virtual: true)
   end
 
   def changeset(%Announcement{} = announcement, attrs) do
     announcement
-    |> cast(attrs, [:title, :content])
+    |> cast(attrs, [:title, :content, :publish_to])
+    |> validate_required(:title)
   end
 end
