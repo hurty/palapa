@@ -1,6 +1,6 @@
 body {
-  @apply bg-grey-lightest;
-  @apply font-sans text-grey-darkest leading-normal;
+  @apply bg-white;
+  @apply font-sans text-black leading-normal;
 }
 
 a:link { 

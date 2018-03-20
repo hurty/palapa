@@ -1,43 +1,44 @@
-<div class="flex justify-center flex-wrap">
-  <%= link("New announcement", to: announcement_path(@conn, :new), class: "nav-btn m-8 p-2 my-4") %>
-</div>
+<div class="flex">
+  <div class="w-1/3">
+  </div>
+  
+  <div class="w-2/5">
+    <div class="flex justify-center mb-8">
+      <%= link("New message", to: announcement_path(@conn, :new), class: "nav-btn") %>
+    </div>
+    
+    <%= if Enum.any?(@today_announcements) do %>
+      <h2 class=  "text-sm mt-2 px-1 text-center text-grey-darkest font-extrabold">Today</h2>
+      <div class="bg-grey-lighter p-2 my-4 rounded-lg">
+        <ul class="list-reset bg-white lg:border lg:border-grey-light rounded">
+          <%= render_many @today_announcements, PalapaWeb.AnnouncementView, "_announcement.html", as: :announcement, conn: @conn %>
+        </ul>
+      </div>
+    <% end %>
 
-<div class="lg:w-2/5 mx-auto">
-  <div class="w-full mx-auto p-2 text-charcoal-lighter text-sm px-4">
-    Filter teams
+    <%= if Enum.any?(@yesterday_announcements) do %>
+      <h2 class="text-sm mt-8 px-1 text-center text-grey-darkest font-extrabold">Yesterday</h2>
+      <div class="bg-grey-lighter p-2 my-4 rounded-lg">
+        <ul class="list-reset bg-white lg:border lg:border-grey-light rounded">
+          <%= render_many @yesterday_announcements, PalapaWeb.AnnouncementView, "_announcement.html", as: :announcement, conn: @conn %>
+        </ul>
+      </div>
+    <% end %>
   </div>
 
-  <h2 class="text-charcoal-lighter text-left text-lg my-4 p-4 text-center">Today</h2>
-  <%= if Enum.any?(@today_announcements) do %>
-    <ul class="list-reset bg-white lg:border lg:border-grey-lighter rounded mb-8">
-      <%= for announcement <- @today_announcements do %>
-        <li class="border-b">
-          <div class="p-8">
-            <h3><%= link announcement.title, to: announcement_path(@conn, :show, announcement), class: "text-red text-base hover:underline" %></h3>
-            <p class="text-sm font-bold text-grey-darker py-2"><%= link announcement.creator.name, to: member_path(@conn, :show, announcement.creator.id), class: "text-grey-darker hover:underline" %></p>
-            <p class="text-xs text-grey-darker font-light"> Posted <%= time_from_now(announcement.inserted_at) %> to <%= announcement_teams_tags(@conn, announcement) %></p>
-            <p class="text-xs text-grey-darker leading-loose"> <%= excerpt(announcement.content) %></p>
-          </div>
+  <div class="w-1/3 ml-8 px-2 py-1">
+    <h2 class="text-grey-dark text-sm font-bold pb-2 mb-2 uppercase">Teams</h2>
+    
+    <ul class="list-reset pl-1">
+      <li class="text-blue-dark font-light mb-2 font-bold">
+        <%= link("My teams", to: announcement_path(@conn, :index), class: (unless @selected_team_id, do: "tag tag--active", else: "tag")) %>
+      </li>
+      <div class="border-t-2 border-grey-lighter w-1/6 my-2"></div>
+      <%= for team <- @teams do %>
+        <li class="text-blue-dark font-light mb-2 font-bold">
+          <%= link(team.name, to: announcement_path(@conn, :index, team_id: team.id), class: (if @selected_team_id == team.id, do: "tag tag--active", else: "tag")) %>
         </li>
       <% end %>
     </ul>
-  <% else %>
-   <p class="text-center blankslate">Nothing new today</p>
-  <% end %>
-
-  <%= if Enum.any?(@yesterday_announcements) do %>
-    <h2 class="text-charcoal-lighter text-left text-lg my-4 p-4  text-center">Yesterday</h2>
-      <ul class="list-reset bg-white lg:border lg:border-grey-lighter rounded mb-8">
-      <%= for announcement <- @yesterday_announcements do %>
-        <li class="border-b">
-          <div class="p-8">
-            <h3><%= link announcement.title, to: announcement_path(@conn, :show, announcement), class: "text-red text-base hover:underline" %></h3>
-            <p class="text-sm font-bold text-grey-darker py-2"><%= link announcement.creator.name, to: member_path(@conn, :show, announcement.creator.id), class: "text-grey-darker hover:underline" %></p>
-            <p class="text-xs text-grey-darker font-light">Posted yesterday to teams <%= announcement_teams_tags(@conn, announcement) %></p>
-            <p class="text-xs text-grey-darker"> <%= excerpt(announcement.content) %></p>
-          </div>
-        </li>
-      <% end %>
-    </ul>
-  <% end %>
+  </div>
 </div>

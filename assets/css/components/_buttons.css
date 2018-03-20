@@ -4,10 +4,29 @@
 }
 
 .btn-blue {
-  @apply bg-indigo-light;
+  @apply bg-indigo;
   @apply text-white !important;
 
   &:hover {
-    @apply bg-indigo;
+    @apply bg-indigo-light;
+  }
+}
+
+.btn-green {
+  @apply bg-green;
+  @apply text-white !important;
+
+  &:hover {
+    @apply bg-green-light;
+  }
+}
+
+.nav-btn {
+  @apply px-4 py-2;
+  @apply border-green border-2 rounded-full;
+  @apply text-xs text-black font-bold;
+
+  &:hover {
+    @apply shadow border-green-light;
   }
 }

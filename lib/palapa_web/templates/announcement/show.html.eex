@@ -1,8 +1,8 @@
-<div class="w-1/2 mx-auto">
-  <div class="bg-grey-lighter p-2 my-4 rounded-lg">
+<div class="md:w-1/2 mx-auto">
+  <div class="lg:bg-grey-lighter p-2 my-4 rounded-lg">
     <article class="bg-white p-8 lg:border lg:border-grey-light rounded">
       <header>
-        <h1 class="mb-2 text-red text-xl"><%= @announcement.title %></h1>
+        <h1 class="mb-2 text-green text-xl"><%= @announcement.title %></h1>
         <p class="text-sm font-bold text-grey-darker py-2">By <%= link @announcement.creator.name, to: member_path(@conn, :show, @announcement.creator.id), class: "text-grey-darker hover:underline" %>
           <span class="text-xs text-grey-darker font-light"> | Announced <%= time_from_now(@announcement.inserted_at) %> to #bla</span>
         </p>

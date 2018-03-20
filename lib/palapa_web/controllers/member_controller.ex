@@ -4,7 +4,7 @@ defmodule PalapaWeb.MemberController do
   alias Palapa.Teams.Team
   alias Palapa.Organizations
 
-  plug(:put_navigation, "member")
+  plug(:put_navigation, "members")
 
   def index(conn, %{"team_id" => team_id}) do
     with :ok <- permit(Organizations, :list_members, current_member()) do

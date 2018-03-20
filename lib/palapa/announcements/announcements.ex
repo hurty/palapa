@@ -3,6 +3,7 @@ defmodule Palapa.Announcements do
   alias Palapa.Announcements.Announcement
   alias Palapa.Organizations.Organization
   alias Palapa.Organizations.Member
+  alias Palapa.Teams.Team
 
   # --- Authorizations
 
@@ -20,6 +21,11 @@ defmodule Palapa.Announcements do
   def where_organization(queryable \\ Announcement, %Organization{} = organization) do
     queryable
     |> where(organization_id: ^organization.id)
+  end
+
+  def published_to(queryable \\ Announcement, %Team{} = team) do
+    queryable
+    |> where([q], q.id in ^announcements_ids_where_team(team))
   end
 
   def published_to_everyone(queryable \\ Announcement) do
@@ -51,6 +57,12 @@ defmodule Palapa.Announcements do
 
     queryable
     |> where([a], a.inserted_at >= ^yesterday and a.inserted_at < ^today)
+  end
+
+  defp announcements_ids_where_team(%Team{} = team) do
+    Ecto.assoc(team, :announcements)
+    |> select([q], q.id)
+    |> Repo.all()
   end
 
   defp announcements_ids_visible_to(%Member{} = member) do

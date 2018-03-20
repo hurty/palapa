@@ -1,24 +1,19 @@
 .header-link {
-  @apply py-8 px-4;
-  @apply text-sm text-grey-darker;
-  @apply border-b-4 border-transparent;
+  @apply mx-2 py-2;
+  
+  @apply border-b-2 border-transparent;
   
   &:hover {
     @apply text-grey-darkest;
   }
+
+  a {
+    @apply text-sm text-black font-bold tracking-wide;
+  }
 }
 
 .header-link--active {
-  @apply text-grey-darkest;
-}
-
-.nav-btn {
-  @apply px-2 py-2 mr-3 border-b-2 border-red-dark;
-  @apply text-xs uppercase text-charcoal font-bold tracking-wide;
-
-  &:hover {
-    @apply border-red-light;
-  }
+  @apply border-b-2 border-black;
 }
 
 .sidebar {

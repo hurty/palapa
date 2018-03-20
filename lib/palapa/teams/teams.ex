@@ -32,7 +32,10 @@ defmodule Palapa.Teams do
 
   # --- Actions ---
 
-  def get!(id), do: Repo.get!(Team, id)
+  def get!(queryable \\ Team, id) do
+    queryable
+    |> Repo.get!(id)
+  end
 
   def list(queryable \\ Team) do
     queryable

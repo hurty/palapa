@@ -1,0 +1,9 @@
+<li class="border-b px-8 py-4">
+  <div class="">
+    <h3><%= link @announcement.title, to: announcement_path(@conn, :show, @announcement), class: "text-green text-base hover:underline" %></h3>
+    <p class="text-sm font-bold text-grey-darker"><%= link @announcement.creator.name, to: member_path(@conn, :show, @announcement.creator.id), class: "text-grey-darker hover:underline" %></p>
+    <p class="text-xs text-grey-darker font-light"> Posted <%= time_from_now(@announcement.inserted_at) %> to <%= announcement_teams_tags(@conn, @announcement) %></p>
+    <p class="text-xs text-grey-darker leading-loose mt-2"> <%= excerpt(@announcement.content) %></p>
+  </div>
+  <div class="text-xs text-grey-darkest mt-2">2 comments</div>
+</li>

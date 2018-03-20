@@ -1,11 +1,26 @@
-<nav class="flex items-center justify-between flex-wrap pl-4 bg-white mb-8 shadow">
-  <h2><%= @current_organization.name %></h2>
+<nav class="flex items-center justify-between flex-wrap pl-4 py-4 bg-white mb-8 shadow">
+  <h2 class="text-base font-extrabold rounded-lg p-1 bg-green-light text-white"><%= @current_organization.name %></h2>
   
-  <div class="flex items-center justify-between ">
-    <%= link("ANNOUNCEMENTS", to: announcement_path(@conn, :index), class: "header-link hover:border-yellow" <> (if @navigation == "announcement", do: " header-link--active border-yellow", else: "")) %>
-    <%= link("DOCUMENTS", to: announcement_path(@conn, :index), class: "header-link") %>
-    <%= link("MEMBERS", to: member_path(@conn, :index), class: "header-link hover:border-yellow" <> (if @navigation == "member", do: " header-link--active border-yellow", else: "")) %>
-  </div>
+  <ul class="flex items-center justify-between list-reset">
+    <li class="header-link mr-8 <%= if @navigation == "personal" do %>header-link--active<% end %>"> 
+      <%= link("My space", to: announcement_path(@conn, :index)) %>
+    </li>
+    <li class="header-link <%= if @navigation == "announcement" do %>header-link--active<% end %>"> 
+      <%= link("Messages", to: announcement_path(@conn, :index)) %>
+    </li>
+    <li class="header-link  <%= if @navigation == "documents" do %>header-link--active<% end %>">
+      <%= link("Documents", to: announcement_path(@conn, :index)) %>
+    </li>
+    <li class="header-link">
+      <%= link("Calendar", to: member_path(@conn, :index)) %>
+    </li>
+    <li class="header-link  <%= if @navigation == "members" do %>header-link--active<% end %>">
+      <%= link("Team", to: member_path(@conn, :index)) %>
+    </li>
+    <li class="header-link">
+      <%= link("Contacts", to: member_path(@conn, :index)) %>
+    </li>
+  </ul>
   
   <div data-controller="navigation" data-navigation-url="<%= session_path(@conn, :switcher) %>">
     <%= if @current_member do %>
@@ -13,6 +28,6 @@
       <div data-target="navigation.switcher" class="absolute pin-r border z-50 p-4 bg-white shadow rounded opacity-0">
       </div>
       <%= link("Log out", to: session_path(@conn, :delete), method: :delete, class: "btn text-yellow") %>
-    <% end%>
+    <% end %>
   </div>
 </nav>

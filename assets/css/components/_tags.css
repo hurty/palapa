@@ -1,7 +1,12 @@
 .tag {
   @apply px-2 py-1 mr-1;
   @apply bg-grey-light rounded;
+  @apply text-grey-darker;
 
+  &--active {
+    @apply bg-green-lighter text-green-darker !important;
+  }
+  
   &:visited {
     @apply text-grey-darker;
   }
