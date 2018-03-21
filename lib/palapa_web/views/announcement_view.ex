@@ -27,11 +27,11 @@ defmodule PalapaWeb.AnnouncementView do
       |> Map.get(:teams)
 
     if Enum.any?(teams) do
-      Enum.map(teams, fn team ->
-        PalapaWeb.TeamView.team_tag(conn, team)
-      end)
-    else
-      "everyone"
+      content_tag :div, class: "flex flex-wrap" do
+        Enum.map(teams, fn team ->
+          PalapaWeb.TeamView.team_tag(conn, team)
+        end)
+      end
     end
   end
 end

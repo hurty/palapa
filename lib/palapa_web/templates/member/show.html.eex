@@ -2,7 +2,7 @@
   <div class="w-1/3 mx-auto">
     <div class="bg-purple p-4 rounded-lg pb-8">
       <div class="text-center">
-        <img src="https://png.icons8.com/dotty/50/000000/cat-profile.png">  
+        <%= avatar(@member) %>
       </div>
       <div class="text-purple-lightest text-center text-3xl font-bold capitalize mb-2"><%= @member.name %></div>
       <div class="text-grey-dark text-center text-xl font-light capitalize"><%= @member.title %></div>
@@ -18,6 +18,8 @@
       <div class="text-sm text-grey-darkest m-2"><a href="#">Github page</a></div>
       <div class="text-sm text-grey-darkest m-2"><a href="#">Twitter page</a></div>
     </div>
+
+    <%= link("Edit profile", to: member_path(@conn, :edit, @member))%>
   </div>
 
   <div class="  ">

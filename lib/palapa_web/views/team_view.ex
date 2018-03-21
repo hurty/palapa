@@ -8,7 +8,7 @@ defmodule PalapaWeb.TeamView do
       :a,
       team.name,
       href: Router.Helpers.member_path(conn, :index, team_id: team),
-      class: "tag"
+      class: "tag tag--sm mt-1 mr-1"
     )
   end
 end

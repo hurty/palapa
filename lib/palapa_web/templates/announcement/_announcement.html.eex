@@ -1,9 +1,18 @@
 <li class="border-b px-8 py-4">
   <div class="">
-    <h3><%= link @announcement.title, to: announcement_path(@conn, :show, @announcement), class: "text-green text-base hover:underline" %></h3>
-    <p class="text-sm font-bold text-grey-darker"><%= link @announcement.creator.name, to: member_path(@conn, :show, @announcement.creator.id), class: "text-grey-darker hover:underline" %></p>
-    <p class="text-xs text-grey-darker font-light"> Posted <%= time_from_now(@announcement.inserted_at) %> to <%= announcement_teams_tags(@conn, @announcement) %></p>
-    <p class="text-xs text-grey-darker leading-loose mt-2"> <%= excerpt(@announcement.content) %></p>
+    <div class="flex my-4">
+      <div class="mr-2">
+        <%= PalapaWeb.MemberView.avatar_small(@announcement.creator) %>
+      </div>
+      <div class="text-xs text-grey-darker pt-1 w-full">
+        <%= link @announcement.creator.name, to: member_path(@conn, :show, @announcement.creator.id), class: "text-grey-darker font-bold hover:underline" %>
+        <p class="text-xs text-grey-darker font-light"> Posted <%= time_from_now(@announcement.inserted_at) %></p>
+        <h3 class="mt-2"><%= link @announcement.title, to: announcement_path(@conn, :show, @announcement), class: "text-green text-base hover:underline" %></h3>
+        <p class="text-xs text-grey-darker leading-normal mt-1"> <%= excerpt(@announcement.content) %></p>
+        <div class="border-2 rounded-full border-grey-light w-1/6 my-4"></div>
+        <div class="my-2"><%= announcement_teams_tags(@conn, @announcement) %></div>
+        <div class="text-xs text-grey-darker mt-2">2 comments</div>
+      </div>
+    </div>
   </div>
-  <div class="text-xs text-grey-darkest mt-2">2 comments</div>
 </li>

@@ -10,6 +10,8 @@ defmodule Palapa.Organizations.Policy do
   # Anybody can see another user in the same organization
   def authorize(:show_member, %Member{}, _), do: true
 
+  def authorize(:edit_member, %Member{}, _), do: true
+
   # Catch-all: deny everything else
   def authorize(_, _, _), do: false
 end

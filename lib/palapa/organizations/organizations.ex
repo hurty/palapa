@@ -73,4 +73,14 @@ defmodule Palapa.Organizations do
     |> Member.changeset(attrs)
     |> Repo.insert()
   end
+
+  def update_member(%Member{} = member, attrs) do
+    member
+    |> Member.update_profile_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def member_change(%Member{} = member) do
+    Member.update_profile_changeset(member, %{})
+  end
 end

@@ -3,7 +3,7 @@
   
   <ul class="flex items-center justify-between list-reset">
     <li class="header-link mr-8 <%= if @navigation == "personal" do %>header-link--active<% end %>"> 
-      <%= link("My space", to: announcement_path(@conn, :index)) %>
+      <%= link("Home", to: announcement_path(@conn, :index)) %>
     </li>
     <li class="header-link <%= if @navigation == "announcement" do %>header-link--active<% end %>"> 
       <%= link("Messages", to: announcement_path(@conn, :index)) %>
@@ -19,6 +19,9 @@
     </li>
     <li class="header-link">
       <%= link("Contacts", to: member_path(@conn, :index)) %>
+    </li>
+    <li class="header-link ml-8 <%= if @navigation == "profile" do %>header-link--active<% end %>"> 
+      <%= link("My profile", to: member_path(@conn, :show, @current_member)) %>
     </li>
   </ul>
   

@@ -1,0 +1,7 @@
+.avatar {
+  @apply rounded-full;
+}
+
+.avatar--sm {
+  width: 50px;
+}

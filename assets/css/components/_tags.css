@@ -1,5 +1,5 @@
 .tag {
-  @apply px-2 py-1 mr-1;
+  @apply px-2 py-1;
   @apply bg-grey-light rounded;
   @apply text-grey-darker;
 
@@ -14,4 +14,8 @@
   &:hover {
     text-decoration: underline;
   }
+}
+
+.tag--sm {
+  @apply bg-grey-lighter rounded;
 }

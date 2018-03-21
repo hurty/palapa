@@ -60,4 +60,36 @@ defmodule PalapaWeb.MemberController do
       )
     end
   end
+
+  def edit(conn, %{"id" => id}) do
+    member =
+      Organizations.get_member!(current_organization(), id)
+      |> Organizations.member_change()
+
+    with :ok <- permit(Organizations, :edit_member, current_member()) do
+      render(
+        conn,
+        "edit.html",
+        member: member
+      )
+    end
+  end
+
+  def update(conn, %{"id" => id, "member" => member_attrs}) do
+    member = Organizations.get_member!(current_organization(), id)
+
+    with :ok <- permit(Organizations, :edit_member, current_member()) do
+      case Organizations.update_member(member, member_attrs) do
+        {:ok, struct} ->
+          redirect(conn, to: member_path(conn, :show, struct))
+
+        {:error, changeset} ->
+          render(
+            conn,
+            "edit.html",
+            member: changeset
+          )
+      end
+    end
+  end
 end
