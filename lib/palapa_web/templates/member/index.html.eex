@@ -1,37 +1,56 @@
-<div class="flex">
-  <div class="w-1/4 p-8 sidebar">
-    <ul class="list-reset">
-      <li class="text-lg text-blue-dark font-light mb-4 <%= unless @selected_team do %> font-bold <% end %>">
-        <%= link("All members", to: member_path(@conn, :index)) %>
-      </li>
-    </ul>
-
-    <h2 class="text-grey-dark text-sm font-bold pb-2 mt-6 uppercase">Teams </h2>
-    
-    <ul class="list-reset pl-1">
-      <%= for team <- @teams do %>
-        <li class=" text-blue-dark font-light mb-2 <%= if @selected_team && @selected_team.id == team.id do %> font-bold <% end %>">
-          <%= link(team.name, to: member_path(@conn, :index, team_id: team.id)) %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-  
-  <div class="w-3/4 p-8 bg-grey-lighter">
-    <div class="flex justify-end flex-wrap py-2">
+<div class="flex w-full sm:w-2/3 mx-auto">
+  <div class="w-full sm:w-3/4">
+    <div class="flex justify-center flex-wrap sm:mb-4">
       <%= if Palapa.Access.permit? Palapa.Teams, :create, @current_member do %>
-        <%= link("+ Add people", to: invitation_path(@conn, :new), class: "nav-btn") %>
-        <%= link("+ Create a new team", to: team_path(@conn, :new), class: "nav-btn") %>
+        <%= link("Invite people", to: invitation_path(@conn, :new), class: "nav-btn mr-2 sm:mr-4 my-1") %>
+        <%= link("Create a team", to: team_path(@conn, :new), class: "nav-btn my-1") %>
       <% end %>
-    </div>
-    
-    <h2 class="text-grey-darker text-xl font-bold uppercase tracking-wide mb-8">
+    </div>    
+  </div>
+  <div class="hidden sm:block w-1/4">
+  </div>
+</div>
+
+<div class="flex w-full sm:w-2/3 mx-auto">
+  <div class="w-full sm:w-3/4">
+    <h2 class="hidden sm:block text-sm py-2 my-4 text-center text-grey-darkest font-extrabold">
       <%= if @selected_team do %> 
-        Members in <span class="bg-grey-light text-blue-dark rounded px-2 py-1"><%= @selected_team.name %></span>
+        <%= @selected_team.name %>
+      <% else %>
+        Everyone in your organization
       <% end %>
     </h2>
 
-    <div class="flex flex-wrap -mb-4">
+    <%# Teams navigation for mobile %>
+    <div data-controller="filter"> 
+      <div class="sm:hidden w-4/5 mx-auto text-center">
+        <button data-action="filter#toggleFilters" class="p-2 my-4 bg-grey-light text-sm text-grey-darkest font-extrabold border rounded-lg">
+          <%= if @selected_team do %> 
+            <%= @selected_team.name %>
+          <% else %>
+            Everyone in your organization
+          <% end %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
+        </button>
+      </div>
+
+      <div data-target="filter.filters" class="hidden sm:hidden w-4/5 mx-auto mb-2 bg-black rounded-lg p-2">
+        <ul class="list-reset">
+          <li class="text-blue-dark mb-2 pt-2 font-bold">
+            <%= link("Everyone", to: member_path(@conn, :index), class: (unless @selected_team, do: "tag tag--active", else: "tag")) %>
+          </li>
+          <div class="border-t-2 border-grey-lighter w-12 my-2"></div>
+          <%= for team <- @teams do %>
+            <li class="inline-block text-blue-dark mb-2 font-bold">
+              <%= link(team.name, to: member_path(@conn, :index, team_id: team.id), class: (if @selected_team && @selected_team.id == team.id, do: "tag tag--active", else: "tag")) %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <%# /Teams navigation for mobile %>
+
+    <div class="flex flex-wrap justify-center">
       <%= if Enum.any?(@members) do %>
         <%= for member <- @members do %> 
           <%= render @view_module, "_member.html", %{conn: @conn, member: member} %>
@@ -39,6 +58,22 @@
       <% else %>
         <div class="blankslate">There is no member in this team yet.</div>
       <% end %>
-    </div>
+    </div>  
+  </div>
+  
+  <div class="hidden sm:block w-1/4">
+    <h2 class="text-grey-dark text-sm font-bold uppercase pb-2">Teams</h2>
+    
+    <ul class="list-reset">
+      <li class="text-blue-dark font-light mb-2 font-bold">
+        <%= link("Everyone", to: member_path(@conn, :index), class: (unless @selected_team, do: "tag tag--active", else: "tag")) %>
+      </li>
+      <div class="border-t-2 border-grey-lighter w-12 my-2"></div>
+      <%= for team <- @teams do %>
+        <li class="text-blue-dark font-light mb-2 font-bold">
+          <%= link(team.name, to: member_path(@conn, :index, team_id: team.id), class: (if @selected_team && @selected_team.id == team.id, do: "tag tag--active", else: "tag")) %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>

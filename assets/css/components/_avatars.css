@@ -2,6 +2,10 @@
   @apply rounded-full;
 }
 
+.avatar--md {
+  width: 110px;
+}
+
 .avatar--sm {
   width: 50px;
 }

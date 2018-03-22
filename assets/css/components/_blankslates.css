@@ -1,4 +1,4 @@
 .blankslate {
-  @apply w-1/2 p-2 mx-auto;
-  @apply text-grey-dark text-center text-lg;
+  @apply p-2;
+  @apply text-grey-darker text-center text-lg;
 }

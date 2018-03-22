@@ -8,7 +8,7 @@
     </div>
     
     <%= if Enum.any?(@today_announcements) do %>
-      <h2 class=  "text-sm mt-2 px-1 text-center text-grey-darkest font-extrabold">Today</h2>
+      <h2 class="text-sm mt-2 px-1 text-center text-grey-darkest font-extrabold">Today</h2>
       <div class="bg-grey-lighter p-2 my-4 rounded-lg">
         <ul class="list-reset bg-white lg:border lg:border-grey-light rounded">
           <%= render_many @today_announcements, PalapaWeb.AnnouncementView, "_announcement.html", as: :announcement, conn: @conn %>

@@ -11,6 +11,11 @@ defmodule PalapaWeb.MemberView do
     img_tag(url, class: "avatar")
   end
 
+  def avatar_medium(member) do
+    url = Palapa.Avatar.url({member.avatar, member}, :thumb)
+    img_tag(url, class: "avatar avatar--md")
+  end
+
   def avatar_small(member) do
     url = Palapa.Avatar.url({member.avatar, member}, :thumb)
     img_tag(url, class: "avatar avatar--sm")
