@@ -60,8 +60,6 @@
       <%= if Enum.any?(@members) do %>
         <%= for member <- @members do %> 
           <%= render @view_module, "_member.html", %{conn: @conn, member: member} %>
-          <%= render @view_module, "_member.html", %{conn: @conn, member: member} %>
-          <%= render @view_module, "_member.html", %{conn: @conn, member: member} %>
         <% end %>
       <% else %>
         <div class="blankslate">There is no member in this team yet.</div>
