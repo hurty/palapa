@@ -33,30 +33,14 @@ defmodule Palapa.Announcements do
     |> where(published_to_everyone: true)
   end
 
-  def published_today(queryable \\ Announcement) do
-    today =
-      Timex.now()
-      |> Timex.beginning_of_day()
-
-    tomorrow =
-      today
-      |> Timex.shift(days: 1)
-
+  def published_between(queryable \\ Announcement, time_start, time_end) do
     queryable
-    |> where([a], a.inserted_at >= ^today and a.inserted_at < ^tomorrow)
+    |> where([a], a.inserted_at >= ^time_start and a.inserted_at < ^time_end)
   end
 
-  def published_yesterday(queryable \\ Announcement) do
-    today =
-      Timex.now()
-      |> Timex.beginning_of_day()
-
-    yesterday =
-      today
-      |> Timex.shift(days: -1)
-
+  def published_before(queryable \\ Announcement, time) do
     queryable
-    |> where([a], a.inserted_at >= ^yesterday and a.inserted_at < ^today)
+    |> where([a], a.inserted_at < ^time)
   end
 
   defp announcements_ids_where_team(%Team{} = team) do
@@ -86,6 +70,13 @@ defmodule Palapa.Announcements do
     |> order_by(desc: :inserted_at)
     |> preload(:creator)
     |> Repo.all()
+  end
+
+  def paginate(queryable \\ Announcement, page \\ 1) do
+    queryable
+    |> order_by(desc: :inserted_at)
+    |> preload(:creator)
+    |> Repo.paginate(page: page, page_size: 10)
   end
 
   def get!(queryable \\ Announcement, id) do

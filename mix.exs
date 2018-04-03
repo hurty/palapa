@@ -20,7 +20,15 @@ defmodule Palapa.Mixfile do
   def application do
     [
       mod: {Palapa.Application, []},
-      extra_applications: [:logger, :runtime_tools, :timex, :bamboo, :arc_ecto]
+      extra_applications: [
+        :logger,
+        :runtime_tools,
+        :timex,
+        :bamboo,
+        :arc_ecto,
+        :scrivener_ecto,
+        :scrivener_html
+      ]
     ]
   end
 
@@ -50,7 +58,9 @@ defmodule Palapa.Mixfile do
       {:wallaby, "~> 0.19.2", [runtime: false, only: [:dev, :test]]},
       {:timex, "~> 3.2"},
       {:arc, "~> 0.8.0"},
-      {:arc_ecto, "~> 0.7.0"}
+      {:arc_ecto, "~> 0.7.0"},
+      {:scrivener_ecto, "~> 1.0"},
+      {:scrivener_html, "~> 1.7"}
     ]
   end
 

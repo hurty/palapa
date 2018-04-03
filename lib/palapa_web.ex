@@ -51,6 +51,7 @@ defmodule PalapaWeb do
       import PalapaWeb.ErrorHelpers
       import PalapaWeb.Gettext
       import PalapaWeb.Helpers
+      import Scrivener.HTML
     end
   end
 

@@ -12,23 +12,31 @@ defmodule PalapaWeb.AnnouncementController do
       Announcements.visible_to(current_member())
       |> filter_by_selected_team(conn, params)
 
-    today_announcements =
+    today =
+      Timex.now()
+      |> Timex.end_of_day()
+
+    beginning_of_week =
+      today
+      |> Timex.beginning_of_week()
+
+    this_week_announcements =
       announcements_query
-      |> Announcements.published_today()
+      |> Announcements.published_between(beginning_of_week, today)
       |> Announcements.list()
 
-    yesterday_announcements =
+    other_announcements =
       announcements_query
-      |> Announcements.published_yesterday()
-      |> Announcements.list()
+      |> Announcements.published_before(beginning_of_week)
+      |> Announcements.paginate(params["page"])
 
     teams = Teams.list_for_member(current_member())
 
     render(
       conn,
       "index.html",
-      today_announcements: today_announcements,
-      yesterday_announcements: yesterday_announcements,
+      this_week_announcements: this_week_announcements,
+      other_announcements: other_announcements,
       teams: teams,
       selected_team_id: params["team_id"]
     )

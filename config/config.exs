@@ -23,6 +23,7 @@ config :logger, :console,
 config :palapa, Palapa.Mailer, adapter: Bamboo.LocalAdapter
 
 config :arc, storage: Arc.Storage.Local
+config :scrivener_html, routes_helper: PalapaWeb.Router.Helpers
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

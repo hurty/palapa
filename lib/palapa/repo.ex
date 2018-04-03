@@ -1,5 +1,6 @@
 defmodule Palapa.Repo do
   use Ecto.Repo, otp_app: :palapa
+  use Scrivener, page_size: 100
   import Ecto.Query
 
   @doc """

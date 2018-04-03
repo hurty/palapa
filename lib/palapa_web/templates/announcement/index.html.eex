@@ -6,23 +6,42 @@
     <div class="flex justify-center mb-8">
       <%= link("New message", to: announcement_path(@conn, :new), class: "nav-btn") %>
     </div>
-    
-    <%= if Enum.any?(@today_announcements) do %>
-      <h2 class="text-sm mt-2 px-1 text-center text-grey-darkest font-extrabold">Today</h2>
+
+    <%= if Enum.empty?(@this_week_announcements) && Enum.empty?(@other_announcements)  do %>
+      <div class="blankslate">There's nothing's there yet.</div>
+    <% end %>
+
+    <%= if Enum.any?(@this_week_announcements) && @other_announcements.page_number < 2 do %>
+      <h2 class="text-sm mt-2 px-1 text-center text-grey-darkest font-extrabold">This week</h2>
       <div class="bg-grey-lighter p-2 my-4 rounded-lg">
         <ul class="list-reset bg-white lg:border lg:border-grey-light rounded">
-          <%= render_many @today_announcements, PalapaWeb.AnnouncementView, "_announcement.html", as: :announcement, conn: @conn %>
+          <%= render_many @this_week_announcements, PalapaWeb.AnnouncementView, "_announcement.html", as: :announcement, conn: @conn %>
         </ul>
       </div>
     <% end %>
 
-    <%= if Enum.any?(@yesterday_announcements) do %>
-      <h2 class="text-sm mt-8 px-1 text-center text-grey-darkest font-extrabold">Yesterday</h2>
+    <%= if Enum.any?(@other_announcements) do %>      
+      <%= if Enum.any?(@this_week_announcements) && @other_announcements.page_number < 2 do %>
+        <h2 class="text-sm mt-8 px-1 text-center text-grey-darkest font-extrabold">Earlier</h2>
+      <% end %>
+
+      <%= if @other_announcements.total_pages > 1 && @other_announcements.page_number > 1 do %>
+        <div class="text-center my-8">
+          <%= pagination_links @other_announcements %>
+        </div>
+      <% end %>
+
       <div class="bg-grey-lighter p-2 my-4 rounded-lg">
         <ul class="list-reset bg-white lg:border lg:border-grey-light rounded">
-          <%= render_many @yesterday_announcements, PalapaWeb.AnnouncementView, "_announcement.html", as: :announcement, conn: @conn %>
+          <%= render_many @other_announcements, PalapaWeb.AnnouncementView, "_announcement.html", as: :announcement, conn: @conn %>
         </ul>
       </div>
+
+      <%= if @other_announcements.total_pages > 1 do %>
+        <div class="text-center my-8">
+        <%= pagination_links @other_announcements %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 
