@@ -1,14 +1,16 @@
-<div class="card lg:w-1/2 mx-auto">
-  <h2 class="card-header">
-    Invite people
-  </h2>
+<div class="card-shadow lg:w-1/2 mx-auto">
+  <div class="card">
+    <h2 class="card-header">Invite people</h2>
+    <div class="card-header-separator"></div>
 
-  <%= render PalapaWeb.InvitationView, "_form.html", conn: @conn, prefill: nil %>
+    <%= render PalapaWeb.InvitationView, "_form.html", conn: @conn, prefill: nil %>
+  </div>
+</div>
 
-  
-
-  <div class="mx-auto mt-8 text-grey-darkest">
-    <h2 class="text-base text-left tracking-wide font-bold text-grey-darker mb-6 uppercase">Pending invitations</h2>
+<div class="card-shadow lg:w-1/2 mx-auto my-8">
+  <div class="card">
+    <h2 class="card-header">Pending invitations</h2>
+    <div class="card-header-separator"></div>
 
     <%= for invitation <- @invitations do %>
       <div class="flex flex-wrap border-t border-blue-lightest">

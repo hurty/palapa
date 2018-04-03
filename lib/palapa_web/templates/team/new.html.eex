@@ -1,30 +1,31 @@
-<div class="card w-1/3 mx-auto">
-  <h2 class="card-header">
-    Create a new team
-  </h2>
+<div class="card-shadow w-1/3 mx-auto">
+  <div class="card">
+    <h2 class="card-header">New team</h2>
+    <div class="card-header-separator"></div>
 
-  <%= form_for @team, team_path(@conn, :create), [], fn form -> %>
-    <%= if @team.action do %>
-      <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+    <%= form_for @team, team_path(@conn, :create), [], fn form -> %>
+      <%= if @team.action do %>
+        <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+      <% end %>
+
+      <div class="field">
+        <%= label form, :name, "Team name", class: "label" %>
+        <%= error_tag form, :name %>
+        <%= text_input form, :name, class: "input" %>
+      </div>
+
+      <div class="field" data-controller="choice">
+        <%= label form, :members, "Add members (you can also do this later)", class: "label" %>
+        <%= error_tag form, :members %>
+        <%= multiple_select form, :members, PalapaWeb.MemberView.organization_members(@current_organization), 
+          placeholder: "Choose members in the list",
+          "data-target": "choice.select", 
+          selected: [] %>
+      </div>
+
+      <div class="card-actions">
+        <%= submit "Create this team", class: "btn btn-blue" %>
+      </div>    
     <% end %>
-
-    <div class="field">
-      <%= label form, :name, "Team name", class: "label" %>
-      <%= error_tag form, :name %>
-      <%= text_input form, :name, class: "input" %>
-    </div>
-
-    <div class="field" data-controller="choice">
-      <%= label form, :members, "Add members (you can also do this later)", class: "label" %>
-      <%= error_tag form, :members %>
-      <%= multiple_select form, :members, PalapaWeb.MemberView.organization_members(@current_organization), 
-        placeholder: "Choose members in the list",
-        "data-target": "choice.select", 
-        selected: [] %>
-    </div>
-
-    <div class="card-actions">
-      <%= submit "Create this team", class: "btn btn-blue" %>
-    </div>    
-  <% end %>
+  </div>
 </div>

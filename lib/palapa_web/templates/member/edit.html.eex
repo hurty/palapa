@@ -1,8 +1,8 @@
 <div class="w-1/2 mx-auto" data-controller="announcement">
-  <div class="lg:bg-grey-lighter p-2 my-4 rounded-lg">
-    <div class="bg-white p-4 lg:border lg:border-grey-light rounded">
-      <h2 class="font-extrabold">Edit my profile</h2>
-      <div class="border-2 rounded-full border-grey-light w-1/6 my-4"></div>
+  <div class="card-shadow">
+    <div class="card">
+      <h2 class="card-header">Edit my profile</h2>
+      <div class="card-header-separator"></div>
 
       <%= form_for @member, member_path(@conn, :update, @member.data.id), [as: :member, multipart: true], fn f ->%>
         <div class="field">

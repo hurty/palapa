@@ -1,19 +1,25 @@
 <div class="flex justify-center py-4">
-  <div class="flex-3 card">
-    <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
-      <div class="field">
-        <%= label f, :email, "Email address", class: "label" %>
-        <%= email_input f, :email, class: "input" %>
-      </div>
+  <div class="flex-3 card-shadow">
+    <div class="card">
+      <h2 class="card-header">Login</h2>
+      
+      <div class="card-header-separator"></div>
 
-      <div class="field">
-        <%= label f, :email, "Password", class: "label" %>
-        <%= password_input f, :password, class: "input" %>
-      </div>
+      <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
+        <div class="field">
+          <%= label f, :email, "Email address", class: "label" %>
+          <%= email_input f, :email, class: "input" %>
+        </div>
 
-      <div class="card-actions">
-        <%= submit "Log in", class: "btn btn-blue" %>
-      </div>
-    <% end %>
+        <div class="field">
+          <%= label f, :email, "Password", class: "label" %>
+          <%= password_input f, :password, class: "input" %>
+        </div>
+
+        <div class="card-actions">
+          <%= submit "Log in", class: "btn btn-blue" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

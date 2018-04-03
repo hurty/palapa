@@ -1,12 +1,17 @@
+.card-shadow {
+  @apply bg-grey-lighter rounded-lg p-2;
+}
+
 .card {
-  @apply p-8;
-  @apply bg-white rounded-lg border border-grey-light shadow;
+  @apply bg-white p-4 border-b border border-grey-light rounded;
 }
 
 .card-header {
-  @apply p-4 mb-8;
-  @apply bg-grey-lightest rounded-full;
-  @apply text-xl tracking-wide text-center text-indigo font-extrabold;
+  @apply font-extrabold;
+}
+
+.card-header-separator {
+  @apply border-2 rounded-full border-grey-light w-1/6 my-4;
 }
 
 .card-actions {

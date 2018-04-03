@@ -1,5 +1,5 @@
-<div class="w-full sm:w-64 h-auto sm:bg-grey-lighter rounded-lg p-2 sm:mb-4 mx-2">
-  <div class="h-full bg-white p-4 border-b sm:border border-grey-light sm:rounded">
+<div class="card-shadow w-full sm:w-64 h-auto sm:mb-4 mx-2">
+  <div class="card h-full">
     <div class="text-center"><%= PalapaWeb.MemberView.avatar_medium(@member) %></div>
     
     <div class="text-center text-lg font-bold capitalize sm:mb-2"><%= link @member.name, to: member_path(@conn, :show, @member), class: "text-green" %></div>
