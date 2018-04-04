@@ -67,15 +67,13 @@ defmodule Palapa.Announcements do
 
   def list(queryable \\ Announcement) do
     queryable
-    |> order_by(desc: :inserted_at)
-    |> preload(:creator)
+    |> prepare_list()
     |> Repo.all()
   end
 
   def paginate(queryable \\ Announcement, page \\ 1) do
     queryable
-    |> order_by(desc: :inserted_at)
-    |> preload(:creator)
+    |> prepare_list
     |> Repo.paginate(page: page, page_size: 10)
   end
 
@@ -94,6 +92,16 @@ defmodule Palapa.Announcements do
     |> Repo.insert()
   end
 
+  def change(%Announcement{} = announcement) do
+    Announcement.changeset(announcement, %{})
+  end
+
+  defp prepare_list(queryable) do
+    queryable
+    |> order_by(desc: :inserted_at)
+    |> preload([:creator, :teams])
+  end
+
   defp put_teams(changeset, teams) do
     if teams && Enum.any?(teams) do
       changeset
@@ -102,9 +110,5 @@ defmodule Palapa.Announcements do
     else
       changeset
     end
-  end
-
-  def change(%Announcement{} = announcement) do
-    Announcement.changeset(announcement, %{})
   end
 end

@@ -21,10 +21,7 @@ defmodule PalapaWeb.AnnouncementView do
   end
 
   def announcement_teams_tags(conn, announcement) do
-    teams =
-      announcement
-      |> Palapa.Repo.preload(:teams)
-      |> Map.get(:teams)
+    teams = announcement.teams
 
     if Enum.any?(teams) do
       content_tag :div, class: "flex flex-wrap" do
