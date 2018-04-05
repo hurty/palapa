@@ -3,7 +3,7 @@ defmodule Palapa.Teams.Team do
 
   alias Palapa.Organizations
   alias Palapa.Teams.{Team, TeamMember}
-  alias Palapa.Announcements.{Announcement}
+  alias Palapa.Messages.{Message}
 
   schema "teams" do
     field(:name, :string)
@@ -12,7 +12,7 @@ defmodule Palapa.Teams.Team do
 
     belongs_to(:organization, Organizations.Organization)
     many_to_many(:members, Organizations.Member, join_through: TeamMember)
-    many_to_many(:announcements, Announcement, join_through: "announcements_teams")
+    many_to_many(:messages, Message, join_through: "messages_teams")
   end
 
   def changeset(%Team{} = team, attrs) do

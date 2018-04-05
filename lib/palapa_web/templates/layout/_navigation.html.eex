@@ -3,13 +3,13 @@
   
   <ul class="flex items-center justify-between list-reset">
     <li class="header-link mr-8 <%= if @navigation == "personal" do %>header-link--active<% end %>"> 
-      <%= link("Home", to: announcement_path(@conn, :index)) %>
+      <%= link("Home", to: message_path(@conn, :index)) %>
     </li>
-    <li class="header-link <%= if @navigation == "announcement" do %>header-link--active<% end %>"> 
-      <%= link("Messages", to: announcement_path(@conn, :index)) %>
+    <li class="header-link <%= if @navigation == "message" do %>header-link--active<% end %>"> 
+      <%= link("Messages", to: message_path(@conn, :index)) %>
     </li>
     <li class="header-link  <%= if @navigation == "documents" do %>header-link--active<% end %>">
-      <%= link("Documents", to: announcement_path(@conn, :index)) %>
+      <%= link("Documents", to: message_path(@conn, :index)) %>
     </li>
     <li class="header-link">
       <%= link("Calendar", to: member_path(@conn, :index)) %>

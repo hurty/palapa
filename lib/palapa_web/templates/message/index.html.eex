@@ -1,6 +1,6 @@
 <div class="flex w-full sm:px-4 lg:w-2/3 mx-auto">
   <div class="w-full sm:w-2/3 flex justify-center mb-8">
-    <%= link("New message", to: announcement_path(@conn, :new), class: "nav-btn") %>
+    <%= link("New message", to: message_path(@conn, :new), class: "nav-btn") %>
   </div>
 </div>
 
@@ -8,39 +8,39 @@
 
 <div class="flex w-full sm:px-4 lg:w-2/3 mx-auto">
   <div class="w-full sm:w-2/3">
-   <%= if Enum.empty?(@this_week_announcements) && Enum.empty?(@other_announcements)  do %>
+   <%= if Enum.empty?(@this_week_messages) && Enum.empty?(@other_messages)  do %>
       <div class="blankslate">There's nothing's there yet.</div>
     <% end %>
 
-    <%= if Enum.any?(@this_week_announcements) && @other_announcements.page_number < 2 do %>
-      <h2 class="text-sm px-1 text-center text-grey-darkest font-extrabold">This week</h2>
+    <%= if Enum.any?(@this_week_messages) && @other_messages.page_number < 2 do %>
+      <h2 class="text-sm text-center text-grey-darkest font-extrabold">This week</h2>
       <div class="bg-grey-lighter p-2 my-4 rounded-lg">
         <ul class="list-reset bg-white lg:border lg:border-grey-light rounded">
-          <%= render_many @this_week_announcements, PalapaWeb.AnnouncementView, "_announcement.html", as: :announcement, conn: @conn %>
+          <%= render_many @this_week_messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn %>
         </ul>
       </div>
     <% end %>
 
-    <%= if Enum.any?(@other_announcements) do %>      
-      <%= if Enum.any?(@this_week_announcements) && @other_announcements.page_number < 2 do %>
+    <%= if Enum.any?(@other_messages) do %>      
+      <%= if Enum.any?(@this_week_messages) && @other_messages.page_number < 2 do %>
         <h2 class="text-sm my-4 px-1 text-center text-grey-darkest font-extrabold">Earlier</h2>
       <% end %>
 
-      <%= if @other_announcements.total_pages > 1 && @other_announcements.page_number > 1 do %>
+      <%= if @other_messages.total_pages > 1 && @other_messages.page_number > 1 do %>
         <div class="text-center my-8">
-          <%= pagination_links @other_announcements %>
+          <%= pagination_links @other_messages %>
         </div>
       <% end %>
 
       <div class="bg-grey-lighter p-2 rounded-lg">
         <ul class="list-reset bg-white lg:border lg:border-grey-light rounded">
-          <%= render_many @other_announcements, PalapaWeb.AnnouncementView, "_announcement.html", as: :announcement, conn: @conn %>
+          <%= render_many @other_messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn %>
         </ul>
       </div>
 
-      <%= if @other_announcements.total_pages > 1 do %>
+      <%= if @other_messages.total_pages > 1 do %>
         <div class="text-center my-8">
-        <%= pagination_links @other_announcements %>
+        <%= pagination_links @other_messages %>
         </div>
       <% end %>
     <% end %>
@@ -51,12 +51,12 @@
     
     <ul class="list-reset pl-1">
       <li class="text-blue-dark font-light mb-2 font-bold">
-        <%= link("My teams", to: announcement_path(@conn, :index), class: (unless @selected_team_id, do: "tag tag--active", else: "tag")) %>
+        <%= link("My teams", to: message_path(@conn, :index), class: (unless @selected_team_id, do: "tag tag--active", else: "tag")) %>
       </li>
       <div class="border-t-2 border-grey-lighter w-1/6 my-2"></div>
       <%= for team <- @teams do %>
         <li class="text-blue-dark font-light mb-2 font-bold">
-          <%= link(team.name, to: announcement_path(@conn, :index, team_id: team.id), class: (if @selected_team_id == team.id, do: "tag tag--active", else: "tag")) %>
+          <%= link(team.name, to: message_path(@conn, :index, team_id: team.id), class: (if @selected_team_id == team.id, do: "tag tag--active", else: "tag")) %>
         </li>
       <% end %>
     </ul>

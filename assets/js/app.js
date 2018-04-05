@@ -18,11 +18,11 @@ import ChoiceController from "./controllers/choice_controller"
 import FilterController from "./controllers/filter_controller"
 import NavigationController from "./controllers/navigation_controller"
 import TextEditorController from "./controllers/text_editor_controller"
-import AnnouncementController from "./controllers/announcement_controller"
+import MessageController from "./controllers/message_controller"
 
 const application = Application.start()
 application.register("choice", ChoiceController)
 application.register("filter", FilterController)
 application.register("navigation", NavigationController)
 application.register("text_editor", TextEditorController)
-application.register("announcement", AnnouncementController)
+application.register("message", MessageController)

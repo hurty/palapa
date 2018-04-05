@@ -1,8 +1,8 @@
-defmodule Palapa.Repo.Migrations.CreateAnnouncements do
+defmodule Palapa.Repo.Migrations.CreateMessages do
   use Ecto.Migration
 
   def change do
-    create table(:announcements, primary_key: false) do
+    create table(:messages, primary_key: false) do
       add(:id, :uuid, primary_key: true)
 
       add(
@@ -18,22 +18,22 @@ defmodule Palapa.Repo.Migrations.CreateAnnouncements do
       add(:published_to_everyone, :boolean, null: false, default: true)
     end
 
-    create(index(:announcements, [:organization_id]))
-    create(index(:announcements, [:creator_id]))
-    create(index(:announcements, [:inserted_at]))
+    create(index(:messages, [:organization_id]))
+    create(index(:messages, [:creator_id]))
+    create(index(:messages, [:inserted_at]))
 
-    create table(:announcements_teams, primary_key: false) do
+    create table(:messages_teams, primary_key: false) do
       add(
-        :announcement_id,
-        references(:announcements, on_delete: :delete_all, type: :uuid),
+        :message_id,
+        references(:messages, on_delete: :delete_all, type: :uuid),
         null: false
       )
 
       add(:team_id, references(:teams, on_delete: :delete_all, type: :uuid), null: false)
     end
 
-    create(index(:announcements_teams, [:announcement_id]))
-    create(index(:announcements_teams, [:team_id]))
-    create(unique_index(:announcements_teams, [:announcement_id, :team_id]))
+    create(index(:messages_teams, [:message_id]))
+    create(index(:messages_teams, [:team_id]))
+    create(unique_index(:messages_teams, [:message_id, :team_id]))
   end
 end

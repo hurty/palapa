@@ -1,4 +1,4 @@
-defmodule PalapaWeb.AnnouncementView do
+defmodule PalapaWeb.MessageView do
   use PalapaWeb, :view
 
   def excerpt(content) do
@@ -20,8 +20,8 @@ defmodule PalapaWeb.AnnouncementView do
     |> String.replace("&nbsp;", "")
   end
 
-  def announcement_teams_tags(conn, announcement) do
-    teams = announcement.teams
+  def message_teams_tags(conn, message) do
+    teams = message.teams
 
     if Enum.any?(teams) do
       content_tag :div, class: "flex flex-wrap" do

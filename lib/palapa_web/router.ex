@@ -41,7 +41,7 @@ defmodule PalapaWeb.Router do
     get("/sessions/switcher", SessionController, :switcher)
     get("/dashboard", DashboardController, :index)
 
-    resources("/announcements", AnnouncementController)
+    resources("/message", MessageController)
 
     resources "/members", MemberController do
       resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)

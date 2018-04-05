@@ -1,4 +1,4 @@
-<div class="w-1/2 mx-auto" data-controller="announcement">
+<div class="w-1/2 mx-auto" data-controller="message">
   <div class="card-shadow">
     <div class="card">
       <h2 class="card-header">Edit my profile</h2>

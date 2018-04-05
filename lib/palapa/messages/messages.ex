@@ -1,99 +1,99 @@
-defmodule Palapa.Announcements do
+defmodule Palapa.Messages do
   use Palapa.Context
-  alias Palapa.Announcements.Announcement
+  alias Palapa.Messages.Message
   alias Palapa.Organizations.Organization
   alias Palapa.Organizations.Member
   alias Palapa.Teams.Team
 
   # --- Authorizations
 
-  defdelegate(authorize(action, member, params), to: Palapa.Announcements.Policy)
+  defdelegate(authorize(action, member, params), to: Palapa.Messages.Policy)
 
   # --- Scopes
 
-  def visible_to(queryable \\ Announcement, %Member{} = member) do
+  def visible_to(queryable \\ Message, %Member{} = member) do
     queryable
     |> where_organization(member.organization)
     |> published_to_everyone
-    |> or_where([q], q.id in ^announcements_ids_visible_to(member))
+    |> or_where([q], q.id in ^messages_ids_visible_to(member))
   end
 
-  def where_organization(queryable \\ Announcement, %Organization{} = organization) do
+  def where_organization(queryable \\ Message, %Organization{} = organization) do
     queryable
     |> where(organization_id: ^organization.id)
   end
 
-  def published_to(queryable \\ Announcement, %Team{} = team) do
+  def published_to(queryable \\ Message, %Team{} = team) do
     queryable
-    |> where([q], q.id in ^announcements_ids_where_team(team))
+    |> where([q], q.id in ^messages_ids_where_team(team))
   end
 
-  def published_to_everyone(queryable \\ Announcement) do
+  def published_to_everyone(queryable \\ Message) do
     queryable
     |> where(published_to_everyone: true)
   end
 
-  def published_between(queryable \\ Announcement, time_start, time_end) do
+  def published_between(queryable \\ Message, time_start, time_end) do
     queryable
     |> where([a], a.inserted_at >= ^time_start and a.inserted_at < ^time_end)
   end
 
-  def published_before(queryable \\ Announcement, time) do
+  def published_before(queryable \\ Message, time) do
     queryable
     |> where([a], a.inserted_at < ^time)
   end
 
-  defp announcements_ids_where_team(%Team{} = team) do
-    Ecto.assoc(team, :announcements)
+  defp messages_ids_where_team(%Team{} = team) do
+    Ecto.assoc(team, :messages)
     |> select([q], q.id)
     |> Repo.all()
   end
 
-  defp announcements_ids_visible_to(%Member{} = member) do
+  defp messages_ids_visible_to(%Member{} = member) do
     teams = Ecto.assoc(member, :teams)
 
     from(
-      announcements in Announcement,
+      messages in Message,
       distinct: true,
-      join: announcement_teams in assoc(announcements, :teams),
+      join: message_teams in assoc(messages, :teams),
       join: member_teams in subquery(teams),
-      on: announcement_teams.id == member_teams.id,
-      select: announcements.id
+      on: message_teams.id == member_teams.id,
+      select: messages.id
     )
     |> Repo.all()
   end
 
   # --- Actions
 
-  def list(queryable \\ Announcement) do
+  def list(queryable \\ Message) do
     queryable
     |> prepare_list()
     |> Repo.all()
   end
 
-  def paginate(queryable \\ Announcement, page \\ 1) do
+  def paginate(queryable \\ Message, page \\ 1) do
     queryable
     |> prepare_list
     |> Repo.paginate(page: page, page_size: 10)
   end
 
-  def get!(queryable \\ Announcement, id) do
+  def get!(queryable \\ Message, id) do
     queryable
     |> preload([:creator, :teams])
     |> Repo.get!(id)
   end
 
   def create(%Organizations.Member{} = creator, attrs, teams) do
-    %Announcement{}
-    |> Announcement.changeset(attrs)
+    %Message{}
+    |> Message.changeset(attrs)
     |> put_change(:organization, creator.organization)
     |> put_change(:creator, creator)
     |> put_teams(teams)
     |> Repo.insert()
   end
 
-  def change(%Announcement{} = announcement) do
-    Announcement.changeset(announcement, %{})
+  def change(%Message{} = message) do
+    Message.changeset(message, %{})
   end
 
   defp prepare_list(queryable) do

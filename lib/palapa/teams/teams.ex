@@ -50,7 +50,7 @@ defmodule Palapa.Teams do
     |> Repo.all()
   end
 
-  # Owner and admins can publish announcements to any team.
+  # Owner and admins can publish messages to any team.
   # Regular members can only publish to teams they're member of.
   def list_for_member(%Member{} = member) do
     if member.role in [:owner, :admin] do

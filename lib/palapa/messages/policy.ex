@@ -1,4 +1,4 @@
-defmodule Palapa.Announcements.Policy do
+defmodule Palapa.Messages.Policy do
   use Palapa.Policy
 
   def authorize(:create, %Member{}, _) do

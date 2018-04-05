@@ -1,24 +1,24 @@
-defmodule Palapa.Announcements.Announcement do
+defmodule Palapa.Messages.Message do
   use Palapa.Schema
   alias Palapa.Organizations
-  alias Palapa.Announcements.Announcement
+  alias Palapa.Messages.Message
   alias Palapa.Teams.Team
 
-  schema "announcements" do
+  schema "messages" do
     belongs_to(:organization, Organizations.Organization)
     belongs_to(:creator, Organizations.Member)
     timestamps()
     field(:title, :string)
     field(:content, :string)
     field(:published_to_everyone, :boolean)
-    many_to_many(:teams, Team, join_through: "announcements_teams")
+    many_to_many(:teams, Team, join_through: "messages_teams")
 
     field(:publish_to, :string, virtual: true)
     field(:publish_teams_ids, {:array, :binary}, virtual: true)
   end
 
-  def changeset(%Announcement{} = announcement, attrs) do
-    announcement
+  def changeset(%Message{} = message, attrs) do
+    message
     |> cast(attrs, [:title, :content, :publish_to])
     |> validate_required(:title)
   end

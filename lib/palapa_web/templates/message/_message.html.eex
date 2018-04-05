@@ -1,0 +1,18 @@
+<li class="border-b p-2 py-4 lg:p-8">
+  <div class="flex">
+    <div class="w-10 sm:w-16 mx-2">
+      <%= PalapaWeb.MemberView.avatar_small(@message.creator) %>
+    </div>
+
+    <div class="w-full text-xs text-grey-darker my-auto">
+      <h3><%= link @message.title, to: message_path(@conn, :show, @message), class: "text-green text-base hover:underline" %></h3>
+      <%= link @message.creator.name, to: member_path(@conn, :show, @message.creator.id), class: "text-grey-darker font-bold hover:underline" %>
+      <div class="text-xs text-grey-darker font-light"> Posted <%= time_from_now(@message.inserted_at) %></div>
+      <div class="border rounded-full border-grey-light w-1/6 my-4"></div>
+      <p class="text-xs text-grey-darker leading-normal mt-1"> <%= excerpt(@message.content) %></p>
+      
+      <div class="my-2"><%= message_teams_tags(@conn, @message) %></div>
+      <div class="text-xs text-grey-darker mt-2">2 comments</div>
+    </div>
+  </div>
+</li>
