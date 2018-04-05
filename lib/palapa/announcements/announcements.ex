@@ -79,7 +79,7 @@ defmodule Palapa.Announcements do
 
   def get!(queryable \\ Announcement, id) do
     queryable
-    |> preload(:creator)
+    |> preload([:creator, :teams])
     |> Repo.get!(id)
   end
 
