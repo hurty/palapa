@@ -1,5 +1,7 @@
-<%= if @comments_count > 0 do %>
-  <h3 class="text-green my-4">   
+<h3 class="text-grey-darkest my-4">   
+  <%= if @comments_count > 0 do %>
     <%= @comments_count %> comments
-  </h3>
-<% end %>
+  <% else %>
+    No comment yet
+  <% end %>
+</h3>
