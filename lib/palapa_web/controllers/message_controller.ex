@@ -3,6 +3,7 @@ defmodule PalapaWeb.MessageController do
 
   alias Palapa.Messages
   alias Palapa.Messages.Message
+  alias Palapa.Messages.MessageComment
   alias Palapa.Teams
 
   plug(:put_navigation, "message")
@@ -80,6 +81,24 @@ defmodule PalapaWeb.MessageController do
     end
   end
 
+  def show(conn, %{"id" => id}) do
+    message =
+      Messages.where_organization(current_organization())
+      |> Messages.get!(id)
+
+    new_message_comment = Messages.change_comment(%MessageComment{})
+
+    with :ok <- permit(Messages, :show, current_member()) do
+      render(
+        conn,
+        "show.html",
+        message: message,
+        comments: message.comments,
+        new_message_comment: new_message_comment
+      )
+    end
+  end
+
   defp find_teams(conn, message_params) do
     message_teams_ids = message_params["publish_teams_ids"] || []
 
@@ -89,16 +108,6 @@ defmodule PalapaWeb.MessageController do
       |> Teams.list()
     else
       []
-    end
-  end
-
-  def show(conn, %{"id" => id}) do
-    message =
-      Messages.where_organization(current_organization())
-      |> Messages.get!(id)
-
-    with :ok <- permit(Messages, :show, current_member()) do
-      render(conn, "show.html", message: message)
     end
   end
 end

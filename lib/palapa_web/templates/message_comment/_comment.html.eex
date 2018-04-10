@@ -1,0 +1,13 @@
+<li class="bg-grey-lighter rounded-lg p-4 mb-4">
+    <div class="flex">
+      <div class="w-10 mx-2">
+        <%= PalapaWeb.MemberView.avatar_small(@comment.creator) %>
+      </div>
+
+      <div class="w-full text-xs my-auto">
+        <%= link @comment.creator.name, to: member_path(@conn, :show, @comment.creator.id), class: "text-grey-darkest font-bold hover:underline" %>
+        <div class="text-grey-darker font-light"><%= time_from_now(@comment.inserted_at) %></div>
+      </div>
+    </div>
+    <div class="text-grey-darkest mt-2 pl-2"><%= raw(@comment.content) %></div>
+</li>

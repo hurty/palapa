@@ -27,4 +27,8 @@ export default class extends Controller {
   updateHiddenContent() {
     this.hiddenContentTarget.value = this.editor.root.innerHTML
   }
+
+  clear() {
+    this.editor.root.innerHTML = ""
+  }
 }

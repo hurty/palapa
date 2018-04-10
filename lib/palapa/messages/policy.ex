@@ -5,7 +5,7 @@ defmodule Palapa.Messages.Policy do
     true
   end
 
-  def authorize(:show, %Member{}, _) do
+  def authorize(:show, %Member{}, _message) do
     true
   end
 

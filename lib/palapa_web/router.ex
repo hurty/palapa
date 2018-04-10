@@ -3,6 +3,7 @@ defmodule PalapaWeb.Router do
 
   pipeline :browser do
     plug(:accepts, ["html"])
+    plug(:accepts, ["json"])
     plug(:fetch_session)
     plug(:fetch_flash)
     plug(:protect_from_forgery)
@@ -41,7 +42,9 @@ defmodule PalapaWeb.Router do
     get("/sessions/switcher", SessionController, :switcher)
     get("/dashboard", DashboardController, :index)
 
-    resources("/message", MessageController)
+    resources("/messages", MessageController) do
+      resources("/comments", MessageCommentController, only: [:create, :edit, :update, :delete])
+    end
 
     resources "/members", MemberController do
       resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)

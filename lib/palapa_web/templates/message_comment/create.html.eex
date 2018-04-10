@@ -1,0 +1,9 @@
+<div>
+  <div id="comments_count">
+    <%= render PalapaWeb.MessageCommentView, "_comments_count.html", comments_count: @comments_count %>
+  </div>
+
+  <div id="comment">
+    <%= render PalapaWeb.MessageCommentView, "_comment.html", comment: @comment, conn: @conn %>
+  </div>
+</div>

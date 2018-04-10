@@ -1,13 +1,15 @@
-<div class="flex w-full sm:w-4/5 lg:w-1/2 mx-auto items-center my-4">
-  <div class="md:bg-grey-lighter p-2 my-4 rounded-lg">
-    <article class="bg-white p-2 md:p-12 md:border md:border-grey-light rounded">
+<link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+
+<div class="w-full sm:w-4/5 lg:w-1/2 mx-auto items-center my-4">
+  <div class="bg-grey-lighter p-2 my-4 rounded-lg">
+    <article class="bg-white p-2 md:p-12 border border-grey-light rounded">
       <header>
         <div class="flex">
           <div class="w-16 mx-2">
             <%= PalapaWeb.MemberView.avatar_small(@message.creator) %>
           </div>
 
-          <div class="w-full text-xs text-grey-darker my-auto">
+          <div class="w-full text-normal text-grey-darker my-auto">
             <%= link @message.creator.name, to: member_path(@conn, :show, @message.creator.id), class: "text-grey-darker font-bold hover:underline" %>
             <div class="text-xs text-grey-darker font-light"> Posted <%= time_from_now(@message.inserted_at) %></div>
           </div>
@@ -23,5 +25,32 @@
       
       <div class="align-right"><%= message_teams_tags(@conn, @message) %></div>
     </article>
+  </div>
+  
+  <div data-controller="message_comment">
+    <div data-target="message_comment.commentsCount">
+      <%= render PalapaWeb.MessageCommentView, "_comments_count.html", comments_count: Enum.count(@comments) %>
+    </div>
+
+    <ul class="list-reset flex flex-col" data-target="message_comment.commentsList">
+      <%= render_many @comments, PalapaWeb.MessageCommentView, "_comment.html", as: :comment, conn: @conn %>
+    </ul>
+
+    <div class="bg-grey-lighter rounded-lg p-4 mb-4">
+      <%= form_for @new_message_comment, message_message_comment_path(@conn, :create, @message), 
+        ["data-target": "message_comment.commentForm", "data-action": "message_comment#submitComment"], fn form -> %>
+        
+        <div data-controller="text_editor" data-target="message_comment.textEditor"> 
+          <div class="bg-white text-grey-darkest" data-target="text_editor.content">
+            <% raw(input_value form, :content) %>
+          </div>
+          <%= hidden_input form, :content, "data-target": "text_editor.hiddenContent message_comment.textEditorContent" %>
+        </div>
+
+        <div class="card-actions">
+          <%= submit "Post this comment", class: "btn btn-green", "data-action": "text_editor#submit" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

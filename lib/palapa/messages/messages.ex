@@ -1,6 +1,7 @@
 defmodule Palapa.Messages do
   use Palapa.Context
   alias Palapa.Messages.Message
+  alias Palapa.Messages.MessageComment
   alias Palapa.Organizations.Organization
   alias Palapa.Organizations.Member
   alias Palapa.Teams.Team
@@ -79,7 +80,7 @@ defmodule Palapa.Messages do
 
   def get!(queryable \\ Message, id) do
     queryable
-    |> preload([:creator, :teams])
+    |> preload([:creator, :teams, [comments: :creator]])
     |> Repo.get!(id)
   end
 
@@ -94,6 +95,25 @@ defmodule Palapa.Messages do
 
   def change(%Message{} = message) do
     Message.changeset(message, %{})
+  end
+
+  def change_comment(%MessageComment{} = message_comment) do
+    MessageComment.changeset(message_comment, %{})
+  end
+
+  def create_comment(%Message{} = message, %Member{} = creator, attrs) do
+    %MessageComment{}
+    |> MessageComment.changeset(attrs)
+    |> put_change(:message, message)
+    |> put_change(:organization, creator.organization)
+    |> put_change(:creator, creator)
+    |> Repo.insert()
+  end
+
+  def comments_count(%Message{} = message) do
+    message
+    |> Ecto.assoc(:comments)
+    |> Repo.count()
   end
 
   defp prepare_list(queryable) do
