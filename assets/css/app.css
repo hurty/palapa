@@ -30,8 +30,9 @@
   * @import "components/forms";
   */
 
-@import "components/_avatars";
 @import "components/_common";
+@import "components/_avatars";
+@import "components/_popover";
 @import "components/_message";
 @import "components/_blankslates";
 @import "components/_choices";
@@ -41,7 +42,6 @@
 @import "components/_tags";
 @import "components/_navigation";
 @import "components/_profile";
-
  /**
   * This injects all of Tailwind's utility classes, generated based on your
   * config file.

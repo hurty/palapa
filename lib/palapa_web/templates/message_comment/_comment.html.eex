@@ -1,4 +1,18 @@
-<li class="bg-grey-lighter rounded-lg p-4 mb-4">
+<li class="relative bg-grey-lighter rounded-lg p-4 mb-4">
+    <div data-controller="popover" class="absolute pin-t pin-r">
+      <button data-target="popover.button" data-action="popover#toggle" class="p-2 border rounded bg-white">
+        ...
+      </button>
+      
+      <div data-target="popover.content" class="popover hidden">
+        <div data-target="popover.arrow" class="popover__arrow"></div>
+        <nav class="flex flex-col">
+          <a class="popover__link" href="#">Edit</a>
+          <a class="popover__link" href="#">Delete</a>
+        </nav>
+      </div>
+    </div>
+
     <div class="flex">
       <div class="w-10 mx-2">
         <%= PalapaWeb.MemberView.avatar_small(@comment.creator) %>
@@ -9,5 +23,7 @@
         <div class="text-grey-darker font-light"><%= time_from_now(@comment.inserted_at) %></div>
       </div>
     </div>
+
+
     <div class="text-grey-darkest mt-2 pl-2"><%= raw(@comment.content) %></div>
 </li>

@@ -43,7 +43,7 @@
         <div data-controller="text_editor" data-target="message_comment.textEditor"> 
           <div class="bg-white text-grey-darkest" data-target="text_editor.content">
             <% raw(input_value form, :content) %>
-          </div>
+            </div>
           <%= hidden_input form, :content, "data-target": "text_editor.hiddenContent message_comment.textEditorContent" %>
         </div>
 

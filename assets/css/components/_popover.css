@@ -1,0 +1,35 @@
+.popover {
+  @apply z-50 p-1 shadow rounded bg-white;
+  @apply border-2 border-grey-dark;
+
+  .popover__arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+    margin: 3px;
+    @apply border-grey-dark;
+  }
+}
+
+.popover__link {
+  @apply rounded-lg px-4 py-1 mb-1;
+  @apply text-grey-darkest;
+  @apply text-sm;
+  
+  &:hover {
+    @apply bg-green-lighter;
+  }
+}
+
+
+.popover[x-placement^="bottom"] .popover__arrow {
+    border-width: 0 7px 7px 7px;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    top: -7px;
+    left: calc(50% - 7px);
+    margin-top: 0;
+    margin-bottom: 0;
+}
