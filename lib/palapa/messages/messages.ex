@@ -116,6 +116,12 @@ defmodule Palapa.Messages do
     |> Repo.insert()
   end
 
+  def update_comment(%MessageComment{} = message_comment, attrs) do
+    message_comment
+    |> MessageComment.changeset(attrs)
+    |> Repo.update()
+  end
+
   def delete_comment!(%MessageComment{} = message_comment) do
     message_comment
     |> Repo.delete!()

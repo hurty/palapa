@@ -1,0 +1,41 @@
+<link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+
+<div class="w-1/2 mx-auto">
+  <div class="lg:bg-grey-lighter p-2 my-4 rounded-lg">
+    <div class="bg-white p-4 lg:border lg:border-grey-light rounded" data-controller="text_editor">
+      <header>
+        <div class="flex">
+          <div class="w-16 mx-2">
+            <%= PalapaWeb.MemberView.avatar_small(@comment.creator) %>
+          </div>
+
+          <div class="w-full text-normal text-grey-darker my-auto">
+            <%= link @comment.creator.name, to: member_path(@conn, :show, @comment.creator.id), class: "text-grey-darker font-bold hover:underline" %>
+            <h2 class="text-sm italic"><%= @message.title %></h2>
+            <div class="text-xs text-grey-darker font-light"> Comment posted <%= time_from_now(@comment.inserted_at) %></div>
+          </div>
+        </div>
+
+        <div class="border-2 rounded-full border-grey-light w-1/6 my-4"></div>
+        
+        <h1 class="mb-2 text-green text-2xl">Edit your comment</h1>
+      </header>
+
+      <%= form_for @changeset, message_message_comment_path(@conn, :update, @message, @comment), fn form -> %>        
+        <div class="bg-white text-grey-darkest" data-target="text_editor.content">
+          <%= raw(input_value form, :content) %>
+        </div>
+        <%= hidden_input form, :content, "data-target": "text_editor.hiddenContent" %>     
+        
+        <div class="card-actions">
+          <%= submit "Save", class: "btn btn-green", "data-action": "text_editor#submit" %>
+        </div>
+
+        <div class="card-actions">
+          <%= link "or discard changes", to: message_path(@conn, :show, @message), class: "btn" %>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>

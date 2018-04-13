@@ -15,7 +15,7 @@
 }
 
 .card-actions {
-  @apply flex justify-center mt-6;
+  @apply flex justify-center mt-4;
 }
 
 .card-footer {
