@@ -21,7 +21,6 @@ import ChoiceController from "./controllers/choice_controller"
 import FilterController from "./controllers/filter_controller"
 import NavigationController from "./controllers/navigation_controller"
 import MessageController from "./controllers/message_controller"
-import MessageCommentController from "./controllers/message_comment_controller"
 
 const application = Application.start()
 application.register("text_editor", TextEditorController)
@@ -31,4 +30,3 @@ application.register("choice", ChoiceController)
 application.register("filter", FilterController)
 application.register("navigation", NavigationController)
 application.register("message", MessageController)
-application.register("message_comment", MessageCommentController)

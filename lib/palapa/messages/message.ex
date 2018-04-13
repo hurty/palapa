@@ -15,6 +15,7 @@ defmodule Palapa.Messages.Message do
     field(:published_to_everyone, :boolean)
     field(:publish_to, :string, virtual: true)
     field(:publish_teams_ids, {:array, :binary}, virtual: true)
+    field(:deleted_at, :utc_datetime)
   end
 
   def changeset(%Message{} = message, attrs) do

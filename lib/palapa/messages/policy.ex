@@ -9,6 +9,14 @@ defmodule Palapa.Messages.Policy do
     true
   end
 
+  def authorize(:edit_comment, %Member{} = member, message_comment) do
+    message_comment.creator_id == member.id
+  end
+
+  def authorize(:delete_comment, %Member{} = member, message_comment) do
+    message_comment.creator_id == member.id || member.role in [:owner, :admin]
+  end
+
   # Catch-all: deny everything else
   def authorize(_, _, _), do: false
 end

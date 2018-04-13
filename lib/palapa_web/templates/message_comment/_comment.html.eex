@@ -1,17 +1,24 @@
-<li class="relative bg-grey-lighter rounded-lg p-4 mb-4">
+<li class="js-message-comment relative bg-grey-lighter rounded-lg p-4 mb-4">
+  <%= if Palapa.Access.permit? Palapa.Messages, :delete_comment, @conn.assigns.current_member, @comment do %>
     <div data-controller="popover" class="absolute pin-t pin-r">
-      <button data-target="popover.button" data-action="popover#toggle" class="p-2 border rounded bg-white">
-        ...
-      </button>
+      <button data-target="popover.button" data-action="popover#toggle" class="m-1 rounded-full h-8 w-8 flex items-center justify-center bg-white text-green-light font-bold shadow">+</button>
       
       <div data-target="popover.content" class="popover hidden">
         <div data-target="popover.arrow" class="popover__arrow"></div>
         <nav class="flex flex-col">
-          <a class="popover__link" href="#">Edit</a>
-          <a class="popover__link" href="#">Delete</a>
+          <%= if Palapa.Access.permit? Palapa.Messages, :edit_comment, @conn.assigns.current_member, @comment do %>
+            <a class="popover__link" href="#">Edit</a>
+          <% end %>
+          <a  data-action="message#deleteComment"
+              data-confirm="Are you sure you want to delete this comment?"
+              data-csrf="<%= Plug.CSRFProtection.get_csrf_token() %>"
+              href="<%= message_message_comment_path(@conn, :delete, @comment.message_id, @comment.id) %>" 
+              class="popover__link">Delete
+          </a>
         </nav>
       </div>
     </div>
+  <% end %>
 
     <div class="flex">
       <div class="w-10 mx-2">

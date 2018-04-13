@@ -101,6 +101,12 @@ defmodule Palapa.Messages do
     MessageComment.changeset(message_comment, %{})
   end
 
+  def get_comment!(queryable \\ MessageComment, id) do
+    queryable
+    |> preload(:creator)
+    |> Repo.get!(id)
+  end
+
   def create_comment(%Message{} = message, %Member{} = creator, attrs) do
     %MessageComment{}
     |> MessageComment.changeset(attrs)
@@ -108,6 +114,11 @@ defmodule Palapa.Messages do
     |> put_change(:organization, creator.organization)
     |> put_change(:creator, creator)
     |> Repo.insert()
+  end
+
+  def delete_comment!(%MessageComment{} = message_comment) do
+    message_comment
+    |> Repo.delete!()
   end
 
   def comments_count(%Message{} = message) do
