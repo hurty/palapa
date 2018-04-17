@@ -12,7 +12,7 @@
       <p class="text-xs text-grey-darker leading-normal mt-1"> <%= excerpt(@message.content) %></p>
       
       <div class="my-2"><%= message_teams_tags(@conn, @message) %></div>
-      <div class="text-xs text-grey-darker mt-2">2 comments</div>
+      <div class="text-xs text-grey-darker mt-2"><%= @message.comments_count %> comments</div>
     </div>
   </div>
 </li>
