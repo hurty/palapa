@@ -9,7 +9,7 @@ defmodule PalapaWeb.TeamController do
   def new(conn, _params) do
     with :ok <- permit(Teams, :create, current_member()) do
       team = Teams.change(%Team{})
-      render(conn, :new, team: team)
+      render(conn, "new.html", team: team)
     end
   end
 
@@ -17,12 +17,14 @@ defmodule PalapaWeb.TeamController do
     with :ok <- permit(Teams, :create, current_member()) do
       case Teams.create(current_organization(), team_params) do
         {:ok, team} ->
-          put_flash(conn, :success, "The team #{team.name} has been created!")
+          conn
+          |> put_flash(:success, "The team #{team.name} has been created!")
           |> redirect(to: member_path(conn, :index, team_id: team.id))
 
         {:error, changeset} ->
-          put_flash(conn, :error, "The team can't be created")
-          |> render(:new, team: changeset)
+          conn
+          |> put_flash(:error, "The team can't be created")
+          |> render("new.html", team: changeset)
       end
     end
   end
