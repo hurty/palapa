@@ -44,14 +44,13 @@ export default class extends Controller {
       return
     }
 
-    fetch(this.commentFormTarget.getAttribute("action"), {
+    PA.fetchHTML(this.commentFormTarget.getAttribute("action"), {
       method: "post",
-      credentials: "same-origin",
-      body: new FormData(this.commentFormTarget),
-    }).then(response => response.text())
-      .then(html_response => {
+      body: new FormData(this.commentFormTarget)
+    })
+      .then(html => {
         let parser = new DOMParser();
-        let doc = parser.parseFromString(html_response, "text/html");
+        let doc = parser.parseFromString(html, "text/html");
         let commentElement = doc.getElementById("comment")
         let commentsCountElement = doc.getElementById("comments_count")
 
@@ -65,23 +64,15 @@ export default class extends Controller {
   deleteComment(event) {
     event.preventDefault()
     let link = event.target
-    let message = link.getAttribute("data-confirm")
-    if (message && !window.confirm(message)) {
+
+    if (!PA.confirm(link)) {
       return;
     }
 
-    let deleteURL = event.target.getAttribute("href")
-
-    fetch(deleteURL, {
-      method: "delete",
-      credentials: "same-origin",
-      headers: {
-        "x-csrf-token": event.target.getAttribute("data-csrf")
-      }
-    }).then(response => response.text())
-      .then(html_response => {
-        event.target.closest(".js-message-comment").remove()
-        this.commentsCountTarget.innerHTML = html_response
+    PA.remoteLink(link, { method: "delete" })
+      .then(html => {
+        link.closest(".js-message-comment").remove()
+        this.commentsCountTarget.innerHTML = html
       })
   }
 

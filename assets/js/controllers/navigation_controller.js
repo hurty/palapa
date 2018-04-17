@@ -17,8 +17,7 @@ export default class extends Controller {
   }
 
   loadSwitcher() {
-    fetch(this.data.get("url"), { credentials: 'same-origin' })
-      .then(response => response.text())
+    PA.fetchHTML(this.data.get("url"))
       .then(html => {
         this.switcherTarget.innerHTML = html
       })
