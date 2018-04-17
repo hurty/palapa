@@ -27,9 +27,9 @@
     </article>
   </div>
   
-  <div>
+  <div id="comments">
     <div data-target="message.commentsCount">
-      <%= render PalapaWeb.MessageCommentView, "_comments_count.html", comments_count: Enum.count(@comments) %>
+      <%= render PalapaWeb.MessageCommentView, "_comments_count.html", comments_count: @message.comments_count %>
     </div>
 
     <ul class="list-reset flex flex-col" data-target="message.commentsList">
