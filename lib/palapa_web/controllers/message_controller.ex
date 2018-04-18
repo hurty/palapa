@@ -99,6 +99,20 @@ defmodule PalapaWeb.MessageController do
     end
   end
 
+  def delete(conn, %{"id" => id}) do
+    message =
+      Messages.where_organization(current_organization())
+      |> Messages.get!(id)
+
+    with :ok <- permit(Messages, :delete, current_member(), message) do
+      Messages.delete!(message)
+
+      conn
+      |> put_flash(:success, "The message has been deleted")
+      |> redirect(to: message_path(conn, :index))
+    end
+  end
+
   defp find_teams(conn, message_params) do
     message_teams_ids = message_params["publish_teams_ids"] || []
 

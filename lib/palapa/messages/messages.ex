@@ -24,6 +24,11 @@ defmodule Palapa.Messages do
     |> where(organization_id: ^organization.id)
   end
 
+  def non_deleted(queryable \\ Message) do
+    queryable
+    |> where([q], is_nil(q.deleted_at))
+  end
+
   def published_to(queryable \\ Message, %Team{} = team) do
     queryable
     |> where([q], q.id in ^messages_ids_where_team(team))
@@ -80,6 +85,7 @@ defmodule Palapa.Messages do
 
   def get!(queryable \\ Message, id) do
     queryable
+    |> non_deleted
     |> preload([:creator, :teams, [comments: :creator]])
     |> Repo.get!(id)
   end
@@ -95,6 +101,12 @@ defmodule Palapa.Messages do
 
   def change(%Message{} = message) do
     Message.changeset(message, %{})
+  end
+
+  def delete!(%Message{} = message) do
+    Message.changeset(message, %{})
+    |> put_change(:deleted_at, DateTime.utc_now())
+    |> Repo.update!()
   end
 
   def change_comment(%MessageComment{} = message_comment) do
@@ -135,6 +147,7 @@ defmodule Palapa.Messages do
 
   defp prepare_list(queryable) do
     queryable
+    |> non_deleted
     |> order_by(desc: :inserted_at)
     |> preload([:creator, :teams])
   end

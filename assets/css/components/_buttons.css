@@ -34,3 +34,13 @@
     @apply shadow border-green-light;
   }
 }
+
+.btn-action {
+  @apply py-2 px-4 mt-2 mr-2;
+  @apply rounded-full border-2 bg-white;
+  @apply text-green-light text-sm font-bold;
+
+  &:hover {
+    @apply border-grey-dark;
+  }
+}
