@@ -1,8 +1,6 @@
-<link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
-
 <div class="w-1/2 mx-auto">
   <div class="lg:bg-grey-lighter p-2 my-4 rounded-lg">
-    <div class="bg-white p-4 lg:border lg:border-grey-light rounded" data-controller="text_editor">
+    <div class="bg-white p-4 lg:border lg:border-grey-light rounded">
       <header>
         <div class="flex">
           <div class="w-16 mx-2">
@@ -16,19 +14,17 @@
           </div>
         </div>
 
-        <div class="border-2 rounded-full border-grey-light w-1/6 my-4"></div>
-        
-        <h1 class="mb-2 text-green text-2xl">Edit your comment</h1>
+        <div class="border-2 rounded-full border-grey-light w-1/6 my-4"></div>        
       </header>
 
       <%= form_for @changeset, message_message_comment_path(@conn, :update, @message, @comment), fn form -> %>        
-        <div class="bg-white text-grey-darkest" data-target="text_editor.content">
-          <%= raw(input_value form, :content) %>
+        <div class="border rounded">
+          <%= hidden_input form, :content %>
+          <trix-editor placeholder="Your comment here..." input="message_comment_content"></trix-editor>
         </div>
-        <%= hidden_input form, :content, "data-target": "text_editor.hiddenContent" %>     
         
         <div class="card-actions">
-          <%= submit "Save", class: "btn btn-green", "data-action": "text_editor#submit" %>
+          <%= submit "Save", class: "btn btn-green" %>
         </div>
 
         <div class="card-actions">

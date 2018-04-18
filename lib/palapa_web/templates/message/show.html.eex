@@ -1,5 +1,3 @@
-<link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
-
 <div data-controller="message" class="w-full sm:w-4/5 lg:w-1/2 mx-auto items-center my-4">
   <div class="bg-grey-lighter p-2 my-4 rounded-lg">
     <article class="bg-white p-2 md:p-12 border border-grey-light rounded">
@@ -36,19 +34,16 @@
       <%= render_many @comments, PalapaWeb.MessageCommentView, "_comment.html", as: :comment, conn: @conn %>
     </ul>
 
-    <div class="bg-grey-lighter rounded-lg p-4 mb-4">
+    <div class="bg-grey-lighter rounded-lg px-2 pt-2 pb-4 mb-4">
       <%= form_for @new_message_comment, message_message_comment_path(@conn, :create, @message), 
-        ["data-target": "message.commentForm", "data-action": "message#submitComment"], fn form -> %>
-        
-        <div data-controller="text_editor" data-target="message.textEditor"> 
-          <div class="bg-white text-grey-darkest" data-target="text_editor.content">
-            <% raw(input_value form, :content) %>
-            </div>
-          <%= hidden_input form, :content, "data-target": "text_editor.hiddenContent message.textEditorContent" %>
-        </div>
+        ["data-target": "message.commentForm", "data-action": "message#submitComment"], fn form -> %> 
+          <div class="border rounded bg-white text-grey-darkest">
+            <%= hidden_input form, :content, "data-target": "message.commentContent" %>
+            <trix-editor placeholder="Your comment here..." input="message_comment_content" data-target="message.editor"></trix-editor>
+          </div>
 
         <div class="card-actions">
-          <%= submit "Post this comment", class: "btn btn-green", "data-action": "text_editor#submit" %>
+          <%= submit "Post this comment", class: "btn btn-green" %>
         </div>
       <% end %>
     </div>

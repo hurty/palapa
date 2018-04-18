@@ -2,14 +2,14 @@ import { Controller } from "stimulus"
 
 export default class extends Controller {
   static targets = ["teamsList", "publishToEveryone", "publishToSpecificTeams", "commentForm", "commentsList",
-    "commentsCount", "textEditor", "textEditorContent"]
+    "commentsCount", "commentContent", "editor"]
 
   //
   // When posting a new message
   //
 
   connect() {
-    if (this.haspublishToSpecificTeamsTarget) {
+    if (this.hasPublishToSpecificTeamsTarget) {
       if (this.publishToSpecificTeamsTarget.checked) {
         this.showTeamsList()
       }
@@ -22,6 +22,9 @@ export default class extends Controller {
 
   publishToSpecificTeams() {
     this.showTeamsList()
+    this.teamsListTarget.scrollIntoView({
+      behavior: 'smooth'
+    })
   }
 
   showTeamsList() {
@@ -40,7 +43,7 @@ export default class extends Controller {
     event.preventDefault();
 
     // Do not post comment if the editor has the defaut empty content
-    if (this.textEditorContentTarget.value === "<p><br></p>") {
+    if (this.commentContentTarget.value === "") {
       return
     }
 
@@ -57,7 +60,7 @@ export default class extends Controller {
         this.commentsListTarget.appendChild(commentElement)
         this.commentsCountTarget.innerHTML = ""
         this.commentsCountTarget.appendChild(commentsCountElement)
-        this.clearTextEditor()
+        this.editorTarget.editor.loadHTML("")
       })
   }
 
@@ -74,13 +77,5 @@ export default class extends Controller {
         link.closest(".js-message-comment").remove()
         this.commentsCountTarget.innerHTML = html
       })
-  }
-
-  clearTextEditor() {
-    this.textEditorController.clear()
-  }
-
-  get textEditorController() {
-    return this.application.getControllerForElementAndIdentifier(this.textEditorTarget, "text_editor")
   }
 }

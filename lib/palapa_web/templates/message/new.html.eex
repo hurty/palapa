@@ -1,45 +1,45 @@
-<link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
-
 <div class="w-1/2 mx-auto" data-controller="message">
   <div class="lg:bg-grey-lighter p-2 my-4 rounded-lg">
-    <div class="bg-white p-4 lg:border lg:border-grey-light rounded" data-controller="text_editor">
+    <div class="bg-white p-4 lg:border lg:border-grey-light rounded">
         <%= form_for @message, message_path(@conn, :create), fn form -> %>
           <div class="my-4">
-            <%= text_input form, :title, placeholder: "Title", class: "border p-2 w-full font-bold text-xl text-grey-darkest" %>
+            <%= text_input form, :title, placeholder: "Title...", autocomplete: "off", class: "rounded border p-2 w-full font-bold text-xl text-green" %>
             <%= error_tag form, :title %>
           </div>
         
-          <div class="bg-white text-grey-darkest" data-target="text_editor.content">
-            <%= raw(input_value form, :content) %>
+          <div class="border rounded">
+            <trix-editor class="min-h-screen-1/2" placeholder="Your message here..." input="content"></trix-editor>
+            <%= hidden_input form, :content, id: "content" %>
           </div>
-          <%= hidden_input form, :content, "data-target": "text_editor.hiddenContent" %>
 
           <%= if Enum.any?(@teams) do %>
-            <div class="mt-4 mb-2">
-              <%= radio_button form, :publish_to, "everyone", "data-action": "message#publishToEveryone", "data-target": "message.publishToEveryone", checked: true %>
-              <%= label form, :publish_to_everyone, "Publish this message to everyone" %>
-            </div>
-            
-            <div class="mt-4 mb-2">
-              <%= radio_button form, :publish_to, "specific_teams", "data-action": "message#publishToSpecificTeams", "data-target": "message.publishToSpecificTeams" %>
-              <%= label form, :publish_to_specific_teams, "Restrict to specific teams" %>
-            </div>
-            
-            <div class="ml-4 hidden" data-target="message.teamsList">
-              <ul class="list-reset">
-                <%= for team <- @teams do %>
-                  <li class="field">
-                    <input type="checkbox" class="h-4 w-4" name="message[publish_teams_ids][]" id="team_<%= team.id %>" 
-                      value="<%= team.id %>" <%= if input_value(form, :publish_teams_ids) && (team.id in input_value(form, :publish_teams_ids)) do %>checked<% end%>>
-                    <label class="bg-grey-light rounded py-1 px-2" for="team_<%= team.id %>"><%= team.name %></label>
-                  </li>
-                <% end %>
-              </ul>
+            <div class="bg-indigo-lightest p-4 rounded-lg my-4">
+              <div class="my-2">
+                <%= radio_button form, :publish_to, "everyone", "data-action": "message#publishToEveryone", "data-target": "message.publishToEveryone", checked: true %>
+                <%= label form, :publish_to_everyone, "Publish this message to everyone" %>
+              </div>
+              
+              <div class="my-2">
+                <%= radio_button form, :publish_to, "specific_teams", "data-action": "message#publishToSpecificTeams", "data-target": "message.publishToSpecificTeams" %>
+                <%= label form, :publish_to_specific_teams, "Restrict to specific teams" %>
+              </div>
+              
+              <div class="ml-4 hidden" data-target="message.teamsList">
+                <ul class="list-reset">
+                  <%= for team <- @teams do %>
+                    <li class="field">
+                      <input type="checkbox" class="h-4 w-4" name="message[publish_teams_ids][]" id="team_<%= team.id %>" 
+                        value="<%= team.id %>" <%= if input_value(form, :publish_teams_ids) && (team.id in input_value(form, :publish_teams_ids)) do %>checked<% end%>>
+                      <label class="" for="team_<%= team.id %>"><%= team.name %></label>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
             </div>
           <% end %>        
           
           <div class="card-actions">
-            <%= submit "Post this message", class: "btn btn-green", "data-action": "text_editor#submit" %>
+            <%= submit "Post this message", class: "btn btn-green" %>
           </div>
         <% end %>
       </div>

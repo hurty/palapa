@@ -14,8 +14,8 @@
 import "./palapa"
 import "phoenix_html"
 import { Application } from "stimulus"
+import "trix"
 
-import TextEditorController from "./controllers/text_editor_controller"
 import PopoverController from "./controllers/popover_controller"
 
 import ChoiceController from "./controllers/choice_controller"
@@ -24,7 +24,6 @@ import NavigationController from "./controllers/navigation_controller"
 import MessageController from "./controllers/message_controller"
 
 const application = Application.start()
-application.register("text_editor", TextEditorController)
 application.register("popover", PopoverController)
 
 application.register("choice", ChoiceController)
