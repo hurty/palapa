@@ -46,12 +46,12 @@ defmodule PalapaWeb.MemberControllerTest do
 
     test "regular member cannot see the 'add people' link", %{conn: conn} do
       conn = get(conn, member_path(conn, :index))
-      refute html_response(conn, 200) =~ "Add people"
+      refute html_response(conn, 200) =~ "Invite people"
     end
 
-    test "regular member cannot see 'the create a new team' link", %{conn: conn} do
+    test "regular member cannot see 'the create a team' link", %{conn: conn} do
       conn = get(conn, member_path(conn, :index))
-      refute html_response(conn, 200) =~ "Create a new team"
+      refute html_response(conn, 200) =~ "Create a team"
     end
 
     test "show member profile", %{conn: conn} do
@@ -75,12 +75,12 @@ defmodule PalapaWeb.MemberControllerTest do
 
     test "admins see the 'add people' link", %{conn: conn} do
       conn = get(conn, member_path(conn, :index))
-      assert html_response(conn, 200) =~ "Add people"
+      assert html_response(conn, 200) =~ "Invite people"
     end
 
-    test "admins see 'the create a new team' link", %{conn: conn} do
+    test "admins see 'the create a team' link", %{conn: conn} do
       conn = get(conn, member_path(conn, :index))
-      assert html_response(conn, 200) =~ "Create a new team"
+      assert html_response(conn, 200) =~ "Create a team"
     end
   end
 
@@ -99,12 +99,12 @@ defmodule PalapaWeb.MemberControllerTest do
 
     test "owners see the 'add people' link", %{conn: conn} do
       conn = get(conn, member_path(conn, :index))
-      assert html_response(conn, 200) =~ "Add people"
+      assert html_response(conn, 200) =~ "Invite people"
     end
 
-    test "owners see 'the create a new team' link", %{conn: conn} do
+    test "owners see 'the create a team' link", %{conn: conn} do
       conn = get(conn, member_path(conn, :index))
-      assert html_response(conn, 200) =~ "Create a new team"
+      assert html_response(conn, 200) =~ "Create a team"
     end
   end
 end

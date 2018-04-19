@@ -46,9 +46,9 @@ defmodule PalapaWeb.TeamControllerTest do
       {:ok, conn: conn, member: member}
     end
 
-    test "display the 'create a new team' form", %{conn: conn} do
+    test "display the 'create a team' form", %{conn: conn} do
       conn = get(conn, team_path(conn, :new))
-      assert html_response(conn, 200) =~ ~r/Create a new team/
+      assert html_response(conn, 200) =~ ~r/New team/
     end
 
     test "create an empty team successfully", %{conn: conn} do
@@ -81,9 +81,9 @@ defmodule PalapaWeb.TeamControllerTest do
       {:ok, conn: conn, member: member}
     end
 
-    test "display the 'create a new team' form", %{conn: conn} do
+    test "display the 'new team' form", %{conn: conn} do
       conn = get(conn, team_path(conn, :new))
-      assert html_response(conn, 200) =~ ~r/Create a new team/
+      assert html_response(conn, 200) =~ ~r/New team/
     end
 
     test "cannot create a team with a name that already exists", %{conn: conn} do
