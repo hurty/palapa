@@ -8,41 +8,24 @@
 
 <div class="flex w-full sm:px-4 lg:w-2/3 mx-auto">
   <div class="w-full sm:w-2/3">
-   <%= if Enum.empty?(@this_week_messages) && Enum.empty?(@other_messages)  do %>
+    <%= if Enum.empty?(@messages) do %>
       <div class="blankslate">There's nothing's there yet.</div>
-    <% end %>
-
-    <%= if Enum.any?(@this_week_messages) && @other_messages.page_number < 2 do %>
-      <h2 class="text-sm text-center text-grey-darkest font-extrabold">This week</h2>
+    <% else %>
       <div class="bg-grey-lighter p-2 my-4 rounded-lg">
+        <%= if !is_nil(@conn.params["page"]) do %>
+          <div class="text-center my-4">
+            <%= pagination_links @messages %>
+          </div>
+        <% end %>
+
         <ul class="list-reset bg-white lg:border lg:border-grey-light rounded">
-          <%= render_many @this_week_messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn %>
+          <%= render_many @messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn %>
         </ul>
-      </div>
-    <% end %>
 
-    <%= if Enum.any?(@other_messages) do %>      
-      <%= if Enum.any?(@this_week_messages) && @other_messages.page_number < 2 do %>
-        <h2 class="text-sm my-4 px-1 text-center text-grey-darkest font-extrabold">Earlier</h2>
-      <% end %>
-
-      <%= if @other_messages.total_pages > 1 && @other_messages.page_number > 1 do %>
-        <div class="text-center my-8">
-          <%= pagination_links @other_messages %>
+        <div class="text-center my-4">
+          <%= pagination_links @messages %>
         </div>
-      <% end %>
-
-      <div class="bg-grey-lighter p-2 rounded-lg">
-        <ul class="list-reset bg-white lg:border lg:border-grey-light rounded">
-          <%= render_many @other_messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn %>
-        </ul>
       </div>
-
-      <%= if @other_messages.total_pages > 1 do %>
-        <div class="text-center my-8">
-        <%= pagination_links @other_messages %>
-        </div>
-      <% end %>
     <% end %>
   </div>
 

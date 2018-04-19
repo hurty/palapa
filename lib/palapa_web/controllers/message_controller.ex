@@ -9,26 +9,9 @@ defmodule PalapaWeb.MessageController do
   plug(:put_navigation, "message")
 
   def index(conn, params) do
-    messages_query =
+    messages =
       Messages.visible_to(current_member())
       |> filter_by_selected_team(conn, params)
-
-    today =
-      Timex.now()
-      |> Timex.end_of_day()
-
-    beginning_of_week =
-      today
-      |> Timex.beginning_of_week()
-
-    this_week_messages =
-      messages_query
-      |> Messages.published_between(beginning_of_week, today)
-      |> Messages.list()
-
-    other_messages =
-      messages_query
-      |> Messages.published_before(beginning_of_week)
       |> Messages.paginate(params["page"])
 
     teams = Teams.list_for_member(current_member())
@@ -36,8 +19,7 @@ defmodule PalapaWeb.MessageController do
     render(
       conn,
       "index.html",
-      this_week_messages: this_week_messages,
-      other_messages: other_messages,
+      messages: messages,
       teams: teams,
       selected_team_id: params["team_id"]
     )
