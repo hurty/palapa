@@ -1,15 +1,19 @@
 defmodule PalapaWeb.MessageView do
   use PalapaWeb, :view
 
+  @excerpt_length 380
+
   def excerpt(content) do
     first_words =
       content
       |> strip_html_tags()
-      |> String.slice(0..380)
+      |> String.slice(0..@excerpt_length)
 
-    if first_words != "" do
-      first_words <> "…"
+    if String.length(content) >= @excerpt_length do
+      first_words = first_words <> "…"
     end
+
+    first_words
   end
 
   def strip_html_tags(content) when is_nil(content), do: ""
