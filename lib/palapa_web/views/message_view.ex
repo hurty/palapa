@@ -9,12 +9,11 @@ defmodule PalapaWeb.MessageView do
       |> strip_html_tags()
       |> String.slice(0..@excerpt_length)
 
-    first_words =
-      if String.length(content) >= @excerpt_length do
-        first_words <> "…"
-      end
-
-    first_words
+    if String.length(content) > @excerpt_length do
+      first_words <> "…"
+    else
+      first_words
+    end
   end
 
   def strip_html_tags(content) when is_nil(content), do: ""
