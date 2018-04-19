@@ -4,11 +4,11 @@ defmodule PalapaWeb.MessageView do
   def excerpt(content) do
     first_words =
       content
-      |> String.slice(0..380)
       |> strip_html_tags()
+      |> String.slice(0..380)
 
     if first_words != "" do
-      first_words <> "..."
+      first_words <> "…"
     end
   end
 
