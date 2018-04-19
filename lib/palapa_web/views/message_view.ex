@@ -9,9 +9,10 @@ defmodule PalapaWeb.MessageView do
       |> strip_html_tags()
       |> String.slice(0..@excerpt_length)
 
-    if String.length(content) >= @excerpt_length do
-      first_words = first_words <> "…"
-    end
+    first_words =
+      if String.length(content) >= @excerpt_length do
+        first_words <> "…"
+      end
 
     first_words
   end
