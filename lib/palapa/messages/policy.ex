@@ -9,7 +9,11 @@ defmodule Palapa.Messages.Policy do
     true
   end
 
-  def authorize(:delete, %Member{} = member, message) do
+  def authorize(:edit_message, %Member{} = member, message) do
+    message.creator_id == member.id
+  end
+
+  def authorize(:delete_message, %Member{} = member, message) do
     is_nil(message.deleted_at) &&
       (message.creator_id == member.id || member.role in [:owner, :admin])
   end
