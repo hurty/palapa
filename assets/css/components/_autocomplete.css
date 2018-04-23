@@ -1,0 +1,13 @@
+.autocomplete {
+  position: absolute;
+  @apply list-reset border shadow rounded bg-white;
+}
+
+.autocomplete__choice {
+  @apply text-sm border-b py-1 px-2;
+  cursor: pointer;
+
+  &--selected {
+    @apply bg-green-light text-white;
+  }
+}
