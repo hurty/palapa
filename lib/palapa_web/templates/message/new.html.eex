@@ -7,11 +7,14 @@
             <%= error_tag form, :title %>
           </div>
         
-          <div class="border rounded" data-controller="editor" data-editor-autocomplete-index="0">
-            <trix-editor class="p-4 shadow-inner bg-grey-lightest text-grey-darkest min-h-screen-1/2" placeholder="Your message here..." input="content"></trix-editor>
-            <%= PalapaWeb.MemberView.organization_members_autocomplete(@current_organization) %>
-            <%= hidden_input form, :content, id: "content" %>
+          <div class="border rounded" data-controller="editor" data-editor-autocomplete-index="0" data-editor-members="<%= PalapaWeb.MemberView.members_for_autocomplete(@current_organization) %>">
+            <trix-editor class="trix-content p-4 shadow-inner bg-grey-lightest text-grey-darkest min-h-screen-1/2" placeholder="Your message here..." input="content"></trix-editor>
+            <ul class="autocomplete hidden" data-target="editor.autocompleteList">
+              <%= PalapaWeb.AutocompleteView.members_autocomplete(Palapa.Organizations.list_members(@current_organization)) %>
+            </ul>
           </div>
+          
+          <%= hidden_input form, :content, id: "content" %>
 
           <%= if Enum.any?(@teams) do %>
             <div class="bg-indigo-lightest p-4 rounded-lg my-4">

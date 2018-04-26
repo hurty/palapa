@@ -6,26 +6,10 @@ defmodule PalapaWeb.MemberView do
     |> Enum.map(fn m -> {m.name, m.id} end)
   end
 
-  def organization_members_autocomplete(organization) do
-    members = Palapa.Organizations.list_members(organization)
-
-    content_tag(
-      :ul,
-      class: "autocomplete hidden",
-      "data-target": "editor.autocompleteList"
-    ) do
-      for member <- members do
-        content_tag(
-          :li,
-          member.name,
-          class: "autocomplete__choice",
-          "data-target": "editor.autocompleteChoice",
-          "data-action": "mouseover->editor#selectAutocompleteChoice",
-          "data-member-name": member.name,
-          "data-member-id": member.id
-        )
-      end
-    end
+  def members_for_autocomplete(organization) do
+    Palapa.Organizations.list_members(organization)
+    |> Enum.map(fn m -> %{"id" => m.id, "name" => m.name} end)
+    |> Jason.encode!()
   end
 
   def avatar(member) do

@@ -46,4 +46,22 @@ defmodule Palapa.Repo do
   def reload(%module{id: id}) do
     get(module, id)
   end
+
+  # Characters that have special meaning inside the `LIKE` clause of a query.
+  #
+  # `%` is a wildcard representing multiple characters.
+  # `_` is a wildcard representing one character.
+  # `\` is used to escape other metacharacters.
+  @like_metacharacter_regex ~r/([\\%_])/
+
+  # What to replace `LIKE` metacharacters with. We want to prepend a literal
+  # backslash to each metacharacter. Because String#gsub does its own round of
+  # interpolation on its second argument, we have to double escape backslashes
+  # in this String.
+  @like_escape "\\\\\1"
+  def escape_like_pattern(value) do
+    if value do
+      String.replace(value, @like_metacharacter_regex, @like_escape)
+    end
+  end
 end

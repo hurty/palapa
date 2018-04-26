@@ -9,6 +9,19 @@ defmodule Palapa.Organizations do
   import EctoEnum
   defenum(RoleEnum, :role, [:owner, :admin, :member])
 
+  ### Scopes
+
+  def with_member_name(queryable \\ Member, name_pattern) do
+    if name_pattern do
+      escaped_pattern = Repo.escape_like_pattern(name_pattern) <> "%"
+      where(queryable, [q], ilike(q.name, ^escaped_pattern))
+    else
+      queryable
+    end
+  end
+
+  ### Actions
+
   def list(queryable \\ Organization) do
     queryable
     |> Repo.all()
@@ -38,9 +51,10 @@ defmodule Palapa.Organizations do
     Organization.changeset(organization, %{})
   end
 
-  def list_members(queryable \\ Organization) do
+  def list_members(queryable \\ Organization, name_pattern \\ nil) do
     queryable
     |> Ecto.assoc(:members)
+    |> with_member_name(name_pattern)
     |> preload(:account)
     |> Repo.all()
   end

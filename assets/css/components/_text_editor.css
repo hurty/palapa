@@ -239,6 +239,10 @@ trix-editor [data-trix-mutable=true].attachment.attachment--file {
   border-color: transparent;
 }
 
+trix-editor [data-trix-mutable=true].attachment {
+  @apply bg-blue-light rounded
+}
+
 trix-editor [data-trix-mutable=true]::-moz-selection,
 trix-editor [data-trix-cursor-target]::-moz-selection {
   background: none;
@@ -302,8 +306,8 @@ trix-editor .attachment__remove--icon {
   margin: 0;
   top: -1.1em;
   left: calc(50% - 0.8em);
-  width: 1.8em;
-  height: 1.8em;
+  width: 1.2em;
+  height: 1.2em;
   line-height: 1.8em;
   border-radius: 50%;
   background-color: #fff;

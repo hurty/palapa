@@ -51,8 +51,6 @@ defmodule PalapaWeb.Router do
 
     resources("/invitations", InvitationController)
     resources("/teams", TeamController, only: [:new, :create])
-
-    get("/autocomplete/members", AutocompleteController, :members)
   end
 
   # Other scopes may use custom stacks.
