@@ -1,5 +1,5 @@
 .autocomplete {
-  position: fixed;
+  position: absolute;
   @apply list-reset border shadow rounded bg-white;
 }
 
