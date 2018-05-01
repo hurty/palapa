@@ -1,7 +1,13 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["switcher"]
+  static targets = ["switcher", "links", "searchLinks"]
+
+  toggleLinks(event) {
+    event.preventDefault()
+    this.linksTarget.classList.toggle("hidden")
+    this.searchLinksTarget.classList.toggle("hidden")
+  }
 
   showSwitcher(event) {
     event.preventDefault()

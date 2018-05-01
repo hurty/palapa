@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
     <%= csrf_meta_tag() %>
@@ -15,7 +15,7 @@
     <%= render PalapaWeb.LayoutView, "_navigation.html", assigns %>
     <%= render PalapaWeb.LayoutView, "_flash_notice.html", assigns %>
     
-    <main role="main">
+    <main role="main" class="py-4">
       <%= render @view_module, @view_template, assigns %>
     </main>
 

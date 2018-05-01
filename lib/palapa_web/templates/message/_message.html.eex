@@ -11,7 +11,9 @@
       
       <%= if @message.content do %>
         <div class="border rounded-full border-grey-light w-1/6 my-4"></div>
-        <p class="text-xs text-grey-darker leading-normal mt-1"> <%= excerpt(@message.content) %></p>
+        <%= link to: message_path(@conn, :show, @message), class: "text-xs text-grey-darker leading-normal mt-1" do %> 
+          <p><%= excerpt(@message.content) %></p>
+        <% end %>
       <% end %>
             
       <div class="my-2"><%= message_teams_tags(@conn, @message) %></div>

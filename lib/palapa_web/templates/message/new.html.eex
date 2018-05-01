@@ -1,6 +1,6 @@
-<div class="w-1/2 mx-auto" data-controller="message">
-  <div class="lg:bg-grey-lighter p-2 my-4 rounded-lg">
-    <div class="bg-white p-4 lg:border lg:border-grey-light rounded">
+<div class="flex justify-center" data-controller="message">
+  <div class="flex-1 max-w-md bg-grey-lighter p-2 my-4 rounded-lg">
+    <div class="bg-white p-4 border border-grey-light rounded">
         <%= form_for @message, message_path(@conn, :create), fn form -> %>
           <div class="my-4">
             <%= text_input form, :title, placeholder: "Title...", autocomplete: "off", class: "p-4 shadow-inner bg-grey-lightest rounded border p-2 w-full font-bold text-xl" %>
