@@ -1,11 +1,4 @@
-<div class="flex justify-center px-2">
-  <div class="flex-1 max-w-md">
-    <ul class="list-reset flex justify-center">
-      <li><%= link("New message", to: message_path(@conn, :new), class: "nav-btn") %></li>
-    </ul>
-  </div>
-  <div class="hidden sm:block w-64 w-64"></div>
-</div>
+<%= render "_message_navigation.html", conn: @conn %>
 
 <div class="flex justify-center mt-8 px-2">
   <div class="flex-1 max-w-md">

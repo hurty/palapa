@@ -1,3 +1,5 @@
+<%= render "_message_navigation.html", conn: @conn %>
+
 <div class="flex justify-center" data-controller="message">
   <div class="flex-1 max-w-md bg-grey-lighter p-2 my-4 rounded-lg">
     <div class="bg-white p-4 border border-grey-light rounded">

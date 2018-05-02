@@ -1,0 +1,7 @@
+<div class="flex justify-center px-2 bg-grey-lightest h-16 items-center">
+  <div class="flex-1 max-w-md">
+    <ul class="list-reset flex justify-center">
+      <li><%= link("New message", to: message_path(@conn, :new), class: "nav-btn") %></li>
+    </ul>
+  </div>
+</div>

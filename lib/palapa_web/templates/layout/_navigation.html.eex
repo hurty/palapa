@@ -1,4 +1,4 @@
-<nav data-controller="navigation" class="sm:flex bg-blue-darkest items-center justify-between flex-wrap px-2 sm:pl-4 py-2 sm:py-1 bg-white mb-8 w-full">
+<nav data-controller="navigation" class="sm:flex bg-blue-darkest items-center justify-between flex-wrap px-2 sm:pl-4 py-2 sm:py-1 bg-white w-full">
   <div class="flex justify-between items-center">
     <%= link(@current_organization.name, to: message_path(@conn, :index), class: "organization-name") %>
     
@@ -23,13 +23,13 @@
     <li class="header-link">
       <%= link("Contacts", to: "#") %>
     </li>
+    <li id="global-search" class="flex-1 ml-4">
+      <input type="text" placeholder="Search" class="search-bar" />
+    </li>
   </ul>
 
   <div data-target="navigation.searchLinks" class="hidden sm:flex">
     <div  data-navigation-url="<%= session_path(@conn, :switcher) %>" class="flex items-center">
-      <div id="global-search" class="flex-1">
-        <input type="text" placeholder="Search" class="search-bar" />
-      </div>
       
       <div class="sm:mx-4 w-10">
         <a href="#" data-action="navigation#showSwitcher" title="Signed id as <%= @current_member.name %>"><%= PalapaWeb.MemberView.avatar_small(@current_member) %></a>
