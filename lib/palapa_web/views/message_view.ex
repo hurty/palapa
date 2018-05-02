@@ -35,4 +35,11 @@ defmodule PalapaWeb.MessageView do
       end
     end
   end
+
+  def more_than_a_week_old?(message) do
+    Timex.now()
+    |> Timex.shift(days: -7)
+    |> Timex.beginning_of_day()
+    |> Timex.after?(message.inserted_at)
+  end
 end

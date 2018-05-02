@@ -7,7 +7,13 @@
     <div class="w-full text-xs text-grey-darker my-auto">
       <h3><%= link @message.title, to: message_path(@conn, :show, @message), class: "text-green text-base hover:underline" %></h3>
       <%= link @message.creator.name, to: member_path(@conn, :show, @message.creator.id), class: "text-grey-darker font-bold hover:underline" %>
-      <div class="text-xs text-grey-darker font-light"> Posted <%= time_from_now(@message.inserted_at) %></div>
+      <div class="text-xs text-grey-darker font-light"> 
+        <%= if more_than_a_week_old?(@message) do %>
+          Posted <%= Timex.format!(@message.inserted_at, "{D}/{0M}/{YYYY}") %>
+        <% else %>
+          Posted <%= time_from_now(@message.inserted_at) %>
+        <% end %>
+      </div>
       
       <%= if @message.content do %>
         <div class="border rounded-full border-grey-light w-1/6 my-4"></div>
