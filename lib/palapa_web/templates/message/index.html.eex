@@ -23,9 +23,11 @@
           <%= render_many @messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn %>
         </ul>
 
-        <div class="text-center my-2">
-          <%= pagination_links @messages %>
-        </div>
+        <%= if @messages.total_pages > 1 do %>
+          <div class="text-center my-2">
+            <%= pagination_links @messages %>
+          </div>
+        <% end %>
       </div>
     <% end %>
   </div>
