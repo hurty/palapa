@@ -23,7 +23,7 @@
     <li class="header-link">
       <%= link("Contacts", to: "#") %>
     </li>
-    <li id="global-search" class="flex-1 ml-4">
+    <li id="global-search" class="flex-1 sm:mx-4 ">
       <input type="text" placeholder="Search" class="search-bar" />
     </li>
   </ul>

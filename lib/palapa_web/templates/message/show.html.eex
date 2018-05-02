@@ -1,7 +1,7 @@
 <%= render "_message_navigation.html", conn: @conn %>
 
 <div data-controller="message" class="w-full sm:w-4/5 lg:w-1/2 mx-auto items-center my-4">
-  <div class="bg-grey-lighter p-2 my-4 rounded-lg">
+  <div class="bg-grey-lighter p-2 my-4 rounded-lg mx-1">
     <article class="relative bg-white p-2 md:p-12 border border-grey-light rounded">
       <header class="">
         
@@ -38,7 +38,7 @@
     </article>
   </div>
   
-  <div id="comments">
+  <div id="comments" class="mx-1">
     <div data-target="message.commentsCount">
       <%= render PalapaWeb.MessageCommentView, "_comments_count.html", comments_count: @message.comments_count %>
     </div>

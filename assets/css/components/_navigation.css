@@ -4,7 +4,7 @@
 
 .header-links {
   @apply flex flex-col list-reset;
-  @apply border-t-2 border-b-2 border-blue-darker my-2;
+  @apply border-t-2 border-blue-darker my-2;
 }
 
 @screen sm {
