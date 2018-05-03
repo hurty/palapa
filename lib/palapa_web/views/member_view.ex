@@ -6,12 +6,6 @@ defmodule PalapaWeb.MemberView do
     |> Enum.map(fn m -> {m.name, m.id} end)
   end
 
-  def members_for_autocomplete(organization) do
-    Palapa.Organizations.list_members(organization)
-    |> Enum.map(fn m -> %{"id" => m.id, "name" => m.name} end)
-    |> Jason.encode!()
-  end
-
   def avatar(member) do
     url = Palapa.Avatar.url({member.avatar, member}, :thumb)
     img_tag(url, class: "avatar")

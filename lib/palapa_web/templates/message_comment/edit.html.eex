@@ -18,10 +18,8 @@
       </header>
 
       <%= form_for @changeset, message_message_comment_path(@conn, :update, @message, @comment), fn form -> %>        
-        <div class="border rounded">
-          <%= hidden_input form, :content %>
-          <trix-editor placeholder="Your comment here..." input="message_comment_content"></trix-editor>
-        </div>
+        <%= text_editor(@current_organization, placeholder: "Your comment here...", input: "message_comment_content") %>
+        <%= hidden_input form, :content %>
         
         <div class="card-actions">
           <%= submit "Save", class: "btn btn-green" %>

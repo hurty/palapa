@@ -563,7 +563,8 @@ module.exports = {
     'full': '100%',
     'screen': '100vh',
     'screen-1/2': '50vh',
-    'screen-1/4': '25vh'
+    'screen-1/4': '25vh',
+    'screen-1/8': '12.5vh'
   },
 
 

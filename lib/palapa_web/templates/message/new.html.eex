@@ -8,12 +8,8 @@
             <%= text_input form, :title, placeholder: "Title...", autocomplete: "off", class: "p-4 shadow-inner focus:shadow-none bg-grey-lightest rounded border p-2 w-full font-bold text-xl" %>
             <%= error_tag form, :title %>
           </div>
-        
-          <div class="border rounded" data-controller="editor" data-editor-autocomplete-index="0" data-editor-members="<%= PalapaWeb.MemberView.members_for_autocomplete(@current_organization) %>">
-            <trix-editor class="trix-content p-4 shadow-inner focus:shadow-none bg-grey-lightest text-grey-darkest min-h-screen-1/2" placeholder="Your message here..." input="content"></trix-editor>
-            <ul class="autocomplete hidden" data-target="editor.autocompleteList"></ul>
-          </div>
-          
+
+          <%= text_editor(@current_organization) %>  
           <%= hidden_input form, :content, id: "content" %>
 
           <%= if Enum.any?(@teams) do %>
