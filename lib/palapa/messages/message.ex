@@ -22,6 +22,7 @@ defmodule Palapa.Messages.Message do
   def changeset(%Message{} = message, attrs) do
     message
     |> cast(attrs, [:title, :content, :publish_to])
+    |> update_change(:content, &HtmlSanitizeEx.html5(&1))
     |> validate_required(:title)
   end
 end
