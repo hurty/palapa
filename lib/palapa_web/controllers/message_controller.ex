@@ -86,7 +86,7 @@ defmodule PalapaWeb.MessageController do
       Messages.where_organization(current_organization())
       |> Messages.get!(id)
 
-    with :ok <- permit(Messages, :delete, current_member(), message) do
+    with :ok <- permit(Messages, :delete_message, current_member(), message) do
       Messages.delete!(message)
 
       conn
