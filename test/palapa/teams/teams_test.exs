@@ -19,7 +19,7 @@ defmodule Palapa.TeamsTest do
 
   test "where_ids scopes teams by ids" do
     organization = insert!(:organization)
-    engineering = insert!(:team, organization: organization, name: "Engineering")
+    _engineering = insert!(:team, organization: organization, name: "Engineering")
     sales = insert!(:team, organization: organization, name: "Sales")
 
     filtered_teams = Teams.where_ids([sales.id]) |> Repo.all()
