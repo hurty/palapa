@@ -1,5 +1,3 @@
-<%= render "_message_navigation.html", conn: @conn %>
-
 <div class="flex justify-center mt-8 px-2">
   <div class="flex-1 max-w-md">
     <%= if Enum.empty?(@messages) do %>

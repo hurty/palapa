@@ -13,6 +13,7 @@
 
   <body>
     <%= render PalapaWeb.LayoutView, "_navigation.html", assigns %>
+    <%= render_existing view_module(@conn), "_navigation.html", assigns %>
     <%= render PalapaWeb.LayoutView, "_flash_notice.html", assigns %>
     
     <main role="main" class="mb-8">
