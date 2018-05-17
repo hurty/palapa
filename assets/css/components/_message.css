@@ -1,5 +1,10 @@
 .message-content {
   @apply leading-normal;
+  @apply text-grey-darkest;
+
+  div {
+    @apply mt-4;
+  }
   
   h1 {
     @apply text-xl;
@@ -16,11 +21,11 @@
   }
 
   a {
-    @apply text-grey-darkest;
+    @apply text-blue-darkest;
     text-decoration: underline !important;
 
     &:visited {
-      @apply text-grey-darkest;
+      @apply text-blue-darkest;
     }
   }
 

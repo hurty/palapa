@@ -27,18 +27,17 @@
           <div class="w-full text-normal text-grey-darker my-auto">
             <%= link @message.creator.name, to: member_path(@conn, :show, @message.creator.id), class: "text-grey-darker font-bold hover:underline" %>
             <div class="text-xs text-grey-darker font-light"> Posted <%= time_from_now(@message.inserted_at) %></div>
+            <div class="text-xs"><%= message_teams_tags(@conn, @message) %></div>
           </div>
         </div>
 
         <div class="border-2 rounded-full border-grey-light w-1/6 my-4"></div>
-        <h1 class="mb-2 text-green text-2xl"><%= @message.title %></h1>
+        <h1 class="my-4 text-green text-2xl"><%= @message.title %></h1>
       </header>
 
       <section class="message-content">      
         <%= raw(@message.content) %>
       </section>
-      
-      <div class="align-right"><%= message_teams_tags(@conn, @message) %></div>
     </article>
   </div>
   
