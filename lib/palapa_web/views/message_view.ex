@@ -42,4 +42,9 @@ defmodule PalapaWeb.MessageView do
     |> Timex.beginning_of_day()
     |> Timex.after?(message.inserted_at)
   end
+
+  def team_checked?(changeset, team) do
+    teams = Ecto.Changeset.get_field(changeset, :teams)
+    teams && team.id in Enum.map(teams, & &1.id)
+  end
 end

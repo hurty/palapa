@@ -25,23 +25,11 @@ defmodule PalapaWeb.MessageController do
     )
   end
 
-  defp filter_by_selected_team(messages_query, conn, params) do
-    if params["team_id"] do
-      team =
-        Teams.where_organization(current_organization())
-        |> Teams.get!(params["team_id"])
-
-      messages_query |> Messages.published_to(team)
-    else
-      messages_query
-    end
-  end
-
   def new(conn, _params) do
-    message = Messages.change(%Message{})
+    message_changeset = Messages.change(%Message{})
     teams = Teams.list_for_member(current_member())
 
-    render(conn, "new.html", message: message, teams: teams)
+    render(conn, "new.html", message_changeset: message_changeset, teams: teams)
   end
 
   def create(conn, %{"message" => message_params}) do
@@ -55,18 +43,16 @@ defmodule PalapaWeb.MessageController do
           |> put_flash(:success, "Your message has been posted")
           |> redirect(to: message_path(conn, :show, message))
 
-        {:error, message} ->
+        {:error, message_changeset} ->
           conn
           |> put_flash(:error, "Your message can't be posted")
-          |> render("new.html", message: message, teams: teams)
+          |> render("new.html", message_changeset: message_changeset, teams: teams)
       end
     end
   end
 
   def show(conn, %{"id" => id}) do
-    message =
-      Messages.where_organization(current_organization())
-      |> Messages.get!(id)
+    message = find_message!(conn, id)
 
     new_message_comment = Messages.change_comment(%MessageComment{})
 
@@ -81,10 +67,49 @@ defmodule PalapaWeb.MessageController do
     end
   end
 
+  def edit(conn, %{"id" => id}) do
+    message = find_message!(conn, id)
+
+    message_changeset = Messages.change(message)
+    teams = Teams.list_for_member(current_member())
+
+    with :ok <- permit(Messages, :edit_message, current_member(), message) do
+      render(
+        conn,
+        "edit.html",
+        message: message,
+        message_changeset: message_changeset,
+        teams: teams
+      )
+    end
+  end
+
+  def update(conn, %{"id" => id, "message" => message_params}) do
+    message = find_message!(conn, id)
+    teams = Teams.list_for_member(current_member())
+    message_params = Map.put(message_params, "teams", find_teams(conn, message_params))
+
+    with :ok <- permit(Messages, :delete_message, current_member(), message) do
+      case Messages.update(message, message_params) do
+        {:ok, _struct} ->
+          conn
+          |> put_flash(:success, "The message has been updated")
+          |> redirect(to: message_path(conn, :show, message))
+
+        {:error, message_changeset} ->
+          render(
+            conn,
+            "edit.html",
+            message: message,
+            message_changeset: message_changeset,
+            teams: teams
+          )
+      end
+    end
+  end
+
   def delete(conn, %{"id" => id}) do
-    message =
-      Messages.where_organization(current_organization())
-      |> Messages.get!(id)
+    message = find_message!(conn, id)
 
     with :ok <- permit(Messages, :delete_message, current_member(), message) do
       Messages.delete!(message)
@@ -95,15 +120,32 @@ defmodule PalapaWeb.MessageController do
     end
   end
 
+  defp find_message!(conn, id) do
+    Messages.where_organization(current_organization())
+    |> Messages.get!(id)
+  end
+
   defp find_teams(conn, message_params) do
     message_teams_ids = message_params["publish_teams_ids"] || []
 
-    if message_params["publish_to"] == "specific_teams" && Enum.any?(message_teams_ids) do
+    if message_params["published_to_everyone"] == "false" && Enum.any?(message_teams_ids) do
       Teams.where_organization(current_organization())
       |> Teams.where_ids(message_teams_ids)
       |> Teams.list()
     else
       []
+    end
+  end
+
+  defp filter_by_selected_team(messages_query, conn, params) do
+    if params["team_id"] do
+      team =
+        Teams.where_organization(current_organization())
+        |> Teams.get!(params["team_id"])
+
+      messages_query |> Messages.published_to(team)
+    else
+      messages_query
     end
   end
 end

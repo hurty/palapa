@@ -1,0 +1,34 @@
+
+  <div class="my-4">
+    <%= text_input @form, :title, placeholder: "Title...", autocomplete: "off", class: "p-4 shadow-inner focus:shadow-none bg-grey-lightest rounded border p-2 w-full font-bold text-xl" %>
+    <%= error_tag @form, :title %>
+  </div>
+
+  <%= text_editor(@current_organization) %>  
+  <%= hidden_input @form, :content, id: "content" %>
+
+  <%= if Enum.any?(@teams) do %>
+    <div class="bg-indigo-lightest p-4 rounded-lg my-4">
+      <div class="my-2">
+        <%= radio_button @form, :published_to_everyone, true, "data-action": "message#publishToEveryone", "data-target": "message.publishToEveryone", checked: true %>
+        <%= label @form, :published_to_everyone_true, "Publish this message to everyone" %>
+      </div>
+      
+      <div class="my-2">
+        <%= radio_button @form, :published_to_everyone, false, "data-action": "message#publishToSpecificTeams", "data-target": "message.publishToSpecificTeams" %>
+        <%= label @form, :published_to_everyone_false, "Restrict to specific teams" %>
+      </div>
+      
+      <div class="ml-4 hidden" data-target="message.teamsList">
+        <ul class="list-reset">
+          <%= for team <- @teams do %>
+            <li class="field">
+              <input type="checkbox" class="h-4 w-4" name="message[publish_teams_ids][]" id="team_<%= team.id %>" 
+                value="<%= team.id %>" <%= if team_checked?(@message_changeset, team) do %>checked<% end %>>
+              <label class="" for="team_<%= team.id %>"><%= team.name %></label>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>      

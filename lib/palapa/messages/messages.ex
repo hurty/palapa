@@ -103,6 +103,14 @@ defmodule Palapa.Messages do
     Message.changeset(message, %{})
   end
 
+  def update(%Message{} = message, attrs) do
+    message
+    |> Message.changeset(attrs)
+    |> Repo.update()
+
+    # |> put_teams(teams)
+  end
+
   def delete!(%Message{} = message) do
     Message.changeset(message, %{})
     |> put_change(:deleted_at, DateTime.utc_now())
@@ -156,9 +164,9 @@ defmodule Palapa.Messages do
     if teams && Enum.any?(teams) do
       changeset
       |> put_change(:published_to_everyone, false)
-      |> put_assoc(:teams, teams)
     else
       changeset
     end
+    |> put_assoc(:teams, teams)
   end
 end

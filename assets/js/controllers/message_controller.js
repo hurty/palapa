@@ -3,12 +3,11 @@ import { Controller } from "stimulus"
 export default class extends Controller {
   static targets = ["teamsList", "publishToEveryone", "publishToSpecificTeams", "commentForm", "commentsList",
     "commentsCount", "commentContent", "editor"]
-
-  //
-  // When posting a new message
-  //
-
   connect() {
+    this.handleTeamListVisibility()
+  }
+
+  handleTeamListVisibility() {
     if (this.hasPublishToSpecificTeamsTarget) {
       if (this.publishToSpecificTeamsTarget.checked) {
         this.showTeamsList()
@@ -34,10 +33,6 @@ export default class extends Controller {
   hideTeamsList() {
     this.teamsListTarget.classList.add("hidden");
   }
-
-  //
-  // When viewing a message
-  //
 
   submitComment(event) {
     event.preventDefault();
