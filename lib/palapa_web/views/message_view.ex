@@ -21,7 +21,7 @@ defmodule PalapaWeb.MessageView do
   def strip_html_tags(content) do
     content
     |> String.replace(~r/<br ?\/?>/, " ")
-    |> String.replace(~r/<.*?>/, "")
+    |> String.replace(~r/<.*?>/, " ")
     |> String.replace("&nbsp;", "")
   end
 
