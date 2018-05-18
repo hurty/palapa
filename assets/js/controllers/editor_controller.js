@@ -163,10 +163,8 @@ export default class extends Controller {
   insertAutocompleteChoice(deleteEndingLineBreak = false) {
     let startRange = this.autocompletePosition
     let endRange = this.cursorPosition
-    console.log("endRange: " + endRange)
 
     this.editor.setSelectedRange([startRange, endRange])
-    console.log(this.editor.getSelectedRange())
 
     let memberName = this.autocompleteChoiceTargets[this.autocompleteIndex].getAttribute("data-member-name")
     let memberId = this.autocompleteChoiceTargets[this.autocompleteIndex].getAttribute("data-member-id")
