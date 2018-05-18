@@ -23,7 +23,7 @@ export default class extends Controller {
   }
 
   loadSwitcher() {
-    PA.fetchHTML(this.data.get("url"))
+    PA.fetchHTML(this.data.get("switcher-url"))
       .then(html => {
         this.switcherTarget.innerHTML = html
       })
