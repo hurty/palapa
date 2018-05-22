@@ -26,7 +26,7 @@
 
       <div class="w-full text-xs my-auto">
         <%= link @comment.creator.name, to: member_path(@conn, :show, @comment.creator.id), class: "text-grey-darkest font-bold hover:underline" %>
-        <div class="text-grey-darker font-light"><%= time_from_now(@comment.inserted_at) %></div>
+        <div class="text-grey-darker font-light"><%= format_datetime(@comment.inserted_at, @current_account) %></div>
       </div>
     </div>
 

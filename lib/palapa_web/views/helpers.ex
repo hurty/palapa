@@ -1,17 +1,32 @@
 defmodule PalapaWeb.Helpers do
   alias Phoenix.HTML
 
-  def format_datetime(datetime) when is_nil(datetime), do: nil
+  def format_datetime(datetime, _account) when is_nil(datetime), do: nil
 
-  def format_datetime(datetime) do
-    {:ok, formatted} = Timex.format(datetime, "{ISO:Extended}")
-    formatted
-  end
+  def format_datetime(datetime, account) do
+    more_than_a_week_old? =
+      Timex.now()
+      |> Timex.shift(days: -7)
+      |> Timex.beginning_of_day()
+      |> Timex.after?(datetime)
 
-  def time_from_now(datetime) when is_nil(datetime), do: nil
+    timezone = Map.get(account, :timezone, "UTC")
+    locale = Map.get(account, :locale, "en")
+    short_format = "{WDshort} {D} {Mfull} {YYYY}, {h24}:{m}"
+    complete_format = "{WDshort} {D} {Mfull} {YYYY}, {h24}:{m} UTC{Z:}"
 
-  def time_from_now(datetime) do
-    Timex.from_now(datetime)
+    datetime = datetime |> Timex.Timezone.convert(timezone)
+
+    short_datetime =
+      if(
+        more_than_a_week_old?,
+        do: Timex.lformat!(datetime, short_format, locale),
+        else: Timex.from_now(datetime)
+      )
+
+    complete_datetime = datetime |> Timex.lformat!(complete_format, locale)
+
+    HTML.Tag.content_tag(:span, short_datetime, title: complete_datetime)
   end
 
   def text_editor(organization, options \\ []) do
@@ -50,8 +65,3 @@ defmodule PalapaWeb.Helpers do
     |> Jason.encode!()
   end
 end
-
-# <div class="border rounded" data-controller="editor" data-editor-autocomplete-index="0" data-editor-members="<%= PalapaWeb.MemberView.members_for_autocomplete(@current_organization) %>">
-#   <trix-editor class="trix-content p-4 shadow-inner focus:shadow-none bg-grey-lightest text-grey-darkest min-h-screen-1/2" placeholder="Your message here..." input="content"></trix-editor>
-#   <ul class="autocomplete hidden" data-target="editor.autocompleteList"></ul>
-# </div>

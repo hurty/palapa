@@ -10,7 +10,7 @@
           <div class="w-full text-normal text-grey-darker my-auto">
             <%= link @comment.creator.name, to: member_path(@conn, :show, @comment.creator.id), class: "text-grey-darker font-bold hover:underline" %>
             <h2 class="text-sm italic"><%= @message.title %></h2>
-            <div class="text-xs text-grey-darker font-light"> Comment posted <%= time_from_now(@comment.inserted_at) %></div>
+            <div class="text-xs text-grey-darker font-light"> Comment posted <%= format_datetime(@comment.inserted_at, @current_account) %></div>
           </div>
         </div>
 

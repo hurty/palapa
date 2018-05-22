@@ -26,7 +26,7 @@
 
           <div class="w-full text-normal text-grey-darker my-auto">
             <%= link @message.creator.name, to: member_path(@conn, :show, @message.creator.id), class: "text-grey-darker font-bold hover:underline" %>
-            <div class="text-xs text-grey-darker font-light"> Posted <%= time_from_now(@message.inserted_at) %></div>
+            <div class="text-xs text-grey-darker font-light"> Posted <%= format_datetime(@message.inserted_at, @current_account) %></div>
             <div class="text-xs"><%= message_teams_tags(@conn, @message) %></div>
           </div>
         </div>
@@ -47,7 +47,7 @@
     </div>
 
     <ul class="list-reset flex flex-col" data-target="message.commentsList">
-      <%= render_many @comments, PalapaWeb.MessageCommentView, "_comment.html", as: :comment, conn: @conn %>
+      <%= render_many @comments, PalapaWeb.MessageCommentView, "_comment.html", as: :comment, conn: @conn, current_account: @current_account %>
     </ul>
 
     <%= form_for @new_message_comment, message_message_comment_path(@conn, :create, @message), 

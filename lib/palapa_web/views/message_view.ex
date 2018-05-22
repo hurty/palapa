@@ -38,13 +38,6 @@ defmodule PalapaWeb.MessageView do
     end
   end
 
-  def more_than_a_week_old?(message) do
-    Timex.now()
-    |> Timex.shift(days: -7)
-    |> Timex.beginning_of_day()
-    |> Timex.after?(message.inserted_at)
-  end
-
   def team_checked?(changeset, team) do
     teams = Ecto.Changeset.get_field(changeset, :teams)
     teams && team.id in Enum.map(teams, & &1.id)

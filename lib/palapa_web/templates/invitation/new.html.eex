@@ -15,7 +15,7 @@
     <%= for invitation <- @invitations do %>
       <div class="flex flex-wrap border-t border-blue-lightest">
         <div class="flex-1 py-4 pr-2"><%= invitation.email %></div>
-        <div class="flex-2 py-4 pr-2"><%= time_from_now(invitation.email_sent_at) %></div>
+        <div class="flex-2 py-4 pr-2"><%= format_datetime(invitation.email_sent_at, @current_account) %></div>
         <div class="flex-2 py-4 pr-2"><a href="#" class="rounded-full px-2 py-1  hover:bg-grey-light hover:no-underline">Send again</a></div>
         <div class="flex-2 py-4 pr-2"><a href="#" class="rounded-full px-2 py-1  hover:bg-red-light hover:no-underline">Cancel</a></div>
       </div>

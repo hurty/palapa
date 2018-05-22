@@ -4,6 +4,6 @@
   </div>
 
   <div id="comment">
-    <%= render PalapaWeb.MessageCommentView, "_comment.html", comment: @comment, conn: @conn %>
+    <%= render PalapaWeb.MessageCommentView, "_comment.html", comment: @comment, conn: @conn, current_account: @current_account %>
   </div>
 </div>
