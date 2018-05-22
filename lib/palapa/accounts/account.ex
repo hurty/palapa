@@ -8,6 +8,7 @@ defmodule Palapa.Accounts.Account do
     field(:email, :string)
     field(:password_hash, :string)
     field(:password, :string, virtual: true)
+    field(:timezone, :string)
     timestamps()
 
     has_many(:members, Organizations.Member)
@@ -17,7 +18,7 @@ defmodule Palapa.Accounts.Account do
   @doc false
   def changeset(%Accounts.Account{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:email, :password, :timezone])
     |> put_password_hash
     |> validate_required([:email, :password_hash])
     |> unique_constraint(:email, name: "accounts_email_index")

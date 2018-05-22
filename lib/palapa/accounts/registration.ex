@@ -6,16 +6,29 @@ defmodule Palapa.Accounts.Registration do
     field(:organization_name)
     field(:email)
     field(:password)
+    field(:timezone)
   end
 
   def changeset(%__MODULE__{} = registration, params) do
     registration
-    |> cast(params, [:name, :organization_name, :email, :password])
+    |> cast(params, [:name, :organization_name, :email, :password, :timezone])
     |> validate_required([:name, :organization_name, :email, :password])
     |> validate_length(:password, min: 8, max: 100)
+    |> validate_or_nilify_timezone
     |> update_change(:name, &String.trim(&1))
     |> update_change(:email, &String.trim(&1))
     |> update_change(:organization_name, &String.trim(&1))
+  end
+
+  # We don't stop to stop the whole registration process if the timezone is not found/valid.
+  def validate_or_nilify_timezone(changeset) do
+    tz = get_change(changeset, :timezone)
+
+    if Tzdata.zone_exists?(tz) do
+      changeset
+    else
+      put_change(changeset, :timezone, nil)
+    end
   end
 
   def validate(changeset) do

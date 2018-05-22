@@ -8,6 +8,7 @@ defmodule Palapa.Organizations.Organization do
 
   schema "organizations" do
     field(:name, :string)
+    field(:default_timezone, :string)
     timestamps()
 
     has_many(:members, Member)
@@ -18,7 +19,7 @@ defmodule Palapa.Organizations.Organization do
   @doc false
   def changeset(%Organization{} = organization, attrs) do
     organization
-    |> cast(attrs, [:name])
+    |> cast(attrs, [:name, :default_timezone])
     |> validate_required([:name])
   end
 end

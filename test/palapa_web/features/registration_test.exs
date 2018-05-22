@@ -11,5 +11,12 @@ defmodule PalapaWeb.RegistrationTest do
     |> fill_in(text_field("registration_password"), with: "password")
     |> click(button("Create a new account"))
     |> assert_text("Dashboard")
+
+    organization = Palapa.Organizations.Organization |> Palapa.Repo.get_by(name: "Pied Piper")
+    account = Palapa.Accounts.get_by(email: "richard.hendricks@piedpiper.com")
+
+    # Timezone infos get populated
+    assert !is_nil(organization.default_timezone)
+    assert !is_nil(account.timezone)
   end
 end

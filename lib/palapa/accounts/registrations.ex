@@ -15,9 +15,13 @@ defmodule Palapa.Accounts.Registrations do
   """
   def create(attrs \\ %{}) do
     changeset = Registration.changeset(%Registration{}, attrs)
+    account_attrs = Map.take(changeset.changes, [:email, :password, :timezone])
 
-    account_attrs = Map.take(changeset.changes, [:email, :password])
-    organization_attrs = %{name: Map.get(changeset.changes, :organization_name)}
+    organization_attrs = %{
+      name: Map.get(changeset.changes, :organization_name),
+      default_timezone: Map.get(changeset.changes, :timezone)
+    }
+
     member_attrs = Map.take(changeset.changes, [:name])
 
     Ecto.Multi.new()

@@ -19,8 +19,9 @@ import "trix"
 import PopoverController from "./controllers/popover_controller"
 import EditorController from "./controllers/editor_controller"
 import TextareaAutoresizeController from "./controllers/textarea_autoresize_controller"
-
 import ChoiceController from "./controllers/choice_controller"
+
+import RegistrationController from "./controllers/registration_controller"
 import FilterController from "./controllers/filter_controller"
 import NavigationController from "./controllers/navigation_controller"
 import MessageController from "./controllers/message_controller"
@@ -30,8 +31,9 @@ const application = Application.start()
 application.register("popover", PopoverController)
 application.register("editor", EditorController)
 application.register("textarea_autoresize", TextareaAutoresizeController)
-
 application.register("choice", ChoiceController)
+
+application.register("registration", RegistrationController)
 application.register("filter", FilterController)
 application.register("navigation", NavigationController)
 application.register("message", MessageController)

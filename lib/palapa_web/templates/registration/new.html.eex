@@ -1,4 +1,4 @@
-<div class="flex justify-center py-4">
+<div data-controller="registration" class="flex justify-center py-4">
   <div class="flex-3 card-shadow">
     <div class="card">
       <%= form_for @changeset, registration_path(@conn, :create), [as: :registration], fn f -> %>
@@ -35,6 +35,8 @@
           <%= error_tag f, :password %>
           <%= password_input f, :password, placeholder: "8 chars minimum", class: "input" %>
         </div>
+
+        <%= hidden_input f, :timezone, "data-target": "registration.timezone" %>
 
         <div class="card-actions">
           <%= submit "Create a new account", class: "btn btn-blue" %>
