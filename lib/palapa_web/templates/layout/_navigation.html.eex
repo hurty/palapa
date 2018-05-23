@@ -32,7 +32,7 @@
     <div class="flex items-center">
       
       <div class="sm:mx-4 w-10">
-        <a href="#" data-action="navigation#showSwitcher" title="Signed id as <%= @current_member.name %>"><%= PalapaWeb.MemberView.avatar_small(@current_member) %></a>
+        <a href="#" data-action="navigation#showSwitcher" title="Signed id as <%= @current_member.name %>"><%= PalapaWeb.MemberView.avatar(@current_member, :small) %></a>
         <div data-target="navigation.switcher" class="absolute pin-r border z-50 p-4 bg-white shadow rounded opacity-0">
       </div>
     </div>

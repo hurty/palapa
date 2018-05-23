@@ -21,7 +21,7 @@
 
         <div class="flex">
           <div class="w-16 mx-2">
-            <%= PalapaWeb.MemberView.avatar_small(@message.creator) %>
+            <%= PalapaWeb.MemberView.avatar(@message.creator, :small) %>
           </div>
 
           <div class="w-full text-normal text-grey-darker my-auto">

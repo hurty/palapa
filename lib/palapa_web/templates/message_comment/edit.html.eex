@@ -4,7 +4,7 @@
       <header>
         <div class="flex">
           <div class="w-16 mx-2">
-            <%= PalapaWeb.MemberView.avatar_small(@comment.creator) %>
+            <%= PalapaWeb.MemberView.avatar(@comment.creator, :small) %>
           </div>
 
           <div class="w-full text-normal text-grey-darker my-auto">
