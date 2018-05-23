@@ -13,10 +13,24 @@ export default class extends Controller {
         }
       }
     })
+
+    let controller = this
+    addEventListener("click", function (event) {
+      let element = event.target
+
+      if (element !== controller.buttonTarget) {
+        controller.hide()
+      }
+    })
   }
 
   toggle() {
     this.contentTarget.classList.toggle("hidden")
     this.popover.update()
+  }
+
+  hide() {
+    console.log("hide")
+    this.contentTarget.classList.add("hidden")
   }
 }

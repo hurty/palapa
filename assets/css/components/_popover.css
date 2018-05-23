@@ -1,6 +1,6 @@
 .popover {
-  @apply z-50 p-1 shadow rounded bg-white;
-  @apply border-2 border-grey-dark;
+  @apply z-50 p-1 shadow-lg rounded bg-white;
+  @apply border-2 border-grey-darker;
 
   .popover__arrow {
     width: 0;
@@ -8,7 +8,7 @@
     border-style: solid;
     position: absolute;
     margin: 3px;
-    @apply border-grey-dark;
+    @apply border-grey-darker;
   }
 }
 
