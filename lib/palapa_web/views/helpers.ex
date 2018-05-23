@@ -10,8 +10,8 @@ defmodule PalapaWeb.Helpers do
       |> Timex.beginning_of_day()
       |> Timex.after?(datetime)
 
-    timezone = Map.get(account, :timezone, "UTC")
-    locale = Map.get(account, :locale, "en")
+    timezone = Map.get(account, :timezone) || "UTC"
+    locale = Map.get(account, :locale) || "en"
     short_format = "{WDshort} {D} {Mfull} {YYYY}, {h24}:{m}"
     complete_format = "{WDshort} {D} {Mfull} {YYYY}, {h24}:{m} UTC{Z:}"
 
