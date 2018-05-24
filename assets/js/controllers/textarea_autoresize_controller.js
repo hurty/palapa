@@ -6,10 +6,7 @@ export default class extends Controller {
     let textarea = this.element
 
     textarea.addEventListener("focus", function () {
-      console.log("focus")
       autosize(textarea)
-      // forcing resize none (resize style is overidden by autosize)
-      textarea.style.resize = "none"
     })
 
     // Disable the Enter key to prevent line breaks
