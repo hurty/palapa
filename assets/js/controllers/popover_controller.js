@@ -15,10 +15,13 @@ export default class extends Controller {
     })
 
     let controller = this
-    addEventListener("click", function (event) {
-      let element = event.target
 
-      if (element !== controller.buttonTarget) {
+    addEventListener("click", function (event) {
+      let clickedElement = event.target
+
+      if (controller.buttonTarget.contains(clickedElement)) {
+        controller.toggle()
+      } else {
         controller.hide()
       }
     })
@@ -30,7 +33,6 @@ export default class extends Controller {
   }
 
   hide() {
-    console.log("hide")
     this.contentTarget.classList.add("hidden")
   }
 }
