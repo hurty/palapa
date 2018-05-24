@@ -1,6 +1,6 @@
 
   <%= if @comments_count > 0 do %>
-    <h3 class="my-4 text-grey-darker text-center"><%= @comments_count %> comments</h3>
+    <h3 class="my-4 text-grey-darker text-center"><i class="fas fa-comments"></i> <%= @comments_count %> comments</h3>
   <% else %>
-    <h3 class="my-4 text-sm text-grey-darker text-center">No comment yet</h3>
+    <h3 class="my-4 text-sm text-grey-darker text-center"><i class="fas fa-comments"></i> No comment yet</h3>
   <% end %>

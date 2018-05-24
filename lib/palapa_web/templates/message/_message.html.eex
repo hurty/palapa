@@ -8,7 +8,7 @@
       <h3><%= link @message.title, to: message_path(@conn, :show, @message), class: "text-green text-base hover:underline" %></h3>
       <%= link @message.creator.name, to: member_path(@conn, :show, @message.creator.id), class: "text-grey-darker font-bold hover:underline" %>
       <div class="text-xs text-grey-darker font-light">
-        <%= format_datetime(@message.inserted_at, @current_account) %>
+        Posted <%= format_datetime(@message.inserted_at, @current_account) %>
       </div>
       
       <%= if @message.content do %>
@@ -20,7 +20,9 @@
             
       <div class="my-2"><%= message_teams_tags(@conn, @message) %></div>
       <%= if @message.comments_count > 0 do %>
-        <%= link "#{@message.comments_count} comments", to: message_path(@conn, :show, @message)<>"#comments", class: "text-xs text-grey-darker mt-2" %>
+        <%= link to: message_path(@conn, :show, @message)<>"#comments", class: "text-xs text-grey-darker mt-2" do %>
+          <i class="fas fa-comments"></i> <%= @message.comments_count %> comments
+        <% end %>
       <% end %>
     </div>
   </div>

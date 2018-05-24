@@ -1,7 +1,11 @@
 <div class="flex justify-center px-2 bg-grey-lightest h-16 items-center">
   <div class="flex-1 max-w-md">
     <ul class="list-reset flex justify-center">
-      <li><%= link("New message", to: message_path(@conn, :new), class: "nav-btn") %></li>
+      <li>
+        <%= link(to: message_path(@conn, :new), class: "nav-btn") do %>
+          <i class="fas fa-plus text-green-light"></i> New message
+        <% end %>
+      </li>
     </ul>
   </div>
 </div>

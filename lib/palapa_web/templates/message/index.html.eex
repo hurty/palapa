@@ -6,7 +6,7 @@
       <div class="bg-grey-lighter p-2 rounded-lg">
         <%= if !is_nil(@conn.params["page"]) do %>
           <div class="text-center my-2">
-            <%= pagination_links @messages %>
+            <%= pagination_links @messages, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
           </div>
         <% end %>
 
@@ -16,7 +16,7 @@
 
         <%= if @messages.total_pages > 1 do %>
           <div class="text-center my-2">
-            <%= pagination_links @messages %>
+            <%= pagination_links @messages, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
           </div>
         <% end %>
       </div>
