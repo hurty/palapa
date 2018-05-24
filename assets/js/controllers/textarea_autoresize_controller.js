@@ -3,10 +3,17 @@ import { default as autosize } from "autosize"
 
 export default class extends Controller {
   connect() {
-    autosize(this.element)
+    let textarea = this.element
+
+    textarea.addEventListener("focus", function () {
+      console.log("focus")
+      autosize(textarea)
+      // forcing resize none (resize style is overidden by autosize)
+      textarea.style.resize = "none"
+    })
 
     // Disable the Enter key to prevent line breaks
-    this.element.addEventListener("keydown", (e) => {
+    textarea.addEventListener("keydown", (e) => {
       if (e.keyCode == '13')
         e.preventDefault()
     })
