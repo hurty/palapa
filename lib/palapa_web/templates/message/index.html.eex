@@ -24,7 +24,7 @@
   </div>
 
   <div class="hidden sm:block w-64 pl-4">
-    <h2 class="text-grey-dark text-sm font-bold pb-2 mb-2 uppercase">Teams</h2>
+    <h2 class="text-grey-dark text-sm font-bold pb-2 mb-2 uppercase"><i class="fas fa-users"></i> Teams</h2>
     
     <ul class="list-reset pl-1">
       <li class="text-blue-dark font-light mb-2 font-bold">
