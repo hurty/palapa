@@ -18,10 +18,7 @@
       <%= link("Calendar", to: "#") %>
     </li>
     <li class="header-link  <%= if @navigation == "members" do %>header-link--active<% end %>">
-      <%= link("Team", to: member_path(@conn, :index)) %>
-    </li>
-    <li class="header-link">
-      <%= link("Contacts", to: "#") %>
+      <%= link("People", to: member_path(@conn, :index)) %>
     </li>
     <li id="global-search" class="flex-1 sm:mx-4 ">
       <input type="text" placeholder="Search" class="search-bar" />

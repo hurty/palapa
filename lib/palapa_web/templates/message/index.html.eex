@@ -24,11 +24,21 @@
   </div>
 
   <div class="hidden sm:block w-64 pl-4">
-    <h2 class="text-grey-dark text-sm font-bold pb-2 mb-2 uppercase"><i class="fas fa-users"></i> Teams</h2>
+    <nav class="pt-4 pb-8">
+      <ul class="list-reset flex justify-left">
+        <li>
+          <%= link(to: message_path(@conn, :new), class: "nav-btn") do %>
+            <i class="fas fa-plus text-green-light mr-2"></i>New message
+          <% end %>
+        </li>
+      </ul>
+    </nav>
+
+    <h2 class="text-grey-dark text-sm font-bold pb-2 pt-1 mb-2 border-t-2 border-grey-lighter"><i class="fas fa-users"></i> Filter messages by team</h2>
     
     <ul class="list-reset pl-1">
       <li class="text-blue-dark font-light mb-2 font-bold">
-        <%= link("My teams", to: message_path(@conn, :index), class: (unless @selected_team_id, do: "tag tag--active", else: "tag")) %>
+        <%= link("All my teams", to: message_path(@conn, :index), class: (unless @selected_team_id, do: "tag tag--active", else: "tag")) %>
       </li>
       <div class="border-t-2 border-grey-lighter w-1/6 my-2"></div>
       <%= for team <- @teams do %>

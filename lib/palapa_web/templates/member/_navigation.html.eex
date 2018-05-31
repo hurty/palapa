@@ -1,0 +1,14 @@
+<ul class="tabs">
+  <%= if Palapa.Access.permit? Palapa.Teams, :create, @current_member do %>
+    <li class="tab tab--selected">
+      <%= link(to: member_path(@conn, :index)) do %>
+        <i class="fas fa-home text-green-light mr-2"></i>Your organization
+      <% end %>
+    </li>
+    <li class="tab">
+      <%= link(to: "#") do %>
+        <i class="fas fa-address-book text-grey-dark mr-2"></i>External contacts
+      <% end %>
+    </li>
+  <% end %>
+</ul>
