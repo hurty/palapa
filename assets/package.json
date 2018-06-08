@@ -8,13 +8,13 @@
     "watch": "brunch watch --stdin"
   },
   "dependencies": {
+    "autosize": "^4.0.2",
     "choices.js": "^3.0.3",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "popper.js": "^1.14.3",
     "stimulus": "^1.0.1",
-    "trix": "^0.11.2",
-    "autosize": "^4.0.2"
+    "trix": "^0.11.3"
   },
   "devDependencies": {
     "babel-brunch": "6.1.1",
