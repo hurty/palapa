@@ -1,8 +1,7 @@
 defmodule Palapa.Organizations do
   use Palapa.Context
 
-  alias Organizations.Organization
-  alias Organizations.Member
+  alias Organizations.{Organization, Member}
 
   defdelegate(authorize(action, user, params), to: Palapa.Organizations.Policy)
 

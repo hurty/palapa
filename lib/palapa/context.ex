@@ -3,6 +3,8 @@ defmodule Palapa.Context do
     quote do
       alias Palapa.Accounts
       alias Palapa.Organizations
+      alias Palapa.Organizations.Organization
+      alias Palapa.Organizations.Member
       alias Palapa.Teams
 
       alias Palapa.Repo
