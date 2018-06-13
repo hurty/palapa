@@ -16,7 +16,10 @@ defmodule Palapa.Attachments.AttachmentUploader do
   end
 
   def filename(version, {_file, scope}) do
-    "#{scope.id}_#{version}"
+    case version do
+      :original -> scope.id
+      _ -> "#{scope.id}_#{version}"
+    end
   end
 
   # Override the storage directory:
