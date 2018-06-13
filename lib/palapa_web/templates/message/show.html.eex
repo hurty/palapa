@@ -42,7 +42,7 @@
       </header>
 
       <section class="message-content">      
-        <%= raw(@message.content) %>
+        <%= raw(PalapaWeb.Helpers.sanitize_html(@message.content)) %>
       </section>
     </article>
   </div>

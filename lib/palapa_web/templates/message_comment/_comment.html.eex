@@ -35,5 +35,5 @@
     </div>
 
 
-    <div class="text-grey-darkest mt-2 pl-2 pr-8"><%= raw(@comment.content) %></div>
+    <div class="text-grey-darkest mt-2 pl-2 pr-8"><%= raw(PalapaWeb.Helpers.sanitize_html(@comment.content)) %></div>
 </li>

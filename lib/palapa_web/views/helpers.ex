@@ -63,4 +63,8 @@ defmodule PalapaWeb.Helpers do
     |> Enum.map(fn m -> %{"id" => m.id, "name" => m.name} end)
     |> Jason.encode!()
   end
+
+  def sanitize_html(text) do
+    HtmlSanitizeEx.Scrubber.scrub(text, PalapaWeb.TrixScrubber)
+  end
 end

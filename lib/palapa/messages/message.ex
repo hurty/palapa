@@ -23,8 +23,6 @@ defmodule Palapa.Messages.Message do
     |> cast(attrs, [:title, :content, :published_to_everyone, :publish_teams_ids])
     |> put_teams(attrs)
     |> validate_required(:title)
-
-    # |> update_change(:content, &HtmlSanitizeEx.html5(&1))
   end
 
   defp put_teams(changeset, attrs) do
