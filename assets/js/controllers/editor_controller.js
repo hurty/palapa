@@ -1,4 +1,6 @@
-import { Controller } from "stimulus"
+import {
+  Controller
+} from "stimulus"
 
 export default class extends Controller {
   static targets = ["autocompleteList", "autocompleteChoice"]
@@ -14,6 +16,25 @@ export default class extends Controller {
     document.addEventListener("trix-change", e => {
       this.detectSearchTerm()
       this.filterAutocompleteList()
+      console.log(this.editor.composition.attachments)
+    })
+
+    // Handle files upload through the text editor
+    document.addEventListener("trix-attachment-add", e => {
+      let attachment
+      attachment = e.attachment
+      if (attachment.file) {
+        this.uploadAttachment(attachment)
+      }
+    })
+
+    // Handle file deletion when the attachment is deleted
+    document.addEventListener("trix-attachment-remove", e => {
+      let attachment
+      attachment = e.attachment
+      if (attachment.file) {
+        this.deleteAttachment(attachment)
+      }
     })
 
     // this.element.addEventListener("focusout", (e) => {
@@ -169,10 +190,15 @@ export default class extends Controller {
     let memberName = this.autocompleteChoiceTargets[this.autocompleteIndex].getAttribute("data-member-name")
     let memberId = this.autocompleteChoiceTargets[this.autocompleteIndex].getAttribute("data-member-id")
     let attachementContent = `<mention data-member-id="${memberId}" class="autocomplete__inserted">@${memberName}</mention>`
-    let attachment = new Trix.Attachment({ content: attachementContent })
+    let attachment = new Trix.Attachment({
+      content: attachementContent
+    })
 
     // Workaround https://github.com/basecamp/trix/issues/422 (pb still present in firefox, webkit is ok)
-    attachment.setAttributes({ url: "#", href: "#" })
+    attachment.setAttributes({
+      url: "#",
+      href: "#"
+    })
 
     this.editor.insertAttachment(attachment)
     this.editor.insertString(" ")
@@ -193,6 +219,51 @@ export default class extends Controller {
     let url = this.data.get("autocompleteUrl") + "?name_pattern=" + searchTerm
     PA.fetchHTML(url).then(filteredList => {
       this.autocompleteListTarget.innerHTML = filteredList
+    })
+  }
+
+  uploadAttachment(attachment) {
+    let file, form, xhr, host;
+    host = "/attachments"
+    file = attachment.file;
+
+    const element = document.head.querySelector('meta[name="csrf-token"]')
+    const csrfToken = element.getAttribute("content")
+
+    form = new FormData;
+    form.append("Content-Type", file.type);
+    form.append("file", file);
+
+    xhr = new XMLHttpRequest;
+    xhr.open("POST", host, true);
+    xhr.setRequestHeader("X-CSRF-Token", csrfToken)
+
+    xhr.upload.onprogress = function (event) {
+      var progress;
+      progress = event.loaded / event.total * 100;
+      return attachment.setUploadProgress(progress);
+    };
+
+    xhr.onload = function () {
+      var href, url;
+      if (xhr.status === 201) {
+        let response = JSON.parse(xhr.responseText)
+
+        return attachment.setAttributes({
+          attachment_uuid: response.attachment_uuid,
+          url: response.thumb_url,
+          href: response.original_url
+        });
+      }
+    };
+
+    return xhr.send(form);
+  };
+
+  deleteAttachment(attachment) {
+    let attachmentUUID = attachment.getAttribute("attachment_uuid")
+    PA.fetch(`/attachments/${attachmentUUID}`, {
+      method: "DELETE"
     })
   }
 

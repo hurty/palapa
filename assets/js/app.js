@@ -18,7 +18,6 @@ import "trix"
 
 // Global events handlers
 import "./handlers/external_links_handler"
-import "./handlers/trix_attachments_handler"
 
 // Components
 import AvatarController from "./controllers/avatar_controller"
