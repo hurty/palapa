@@ -38,6 +38,9 @@ export default class extends Controller {
     this.commentFormTarget.classList.remove("hidden")
     this.leaveCommentTarget.classList.add("hidden")
     this.commentFormTarget.querySelector("trix-editor").focus()
+    this.commentFormTarget.scrollIntoView({
+      behavior: 'smooth'
+    })
   }
 
   hideCommentForm(event) {
