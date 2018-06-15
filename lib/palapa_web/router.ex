@@ -41,7 +41,7 @@ defmodule PalapaWeb.Router do
     get("/sessions/switcher", SessionController, :switcher)
     get("/dashboard", DashboardController, :index)
 
-    resources("/attachments", AttachmentController, only: [:create, :delete])
+    resources("/attachments", AttachmentController, only: [:create])
 
     resources("/messages", MessageController) do
       resources("/comments", MessageCommentController, only: [:create, :edit, :update, :delete])

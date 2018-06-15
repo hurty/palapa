@@ -10,6 +10,8 @@ defmodule Palapa.Attachments.Attachment do
     field(:content_type, :string)
     timestamps()
     field(:deleted_at, :utc_datetime)
+
+    belongs_to(:message, Palapa.Messages.Message)
   end
 
   def changeset(%Attachment{} = attachment, attrs) do

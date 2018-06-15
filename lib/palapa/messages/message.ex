@@ -3,12 +3,14 @@ defmodule Palapa.Messages.Message do
   alias Palapa.Organizations
   alias Palapa.Messages.{Message, MessageComment}
   alias Palapa.Teams.Team
+  alias Palapa.Attachments.Attachment
 
   schema "messages" do
     belongs_to(:organization, Organizations.Organization)
     belongs_to(:creator, Organizations.Member)
     many_to_many(:teams, Team, join_through: "messages_teams", on_replace: :delete)
     has_many(:comments, MessageComment)
+    has_many(:attachments, Attachment, on_replace: :nilify)
     timestamps()
     field(:title, :string)
     field(:content, :string)

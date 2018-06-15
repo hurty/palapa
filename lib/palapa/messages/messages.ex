@@ -2,9 +2,8 @@ defmodule Palapa.Messages do
   use Palapa.Context
   alias Palapa.Messages.Message
   alias Palapa.Messages.MessageComment
-  alias Palapa.Organizations.Organization
-  alias Palapa.Organizations.Member
   alias Palapa.Teams.Team
+  alias Palapa.Attachments
 
   # --- Authorizations
 
@@ -96,6 +95,7 @@ defmodule Palapa.Messages do
     |> put_change(:organization, creator.organization)
     |> put_change(:creator, creator)
     |> put_teams(teams)
+    |> Attachments.put_attachments()
     |> Repo.insert()
   end
 
@@ -105,7 +105,10 @@ defmodule Palapa.Messages do
 
   def update(%Message{} = message, attrs) do
     message
+    |> Repo.preload([:organization, :attachments])
     |> Message.changeset(attrs)
+    |> Attachments.put_attachments()
+    |> IO.inspect()
     |> Repo.update()
 
     # |> put_teams(teams)

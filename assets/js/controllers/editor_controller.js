@@ -28,15 +28,6 @@ export default class extends Controller {
       }
     })
 
-    // Handle file deletion when the attachment is deleted
-    document.addEventListener("trix-attachment-remove", e => {
-      let attachment
-      attachment = e.attachment
-      if (attachment.file) {
-        this.deleteAttachment(attachment)
-      }
-    })
-
     // this.element.addEventListener("focusout", (e) => {
     //   this.hideAutocomplete()
     // })
@@ -259,13 +250,6 @@ export default class extends Controller {
 
     return xhr.send(form);
   };
-
-  deleteAttachment(attachment) {
-    let attachmentUUID = attachment.getAttribute("attachment_uuid")
-    PA.fetch(`/attachments/${attachmentUUID}`, {
-      method: "DELETE"
-    })
-  }
 
   get cursorPosition() {
     return this.editor.getPosition()

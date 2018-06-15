@@ -18,16 +18,4 @@ defmodule PalapaWeb.AttachmentController do
         |> json(%{})
     end
   end
-
-  def delete(conn, %{"id" => id}) do
-    attachment = Palapa.Attachments.get!(id)
-
-    with :ok <- permit(Palapa.Attachments, :delete, current_member(), attachment) do
-      Palapa.Attachments.delete!(attachment)
-
-      conn
-      |> put_status(200)
-      |> json(%{})
-    end
-  end
 end
