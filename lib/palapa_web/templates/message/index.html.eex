@@ -34,18 +34,20 @@
       </ul>
     </nav>
 
-    <h2 class="text-grey-dark text-sm font-bold pb-2 pt-1 mb-2 border-t-2 border-grey-lighter"><i class="fas fa-users"></i> Filter messages by team</h2>
-    
-    <ul class="list-reset pl-1">
-      <li class="text-blue-dark font-light mb-2 font-bold">
-        <%= link("All my teams", to: message_path(@conn, :index), class: (unless @selected_team_id, do: "tag tag--active", else: "tag")) %>
-      </li>
-      <div class="border-t-2 border-grey-lighter w-1/6 my-2"></div>
-      <%= for team <- @teams do %>
+    <%= if Enum.any?(@teams) do %>
+      <h2 class="text-grey-dark text-sm font-bold pb-2 pt-1 mb-2 border-t-2 border-grey-lighter"><i class="fas fa-users"></i> Filter messages by team</h2>
+      
+      <ul class="list-reset pl-1">
         <li class="text-blue-dark font-light mb-2 font-bold">
-          <%= link(team.name, to: message_path(@conn, :index, team_id: team.id), class: (if @selected_team_id == team.id, do: "tag tag--active", else: "tag")) %>
+          <%= link("All my teams", to: message_path(@conn, :index), class: (unless @selected_team_id, do: "tag tag--active", else: "tag")) %>
         </li>
-      <% end %>
-    </ul>
+        <div class="border-t-2 border-grey-lighter w-1/6 my-2"></div>
+        <%= for team <- @teams do %>
+          <li class="text-blue-dark font-light mb-2 font-bold">
+            <%= link(team.name, to: message_path(@conn, :index, team_id: team.id), class: (if @selected_team_id == team.id, do: "tag tag--active", else: "tag")) %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
   </div>
 </div>
