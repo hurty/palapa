@@ -2,7 +2,7 @@ import { Controller } from "stimulus"
 
 export default class extends Controller {
   static targets = ["teamsList", "publishToEveryone", "publishToSpecificTeams", "commentForm", "commentsList",
-    "commentsCount", "commentContent", "editor"]
+    "commentsCount", "commentContent", "editor", "leaveComment"]
   connect() {
     this.handleTeamListVisibility()
   }
@@ -27,11 +27,21 @@ export default class extends Controller {
   }
 
   showTeamsList() {
-    this.teamsListTarget.classList.remove("hidden");
+    this.teamsListTarget.classList.remove("hidden")
   }
 
   hideTeamsList() {
-    this.teamsListTarget.classList.add("hidden");
+    this.teamsListTarget.classList.add("hidden")
+  }
+
+  showCommentForm(event) {
+    this.commentFormTarget.classList.remove("hidden")
+    this.leaveCommentTarget.classList.add("hidden")
+  }
+
+  hideCommentForm(event) {
+    this.commentFormTarget.classList.add("hidden")
+    this.leaveCommentTarget.classList.remove("hidden")
   }
 
   submitComment(event) {
@@ -56,6 +66,7 @@ export default class extends Controller {
         this.commentsCountTarget.innerHTML = ""
         this.commentsCountTarget.appendChild(commentsCountElement)
         this.editorTarget.editor.loadHTML("")
+        this.hideCommentForm()
       })
   }
 

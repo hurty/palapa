@@ -56,8 +56,12 @@
       <%= render_many @comments, PalapaWeb.MessageCommentView, "_comment.html", as: :comment, conn: @conn, current_account: @current_account %>
     </ul>
 
+    <div class="card-actions" data-target="message.leaveComment">
+      <%= submit "Leave a comment", class: "btn btn-green", "data-action": "message#showCommentForm" %>
+    </div>
+
     <%= form_for @new_message_comment, message_message_comment_path(@conn, :create, @message), 
-      ["data-target": "message.commentForm", "data-action": "message#submitComment"], fn form -> %> 
+      ["data-target": "message.commentForm", "data-action": "message#submitComment", class: "hidden"], fn form -> %> 
 
       <%= text_editor(@current_organization, placeholder: "Your comment here...", input: "message_comment_content", "data-target": "message.editor", class: "min-h-screen-1/8") %>
       <%= hidden_input form, :content, "data-target": "message.commentContent" %>
