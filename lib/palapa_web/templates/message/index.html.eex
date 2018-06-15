@@ -1,7 +1,7 @@
 <div class="flex justify-center mt-8 px-2">
   <div class="flex-1 max-w-md">
     <%= if Enum.empty?(@messages) do %>
-      <div class="blankslate">There's nothing's there yet.</div>
+      <%= render "_blankslate.html", conn: @conn %>
     <% else %>
       <div class="bg-grey-lighter p-2 rounded-lg">
         <%= if !is_nil(@conn.params["page"]) do %>
