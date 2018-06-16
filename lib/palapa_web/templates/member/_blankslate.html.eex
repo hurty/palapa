@@ -1,0 +1,4 @@
+<div class="bg-grey-lighter p-6 rounded-lg text-center mx-auto">
+  <i class="text-4xl text-green fa fa-child"></i>
+  <div class="blankslate my-2">There is no member in this team yet.</div>
+</div>
