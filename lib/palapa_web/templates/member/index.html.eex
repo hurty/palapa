@@ -45,7 +45,7 @@
 <div class="flex w-full lg:w-4/5 mx-auto">
   <div class="w-full sm:2/3">
 
-    <div class="flex flex-wrap justify-center">
+    <div class="flex flex-wrap justify-left">
       <%= if Enum.any?(@members) do %>
         <%= for member <- @members do %> 
           <%= render @view_module, "_member.html", %{conn: @conn, member: member} %>

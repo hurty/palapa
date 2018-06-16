@@ -7,21 +7,21 @@
   }
 }
 
-.btn-blue {
-  @apply bg-indigo;
-  @apply text-white !important;
+.btn-grey {
+  @apply bg-grey-light;
+  @apply text-grey-darkest !important;
 
   &:hover {
-    @apply bg-indigo-light;
+    @apply bg-grey-light;
   }
 }
 
 .btn-green {
-  @apply bg-green;
+  @apply bg-green-light;
   @apply text-white !important;
 
   &:hover {
-    @apply bg-green-light;
+    @apply bg-green-lighter;
   }
 }
 

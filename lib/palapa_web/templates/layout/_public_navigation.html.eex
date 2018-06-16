@@ -1,6 +1,6 @@
 <nav class="flex items-center justify-between flex-wrap bg-white p-6 shadow">
   <div class="flex items-center flex-no-shrink text-white mr-6">
-    <span class="font-semibold text-xl tracking-tight"><%= link("Palapa", to: home_path(@conn, :index)) %></span>
+    <span class="font-semibold text-xl tracking-tight"><%= link("Palapa", to: home_path(@conn, :index), class: "text-grey-darkest") %></span>
   </div>
   <div class="block lg:hidden">
     <button class="flex items-center px-3 py-2 border rounded text-indigo-lighter border-indigo-light hover:text-white hover:border-white">
@@ -9,22 +9,19 @@
   </div>
   <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
     <div class="text-sm lg:flex-grow">
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-indigo mr-4 font-bold">
-        Palapa
-      </a>
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-indigo-lighter hover:text-indigo mr-4">
+      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-grey-darker hover:text-grey mr-4">
         Features
       </a>
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-indigo-lighter hover:text-indigo mr-4">
+      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-grey-darker hover:text-grey mr-4">
         Pricing
       </a>
     </div>
     <div>
-      <%= link("Sign up", to: registration_path(@conn, :new), class: "btn btn-blue") %>
+      <%= link("Create workspace", to: registration_path(@conn, :new), class: "btn btn-grey") %>
       <%= if @current_member do %>
-        <%= link("Log out", to: session_path(@conn, :delete), method: :delete, class: "btn btn-blue") %>
+        <%= link("Log out", to: session_path(@conn, :delete), method: :delete, class: "btn btn-grey") %>
       <% else %>
-        <%= link("Login", to: session_path(@conn, :new), class: "btn btn-blue") %>
+        <%= link("Login", to: session_path(@conn, :new), class: "btn btn-grey") %>
       <% end%>
     </div>
   </div>

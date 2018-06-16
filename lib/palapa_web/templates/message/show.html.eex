@@ -47,7 +47,7 @@
     </article>
   </div>
   
-  <div id="comments" class="w-2/3 mx-auto">
+  <div id="comments" class="w-4/5 mx-auto">
     <div data-target="message.commentsCount">
       <%= render PalapaWeb.MessageCommentView, "_comments_count.html", comments_count: @message.comments_count %>
     </div>

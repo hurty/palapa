@@ -1,0 +1,43 @@
+<%= form_for @changeset, registration_path(@conn, :create), [as: :registration], fn f -> %>
+  <h2 class="card-header">
+    Create a new workspace
+  </h2>
+
+  <div class="card-header-separator"></div>
+
+  <%= if @changeset.action do %>
+    <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+  <% end %>
+
+  <div class="field">
+    <%= label f, :organization_name, "Workspace name", class: "label" %>
+    <%= error_tag f, :organization_name %>
+    <%= text_input f, :organization_name, placeholder: "Usually, your company or organization name", class: "input" %>
+  </div>
+
+  <div class="field">
+    <%= label f, :name, "Your full name", class: "label" %>
+    <%= error_tag f, :name %>
+    <%= text_input f, :name, placeholder: "Richard Hendricks", class: "input" %>
+  </div>
+
+  <div class="field">
+    <%= label f, :email, "Your Email address", class: "label" %>
+    <%= error_tag f, :email %>
+    <%= email_input f, :email, placeholder: "richard@piedpiper.com", class: "input" %>
+  </div>
+
+  <div class="field">
+    <%= label f, :email, "Choose a password", class: "label" %>
+    <%= error_tag f, :password %>
+    <%= password_input f, :password, placeholder: "8 chars minimum", class: "input" %>
+  </div>
+
+  <%= hidden_input f, :timezone, "data-target": "registration.timezone" %>
+
+  <div class="card-actions">
+    <%= submit "Create a new account", class: "btn btn-green" %>
+  </div>
+
+  <div class="card-footer">You already have an account? &nbsp; <%= link("Log in!", to: session_path(@conn, :new), class: "text-green") %></div>
+<% end %>

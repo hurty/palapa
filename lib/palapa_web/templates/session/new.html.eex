@@ -1,6 +1,6 @@
-<div class="flex justify-center py-4">
+<div class="flex justify-center mt-8">
   <div class="flex-3 card-shadow">
-    <div class="card">
+    <div class="card p-8">
       <h2 class="card-header">Login</h2>
       
       <div class="card-header-separator"></div>
@@ -17,7 +17,7 @@
         </div>
 
         <div class="card-actions">
-          <%= submit "Log in", class: "btn btn-blue" %>
+          <%= submit "Log in", class: "btn btn-green" %>
         </div>
       <% end %>
     </div>
