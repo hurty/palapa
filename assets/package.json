@@ -24,7 +24,7 @@
     "postcss-brunch": "^2.1.0",
     "postcss-import": "^11.0.0",
     "postcss-nested": "^3.0.0",
-    "tailwindcss": "^0.4.0",
+    "tailwindcss": "^0.5.0",
     "uglify-js-brunch": "2.10.0"
   }
 }
