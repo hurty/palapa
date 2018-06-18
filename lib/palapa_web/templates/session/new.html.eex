@@ -12,7 +12,7 @@
         </div>
 
         <div class="field">
-          <%= label f, :email, "Password", class: "label" %>
+          <%= label f, :password, "Password", class: "label" %>
           <%= password_input f, :password, class: "input" %>
         </div>
 
