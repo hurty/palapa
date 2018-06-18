@@ -44,6 +44,9 @@
 @import "components/_navigation";
 @import "components/_tabs";
 @import "components/_profile";
+
+@import "pages/members";
+
  /**
   * This injects all of Tailwind's utility classes, generated based on your
   * config file.

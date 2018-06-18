@@ -1,8 +1,8 @@
-<div class="card-shadow w-full sm:w-64 h-auto sm:mb-4 mx-2">
+<div class="card-shadow">
   <div class="card h-full">
     <div class="text-center"><%= PalapaWeb.MemberView.avatar(@member, :medium) %></div>
     
-    <div class="text-center text-lg font-bold capitalize sm:mb-2"><%= link @member.name, to: member_path(@conn, :show, @member), class: "text-green" %></div>
+    <div class="text-center text-lg font-bold capitalize"><%= link @member.name, to: member_path(@conn, :show, @member), class: "text-green" %></div>
     <div class="text-grey-darker text-center text-sm capitalize"><%= @member.title %></div>
   </div>
 </div>

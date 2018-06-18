@@ -1,7 +1,7 @@
 <div class="flex w-full lg:w-4/5 mx-auto items-center mt-8 mb-4 mx-8">
   <div class="w-full sm:w-3/4">
     
-    <h2 class="hidden sm:block text-xl text-center text-grey-darker font-bold">
+    <h2 class="hidden sm:block text-2xl py-2 text-center text-green rounded-lg bg-grey-lightest sm:mx-4">
       <%= if @selected_team do %> 
         <%= @selected_team.name %>
       <% else %>
@@ -43,9 +43,9 @@
 </div>
 
 <div class="flex w-full lg:w-4/5 mx-auto">
-  <div class="w-full sm:2/3">
+  <div class="w-full sm:2/3 sm:mx-4">
 
-    <div class="flex flex-wrap justify-left">
+    <div class="members-grid">
       <%= if Enum.any?(@members) do %>
         <%= for member <- @members do %> 
           <%= render @view_module, "_member.html", %{conn: @conn, member: member} %>
