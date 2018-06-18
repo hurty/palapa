@@ -1,53 +1,54 @@
-<div class="flex justify-center mt-8 px-2">
-  <div class="flex-1 max-w-md">
-    <%= if Enum.empty?(@messages) do %>
-      <%= render "_blankslate.html", conn: @conn %>
-    <% else %>
-      <div class="bg-grey-lighter p-2 rounded-lg">
-        <%= if !is_nil(@conn.params["page"]) do %>
-          <div class="text-center my-2">
-            <%= pagination_links @messages, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
-          </div>
-        <% end %>
-
-        <ul class="list-reset bg-white lg:border lg:border-grey-light rounded">
-          <%= render_many @messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn, current_account: @current_account %>
-        </ul>
-
-        <%= if @messages.total_pages > 1 do %>
-          <div class="text-center my-2">
-            <%= pagination_links @messages, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="hidden sm:block w-64 pl-4">
-    <nav class="pt-4 pb-8">
-      <ul class="list-reset flex justify-left">
-        <li>
-          <%= link(to: message_path(@conn, :new), class: "nav-btn") do %>
-            <i class="fas fa-plus text-green-light mr-2"></i>New message
-          <% end %>
-        </li>
-      </ul>
-    </nav>
-
-    <%= if Enum.any?(@teams) do %>
-      <h2 class="text-grey-dark text-sm font-bold pb-2 pt-1 mb-2 border-t-2 border-grey-lighter"><i class="fas fa-users"></i> Filter messages by team</h2>
-      
-      <ul class="list-reset pl-1">
-        <li class="text-blue-dark font-light mb-2 font-bold">
-          <%= link("All my teams", to: message_path(@conn, :index), class: (unless @selected_team_id, do: "tag tag--active", else: "tag")) %>
-        </li>
-        <div class="border-t-2 border-grey-lighter w-1/6 my-2"></div>
-        <%= for team <- @teams do %>
-          <li class="text-blue-dark font-light mb-2 font-bold">
-            <%= link(team.name, to: message_path(@conn, :index, team_id: team.id), class: (if @selected_team_id == team.id, do: "tag tag--active", else: "tag")) %>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
-  </div>
+<div class="left-sidebar">
 </div>
+
+<div class="content">
+  <%= if Enum.empty?(@messages) do %>
+    <%= render "_blankslate.html", conn: @conn %>
+  <% else %>
+    <div class="bg-grey-lighter p-2 rounded-lg">
+      <%= if !is_nil(@conn.params["page"]) do %>
+        <div class="text-center my-2">
+          <%= pagination_links @messages, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
+        </div>
+      <% end %>
+
+      <ul class="list-reset bg-white lg:border lg:border-grey-light rounded">
+        <%= render_many @messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn, current_account: @current_account %>
+      </ul>
+
+      <%= if @messages.total_pages > 1 do %>
+        <div class="text-center my-2">
+          <%= pagination_links @messages, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+
+  <nav class="right-sidebar">
+    <ul class="list-reset flex justify-left">
+      <li>
+        <%= link(to: message_path(@conn, :new), class: "nav-btn") do %>
+          <i class="fas fa-plus text-green-light mr-2"></i>New message
+        <% end %>
+      </li>
+    </ul>
+  
+
+  <%= if Enum.any?(@teams) do %>
+    <h2 class="text-grey-dark text-sm font-bold pb-2 pt-1 mb-2 border-t-2 border-grey-lighter"><i class="fas fa-users"></i> Filter messages by team</h2>
+    
+    <ul class="list-reset pl-1">
+      <li class="text-blue-dark font-light mb-2 font-bold">
+        <%= link("All my teams", to: message_path(@conn, :index), class: (unless @selected_team_id, do: "tag tag--active", else: "tag")) %>
+      </li>
+      <div class="border-t-2 border-grey-lighter w-1/6 my-2"></div>
+      <%= for team <- @teams do %>
+        <li class="text-blue-dark font-light mb-2 font-bold">
+          <%= link(team.name, to: message_path(@conn, :index, team_id: team.id), class: (if @selected_team_id == team.id, do: "tag tag--active", else: "tag")) %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</nav>

@@ -45,6 +45,8 @@
 @import "components/_tabs";
 @import "components/_profile";
 
+@import "layout/layout";
+
 @import "pages/members";
 
  /**

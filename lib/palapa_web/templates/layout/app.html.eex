@@ -12,13 +12,15 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
-  <body>
+  <body class="layout">
     <%= render PalapaWeb.LayoutView, "_navigation.html", assigns %>
     <%= render_existing view_module(@conn), "_navigation.html", assigns %>
     <%= render PalapaWeb.LayoutView, "_flash_notice.html", assigns %>
     
-    <main role="main" class="mb-8">
-      <%= render @view_module, @view_template, assigns %>
-    </main>
+    <%= render @view_module, @view_template, assigns %>
+
+    <footer class="footer bg-grey-lightest py-8 mt-8 text-center text-blue-dark">
+      © 2018 Palapa SAS
+    </footer>
   </body>
 </html>
