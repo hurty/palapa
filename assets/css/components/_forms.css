@@ -28,7 +28,43 @@ button:focus {
 }
 
 .error {
-  @apply mb-2;
-  @apply rounded-lg bg-white;
-  @apply text-white text-red-light text-sm font-bold;
+  position: relative;
+  z-index: 10;
+  display: inline-block;
+  max-width: 450px;
+  padding: 5px 8px;
+  margin: 1px 0 0;
+  font-size: 13px;
+  font-weight: 400;
+  border-radius: 3px;
+  @apply text-white;
+  @apply bg-red-light;
+
+  &::before {
+    position: absolute;
+    bottom: 100%;
+    left: 10px;
+    z-index: 15;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    content: " ";
+    border: solid transparent;
+    border-bottom-color: config('colors.red-light');
+    border-width: 5px;
+  }
+
+  &::after {
+    position: absolute;
+    bottom: 100%;
+    left: 10px;
+    z-index: 15;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    content: " ";
+    border: solid transparent;
+    border-bottom-color: config('colors.red-light');
+    border-width: 5px;
+  }
 }

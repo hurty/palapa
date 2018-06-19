@@ -10,7 +10,7 @@ defmodule PalapaWeb.ErrorHelpers do
   """
   def error_tag(form, field, class \\ "error") do
     Enum.map(Keyword.get_values(form.errors, field), fn error ->
-      content_tag(:span, translate_error(error), class: class)
+      content_tag(:span, translate_error(error) |> String.capitalize(), class: class)
     end)
   end
 

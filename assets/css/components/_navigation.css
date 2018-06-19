@@ -1,5 +1,5 @@
 .organization-name {
-  @apply text-base font-extrabold text-green-lighter;
+  @apply text-base font-extrabold text-white;
 }
 
 .header-links {
