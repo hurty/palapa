@@ -1,4 +1,4 @@
-<ul class="tabs">
+<ul class="tab-navigation tabs">
   <%= if Palapa.Access.permit? Palapa.Teams, :create, @current_member do %>
     <li class="tab tab--selected">
       <%= link(to: member_path(@conn, :index)) do %>

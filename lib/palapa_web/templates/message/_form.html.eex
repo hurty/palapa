@@ -4,7 +4,7 @@
     <%= error_tag @form, :title %>
   </div>
 
-  <%= text_editor(@current_organization) %>  
+  <%= text_editor(@current_organization) %>
   <%= hidden_input @form, :content, id: "content" %>
 
   <%= if Enum.any?(@teams) do %>

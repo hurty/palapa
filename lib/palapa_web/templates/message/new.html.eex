@@ -1,18 +1,20 @@
-<div class="flex justify-center" data-controller="message">
-  <div class="flex-1 max-w-md bg-grey-lighter p-2 my-4 rounded-lg">
-    <div class="bg-white p-4 border border-grey-light rounded">
-        <%= form_for @message_changeset, message_path(@conn, :create), fn form -> %>
-        <%= render "_form.html", 
-            message_changeset: @message_changeset, 
-            form: form,
-            current_organization: @current_organization, 
-            teams: @teams 
-          %>    
-          
-          <div class="card-actions">
-            <%= submit "Post this message", class: "btn btn-green" %>
-          </div>
-        <% end %>
+<div class="content article-layout">
+  <div class="main-content" data-controller="message">
+    <div class="card-shadow">
+      <div class="card">
+          <%= form_for @message_changeset, message_path(@conn, :create), fn form -> %>
+          <%= render "_form.html", 
+              message_changeset: @message_changeset, 
+              form: form,
+              current_organization: @current_organization, 
+              teams: @teams 
+            %>    
+            
+            <div class="card-actions">
+              <%= submit "Post this message", class: "btn btn-green" %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

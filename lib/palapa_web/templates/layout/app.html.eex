@@ -19,7 +19,7 @@
     
     <%= render @view_module, @view_template, assigns %>
 
-    <footer class="footer bg-grey-lightest py-8 mt-8 text-center text-blue-dark">
+    <footer class="footer bg-grey-lightest py-8 mt-8 text-center text-sm text-blue-dark">
       © 2018 Palapa SAS
     </footer>
   </body>
