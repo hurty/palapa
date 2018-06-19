@@ -97,8 +97,9 @@ defmodule PalapaWeb.MessageController do
           |> redirect(to: message_path(conn, :show, message))
 
         {:error, message_changeset} ->
-          render(
-            conn,
+          conn
+          |> put_flash(:error, "Your message can't be posted")
+          |> render(
             "edit.html",
             message: message,
             message_changeset: message_changeset,

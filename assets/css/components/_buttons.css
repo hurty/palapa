@@ -27,11 +27,11 @@
 
 .nav-btn {
   @apply px-4 py-2;
-  @apply bg-white border-grey border-2 rounded-full;
-  @apply text-xs text-black font-bold;
+  @apply bg-grey-lighter rounded-lg ;
+  @apply text-xs text-grey-darkest font-bold;
 
   &:hover {
-    @apply border-green-light;
+    @apply bg-grey-light;
   }
 }
 

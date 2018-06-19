@@ -1,8 +1,9 @@
 <div class="flash">
   <%= if get_flash(@conn, :success) do %>
     <div class="text-center py-4 lg:px-4">
-      <div class="p-2 bg-green-light items-center text-indigo-lightest leading-none lg:rounded-full flex lg:inline-flex" role="alert">
-        <span class="text-green-darkest font-semibold p-2 text-center flex-auto"><%= get_flash(@conn, :success) %></span>
+      <div class="p-2 bg-green-light items-center text-white leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+        <span class="font-semibold mr-2 text-left flex-auto"><i class="fas fa-check-circle"></i> 
+        <%= get_flash(@conn, :success) %></span> 
       </div>
     </div>
   <% end %>

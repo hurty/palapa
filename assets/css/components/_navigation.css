@@ -83,3 +83,7 @@
     }
   }
 }
+
+.separator {
+  @apply border-2 rounded-full border-grey-light w-32 my-4 text-center;
+}
