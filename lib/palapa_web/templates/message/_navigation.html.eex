@@ -1,0 +1,19 @@
+<div class="relative">
+<%= if assigns[:breadcrumbs] do %>
+  <nav class="navigation">
+    <ol class="breadcrumbs">
+      <li class="breadcrumb-item">
+        <%= link to: dashboard_path(@conn, :index) do %> 
+          <span><i class="fas fa-home"></i> <%= @current_organization.name %></span>
+        <% end %>
+      </li>
+      
+      <%= for breadcrumb <- @breadcrumbs do %>
+        <li class="breadcrumb-item">
+          <span><%= link breadcrumb[:title], to: breadcrumb[:href] %></span>
+        </li>
+      <% end %>
+    </ol>
+  </nav>
+<% end %>
+</div>

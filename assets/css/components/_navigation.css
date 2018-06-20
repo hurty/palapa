@@ -4,7 +4,7 @@
 
 .header-links {
   @apply flex flex-col list-reset;
-  @apply border-t-2 border-blue-darker my-2;
+  @apply border-t-2 border-blue-darker;
 }
 
 @screen sm {
@@ -15,7 +15,6 @@
 }
 
 .header-link {
-  @apply py-2;
   @apply border-b-2 border-transparent;
   
   a {
@@ -86,4 +85,47 @@
 
 .separator {
   @apply border-2 rounded-full border-grey-light w-32 my-4 text-center;
+}
+
+.navigation {
+  @apply bg-grey-lightest py-2 border-b border-grey-lighter text-sm px-4
+}
+
+.breadcrumbs {
+  @apply list-reset;
+
+  .breadcrumb-item:first-child {
+    &::before {
+      content: none;
+    }
+  }
+
+  .breadcrumb-item:last-child {
+    a {
+      @apply text-grey-darker;
+    }
+  }
+}
+
+.breadcrumb-item {
+  @apply inline-block;
+  @apply text-grey-dark;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  a {
+    @apply text-xs text-green opacity-75;
+
+    &:hover {
+      @apply opacity-100 underline;
+    }
+  } 
+
+  &::before {
+    content: "/";
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+  }
 }

@@ -7,6 +7,12 @@ defmodule PalapaWeb.MessageController do
   alias Palapa.Teams
 
   plug(:put_navigation, "message")
+  plug(:put_common_breadcrumbs)
+
+  def put_common_breadcrumbs(conn, _params) do
+    conn
+    |> put_breadcrumb("Messages", message_path(conn, :index))
+  end
 
   def index(conn, params) do
     messages =
@@ -16,8 +22,8 @@ defmodule PalapaWeb.MessageController do
 
     teams = Teams.list_for_member(current_member())
 
-    render(
-      conn,
+    conn
+    |> render(
       "index.html",
       messages: messages,
       teams: teams,
@@ -29,13 +35,17 @@ defmodule PalapaWeb.MessageController do
     message_changeset = Messages.change(%Message{})
     teams = Teams.list_for_member(current_member())
 
-    render(conn, "new.html", message_changeset: message_changeset, teams: teams)
+    conn
+    |> put_breadcrumb("New message", message_path(conn, :new))
+    |> render("new.html", message_changeset: message_changeset, teams: teams)
   end
 
   def create(conn, %{"message" => message_params}) do
     with :ok <- permit(Messages, :create, current_member()) do
       teams = Teams.list_for_member(current_member())
       message_teams = find_teams(conn, message_params)
+
+      conn = put_breadcrumb(conn, "New messages", message_path(conn, :new))
 
       case Messages.create(current_member(), message_params, message_teams) do
         {:ok, message} ->
@@ -57,8 +67,9 @@ defmodule PalapaWeb.MessageController do
     new_message_comment = Messages.change_comment(%MessageComment{})
 
     with :ok <- permit(Messages, :show, current_member()) do
-      render(
-        conn,
+      conn
+      |> put_breadcrumb(message.title, message_path(conn, :show, message))
+      |> render(
         "show.html",
         message: message,
         comments: message.comments,
@@ -74,8 +85,10 @@ defmodule PalapaWeb.MessageController do
     teams = Teams.list_for_member(current_member())
 
     with :ok <- permit(Messages, :edit_message, current_member(), message) do
-      render(
-        conn,
+      conn
+      |> put_breadcrumb(message.title, message_path(conn, :show, message))
+      |> put_breadcrumb("Edit", message_path(conn, :edit, message))
+      |> render(
         "edit.html",
         message: message,
         message_changeset: message_changeset,
