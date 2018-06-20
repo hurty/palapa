@@ -61,13 +61,13 @@
     
     <ul class="list-reset flex flex-col my-4">
       <li class="my-2">
-        <%= link(to: invitation_path(@conn, :new), class: "nav-btn") do %>
+        <%= link(to: invitation_path(@conn, :new), class: "btn") do %>
           <i class="fas fa-user-plus text-grey-dark mr-2"></i>Invite people
         <% end %>
       </li>
       
       <li class="my-2">
-        <%= link(to: team_path(@conn, :new), class: "nav-btn") do %>
+        <%= link(to: team_path(@conn, :new), class: "btn") do %>
           <i class="fas fa-users text-grey-dark mr-2"></i>Create a team
         <% end %>
       </li>

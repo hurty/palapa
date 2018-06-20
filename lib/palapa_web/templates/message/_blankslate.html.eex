@@ -1,4 +1,4 @@
-<div class="bg-grey-lighter p-6 rounded-lg text-center">
+<div class="blankslate">
   <i class="text-4xl text-green fa fa-seedling"></i>
-  <div class="blankslate my-2">There's nothing's there yet...</div>
+  <div>There's nothing's there yet...</div>
 </div>

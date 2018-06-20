@@ -23,8 +23,21 @@
   margin-top: 30px;
 }
 
+.layout {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content min-content min-content 1fr min-content;
+  grid-template-areas: 
+    "header"
+    "tab-navigation"
+    "flash"
+    "content"
+    "footer";
+}
+
 @screen sm {
-  .layout{
+  .layout {
     display: grid;
     min-height: 100vh;
     grid-template-columns: 1fr;
@@ -51,10 +64,10 @@
 
   .right-sidebar-layout {
     display: grid;
-    width: 80%;
+    width: 70%;
     margin-right: auto;
     margin-left: auto;
-    grid-gap: 1em;
+    grid-gap: 2em;
     grid-template-columns: 2fr 1fr;
     grid-template-areas: "main-content right-sidebar";
   }
