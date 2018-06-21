@@ -1,0 +1,22 @@
+.messages__container {
+  @apply bg-grey-lightest rounded border;
+}
+
+.messages__actions {
+  @apply flex justify-between;
+  @apply p-4;
+}
+
+.messages__team-filter {
+  @apply flex-initial;
+    &, & > div.btn {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.messages__list {
+  @apply bg-white;
+  @apply border-t border-b;
+}

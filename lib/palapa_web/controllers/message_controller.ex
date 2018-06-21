@@ -15,9 +15,17 @@ defmodule PalapaWeb.MessageController do
   end
 
   def index(conn, params) do
+    selected_team =
+      if params["team_id"] do
+        Teams.where_organization(current_organization())
+        |> Teams.get!(params["team_id"])
+      else
+        nil
+      end
+
     messages =
       Messages.visible_to(current_member())
-      |> filter_by_selected_team(conn, params)
+      |> filter_team(selected_team)
       |> Messages.paginate(params["page"])
 
     teams = Teams.list_for_member(current_member())
@@ -27,8 +35,17 @@ defmodule PalapaWeb.MessageController do
       "index.html",
       messages: messages,
       teams: teams,
-      selected_team_id: params["team_id"]
+      selected_team: selected_team
     )
+  end
+
+  defp filter_team(query, team) do
+    if team do
+      query
+      |> Messages.published_to(team)
+    else
+      query
+    end
   end
 
   def new(conn, _params) do
@@ -148,18 +165,6 @@ defmodule PalapaWeb.MessageController do
       |> Teams.list()
     else
       []
-    end
-  end
-
-  defp filter_by_selected_team(messages_query, conn, params) do
-    if params["team_id"] do
-      team =
-        Teams.where_organization(current_organization())
-        |> Teams.get!(params["team_id"])
-
-      messages_query |> Messages.published_to(team)
-    else
-      messages_query
     end
   end
 end

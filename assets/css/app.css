@@ -49,7 +49,8 @@
 
 @import "layout/layout";
 
-@import "pages/members";
+@import "pages/_members";
+@import "pages/_messages";
 
  /**
   * This injects all of Tailwind's utility classes, generated based on your

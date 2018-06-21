@@ -1,6 +1,6 @@
 .selector-item {
   @apply border-b border-grey-lighter px-2 py-1;
-  @apply text-grey-darkest text-sm;
+  @apply text-grey-darkest font-semibold text-sm;
 
   * {
     @apply text-grey-darkest;
@@ -16,5 +16,5 @@
 }
 
 .selector-item-default {
-  @apply py-2 border-b-2 border-grey;
+  @apply border-b-2 border-grey-lighter;
 }
