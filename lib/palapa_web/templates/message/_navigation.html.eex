@@ -1,4 +1,3 @@
-<div class="">
 <%= if assigns[:breadcrumbs] do %>
   <nav class="navigation">
     <ol class="breadcrumbs">
@@ -16,4 +15,3 @@
     </ol>
   </nav>
 <% end %>
-</div>

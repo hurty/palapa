@@ -1,0 +1,44 @@
+<header class="header mb-8">
+  <nav data-controller="navigation" data-navigation-switcher-url="<%= session_path(@conn, :switcher) %>" class="sm:flex bg-blue-darkest items-center justify-between flex-wrap px-2 sm:pl-4 py-2 sm:py-1 bg-white w-full">
+    <div class="flex justify-between items-center">
+      <%= link(@current_organization.name, to: home_path(@conn, :index), class: "organization-name") %>
+      
+      <button data-action="navigation#toggleLinks" class="sm:hidden flex items-center px-3 py-2 border-2 rounded text-green-lighter border-green-light hover:text-white hover:border-white">
+        <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+      </button>
+    </div>
+
+    <ul data-target="navigation.links" class="header-links hidden sm:flex">
+      <li class="header-link <%= if @navigation == "message" do %>header-link--active<% end %>"> 
+        <%= link("Messages", to: message_path(@conn, :index)) %>
+      </li>
+      <li class="header-link  <%= if @navigation == "documents" do %>header-link--active<% end %>">
+        <%= link("Documents", to: "#") %>
+      </li>
+      <li class="header-link  <%= if @navigation == "requests" do %>header-link--active<% end %>">
+        <%= link("Requests", to: "#") %>
+      </li>
+      <li class="header-link">
+        <%= link("Calendar", to: "#") %>
+      </li>
+      <li class="header-link  <%= if @navigation == "members" do %>header-link--active<% end %>">
+        <%= link("People", to: member_path(@conn, :index)) %>
+      </li>
+      <li id="global-search" class="flex-1 sm:mx-4 ">
+        <input type="text" placeholder="Search" class="search-bar" />
+      </li>
+    </ul>
+
+    <div data-target="navigation.searchLinks" class="hidden sm:flex">
+      <div class="flex items-center">
+        
+        <div class="sm:mx-4 w-10">
+          <a href="#" data-action="navigation#showSwitcher" title="Signed id as <%= @current_member.name %>"><%= PalapaWeb.MemberView.avatar(@current_member, :small) %></a>
+          <div data-target="navigation.switcher" class="absolute pin-r border z-50 p-4 bg-white shadow rounded opacity-0">
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <%= render_existing view_module(@conn), "_navigation.html", assigns %>
+</header>
