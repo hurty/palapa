@@ -1,7 +1,7 @@
 .tag {
   @apply px-2 py-1;
   @apply bg-grey-light rounded;
-  @apply text-grey-darker;
+  @apply text-grey-darker text-sm;
 
   &--active {
     @apply bg-green-lighter text-green-darker !important;

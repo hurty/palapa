@@ -1,51 +1,64 @@
-<div class="content right-sidebar-layout">
-  <div class="main-content z-50">
-    <%= if Enum.empty?(@messages) do %>
-      <%= render "_blankslate.html", conn: @conn %>
-    <% else %>
-      <div class="bg-grey-lighter p-2 rounded-lg">
-        <%= if !is_nil(@conn.params["page"]) do %>
-          <div class="text-center my-2">
-            <%= pagination_links @messages, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
-          </div>
-        <% end %>
+<div class="content article-layout">
+  <div class="main-content"> 
+    <div class="card-shadow flex justify-between">
+      <div class="flex flex-col bg-grey-lightest rounded border w-full">
+        
+        <%# Start navigation %>
+        <div class="flex justify-between items-center p-2 border-b border-grey-lighter">
+        
+          <%= if Enum.any?(@teams) do %>
+            <div data-controller="popover">
+              <button data-target="popover.button" class="btn text-sm">
+                <i class="fas fa-users"></i>
+                <%= if assigns[:selected_team], do: @selected_team.id, else: "All my teams" %>
+                <i class="fas fa-angle-down"></i>
+              </button>
+              <div data-target="popover.content" class="popover hidden">
+                <div data-target="popover.arrow" class="popover__arrow"></div>
 
-        <ul class="list-reset bg-white lg:border lg:border-grey-light rounded">
-          <%= render_many @messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn, current_account: @current_account %>
-        </ul>
+                  <div class="flex flex-col">
+                    <%= link("All my teams", to: message_path(@conn, :index), class: "selector-item truncate selector-item-default") %>
+                    <%= for team <- @teams do %>
+                      <%= link(team.name, to: message_path(@conn, :index, team_id: team.id), class: "selector-item truncate", title: team.name) %>
+                    <% end %>
+                  </div>
 
-        <%= if @messages.total_pages > 1 do %>
-          <div class="text-center my-2">
-            <%= pagination_links @messages, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+              </div>
+            </div>
+          <% end %>
 
-  <nav class="right-sidebar">
-    <div class="flex flex-col text-sm pt-2">
-      <div class="">
-        <%= link(to: message_path(@conn, :new), class: "btn") do %>
-          <i class="fas fa-plus text-green-light mr-2"></i>New message
-        <% end %>
+                    
+          <%= link(to: message_path(@conn, :new), class: "btn text-sm") do %>
+            <i class="fas fa-comment text-green-light mr-2"></i>New message
+          <% end %>
+        </div>
+
+          <%# Start message list %>
+        <div class="bg-white rounded">
+          <%= if Enum.empty?(@messages) do %>
+            <%= render "_blankslate.html", conn: @conn %>
+          <% else %>
+            <div class="">
+              <%= if !is_nil(@conn.params["page"]) do %>
+                <div class="text-center border-b py-2">
+                  <%= pagination_links @messages, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
+                </div>
+              <% end %>
+
+              <ul class="list-reset bg-white rounded">
+                <%= render_many @messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn, current_account: @current_account %>
+              </ul>
+
+              <%= if @messages.total_pages > 1 do %>
+                <div class="text-center my-2">
+                  <%= pagination_links @messages, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+        <%# End message list %>
       </div>
     </div>
-    
-    <%= if Enum.any?(@teams) do %>
-      <h2 class="text-grey-dark text-sm font-bold pb-2 mt-4 mb-2"><i class="fas fa-users"></i> Filter messages by team</h2>
-      
-      <ul class="list-reset pl-1">
-        <li class="text-blue-dark font-light mb-2 font-bold">
-          <%= link("All my teams", to: message_path(@conn, :index), class: (unless @selected_team_id, do: "tag tag--active", else: "tag")) %>
-        </li>
-        <div class="border-t-2 border-grey-lighter w-1/6 my-2"></div>
-        <%= for team <- @teams do %>
-          <li class="text-blue-dark font-light mb-2 font-bold">
-            <%= link(team.name, to: message_path(@conn, :index, team_id: team.id), class: (if @selected_team_id == team.id, do: "tag tag--active", else: "tag")) %>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
-  </nav>
+  </div>
 </div>

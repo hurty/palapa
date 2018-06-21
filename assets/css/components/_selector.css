@@ -1,0 +1,20 @@
+.selector-item {
+  @apply border-b border-grey-lighter px-2 py-1;
+  @apply text-grey-darkest text-sm;
+
+  * {
+    @apply text-grey-darkest;
+  }
+
+  &--selected {
+    @apply font-bold;
+  }
+
+  &:hover {
+    @apply bg-green text-white;
+  }
+}
+
+.selector-item-default {
+  @apply py-2 border-b-2 border-grey;
+}
