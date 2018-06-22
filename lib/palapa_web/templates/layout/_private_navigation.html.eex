@@ -1,4 +1,4 @@
-<header class="header mb-8">
+<header class="header">
   <nav data-controller="navigation" data-navigation-switcher-url="<%= session_path(@conn, :switcher) %>" class="sm:flex bg-blue-darkest items-center justify-between flex-wrap px-2 sm:pl-4 py-2 sm:py-1 bg-white w-full">
     <div class="flex justify-between items-center">
       <%= link(@current_organization.name, to: home_path(@conn, :index), class: "organization-name") %>

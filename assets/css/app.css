@@ -47,7 +47,7 @@
 @import "components/_truncate";
 @import "components/_selector";
 
-@import "layout/layout";
+@import "layout/_layout";
 
 @import "pages/_members";
 @import "pages/_messages";

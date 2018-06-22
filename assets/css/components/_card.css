@@ -1,5 +1,7 @@
-.card-shadow {
-  @apply bg-grey-lighter rounded-lg p-2;
+@screen sm {
+  .card-shadow {
+    @apply bg-grey-lighter rounded-lg p-2;
+  }
 }
 
 .card {

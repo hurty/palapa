@@ -1,8 +1,8 @@
-<div data-controller="message" class="content right-sidebar-layout">
+<div data-controller="message" class="content article-layout">
   <div class="main-content">
     <div class="card-shadow">
       <article class="card md:p-12">
-        <header class="relative">
+        <header class="">
             <div class="flex">
               <div class="w-16 mx-2">
                 <%= PalapaWeb.MemberView.avatar(@message.creator, :small) %>
@@ -54,7 +54,7 @@
     </div>
   </div>
 
-  <nav class="right-sidebar">    
+  <nav class="">    
     <div class="flex flex-col text-sm pt-2">
       <div class="pb-4">
         <%= if Palapa.Access.permit? Palapa.Messages, :edit_message, @current_member, @message do %>

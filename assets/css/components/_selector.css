@@ -1,5 +1,5 @@
 .selector-item {
-  @apply border-b border-grey-lighter px-2 py-1;
+  @apply border-b border-grey-lighter px-4 py-1;
   @apply text-grey-darkest font-semibold text-sm;
 
   * {
