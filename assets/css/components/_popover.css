@@ -1,6 +1,7 @@
 .popover {
   @apply z-50 shadow-lg rounded bg-white;
-  @apply border border-grey bg-white shadow-inner shadow overflow-y-auto h-64;
+  @apply border border-grey bg-white shadow-inner shadow overflow-y-auto;
+  max-height: 16em;
 
   .popover__arrow {
     width: 0;
@@ -13,12 +14,11 @@
 }
 
 .popover__link {
-  @apply rounded-lg px-4 py-1 mb-1;
-  @apply text-grey-darkest;
-  @apply text-sm;
+  @apply px-4 py-1 mb-1;
+  @apply text-grey-darkest font-semibold text-sm;
   
   &:hover {
-    @apply bg-green-lighter;
+    @apply bg-green-light text-white;
   }
 }
 

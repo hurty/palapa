@@ -1,0 +1,27 @@
+<div data-controller="popover" class="messages__team-filter">
+  <%= if Enum.any?(@teams) do %>
+    <div data-target="popover.button" class="btn text-sm truncate">
+      <%= if @selected_team do %> 
+        <span title="<%= @selected_team.name %>"><%= @selected_team.name %></span>
+      <% else %>
+        <span title="All my teams">All my teams</span>
+      <% end %>
+      <i class="fas fa-angle-down"></i>
+    </div>
+    
+    <div data-target="popover.content" class="popover hidden">
+      <div data-target="popover.arrow" class="popover__arrow"></div>
+      <div class="flex flex-col">
+        <%= link("All my teams", to: message_path(@conn, :index), class: "selector-item truncate selector-item-default") %>
+        <%= for team <- @teams do %>
+          <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
+          <%= link(team.name, to: message_path(@conn, :index, team_id: team.id), class: item_class, title: team.name) %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= link(to: message_path(@conn, :new), class: "messages__new-message-button btn text-sm") do %>
+  <i class="fas fa-plus-circle text-green-light mr-2"></i>New message
+<% end %>

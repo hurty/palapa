@@ -19,7 +19,7 @@ button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-mo
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  @apply text-grey-darkest;
+  @apply text-sm text-grey-darkest;
   background-color: config('colors.white');
 
   &:hover {

@@ -1,6 +1,4 @@
-.messages__container {
-  @apply bg-grey-lightest rounded border;
-}
+/* INDEX */
 
 .messages__actions {
   @apply p-2;
@@ -22,7 +20,27 @@
   grid-area: messages__new-message-button;
 }
 
-.messages__list {
-  @apply bg-white;
-  @apply border-t border-b;
+/* SHOW */
+
+.message__toolbar {
+  display: grid;
+  justify-content: space-between;
+  grid-gap: 0.2em;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 
+  "message__author message__actions"
+  "message__tags message__tags"
+}
+
+.message__author {
+  grid-area: message__author;
+}
+
+.message__actions {
+  grid-area: message__actions;
+  @apply relative
+}
+
+.message__tags {
+  grid-area: message__tags;
 }

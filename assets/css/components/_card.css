@@ -8,6 +8,10 @@
   @apply bg-white p-4 border-b border border-grey-light rounded;
 }
 
+.card-toolbar{
+  @apply p-2 bg-grey-lightest rounded-t border-t border-l border-r;
+}
+
 .card-header {
   @apply font-extrabold;
 }
@@ -18,6 +22,11 @@
 
 .card-actions {
   @apply flex justify-center mt-4;
+}
+
+.card-content {
+  @apply bg-white;
+  @apply border;
 }
 
 .card-footer {
