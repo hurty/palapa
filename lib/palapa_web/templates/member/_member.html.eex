@@ -1,4 +1,4 @@
-<div class="p-2 h-full">
+<div class="h-full">
   <div class="text-center"><%= PalapaWeb.MemberView.avatar(@member, :medium) %></div>
   
   <div class="text-center capitalize"><%= link @member.name, to: member_path(@conn, :show, @member), class: "text-green" %></div>

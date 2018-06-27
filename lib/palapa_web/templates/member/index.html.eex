@@ -1,7 +1,7 @@
 <div class="content article-layout">
-  <div class="main-content"> 
-    <div class="card-shadow">
-      <div class="card-toolbar flex flex-wrap">
+  <div class="main-content">
+    <div class="rounded shadow bg-white">
+      <div class="p-4 bg-grey-lightest flex flex-wrap border-b border-grey-lighter">
         <div class="flex-1">
           <h2><%= @current_organization.name %></h2>
           <div class="text-sm uppercase text-grey-dark"><span class="font-bold"><%= @organization_members_count %></span> members</div>
@@ -19,35 +19,31 @@
         </div>
       </div>
 
-      <div class="card-content bg-white p-4">
+      <div class="my-4 p-4">
+        <%= if Enum.any?(@teams) do %>
+          <div data-controller="popover" data-target="popover.button" class="btn text-sm truncate sm:w-2/5 text-center mx-auto rounded-full">
+            <%= if @selected_team do %> 
+              <span class="mx-auto" title="<%= @selected_team.name %>"><%= @selected_team.name %></span>
+            <% else %>
+              <span class="mx-auto" title="Everyone in the organization">Everyone in the organization</span>
+            <% end %>
+            <i class="fas fa-angle-down"></i>
 
 
-
-      <%= if Enum.any?(@teams) do %>
-        <div data-controller="popover" data-target="popover.button" class="btn text-sm font-bold truncate sm:w-2/5 text-center mx-auto rounded-full">
-          <%= if @selected_team do %> 
-            <span class="mx-auto" title="<%= @selected_team.name %>"><%= @selected_team.name %></span>
-          <% else %>
-            <span class="mx-auto" title="Everyone in the organization">Everyone in the organization</span>
-          <% end %>
-          <i class="fas fa-angle-down"></i>
-
-
-            <div data-target="popover.content" class="popover hidden">
-            <div data-target="popover.arrow" class="popover__arrow"></div>
-            <div class="flex flex-col">
-              <%= link("Everyone in the organization", to: member_path(@conn, :index), class: "selector-item truncate selector-item-default") %>
-              <%= for team <- @teams do %>
-                <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
-                <%= link(team.name, to: member_path(@conn, :index, team_id: team.id), class: item_class, title: team.name) %>
-              <% end %>
+              <div data-target="popover.content" class="popover hidden">
+              <div data-target="popover.arrow" class="popover__arrow"></div>
+              <div class="flex flex-col">
+                <%= link("Everyone in the organization", to: member_path(@conn, :index), class: "selector-item truncate selector-item-default") %>
+                <%= for team <- @teams do %>
+                  <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
+                  <%= link(team.name, to: member_path(@conn, :index, team_id: team.id), class: item_class, title: team.name) %>
+                <% end %>
+              </div>
             </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
 
-
-        <div class="members-grid mt-4">
+        <div class="members-grid my-8">
           <%= if Enum.any?(@members) do %>
             <%= for member <- @members do %> 
               <%= render @view_module, "_member.html", %{conn: @conn, member: member} %>
