@@ -15,12 +15,6 @@
       <li class="header-link  <%= if @navigation == "documents" do %>header-link--active<% end %>">
         <%= link("Documents", to: "#") %>
       </li>
-      <li class="header-link  <%= if @navigation == "requests" do %>header-link--active<% end %>">
-        <%= link("Requests", to: "#") %>
-      </li>
-      <li class="header-link">
-        <%= link("Calendar", to: "#") %>
-      </li>
       <li class="header-link  <%= if @navigation == "members" do %>header-link--active<% end %>">
         <%= link("People", to: member_path(@conn, :index)) %>
       </li>
@@ -40,5 +34,5 @@
     </div>
   </nav>
 
-  <%= render_existing view_module(@conn), "_navigation.html", assigns %>
+  <%= render PalapaWeb.LayoutView, "_breadcrumbs.html", assigns %>
 </header>

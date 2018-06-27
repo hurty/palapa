@@ -65,6 +65,12 @@ defmodule Palapa.Organizations do
     |> Repo.all()
   end
 
+  def members_count(queryable \\ Organization) do
+    queryable
+    |> Ecto.assoc(:members)
+    |> Repo.count()
+  end
+
   def get_member!(%Organization{} = organization, member_id) do
     organization
     |> Ecto.assoc(:members)

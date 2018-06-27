@@ -1,4 +1,4 @@
 .blankslate {
-  @apply p-8 my-4;
+  @apply p-4;
   @apply text-grey-darker text-center text-lg;
 }

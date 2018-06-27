@@ -53,6 +53,8 @@ defmodule PalapaWeb.Router do
 
     resources("/invitations", InvitationController)
     resources("/teams", TeamController, only: [:new, :create])
+
+    get("/sketch", SketchController, :index)
   end
 
   # Other scopes may use custom stacks.

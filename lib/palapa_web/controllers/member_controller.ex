@@ -1,7 +1,6 @@
 defmodule PalapaWeb.MemberController do
   use PalapaWeb, :controller
   alias Palapa.Teams
-  alias Palapa.Teams.Team
   alias Palapa.Organizations
 
   plug(:put_navigation, "members")
@@ -11,15 +10,17 @@ defmodule PalapaWeb.MemberController do
       selected_team = Teams.get!(team_id)
       members = Teams.list_members(selected_team)
       teams = Teams.where_organization(current_organization()) |> Teams.list()
-      new_team_form = Teams.change(%Team{organization: current_organization()})
+      organization_members_count = current_organization() |> Organizations.members_count()
 
-      render(
-        conn,
+      conn
+      |> put_breadcrumb("People", member_path(conn, :index))
+      |> put_breadcrumb(selected_team.name, member_path(conn, :index, team_id: team_id))
+      |> render(
         "index.html",
         members: members,
         teams: teams,
         selected_team: selected_team,
-        new_team_form: new_team_form
+        organization_members_count: organization_members_count
       )
     end
   end
@@ -31,15 +32,15 @@ defmodule PalapaWeb.MemberController do
         |> Organizations.list_members()
 
       teams = Teams.where_organization(current_organization()) |> Teams.list()
-      new_team_form = Teams.change(%Team{organization: current_organization()})
 
-      render(
-        conn,
+      conn
+      |> put_breadcrumb("People", member_path(conn, :index))
+      |> render(
         "index.html",
         members: members,
         teams: teams,
         selected_team: nil,
-        new_team_form: new_team_form
+        organization_members_count: length(members)
       )
     end
   end
