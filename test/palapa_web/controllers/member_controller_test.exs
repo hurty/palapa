@@ -11,11 +11,11 @@ defmodule PalapaWeb.MemberControllerTest do
         |> assign(:current_account, member.account)
         |> assign(:current_organization, member.organization)
 
-      {:ok, conn: conn, member: member}
+      {:ok, conn: conn, member: member, org: member.organization}
     end
 
-    test "list all members in the organization", %{conn: conn} do
-      conn = get(conn, member_path(conn, :index))
+    test "list all members in the organization", %{conn: conn, org: org} do
+      conn = get(conn, member_path(conn, :index, org))
       assert html_response(conn, 200) =~ "Bertram Gilfoyle"
     end
 
@@ -44,18 +44,22 @@ defmodule PalapaWeb.MemberControllerTest do
       refute html_response(conn, 200) =~ "Jared"
     end
 
-    test "regular member cannot see the 'add people' link", %{conn: conn} do
-      conn = get(conn, member_path(conn, :index))
+    test "regular member cannot see the 'add people' link", %{conn: conn, org: org} do
+      conn = get(conn, member_path(conn, :index, org))
       refute html_response(conn, 200) =~ "Invite people"
     end
 
-    test "regular member cannot see 'the create a team' link", %{conn: conn} do
-      conn = get(conn, member_path(conn, :index))
+    test "regular member cannot see 'the create a team' link", %{
+      conn: conn,
+      org: org,
+      member: member
+    } do
+      conn = get(conn, member_path(conn, :index, org))
       refute html_response(conn, 200) =~ "Create a team"
     end
 
-    test "show member profile", %{conn: conn} do
-      conn = get(conn, member_path(conn, :show, conn.assigns.current_member))
+    test "show member profile", %{conn: conn, org: org, member: member} do
+      conn = get(conn, member_path(conn, :show, org, member))
       assert html_response(conn, 200) =~ "Bertram Gilfoyle"
     end
   end
@@ -70,16 +74,16 @@ defmodule PalapaWeb.MemberControllerTest do
         |> assign(:current_account, member.account)
         |> assign(:current_organization, member.organization)
 
-      {:ok, conn: conn, member: member}
+      {:ok, conn: conn, member: member, org: member.organization}
     end
 
-    test "admins see the 'add people' link", %{conn: conn} do
-      conn = get(conn, member_path(conn, :index))
+    test "admins see the 'add people' link", %{conn: conn, org: org} do
+      conn = get(conn, member_path(conn, :index, org))
       assert html_response(conn, 200) =~ "Invite people"
     end
 
-    test "admins see 'the create a team' link", %{conn: conn} do
-      conn = get(conn, member_path(conn, :index))
+    test "admins see 'the create a team' link", %{conn: conn, org: org} do
+      conn = get(conn, member_path(conn, :index, org))
       assert html_response(conn, 200) =~ "Create a team"
     end
   end
@@ -94,16 +98,16 @@ defmodule PalapaWeb.MemberControllerTest do
         |> assign(:current_account, member.account)
         |> assign(:current_organization, member.organization)
 
-      {:ok, conn: conn, member: member}
+      {:ok, conn: conn, member: member, org: member.organization}
     end
 
-    test "owners see the 'add people' link", %{conn: conn} do
-      conn = get(conn, member_path(conn, :index))
+    test "owners see the 'add people' link", %{conn: conn, org: org} do
+      conn = get(conn, member_path(conn, :index, org: org))
       assert html_response(conn, 200) =~ "Invite people"
     end
 
-    test "owners see 'the create a team' link", %{conn: conn} do
-      conn = get(conn, member_path(conn, :index))
+    test "owners see 'the create a team' link", %{conn: conn, org: org} do
+      conn = get(conn, member_path(conn, :index, org: org))
       assert html_response(conn, 200) =~ "Create a team"
     end
   end

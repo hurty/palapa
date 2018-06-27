@@ -32,7 +32,7 @@ defmodule PalapaWeb.InvitationController do
           end
 
         conn
-        |> redirect(to: invitation_path(conn, :new))
+        |> redirect(to: invitation_path(conn, :new, current_organization()))
       end
     end
   end

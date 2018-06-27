@@ -25,7 +25,7 @@
 
     <div class="w-full lg:w-2/3">
       <div class="text-center">
-        <%= link("Edit profile", to: member_path(@conn, :edit, @member), class: "btn")%>
+        <%= link("Edit profile", to: member_path(@conn, :edit, @current_organization, @member), class: "btn")%>
       </div>
 
       <div class="mt-8 min-h-full">
@@ -48,20 +48,12 @@
   </div>
 </div>
 
-
-
-
-
-
-
-
-
 <div class="pt-8">
   <div class="  ">
     <div class="mb-6" data-controller="user_teams">
       <h3 class="uppercase text-xl text-grey-darker mb-4">Teams</h3>
       <%= if Palapa.Access.permit? Palapa.Teams, :create, @current_member do %>
-        <%= link "Manage member's teams", to: member_team_member_path(@conn, :edit, @member) %>
+        <%= link "Manage member's teams", to: member_team_member_path(@conn, :edit, @current_organization, @member) %>
       <% end %>
       <div class="mt-4">
         <%= for team <- @member_teams do %>

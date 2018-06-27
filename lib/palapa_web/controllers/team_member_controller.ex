@@ -44,7 +44,7 @@ defmodule PalapaWeb.TeamMemberController do
              teams: new_teams
            ) do
       Teams.update_all_teams_for_member(member, new_teams)
-      redirect(conn, to: member_path(conn, :show, member))
+      redirect(conn, to: member_path(conn, :show, current_organization(), member))
     end
   end
 end

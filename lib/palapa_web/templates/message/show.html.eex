@@ -34,7 +34,7 @@
         <%= submit "Leave a comment", class: "btn", "data-action": "message#showCommentForm" %>
       </div>
 
-      <%= form_for @new_message_comment, message_message_comment_path(@conn, :create, @message), 
+      <%= form_for @new_message_comment, message_message_comment_path(@conn, :create, @current_organization, @message), 
         ["data-target": "message.commentForm", "data-action": "message#submitComment", class: "hidden"], fn form -> %> 
 
         <%= text_editor(@current_organization, placeholder: "Your comment here...", input: "message_comment_content", "data-target": "message.editor", class: "min-h-screen-1/8") %>

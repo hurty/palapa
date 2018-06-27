@@ -2,7 +2,7 @@
   <div class="main-content" data-controller="message">
     <div class="card-shadow">
       <div class="card">
-        <%= form_for @message_changeset, message_path(@conn, :update, @message), fn form -> %>
+        <%= form_for @message_changeset, message_path(@conn, :update, @current_organization, @message), fn form -> %>
           <%= render "_form.html", 
             message_changeset: @message_changeset, 
             form: form, 

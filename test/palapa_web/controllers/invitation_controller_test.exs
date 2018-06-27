@@ -6,17 +6,19 @@ defmodule PalapaWeb.InvitationControllerTest do
     setup do
       member = insert!(:member)
       conn = login(member)
-      {:ok, conn: conn, member: member}
+      {:ok, conn: conn, member: member, org: member.organization}
     end
 
-    test "regular members can't access the invitation page", %{conn: conn} do
-      conn = get(conn, invitation_path(conn, :new))
+    test "regular members can't access the invitation page", %{conn: conn, org: org} do
+      conn = get(conn, invitation_path(conn, :new, org))
       assert html_response(conn, :forbidden)
     end
 
-    test "regular members can't invite people", %{conn: conn} do
+    test "regular members can't invite people", %{conn: conn, org: org} do
       conn =
-        post(conn, invitation_path(conn, :create), %{"invitation" => %{"email_addresses" => ""}})
+        post(conn, invitation_path(conn, :create, org), %{
+          "invitation" => %{"email_addresses" => ""}
+        })
 
       assert html_response(conn, :forbidden)
     end
@@ -26,19 +28,19 @@ defmodule PalapaWeb.InvitationControllerTest do
     setup do
       member = insert!(:admin)
       conn = login(member)
-      {:ok, conn: conn, member: member}
+      {:ok, conn: conn, member: member, org: member.organization}
     end
 
-    test "admin can access the invitation page", %{conn: conn} do
-      conn = get(conn, invitation_path(conn, :new))
+    test "admin can access the invitation page", %{conn: conn, org: org} do
+      conn = get(conn, invitation_path(conn, :new, org))
       assert html_response(conn, 200) =~ "Invite people"
     end
 
-    test "admin can invite people", %{conn: conn} do
+    test "admin can invite people", %{conn: conn, org: org} do
       count_invitations_before = Repo.count("invitations")
 
       conn =
-        post(conn, invitation_path(conn, :create), %{
+        post(conn, invitation_path(conn, :create, org), %{
           "invitation" => %{"email_addresses" => "bertram.gilfoyle@piedpiper.com"}
         })
 
@@ -49,11 +51,11 @@ defmodule PalapaWeb.InvitationControllerTest do
       assert_in_delta(count_invitations_before, count_invitations_after, 1)
     end
 
-    test "malformed email addresses are ignored", %{conn: conn} do
+    test "malformed email addresses are ignored", %{conn: conn, org: org} do
       count_invitations_before = Repo.count("invitations")
 
       conn =
-        post(conn, invitation_path(conn, :create), %{
+        post(conn, invitation_path(conn, :create, org), %{
           "invitation" => %{"email_addresses" => "bertram.gilfoyle@piedpiper.com bad_address"}
         })
 
@@ -63,11 +65,11 @@ defmodule PalapaWeb.InvitationControllerTest do
       assert_in_delta(count_invitations_before, count_invitations_after, 1)
     end
 
-    test "addresses field can't be empty", %{conn: conn} do
+    test "addresses field can't be empty", %{conn: conn, org: org} do
       count_invitations_before = Repo.count("invitations")
 
       conn =
-        post(conn, invitation_path(conn, :create), %{
+        post(conn, invitation_path(conn, :create, org), %{
           "invitation" => %{"email_addresses" => ""}
         })
 
@@ -83,19 +85,19 @@ defmodule PalapaWeb.InvitationControllerTest do
     setup do
       member = insert!(:owner)
       conn = login(member)
-      {:ok, conn: conn, member: member}
+      {:ok, conn: conn, member: member, org: member.organization}
     end
 
-    test "owner can access the invitation page", %{conn: conn} do
-      conn = get(conn, invitation_path(conn, :new))
+    test "owner can access the invitation page", %{conn: conn, org: org} do
+      conn = get(conn, invitation_path(conn, :new, org))
       assert html_response(conn, 200) =~ "Invite people"
     end
 
-    test "admin can invite people", %{conn: conn} do
+    test "admin can invite people", %{conn: conn, org: org} do
       count_invitations_before = Repo.count("invitations")
 
       conn =
-        post(conn, invitation_path(conn, :create), %{
+        post(conn, invitation_path(conn, :create, org), %{
           "invitation" => %{"email_addresses" => "bertram.gilfoyle@piedpiper.com"}
         })
 

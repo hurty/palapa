@@ -5,22 +5,22 @@
     </div>
 
     <div class="w-full text-xs text-grey-darker my-auto">
-      <h3><%= link @message.title, to: message_path(@conn, :show, @message), class: "text-green text-base hover:underline" %></h3>
-      <%= link @message.creator.name, to: member_path(@conn, :show, @message.creator.id), class: "text-grey-darker font-bold hover:underline" %>
+      <h3><%= link @message.title, to: message_path(@conn, :show, @current_organization, @message), class: "text-green text-base hover:underline" %></h3>
+      <%= link @message.creator.name, to: member_path(@conn, :show, @current_organization, @message.creator.id), class: "text-grey-darker font-bold hover:underline" %>
       <div class="text-xs text-grey-darker font-light">
         Posted <%= format_datetime(@message.inserted_at, @current_account) %>
       </div>
       
       <%= if @message.content do %>
         <div class="border rounded-full border-grey-light w-1/6 my-4"></div>
-        <%= link to: message_path(@conn, :show, @message), class: "text-xs text-grey-darker leading-normal mt-1" do %> 
+        <%= link to: message_path(@conn, :show, @current_organization, @message), class: "text-xs text-grey-darker leading-normal mt-1" do %> 
           <p><%= excerpt(@message.content) %></p>
         <% end %>
       <% end %>
             
       <div class="my-2"><%= message_teams_tags(@conn, @message) %></div>
       <%= if @message.comments_count > 0 do %>
-        <%= link to: message_path(@conn, :show, @message)<>"#comments", class: "text-xs text-grey-darker mt-2" do %>
+        <%= link to: message_path(@conn, :show, @current_organization, @message)<>"#comments", class: "text-xs text-grey-darker mt-2" do %>
           <i class="fas fa-comments"></i> <%= @message.comments_count %> comments
         <% end %>
       <% end %>

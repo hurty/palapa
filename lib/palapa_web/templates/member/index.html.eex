@@ -9,11 +9,11 @@
         </div>
 
         <div class="flex-1 flex flex-wrap justify-end">
-          <%= link(to: invitation_path(@conn, :new), class: "btn m-1") do %>
+          <%= link(to: invitation_path(@conn, :new, @current_organization), class: "btn m-1") do %>
             <i class="fas fa-user-plus text-grey-dark mr-2"></i>Invite people
           <% end %>
 
-          <%= link(to: team_path(@conn, :new), class: "btn m-1") do %>
+          <%= link(to: team_path(@conn, :new, @current_organization), class: "btn m-1") do %>
             <i class="fas fa-users text-grey-dark mr-2"></i>Create a team
           <% end %>
         </div>
@@ -33,10 +33,10 @@
               <div data-target="popover.content" class="popover hidden">
               <div data-target="popover.arrow" class="popover__arrow"></div>
               <div class="flex flex-col">
-                <%= link("Everyone in the organization", to: member_path(@conn, :index), class: "selector-item truncate selector-item-default") %>
+                <%= link("Everyone in the organization", to: member_path(@conn, :index, @current_organization), class: "selector-item truncate selector-item-default") %>
                 <%= for team <- @teams do %>
                   <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
-                  <%= link(team.name, to: member_path(@conn, :index, team_id: team.id), class: item_class, title: team.name) %>
+                  <%= link(team.name, to: member_path(@conn, :index, @current_organization, team_id: team.id), class: item_class, title: team.name) %>
                 <% end %>
               </div>
             </div>

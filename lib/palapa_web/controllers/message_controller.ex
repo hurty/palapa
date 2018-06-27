@@ -11,7 +11,7 @@ defmodule PalapaWeb.MessageController do
 
   def put_common_breadcrumbs(conn, _params) do
     conn
-    |> put_breadcrumb("Messages", message_path(conn, :index))
+    |> put_breadcrumb("Messages", message_path(conn, :index, current_organization()))
   end
 
   def index(conn, params) do
@@ -53,7 +53,7 @@ defmodule PalapaWeb.MessageController do
     teams = Teams.list_for_member(current_member())
 
     conn
-    |> put_breadcrumb("New message", message_path(conn, :new))
+    |> put_breadcrumb("New message", message_path(conn, :new, current_organization()))
     |> render("new.html", message_changeset: message_changeset, teams: teams)
   end
 
@@ -62,13 +62,14 @@ defmodule PalapaWeb.MessageController do
       teams = Teams.list_for_member(current_member())
       message_teams = find_teams(conn, message_params)
 
-      conn = put_breadcrumb(conn, "New messages", message_path(conn, :new))
+      conn =
+        put_breadcrumb(conn, "New messages", message_path(conn, :new, current_organization()))
 
       case Messages.create(current_member(), message_params, message_teams) do
         {:ok, message} ->
           conn
           |> put_flash(:success, "Your message has been posted")
-          |> redirect(to: message_path(conn, :show, message))
+          |> redirect(to: message_path(conn, :show, current_organization(), message))
 
         {:error, message_changeset} ->
           conn
@@ -85,7 +86,7 @@ defmodule PalapaWeb.MessageController do
 
     with :ok <- permit(Messages, :show, current_member()) do
       conn
-      |> put_breadcrumb(message.title, message_path(conn, :show, message))
+      |> put_breadcrumb(message.title, message_path(conn, :show, current_organization(), message))
       |> render(
         "show.html",
         message: message,
@@ -103,8 +104,8 @@ defmodule PalapaWeb.MessageController do
 
     with :ok <- permit(Messages, :edit_message, current_member(), message) do
       conn
-      |> put_breadcrumb(message.title, message_path(conn, :show, message))
-      |> put_breadcrumb("Edit", message_path(conn, :edit, message))
+      |> put_breadcrumb(message.title, message_path(conn, :show, current_organization(), message))
+      |> put_breadcrumb("Edit", message_path(conn, :edit, current_organization(), message))
       |> render(
         "edit.html",
         message: message,
@@ -124,7 +125,7 @@ defmodule PalapaWeb.MessageController do
         {:ok, _struct} ->
           conn
           |> put_flash(:success, "The message has been updated")
-          |> redirect(to: message_path(conn, :show, message))
+          |> redirect(to: message_path(conn, :show, current_organization(), message))
 
         {:error, message_changeset} ->
           conn
@@ -147,7 +148,7 @@ defmodule PalapaWeb.MessageController do
 
       conn
       |> put_flash(:success, "The message has been deleted")
-      |> redirect(to: message_path(conn, :index))
+      |> redirect(to: message_path(conn, :index, current_organization()))
     end
   end
 

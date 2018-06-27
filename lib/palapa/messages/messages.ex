@@ -15,7 +15,6 @@ defmodule Palapa.Messages do
     queryable
     |> where_organization(member.organization)
     |> published_to_everyone
-    |> or_where([q], q.id in ^messages_ids_visible_to(member))
   end
 
   def where_organization(queryable \\ Message, %Organization{} = organization) do

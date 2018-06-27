@@ -19,7 +19,7 @@ defmodule PalapaWeb.TeamController do
         {:ok, team} ->
           conn
           |> put_flash(:success, "The team #{team.name} has been created!")
-          |> redirect(to: member_path(conn, :index, team_id: team.id))
+          |> redirect(to: member_path(conn, :index, current_organization(), team_id: team.id))
 
         {:error, changeset} ->
           conn

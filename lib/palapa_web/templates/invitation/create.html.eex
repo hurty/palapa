@@ -20,6 +20,6 @@
   <%= render PalapaWeb.InvitationView, "_form.html", conn: @conn, prefill: Enum.join(@ignored, "\n") %>
 
   <div class="text-center mt-2">
-  <%= link "or ignore these addresses", to: invitation_path(@conn, :new) %>
+  <%= link "or ignore these addresses", to: invitation_path(@conn, :new, @current_organization) %>
   </div>
 </div>

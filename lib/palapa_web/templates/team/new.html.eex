@@ -3,7 +3,7 @@
     <h2 class="card-header">New team</h2>
     <div class="card-header-separator"></div>
 
-    <%= form_for @team, team_path(@conn, :create), [], fn form -> %>
+    <%= form_for @team, team_path(@conn, :create, @current_organization), [], fn form -> %>
       <%= if @team.action do %>
         <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
       <% end %>

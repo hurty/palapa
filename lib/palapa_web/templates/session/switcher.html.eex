@@ -1,10 +1,10 @@
-<%= link("My profile", to: member_path(@conn, :show, @current_member)) %>
+<%= link("My profile", to: member_path(@conn, :show, @current_organization, @current_member)) %>
 <%= link("Log out", to: session_path(@conn, :delete), method: :delete, class: "btn text-yellow") %>
 
 <ul class="list-reset">
   <span>Logged in as <%= @current_member.name %></span>
   <hr class="border">
   <%= for organization <- @organizations do %>
-    <li><%= link organization.name, to: session_path(@conn, :switch_organization, organization_id: organization.id) %></li>
+    <li><%= link organization.name, to: session_path(@conn, :switch_organization, @current_organization, organization_id: organization.id) %></li>
   <% end %>
 </ul>

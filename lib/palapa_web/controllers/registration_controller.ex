@@ -17,7 +17,7 @@ defmodule PalapaWeb.RegistrationController do
           result.organization,
           result.member
         )
-        |> redirect(to: dashboard_path(conn, :index))
+        |> redirect(to: dashboard_path(conn, :index, current_organization()))
 
       {:error, _failed_operation, changeset, _changes_so_far} ->
         render(conn, "new.html", changeset: %{changeset | action: :insert})

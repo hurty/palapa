@@ -18,7 +18,7 @@
               <% end %>
 
               <ul class="list-reset bg-white rounded">
-                <%= render_many @messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn, current_account: @current_account %>
+                <%= render_many @messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn, current_organization: @current_organization, current_account: @current_account %>
               </ul>
 
               <%= if @messages.total_pages > 1 do %>

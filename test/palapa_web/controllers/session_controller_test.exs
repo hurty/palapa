@@ -4,7 +4,7 @@ defmodule PalapaWeb.SessionControllerTest do
   describe "login" do
     setup do
       conn = build_conn()
-      {:ok, conn: conn}
+      {:ok, conn: conn, org: conn.assigns.current_organization}
     end
 
     test "visitors can see the login form", %{conn: conn} do
@@ -12,7 +12,7 @@ defmodule PalapaWeb.SessionControllerTest do
       assert html_response(conn, 200) =~ "Log in"
     end
 
-    test "a member logins successfully", %{conn: conn} do
+    test "a member logins successfully", %{conn: conn, org: org} do
       insert!(:owner)
 
       conn =
@@ -23,7 +23,8 @@ defmodule PalapaWeb.SessionControllerTest do
           }
         })
 
-      assert redirected_to(conn, 302) =~ dashboard_path(conn, :index)
+      assert redirected_to(conn, 302) =~ dashboard_path(conn, :index, org)
+
       assert conn.assigns.current_account
       assert conn.assigns.current_organization
       assert conn.assigns.current_member

@@ -49,7 +49,7 @@ defmodule PalapaWeb.MessageCommentController do
     with :ok <- permit(Messages, :edit_comment, current_member(), comment) do
       case Messages.update_comment(comment, message_comment_attrs) do
         {:ok, _struct} ->
-          redirect(conn, to: message_path(conn, :show, message))
+          redirect(conn, to: message_path(conn, :show, current_organization(), message))
 
         {:error, changeset} ->
           render(conn, "edit.html", message: message, comment: comment, changeset: changeset)

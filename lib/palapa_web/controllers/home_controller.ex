@@ -5,7 +5,7 @@ defmodule PalapaWeb.HomeController do
 
   def index(conn, _params) do
     if current_member() do
-      redirect(conn, to: dashboard_path(conn, :index))
+      redirect(conn, to: dashboard_path(conn, :index, current_organization()))
     else
       render(conn, "index.html")
     end

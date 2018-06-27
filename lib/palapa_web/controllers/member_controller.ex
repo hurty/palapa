@@ -13,8 +13,11 @@ defmodule PalapaWeb.MemberController do
       organization_members_count = current_organization() |> Organizations.members_count()
 
       conn
-      |> put_breadcrumb("People", member_path(conn, :index))
-      |> put_breadcrumb(selected_team.name, member_path(conn, :index, team_id: team_id))
+      |> put_breadcrumb("People", member_path(conn, :index, current_organization()))
+      |> put_breadcrumb(
+        selected_team.name,
+        member_path(conn, :index, current_organization(), team_id: team_id)
+      )
       |> render(
         "index.html",
         members: members,
@@ -34,7 +37,7 @@ defmodule PalapaWeb.MemberController do
       teams = Teams.where_organization(current_organization()) |> Teams.list()
 
       conn
-      |> put_breadcrumb("People", member_path(conn, :index))
+      |> put_breadcrumb("People", member_path(conn, :index, current_organization()))
       |> render(
         "index.html",
         members: members,
@@ -76,13 +79,13 @@ defmodule PalapaWeb.MemberController do
     end
   end
 
-  def update(conn, %{"id" => id, "member" => member_attrs}) do
-    member = Organizations.get_member!(current_organization(), id)
+  def update(conn, params) do
+    member = Organizations.get_member!(current_organization(), params["id"])
 
     with :ok <- permit(Organizations, :edit_member, current_member()) do
-      case Organizations.update_member(member, member_attrs) do
+      case Organizations.update_member(member, params["member"]) do
         {:ok, struct} ->
-          redirect(conn, to: member_path(conn, :show, struct))
+          redirect(conn, to: member_path(conn, :show, current_organization(), struct))
 
         {:error, changeset} ->
           render(

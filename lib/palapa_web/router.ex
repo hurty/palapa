@@ -37,25 +37,27 @@ defmodule PalapaWeb.Router do
   scope "/", PalapaWeb do
     pipe_through([:browser, :enforce_authentication])
 
-    get("/sessions/switch_organization", SessionController, :switch_organization)
-    get("/sessions/switcher", SessionController, :switcher)
-    get("/dashboard", DashboardController, :index)
+    resources("/org", OrganizationController, as: nil, only: []) do
+      get("/sessions/switch_organization", SessionController, :switch_organization)
+      get("/sessions/switcher", SessionController, :switcher)
+      get("/dashboard", DashboardController, :index)
 
-    resources("/attachments", AttachmentController, only: [:create])
+      resources("/attachments", AttachmentController, only: [:create])
 
-    resources("/messages", MessageController) do
-      resources("/comments", MessageCommentController, only: [:create, :edit, :update, :delete])
+      resources("/messages", MessageController) do
+        resources("/comments", MessageCommentController, only: [:create, :edit, :update, :delete])
+      end
+
+      resources "/members", MemberController do
+        resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)
+      end
+
+      resources("/invitations", InvitationController)
+      resources("/teams", TeamController, only: [:new, :create])
     end
-
-    resources "/members", MemberController do
-      resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)
-    end
-
-    resources("/invitations", InvitationController)
-    resources("/teams", TeamController, only: [:new, :create])
-
-    get("/sketch", SketchController, :index)
   end
+
+  get("/sketch", SketchController, :index)
 
   # Other scopes may use custom stacks.
   # scope "/api", PalapaWeb do

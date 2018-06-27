@@ -97,6 +97,8 @@ defmodule PalapaWeb.Authentication do
     |> assign(:organization, organization)
     |> put_session(:organization_id, organization.id)
     |> configure_session(renew: true)
-    |> redirect(to: Router.Helpers.dashboard_path(conn, :index))
+    |> redirect(
+      to: Router.Helpers.dashboard_path(conn, :index, conn.assigns.current_organization)
+    )
   end
 end
