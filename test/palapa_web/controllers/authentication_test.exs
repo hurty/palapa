@@ -18,16 +18,19 @@ defmodule PalapaWeb.AuthenticationTest do
     {:ok, %{conn: conn}}
   end
 
-  test "authenticate_account halts when no current_account exists", %{conn: conn} do
-    conn = Authentication.authenticate_account(conn, [])
+  test "enforce_authentication halts when no current_account exists", %{conn: conn} do
+    conn = Authentication.enforce_authentication(conn, [])
     assert conn.halted
   end
 
-  test "authenticate_account continues when the current_account exists", %{conn: conn} do
+  test "enforce_authentication continues when the current account, organization and members are set",
+       %{conn: conn} do
     conn =
       conn
       |> assign(:current_account, %Palapa.Accounts.Account{})
-      |> Authentication.authenticate_account([])
+      |> assign(:current_organization, %Palapa.Organizations.Organization{})
+      |> assign(:current_member, %Palapa.Organizations.Member{})
+      |> Authentication.enforce_authentication([])
 
     refute conn.halted
   end
@@ -54,15 +57,14 @@ defmodule PalapaWeb.AuthenticationTest do
     refute get_session(next_conn, :account_id)
   end
 
-  test "call places the current user into assigns", %{conn: conn} do
+  test "call places the current account, organization, and member into assigns", %{conn: conn} do
     {:ok, %{account: account, organization: organization, member: member}} =
       Palapa.Accounts.Registrations.create(@registration)
 
     conn =
       conn
       |> put_session(:account_id, account.id)
-      |> put_session(:organization_id, organization.id)
-      |> put_session(:member_id, member.id)
+      |> Map.put(:params, %{"organization_id" => organization.id})
       |> Authentication.call([])
 
     assert conn.assigns.current_account.id == account.id

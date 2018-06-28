@@ -9,12 +9,16 @@
         </div>
 
         <div class="flex-1 flex flex-wrap justify-end">
-          <%= link(to: invitation_path(@conn, :new, @current_organization), class: "btn m-1") do %>
-            <i class="fas fa-user-plus text-grey-dark mr-2"></i>Invite people
+          <%= if Palapa.Access.permit? Palapa.Invitations, :create, @current_member do %>
+            <%= link(to: invitation_path(@conn, :new, @current_organization), class: "btn m-1") do %>
+              <i class="fas fa-user-plus text-grey-dark mr-2"></i>Invite people
+            <% end %>
           <% end %>
 
-          <%= link(to: team_path(@conn, :new, @current_organization), class: "btn m-1") do %>
-            <i class="fas fa-users text-grey-dark mr-2"></i>Create a team
+          <%= if Palapa.Access.permit? Palapa.Teams, :create, @current_member do %>
+            <%= link(to: team_path(@conn, :new, @current_organization), class: "btn m-1") do %>
+              <i class="fas fa-users text-grey-dark mr-2"></i>Create a team
+            <% end %>
           <% end %>
         </div>
       </div>

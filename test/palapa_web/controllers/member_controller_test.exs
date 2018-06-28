@@ -19,7 +19,7 @@ defmodule PalapaWeb.MemberControllerTest do
       assert html_response(conn, 200) =~ "Bertram Gilfoyle"
     end
 
-    test "list members in a specific team", %{conn: conn} do
+    test "list members in a specific team", %{conn: conn, org: org} do
       insert!(
         :team,
         name: "Management",
@@ -38,7 +38,7 @@ defmodule PalapaWeb.MemberControllerTest do
           ]
         )
 
-      conn = get(conn, member_path(conn, :index, team_id: tech_team.id))
+      conn = get(conn, member_path(conn, :index, org, team_id: tech_team.id))
       assert html_response(conn, 200) =~ "Richard"
       assert html_response(conn, 200) =~ "Gilfoyle"
       refute html_response(conn, 200) =~ "Jared"
@@ -51,8 +51,7 @@ defmodule PalapaWeb.MemberControllerTest do
 
     test "regular member cannot see 'the create a team' link", %{
       conn: conn,
-      org: org,
-      member: member
+      org: org
     } do
       conn = get(conn, member_path(conn, :index, org))
       refute html_response(conn, 200) =~ "Create a team"
@@ -102,12 +101,12 @@ defmodule PalapaWeb.MemberControllerTest do
     end
 
     test "owners see the 'add people' link", %{conn: conn, org: org} do
-      conn = get(conn, member_path(conn, :index, org: org))
+      conn = get(conn, member_path(conn, :index, org))
       assert html_response(conn, 200) =~ "Invite people"
     end
 
     test "owners see 'the create a team' link", %{conn: conn, org: org} do
-      conn = get(conn, member_path(conn, :index, org: org))
+      conn = get(conn, member_path(conn, :index, org))
       assert html_response(conn, 200) =~ "Create a team"
     end
   end

@@ -9,7 +9,6 @@ defmodule Palapa.Organizations do
   defenum(RoleEnum, :role, [:owner, :admin, :member])
 
   ### Scopes
-
   def with_member_name(queryable \\ Member, name_pattern) do
     if name_pattern do
       escaped_pattern = Repo.escape_like_pattern(name_pattern) <> "%"

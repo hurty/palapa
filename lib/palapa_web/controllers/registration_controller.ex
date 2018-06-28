@@ -12,12 +12,8 @@ defmodule PalapaWeb.RegistrationController do
     case Registrations.create(registration_params) do
       {:ok, result} ->
         conn
-        |> PalapaWeb.Authentication.start_session(
-          result.account,
-          result.organization,
-          result.member
-        )
-        |> redirect(to: dashboard_path(conn, :index, current_organization()))
+        |> PalapaWeb.Authentication.start_session(result.account)
+        |> redirect(to: dashboard_path(conn, :index, result.organization()))
 
       {:error, _failed_operation, changeset, _changes_so_far} ->
         render(conn, "new.html", changeset: %{changeset | action: :insert})

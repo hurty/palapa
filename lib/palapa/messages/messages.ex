@@ -12,6 +12,8 @@ defmodule Palapa.Messages do
   # --- Scopes
 
   def visible_to(queryable \\ Message, %Member{} = member) do
+    member = Repo.preload(member, :organization)
+
     queryable
     |> where_organization(member.organization)
     |> published_to_everyone
@@ -88,7 +90,7 @@ defmodule Palapa.Messages do
     |> Repo.get!(id)
   end
 
-  def create(%Organizations.Member{} = creator, attrs, teams) do
+  def create(%Organizations.Member{} = creator, attrs, teams \\ nil) do
     %Message{}
     |> Message.changeset(attrs)
     |> put_change(:organization, creator.organization)
@@ -166,9 +168,9 @@ defmodule Palapa.Messages do
     if teams && Enum.any?(teams) do
       changeset
       |> put_change(:published_to_everyone, false)
+      |> put_assoc(:teams, teams)
     else
       changeset
     end
-    |> put_assoc(:teams, teams)
   end
 end

@@ -68,7 +68,7 @@ defmodule PalapaWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
-      import PalapaWeb.Authentication, only: [authenticate_account: 2]
+      import PalapaWeb.Authentication, only: [enforce_authentication: 2]
     end
   end
 

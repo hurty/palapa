@@ -48,6 +48,13 @@ defmodule Palapa.Accounts do
     |> Repo.one()
   end
 
+  def organization_for_account(%Account{} = account, organization_id) do
+    account
+    |> Ecto.assoc(:organizations)
+    |> where(id: ^organization_id)
+    |> Repo.one()
+  end
+
   def member_for_organization(%Account{} = account, %Organization{} = organization) do
     Palapa.Organizations.Member
     |> where(account_id: ^account.id, organization_id: ^organization.id)

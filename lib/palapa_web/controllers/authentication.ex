@@ -4,7 +4,6 @@ defmodule PalapaWeb.Authentication do
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   alias PalapaWeb.Router
   alias Palapa.Accounts
-  alias Palapa.Organizations
 
   def init(options) do
     options
@@ -12,31 +11,28 @@ defmodule PalapaWeb.Authentication do
 
   def call(conn, _options) do
     account_id = get_session(conn, :account_id)
-    organization_id = get_session(conn, :organization_id)
-    member_id = get_session(conn, :member_id)
+    organization_id = conn.params["organization_id"]
 
     cond do
-      member = conn.assigns[:current_member] ->
+      conn.assigns[:current_account] && conn.assigns[:current_organization] &&
+          conn.assigns[:current_member] ->
         conn
 
-      account_id && organization_id && member_id ->
-        member = Organizations.get_member_with_account!(member_id)
-
-        conn
-        |> assign(:current_account, member.account)
-        |> assign(:current_organization, member.organization)
-        |> assign(:current_member, member)
+      account_id && organization_id ->
+        account = Accounts.get!(account_id)
+        organization = Accounts.organization_for_account(account, organization_id)
+        member = Accounts.member_for_organization(account, organization)
+        set_assigns(conn, account, organization, member)
 
       true ->
         conn
-        |> assign(:current_account, nil)
-        |> assign(:current_organization, nil)
-        |> assign(:current_member, nil)
+        |> clear_assigns
     end
   end
 
-  def authenticate_account(conn, _options) do
-    if conn.assigns[:current_account] do
+  def enforce_authentication(conn, _options) do
+    if conn.assigns[:current_account] && conn.assigns[:current_organization] &&
+         conn.assigns[:current_member] do
       conn
     else
       conn
@@ -59,46 +55,38 @@ defmodule PalapaWeb.Authentication do
   end
 
   def start_session(conn, account) do
-    organization = Accounts.main_organization(account)
-    member = Accounts.member_for_organization(account, organization)
+    {organization, member} = retrieve_context(account)
 
-    start_session(conn, account, organization, member)
-  end
-
-  def start_session(conn, account, organization, member) do
     conn
-    |> assign(:current_account, account)
     |> put_session(:account_id, account.id)
-    |> assign(:current_organization, organization)
-    |> put_session(:organization_id, organization.id)
-    |> assign(:current_member, member)
-    |> put_session(:member_id, member.id)
+    |> set_assigns(account, organization, member)
     |> configure_session(renew: true)
   end
 
   def logout(conn) do
     conn
-    |> assign(:current_account, nil)
-    |> assign(:current_organization, nil)
-    |> assign(:current_member, nil)
+    |> clear_assigns
     |> configure_session(drop: true)
   end
 
-  def current_member(conn) do
-    conn.assigns.current_member
+  defp retrieve_context(account) do
+    organization = Accounts.main_organization(account)
+    member = Accounts.member_for_organization(account, organization)
+
+    {organization, member}
   end
 
-  def current_organization(conn) do
-    conn.assigns.current_organization
-  end
-
-  def switch_organization(conn, organization) do
+  defp set_assigns(conn, account, organization, member) do
     conn
-    |> assign(:organization, organization)
-    |> put_session(:organization_id, organization.id)
-    |> configure_session(renew: true)
-    |> redirect(
-      to: Router.Helpers.dashboard_path(conn, :index, conn.assigns.current_organization)
-    )
+    |> assign(:current_account, account)
+    |> assign(:current_organization, organization)
+    |> assign(:current_member, member)
+  end
+
+  defp clear_assigns(conn) do
+    conn
+    |> assign(:current_account, nil)
+    |> assign(:current_organization, nil)
+    |> assign(:current_member, nil)
   end
 end
