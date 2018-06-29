@@ -1,7 +1,7 @@
 <div class="content article-layout">
   <div class="main-content">
     <div class="rounded shadow bg-white">
-      <div class="p-4 bg-grey-lightest flex flex-wrap border-b border-grey-lighter">
+      <div class="p-4 flex flex-wrap border-b border-grey-lighter bg-white rounded-t">
         <div class="flex-1">
           <h2 class="text-green"><%= @current_organization.name %></h2>
           <div class="text-sm uppercase text-grey-dark"><span class="font-bold"><%= @organization_members_count %></span> members</div>

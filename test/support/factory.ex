@@ -1,8 +1,11 @@
 defmodule Palapa.Factory do
   alias Palapa.Repo
+
   alias Palapa.Organizations.{Organization, Member}
   alias Palapa.Accounts.Account
   alias Palapa.Teams.{Team}
+
+  alias Palapa.Messages.{Message}
 
   #
   # Convenience functions
@@ -27,18 +30,30 @@ defmodule Palapa.Factory do
   # Factories
   #
 
-  def insert_all do
+  def insert_pied_piper! do
     # -- Organization
     pied_piper = insert!(:organization)
 
-    # -- Users
+    # -- Members
     richard = insert!(:owner, organization: pied_piper)
     jared = insert!(:admin, organization: pied_piper)
     gilfoyle = insert!(:member, organization: pied_piper)
 
     # -- Teams
-    insert!(:team, organization: pied_piper, members: [richard, gilfoyle])
-    insert!(:team, organization: pied_piper, name: "Management", members: [richard, jared])
+    tech_team =
+      insert!(:team, organization: pied_piper, name: "Tech", members: [richard, gilfoyle])
+
+    management_team =
+      insert!(:team, organization: pied_piper, name: "Management", members: [richard, jared])
+
+    %{
+      organization: pied_piper,
+      richard: richard,
+      jared: jared,
+      gilfoyle: gilfoyle,
+      tech_team: tech_team,
+      management_team: management_team
+    }
   end
 
   def build(:organization) do
@@ -102,6 +117,16 @@ defmodule Palapa.Factory do
     %Team{
       organization: build(:organization),
       name: "Tech"
+    }
+  end
+
+  def build(:message) do
+    %Message{
+      organization: build(:organization),
+      creator: build(:owner),
+      published_to_everyone: true,
+      title: "I have a great announcement to make",
+      content: "<p>This is so great</p>"
     }
   end
 end

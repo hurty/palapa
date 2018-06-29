@@ -153,7 +153,7 @@ defmodule PalapaWeb.MessageController do
   end
 
   defp find_message!(conn, id) do
-    Messages.where_organization(current_organization())
+    Messages.visible_to(current_member())
     |> Messages.get!(id)
   end
 

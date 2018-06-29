@@ -12,11 +12,16 @@ defmodule Palapa.Messages do
   # --- Scopes
 
   def visible_to(queryable \\ Message, %Member{} = member) do
-    member = Repo.preload(member, :organization)
+    member_teams_ids =
+      Ecto.assoc(member, :teams)
+      |> Repo.all()
+      |> Enum.map(fn team -> team.id end)
 
     queryable
-    |> where_organization(member.organization)
-    |> published_to_everyone
+    |> join(:left, [messages], message_teams in assoc(messages, :teams))
+    |> where([_, t], t.id in ^member_teams_ids)
+    |> or_where(published_to_everyone: true, organization_id: ^member.organization_id)
+    |> distinct(true)
   end
 
   def where_organization(queryable \\ Message, %Organization{} = organization) do
@@ -55,20 +60,6 @@ defmodule Palapa.Messages do
     |> Repo.all()
   end
 
-  defp messages_ids_visible_to(%Member{} = member) do
-    teams = Ecto.assoc(member, :teams)
-
-    from(
-      messages in Message,
-      distinct: true,
-      join: message_teams in assoc(messages, :teams),
-      join: member_teams in subquery(teams),
-      on: message_teams.id == member_teams.id,
-      select: messages.id
-    )
-    |> Repo.all()
-  end
-
   # --- Actions
 
   def list(queryable \\ Message) do
@@ -91,6 +82,8 @@ defmodule Palapa.Messages do
   end
 
   def create(%Organizations.Member{} = creator, attrs, teams \\ nil) do
+    creator = Repo.preload(creator, :organization)
+
     %Message{}
     |> Message.changeset(attrs)
     |> put_change(:organization, creator.organization)

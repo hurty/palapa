@@ -1,15 +1,15 @@
 @screen sm {
   .card-shadow {
-    @apply bg-grey-lighter rounded-lg p-2;
+    @apply shadow rounded-lg p-1;
   }
 }
 
 .card {
-  @apply bg-white p-4 border-b border border-grey-light rounded;
+  @apply bg-white rounded-lg border-4 border-grey-lighter;
 }
 
 .card-toolbar{
-  @apply p-4 bg-grey-lightest rounded-t border-t border-l border-r;
+  @apply m-0 bg-grey-lightest rounded-t;
 }
 
 .card-header {
@@ -22,11 +22,6 @@
 
 .card-actions {
   @apply flex justify-center mt-4;
-}
-
-.card-content {
-  @apply bg-white;
-  @apply border;
 }
 
 .card-footer {

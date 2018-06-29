@@ -1,5 +1,5 @@
 .organization-name {
-  @apply text-base font-extrabold text-white;
+  @apply text-xl font-extrabold text-black;
 }
 
 .header-links {
@@ -18,10 +18,10 @@
   @apply border-b-2 border-transparent;
   
   a {
-    @apply text-sm text-grey-light font-bold tracking-wide;
+    @apply text-sm text-black font-bold uppercase tracking-wide p-1;
 
     &:hover {
-      @apply text-white;
+      @apply border-b-2 border-purple-dark;
     }
   }
 }
@@ -33,12 +33,8 @@
 }  
 
 .header-link--active {
-  @screen sm {
-    @apply .border-b-2 .border-grey-lighter;
-  }
-
   a {
-    @apply text-white border-b-2 pb-2;
+    @apply border-b-2 border-purple-dark;
   }
 }
 
@@ -68,17 +64,17 @@
 }
 
 .search-bar {
-  @apply bg-grey-darker p-2 rounded text-grey-darker text-sm;
+  @apply bg-white p-2 rounded text-grey-darkest text-sm border;
 
   &::placeholder {
-    @apply text-grey-light;
+    @apply text-grey-darker;
   }  
   
   &:focus {
-    @apply bg-grey-lighter;
+    @apply bg-grey-lightest;
 
     &::placeholder {
-      @apply text-grey-darker;
+      @apply text-grey-darkest;
     }
   }
 }
@@ -88,11 +84,11 @@
 }
 
 .navigation {
-  @apply bg-grey-lightest py-1 border-b border-grey-lighter text-sm px-4 text-lg
+  @apply bg-white border-b  border-t py-2 px-4 text-xs border-grey-lighter;
 }
 
 .breadcrumbs {
-  @apply list-reset;
+  @apply list-reset text-left;
 
   .breadcrumb-item:first-child {
     &::before {
@@ -109,14 +105,15 @@
 
 .breadcrumb-item {
   @apply inline-block;
-  @apply text-grey-dark;
+  @apply text-grey-dark align-middle;
   max-width: 300px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  vertical-align: middle;
 
   a {
-    @apply text-xs text-green opacity-75;
+    @apply text-green align-middle;
 
     &:hover {
       @apply opacity-100 underline;

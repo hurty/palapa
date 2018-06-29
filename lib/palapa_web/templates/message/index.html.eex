@@ -1,34 +1,31 @@
 <div class="content article-layout">
   <div class="main-content"> 
-    <div class="card-shadow">
-    
-        <div class="messages__actions card-toolbar">
-          <%= render "_index_toolbar.html", assigns %>
-        </div>
+    <div class="card">
+      <div class="card-toolbar messages__actions">
+        <%= render "_index_toolbar.html", assigns %>
+      </div>
 
-        <div class="card-content">
+      <div class="card-content">
+        <%= if Enum.empty?(@messages) do %>
+          <%= render "_blankslate.html", conn: @conn %>
+        <% else %>
+            <%= if !is_nil(@conn.params["page"]) do %>
+              <div class="text-center border-b py-2">
+                <%= render "_index_pagination.html", assigns %>
+              </div>
+            <% end %>
 
-          <%= if Enum.empty?(@messages) do %>
-            <%= render "_blankslate.html", conn: @conn %>
-          <% else %>
-              <%= if !is_nil(@conn.params["page"]) do %>
-                <div class="text-center border-b py-2">
-                  <%= render "_index_pagination.html", assigns %>
-                </div>
-              <% end %>
+            <ul class="list-reset">
+              <%= render_many @messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn, current_organization: @current_organization, current_account: @current_account %>
+            </ul>
 
-              <ul class="list-reset bg-white rounded">
-                <%= render_many @messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn, current_organization: @current_organization, current_account: @current_account %>
-              </ul>
-
-              <%= if @messages.total_pages > 1 do %>
-                <div class="text-center my-2">
-                  <%= render "_index_pagination.html", assigns %>
-                </div>
-              <% end %>
-          <% end %>
-
-        </div>
+            <%= if @messages.total_pages > 1 do %>
+              <div class="text-center my-2">
+                <%= render "_index_pagination.html", assigns %>
+              </div>
+            <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
