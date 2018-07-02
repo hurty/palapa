@@ -151,4 +151,72 @@ defmodule PalapaWeb.MessageControllerTest do
       assert html_response(conn, :forbidden)
     end
   end
+
+  describe "as the owner" do
+    setup do
+      workspace = insert_pied_piper!()
+
+      tech_message =
+        insert!(
+          :message,
+          organization: workspace.organization,
+          creator: workspace.gilfoyle,
+          published_to_everyone: false,
+          teams: [workspace.tech_team],
+          title: "I have a great announcement for tech people",
+          content: "<p>This is so fun</p>"
+        )
+
+      workspace =
+        Map.put_new(workspace, :messages, %{
+          tech_message: tech_message
+        })
+
+      conn = login(workspace.richard)
+
+      {:ok, conn: conn, workspace: workspace}
+    end
+
+    test "the owner can delete any message", %{conn: conn, workspace: workspace} do
+      path = message_path(conn, :delete, workspace.organization, workspace.messages.tech_message)
+      conn = delete(conn, path)
+
+      assert Messages.deleted?(Repo.reload(workspace.messages.tech_message))
+      assert redirected_to(conn, 302) =~ message_path(conn, :index, workspace.organization)
+    end
+  end
+
+  describe "as an admin" do
+    setup do
+      workspace = insert_pied_piper!()
+
+      tech_message =
+        insert!(
+          :message,
+          organization: workspace.organization,
+          creator: workspace.gilfoyle,
+          published_to_everyone: false,
+          teams: [workspace.tech_team],
+          title: "I have a great announcement for tech people",
+          content: "<p>This is so fun</p>"
+        )
+
+      workspace =
+        Map.put_new(workspace, :messages, %{
+          tech_message: tech_message
+        })
+
+      conn = login(workspace.jared)
+
+      {:ok, conn: conn, workspace: workspace}
+    end
+
+    test "an admin can delete any message", %{conn: conn, workspace: workspace} do
+      path = message_path(conn, :delete, workspace.organization, workspace.messages.tech_message)
+      conn = delete(conn, path)
+
+      assert Messages.deleted?(Repo.reload(workspace.messages.tech_message))
+      assert redirected_to(conn, 302) =~ message_path(conn, :index, workspace.organization)
+    end
+  end
 end
