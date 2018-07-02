@@ -102,16 +102,17 @@ defmodule Palapa.Messages do
     |> Repo.preload([:organization, :attachments])
     |> Message.changeset(attrs)
     |> Attachments.put_attachments()
-    |> IO.inspect()
     |> Repo.update()
-
-    # |> put_teams(teams)
   end
 
   def delete!(%Message{} = message) do
     Message.changeset(message, %{})
     |> put_change(:deleted_at, DateTime.utc_now())
     |> Repo.update!()
+  end
+
+  def deleted?(%Message{} = message) do
+    !is_nil(message.deleted_at)
   end
 
   def change_comment(%MessageComment{} = message_comment) do
@@ -125,6 +126,8 @@ defmodule Palapa.Messages do
   end
 
   def create_comment(%Message{} = message, %Member{} = creator, attrs) do
+    creator = Repo.preload(creator, :organization)
+
     %MessageComment{}
     |> MessageComment.changeset(attrs)
     |> put_change(:message, message)

@@ -10,6 +10,10 @@ defmodule Palapa.Teams do
 
   # --- Scopes ---
 
+  def visible_to(member) do
+    Ecto.assoc(member, :teams)
+  end
+
   def where_organization(queryable \\ Team, organization) do
     if %Organization{} = organization do
       queryable

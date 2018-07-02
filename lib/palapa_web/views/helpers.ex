@@ -30,7 +30,7 @@ defmodule PalapaWeb.Helpers do
   end
 
   def text_editor(organization, options \\ []) do
-    editor_classes = "trix-content p-4 bg-grey-lightest text-grey-darkest "
+    editor_classes = "trix-content p-4 bg-white shadow-inner text-grey-darkest "
 
     editor_classes = editor_classes <> (options[:class] || "min-h-screen-1/2")
 

@@ -1,7 +1,7 @@
-<li class="js-message-comment relative bg-blue-lighter rounded-lg p-4 mb-4">
+<li class="js-message-comment relative bg-grey-lightest rounded-lg p-4 mb-4">
   <%= if Palapa.Access.permit? Palapa.Messages, :delete_comment, @conn.assigns.current_member, @comment do %>
     <div data-controller="popover">
-      <button data-target="popover.button" class="absolute pin-t pin-r m-1 bg-blue rounded-full h-8 w-8 flex items-center justify-center bg-grey text-blue-darker font-bold border-2 border-transparent hover:border-grey-dark">
+      <button data-target="popover.button" class="absolute pin-t pin-r m-1 bg-grey rounded-full h-8 w-8 flex items-center justify-center bg-grey text-blue-darker font-bold border-2 border-transparent hover:border-grey-dark">
         <i class="fas fa-ellipsis-h"></i>
       </button>
       

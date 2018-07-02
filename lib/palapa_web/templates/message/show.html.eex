@@ -1,12 +1,12 @@
 <div data-controller="message" class="content article-layout">
   <div class="main-content">
-    <div class="card-shadow">
+    <div class="card">
       <div class="card-toolbar message__toolbar">
         <%= render "_show_toolbar.html", assigns %>
       </div>
 
 
-      <article class="card-content p-4 sm:p-12">
+      <article class="p-4 sm:p-12">
         <header class="">
 
 

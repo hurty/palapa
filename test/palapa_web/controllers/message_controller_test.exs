@@ -2,6 +2,7 @@ defmodule PalapaWeb.MessageControllerTest do
   use PalapaWeb.ConnCase
 
   alias Palapa.Repo, warn: false
+  alias Palapa.Messages, warn: false
   alias Palapa.Messages.Message, warn: false
 
   describe "as regular member" do
@@ -100,6 +101,53 @@ defmodule PalapaWeb.MessageControllerTest do
       path = message_path(conn, :edit, workspace.organization, workspace.messages.public_message)
       conn = get(conn, path)
 
+      assert html_response(conn, :forbidden)
+    end
+
+    test "a regular member can update a message if he is the creator", %{
+      conn: conn,
+      workspace: workspace
+    } do
+      path = message_path(conn, :update, workspace.organization, workspace.messages.tech_message)
+      conn = patch(conn, path, %{"message" => %{"title" => "Updated title"}})
+      updated_message = Repo.reload(workspace.messages.tech_message)
+
+      assert redirected_to(conn, 302) =~
+               message_path(conn, :show, workspace.organization, updated_message)
+
+      assert updated_message.title == "Updated title"
+    end
+
+    test "a regular member cannot update a message if he is not the creator", %{
+      conn: conn,
+      workspace: workspace
+    } do
+      path =
+        message_path(conn, :update, workspace.organization, workspace.messages.public_message)
+
+      conn = patch(conn, path, %{"message" => %{"title" => "Updated title"}})
+
+      assert html_response(conn, :forbidden)
+    end
+
+    test "a regular member can delete his own message", %{conn: conn, workspace: workspace} do
+      path = message_path(conn, :delete, workspace.organization, workspace.messages.tech_message)
+      conn = delete(conn, path)
+
+      assert Messages.deleted?(Repo.reload(workspace.messages.tech_message))
+      assert redirected_to(conn, 302) =~ message_path(conn, :index, workspace.organization)
+    end
+
+    test "a regular member cannot delete someone else's message", %{
+      conn: conn,
+      workspace: workspace
+    } do
+      path =
+        message_path(conn, :delete, workspace.organization, workspace.messages.public_message)
+
+      conn = delete(conn, path)
+
+      refute Messages.deleted?(Repo.reload(workspace.messages.public_message))
       assert html_response(conn, :forbidden)
     end
   end

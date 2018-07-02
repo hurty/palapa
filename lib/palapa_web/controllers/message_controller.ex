@@ -60,7 +60,7 @@ defmodule PalapaWeb.MessageController do
   def create(conn, %{"message" => message_params}) do
     with :ok <- permit(Messages, :create, current_member()) do
       teams = Teams.list_for_member(current_member())
-      message_teams = find_teams(conn, message_params)
+      message_teams = find_teams(message_params, current_member())
 
       conn =
         put_breadcrumb(conn, "New messages", message_path(conn, :new, current_organization()))
@@ -118,7 +118,9 @@ defmodule PalapaWeb.MessageController do
   def update(conn, %{"id" => id, "message" => message_params}) do
     message = find_message!(conn, id)
     teams = Teams.list_for_member(current_member())
-    message_params = Map.put(message_params, "teams", find_teams(conn, message_params))
+
+    message_params =
+      Map.put(message_params, "teams", find_teams(message_params, current_member()))
 
     with :ok <- permit(Messages, :delete_message, current_member(), message) do
       case Messages.update(message, message_params) do
@@ -157,11 +159,11 @@ defmodule PalapaWeb.MessageController do
     |> Messages.get!(id)
   end
 
-  defp find_teams(conn, message_params) do
+  defp find_teams(message_params, member) do
     message_teams_ids = message_params["publish_teams_ids"] || []
 
     if message_params["published_to_everyone"] == "false" && Enum.any?(message_teams_ids) do
-      Teams.where_organization(current_organization())
+      Teams.visible_to(member)
       |> Teams.where_ids(message_teams_ids)
       |> Teams.list()
     else
