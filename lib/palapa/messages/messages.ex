@@ -97,10 +97,11 @@ defmodule Palapa.Messages do
     Message.changeset(message, %{})
   end
 
-  def update(%Message{} = message, attrs) do
+  def update(%Message{} = message, attrs, teams \\ nil) do
     message
     |> Repo.preload([:organization, :attachments])
     |> Message.changeset(attrs)
+    |> put_teams(teams)
     |> Attachments.put_attachments()
     |> Repo.update()
   end

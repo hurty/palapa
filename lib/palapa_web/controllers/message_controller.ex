@@ -117,19 +117,18 @@ defmodule PalapaWeb.MessageController do
 
   def update(conn, %{"id" => id, "message" => message_params}) do
     message = find_message!(conn, id)
-    teams = Teams.list_for_member(current_member())
-
-    message_params =
-      Map.put(message_params, "teams", find_teams(message_params, current_member()))
+    message_teams = find_teams(message_params, current_member())
 
     with :ok <- permit(Messages, :delete_message, current_member(), message) do
-      case Messages.update(message, message_params) do
+      case Messages.update(message, message_params, message_teams) do
         {:ok, _struct} ->
           conn
           |> put_flash(:success, "The message has been updated")
           |> redirect(to: message_path(conn, :show, current_organization(), message))
 
         {:error, message_changeset} ->
+          teams = Teams.list_for_member(current_member())
+
           conn
           |> put_flash(:error, "Your message can't be posted")
           |> render(
