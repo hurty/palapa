@@ -12,7 +12,7 @@ defmodule PalapaWeb.Helpers do
 
     timezone = Map.get(account, :timezone) || "UTC"
     locale = Map.get(account, :locale) || "en"
-    short_format = "{WDshort} {D} {Mfull} {YYYY}, {h24}:{m}"
+    short_format = "{WDshort} {D} {Mfull} {YYYY}"
     complete_format = "{WDshort} {D} {Mfull} {YYYY}, {h24}:{m} UTC{Z:}"
 
     datetime = datetime |> Timex.Timezone.convert(timezone)
