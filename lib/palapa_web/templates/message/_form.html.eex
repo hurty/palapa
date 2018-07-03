@@ -6,7 +6,7 @@
     <%= error_tag @form, :title %>
   </div>
 
-  <%= PalapaWeb.EditorView.text_editor(@current_organization) %>
+  <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization) %>
   <%= hidden_input @form, :content, id: "content" %>
 
   <%= if Enum.any?(@teams) do %>

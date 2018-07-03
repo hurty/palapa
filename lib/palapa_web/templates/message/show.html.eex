@@ -37,7 +37,7 @@
       <%= form_for @new_message_comment, message_message_comment_path(@conn, :create, @current_organization, @message), 
         ["data-target": "message.commentForm", "data-action": "message#submitComment", class: "hidden"], fn form -> %> 
 
-        <%= PalapaWeb.EditorView.text_editor(@current_organization) %>
+        <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization) %>
         <%= hidden_input form, :content, "data-target": "message.commentContent" %>
 
         <div class="card-actions">

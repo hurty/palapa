@@ -16,7 +16,6 @@ export default class extends Controller {
     document.addEventListener("trix-change", e => {
       this.detectSearchTerm()
       this.filterAutocompleteList()
-      console.log(this.editor.composition.attachments)
     })
 
     // Handle files upload through the text editor
@@ -215,7 +214,7 @@ export default class extends Controller {
 
   uploadAttachment(attachment) {
     let file, form, xhr, host;
-    host = "/attachments"
+    host = this.data.get("attachments-url")
     file = attachment.file;
 
     const element = document.head.querySelector('meta[name="csrf-token"]')

@@ -18,7 +18,7 @@
       </header>
 
       <%= form_for @changeset, message_message_comment_path(@conn, :update, @current_organization, @message, @comment), fn form -> %>        
-        <%= PalapaWeb.EditorView.text_editor(@current_organization) %>
+        <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization) %>
         <%= hidden_input form, :content %>
         
         <div class="card-actions">
