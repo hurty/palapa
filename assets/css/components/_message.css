@@ -35,4 +35,9 @@
     @apply bg-purple-lightest;
     @apply my-4 py-4 px-4;
   }
+
+  img {
+    width: auto;
+    height: auto;
+  }
 }
