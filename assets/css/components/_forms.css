@@ -34,8 +34,8 @@ input[type=checkbox] {
   -ms-appearance: none;
 
   border-radius: 4px;
-  height: 20px;
-  width: 20px;
+  height: 15px;
+  width: 15px;
   background: #FFF;
   border: 1px solid #ccc;
   cursor: pointer;
@@ -57,8 +57,8 @@ input[type=radio] {
   -ms-appearance: none;
 
   border-radius: 10px;
-  height: 20px;
-  width: 20px;
+  height: 15px;
+  width: 15px;
   background: #FFF;
   border: 1px solid #ccc;
   cursor: pointer;
@@ -67,11 +67,7 @@ input[type=radio] {
 input[type="radio"]:checked {
   margin: 0px;
   position: relative;
-  @apply bg-green border-none;
-  background-image: url('data:image/svg+xml;utf8,<svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="white" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path></svg>');
-  background-repeat: no-repeat;
-  background-size: 40%;
-  background-position: center; 
+  @apply bg-green border-4 border-green-lighter;
 }
 
 .error {

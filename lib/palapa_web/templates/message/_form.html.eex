@@ -22,15 +22,18 @@
       </div>
       
       <div class="ml-4 hidden" data-target="message.teamsList">
-        <ul class="list-reset flex flex-wrap">
+        <div class="flex flex-wrap">
           <%= for team <- @teams do %>
-            <li class="field mx-1 tag">
+            
+              
+              <label class="m-1 tag align-middle cursor-pointer" for="team_<%= team.id %>">
               <input type="checkbox" class="align-middle" name="message[publish_teams_ids][]" id="team_<%= team.id %>" 
                 value="<%= team.id %>" <%= if team_checked?(@message_changeset, team) do %>checked<% end %>>
-              <label class="cursor-pointer" for="team_<%= team.id %>"><%= team.name %></label>
-            </li>
+                <%= team.name %>
+              </label>
+
           <% end %>
-        </ul>
+        </div>
       </div>
     </div>
   <% end %>    
