@@ -57,11 +57,7 @@ defmodule Palapa.Teams do
   # Owner and admins can publish messages to any team.
   # Regular members can only publish to teams they're member of.
   def list_for_member(%Member{} = member) do
-    if member.role in [:owner, :admin] do
-      where_organization_id(member.organization_id)
-    else
-      Ecto.assoc(member, :teams)
-    end
+    Ecto.assoc(member, :teams)
     |> list()
   end
 
