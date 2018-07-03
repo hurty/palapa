@@ -1,11 +1,17 @@
 .header {
   grid-area: header;
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0; /* required */
   z-index: 100;
   @apply mb-8;
 }
+
+/* Don't make the header sticky on small screens */
+@screen sm {
+  .header {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+  }
+}  
 
 .tab-navigation {
   grid-area: tab-navigation;

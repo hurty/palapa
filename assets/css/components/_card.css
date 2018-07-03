@@ -5,11 +5,11 @@
 }
 
 .card {
-  @apply bg-white rounded-lg border-4 border-grey-lighter;
+  @apply bg-white rounded shadow;
 }
 
 .card-toolbar{
-  @apply m-0 bg-grey-lightest rounded-t;
+  @apply p-4 bg-grey-lightest rounded-t;
 }
 
 .card-header {

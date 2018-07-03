@@ -1,7 +1,7 @@
 .tag {
   @apply px-2 py-1;
   @apply bg-grey-light rounded;
-  @apply text-grey-darker text-sm;
+  @apply text-grey-darkest text-sm;
 
   &--active {
     @apply bg-green-lighter text-green-darker !important;
@@ -10,12 +10,8 @@
   &:visited {
     @apply text-grey-darker;
   }
-
+  
   &:hover {
-    text-decoration: underline;
+    @apply bg-grey;
   }
-}
-
-.tag--sm {
-  @apply bg-grey-lighter rounded;
 }

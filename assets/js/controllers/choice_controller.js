@@ -5,7 +5,6 @@ export default class extends Controller {
   static targets = ["select"]
 
   connect() {
-    console.log("choice connect")
     new Choices(this.selectTarget, {
       removeItemButton: true
     })

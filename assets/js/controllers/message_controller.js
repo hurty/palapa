@@ -1,9 +1,12 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["teamsList", "publishToEveryone", "publishToSpecificTeams", "commentForm", "commentsList",
+  static targets = ["title", "teamsList", "publishToEveryone", "publishToSpecificTeams", "commentForm", "commentsList",
     "commentsCount", "commentContent", "editor", "leaveComment"]
   connect() {
+    if (this.targets.has("title"))
+      this.titleTarget.focus()
+
     this.handleTeamListVisibility()
   }
 

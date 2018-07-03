@@ -1,0 +1,7 @@
+<div class="border rounded" data-controller="editor" data-editor-autocomplete-index="0" 
+data-editor-members="<%= members_for_autocomplete(@organization) %>">
+  <trix-editor class="trix-content sm:p-4"
+    input="content" placeholder="Your message here...">
+  </trix-editor>
+  <ul class="autocomplete hidden" data-target="editor.autocompleteList"></ul>
+</div>

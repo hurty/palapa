@@ -1,10 +1,14 @@
 trix-editor {
-  border: 1px solid #bbb;
+  /* border: 1px solid #bbb; */
   border-radius: 3px;
   margin: 0;
   padding: 0.4em 0.6em;
   min-height: 5em;
   outline: none;
+}
+
+trix-toolbar {
+  @apply border-b border-grey-lighter;
 }
 
 trix-toolbar * {
@@ -13,9 +17,8 @@ trix-toolbar * {
 
 trix-toolbar .trix-button-row {
   display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  border-bottom: 1px solid #ddd;
+  flex-wrap: wrap;
+  /* border-bottom: 1px solid #ddd; */
 }
 
 trix-toolbar .trix-button-group {
@@ -30,21 +33,21 @@ trix-toolbar .trix-button {
   font-weight: 600;
   white-space: nowrap;
   padding: 0 0.5em;
-  margin: 0;
+  margin: 1px;
   outline: none;
   background: transparent;
 }
 
 trix-toolbar .trix-button:not(:first-child) {
-  border-left: 1px solid #ccc;
+  /* border-left: 1px solid #ccc; */
 }
 
 trix-toolbar .trix-button:last-child) {
-  border-right: 1px solid #ccc;
+  /* border-right: 1px solid #ccc; */
 }
 
 trix-toolbar .trix-button.trix-active {
-  @apply bg-green-lighter;
+  @apply bg-blue-lighter rounded;
   color: black;
 }
 
@@ -172,7 +175,6 @@ trix-toolbar .trix-dialog {
   padding: 15px 10px;
   background: #fff;
   box-shadow: 0 0.3em 1em #ccc;
-  border-top: 2px solid #888;
   border-radius: 5px;
   z-index: 5;
 }
@@ -437,14 +439,14 @@ trix-editor .attachment__remove--icon:hover::before {
 }
 
 .trix-button-group--text-tools {
-  border-right: 1px solid #ccc;
+  /* border-right: 1px solid #ccc; */
 }
 
 .trix-button-group--block-tools {
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
+  /* border-left: 1px solid #ccc; */
+  /* border-right: 1px solid #ccc; */
 }
 
 .trix-button-group--history-tools {
-  border-left: 1px solid #ccc;
+  /* border-left: 1px solid #ccc; */
 }
