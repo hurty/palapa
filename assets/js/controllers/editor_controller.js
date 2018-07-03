@@ -47,13 +47,22 @@ export default class extends Controller {
         this.searchTerm = null
         searchingTrigger = false
         break
+      } else if (currentString[0] === "\n") {
+        this.searchTerm = null
+        searchingTrigger = false
+        break
       } else if (position < 0) {
         this.searchTerm = null
         searchingTrigger = false
         break
       }
 
-      if (currentString[0] === "@" && (this.editorContent[position - 1] === " " || position === 0)) {
+      if (currentString[0] === "@" && (
+        this.editorContent[position - 1] === " " ||
+        this.editorContent[position - 1] === "￼" || // kind of empty string representing attachments in the editor.
+        this.editorContent[position - 1] === "\n" ||
+        position === 0)
+      ) {
         this.autocompletePosition = position
         this.searchTerm = currentString
         break
