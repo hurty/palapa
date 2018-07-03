@@ -13,7 +13,9 @@
           <h1 class="text-green text-2xl"><%= @message.title %></h1>
         </header>
 
-        <div class="separator"></div>
+        <%= unless message_blank?(@message) do %>
+          <div class="separator"></div>
+        <% end %>
         
         <section class="message-content">      
           <%= raw(PalapaWeb.Helpers.sanitize_html(@message.content)) %>
