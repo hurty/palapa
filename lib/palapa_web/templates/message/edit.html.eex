@@ -1,9 +1,9 @@
 <div class="content article-layout">
   <div class="main-content" data-controller="message">
-    <div class="card-shadow">
-      <div class="card">
+      <div class="card p-8">
         <%= form_for @message_changeset, message_path(@conn, :update, @current_organization, @message), fn form -> %>
           <%= render "_form.html", 
+            conn: @conn,
             message_changeset: @message_changeset, 
             form: form, 
             current_organization: @current_organization, 
@@ -14,7 +14,6 @@
             <%= submit "Update this message", class: "btn btn-green" %>
           </div>
         <% end %>
-        </div>
       </div>
     </div>
   </div>
