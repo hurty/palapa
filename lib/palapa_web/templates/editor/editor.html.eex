@@ -3,8 +3,7 @@ data-editor-autocomplete-index="0"
 data-editor-members="<%= members_for_autocomplete(@organization) %>" 
 data-editor-attachments-url="<%= attachment_url(@conn, :create, @organization)%>">
   
-  <trix-editor class="trix-content sm:p-4"
-    input="content" placeholder="Your message here...">
+  <trix-editor class="trix-content sm:p-4" input="<%= @content_input_id %>" placeholder="Your message here..." data-target="<%= @data_target %>">
   </trix-editor>
   
   <ul class="autocomplete hidden" data-target="editor.autocompleteList"></ul>
