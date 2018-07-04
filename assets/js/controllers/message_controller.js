@@ -8,7 +8,9 @@ export default class extends Controller {
     if (this.targets.has("title"))
       this.titleTarget.focus()
 
-    this.handleImageGallery()
+    if (this.data.get("page") == "show")
+      this.handleImageGallery()
+
     this.handleTeamListVisibility()
   }
 
