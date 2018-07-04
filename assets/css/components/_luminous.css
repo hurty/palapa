@@ -375,29 +375,3 @@
   right: 12%;
   border-radius: 0 3px 0 0;
 }
-
-/* This media query makes screens less than 460px wide display in a "fullscreen"-esque mode. Users can then scroll around inside the lightbox to see the entire image. */
-@media (max-width: 460px) {
-  .lum-lightbox-image-wrapper {
-    display: -ms-flexbox;
-    display: flex;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .lum-lightbox-caption {
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-  }
-
-  /* Used to centre the image in the container, respecting overflow: https://stackoverflow.com/a/33455342/515634 */
-  .lum-lightbox-position-helper {
-    margin: auto;
-  }
-
-  .lum-lightbox-inner img {
-    max-width: none;
-    max-height: none;
-  }
-}
