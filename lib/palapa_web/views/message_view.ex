@@ -6,6 +6,7 @@ defmodule PalapaWeb.MessageView do
   def excerpt(content) do
     first_words =
       content
+      |> HtmlSanitizeEx.Scrubber.scrub(PalapaWeb.MessageScrubber)
       |> strip_html_tags()
       |> String.slice(0..@excerpt_length)
 
