@@ -1,4 +1,5 @@
 import { Controller } from "stimulus"
+import { LuminousGallery } from 'luminous-lightbox'
 
 export default class extends Controller {
   static targets = ["title", "teamsList", "publishToEveryone", "publishToSpecificTeams", "commentForm", "commentsList",
@@ -7,7 +8,12 @@ export default class extends Controller {
     if (this.targets.has("title"))
       this.titleTarget.focus()
 
+    this.handleImageGallery()
     this.handleTeamListVisibility()
+  }
+
+  handleImageGallery() {
+    new LuminousGallery(document.querySelectorAll("a[data-trix-content-type^='image']"))
   }
 
   handleTeamListVisibility() {

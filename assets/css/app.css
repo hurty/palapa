@@ -46,6 +46,7 @@
 @import "components/_profile";
 @import "components/_truncate";
 @import "components/_selector";
+@import "components/_luminous";
 
 @import "layout/_layout";
 

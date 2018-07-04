@@ -36,6 +36,11 @@
     @apply my-4 py-4 px-4;
   }
 
+  figure {
+    text-align: center;
+    margin-top: 5px;
+  }
+
   img {
     width: auto;
     height: auto;
