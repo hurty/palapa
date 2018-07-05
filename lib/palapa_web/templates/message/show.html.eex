@@ -7,12 +7,8 @@
 
 
       <article class="p-4 sm:p-12">
-        <header class="">
-
-
-          <h1 class="text-green text-2xl"><%= @message.title %></h1>
-        </header>
-
+        <h1 class="text-green text-2xl"><%= @message.title %></h1>
+        
         <%= unless message_blank?(@message) do %>
           <div class="separator"></div>
         <% end %>
