@@ -38,7 +38,7 @@
 
 .message__actions {
   grid-area: message__actions;
-  @apply relative
+  justify-self: end;
 }
 
 .message__tags {

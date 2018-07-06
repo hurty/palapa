@@ -6,7 +6,7 @@ export default class extends Controller {
 
   connect() {
     this.popover = new PopperJs(this.buttonTarget, this.contentTarget, {
-      placement: "bottom",
+      placement: "auto-start",
       modifiers: {
         arrow: {
           element: this.arrowTarget
