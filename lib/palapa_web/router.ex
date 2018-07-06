@@ -45,8 +45,10 @@ defmodule PalapaWeb.Router do
       resources("/attachments", AttachmentController, only: [:create])
 
       resources("/messages", MessageController) do
-        resources("/comments", MessageCommentController, only: [:create, :edit, :update, :delete])
+        resources("/comments", MessageCommentController, only: [:create])
       end
+
+      resources("/messages/comments", MessageCommentController, only: [:edit, :update, :delete])
 
       resources "/members", MemberController do
         resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)

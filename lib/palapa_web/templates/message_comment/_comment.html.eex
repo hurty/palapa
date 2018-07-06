@@ -1,38 +1,7 @@
-<li class="js-message-comment relative bg-grey-light rounded-lg p-4 mb-4">
-  <%= if Palapa.Access.permit? Palapa.Messages, :delete_comment, @conn.assigns.current_member, @comment do %>
-    <div data-controller="popover">
-      <button data-target="popover.button" class="absolute pin-t pin-r m-1 bg-grey rounded-full h-8 w-8 flex items-center justify-center bg-grey text-blue-darker font-bold border-2 border-transparent hover:border-grey-dark">
-        <i class="fas fa-ellipsis-h"></i>
-      </button>
-      
-      <div data-target="popover.content" class="popover hidden">
-        <div data-target="popover.arrow" class="popover__arrow"></div>
-        <nav class="flex flex-col">
-          <%= if Palapa.Access.permit? Palapa.Messages, :edit_comment, @conn.assigns.current_member, @comment do %>
-            <%= link to: message_message_comment_path(@conn, :edit, @conn.assigns.current_organization, @comment.message_id, @comment), class: "popover__link" do %>
-              <i class="fas fa-pencil-alt"></i> Edit
-            <% end %>
-          <% end %>
-          <%= link to: message_message_comment_path(@conn, :delete, @conn.assigns.current_organization, @comment.message_id, @comment.id),
-           data: [confirm: "Are you sure you want to delete this comment?", action: "message-comment#deleteComment"], class: "popover__link" do %>
-            <i class="fas fa-trash"></i> Delete
-          <% end %>
-        </nav>
-      </div>
-    </div>
-  <% end %>
+<li data-controller="message-comment" class="relative bg-white border-b sm:border-none sm:rounded-lg p-4 mb-4">
+  <div data-target="message-comment.formContainer"></div>
 
-    <div class="flex">
-      <div class="w-10 mx-2">
-        <%= PalapaWeb.MemberView.avatar(@comment.creator, :small) %>
-      </div>
-
-      <div class="w-full text-xs my-auto">
-        <%= link @comment.creator.name, to: member_path(@conn, :show, @conn.assigns.current_organization, @comment.creator.id), class: "text-grey-darkest font-bold hover:underline" %>
-        <div class="text-grey-darker font-light"><%= format_datetime(@comment.inserted_at, @current_account) %></div>
-      </div>
-    </div>
-
-
-    <div class="text-grey-darkest mt-2 pl-2 pr-8"><%= raw(PalapaWeb.Helpers.sanitize_html(@comment.content)) %></div>
+  <div data-target="message-comment.content">
+    <%= render "_comment_content.html", assigns %>
+  <div>
 </li>

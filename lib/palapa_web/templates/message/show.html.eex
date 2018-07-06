@@ -19,24 +19,24 @@
       </article>
     </div>
     
-    <div data-controller="message-comment" id="message-comments" class="mx-auto sm:w-5/6">
-      <div data-target="message-comment.commentsCount">
+    <div id="message-comments" class="mx-auto sm:w-5/6">
+      <div id="message-comments-count", data-target="message.commentsCount">
         <%= render PalapaWeb.MessageCommentView, "_comments_count.html", comments_count: @message.comments_count %>
       </div>
 
-      <ul class="list-reset flex flex-col" data-target="message-comment.commentsList">
+      <ul class="list-reset flex flex-col" data-target="message.commentsList">
         <%= render_many @comments, PalapaWeb.MessageCommentView, "_comment.html", as: :comment, conn: @conn, current_account: @current_account %>
       </ul>
 
-      <div class="card-actions" data-target="message-comment.leaveComment">
-        <%= submit "Leave a comment", class: "btn", "data-action": "message-comment#showCommentForm" %>
+      <div class="card-actions" data-target="message.leaveComment">
+        <%= submit "Leave a comment", class: "btn", "data-action": "message#showCommentForm" %>
       </div>
 
       <%= form_for @new_message_comment, message_message_comment_path(@conn, :create, @current_organization, @message), 
-        ["data-target": "message-comment.commentForm", "data-action": "message-comment#submitComment", class: "hidden"], fn form -> %> 
+        ["data-target": "message.commentForm", "data-action": "message#submitComment", class: "hidden"], fn form -> %> 
 
-        <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization, content_input_id: "message_comment_content", data_target: "message-comment.editor") %>
-        <%= hidden_input form, :content, "data-target": "message-comment.commentContent" %>
+        <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization, content_input_id: "message_comment_content", data_target: "message.editor") %>
+        <%= hidden_input form, :content, "data-target": "message.commentContent" %>
 
         <div class="card-actions">
           <%= submit "Post this comment", class: "btn btn-green" %>

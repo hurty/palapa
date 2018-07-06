@@ -22,50 +22,45 @@ defmodule PalapaWeb.MessageCommentController do
     )
   end
 
-  def edit(conn, %{"message_id" => message_id, "id" => id}) do
-    message =
-      Messages.visible_to(current_member())
-      |> Messages.get!(message_id)
-
+  def edit(conn, %{"id" => id}) do
     comment = Messages.get_comment!(id)
     changeset = comment |> Messages.change_comment()
 
     with :ok <- permit(Messages, :edit_comment, current_member(), comment) do
-      render(conn, "edit.html", message: message, comment: comment, changeset: changeset)
+      render(
+        conn,
+        "_form.html",
+        layout: false,
+        comment: comment,
+        changeset: changeset
+      )
     end
   end
 
-  def update(conn, %{
-        "message_id" => message_id,
-        "id" => id,
-        "message_comment" => message_comment_attrs
-      }) do
-    message =
-      Messages.visible_to(current_member())
-      |> Messages.get!(message_id)
-
+  def update(conn, %{"id" => id, "message_comment" => message_comment_attrs}) do
     comment = Messages.get_comment!(id)
 
     with :ok <- permit(Messages, :edit_comment, current_member(), comment) do
       case Messages.update_comment(comment, message_comment_attrs) do
-        {:ok, _struct} ->
-          redirect(conn, to: message_path(conn, :show, current_organization(), message))
+        {:ok, updated_comment} ->
+          conn
+          |> put_status(:ok)
+          |> render("_comment_content.html", layout: false, comment: updated_comment)
 
         {:error, changeset} ->
-          render(conn, "edit.html", message: message, comment: comment, changeset: changeset)
+          conn
+          |> put_status(:unprocessable_entity)
+          |> render("_form.html", layout: false, comment: comment, changeset: changeset)
       end
     end
   end
 
-  def delete(conn, %{"message_id" => message_id, "id" => id}) do
-    message =
-      Messages.visible_to(current_member())
-      |> Messages.get!(message_id)
-
+  def delete(conn, %{"id" => id}) do
     comment = Messages.get_comment!(id)
 
     with :ok <- permit(Messages, :delete_comment, current_member(), comment) do
       Messages.delete_comment!(comment)
+      message = Messages.get!(comment.message_id)
       comments_count = Messages.comments_count(message)
 
       render(
