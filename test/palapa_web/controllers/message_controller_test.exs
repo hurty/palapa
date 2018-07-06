@@ -10,36 +10,33 @@ defmodule PalapaWeb.MessageControllerTest do
       workspace = insert_pied_piper!()
 
       public_message =
-        insert!(
-          :message,
+        Repo.insert!(%Message{
           organization: workspace.organization,
           creator: workspace.richard,
           published_to_everyone: true,
           title: "I have a great announcement to make to everyone",
           content: "<p>This is so great</p>"
-        )
+        })
 
       tech_message =
-        insert!(
-          :message,
+        Repo.insert!(%Message{
           organization: workspace.organization,
           creator: workspace.gilfoyle,
           published_to_everyone: false,
           teams: [workspace.tech_team],
           title: "I have a great announcement for tech people",
           content: "<p>This is so fun</p>"
-        )
+        })
 
       management_message =
-        insert!(
-          :message,
+        Repo.insert!(%Message{
           organization: workspace.organization,
           creator: workspace.jared,
           published_to_everyone: false,
           teams: [workspace.management_team],
           title: "I have a sad announcement for the managers",
           content: "<p>This is so sad</p>"
-        )
+        })
 
       workspace =
         Map.put_new(workspace, :messages, %{
@@ -157,15 +154,14 @@ defmodule PalapaWeb.MessageControllerTest do
       workspace = insert_pied_piper!()
 
       tech_message =
-        insert!(
-          :message,
+        Repo.insert!(%Message{
           organization: workspace.organization,
           creator: workspace.gilfoyle,
           published_to_everyone: false,
           teams: [workspace.tech_team],
           title: "I have a great announcement for tech people",
           content: "<p>This is so fun</p>"
-        )
+        })
 
       workspace =
         Map.put_new(workspace, :messages, %{
@@ -191,15 +187,14 @@ defmodule PalapaWeb.MessageControllerTest do
       workspace = insert_pied_piper!()
 
       tech_message =
-        insert!(
-          :message,
+        Repo.insert!(%Message{
           organization: workspace.organization,
           creator: workspace.gilfoyle,
           published_to_everyone: false,
           teams: [workspace.tech_team],
           title: "I have a great announcement for tech people",
           content: "<p>This is so fun</p>"
-        )
+        })
 
       workspace =
         Map.put_new(workspace, :messages, %{

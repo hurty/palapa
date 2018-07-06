@@ -5,8 +5,6 @@ defmodule Palapa.Factory do
   alias Palapa.Accounts.Account
   alias Palapa.Teams.{Team}
 
-  alias Palapa.Messages.{Message}
-
   #
   # Convenience functions
   #
@@ -117,16 +115,6 @@ defmodule Palapa.Factory do
     %Team{
       organization: build(:organization),
       name: "Tech"
-    }
-  end
-
-  def build(:message) do
-    %Message{
-      organization: build(:organization),
-      creator: build(:owner),
-      published_to_everyone: true,
-      title: "I have a great announcement to make",
-      content: "<p>This is so great</p>"
     }
   end
 end
