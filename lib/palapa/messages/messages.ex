@@ -130,6 +130,7 @@ defmodule Palapa.Messages do
     |> put_change(:message, message)
     |> put_change(:organization, creator.organization)
     |> put_change(:creator, creator)
+    |> Attachments.put_attachments()
     |> Repo.insert()
   end
 
@@ -139,7 +140,9 @@ defmodule Palapa.Messages do
 
   def update_comment(%MessageComment{} = message_comment, attrs) do
     message_comment
+    |> Repo.preload([:organization, :attachments])
     |> MessageComment.changeset(attrs)
+    |> Attachments.put_attachments()
     |> Repo.update()
   end
 

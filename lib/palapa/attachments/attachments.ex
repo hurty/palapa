@@ -26,6 +26,7 @@ defmodule Palapa.Attachments do
   def orphan(queryable \\ Attachment) do
     queryable
     |> where([a], is_nil(a.message_id))
+    |> where([a], is_nil(a.message_comment_id))
   end
 
   # --- Actions
@@ -71,6 +72,7 @@ defmodule Palapa.Attachments do
     content = get_field(changeset, :content)
     organization = get_field(changeset, :organization)
     attachments = find_attachments_in_content(content, organization)
+    IO.inspect(attachments)
 
     changeset
     |> put_assoc(:attachments, attachments)
