@@ -99,7 +99,7 @@ defmodule Palapa.Messages do
 
   def update(%Message{} = message, attrs, teams \\ nil) do
     message
-    |> Repo.preload([:organization, :attachments])
+    |> Repo.preload([:organization, :attachments, :teams])
     |> Message.changeset(attrs)
     |> put_teams(teams)
     |> Attachments.put_attachments()
@@ -107,17 +107,13 @@ defmodule Palapa.Messages do
   end
 
   def delete!(%Message{} = message) do
-    Message.changeset(message, %{})
+    __MODULE__.change(message)
     |> put_change(:deleted_at, DateTime.utc_now())
     |> Repo.update!()
   end
 
-  def deleted?(%Message{} = message) do
-    !is_nil(message.deleted_at)
-  end
-
-  def change_comment(%MessageComment{} = message_comment) do
-    MessageComment.changeset(message_comment, %{})
+  def deleted?(resource) do
+    !is_nil(resource.deleted_at)
   end
 
   def get_comment!(queryable \\ MessageComment, id) do
@@ -137,6 +133,10 @@ defmodule Palapa.Messages do
     |> Repo.insert()
   end
 
+  def change_comment(%MessageComment{} = message_comment) do
+    MessageComment.changeset(message_comment, %{})
+  end
+
   def update_comment(%MessageComment{} = message_comment, attrs) do
     message_comment
     |> MessageComment.changeset(attrs)
@@ -144,8 +144,9 @@ defmodule Palapa.Messages do
   end
 
   def delete_comment!(%MessageComment{} = message_comment) do
-    message_comment
-    |> Repo.delete!()
+    __MODULE__.change_comment(message_comment)
+    |> put_change(:deleted_at, DateTime.utc_now())
+    |> Repo.update!()
   end
 
   def comments_count(%Message{} = message) do

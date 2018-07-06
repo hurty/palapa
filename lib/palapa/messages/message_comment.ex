@@ -9,6 +9,7 @@ defmodule Palapa.Messages.MessageComment do
     belongs_to(:message, Message)
     belongs_to(:creator, Member)
     field(:content, :string)
+    field(:deleted_at, :utc_datetime)
     timestamps()
   end
 
