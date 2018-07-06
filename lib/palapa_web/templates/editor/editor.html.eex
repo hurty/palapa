@@ -1,4 +1,4 @@
-<div class="border rounded" data-controller="editor" 
+<div class="bg-white border rounded" data-controller="editor" 
 data-editor-autocomplete-index="0" 
 data-editor-members="<%= members_for_autocomplete(@organization) %>" 
 data-editor-attachments-url="<%= attachment_url(@conn, :create, @organization)%>">
