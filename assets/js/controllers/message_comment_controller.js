@@ -5,7 +5,7 @@ export default class extends Controller {
 
   editComment(event) {
     event.preventDefault()
-    let link = event.target
+    let link = event.target.closest("a")
 
     PA.remoteLink(link).then(html => {
       this.formContainerTarget.innerHTML = html
@@ -35,7 +35,7 @@ export default class extends Controller {
 
   deleteComment(event) {
     event.preventDefault()
-    let link = event.target
+    let link = event.target.closest("a")
 
     if (!PA.confirm(link)) {
       return;
