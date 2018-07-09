@@ -11,7 +11,6 @@ defmodule Palapa.Messages.MessageComment do
     belongs_to(:creator, Member)
     has_many(:attachments, Attachment, on_replace: :nilify)
     field(:content, :string)
-    field(:deleted_at, :utc_datetime)
     timestamps()
   end
 
