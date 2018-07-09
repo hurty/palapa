@@ -147,9 +147,8 @@ defmodule Palapa.Messages do
   end
 
   def delete_comment!(%MessageComment{} = message_comment) do
-    __MODULE__.change_comment(message_comment)
-    |> put_change(:deleted_at, DateTime.utc_now())
-    |> Repo.update!()
+    message_comment
+    |> Repo.delete!()
   end
 
   def comments_count(%Message{} = message) do
