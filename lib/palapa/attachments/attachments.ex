@@ -91,7 +91,6 @@ defmodule Palapa.Attachments do
     content = get_field(changeset, :content)
     organization = get_field(changeset, :organization)
     attachments = find_attachments_in_content(content, organization)
-    IO.inspect(attachments)
 
     changeset
     |> put_assoc(:attachments, attachments)
