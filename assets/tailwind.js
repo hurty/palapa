@@ -56,14 +56,6 @@ let colors = {
   'grey-darkest': '#424244',
   'white': '#ffffff',
 
-  'charcoal-lightest': '#EAEAEA',
-  'charcoal-lighter': '#ABABAD',
-  'charcoal-light': '#6D6D6F',
-  'charcoal': '#2E2E31',
-  'charcoal-dark': '#29292C',
-  'charcoal-darker': '#1C1C1D',
-  'charcoal-darkest': '#0E0E0F',
-
   'red-lightest': '#FDEDEE',
   'red-lighter': '#F7B7B9',
   'red-light': '#F08285',
@@ -71,22 +63,6 @@ let colors = {
   'red-dark': '#D34448',
   'red-darker': '#8C2E30',
   'red-darkest': '#461718',
-
-  'orange-darkest': '#462a16',
-  'orange-darker': '#613b1f',
-  'orange-dark': '#de751f',
-  'orange': '#f6993f',
-  'orange-light': '#faad63',
-  'orange-lighter': '#fcd9b6',
-  'orange-lightest': '#fff5eb',
-
-  'yellow-lightest': '#FFFAEF',
-  'yellow-lighter': '#FFECBE',
-  'yellow-light': '#FEDD8E',
-  'yellow': '#FECF5D',
-  'yellow-dark': '#E5BA54',
-  'yellow-darker': '#987C38',
-  'yellow-darkest': '#4C3E1C',
 
   'green-lightest': '#F2F9F2',
   'green-lighter': '#CCE5C9',
@@ -127,14 +103,6 @@ let colors = {
   'purple-dark': '#9A80B9',
   'purple-darker': '#67557B',
   'purple-darkest': '#332B3E',
-
-  'pink-darkest': '#451225',
-  'pink-darker': '#6f213f',
-  'pink-dark': '#eb5286',
-  'pink': '#f66d9b',
-  'pink-light': '#fa7ea8',
-  'pink-lighter': '#ffbbca',
-  'pink-lightest': '#ffebef',
 }
 
 module.exports = {
@@ -175,10 +143,7 @@ module.exports = {
   */
 
   screens: {
-    'sm': '576px',
-    'md': '768px',
-    'lg': '992px',
-    'xl': '1200px',
+    'sm': '576px'
   },
 
 
