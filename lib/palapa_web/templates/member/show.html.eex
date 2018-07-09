@@ -1,8 +1,8 @@
-<div class="w-full lg:w-4/5 mx-auto">
+<div class="w-full sm:w-4/5 mx-auto">
   <div class="flex flex-wrap">
-    <div class="w-full sm:mx-auto sm:w-1/2 lg:w-1/3">
+    <div class="w-full sm:mx-auto sm:w-1/2 sm:w-1/3">
       <div class="bg-grey-lighter rounded-lg p-2 mb-4 mx-2">
-        <div class="bg-white p-2 lg:p-4 border-b border border-grey-light rounded">
+        <div class="bg-white p-2 sm:p-4 border-b border border-grey-light rounded">
           <div class="text-center">
             <%= avatar(@member) %>
           </div>
@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <div class="w-full lg:w-2/3">
+    <div class="w-full sm:w-2/3">
       <div class="text-center">
         <%= link("Edit profile", to: member_path(@conn, :edit, @current_organization, @member), class: "btn")%>
       </div>

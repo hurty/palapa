@@ -1,4 +1,4 @@
-<div class="card-shadow lg:w-1/2 mx-auto">
+<div class="card-shadow sm:w-1/2 mx-auto">
   <div class="card">
     <h2 class="card-header">Invite people</h2>
     <div class="card-header-separator"></div>
@@ -7,7 +7,7 @@
   </div>
 </div>
 
-<div class="card-shadow lg:w-1/2 mx-auto my-8">
+<div class="card-shadow sm:w-1/2 mx-auto my-8">
   <div class="card">
     <h2 class="card-header">Pending invitations</h2>
     <div class="card-header-separator"></div>
