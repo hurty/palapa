@@ -23,8 +23,8 @@
 .card-actions {
   @apply flex justify-center mt-4;
 
-  &> * {
-    margin-right: 10px;
+  & > *:not(:first-child) {
+    margin-left: 10px;
   }
 }
 
