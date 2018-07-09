@@ -1,0 +1,21 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": [
+            ">1%",
+            "not op_mini all"
+          ]
+        }
+      }
+    ]
+  ],
+  "ignore": [
+    "/vendor/"
+  ],
+  "plugins": [
+    "transform-class-properties"
+  ]
+}

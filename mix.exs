@@ -78,7 +78,7 @@ defmodule Palapa.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "assets.compile": &compile_assets/1,
+      # "assets.compile": &compile_assets/1,
       test: [
         "ecto.create --quiet",
         "ecto.migrate",
@@ -87,7 +87,7 @@ defmodule Palapa.Mixfile do
     ]
   end
 
-  defp compile_assets(_) do
-    Mix.shell().cmd("assets/node_modules/brunch/bin/brunch build assets/")
-  end
+  # defp compile_assets(_) do
+  #   Mix.shell().cmd("assets/node_modules/brunch/bin/brunch build assets/")
+  # end
 end

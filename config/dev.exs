@@ -4,8 +4,7 @@ use Mix.Config
 # debugging and code reloading.
 #
 # The watchers configuration can be used to run external
-# watchers to your application. For example, we use it
-# with brunch.io to recompile .js and .css sources.
+# watchers to your application.
 config :palapa, PalapaWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
@@ -13,9 +12,10 @@ config :palapa, PalapaWeb.Endpoint,
   check_origin: false,
   watchers: [
     node: [
-      "node_modules/brunch/bin/brunch",
-      "watch",
-      "--stdin",
+      "node_modules/webpack/bin/webpack.js",
+      "--mode",
+      "development",
+      "--watch-stdin",
       cd: Path.expand("../assets", __DIR__)
     ]
   ]
