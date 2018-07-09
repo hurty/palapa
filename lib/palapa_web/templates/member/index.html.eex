@@ -40,11 +40,15 @@
                 <%= link("Everyone in the organization", to: member_path(@conn, :index, @current_organization), class: "selector-item truncate selector-item-default") %>
                 <%= for team <- @teams do %>
                   <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
-                  <%= link(team.name, to: member_path(@conn, :index, @current_organization, team_id: team.id), class: item_class, title: team.name) %>
+                  <%= link(to: member_path(@conn, :index, @current_organization, team_id: team.id), class: item_class, title: team.name) do %>
+                    <%= team.name %><%= if team.private do %>&nbsp;<i class="text-xs text-grey fas fa-lock"></i><% end %>
+                  <% end %>
                 <% end %>
               </div>
             </div>
           </div>
+
+          <%= render "_team_membership.html", assigns %>
         <% end %>
 
         <div class="members-grid my-8">

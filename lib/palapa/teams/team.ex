@@ -8,6 +8,7 @@ defmodule Palapa.Teams.Team do
   schema "teams" do
     field(:name, :string)
     field(:members_count, :integer, default: 0)
+    field(:private, :boolean)
     timestamps()
 
     belongs_to(:organization, Organizations.Organization)
@@ -17,7 +18,7 @@ defmodule Palapa.Teams.Team do
 
   def changeset(%Team{} = team, attrs) do
     team
-    |> cast(attrs, [:name])
+    |> cast(attrs, [:name, :private])
     |> validate_required([:name])
     |> unsafe_validate_unique(
       [:name, :organization_id],

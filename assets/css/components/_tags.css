@@ -1,6 +1,6 @@
 .tag {
   @apply px-2 py-1;
-  @apply bg-grey-light rounded;
+  @apply bg-grey-lighter rounded;
   @apply text-grey-darker text-sm;
 
   &--active {
@@ -12,6 +12,6 @@
   }
   
   &:hover {
-    @apply bg-grey;
+    @apply bg-grey-light;
   }
 }

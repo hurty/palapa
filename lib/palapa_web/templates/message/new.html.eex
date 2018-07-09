@@ -12,6 +12,7 @@
           
         <div class="card-actions">
           <%= submit "Post this message", class: "btn btn-green" %>
+          <%= link "Cancel", to: message_path(@conn, :index, @current_organization), class: "btn" %>
         </div>
       <% end %>
     </div>

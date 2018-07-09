@@ -13,6 +13,14 @@ defmodule Palapa.Teams.Policy do
     role in [:owner, :admin]
   end
 
+  def authorize(:join, %Member{role: role}, team) do
+    !team.private || role in [:owner, :admin]
+  end
+
+  def authorize(:leave, %Member{}, _team) do
+    true
+  end
+
   # Catch-all: deny everything else
   def authorize(_, _, _), do: false
 end

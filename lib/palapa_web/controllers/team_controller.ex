@@ -9,7 +9,14 @@ defmodule PalapaWeb.TeamController do
   def new(conn, _params) do
     with :ok <- permit(Teams, :create, current_member()) do
       team = Teams.change(%Team{})
-      render(conn, "new.html", team: team)
+
+      conn
+      |> put_breadcrumb("People & Teams", member_path(conn, :index, current_organization()))
+      |> put_breadcrumb(
+        "New team",
+        team_path(conn, :new, current_organization())
+      )
+      |> render("new.html", team: team)
     end
   end
 

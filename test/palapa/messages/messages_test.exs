@@ -110,8 +110,8 @@ defmodule Palapa.MessagesTest do
     end
 
     test "delete_comment!", %{comment: comment} do
-      deleted_comment = Messages.delete_comment!(comment)
-      assert Messages.deleted?(deleted_comment)
+      Messages.delete_comment!(comment)
+      assert_raise(Ecto.NoResultsError, fn -> Messages.get_comment!(comment.id) end)
     end
 
     test "comments_count", %{message: message} do

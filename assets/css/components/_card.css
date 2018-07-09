@@ -22,6 +22,10 @@
 
 .card-actions {
   @apply flex justify-center mt-4;
+
+  &> * {
+    margin-right: 10px;
+  }
 }
 
 .card-footer {
