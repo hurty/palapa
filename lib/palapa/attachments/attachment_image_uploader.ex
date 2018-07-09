@@ -1,8 +1,25 @@
-defmodule Palapa.Attachments.AttachmentUploader do
+defmodule Palapa.Attachments.AttachmentImageUploader do
   use Arc.Definition
 
-  def filename(_version, {_file, scope}) do
-    scope.id
+  @versions [:original, :thumb]
+  @transform_extensions ~w(.jpg .jpeg .gif .png)
+
+  # We only generate thumbnails for image formats
+  def transform(:thumb, {file, _scope}) do
+    file_extension = file.file_name |> Path.extname() |> String.downcase()
+
+    if(Enum.member?(@transform_extensions, file_extension)) do
+      {:convert, "-strip -thumbnail 600x>"}
+    else
+      :noaction
+    end
+  end
+
+  def filename(version, {_file, scope}) do
+    case version do
+      :original -> scope.id
+      _ -> "#{scope.id}_#{version}"
+    end
   end
 
   # Override the storage directory:

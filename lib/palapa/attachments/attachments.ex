@@ -1,6 +1,12 @@
 defmodule Palapa.Attachments do
   use Palapa.Context
-  alias Palapa.Attachments.{Attachment, AttachmentUploader, AttachmentParser}
+
+  alias Palapa.Attachments.{
+    Attachment,
+    AttachmentUploader,
+    AttachmentImageUploader,
+    AttachmentParser
+  }
 
   # --- Authorizations
 
@@ -48,12 +54,25 @@ defmodule Palapa.Attachments do
       |> put_change(:organization_id, organization.id)
       |> Repo.insert()
 
-    case AttachmentUploader.store({file, attachment}) do
-      {:ok, _filename} ->
-        {:ok, attachment}
+    # We have 2 different uploaders because Arc doesn't support skipping versions
+    # if the file is not an image
 
-      _ ->
-        {:error}
+    if image?(attachment) do
+      case AttachmentImageUploader.store({file, attachment}) do
+        {:ok, _filename} ->
+          {:ok, attachment}
+
+        _ ->
+          {:error}
+      end
+    else
+      case AttachmentUploader.store({file, attachment}) do
+        {:ok, _filename} ->
+          {:ok, attachment}
+
+        _ ->
+          {:error}
+      end
     end
   end
 
@@ -89,5 +108,19 @@ defmodule Palapa.Attachments do
     where_organization(organization)
     |> where_ids(ids)
     |> list
+  end
+
+  defp image?(attachment) do
+    image_types = [
+      "image/gif",
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/tiff",
+      "image/bmp",
+      "image/x-bmp"
+    ]
+
+    Enum.member?(image_types, attachment.content_type)
   end
 end
