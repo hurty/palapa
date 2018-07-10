@@ -5,25 +5,23 @@ defmodule PalapaWeb.TeamControllerTest do
 
   describe "as regular member" do
     setup do
-      member = insert!(:member)
+      workspace = insert_pied_piper!()
+      conn = login(workspace.gilfoyle)
 
-      conn =
-        build_conn()
-        |> assign(:current_member, member)
-        |> assign(:current_account, member.account)
-        |> assign(:current_organization, member.organization)
-
-      {:ok, conn: conn, member: member, org: member.organization}
+      {:ok, conn: conn, workspace: workspace}
     end
 
-    test "regular members cannot access the team creation form", %{conn: conn, org: org} do
-      conn = get(conn, team_path(conn, :new, org))
+    test "regular members cannot access the team creation form", %{
+      conn: conn,
+      workspace: workspace
+    } do
+      conn = get(conn, team_path(conn, :new, workspace.organization))
       assert html_response(conn, :forbidden)
     end
 
-    test "regular members cannot create new team", %{conn: conn, org: org} do
+    test "regular members cannot create new team", %{conn: conn, workspace: workspace} do
       conn =
-        post(conn, team_path(conn, :create, org), %{
+        post(conn, team_path(conn, :create, workspace.organization), %{
           "team" => %{
             "name" => "Sales"
           }
