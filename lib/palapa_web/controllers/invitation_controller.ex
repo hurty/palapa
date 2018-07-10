@@ -4,11 +4,19 @@ defmodule PalapaWeb.InvitationController do
   alias Palapa.Invitations
 
   plug(:put_navigation, "member")
+  plug(:put_common_breadcrumbs)
+
+  def put_common_breadcrumbs(conn, _params) do
+    put_breadcrumb(conn, "People & Teams", member_path(conn, :index, current_organization()))
+  end
 
   def new(conn, _params) do
     with :ok <- permit(Invitations, :create, current_member()) do
       invitations = Palapa.Invitations.list(current_organization())
-      render(conn, "new.html", invitations: invitations)
+
+      conn
+      |> put_breadcrumb("Invite people", invitation_path(conn, :new, current_organization()))
+      |> render("new.html", invitations: invitations)
     end
   end
 

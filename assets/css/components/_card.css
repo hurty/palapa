@@ -4,8 +4,10 @@
   }
 }
 
-.card {
-  @apply bg-white rounded shadow;
+@screen sm {
+  .card {
+    @apply bg-white rounded shadow;
+  }
 }
 
 .card-toolbar{

@@ -1,24 +1,27 @@
-<div class="card-shadow sm:w-1/2 mx-auto">
-  <div class="card">
-    <h2 class="card-header">Invite people</h2>
-    <div class="card-header-separator"></div>
+<div class="content article-layout">
+  <div class="main-content">
+    <div class="card p-1 sm:p-8">
+      <h2 class="card-header">Invite people</h2>
+      <div class="card-header-separator"></div>
 
-    <%= render PalapaWeb.InvitationView, "_form.html", conn: @conn, prefill: nil %>
-  </div>
-</div>
+      <%= render PalapaWeb.InvitationView, "_form.html", conn: @conn, prefill: nil %>
+    </div>
 
-<div class="card-shadow sm:w-1/2 mx-auto my-8">
-  <div class="card">
-    <h2 class="card-header">Pending invitations</h2>
-    <div class="card-header-separator"></div>
+    <div class="card my-8">
+      <div class="border-b border-grey-lighter rounded-t">
+        <h3 class="p-4 text-purple">Pending invitations</h3>
 
-    <%= for invitation <- @invitations do %>
-      <div class="flex flex-wrap border-t border-blue-lightest">
-        <div class="flex-1 py-4 pr-2"><%= invitation.email %></div>
-        <div class="flex-2 py-4 pr-2"><%= format_datetime(invitation.email_sent_at, @current_account) %></div>
-        <div class="flex-2 py-4 pr-2"><a href="#" class="rounded-full px-2 py-1  hover:bg-grey-light hover:no-underline">Send again</a></div>
-        <div class="flex-2 py-4 pr-2"><a href="#" class="rounded-full px-2 py-1  hover:bg-red-light hover:no-underline">Cancel</a></div>
+        <%= for invitation <- @invitations do %>
+          <div class="p-4 flex flex-wrap border-t text-sm">
+            <div class="flex-1 py-2"><%= invitation.email %></div>
+            <div class=" py-2 pr-2">Sent <%= format_datetime(invitation.inserted_at, @current_account) %></div>
+            <div class="flex py-2">
+              <div ><a href="#" class="btn">Send again</a></div>
+              <div ><a href="#" class="btn btn-purple ml-1">Cancel</a></div>
+            </div>
+          </div>
+        <% end %>
       </div>
-    <% end %>
+    </div>
   </div>
 </div>
