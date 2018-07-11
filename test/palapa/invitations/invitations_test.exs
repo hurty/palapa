@@ -1,7 +1,19 @@
-defmodule Palapa.InvitationsTest do
+defmodule Palapa.Invitations.InvitationsTest do
   use Palapa.DataCase
 
   alias Palapa.Invitations
+  alias Palapa.Invitations.Invitation
+
+  on_exit do
+    Verk.Queue.clear("default")
+  end
+
+  test "create/2 generate an invitation and a job to send it" do
+    workspace = Palapa.Factory.insert_pied_piper!()
+
+    assert {:ok, %Invitation{}} =
+             Invitations.create("dinesh.chugtai@piedpiper.com", workspace.richard)
+  end
 
   describe "Email addresses parsing" do
     test "parse_emails/1 removes duplicated addresses" do
@@ -18,7 +30,7 @@ defmodule Palapa.InvitationsTest do
     test "parse_emails/1 removes leading and trailing whitespaces" do
       emails_string = """
 
-        richard.hendricks@piedpiper.com  
+        richard.hendricks@piedpiper.com
       jared.dunn@piedpiper.com
 
 

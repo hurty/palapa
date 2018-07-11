@@ -1,4 +1,4 @@
-defmodule Palapa.Emails do
+defmodule Palapa.Invitations.Emails do
   import Bamboo.Email
 
   # Usage
@@ -36,7 +36,7 @@ defmodule Palapa.Emails do
     |> to(invitation.email)
     |> subject("You've been invited to join Palapa")
     |> html_body("""
-    <p>#{invitation.creator.name} invited you to join #{invitation.organization.name} on Palapa. Click the following link 
+    <p>#{invitation.creator.name} invited you to join #{invitation.organization.name} on Palapa. Click the following link
     : <a href="#">#{invitation.token}</a></p>
     """)
   end

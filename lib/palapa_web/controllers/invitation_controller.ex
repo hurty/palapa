@@ -25,7 +25,7 @@ defmodule PalapaWeb.InvitationController do
       {:ok, emails, ignored} = Invitations.parse_emails(email_addresses)
 
       Enum.each(emails, fn email ->
-        Invitations.create(current_organization(), email, current_member())
+        Invitations.create(email, current_member())
       end)
 
       if Enum.any?(ignored) do

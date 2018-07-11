@@ -20,10 +20,22 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :palapa, Palapa.Mailer, adapter: Bamboo.LocalAdapter
+config :palapa, Palapa.Mailer,
+  adapter: Bamboo.LocalAdapter,
+  deliver_later_strategy: Palapa.Mailer.DeliverLaterStrategy
 
 config :arc, storage: Arc.Storage.Local
 config :scrivener_html, routes_helper: PalapaWeb.Router.Helpers
+
+config :verk,
+  queues: [default: 25, priority: 10],
+  max_retry_count: 10,
+  poll_interval: 5000,
+  start_job_log_level: :info,
+  done_job_log_level: :info,
+  fail_job_log_level: :info,
+  node_id: "1",
+  redis_url: {:system, "REDIS_URL", "redis://127.0.0.1:6379"}
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

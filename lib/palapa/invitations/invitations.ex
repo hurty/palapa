@@ -1,6 +1,6 @@
 defmodule Palapa.Invitations do
   use Palapa.Context
-  alias Palapa.Invitations
+  alias Palapa.Invitations.Invitation
   alias Palapa.Organizations.Organization
 
   @expiration_days 30
@@ -12,6 +12,10 @@ defmodule Palapa.Invitations do
     |> Ecto.assoc(:invitations)
     |> order_by(desc: :updated_at)
     |> Repo.all()
+  end
+
+  def get(id) do
+    Repo.get(Invitation, id)
   end
 
   def parse_emails(emails_string) do
@@ -33,20 +37,35 @@ defmodule Palapa.Invitations do
     {:ok, emails, ignored}
   end
 
-  def create(organization, email, creator) do
-    {:ok, invitation} =
-      %Invitations.Invitation{
-        organization_id: organization.id,
-        email: email,
-        creator_id: creator.id,
-        token: Palapa.Access.generate_token(),
-        expire_at: Timex.shift(Timex.now(), days: @expiration_days)
-      }
-      |> Repo.insert(
-        on_conflict: :replace_all,
-        conflict_target: [:organization_id, :email]
-      )
+  def create(email, creator) do
+    with {:ok, invitation} <-
+           %Invitation{
+             organization_id: creator.organization_id,
+             email: email,
+             creator_id: creator.id,
+             token: Palapa.Access.generate_token(),
+             expire_at: Timex.shift(Timex.now(), days: @expiration_days)
+           }
+           |> Repo.insert(
+             on_conflict: :replace_all,
+             conflict_target: [:organization_id, :email]
+           ),
+         {:ok, _jid} <-
+           Verk.enqueue(%Verk.Job{
+             queue: :default,
+             class: "Palapa.Invitations.Jobs.SendInvitationJob",
+             args: [invitation.id]
+           }) do
+      {:ok, invitation}
+    else
+      {:error} -> "Unable to create the invitation for #{email}"
+    end
+  end
 
-    Palapa.Emails.invitation(invitation) |> Palapa.Mailer.deliver_later()
+  def put_sent_at(invitation, at \\ Timex.now()) do
+    invitation
+    |> change()
+    |> put_change(:email_sent_at, at)
+    |> Repo.update()
   end
 end

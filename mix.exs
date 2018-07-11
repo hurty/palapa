@@ -58,13 +58,15 @@ defmodule Palapa.Mixfile do
       {:bcrypt_elixir, "~> 1.0"},
       {:bodyguard, "~> 2.2"},
       {:ecto_enum, "~> 1.0"},
-      {:bamboo, github: "thoughtbot/bamboo"},
+      {:bamboo, "~> 1.0.0"},
       {:wallaby, "~> 0.19.2", [runtime: false, only: [:dev, :test]]},
       {:timex, "~> 3.2"},
       {:arc, "~> 0.8.0"},
       {:arc_ecto, "~> 0.7.0"},
       {:scrivener_ecto, "~> 1.0"},
-      {:scrivener_html, "~> 1.7"}
+      {:scrivener_html, "~> 1.7"},
+      {:verk, "~> 1.4.0"},
+      {:hackney, "~> 1.13.0", override: true}
     ]
   end
 
