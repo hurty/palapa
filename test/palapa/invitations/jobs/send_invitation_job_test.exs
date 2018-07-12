@@ -5,12 +5,22 @@ defmodule Palapa.Invitations.Jobs.SendInvitationJobTest do
   alias Palapa.Invitations
   alias Palapa.Invitations.Jobs.SendInvitationJob
 
-  test "perform/1 do nothing if the invitation doesn't exists" do
+  test "do nothing if the invitation doesn't exists" do
     # unexisting invitation id
     assert {:ignore, _} = SendInvitationJob.perform("32107cd7-712a-44f9-85c3-b6d4d5b354ed")
   end
 
-  test "perform/1 sends an email and updates the sent date" do
+  test "do nothing if the invitation has already been sent" do
+    workspace = Palapa.Factory.insert_pied_piper!()
+    {:ok, invitation} = Invitations.create("dinesh.chugtai@piedpiper.com", workspace.richard)
+
+    # Pretend the invitation has already been sent
+    invitation |> change(%{email_sent_at: Timex.now()}) |> Repo.update!()
+
+    assert {:ignore, _} = SendInvitationJob.perform(invitation.id)
+  end
+
+  test "sends an email and updates the sent date" do
     workspace = Palapa.Factory.insert_pied_piper!()
 
     {:ok, invitation} = Invitations.create("dinesh.chugtai@piedpiper.com", workspace.richard)

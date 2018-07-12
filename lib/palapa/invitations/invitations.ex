@@ -7,6 +7,14 @@ defmodule Palapa.Invitations do
 
   defdelegate(authorize(action, user, params), to: Palapa.Invitations.Policy)
 
+  # --- Scopes
+  def visible_to(queryable \\ Invitation, %Member{} = member) do
+    queryable
+    |> where(organization_id: ^member.organization_id)
+  end
+
+  # --- Actions
+
   def list(%Organization{} = organization) do
     organization
     |> Ecto.assoc(:invitations)
@@ -14,8 +22,14 @@ defmodule Palapa.Invitations do
     |> Repo.all()
   end
 
-  def get(id) do
-    Repo.get(Invitation, id)
+  def get(queryable \\ Invitation, id) do
+    queryable
+    |> Repo.get(id)
+  end
+
+  def get!(queryable \\ Invitation, id) do
+    queryable
+    |> Repo.get!(id)
   end
 
   def parse_emails(emails_string) do
@@ -37,7 +51,7 @@ defmodule Palapa.Invitations do
     {:ok, emails, ignored}
   end
 
-  def create(email, creator) do
+  def create(email, %Member{} = creator) do
     with {:ok, invitation} <-
            %Invitation{
              organization_id: creator.organization_id,
@@ -62,7 +76,21 @@ defmodule Palapa.Invitations do
     end
   end
 
-  def put_sent_at(invitation, at \\ Timex.now()) do
+  def delete(%Invitation{} = invitation) do
+    invitation
+    |> Repo.delete()
+  end
+
+  def renew(%Invitation{} = invitation, creator) do
+    with {:ok, _} <- delete(invitation),
+         {:ok, new_invitation} <- create(invitation.email, creator) do
+      {:ok, new_invitation}
+    else
+      {:error} -> {:error, "Unable to renew the invitation for #{invitation.email}"}
+    end
+  end
+
+  def update_sent_at(invitation, at \\ Timex.now()) do
     invitation
     |> change()
     |> put_change(:email_sent_at, at)

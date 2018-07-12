@@ -4,10 +4,6 @@ defmodule Palapa.Invitations.InvitationsTest do
   alias Palapa.Invitations
   alias Palapa.Invitations.Invitation
 
-  on_exit do
-    Verk.Queue.clear("default")
-  end
-
   test "create/2 generate an invitation and a job to send it" do
     workspace = Palapa.Factory.insert_pied_piper!()
 

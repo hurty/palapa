@@ -4,15 +4,15 @@ defmodule Palapa.Invitations.Jobs.SendInvitationJob do
   def perform(invitation_id) do
     invitation = Invitations.get(invitation_id)
 
-    if invitation do
+    if invitation && is_nil(invitation.email_sent_at) do
       email =
         Invitations.Emails.invitation(invitation)
         |> Palapa.Mailer.deliver_now()
 
-      {:ok, invitation} = Invitations.put_sent_at(invitation)
+      {:ok, invitation} = Invitations.update_sent_at(invitation)
       {:ok, invitation, email}
     else
-      {:ignore, "Invitation not found"}
+      {:ignore, "Invitation not found or already sent"}
     end
   end
 end

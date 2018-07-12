@@ -44,4 +44,24 @@ defmodule PalapaWeb.InvitationController do
       end
     end
   end
+
+  def delete(conn, %{"id" => id}) do
+    invitation = Invitations.visible_to(current_member()) |> Invitations.get!(id)
+
+    with :ok <- permit(Invitations, :delete, current_member(), invitation),
+         {:ok, _invitation} = Invitations.delete(invitation) do
+      send_resp(conn, :no_content, "")
+    end
+  end
+
+  def renew(conn, %{"invitation_id" => invitation_id}) do
+    invitation = Invitations.visible_to(current_member()) |> Invitations.get!(invitation_id)
+
+    with :ok <- permit(Invitations, :renew, current_member(), invitation),
+         {:ok, new_invitation} <- Invitations.renew(invitation, current_member()) do
+      conn
+      |> put_flash(:success, "#{new_invitation.email} has been sent a new invitation")
+      |> redirect(to: invitation_path(conn, :new, current_organization()))
+    end
+  end
 end

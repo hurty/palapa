@@ -4,6 +4,12 @@ defmodule PalapaWeb.MemberController do
   alias Palapa.Organizations
 
   plug(:put_navigation, "members")
+  plug(:put_common_breadcrumbs)
+
+  def put_common_breadcrumbs(conn, _params) do
+    conn
+    |> put_breadcrumb("People & Teams", member_path(conn, :index, current_organization()))
+  end
 
   def index(conn, %{"team_id" => team_id}) do
     with :ok <- permit(Organizations, :list_members, current_member()) do
@@ -13,7 +19,6 @@ defmodule PalapaWeb.MemberController do
       organization_members_count = current_organization() |> Organizations.members_count()
 
       conn
-      |> put_breadcrumb("People", member_path(conn, :index, current_organization()))
       |> put_breadcrumb(
         selected_team.name,
         member_path(conn, :index, current_organization(), team_id: team_id)
@@ -37,7 +42,6 @@ defmodule PalapaWeb.MemberController do
       teams = Teams.where_organization(current_organization()) |> Teams.list()
 
       conn
-      |> put_breadcrumb("People", member_path(conn, :index, current_organization()))
       |> render(
         "index.html",
         members: members,
