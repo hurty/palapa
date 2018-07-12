@@ -22,15 +22,22 @@ defmodule PalapaWeb.InvitationController do
 
   def create(conn, %{"invitation" => %{"email_addresses" => email_addresses}}) do
     with :ok <- permit(Invitations, :create, current_member()) do
-      {:ok, emails, ignored} = Invitations.parse_emails(email_addresses)
+      {:ok, emails, malformed, already_member} =
+        Invitations.parse_emails(email_addresses, current_organization())
 
       Enum.each(emails, fn email ->
         Invitations.create(email, current_member())
       end)
 
-      if Enum.any?(ignored) do
+      if Enum.any?(malformed) || Enum.any?(already_member) do
         conn
-        |> render("create.html", emails: emails, ignored: ignored)
+        |> put_breadcrumb("Invite people", invitation_path(conn, :new, current_organization()))
+        |> render(
+          "create.html",
+          emails: emails,
+          malformed: malformed,
+          already_member: already_member
+        )
       else
         conn =
           if Enum.any?(emails) do

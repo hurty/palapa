@@ -32,6 +32,21 @@ defmodule Palapa.Invitations do
     |> Repo.get!(id)
   end
 
+  # Parse emails, reject malformed ones and people who are already members of the given organization
+  def parse_emails(emails_string, %Organization{} = organization) do
+    {:ok, emails, malformed} = parse_emails(emails_string)
+
+    already_members_emails =
+      Palapa.Organizations.list_members(organization)
+      |> Enum.map(fn member -> member.account.email end)
+
+    already_members = Enum.filter(emails, fn string -> string in already_members_emails end)
+
+    emails = emails -- already_members
+    {:ok, emails, malformed, already_members}
+  end
+
+  # Parse emails and reject malformed ones
   def parse_emails(emails_string) do
     emails =
       emails_string
@@ -43,12 +58,9 @@ defmodule Palapa.Invitations do
       |> Enum.map(&String.trim(&1))
       |> Enum.uniq()
 
-    ignored =
-      emails
-      |> Enum.reject(fn string -> string =~ ~r/\w+@\w+/ end)
-
-    emails = emails -- ignored
-    {:ok, emails, ignored}
+    malformed = Enum.reject(emails, fn string -> string =~ ~r/\w+@\w+/ end)
+    emails = emails -- malformed
+    {:ok, emails, malformed}
   end
 
   def create(email, %Member{} = creator) do

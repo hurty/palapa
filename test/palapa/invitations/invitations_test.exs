@@ -4,11 +4,22 @@ defmodule Palapa.Invitations.InvitationsTest do
   alias Palapa.Invitations
   alias Palapa.Invitations.Invitation
 
-  test "create/2 generate an invitation and a job to send it" do
+  test "create/2 generate an invitation" do
     workspace = Palapa.Factory.insert_pied_piper!()
 
     assert {:ok, %Invitation{}} =
              Invitations.create("dinesh.chugtai@piedpiper.com", workspace.richard)
+  end
+
+  test "create/2 replaces an existing invitation" do
+    workspace = Palapa.Factory.insert_pied_piper!()
+    {:ok, invitation_1} = Invitations.create("dinesh.chugtai@piedpiper.com", workspace.richard)
+    count_invitations_before = Repo.count(Invitation)
+    {:ok, invitation_2} = Invitations.create("dinesh.chugtai@piedpiper.com", workspace.richard)
+    count_invitations_after = Repo.count(Invitation)
+
+    refute invitation_1.id == invitation_2.id
+    assert count_invitations_after == count_invitations_before
   end
 
   describe "Email addresses parsing" do
@@ -19,7 +30,7 @@ defmodule Palapa.Invitations.InvitationsTest do
       richard.hendricks@piedpiper.com
       """
 
-      {:ok, emails, _ignored} = Invitations.parse_emails(emails_string)
+      {:ok, emails, _malformed} = Invitations.parse_emails(emails_string)
       assert emails == ["richard.hendricks@piedpiper.com", "jared.dunn@piedpiper.com"]
     end
 
@@ -32,7 +43,7 @@ defmodule Palapa.Invitations.InvitationsTest do
 
       """
 
-      {:ok, emails, _ignored} = Invitations.parse_emails(emails_string)
+      {:ok, emails, _malformed} = Invitations.parse_emails(emails_string)
       assert emails == ["richard.hendricks@piedpiper.com", "jared.dunn@piedpiper.com"]
     end
 
@@ -42,7 +53,7 @@ defmodule Palapa.Invitations.InvitationsTest do
       jared.dunn@piedpiper.com
       """
 
-      {:ok, emails, _ignored} = Invitations.parse_emails(emails_string)
+      {:ok, emails, _malformed} = Invitations.parse_emails(emails_string)
 
       assert emails == [
                "richard.hendricks@piedpiper.com",
@@ -56,7 +67,7 @@ defmodule Palapa.Invitations.InvitationsTest do
       richard.hendricks@piedpiper.com,bertram.gilfoyle@piedpiper.com,jared.dunn@piedpiper.com
       """
 
-      {:ok, emails, _ignored} = Invitations.parse_emails(emails_string)
+      {:ok, emails, _malformed} = Invitations.parse_emails(emails_string)
 
       assert emails == [
                "richard.hendricks@piedpiper.com",
@@ -72,10 +83,29 @@ defmodule Palapa.Invitations.InvitationsTest do
       @hurrah.com
       """
 
-      {:ok, emails, ignored} = Invitations.parse_emails(emails_string)
+      {:ok, emails, malformed} = Invitations.parse_emails(emails_string)
 
       assert emails == ["richard.hendricks@piedpiper.com"]
-      assert ignored == ["jared.dunn_without_arobase_piedpiper.com", "@hurrah.com"]
+      assert malformed == ["jared.dunn_without_arobase_piedpiper.com", "@hurrah.com"]
+    end
+
+    test "parse_emails/2 ignores malformed emails and people who are already members" do
+      # Richard is already a member, Dinesh is not.
+      emails_string = """
+      dinesh@piedpiper.com
+      richard.hendricks@piedpiper.com
+      jared.dunn_without_arobase_piedpiper.com
+      @hurrah.com
+      """
+
+      workspace = Palapa.Factory.insert_pied_piper!()
+
+      {:ok, emails, malformed, already_member} =
+        Invitations.parse_emails(emails_string, workspace.organization)
+
+      assert emails == ["dinesh@piedpiper.com"]
+      assert malformed == ["jared.dunn_without_arobase_piedpiper.com", "@hurrah.com"]
+      assert already_member == ["richard.hendricks@piedpiper.com"]
     end
   end
 end
