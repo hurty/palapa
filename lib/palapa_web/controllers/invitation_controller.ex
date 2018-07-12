@@ -61,7 +61,9 @@ defmodule PalapaWeb.InvitationController do
          {:ok, new_invitation} <- Invitations.renew(invitation, current_member()) do
       conn
       |> put_flash(:success, "#{new_invitation.email} has been sent a new invitation")
-      |> redirect(to: invitation_path(conn, :new, current_organization()))
+      |> redirect(
+        to: invitation_path(conn, :new, current_organization(), %{"renewed" => new_invitation.id})
+      )
     end
   end
 end
