@@ -9,7 +9,7 @@ defmodule Palapa.Invitations.Jobs.SendInvitationJob do
         Invitations.Emails.invitation(invitation)
         |> Palapa.Mailer.deliver_now()
 
-      {:ok, invitation} = Invitations.update_sent_at(invitation)
+      {:ok, invitation} = Invitations.mark_as_sent(invitation)
       {:ok, invitation, email}
     else
       {:ignore, "Invitation not found or already sent"}

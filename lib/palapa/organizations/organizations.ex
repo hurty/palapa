@@ -2,6 +2,7 @@ defmodule Palapa.Organizations do
   use Palapa.Context
 
   alias Organizations.{Organization, Member}
+  alias Palapa.Accounts.Account
 
   defdelegate(authorize(action, user, params), to: Palapa.Organizations.Policy)
 
@@ -77,13 +78,11 @@ defmodule Palapa.Organizations do
     |> Repo.get!(member_id)
   end
 
-  def get_member_with_account!(member_id) do
-    Member
-    |> join(:left, [m], o in assoc(m, :organization))
-    |> join(:left, [m], a in assoc(m, :account))
-    |> preload([_, o, _], organization: o)
-    |> preload([..., a], account: a)
-    |> Repo.get!(member_id)
+  def get_member_from_account(%Organization{} = organization, %Account{} = account) do
+    account
+    |> Ecto.assoc(:members)
+    |> where(organization_id: ^organization.id)
+    |> Repo.one()
   end
 
   def create_member(attrs \\ %{}) do

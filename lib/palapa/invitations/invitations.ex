@@ -1,7 +1,10 @@
 defmodule Palapa.Invitations do
   use Palapa.Context
   alias Palapa.Invitations.Invitation
+  alias Palapa.Invitations.Join
+  alias Palapa.Organizations
   alias Palapa.Organizations.Organization
+  alias Palapa.Accounts
 
   @expiration_days 30
 
@@ -24,11 +27,13 @@ defmodule Palapa.Invitations do
 
   def get(queryable \\ Invitation, id) do
     queryable
+    |> preload(:organization)
     |> Repo.get(id)
   end
 
   def get!(queryable \\ Invitation, id) do
     queryable
+    |> preload(:organization)
     |> Repo.get!(id)
   end
 
@@ -64,15 +69,18 @@ defmodule Palapa.Invitations do
   end
 
   def create(email, %Member{} = creator) do
+    new_invitation = %Invitation{
+      organization_id: creator.organization_id,
+      email: email,
+      creator_id: creator.id,
+      token: Palapa.Access.generate_token(),
+      expire_at: Timex.shift(Timex.now(), days: @expiration_days),
+      email_sent_at: nil
+    }
+
     with {:ok, invitation} <-
-           %Invitation{
-             organization_id: creator.organization_id,
-             email: email,
-             creator_id: creator.id,
-             token: Palapa.Access.generate_token(),
-             expire_at: Timex.shift(Timex.now(), days: @expiration_days)
-           }
-           |> Repo.insert(
+           Repo.insert(
+             new_invitation,
              on_conflict: :replace_all,
              conflict_target: [:organization_id, :email]
            ),
@@ -102,10 +110,106 @@ defmodule Palapa.Invitations do
     end
   end
 
-  def update_sent_at(invitation, at \\ Timex.now()) do
+  def mark_as_sent(%Invitation{} = invitation, at \\ Timex.now()) do
     invitation
     |> change()
     |> put_change(:email_sent_at, at)
     |> Repo.update()
+  end
+
+  def authorized?(%Invitation{} = invitation, token) when is_binary(token) do
+    invitation.token == token && Timex.after?(invitation.expire_at, Timex.now())
+  end
+
+  def retrieve_account_from_invitation(invitation) do
+    account = Accounts.get_by(email: invitation.email)
+
+    member =
+      if account do
+        Organizations.get_member_from_account(invitation.organization, account)
+      else
+        nil
+      end
+
+    cond do
+      account && member ->
+        delete(invitation) && {:already_member, account, member}
+
+      account && !member ->
+        {:already_account, account, member}
+
+      true ->
+        {:none, account, member}
+    end
+  end
+
+  def join(%Invitation{} = invitation, attrs) do
+    {status, account, member} = retrieve_account_from_invitation(invitation)
+
+    case status do
+      :already_member ->
+        {:ok, %{account: account, member: member}}
+
+      :already_account ->
+        join_with_existing_account(invitation, account, attrs)
+
+      _ ->
+        join_and_create_new_account(invitation, attrs)
+    end
+  end
+
+  defp join_and_create_new_account(invitation, attrs) do
+    member_attrs = Map.take(attrs, ["name", "title"])
+
+    account_attrs =
+      Map.take(attrs, ["password", "timezone"])
+      |> Map.put("email", invitation.email)
+
+    changeset = Join.changeset(%Join{}, attrs)
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:validation, fn _ ->
+      Join.validate(changeset)
+    end)
+    |> Ecto.Multi.run(:account, fn _changes ->
+      Accounts.create(account_attrs)
+    end)
+    |> Ecto.Multi.run(:member, fn changes ->
+      Organizations.create_member(%{
+        organization_id: invitation.organization_id,
+        account_id: changes.account.id,
+        name: member_attrs["name"],
+        title: member_attrs["title"],
+        role: :member
+      })
+    end)
+    |> Ecto.Multi.run(:delete_invitation, fn _changes ->
+      delete(invitation)
+    end)
+    |> Repo.transaction()
+  end
+
+  defp join_with_existing_account(invitation, account, attrs) do
+    member_attrs = Map.take(attrs, ["name", "title"])
+    changeset = Join.changeset(%Join{}, attrs)
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:validation, fn _ ->
+      Join.validate(changeset)
+    end)
+    |> Ecto.Multi.run(:account, fn _ -> {:ok, account} end)
+    |> Ecto.Multi.run(:member, fn _changes ->
+      Organizations.create_member(%{
+        organization_id: invitation.organization_id,
+        account_id: account.id,
+        name: member_attrs["name"],
+        title: member_attrs["title"],
+        role: :member
+      })
+    end)
+    |> Ecto.Multi.run(:delete_invitation, fn _changes ->
+      delete(invitation)
+    end)
+    |> Repo.transaction()
   end
 end

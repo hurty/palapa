@@ -32,12 +32,16 @@ defmodule Palapa.Invitations.Emails do
       |> Palapa.Repo.preload(creator: :account)
       |> Palapa.Repo.preload(:organization)
 
+    join_link =
+      PalapaWeb.Router.Helpers.join_url(PalapaWeb.Endpoint, :new, invitation.id, invitation.token)
+
     base_email()
     |> to(invitation.email)
-    |> subject("You've been invited to join Palapa")
+    |> subject("You have been invited to join #{invitation.organization.name}")
     |> html_body("""
-    <p>#{invitation.creator.name} invited you to join #{invitation.organization.name} on Palapa. Click the following link
-    : <a href="#">#{invitation.token}</a></p>
+    <p>#{invitation.creator.name} invited you to join the workspace '#{
+      invitation.organization.name
+    }'". Click the following link to get started: <a href="#{join_link}">#{join_link}</a></p>
     """)
   end
 end

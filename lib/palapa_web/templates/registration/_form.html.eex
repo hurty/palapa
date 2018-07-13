@@ -28,12 +28,12 @@
   </div>
 
   <div class="field">
-    <%= label f, :email, "Choose a password", class: "label" %>
+    <%= label f, :password, "Choose a password", class: "label" %>
     <%= error_tag f, :password %>
-    <%= password_input f, :password, placeholder: "8 chars minimum", class: "input" %>
+    <%= password_input f, :password, placeholder: "8 characters minimum", class: "input", autocomplete: "new-password" %>
   </div>
 
-  <%= hidden_input f, :timezone, "data-target": "registration.timezone" %>
+  <%= hidden_input f, :timezone, "data-controller": "timezone" %>
 
   <div class="card-actions">
     <%= submit "Create a new account", class: "btn btn-green" %>

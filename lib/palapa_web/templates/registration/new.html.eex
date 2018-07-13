@@ -1,4 +1,4 @@
-<div data-controller="registration" class="flex justify-center mt-8">
+<div class="flex justify-center mt-8">
   <div class="flex-3 card-shadow">
     <div class="card p-8">
       <%= render "_form.html", assigns %>

@@ -1,0 +1,62 @@
+<div class="content article-layout">
+  <div class="main-content my-8 sm:w-4/5 mx-auto">
+    <div class="card p-1 sm:p-8">
+      <%= form_for @changeset, join_path(@conn, :create, @invitation.id, @invitation.token), [as: :join_form, multipart: true], fn f -> %>
+        <h2 class="card-header">
+          Welcome!
+        </h2>
+
+        <div class="card-header-separator"></div>
+
+        <p>You are about to join <span class="text-purple-dark font-bold"><%= @invitation.organization.name %></span>!<br>
+          <%= if @existing_account do %>
+          But first, let's set up your profile for this workspace:
+          <% else %>
+          But first, let's create an account for you:
+          <% end %>
+        </p>
+
+        <%= if @changeset.action do %>
+          <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+        <% end %>
+
+        <div class="py-2">
+          <div class="field">
+            <%= label f, :name, "Your full name", class: "label" %>
+            <%= text_input f, :name, class: "input" %>
+            <%= error_tag f, :name %>
+          </div>
+
+          <%= if @existing_account do %>
+            <%= hidden_input f, :password, value: "skip_validation" %>
+          <% else %>
+            <div class="field">
+              <%= label f, :password, "Choose a password", class: "label" %>
+              <%= password_input f, :password, placeholder: "8 characters minimum", class: "input", autocomplete: "new-password" %>
+              <%= error_tag f, :password %>
+            </div>
+            
+            <div class="field">
+              <%= label f, :avatar, "Upload your picture/avatar (you can also do this later)", class: "label" %>
+              <%= file_input f, :avatar, class: "input-file" %>
+              <%= error_tag f, :avatar %>
+              <%# label f, :avatar, "Choose a file" %>
+            </div>
+
+            <%= hidden_input f, :timezone, "data-controller": "timezone" %>
+          <% end %>
+
+          <div class="field">
+            <%= label f, :title, "Your title (optional)", class: "label" %>
+            <%= text_input f, :title, placeholder: "Engineer, sales assistant, project manager ...", class: "input" %>
+            <%= error_tag f, :title %>
+          </div>
+
+          <div class="card-actions">
+            <%= submit class: "btn btn-green" do %>Let's go <i class="fas fa-arrow-right"></i><% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

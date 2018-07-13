@@ -15,6 +15,9 @@ config :palapa, PalapaWeb.Endpoint,
   render_errors: [view: PalapaWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Palapa.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :palapa,
+  email_support: "help@palapa.app"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
