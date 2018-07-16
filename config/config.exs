@@ -5,6 +5,8 @@
 # is restricted to this project.
 use Mix.Config
 
+config :palapa, env: Mix.env()
+
 # General application configuration
 config :palapa, ecto_repos: [Palapa.Repo]
 

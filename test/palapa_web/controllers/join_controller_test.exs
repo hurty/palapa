@@ -12,7 +12,7 @@ defmodule PalapaWeb.JoinControllerTest do
 
   describe "join form" do
     test "expired invitation", %{conn: conn, workspace: workspace} do
-      {:ok, invitation} = Invitations.create("dinesh@piedpiper.com", workspace.richard)
+      {:ok, invitation} = Invitations.create_or_renew("dinesh@piedpiper.com", workspace.richard)
 
       invitation
       |> Ecto.Changeset.change(%{expire_at: Timex.now()})
@@ -23,7 +23,7 @@ defmodule PalapaWeb.JoinControllerTest do
     end
 
     test "bad token for invitation", %{conn: conn, workspace: workspace} do
-      {:ok, invitation} = Invitations.create("dinesh@piedpiper.com", workspace.richard)
+      {:ok, invitation} = Invitations.create_or_renew("dinesh@piedpiper.com", workspace.richard)
       conn = get(conn, join_path(conn, :new, invitation.id, "bad-token"))
       assert html_response(conn, :forbidden) =~ "invalid"
     end
@@ -34,7 +34,7 @@ defmodule PalapaWeb.JoinControllerTest do
     end
 
     test "valid invitation shows the join form", %{conn: conn, workspace: workspace} do
-      {:ok, invitation} = Invitations.create("dinesh@piedpiper.com", workspace.richard)
+      {:ok, invitation} = Invitations.create_or_renew("dinesh@piedpiper.com", workspace.richard)
       conn = get(conn, join_path(conn, :new, invitation.id, invitation.token))
       assert html_response(conn, :ok) =~ "Your title"
     end
@@ -42,7 +42,7 @@ defmodule PalapaWeb.JoinControllerTest do
 
   describe "join" do
     test "join without existing account", %{conn: conn, workspace: workspace} do
-      {:ok, invitation} = Invitations.create("dinesh@piedpiper.com", workspace.richard)
+      {:ok, invitation} = Invitations.create_or_renew("dinesh@piedpiper.com", workspace.richard)
 
       count_accounts_before = Repo.count("accounts")
       count_members_before = Repo.count("members")
@@ -81,7 +81,7 @@ defmodule PalapaWeb.JoinControllerTest do
 
     test "join with an already existing account", %{conn: conn, workspace: workspace} do
       Palapa.Accounts.create(%{email: "dinesh@piedpiper.com", password: "password"})
-      {:ok, invitation} = Invitations.create("dinesh@piedpiper.com", workspace.richard)
+      {:ok, invitation} = Invitations.create_or_renew("dinesh@piedpiper.com", workspace.richard)
 
       count_accounts_before = Repo.count("accounts")
       count_members_before = Repo.count("members")
@@ -119,7 +119,8 @@ defmodule PalapaWeb.JoinControllerTest do
     end
 
     test "join but already a member of the organization", %{conn: conn, workspace: workspace} do
-      {:ok, invitation} = Invitations.create("bertram.gilfoyle@piedpiper.com", workspace.richard)
+      {:ok, invitation} =
+        Invitations.create_or_renew("bertram.gilfoyle@piedpiper.com", workspace.richard)
 
       count_accounts_before = Repo.count("accounts")
       count_members_before = Repo.count("members")
@@ -160,7 +161,7 @@ defmodule PalapaWeb.JoinControllerTest do
       conn: conn,
       workspace: workspace
     } do
-      {:ok, invitation} = Invitations.create("dinesh@piedpiper.com", workspace.richard)
+      {:ok, invitation} = Invitations.create_or_renew("dinesh@piedpiper.com", workspace.richard)
 
       conn =
         post(

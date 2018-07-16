@@ -27,7 +27,7 @@ defmodule PalapaWeb.InvitationControllerTest do
     end
 
     test "regular members can't cancel an invitation", %{conn: conn, member: member, org: org} do
-      {:ok, invitation} = Invitations.create("dinesh@piedpiper.com", member)
+      {:ok, invitation} = Invitations.create_or_renew("dinesh@piedpiper.com", member)
       conn = delete(conn, invitation_path(conn, :delete, org, invitation))
 
       assert html_response(conn, :forbidden)
@@ -91,7 +91,7 @@ defmodule PalapaWeb.InvitationControllerTest do
     end
 
     test "an admin can cancel an invitation", %{conn: conn, member: member, org: org} do
-      {:ok, invitation} = Palapa.Invitations.create("dinesh@piedpiper.com", member)
+      {:ok, invitation} = Palapa.Invitations.create_or_renew("dinesh@piedpiper.com", member)
       count_invitations_before = Repo.count(Invitation)
       conn = delete(conn, invitation_path(conn, :delete, org, invitation))
       count_invitations_after = Repo.count(Invitation)
@@ -101,7 +101,7 @@ defmodule PalapaWeb.InvitationControllerTest do
     end
 
     test "an admin can renew an invitation", %{conn: conn, member: member, org: org} do
-      {:ok, invitation} = Palapa.Invitations.create("dinesh@piedpiper.com", member)
+      {:ok, invitation} = Palapa.Invitations.create_or_renew("dinesh@piedpiper.com", member)
       count_invitations_before = Repo.count(Invitation)
       conn = post(conn, invitation_renew_path(conn, :renew, org, invitation))
       count_invitations_after = Repo.count(Invitation)
@@ -140,7 +140,7 @@ defmodule PalapaWeb.InvitationControllerTest do
     end
 
     test "the owner can cancel an invitation", %{conn: conn, member: member, org: org} do
-      {:ok, invitation} = Palapa.Invitations.create("dinesh@piedpiper.com", member)
+      {:ok, invitation} = Palapa.Invitations.create_or_renew("dinesh@piedpiper.com", member)
       count_invitations_before = Repo.count(Invitation)
       conn = delete(conn, invitation_path(conn, :delete, org, invitation))
       count_invitations_after = Repo.count(Invitation)
@@ -150,7 +150,7 @@ defmodule PalapaWeb.InvitationControllerTest do
     end
 
     test "the owner can renew an invitation", %{conn: conn, member: member, org: org} do
-      {:ok, invitation} = Palapa.Invitations.create("dinesh@piedpiper.com", member)
+      {:ok, invitation} = Palapa.Invitations.create_or_renew("dinesh@piedpiper.com", member)
       count_invitations_before = Repo.count(Invitation)
       conn = post(conn, invitation_renew_path(conn, :renew, org, invitation))
       count_invitations_after = Repo.count(Invitation)

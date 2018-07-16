@@ -37,6 +37,13 @@ defmodule Palapa.Invitations do
     |> Repo.get!(id)
   end
 
+  def get_by_organization_id_and_email(organization_id, email) do
+    Invitation
+    |> preload(:organization)
+    |> where(organization_id: ^organization_id, email: ^email)
+    |> Repo.one()
+  end
+
   # Parse emails, reject malformed ones and people who are already members of the given organization
   def parse_emails(emails_string, %Organization{} = organization) do
     {:ok, emails, malformed} = parse_emails(emails_string)
@@ -68,7 +75,9 @@ defmodule Palapa.Invitations do
     {:ok, emails, malformed}
   end
 
-  def create(email, %Member{} = creator) do
+  def create_or_renew(email, %Member{} = creator) do
+    existing_invitation = get_by_organization_id_and_email(creator.organization_id, email)
+
     new_invitation = %Invitation{
       organization_id: creator.organization_id,
       email: email,
@@ -78,36 +87,37 @@ defmodule Palapa.Invitations do
       email_sent_at: nil
     }
 
-    with {:ok, invitation} <-
-           Repo.insert(
-             new_invitation,
-             on_conflict: :replace_all,
-             conflict_target: [:organization_id, :email]
-           ),
-         {:ok, _jid} <-
-           Verk.enqueue(%Verk.Job{
-             queue: :default,
-             class: "Palapa.Invitations.Jobs.SendInvitationJob",
-             args: [invitation.id]
-           }) do
-      {:ok, invitation}
-    else
-      {:error} -> "Unable to create the invitation for #{email}"
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:delete_existing_invitation, fn _ ->
+      if existing_invitation do
+        delete(existing_invitation)
+      else
+        {:ok, nil}
+      end
+    end)
+    |> Ecto.Multi.run(:invitation, fn _ ->
+      Repo.insert(new_invitation)
+    end)
+    |> Ecto.Multi.run(:send_invitation_job, fn changes ->
+      Verk.enqueue(%Verk.Job{
+        queue: :default,
+        class: "Palapa.Invitations.Jobs.SendInvitationJob",
+        args: [changes.invitation.id]
+      })
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, result} ->
+        {:ok, result.invitation}
+
+      _ ->
+        {:error, "Unable to create the invitation for #{email}"}
     end
   end
 
   def delete(%Invitation{} = invitation) do
     invitation
     |> Repo.delete()
-  end
-
-  def renew(%Invitation{} = invitation, creator) do
-    with {:ok, _} <- delete(invitation),
-         {:ok, new_invitation} <- create(invitation.email, creator) do
-      {:ok, new_invitation}
-    else
-      {:error} -> {:error, "Unable to renew the invitation for #{invitation.email}"}
-    end
   end
 
   def mark_as_sent(%Invitation{} = invitation, at \\ Timex.now()) do

@@ -26,7 +26,7 @@ defmodule PalapaWeb.InvitationController do
         Invitations.parse_emails(email_addresses, current_organization())
 
       Enum.each(emails, fn email ->
-        Invitations.create(email, current_member())
+        Invitations.create_or_renew(email, current_member())
       end)
 
       if Enum.any?(malformed) || Enum.any?(already_member) do
@@ -65,7 +65,7 @@ defmodule PalapaWeb.InvitationController do
     invitation = Invitations.visible_to(current_member()) |> Invitations.get!(invitation_id)
 
     with :ok <- permit(Invitations, :renew, current_member(), invitation),
-         {:ok, new_invitation} <- Invitations.renew(invitation, current_member()) do
+         {:ok, new_invitation} <- Invitations.create_or_renew(invitation.email, current_member()) do
       conn
       |> put_flash(:success, "#{new_invitation.email} has been sent a new invitation")
       |> redirect(

@@ -12,7 +12,9 @@ defmodule Palapa.Invitations.Jobs.SendInvitationJobTest do
 
   test "do nothing if the invitation has already been sent" do
     workspace = Palapa.Factory.insert_pied_piper!()
-    {:ok, invitation} = Invitations.create("dinesh.chugtai@piedpiper.com", workspace.richard)
+
+    {:ok, invitation} =
+      Invitations.create_or_renew("dinesh.chugtai@piedpiper.com", workspace.richard)
 
     # Pretend the invitation has already been sent
     invitation |> change(%{email_sent_at: Timex.now()}) |> Repo.update!()
@@ -23,7 +25,9 @@ defmodule Palapa.Invitations.Jobs.SendInvitationJobTest do
   test "sends an email and updates the sent date" do
     workspace = Palapa.Factory.insert_pied_piper!()
 
-    {:ok, invitation} = Invitations.create("dinesh.chugtai@piedpiper.com", workspace.richard)
+    {:ok, invitation} =
+      Invitations.create_or_renew("dinesh.chugtai@piedpiper.com", workspace.richard)
+
     {:ok, invitation, email} = SendInvitationJob.perform(invitation.id)
 
     refute is_nil(invitation.email_sent_at)
