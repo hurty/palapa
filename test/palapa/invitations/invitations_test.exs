@@ -22,6 +22,43 @@ defmodule Palapa.Invitations.InvitationsTest do
     assert count_invitations_after == count_invitations_before
   end
 
+  test "delete/1 deletes an existing invitation" do
+    workspace = Palapa.Factory.insert_pied_piper!()
+
+    {:ok, invitation} = Invitations.create("dinesh.chugtai@piedpiper.com", workspace.richard)
+    count_invitations_before = Repo.count("invitations")
+
+    assert {:ok, _} = Invitations.delete(invitation)
+    count_invitations_after = Repo.count("invitations")
+    assert count_invitations_after == count_invitations_before - 1
+  end
+
+  test "mark_as_sent/2 fills the email sending date of the invitation" do
+    workspace = Palapa.Factory.insert_pied_piper!()
+    {:ok, invitation} = Invitations.create("dinesh.chugtai@piedpiper.com", workspace.richard)
+    assert {:ok, invitation} = Invitations.mark_as_sent(invitation)
+    refute is_nil(invitation.email_sent_at)
+  end
+
+  test "authorized?/2 is falsy if the invitation is expired" do
+    workspace = Palapa.Factory.insert_pied_piper!()
+    {:ok, invitation} = Invitations.create("dinesh.chugtai@piedpiper.com", workspace.richard)
+    invitation = invitation |> Ecto.Changeset.change(%{expire_at: Timex.now()}) |> Repo.update!()
+    refute Invitations.authorized?(invitation, invitation.token)
+  end
+
+  test "authorized?/2 is falsy if the invitation is given with the bad token" do
+    workspace = Palapa.Factory.insert_pied_piper!()
+    {:ok, invitation} = Invitations.create("dinesh.chugtai@piedpiper.com", workspace.richard)
+    refute Invitations.authorized?(invitation, "bad-token")
+  end
+
+  test "authorized?/2 is true if the invitation and token are valid" do
+    workspace = Palapa.Factory.insert_pied_piper!()
+    {:ok, invitation} = Invitations.create("dinesh.chugtai@piedpiper.com", workspace.richard)
+    assert Invitations.authorized?(invitation, invitation.token)
+  end
+
   describe "Email addresses parsing" do
     test "parse_emails/1 removes duplicated addresses" do
       emails_string = """
