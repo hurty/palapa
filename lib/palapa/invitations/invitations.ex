@@ -1,7 +1,7 @@
 defmodule Palapa.Invitations do
   use Palapa.Context
   alias Palapa.Invitations.Invitation
-  alias Palapa.Invitations.Join
+  alias Palapa.Invitations.JoinForm
   alias Palapa.Organizations
   alias Palapa.Organizations.Organization
   alias Palapa.Accounts
@@ -165,11 +165,11 @@ defmodule Palapa.Invitations do
       Map.take(attrs, ["password", "timezone"])
       |> Map.put("email", invitation.email)
 
-    changeset = Join.changeset(%Join{}, attrs)
+    changeset = JoinForm.changeset(%JoinForm{}, attrs)
 
     Ecto.Multi.new()
     |> Ecto.Multi.run(:validation, fn _ ->
-      Join.validate(changeset)
+      JoinForm.validate(changeset)
     end)
     |> Ecto.Multi.run(:account, fn _changes ->
       Accounts.create(account_attrs)
@@ -191,11 +191,11 @@ defmodule Palapa.Invitations do
 
   defp join_with_existing_account(invitation, account, attrs) do
     member_attrs = Map.take(attrs, ["name", "title"])
-    changeset = Join.changeset(%Join{}, attrs)
+    changeset = JoinForm.changeset(%JoinForm{}, attrs)
 
     Ecto.Multi.new()
     |> Ecto.Multi.run(:validation, fn _ ->
-      Join.validate(changeset)
+      JoinForm.validate(changeset)
     end)
     |> Ecto.Multi.run(:account, fn _ -> {:ok, account} end)
     |> Ecto.Multi.run(:member, fn _changes ->

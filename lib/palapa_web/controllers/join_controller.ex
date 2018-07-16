@@ -18,7 +18,7 @@ defmodule PalapaWeb.JoinController do
         |> PalapaWeb.Authentication.start_session(account)
         |> redirect(to: dashboard_path(conn, :index, account.organization_id))
       else
-        changeset = Invitations.Join.changeset(%Invitations.Join{}, %{})
+        changeset = Invitations.JoinForm.changeset(%Invitations.JoinForm{}, %{})
 
         render(
           conn,
@@ -29,7 +29,9 @@ defmodule PalapaWeb.JoinController do
         )
       end
     else
-      render(conn, "invalid_invitation.html")
+      conn
+      |> put_status(:forbidden)
+      |> render("invalid_invitation.html")
     end
   end
 

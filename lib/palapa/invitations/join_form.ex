@@ -1,4 +1,4 @@
-defmodule Palapa.Invitations.Join do
+defmodule Palapa.Invitations.JoinForm do
   use Palapa.Schema
 
   embedded_schema do
