@@ -255,6 +255,10 @@ trix-editor [data-trix-cursor-target]::selection {
   background: none;
 }
 
+trix-editor .attachment {
+  position: relative; 
+}
+
 trix-editor .attachment:hover {
   cursor: default;
 }
