@@ -1,6 +1,7 @@
 defmodule PalapaWeb.TeamControllerTest do
   use PalapaWeb.ConnCase
   import Ecto.Query
+  alias Palapa.Teams
   alias Palapa.Repo
 
   describe "as regular member" do
@@ -26,6 +27,32 @@ defmodule PalapaWeb.TeamControllerTest do
             "name" => "Sales"
           }
         })
+
+      assert html_response(conn, :forbidden)
+    end
+
+    test "regular members cannot access the team edition form", %{
+      conn: conn,
+      workspace: workspace
+    } do
+      {:ok, team} = Teams.create(workspace.organization, %{name: "Sales"})
+      conn = get(conn, team_path(conn, :edit, workspace.organization, team))
+      assert html_response(conn, :forbidden)
+    end
+
+    test "regular members cannot update a team", %{
+      conn: conn,
+      workspace: workspace
+    } do
+      {:ok, team} = Teams.create(workspace.organization, %{name: "Sales"})
+
+      conn =
+        put(
+          conn,
+          team_path(conn, :update, workspace.organization, team, %{
+            "team" => %{"name" => "Sales Dpt"}
+          })
+        )
 
       assert html_response(conn, :forbidden)
     end
@@ -63,6 +90,30 @@ defmodule PalapaWeb.TeamControllerTest do
 
       assert redirected_to(conn, 302) =~ member_path(conn, :index, org)
       assert count_teams_after == count_teams_before + 1
+    end
+
+    test "admin can access the team edition form", %{conn: conn, org: org} do
+      {:ok, team} = Teams.create(org, %{name: "Sales"})
+      conn = get(conn, team_path(conn, :edit, org, team))
+      assert html_response(conn, :ok)
+    end
+
+    test "admin can update a team", %{conn: conn, org: org, member: member} do
+      {:ok, team} = Teams.create(org, %{name: "Sales", private: false, members: []})
+
+      conn =
+        put(
+          conn,
+          team_path(conn, :update, org, team, %{
+            "team" => %{"name" => "Sales Dpt", "private" => true, "members" => [member.id]}
+          })
+        )
+
+      assert redirected_to(conn, 302) =~ member_path(conn, :index, org, team_id: team.id)
+      team = Repo.reload(team) |> Repo.preload(:members)
+      assert "Sales Dpt" == team.name
+      assert team.private
+      assert [member.id] == team.members |> Enum.map(fn m -> m.id end)
     end
   end
 
@@ -125,6 +176,30 @@ defmodule PalapaWeb.TeamControllerTest do
       assert redirected_to(conn, 302) =~ member_path(conn, :index, org)
       assert count_teams_after == count_teams_before + 1
       assert count_teams_members_after == count_teams_members_before + 2
+    end
+
+    test "owner can access the team edition form", %{conn: conn, org: org} do
+      {:ok, team} = Teams.create(org, %{name: "Sales"})
+      conn = get(conn, team_path(conn, :edit, org, team))
+      assert html_response(conn, :ok)
+    end
+
+    test "owner can update a team", %{conn: conn, org: org, member: member} do
+      {:ok, team} = Teams.create(org, %{name: "Sales", private: false, members: []})
+
+      conn =
+        put(
+          conn,
+          team_path(conn, :update, org, team, %{
+            "team" => %{"name" => "Sales Dpt", "private" => true, "members" => [member.id]}
+          })
+        )
+
+      assert redirected_to(conn, 302) =~ member_path(conn, :index, org, team_id: team.id)
+      team = Repo.reload(team) |> Repo.preload(:members)
+      assert "Sales Dpt" == team.name
+      assert team.private
+      assert [member.id] == team.members |> Enum.map(fn m -> m.id end)
     end
   end
 

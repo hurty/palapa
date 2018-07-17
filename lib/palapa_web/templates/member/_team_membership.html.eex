@@ -1,19 +1,18 @@
 <%= if @selected_team do %>
-  <p class="text-sm text-center mx-auto my-4 w-1/2">
+  <p>
     <%= if Palapa.Teams.member?(@selected_team, @current_member) do %>
       You are a member of this team. 
       <%= link(to: team_team_membership_path(@conn, :delete, @current_organization, @selected_team), method: :delete, 
         class: "tag", data: [confirm: "Are you sure you want to leave this team?"]) do %>
-        <i class="text-pink fas fa-sign-out-alt"></i>&nbsp;Leave?
+        <i class="text-pink fas fa-sign-out-alt"></i>&nbsp;Leave
       <% end %>
     <% else %>
       <%= if Palapa.Access.permit? Palapa.Teams, :join, @current_member, @selected_team do %>
         You are not member of this team. 
         <%= link(to: team_team_membership_path(@conn, :create, @current_organization, @selected_team), method: :post, class: "tag") do %>
-          <i class="text-green fas fa-sign-in-alt"></i>&nbsp;Join?
+          <i class="text-green fas fa-sign-in-alt"></i>&nbsp;Join
         <% end %>
       <% else %>
-        <i class="fas fa-lock text-red-light"></i> This team is private.<br>
         Only an admin can invite you.
       <% end %>
     <% end %>

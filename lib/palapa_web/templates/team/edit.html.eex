@@ -1,0 +1,17 @@
+<div class="content article-layout">
+<div class="main-content w-2/3 mx-auto">
+  <div class="card p-1 sm:p-8">
+    <h2 class="card-header">Edit team</h2>
+    <div class="card-header-separator"></div>
+
+    <%= form_for @team_changeset, team_path(@conn, :update, @current_organization, @team), [], fn form -> %>
+      <%= render "_form.html", team_changeset: @team_changeset, form: form, team: @team, current_organization: @current_organization, selected_members: @team.members %>
+
+      <div class="card-actions">
+        <%= submit "Save", class: "btn btn-green" %>
+        <%= link "Cancel", to: member_path(@conn, :index, @current_organization, team_id: @team.id), class: "btn" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+</div>

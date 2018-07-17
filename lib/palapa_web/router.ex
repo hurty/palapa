@@ -60,7 +60,7 @@ defmodule PalapaWeb.Router do
         post("/renewal", InvitationController, :renew, as: :renew)
       end
 
-      resources("/teams", TeamController, only: [:new, :create]) do
+      resources("/teams", TeamController, only: [:new, :create, :edit, :update]) do
         resources(
           "/membership",
           TeamMembershipController,

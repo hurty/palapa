@@ -12,7 +12,7 @@ defmodule Palapa.Teams.Team do
     timestamps()
 
     belongs_to(:organization, Organizations.Organization)
-    many_to_many(:members, Organizations.Member, join_through: TeamMember)
+    many_to_many(:members, Organizations.Member, join_through: TeamMember, on_replace: :delete)
     many_to_many(:messages, Message, join_through: "messages_teams")
   end
 

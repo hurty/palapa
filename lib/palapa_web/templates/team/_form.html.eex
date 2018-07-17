@@ -1,0 +1,25 @@
+<%= if @team_changeset.action do %>
+  <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+<% end %>
+
+<div class="field">
+  <%= label @form, :name, "Team name", class: "label" %>
+  <%= text_input @form, :name, class: "input" %>
+  <%= error_tag @form, :name %>
+</div>
+
+<div class="field" data-controller="choice">
+  <%= label @form, :members, "Members", class: "label" %>
+  <%= multiple_select @form, :members, PalapaWeb.MemberView.organization_members(@current_organization), 
+    placeholder: "Choose members in the list",
+    "data-target": "choice.select", 
+    selected: (@selected_members |> Enum.map(fn m -> m.id end)) || [],
+    class: "w-full" %>
+  <%= error_tag @form, :members %>
+</div>
+
+<div class="field">
+  <%= checkbox @form, :private, class: "input" %>
+  <%= label @form, :private, "This team is private (only admins can add members)", class: "label" %>
+  <%= error_tag @form, :private %>
+</div>

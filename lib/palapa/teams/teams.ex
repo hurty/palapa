@@ -38,6 +38,7 @@ defmodule Palapa.Teams do
 
   def get!(queryable \\ Team, id) do
     queryable
+    |> preload(:members)
     |> Repo.get!(id)
   end
 
@@ -71,23 +72,30 @@ defmodule Palapa.Teams do
   end
 
   def create(%Organization{} = organization, attrs \\ %{}) do
-    whitelisted_members =
-      if is_list(attrs["members"]) do
-        Organizations.list_members_by_ids(organization, attrs["members"])
-      else
-        []
-      end
+    team_members = secure_members_list(organization, attrs)
 
     %Team{organization_id: organization.id}
     |> Team.create_changeset(attrs)
-    |> put_assoc(:members, whitelisted_members)
+    |> put_assoc(:members, team_members)
     |> Repo.insert()
   end
 
   def update(%Team{} = team, attrs) do
+    team = Repo.preload(team, :organization)
+    team_members = secure_members_list(team.organization, attrs)
+
     team
     |> Team.changeset(attrs)
+    |> put_assoc(:members, team_members)
     |> Repo.update()
+  end
+
+  defp secure_members_list(%Organization{} = organization, attrs) do
+    if is_list(attrs["members"]) do
+      Organizations.list_members_by_ids(organization, attrs["members"])
+    else
+      []
+    end
   end
 
   def delete(%Team{} = team) do

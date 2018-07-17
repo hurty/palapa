@@ -4,7 +4,7 @@
       <div class="p-4 flex flex-wrap border-b border-grey-lighter bg-white rounded-t">
         <div class="flex-1">
           <h2 class="text-green"><%= @current_organization.name %></h2>
-          <div class="text-sm uppercase text-grey-dark"><span class="font-bold"><%= @organization_members_count %></span> members</div>
+          <div class="text-sm uppercase text-grey-dark"><span class="font-bold"><%= @organization_members_count %></span> people</div>
           <div class="text-sm uppercase text-grey-dark"><span class="font-bold"><%= length(@teams) %></span> teams</div>
         </div>
 
@@ -24,32 +24,7 @@
       </div>
 
       <div class="my-4 p-4">
-        <%= if Enum.any?(@teams) do %>
-          <div data-controller="popover" data-target="popover.button" class="btn text-sm truncate sm:w-2/5 text-center mx-auto rounded-full">
-            <%= if @selected_team do %> 
-              <span class="mx-auto" title="<%= @selected_team.name %>"><%= @selected_team.name %></span>
-            <% else %>
-              <span class="mx-auto" title="Everyone in the organization">Everyone in the organization</span>
-            <% end %>
-            <i class="fas fa-angle-down"></i>
-
-
-              <div data-target="popover.content" class="popover hidden">
-              <div data-target="popover.arrow" class="popover__arrow"></div>
-              <div class="flex flex-col">
-                <%= link("Everyone in the organization", to: member_path(@conn, :index, @current_organization), class: "selector-item truncate selector-item-default") %>
-                <%= for team <- @teams do %>
-                  <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
-                  <%= link(to: member_path(@conn, :index, @current_organization, team_id: team.id), class: item_class, title: team.name) do %>
-                    <%= team.name %><%= if team.private do %>&nbsp;<i class="text-xs text-grey fas fa-lock"></i><% end %>
-                  <% end %>
-                <% end %>
-              </div>
-            </div>
-          </div>
-
-          <%= render "_team_membership.html", assigns %>
-        <% end %>
+        <%= render "_team_info.html", assigns %>
 
         <div class="members-grid my-8">
           <%= if Enum.any?(@members) do %>
