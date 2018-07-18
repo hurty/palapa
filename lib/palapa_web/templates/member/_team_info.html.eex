@@ -26,7 +26,7 @@
   </div>
   
   <%= if @selected_team do %>
-    <div class="flex flex-wrap justify-left mt-4 p-2 pb-4 pt-4 border-b border-t border-grey-lighter text-sm">
+    <div class="flex flex-wrap justify-center mt-4 p-2 pb-4 pt-4 border-b border-t border-grey-lighter text-sm">
       <div class="mr-8">
         <div class="text-sm uppercase"><span class="font-bold"><%= length(@members) %> member(s)</div>
         <div class="text-sm uppercase"><span class="font-bold">
