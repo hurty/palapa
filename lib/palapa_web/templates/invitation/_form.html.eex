@@ -7,6 +7,5 @@
   
   <div class="card-actions">
     <%= submit "Send invitations", class: "btn btn-green" %>
-    <%= link "Cancel", to: member_path(@conn, :index, @conn.assigns.current_organization), class: "btn" %>
   </div>
 <% end %>
