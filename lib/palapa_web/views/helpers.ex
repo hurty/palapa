@@ -31,7 +31,7 @@ defmodule PalapaWeb.Helpers do
 
   def members_for_autocomplete(organization) do
     Palapa.Organizations.list_members(organization)
-    |> Enum.map(fn m -> %{"id" => m.id, "name" => m.name} end)
+    |> Enum.map(fn m -> %{"id" => m.id, "name" => m.account.name} end)
     |> Jason.encode!()
   end
 

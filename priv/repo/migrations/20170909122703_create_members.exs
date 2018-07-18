@@ -14,7 +14,6 @@ defmodule Palapa.Repo.Migrations.CreateMembers do
         null: false
       )
 
-      add(:name, :string, null: false)
       add(:role, :role, default: "member")
       add(:title, :string)
       timestamps()

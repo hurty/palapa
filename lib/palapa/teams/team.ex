@@ -7,7 +7,6 @@ defmodule Palapa.Teams.Team do
 
   schema "teams" do
     field(:name, :string)
-    field(:members_count, :integer, default: 0)
     field(:private, :boolean)
     timestamps()
 

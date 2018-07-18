@@ -1,14 +1,17 @@
 defmodule Palapa.Accounts.Account do
   use Palapa.Schema
+  use Arc.Ecto.Schema
 
   alias Palapa.Accounts
   alias Palapa.Organizations
 
   schema "accounts" do
     field(:email, :string)
+    field(:name, :string)
     field(:password_hash, :string)
     field(:password, :string, virtual: true)
     field(:timezone, :string)
+    field(:avatar, Palapa.Avatar.Type)
     timestamps()
 
     has_many(:members, Organizations.Member)
@@ -18,9 +21,10 @@ defmodule Palapa.Accounts.Account do
   @doc false
   def changeset(%Accounts.Account{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :password, :timezone])
+    |> cast(attrs, [:email, :name, :password, :timezone])
     |> put_password_hash
-    |> validate_required([:email, :password_hash])
+    |> cast_attachments(attrs, [:avatar])
+    |> validate_required([:email, :name, :password_hash])
     |> unique_constraint(:email, name: "accounts_email_index")
   end
 

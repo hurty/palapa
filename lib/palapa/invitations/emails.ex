@@ -39,7 +39,7 @@ defmodule Palapa.Invitations.Emails do
     |> to(invitation.email)
     |> subject("You have been invited to join #{invitation.organization.name}")
     |> html_body("""
-    <p>#{invitation.creator.name} invited you to join the workspace '#{
+    <p>#{invitation.creator.account.name} invited you to join the workspace '#{
       invitation.organization.name
     }'". Click the following link to get started: <a href="#{join_link}">#{join_link}</a></p>
     """)

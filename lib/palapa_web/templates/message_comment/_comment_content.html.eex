@@ -1,10 +1,10 @@
   <div class="flex">
     <div class="w-10 mx-2">
-      <%= PalapaWeb.MemberView.avatar(@comment.creator, :small) %>
+      <%= PalapaWeb.MemberView.avatar(@comment.creator.account, :small) %>
     </div>
 
     <div class="w-full text-xs my-auto">
-      <%= link @comment.creator.name, to: member_path(@conn, :show, @conn.assigns.current_organization, @comment.creator.id), class: "text-grey-darkest font-bold hover:underline" %>
+      <%= link @comment.creator.account.name, to: member_path(@conn, :show, @conn.assigns.current_organization, @comment.creator.id), class: "text-grey-darkest font-bold hover:underline" %>
       <div class="text-grey-darker font-light"><%= format_datetime(@comment.inserted_at, @current_account) %></div>
     </div>
 

@@ -169,10 +169,10 @@ defmodule Palapa.Invitations do
   end
 
   defp join_and_create_new_account(invitation, attrs) do
-    member_attrs = Map.take(attrs, ["name", "title"])
+    member_attrs = Map.take(attrs, ["title"])
 
     account_attrs =
-      Map.take(attrs, ["password", "timezone"])
+      Map.take(attrs, ["name", "avatar", "password", "timezone"])
       |> Map.put("email", invitation.email)
 
     changeset = JoinForm.changeset(%JoinForm{}, attrs)
@@ -188,7 +188,6 @@ defmodule Palapa.Invitations do
       Organizations.create_member(%{
         organization_id: invitation.organization_id,
         account_id: changes.account.id,
-        name: member_attrs["name"],
         title: member_attrs["title"],
         role: :member
       })
@@ -200,7 +199,7 @@ defmodule Palapa.Invitations do
   end
 
   defp join_with_existing_account(invitation, account, attrs) do
-    member_attrs = Map.take(attrs, ["name", "title"])
+    member_attrs = Map.take(attrs, ["title"])
     changeset = JoinForm.changeset(%JoinForm{}, attrs)
 
     Ecto.Multi.new()
@@ -212,7 +211,6 @@ defmodule Palapa.Invitations do
       Organizations.create_member(%{
         organization_id: invitation.organization_id,
         account_id: account.id,
-        name: member_attrs["name"],
         title: member_attrs["title"],
         role: :member
       })

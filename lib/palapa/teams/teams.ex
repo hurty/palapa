@@ -51,7 +51,8 @@ defmodule Palapa.Teams do
   def list_members(%Team{} = team) do
     team
     |> Ecto.assoc(:members)
-    |> order_by(:name)
+    |> preload(:account)
+    |> order_by(desc: :inserted_at)
     |> Repo.all()
   end
 
@@ -81,7 +82,7 @@ defmodule Palapa.Teams do
   end
 
   def update(%Team{} = team, attrs) do
-    team = Repo.preload(team, :organization)
+    team = Repo.preload(team, [:organization, :members])
     team_members = secure_members_list(team.organization, attrs)
 
     team
@@ -109,7 +110,6 @@ defmodule Palapa.Teams do
 
   def add_member(%Team{} = team, %Member{} = member) do
     TeamMember.changeset(%TeamMember{}, %{member_id: member.id, team_id: team.id})
-    |> increment_counter_cache(team, :members_count)
     |> Repo.insert()
     |> case do
       {:ok, team_member} ->
@@ -126,16 +126,6 @@ defmodule Palapa.Teams do
 
     Ecto.Multi.new()
     |> Ecto.Multi.delete_all(:team_member, team_member_query)
-    |> Ecto.Multi.run(:counter_cache_decrement, fn changes_so_far ->
-      # Avoids having a negative counter by checking if the row has actually been deleted
-      %{team_member: {deleted_entries_count, nil}} = changes_so_far
-
-      if deleted_entries_count > 0 do
-        Repo.decrement(team, :members_count)
-      else
-        {:ok, team}
-      end
-    end)
     |> Repo.transaction()
     |> case do
       {:ok, _} ->
@@ -158,12 +148,5 @@ defmodule Palapa.Teams do
     |> Ecto.Changeset.change()
     |> Ecto.Changeset.put_assoc(:teams, teams)
     |> Repo.update()
-  end
-
-  defp increment_counter_cache(changeset, struct, counter_name, value \\ 1) do
-    prepare_changes(changeset, fn prepared_changeset ->
-      prepared_changeset.repo.increment(struct, counter_name, value)
-      prepared_changeset
-    end)
   end
 end

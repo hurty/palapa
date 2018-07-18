@@ -80,7 +80,13 @@ defmodule PalapaWeb.JoinControllerTest do
     end
 
     test "join with an already existing account", %{conn: conn, workspace: workspace} do
-      Palapa.Accounts.create(%{email: "dinesh@piedpiper.com", password: "password"})
+      {:ok, _account} =
+        Palapa.Accounts.create(%{
+          name: "Dinesh",
+          email: "dinesh@piedpiper.com",
+          password: "password"
+        })
+
       {:ok, invitation} = Invitations.create_or_renew("dinesh@piedpiper.com", workspace.richard)
 
       count_accounts_before = Repo.count("accounts")

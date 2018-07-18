@@ -20,6 +20,7 @@ defmodule Palapa.AccountsTest do
   test "create/1 with valid data creates a account" do
     assert {:ok, %Account{}} =
              Accounts.create(%{
+               name: "Gavin Belson",
                email: "gavin.belson@hooli.com",
                password: "password"
              })

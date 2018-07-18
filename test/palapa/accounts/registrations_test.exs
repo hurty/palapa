@@ -14,9 +14,10 @@ defmodule Palapa.RegistrationsTest do
              })
 
     assert account.email == "richard.hendricks@piedpiper.com"
+    assert account.name == "Richard Hendricks"
     assert account.password_hash
     assert organization.name == "Pied Piper"
-    assert member.name == "Richard Hendricks"
+    assert member.role == :owner
   end
 
   test "create/1 with invalid data returns an error and a changeset" do

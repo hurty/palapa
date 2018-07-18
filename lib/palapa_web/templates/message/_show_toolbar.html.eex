@@ -1,10 +1,10 @@
 <div class="message__author flex">
   <div class="w-12 mx-2">
-    <%= PalapaWeb.MemberView.avatar(@message.creator, :small) %>
+    <%= PalapaWeb.MemberView.avatar(@message.creator.account, :small) %>
   </div>
 
   <div class="text-sm text-grey-darker my-auto">
-    <%= link @message.creator.name, to: member_path(@conn, :show, @current_organization, @message.creator.id), class: "text-grey-darker font-bold hover:underline" %>
+    <%= link @message.creator.account.name, to: member_path(@conn, :show, @current_organization, @message.creator.id), class: "text-grey-darker font-bold hover:underline" %>
     <div class="text-xs text-grey-darker font-light"> Posted <%= format_datetime(@message.inserted_at, @current_account) %></div>
   </div>
 </div>

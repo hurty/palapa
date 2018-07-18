@@ -3,12 +3,12 @@ defmodule PalapaWeb.MemberView do
 
   def organization_members(organization) do
     Palapa.Organizations.list_members(organization)
-    |> Enum.map(fn m -> {m.name, m.id} end)
+    |> Enum.map(fn m -> {m.account.name, m.id} end)
   end
 
-  def avatar(member, size \\ nil) do
-    url = Palapa.Avatar.url({member.avatar, member}, :thumb)
-    img_attributes = [alt: member.name, title: member.name]
+  def avatar(account, size \\ nil) do
+    url = Palapa.Avatar.url({account.avatar, account}, :thumb)
+    img_attributes = [alt: account.name, title: account.name]
 
     img_attributes =
       if !url do
