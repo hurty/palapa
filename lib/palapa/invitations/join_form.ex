@@ -1,16 +1,18 @@
 defmodule Palapa.Invitations.JoinForm do
   use Palapa.Schema
+  use Arc.Ecto.Schema
 
   embedded_schema do
-    field(:name)
-    field(:title)
-    field(:password)
-    field(:timezone)
+    field(:name, :string)
+    field(:title, :string)
+    field(:password, :string)
+    field(:timezone, :string)
+    field(:avatar, Palapa.Avatar.Type)
   end
 
-  def changeset(%__MODULE__{} = registration, params) do
+  def changeset(%__MODULE__{} = registration, attrs) do
     registration
-    |> cast(params, [:name, :title, :password, :timezone])
+    |> cast(attrs, [:name, :title, :password, :timezone])
     |> validate_required([:name, :password])
     |> validate_length(:password, min: 8, max: 100)
     |> validate_or_nilify_timezone

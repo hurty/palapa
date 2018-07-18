@@ -15,14 +15,17 @@ defmodule Palapa.Avatar do
     {:convert, "-strip -thumbnail 170x170^ -extent 170x170"}
   end
 
-  # Override the persisted filenames:
-  def filename(version, _) do
-    version
+  def filename(version, {_file, scope}) do
+    if version == :original do
+      scope.id
+    else
+      "#{scope.id}_thumb"
+    end
   end
 
   # Override the storage directory:
   def storage_dir(_version, {_file, scope}) do
-    "uploads/members/avatars/#{scope.id}"
+    "uploads/avatars/#{scope.id}/"
   end
 
   # Provide a default URL if there hasn't been a file uploaded

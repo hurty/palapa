@@ -22,10 +22,19 @@ defmodule Palapa.Accounts.Account do
   def changeset(%Accounts.Account{} = user, attrs) do
     user
     |> cast(attrs, [:email, :name, :password, :timezone])
+    |> put_uuid()
     |> put_password_hash
     |> cast_attachments(attrs, [:avatar])
     |> validate_required([:email, :name, :password_hash])
     |> unique_constraint(:email, name: "accounts_email_index")
+  end
+
+  def put_uuid(changeset) do
+    if is_nil(get_field(changeset, :id)) do
+      force_change(changeset, :id, Ecto.UUID.generate())
+    else
+      changeset
+    end
   end
 
   def put_password_hash(changeset) do
