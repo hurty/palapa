@@ -9,7 +9,24 @@ defmodule Palapa.Organizations do
   import EctoEnum
   defenum(RoleEnum, :role, [:owner, :admin, :member])
 
+  defenum(MemberInformationTypeEnum, :member_information_type, [
+    :custom,
+    :phone,
+    :email,
+    :address,
+    :birthday,
+    :person_to_contact,
+    :attachment,
+    :office_hours,
+    :twitter,
+    :facebook,
+    :github,
+    :linkedin,
+    :skype
+  ])
+
   ### Scopes
+
   def with_member_name(queryable \\ Member, name_pattern) do
     if name_pattern do
       escaped_pattern = Repo.escape_like_pattern(name_pattern) <> "%"

@@ -59,8 +59,12 @@ defmodule PalapaWeb.MemberController do
       member_teams = Teams.list_for_member(member)
       all_teams = Teams.where_organization(current_organization()) |> Teams.list()
 
-      render(
-        conn,
+      conn
+      |> put_breadcrumb(
+        member.account.name,
+        member_path(conn, :show, current_organization(), member)
+      )
+      |> render(
         "show.html",
         member: member,
         member_teams: member_teams,

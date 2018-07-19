@@ -1,0 +1,13 @@
+<div class="border border-grey-lighter rounded p-2 text-sm bg-grey-lightest">
+  <%= form_for @conn, member_path(@conn, :index, @current_organization), [multipart: true], fn form -> %>
+    <%= select form, :type, [:email, :phone, :attachment], class: "field border" %>
+    <%= text_input form, :custom_label, placeholder: "Custom label", class: "field input" %>
+    <%= text_input form, :value, placeholder: "Value", class: "field input" %>
+    <%= file_input form, :attachment, class: "field input" %>
+    <%= checkbox form, :private, class: "field" %>
+    <div class="card-actions">
+      <%= submit "Add information", class: "btn btn-green" %>
+      <%= link "Cancel", to: message_path(@conn, :index, @current_organization), class: "btn" %>
+    </div>
+  <% end %>
+</div>

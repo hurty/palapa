@@ -1,5 +1,6 @@
 defmodule PalapaWeb.MemberView do
   use PalapaWeb, :view
+  alias Phoenix.HTML
 
   def organization_members(organization) do
     Palapa.Organizations.list_members(organization)
@@ -28,5 +29,18 @@ defmodule PalapaWeb.MemberView do
       url,
       img_attributes
     )
+  end
+
+  def account_time(account) do
+    timezone = Map.get(account, :timezone) || "UTC"
+    locale = Map.get(account, :locale) || "en"
+    format = "{h24}:{m}"
+
+    datetime =
+      Timex.now()
+      |> Timex.Timezone.convert(timezone)
+      |> Timex.lformat!(format, locale)
+
+    HTML.Tag.content_tag(:time, datetime)
   end
 end
