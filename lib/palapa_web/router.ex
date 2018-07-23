@@ -2,7 +2,7 @@ defmodule PalapaWeb.Router do
   use PalapaWeb, :router
 
   pipeline :browser do
-    plug(:accepts, ["html"])
+    plug(:accepts, ["html", "json"])
     plug(:fetch_session)
     plug(:fetch_flash)
     plug(:protect_from_forgery)
@@ -54,6 +54,12 @@ defmodule PalapaWeb.Router do
 
       resources "/members", MemberController do
         resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)
+
+        resources(
+          "/member_informations",
+          MemberInformationController,
+          only: [:create, :update, :delete]
+        )
       end
 
       resources("/invitations", InvitationController, only: [:new, :create, :delete]) do

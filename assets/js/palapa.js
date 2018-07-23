@@ -40,7 +40,8 @@ window.PA = {
   fetch: fetchWithDefaultOptions,
   fetchHTML: fetchHTML,
   remoteLink: remoteLink,
-  confirm: confirm
+  confirm: confirm,
+  getMetaValue: getMetaValue
 }
 
 export default window.PA

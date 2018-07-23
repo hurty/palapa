@@ -2,7 +2,7 @@ defmodule Palapa.Organizations.Member do
   use Palapa.Schema
 
   alias Palapa.Accounts.Account
-  alias Palapa.Organizations.{Member, Organization, RoleEnum}
+  alias Palapa.Organizations.{Member, Organization, MemberInformation, RoleEnum}
   alias Palapa.Invitations
   alias Palapa.Teams.{Team, TeamMember}
 
@@ -15,6 +15,7 @@ defmodule Palapa.Organizations.Member do
 
     has_many(:invitations, Invitations.Invitation, foreign_key: :creator_id)
     many_to_many(:teams, Team, join_through: TeamMember, on_replace: :delete)
+    has_many(:member_informations, MemberInformation)
   end
 
   def changeset(%Member{} = member, attrs) do

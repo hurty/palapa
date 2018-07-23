@@ -11,9 +11,10 @@ defmodule Palapa.Organizations.MemberInformation do
     timestamps()
   end
 
-  def changeset(%__MODULE__{} = member_information, attrs) do
+  def changeset(%__MODULE__{} = member_information, %Member{} = member, attrs) do
     member_information
-    |> cast(attrs, [:member_id, :type, :custom_label, :value, :private])
-    |> validate_required([:member_id, :type])
+    |> cast(attrs, [:type, :custom_label, :value, :private])
+    |> force_change(:member_id, member.id)
+    |> validate_required([:member_id, :type, :value])
   end
 end

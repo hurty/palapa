@@ -12,6 +12,10 @@ defmodule Palapa.Organizations.Policy do
 
   def authorize(:edit_member, %Member{}, _), do: true
 
+  def authorize(:create_member_information, %Member{} = member, target_member) do
+    member.id == target_member.id
+  end
+
   # Catch-all: deny everything else
   def authorize(_, _, _), do: false
 end

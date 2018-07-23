@@ -30,23 +30,24 @@
   * @import "components/forms";
   */
 @import "components/_autocomplete";
-@import "components/_text_editor";
-@import "components/_common";
 @import "components/_avatars";
-@import "components/_popover";
-@import "components/_message";
 @import "components/_blankslates";
-@import "components/_choices";
-@import "components/_card";
 @import "components/_buttons";
+@import "components/_card";
+@import "components/_choices";
+@import "components/_common";
+@import "components/_dropzone";
 @import "components/_forms";
-@import "components/_tags";
-@import "components/_navigation";
-@import "components/_tabs";
-@import "components/_profile";
-@import "components/_truncate";
-@import "components/_selector";
 @import "components/_luminous";
+@import "components/_message";
+@import "components/_navigation";
+@import "components/_popover";
+@import "components/_profile";
+@import "components/_selector";
+@import "components/_tabs";
+@import "components/_tags";
+@import "components/_text_editor";
+@import "components/_truncate";
 
 @import "layout/_layout";
 

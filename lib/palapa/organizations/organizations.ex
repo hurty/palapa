@@ -1,7 +1,7 @@
 defmodule Palapa.Organizations do
   use Palapa.Context
 
-  alias Organizations.{Organization, Member}
+  alias Organizations.{Organization, Member, MemberInformation}
   alias Palapa.Accounts.Account
 
   defdelegate(authorize(action, user, params), to: Palapa.Organizations.Policy)
@@ -9,20 +9,40 @@ defmodule Palapa.Organizations do
   import EctoEnum
   defenum(RoleEnum, :role, [:owner, :admin, :member])
 
-  defenum(MemberInformationTypeEnum, :member_information_type, [
+  @member_information_types [
     :custom,
     :phone,
     :email,
     :address,
     :birthday,
     :person_to_contact,
-    :attachment,
+    :office_hours,
+    :skype,
+    :twitter,
+    :facebook,
+    :linkedin,
+    :github
+  ]
+
+  def list_member_information_types do
+    @member_information_types
+  end
+
+  # It seems that we can't use the module attribute @member_information_types in this EctoEnum macro,
+  # so we're repeating types here.
+  defenum(MemberInformationTypeEnum, :member_information_type, [
+    :custom,
+    :phone,
+    :email,
+    :skype,
+    :address,
+    :birthday,
+    :person_to_contact,
     :office_hours,
     :twitter,
     :facebook,
-    :github,
     :linkedin,
-    :skype
+    :github
   ])
 
   ### Scopes
@@ -117,5 +137,25 @@ defmodule Palapa.Organizations do
 
   def member_change(%Member{} = member) do
     Member.update_profile_changeset(member, %{})
+  end
+
+  def change_member_information(
+        %MemberInformation{} = member_information \\ %MemberInformation{},
+        %Member{} = member,
+        attrs \\ %{}
+      ) do
+    MemberInformation.changeset(member_information, member, attrs)
+  end
+
+  def create_member_information(%Member{} = member, attrs) do
+    MemberInformation.changeset(%MemberInformation{}, member, attrs)
+    |> Repo.insert()
+  end
+
+  def list_member_informations(%Member{} = member) do
+    member
+    |> Ecto.assoc(:member_informations)
+    |> order_by([i], asc: i.type, asc: i.inserted_at)
+    |> list
   end
 end

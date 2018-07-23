@@ -1,6 +1,7 @@
 import css from "../css/app.css"
 import "./vendor/fontawesome"
 import "./vendor/fontawesome-solid"
+import "./vendor/fontawesome-brands"
 
 import "./palapa"
 import "phoenix_html"

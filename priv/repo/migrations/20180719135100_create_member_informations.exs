@@ -1,7 +1,7 @@
 defmodule Palapa.Repo.Migrations.CreateMemberInformations do
   use Ecto.Migration
 
-  def change do
+  def up do
     Palapa.Organizations.MemberInformationTypeEnum.create_type()
 
     create(table(:member_informations, primary_key: false)) do
@@ -11,8 +11,14 @@ defmodule Palapa.Repo.Migrations.CreateMemberInformations do
       add(:custom_label, :string)
       add(:value, :string)
       add(:private, :boolean, default: false)
+      timestamps()
     end
 
     create(index(:member_informations, [:member_id]))
+  end
+
+  def down do
+    drop(table(:member_informations))
+    Palapa.Organizations.MemberInformationTypeEnum.drop_type()
   end
 end
