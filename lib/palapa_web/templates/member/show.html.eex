@@ -1,4 +1,4 @@
-<div data-controller="member-information" class="content article-layout">
+<div class="content article-layout">
   <div class="main-content">
     <div class="card ">
 
@@ -38,7 +38,10 @@
 
           </div>
           
-          <div class="p-2 flex-1 p-4">
+          <div data-controller="member-information" 
+            data-member-information-attachment-url="<%= attachment_url(@conn, :create, @current_organization) %>" 
+            class="p-2 flex-1 p-4">
+            
             <h2 class="text-grey-darker text-sm py-2">Personal information shared within <%= @current_organization.name %></h2>
             
             <div data-target="member-information.list">

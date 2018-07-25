@@ -20,11 +20,21 @@ export default class extends Controller {
   }
 
   setAttachmentDropzone() {
-    let dropzone = new Dropzone(this.attachmentTarget, {
+    this.dropzone = new Dropzone(this.attachmentTarget, {
       url: this.data.get("attachment-url"),
       headers: {
         "X-CSRF-Token": PA.getMetaValue("csrf-token")
       }
+    });
+
+    let self = this
+
+    this.dropzone.on("success", function (file, response) {
+      let attachmentIdElement = document.createElement("input")
+      attachmentIdElement.setAttribute("type", "hidden")
+      attachmentIdElement.setAttribute("name", "member_information[attachments][]")
+      attachmentIdElement.setAttribute("value", response.attachment_sid)
+      self.formTarget.appendChild(attachmentIdElement)
     });
   }
 
@@ -40,7 +50,7 @@ export default class extends Controller {
     })
       .then(html => {
         list.innerHTML = html
-        this.hideForm()
+        this.clearForm()
       })
   }
 
@@ -54,6 +64,11 @@ export default class extends Controller {
       event.preventDefault()
     this.formTarget.classList.add("hidden")
     this.addInformationButtonTarget.classList.remove("hidden")
+  }
+
+  clearForm() {
+    this.formTarget.querySelectorAll(".input").forEach((node, index) => { node.value = null })
+    this.dropzone.removeAllFiles()
   }
 
   showCustomLabel() {

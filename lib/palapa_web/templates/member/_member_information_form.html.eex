@@ -1,25 +1,23 @@
-<div data-member-information-attachment-url="<%= attachment_url(@conn, :create, @current_organization) %>">
-  <%= form_for @member_information_changeset, member_member_information_path(@conn, :create, @current_organization, @member.id), 
-    [multipart: true, class: "hidden border border-grey-lighter rounded p-2 text-sm bg-grey-lightest", 
-    "data-target": "member-information.form"], fn form -> %>
-    <%= select form, :type, Palapa.Organizations.list_member_information_types, class: "field borde w-full", "data-target": "member-information.type", "data-action": "member-information#displayFields" %>
-    <%= text_input form, :custom_label, placeholder: "Custom label", class: "field input", "data-target": "member-information.customLabel" %>
-    <%= text_input form, :value, placeholder: "Value", class: "field input", "data-target": "member-information.value" %>
-    
-    <div class="field input" data-target="member-information.attachment">
-      Drag and drop files or click here to upload attachments
-    </div>
-    
-    <%= checkbox form, :private, class: "field" %>
-    <%= label form, :private, "Visible only to..."%>
-
-    <div class="card-actions">
-      <%= submit "Add information", "data-action": "member-information#create", class: "btn btn-green" %>
-      <%= link "Cancel", to: "#", "data-action": "member-information#hideForm", class: "btn" %>
-    </div>
-  <% end %>
-
-  <div class="w-full p-2 mt-2 btn" data-target="member-information.addInformationButton" data-action="click->member-information#showForm">
-    <i class="fas fa-plus-circle"></i>&nbsp;Add information
+<%= form_for @member_information_changeset, member_member_information_path(@conn, :create, @current_organization, @member.id), 
+  [multipart: true, class: "hidden border border-grey-lighter rounded p-2 text-sm bg-grey-lightest", 
+  "data-target": "member-information.form"], fn form -> %>
+  <%= select form, :type, PalapaWeb.MemberInformationView.information_types_for_select, class: "field borde w-full", "data-target": "member-information.type", "data-action": "member-information#displayFields" %>
+  <%= text_input form, :custom_label, placeholder: "Custom label", class: "field input", "data-target": "member-information.customLabel" %>
+  <%= text_input form, :value, placeholder: "Value", class: "field input", "data-target": "member-information.value" %>
+  
+  <div class="field input" data-target="member-information.attachment">
+    Drag and drop files or click here to upload attachments
   </div>
+  
+  <%= checkbox form, :private, class: "field" %>
+  <%= label form, :private, "Visible only to..."%>
+
+  <div class="card-actions">
+    <%= submit "Add information", "data-action": "member-information#create", class: "btn btn-green" %>
+    <%= link "Cancel", to: "#", "data-action": "member-information#hideForm", class: "btn" %>
+  </div>
+<% end %>
+
+<div class="w-full p-2 mt-2 btn" data-target="member-information.addInformationButton" data-action="click->member-information#showForm">
+  <i class="fas fa-plus-circle"></i>&nbsp;Add information
 </div>

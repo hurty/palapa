@@ -13,6 +13,7 @@ defmodule Palapa.Attachments.Attachment do
 
     belongs_to(:message, Palapa.Messages.Message)
     belongs_to(:message_comment, Palapa.Messages.MessageComment)
+    belongs_to(:member_information, Palapa.Organizations.MemberInformation)
   end
 
   def changeset(%Attachment{} = attachment, attrs) do

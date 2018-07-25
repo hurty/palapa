@@ -1,9 +1,6 @@
 defmodule Palapa.Organizations.Policy do
   use Palapa.Policy
 
-  # Owner can do anything
-  def authorize(_, %Member{role: :owner}, _), do: true
-
   # Anybody can see the list of members within an organization
   def authorize(:list_members, %Member{}, _), do: true
 

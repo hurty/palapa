@@ -15,10 +15,23 @@ defmodule Palapa.Repo.Migrations.CreateMemberInformations do
     end
 
     create(index(:member_informations, [:member_id]))
+
+    alter(table(:attachments)) do
+      add(
+        :member_information_id,
+        references(:member_informations, on_delete: :delete_all, type: :uuid)
+      )
+    end
+
+    create(index(:attachments, :member_information_id))
   end
 
   def down do
     drop(table(:member_informations))
     Palapa.Organizations.MemberInformationTypeEnum.drop_type()
+
+    # alter(table(:attachments)) do
+    #   remove(:member_information_id)
+    # end
   end
 end

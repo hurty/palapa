@@ -4,7 +4,7 @@
       <%= PalapaWeb.MemberInformationView.information_type_label(info)%>
     </div>
     
-    <div class="flex-1 border-b-2 mx-1 border-grey-lightest py-1 px-2">
+    <div class="flex-1 border-b-2 mx-1 border-grey-lightest py-1 px-2 <%= if assigns[:new_info] && info.id == @new_info.id do %> border-yellow <% end %>"">
       <%= info.value %>
     </div>
   </div>

@@ -5,7 +5,7 @@ defmodule PalapaWeb.MemberInformationView do
 
   # Map for FontAwesome icons names
   @information_types %{
-    custom: %{icon: "fas fa-info", label: "Custom"},
+    custom: %{icon: "fas fa-info-circle", label: "Custom"},
     email: %{icon: "fas fa-at", label: "Email"},
     phone: %{icon: "fas fa-mobile-alt", label: "Phone"},
     address: %{icon: "fas fa-map-marker-alt", label: "Address"},
@@ -18,6 +18,14 @@ defmodule PalapaWeb.MemberInformationView do
     linkedin: %{icon: "fab fa-linkedin", label: "LinkedIn"},
     github: %{icon: "fab fa-github", label: "Github"}
   }
+
+  def information_types_for_select do
+    @information_types
+    |> Enum.map(fn type ->
+      {type_key, %{label: type_label}} = type
+      {type_label, type_key}
+    end)
+  end
 
   def information_type_label(%MemberInformation{} = info) do
     information_types = @information_types

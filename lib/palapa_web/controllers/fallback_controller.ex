@@ -4,6 +4,7 @@ defmodule PalapaWeb.FallbackController do
   def call(conn, {:error, :unauthorized}) do
     conn
     |> put_status(:forbidden)
+    |> put_layout(false)
     |> render(PalapaWeb.ErrorView, :"403")
   end
 end

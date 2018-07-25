@@ -23,4 +23,19 @@ defmodule Palapa.Access do
     |> Base.encode64()
     |> binary_part(0, length)
   end
+
+  def generate_signed_id(id) do
+    Phoenix.Token.sign(PalapaWeb.Endpoint, "signed-id-salt", id)
+  end
+
+  def verify_signed_id(signed_id) do
+    Phoenix.Token.verify(PalapaWeb.Endpoint, "signed-id-salt", signed_id, max_age: 2_592_000)
+  end
+
+  def verified_signed_id?(signed_id) do
+    case verify_signed_id(signed_id) do
+      {:ok, _} -> true
+      _ -> false
+    end
+  end
 end

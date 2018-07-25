@@ -33,6 +33,7 @@ defmodule Palapa.Attachments do
     queryable
     |> where([a], is_nil(a.message_id))
     |> where([a], is_nil(a.message_comment_id))
+    |> where([a], is_nil(a.member_information_id))
   end
 
   # --- Actions
@@ -94,6 +95,23 @@ defmodule Palapa.Attachments do
 
     changeset
     |> put_assoc(:attachments, attachments)
+  end
+
+  def list_attachments_from_signed_ids(signed_ids) when is_list(signed_ids) do
+    attachments_ids =
+      signed_ids
+      |> Enum.map(fn sid ->
+        case Palapa.Access.verify_signed_id(sid) do
+          {:ok, id} -> id
+          _ -> nil
+        end
+      end)
+      |> Enum.reject(&is_nil/1)
+
+    Attachment
+    |> orphan
+    |> Palapa.Access.scope_by_ids(attachments_ids)
+    |> Repo.all()
   end
 
   def delete_orphans() do
