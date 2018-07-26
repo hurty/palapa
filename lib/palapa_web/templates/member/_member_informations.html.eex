@@ -1,11 +1,18 @@
 <%= for info <- @member_informations do %>
   <div class="flex text-sm p-1">
-    <div class="w-2/5 bg-grey-lightest rounded py-1 px-2 font-bold overflow-hidden">
+    <div class="w-2/5 bg-grey-lightest rounded py-1 px-2 font-bold overflow-hidden text-grey-darker">
       <%= PalapaWeb.MemberInformationView.information_type_label(info)%>
     </div>
     
-    <div class="flex-1 border-b-2 mx-1 border-grey-lightest py-1 px-2 <%= if assigns[:new_info] && info.id == @new_info.id do %> border-yellow <% end %>"">
-      <%= info.value %>
+    <div class="flex-1 border-b-2 mx-1 border-grey-lightest py-1 px-2 <%= if assigns[:new_info] && info.id == @new_info.id do %> border-green <% end %>">
+      <%= PalapaWeb.MemberInformationView.autolink info.value %>
+      <%= if Enum.any?(info.attachments) do %>
+        <%= for attachment <- info.attachments do %>
+          <%= link to: Palapa.Attachments.url(attachment), target: "_blank" do %>
+            <br><i class="fas fa-paperclip"></i>&nbsp;<%= attachment.filename %>
+          <% end %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 <% end %>

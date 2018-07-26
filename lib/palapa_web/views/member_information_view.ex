@@ -5,19 +5,51 @@ defmodule PalapaWeb.MemberInformationView do
 
   # Map for FontAwesome icons names
   @information_types %{
-    custom: %{icon: "fas fa-info-circle", label: "Custom"},
-    email: %{icon: "fas fa-at", label: "Email"},
-    phone: %{icon: "fas fa-mobile-alt", label: "Phone"},
-    address: %{icon: "fas fa-map-marker-alt", label: "Address"},
-    birthday: %{icon: "fas fa-birthday-cake", label: "Birthday"},
-    person_to_contact: %{icon: "fas fa-ambulance", label: "Contact in case of emergency"},
-    office_hours: %{icon: "fas fa-briefcase", label: "Office hours"},
-    skype: %{icon: "fab fa-skype", label: "Skype"},
-    twitter: %{icon: "fab fa-twitter", label: "Twitter"},
-    facebook: %{icon: "fab fa-facebook", label: "Facebook"},
-    linkedin: %{icon: "fab fa-linkedin", label: "LinkedIn"},
-    github: %{icon: "fab fa-github", label: "Github"}
+    custom: %{icon: "fas fa-info-circle", label: "Custom", placeholder: "Your custom information"},
+    email: %{icon: "fas fa-at", label: "Email", placeholder: "Example: your@email.com"},
+    phone: %{icon: "fas fa-mobile-alt", label: "Phone", placeholder: "Example: (+33) 123456789"},
+    address: %{
+      icon: "fas fa-map-marker-alt",
+      label: "Address",
+      placeholder: "Example: 221B Baker Street, London, England"
+    },
+    birthday: %{icon: "fas fa-birthday-cake", label: "Birthday", placeholder: ""},
+    person_to_contact: %{
+      icon: "fas fa-ambulance",
+      label: "Contact in case of emergency",
+      placeholder: "Example: Mom's phone 0123456789"
+    },
+    office_hours: %{
+      icon: "fas fa-briefcase",
+      label: "Office hours",
+      placeholder: "Example: Monday - Friday, 9am-5pm"
+    },
+    skype: %{icon: "fab fa-skype", label: "Skype", placeholder: "your.username"},
+    twitter: %{
+      icon: "fab fa-twitter",
+      label: "Twitter",
+      placeholder: "Example: https://twitter.com/<your-user-name>"
+    },
+    facebook: %{
+      icon: "fab fa-facebook",
+      label: "Facebook",
+      placeholder: "Example: https://www.facebook.com/<your-user-name>"
+    },
+    linkedin: %{
+      icon: "fab fa-linkedin",
+      label: "LinkedIn",
+      placeholder: "Example: https://www.linkedin.com/in/<your-user-name>"
+    },
+    github: %{
+      icon: "fab fa-github",
+      label: "Github",
+      placeholder: "Example: https://github.com/<your-user-name>"
+    }
   }
+
+  def types do
+    Jason.encode!(@information_types)
+  end
 
   def information_types_for_select do
     @information_types
@@ -41,5 +73,13 @@ defmodule PalapaWeb.MemberInformationView do
       <% end %>
     </span>
     """
+  end
+
+  def autolink(text) do
+    if text =~ ~r/https?:\/\/(www\.)?/ do
+      link(text, to: text, target: "_blank")
+    else
+      text
+    end
   end
 end

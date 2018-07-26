@@ -155,6 +155,7 @@ defmodule Palapa.Organizations do
   def list_member_informations(%Member{} = member) do
     member
     |> Ecto.assoc(:member_informations)
+    |> preload(:attachments)
     |> order_by([i], asc: i.type, asc: i.inserted_at)
     |> list
   end

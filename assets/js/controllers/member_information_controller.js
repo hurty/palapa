@@ -12,6 +12,7 @@ export default class extends Controller {
   displayFields(event) {
     this.hideCustomLabel()
     this.hideAttachment()
+    this.setPlaceholder()
 
     if (this.typeTarget.value === "custom") {
       this.showCustomLabel()
@@ -77,6 +78,12 @@ export default class extends Controller {
 
   hideCustomLabel() {
     this.customLabelTarget.classList.add("hidden")
+  }
+
+  setPlaceholder() {
+    let infoTypes = JSON.parse(this.data.get("types"))
+    let placeholder = infoTypes[this.typeTarget.value]["placeholder"]
+    this.valueTarget.setAttribute("placeholder", placeholder)
   }
 
   showAttachment() {
