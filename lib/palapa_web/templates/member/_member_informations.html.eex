@@ -8,7 +8,7 @@
       <%= PalapaWeb.MemberInformationView.autolink info.value %>
       <%= if Enum.any?(info.attachments) do %>
         <%= for attachment <- info.attachments do %>
-          <%= link to: Palapa.Attachments.url(attachment), target: "_blank" do %>
+          <%= link to: Palapa.Attachments.url(attachment), target: "_blank", class: "text-blue" do %>
             <br><i class="fas fa-paperclip"></i>&nbsp;<%= attachment.filename %>
           <% end %>
         <% end %>

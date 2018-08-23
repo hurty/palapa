@@ -48,7 +48,13 @@
             <div data-target="member-information.list">
               <%= render "_member_informations.html", assigns %>
             </div>
-            <%= render "_member_information_form.html", assigns %>
+
+            <%= if Palapa.Access.permit?(Palapa.Organizations, :create_member_information, @current_member, @member) do %>
+              <%= render "_member_information_form.html", assigns %>
+              <div class="w-full p-2 mt-2 btn" data-target="member-information.addInformationButton" data-action="click->member-information#showForm">
+                <i class="fas fa-plus-circle"></i>&nbsp;Add information
+              </div>
+            <% end %>
           </div>
         </div>
       </div>

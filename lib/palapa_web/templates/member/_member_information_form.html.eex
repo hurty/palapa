@@ -1,23 +1,39 @@
 <%= form_for @member_information_changeset, member_member_information_path(@conn, :create, @current_organization, @member.id), 
   [multipart: true, class: "hidden border border-grey-lighter rounded p-2 text-sm bg-grey-lightest", 
   "data-target": "member-information.form"], fn form -> %>
-  <%= select form, :type, PalapaWeb.MemberInformationView.information_types_for_select, class: "field borde w-full", "data-target": "member-information.type", "data-action": "member-information#displayFields" %>
+  <%= select form, :type, PalapaWeb.MemberInformationView.information_types_for_select, class: "field w-full", 
+    "data-target": "member-information.type", "data-action": "member-information#displayFields" %>
+  <%= error_tag form, :type %>
+  
   <%= text_input form, :custom_label, placeholder: "Custom label", class: "field input", "data-target": "member-information.customLabel" %>
+  <%= error_tag form, :custom_label %>
+
   <%= text_input form, :value, placeholder: "Value", class: "field input", "data-target": "member-information.value" %>
+  <%= error_tag form, :value %>
   
   <div class="field input" data-target="member-information.attachment">
     Drag and drop files or click here to upload attachments
   </div>
   
   <%= checkbox form, :private, class: "field" %>
-  <%= label form, :private, "Visible only to..."%>
+  <%= label form, :private, "Visible only to..." %>
+
+  <select name=member_information[visibilities][] multiple="true" data-controller="choice" data-target="choice.select" class="w-full" placeholder="Choose people or teams">
+    <optgroup label="People">
+      <%= for user <- Palapa.Organizations.list_members(@current_organization) do %>
+        <option value="<%= Palapa.Access.GlobalId.create("palapa", user) %>"><%= user.account.name %></option>
+      <% end %>
+    </optgroup>
+
+    <optgroup label="Teams">
+      <%= for team <- Palapa.Teams.where_organization(@current_organization) |> Palapa.Teams.list do %>
+        <option value="<%= Palapa.Access.GlobalId.create("palapa", team) %>"># <%= team.name %></option>
+      <% end %>
+    </optgroup>
+  </select>
 
   <div class="card-actions">
     <%= submit "Add information", "data-action": "member-information#create", class: "btn btn-green" %>
     <%= link "Cancel", to: "#", "data-action": "member-information#hideForm", class: "btn" %>
   </div>
 <% end %>
-
-<div class="w-full p-2 mt-2 btn" data-target="member-information.addInformationButton" data-action="click->member-information#showForm">
-  <i class="fas fa-plus-circle"></i>&nbsp;Add information
-</div>

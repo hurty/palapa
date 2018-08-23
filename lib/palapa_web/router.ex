@@ -40,6 +40,7 @@ defmodule PalapaWeb.Router do
     pipe_through([:browser, :enforce_account_authentication])
 
     resources("/org", OrganizationController, as: nil, only: []) do
+      get("/sketch", SketchController, :index)
       get("/sessions/switch_organization", SessionController, :switch_organization)
       get("/sessions/switcher", SessionController, :switcher)
       get("/dashboard", DashboardController, :index)
@@ -76,8 +77,6 @@ defmodule PalapaWeb.Router do
       end
     end
   end
-
-  get("/sketch", SketchController, :index)
 
   # Other scopes may use custom stacks.
   # scope "/api", PalapaWeb do

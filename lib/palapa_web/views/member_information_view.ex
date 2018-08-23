@@ -5,7 +5,6 @@ defmodule PalapaWeb.MemberInformationView do
 
   # Map for FontAwesome icons names
   @information_types %{
-    custom: %{icon: "fas fa-info-circle", label: "Custom", placeholder: "Your custom information"},
     email: %{icon: "fas fa-at", label: "Email", placeholder: "Example: your@email.com"},
     phone: %{icon: "fas fa-mobile-alt", label: "Phone", placeholder: "Example: (+33) 123456789"},
     address: %{
@@ -44,6 +43,11 @@ defmodule PalapaWeb.MemberInformationView do
       icon: "fab fa-github",
       label: "Github",
       placeholder: "Example: https://github.com/<your-user-name>"
+    },
+    custom: %{
+      icon: "fas fa-info-circle",
+      label: "Custom",
+      placeholder: "Your custom information"
     }
   }
 
@@ -66,7 +70,7 @@ defmodule PalapaWeb.MemberInformationView do
     <span class="">
       <i class="text-green-light <%= information_types[info.type][:icon] %>"></i>&nbsp
 
-      <%= if info.type == :custom do %>
+      <%= if info.type == :custom_type do %>
         <%= info.custom_label %>
       <% else %>
         <%= information_types[info.type][:label] %>

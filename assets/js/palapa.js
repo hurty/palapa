@@ -17,8 +17,15 @@ function fetchWithDefaultOptions(url, options = {}) {
 }
 
 function fetchHTML(url, options = {}) {
-  return fetchWithDefaultOptions(url, options)
-    .then(response => response.text())
+  return fetchWithDefaultOptions(url, options).then(response => {
+    if (response.status >= 200 && response.status < 300) {
+      return response.text()
+    } else {
+      let error = new Error(response.statusText)
+      error.response = response
+      throw error
+    }
+  })
 }
 
 function remoteLink(link, options = {}) {

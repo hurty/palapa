@@ -5,8 +5,10 @@ export default class extends Controller {
   static targets = ["addInformationButton", "form", "list", "type", "customLabel", "value", "attachment"]
 
   connect() {
-    this.displayFields()
-    this.setAttachmentDropzone()
+    if (this.targets.has("form")) {
+      this.displayFields()
+      this.setAttachmentDropzone()
+    }
   }
 
   displayFields(event) {
@@ -52,6 +54,11 @@ export default class extends Controller {
       .then(html => {
         list.innerHTML = html
         this.clearForm()
+      })
+      .catch(error => {
+        error.response.text().then(html => {
+          this.formTarget.innerHTML = html
+        })
       })
   }
 
