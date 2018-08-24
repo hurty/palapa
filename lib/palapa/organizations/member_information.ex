@@ -7,7 +7,7 @@ defmodule Palapa.Organizations.MemberInformation do
 
   schema "member_informations" do
     belongs_to(:member, Member)
-    field(:type, MemberInformationTypeEnum, default: :custom)
+    field(:type, MemberInformationTypeEnum)
     field(:custom_label, :string)
     field(:value, :string)
     field(:private, :boolean, default: false)
@@ -35,6 +35,7 @@ defmodule Palapa.Organizations.MemberInformation do
     |> put_teams_visibilities(attrs)
     |> put_members_visibilities(attrs)
     |> validate_required([:member_id, :type, :value])
+    |> validate_custom_information
   end
 
   defp put_attachments(changeset, attrs) do
@@ -59,6 +60,13 @@ defmodule Palapa.Organizations.MemberInformation do
       put_assoc(changeset, :members, attrs["members"])
     else
       changeset
+    end
+  end
+
+  defp validate_custom_information(changeset) do
+    case get_field(changeset, :type) do
+      :custom -> validate_required(changeset, [:custom_label])
+      _ -> changeset
     end
   end
 end

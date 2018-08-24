@@ -7,7 +7,6 @@ export default class extends Controller {
   connect() {
     if (this.targets.has("form")) {
       this.displayFields()
-      this.setAttachmentDropzone()
     }
   }
 
@@ -18,11 +17,16 @@ export default class extends Controller {
 
     if (this.typeTarget.value === "custom") {
       this.showCustomLabel()
+      this.setAttachmentDropzone()
       this.showAttachment()
     }
   }
 
   setAttachmentDropzone() {
+    if (this.dropzone != undefined) {
+      return
+    }
+
     this.dropzone = new Dropzone(this.attachmentTarget, {
       url: this.data.get("attachment-url"),
       headers: {
@@ -56,8 +60,10 @@ export default class extends Controller {
         this.clearForm()
       })
       .catch(error => {
+        console.log(error.response)
         error.response.text().then(html => {
           this.formTarget.innerHTML = html
+          this.displayFields()
         })
       })
   }
@@ -76,7 +82,9 @@ export default class extends Controller {
 
   clearForm() {
     this.formTarget.querySelectorAll(".input").forEach((node, index) => { node.value = null })
-    this.dropzone.removeAllFiles()
+
+    if (this.dropzone)
+      this.dropzone.removeAllFiles()
   }
 
   showCustomLabel() {

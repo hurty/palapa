@@ -21,7 +21,7 @@ function fetchHTML(url, options = {}) {
     if (response.status >= 200 && response.status < 300) {
       return response.text()
     } else {
-      let error = new Error(response.statusText)
+      let error = new Error(response.status)
       error.response = response
       throw error
     }
