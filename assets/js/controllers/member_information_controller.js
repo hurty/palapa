@@ -60,11 +60,12 @@ export default class extends Controller {
         this.clearForm()
       })
       .catch(error => {
-        console.log(error.response)
-        error.response.text().then(html => {
-          this.formTarget.innerHTML = html
-          this.displayFields()
-        })
+        if (error.response.status === 422) {
+          error.response.text().then(html => {
+            this.formTarget.innerHTML = html
+            this.displayFields()
+          })
+        }
       })
   }
 
@@ -82,6 +83,7 @@ export default class extends Controller {
 
   clearForm() {
     this.formTarget.querySelectorAll(".input").forEach((node, index) => { node.value = null })
+    this.formTarget.querySelectorAll(".error").forEach((node, index) => { node.remove() })
 
     if (this.dropzone)
       this.dropzone.removeAllFiles()
