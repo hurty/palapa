@@ -12,6 +12,7 @@ defmodule PalapaWeb.FeatureCase do
 
       import PalapaWeb.Router.Helpers
       import Wallaby.Query
+      import Palapa.Factory
     end
   end
 

@@ -48,5 +48,5 @@
   "tzdata": {:hex, :tzdata, "0.5.16", "13424d3afc76c68ff607f2df966c0ab4f3258859bbe3c979c9ed1606135e7352", [:mix], [{:hackney, "~> 1.0", [hex: :hackney, repo: "hexpm", optional: false]}], "hexpm"},
   "unicode_util_compat": {:hex, :unicode_util_compat, "0.3.1", "a1f612a7b512638634a603c8f401892afbf99b8ce93a45041f8aaca99cadb85e", [:rebar3], [], "hexpm"},
   "verk": {:hex, :verk, "1.4.0", "cbc8cacf7fa05f7a08541b9ea5c126e8e009a5e841d912584a51c9224a432028", [:mix], [{:confex, "~> 3.2.0", [hex: :confex, repo: "hexpm", optional: false]}, {:gen_stage, "~> 0.12.1", [hex: :gen_stage, repo: "hexpm", optional: false]}, {:jason, "~> 1.0", [hex: :jason, repo: "hexpm", optional: false]}, {:poolboy, "~> 1.5.1", [hex: :poolboy, repo: "hexpm", optional: false]}, {:redix, "~> 0.6", [hex: :redix, repo: "hexpm", optional: false]}], "hexpm"},
-  "wallaby": {:hex, :wallaby, "0.19.2", "358bbff251e3555e02566280d1795132da792969dd58ff89963536d013058719", [:mix], [{:httpoison, "~> 0.12", [hex: :httpoison, repo: "hexpm", optional: false]}, {:poison, ">= 1.4.0", [hex: :poison, repo: "hexpm", optional: false]}, {:poolboy, "~> 1.5", [hex: :poolboy, repo: "hexpm", optional: false]}], "hexpm"},
+  "wallaby": {:git, "https://github.com/keathley/wallaby.git", "0af6bba2e97114f76166a503b2d0042129be2a0b", [ref: "0af6bba2e97114f76166a503b2d0042129be2a0b"]},
 }
