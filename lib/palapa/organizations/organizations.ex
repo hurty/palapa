@@ -166,11 +166,58 @@ defmodule Palapa.Organizations do
     |> Repo.insert()
   end
 
-  def list_member_informations(%Member{} = member) do
-    member
-    |> Ecto.assoc(:member_informations)
-    |> preload(:attachments)
-    |> order_by([i], asc: i.type, asc: i.inserted_at)
-    |> list
+  @doc """
+  List all informations of `member` that are visible to `viewer`.
+
+  It retrieves:
+
+  - Public informations
+  - Private informations where member == viewer
+  - Private informations where viewer is in the members allow-list
+  - Private informations where viewer is in the teams allow-list
+  """
+  def list_member_informations(%Member{} = member, %Member{} = viewer) do
+    query = """
+    SELECT mi.*
+    FROM member_informations AS mi
+    WHERE mi.private = 'false'
+    AND mi.member_id = $1
+
+    UNION
+
+    SELECT mi.*
+    FROM member_informations AS mi
+    WHERE mi.private = 'true'
+    AND mi.member_id = $2
+    AND mi.member_id = $3
+
+    UNION
+
+    SELECT mi.*
+    FROM member_informations AS mi
+    JOIN member_information_visibilities miv ON mi.id = miv.member_information_id
+    WHERE mi.member_id = $4
+    AND mi.private = 'true'
+    AND (miv.member_id = $5
+    OR miv.team_id IN (
+      SELECT DISTINCT tm.team_id
+      FROM teams_members AS tm
+      WHERE tm.member_id = $6
+    ))
+    """
+
+    {:ok, member_id} = Ecto.UUID.dump(member.id)
+    {:ok, viewer_id} = Ecto.UUID.dump(viewer.id)
+
+    Ecto.Adapters.SQL.query!(Repo, query, [
+      member_id,
+      member_id,
+      viewer_id,
+      member_id,
+      viewer_id,
+      viewer_id
+    ])
+    |> Repo.load_raw(MemberInformation)
+    |> Repo.preload(:attachments)
   end
 end

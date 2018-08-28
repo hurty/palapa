@@ -9,7 +9,7 @@ defmodule PalapaWeb.MemberInformationController do
     with :ok <- permit(Organizations, :create_member_information, current_member(), member),
          {:ok, new_info} <-
            Organizations.create_member_information(member, params["member_information"]) do
-      member_informations = Organizations.list_member_informations(member)
+      member_informations = Organizations.list_member_informations(member, current_member())
 
       conn
       |> put_view(PalapaWeb.MemberView)

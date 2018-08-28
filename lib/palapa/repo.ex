@@ -47,6 +47,10 @@ defmodule Palapa.Repo do
     get(module, id)
   end
 
+  def load_raw(result, struct_type) do
+    Enum.map(result.rows, &load(struct_type, {result.columns, &1}))
+  end
+
   # Characters that have special meaning inside the `LIKE` clause of a query.
   #
   # `%` is a wildcard representing multiple characters.
