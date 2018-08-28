@@ -14,7 +14,7 @@ defmodule PalapaWeb.MemberInformationTest do
     {:ok, session: logged_session, workspace: workspace}
   end
 
-  test "a member add a new information on his profile", %{
+  test "a member add a new informations on his profile", %{
     session: session,
     workspace: workspace
   } do
@@ -24,6 +24,23 @@ defmodule PalapaWeb.MemberInformationTest do
     |> fill_in(text_field("member_information_value"), with: "28 rue saint antoine 44000 Nantes")
     |> click(button("Add information"))
     |> assert_has(css(".js-member-information", text: "28 rue saint antoine 44000 Nantes"))
+    |> fill_in(select("member_information_type"), with: "Custom")
+    |> fill_in(text_field("member_information_custom_label"), with: "Social security number")
+    |> fill_in(text_field("member_information_value"), with: "123456")
+    |> click(button("Add information"))
+    |> assert_has(css(".js-member-information", text: "123456"))
+  end
+
+  test "a member cannot add an information with no value", %{
+    session: session,
+    workspace: workspace
+  } do
+    session
+    |> visit(member_path(PalapaWeb.Endpoint, :show, workspace.organization, workspace.gilfoyle))
+    |> click(button("Add information"))
+    |> fill_in(text_field("member_information_value"), with: "")
+    |> click(button("Add information"))
+    |> assert_has(css(".error", text: "Can't be blank"))
   end
 
   test "a member cannot add information on another member profile", %{
