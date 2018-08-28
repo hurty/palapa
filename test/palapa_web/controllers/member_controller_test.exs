@@ -61,6 +61,90 @@ defmodule PalapaWeb.MemberControllerTest do
       conn = get(conn, member_path(conn, :show, org, member))
       assert html_response(conn, 200) =~ "Bertram Gilfoyle"
     end
+
+    test "the member can see all his informations, even private", %{
+      conn: conn,
+      org: org,
+      member: member
+    } do
+      Palapa.Organizations.create_member_information(member, %{
+        type: :email,
+        value: "bertram.gilfoyle@piedpiper.com"
+      })
+
+      Palapa.Organizations.create_member_information(member, %{
+        type: :address,
+        value: "28 rue saint antoine 44000 Nantes",
+        private: true
+      })
+
+      conn = get(conn, member_path(conn, :show, org, member))
+      assert html_response(conn, 200) =~ "bertram.gilfoyle@piedpiper.com"
+      assert html_response(conn, 200) =~ "28 rue saint antoine 44000 Nantes"
+    end
+
+    test "the member can see all public informations on another profile", %{
+      conn: conn,
+      org: org,
+      member: member
+    } do
+      other_member = insert!(:admin, organization: member.organization)
+
+      Palapa.Organizations.create_member_information(other_member, %{
+        type: :email,
+        value: "jared.dunn@piedpiper.com"
+      })
+
+      Palapa.Organizations.create_member_information(other_member, %{
+        type: :address,
+        value: "The basement",
+        private: true
+      })
+
+      conn = get(conn, member_path(conn, :show, org, other_member))
+      assert html_response(conn, 200) =~ "jared.dunn@piedpiper.com"
+      refute html_response(conn, 200) =~ "The basement"
+    end
+
+    test "the member can see private informations that are shared with him", %{
+      conn: conn,
+      org: org,
+      member: member
+    } do
+      jared = insert!(:admin, organization: member.organization)
+
+      Palapa.Organizations.create_member_information(jared, %{
+        "type" => :email,
+        "value" => "jared.dunn@piedpiper.com",
+        "private" => true,
+        "members" => [member]
+      })
+
+      tech_team =
+        insert!(:team,
+          organization: jared.organization,
+          name: "Management",
+          members: [member]
+        )
+
+      Palapa.Organizations.create_member_information(jared, %{
+        "type" => :github,
+        "value" => "jared-knows-code",
+        "private" => true,
+        "teams" => [tech_team]
+      })
+
+      Palapa.Organizations.create_member_information(jared, %{
+        type: :address,
+        value: "The basement",
+        private: true
+      })
+
+      conn = get(conn, member_path(conn, :show, org, jared))
+      assert html_response(conn, 200) =~ "jared.dunn@piedpiper.com"
+      assert html_response(conn, 200) =~ "jared-knows-code"
+      refute html_response(conn, 200) =~ "The basement"
+    end
   end
 
   describe "as admin" do

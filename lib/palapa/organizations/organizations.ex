@@ -167,7 +167,7 @@ defmodule Palapa.Organizations do
   end
 
   @doc """
-  List all informations of `member` that are visible to `viewer`.
+  List all informations of `member` that are visible to the `viewer`.
 
   It retrieves:
 
@@ -209,7 +209,7 @@ defmodule Palapa.Organizations do
     {:ok, member_id} = Ecto.UUID.dump(member.id)
     {:ok, viewer_id} = Ecto.UUID.dump(viewer.id)
 
-    Ecto.Adapters.SQL.query!(Repo, query, [
+    Repo.query!(query, [
       member_id,
       member_id,
       viewer_id,
