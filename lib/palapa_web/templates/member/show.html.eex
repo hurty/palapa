@@ -38,24 +38,23 @@
 
           </div>
           
-          <div data-controller="member-information" 
-            data-member-information-attachment-url="<%= attachment_url(@conn, :create, @current_organization) %>" 
-            data-member-information-types="<%= PalapaWeb.MemberInformationView.types %>"
-            class="p-2 flex-1 p-4">
-            
-            <h2 class="text-grey-darker text-sm py-2">Personal information shared within <%= @current_organization.name %></h2>
-            
-            <div data-target="member-information.list">
-              <%= render "_member_informations.html", assigns %>
+            <div data-controller="member-information" 
+              data-member-information-attachment-url="<%= attachment_url(@conn, :create, @current_organization) %>" 
+              data-member-information-types="<%= PalapaWeb.MemberInformationView.types %>"
+              class="p-2 flex-1 p-4">
+        
+              <div data-target="member-information.list">
+                <%= render "_member_informations.html", assigns %>
+              </div>
+
+              <%= if Palapa.Access.permit?(Palapa.Organizations, :create_member_information, @current_member, @member) do %>
+                <%= render "_member_information_form.html", assigns %>
+                <button class="w-full p-2 mt-2 btn" data-target="member-information.addInformationButton" data-action="click->member-information#showForm">
+                  <i class="fas fa-plus-circle"></i>&nbsp;Add information
+                </button>
+              <% end %>
             </div>
 
-            <%= if Palapa.Access.permit?(Palapa.Organizations, :create_member_information, @current_member, @member) do %>
-              <%= render "_member_information_form.html", assigns %>
-              <button class="w-full p-2 mt-2 btn" data-target="member-information.addInformationButton" data-action="click->member-information#showForm">
-                <i class="fas fa-plus-circle"></i>&nbsp;Add information
-              </button>
-            <% end %>
-          </div>
         </div>
       </div>
     </div>

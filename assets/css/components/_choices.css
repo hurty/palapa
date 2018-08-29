@@ -129,6 +129,7 @@
   font-size: 14px;
   min-height: 44px;
   overflow: hidden;
+  @apply border rounded p-2;
 }
 
 .is-focused .choices__inner, .is-open .choices__inner {
@@ -324,7 +325,14 @@
 }
 
 .choices__input {
-  @apply appearance-none border rounded w-full py-2 leading-normal text-sm;
+  display: inline-block;
+  vertical-align: baseline;
+  font-size: 14px;
+  margin-bottom: 5px;
+  border: 0;
+  border-radius: 0;
+  max-width: 100%;
+  padding: 4px 0 4px 2px;
 }
 
 .choices__input:focus {

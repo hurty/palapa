@@ -15,25 +15,22 @@
     Drag and drop files or click here to upload attachments
   </div>
   
-  <%= checkbox form, :private, class: "field" %>
-  <%= label form, :private, "Visible only to..." %>
+  <%= checkbox form, :private, class: "field", 
+    "data-action": "member-information#toggleVisibilities", "data-target": "member-information.privateCheckbox" %>
+  <%= label form, :private, "Visible only to me and..." %>
 
-  <select name=member_information[visibilities][] multiple="true" data-controller="choice" data-target="choice.select" class="w-full" placeholder="Choose people or teams">
-    <optgroup label="People">
-      <%= for user <- Palapa.Organizations.list_members(@current_organization) do %>
-        <option value="<%= Palapa.Access.GlobalId.create("palapa", user) %>"><%= user.account.name %></option>
-      <% end %>
-    </optgroup>
-
-    <optgroup label="Teams">
-      <%= for team <- Palapa.Teams.where_organization(@current_organization) |> Palapa.Teams.list do %>
-        <option value="<%= Palapa.Access.GlobalId.create("palapa", team) %>"># <%= team.name %></option>
-      <% end %>
-    </optgroup>
-  </select>
+  <div data-target="member-information.visibilities" class="hidden">
+    <%= multiple_select form, :visibilities, 
+      [
+        "People": Enum.map(Palapa.Organizations.list_members(@current_organization), fn m -> [key: m.account.name, value: to_string(Palapa.Access.GlobalId.create("palapa", m))] end),
+        "Teams": Enum.map(Palapa.Teams.where_organization(@current_organization) |> Palapa.Teams.list, fn t -> [key: t.name, value: to_string(Palapa.Access.GlobalId.create("palapa", t))] end)
+      ],
+      "data-controller": "choice", "data-target": "choice.select"
+    %>
+  </div>
 
   <div class="card-actions">
-    <%= submit "Add information", "data-action": "member-information#create", class: "btn btn-green" %>
+    <%= submit "Add information", "data-action": "member-information#create", class: "btn btn-green" %> 
     <%= link "Cancel", to: "#", "data-action": "member-information#hideForm", class: "btn" %>
   </div>
 <% end %>

@@ -49,7 +49,6 @@ defmodule PalapaWeb.MemberInformationTest do
   } do
     session
     |> visit(member_path(PalapaWeb.Endpoint, :show, workspace.organization, workspace.richard))
-    |> assert_has(Wallaby.Query.text("Personal information shared"))
     |> refute_has(button("Add information"))
   end
 end

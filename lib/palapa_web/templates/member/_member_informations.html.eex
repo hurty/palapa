@@ -1,3 +1,14 @@
+<%= if Enum.any?(@member_informations) do %>
+  <h2 class="text-grey-darker text-sm py-2">Personal information shared within <%= @current_organization.name %></h2>
+  
+<% else %>
+  <%= if @current_member.id == @member.id do %>
+    <h2 class="text-grey-darker text-sm py-2">You have not shared any information yet.</h2>
+  <% else %>
+    <h2 class="text-grey-darker text-sm py-2">This member hasn't shared personal information yet.</h2>
+  <% end %>
+<% end %>
+
 <%= for info <- @member_informations do %>
   <div class="js-member-information flex text-sm p-1">
     <div class="w-2/5 bg-grey-lightest rounded py-1 px-2 font-bold overflow-hidden text-grey-darker">

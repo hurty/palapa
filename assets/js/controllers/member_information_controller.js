@@ -2,7 +2,8 @@ import { Controller } from "stimulus"
 import Dropzone from "../vendor/dropzone"
 
 export default class extends Controller {
-  static targets = ["addInformationButton", "form", "list", "type", "customLabel", "value", "attachment"]
+  static targets = ["addInformationButton", "form", "list", "type", "customLabel", "value",
+    "attachment", "visibilities", "privateCheckbox"]
 
   connect() {
     if (this.targets.has("form")) {
@@ -10,15 +11,17 @@ export default class extends Controller {
     }
   }
 
-  displayFields(event) {
-    this.hideCustomLabel()
-    this.hideAttachment()
-    this.setPlaceholder()
+  displayFields() {
+    this.setCustomValuePlaceholder()
+
+    if (this.privateCheckboxTarget.checked)
+      this.show(this.visibilitiesTarget)
 
     if (this.typeTarget.value === "custom") {
-      this.showCustomLabel()
+      this.show(this.customLabelTarget)
+      this.show(this.attachmentTarget)
       this.setAttachmentDropzone()
-      this.showAttachment()
+      this.show(this.attachmentTarget)
     }
   }
 
@@ -70,15 +73,15 @@ export default class extends Controller {
   }
 
   showForm(event) {
-    this.formTarget.classList.remove("hidden")
-    this.addInformationButtonTarget.classList.add("hidden")
+    this.show(this.formTarget)
+    this.hide(this.addInformationButtonTarget)
   }
 
   hideForm(event) {
     if (event)
       event.preventDefault()
-    this.formTarget.classList.add("hidden")
-    this.addInformationButtonTarget.classList.remove("hidden")
+    this.hide(this.formTarget)
+    this.show(this.addInformationButtonTarget)
   }
 
   clearForm() {
@@ -89,25 +92,25 @@ export default class extends Controller {
       this.dropzone.removeAllFiles()
   }
 
-  showCustomLabel() {
-    this.customLabelTarget.classList.remove("hidden")
-  }
-
-  hideCustomLabel() {
-    this.customLabelTarget.classList.add("hidden")
-  }
-
-  setPlaceholder() {
+  setCustomValuePlaceholder() {
     let infoTypes = JSON.parse(this.data.get("types"))
     let placeholder = infoTypes[this.typeTarget.value]["placeholder"]
     this.valueTarget.setAttribute("placeholder", placeholder)
   }
 
-  showAttachment() {
-    this.attachmentTarget.classList.remove("hidden")
+  toggleVisibilities() {
+    this.toggle(this.visibilitiesTarget)
   }
 
-  hideAttachment() {
-    this.attachmentTarget.classList.add("hidden")
+  show(element) {
+    element.classList.remove("hidden")
+  }
+
+  hide(element) {
+    element.classList.add("hidden")
+  }
+
+  toggle(element) {
+    element.classList.toggle("hidden")
   }
 }
