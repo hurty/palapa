@@ -123,7 +123,7 @@ defmodule Palapa.Messages do
   end
 
   def create_comment(%Message{} = message, %Member{} = creator, attrs) do
-    creator = Repo.preload(creator, :organization)
+    creator = Repo.preload(creator, [:organization, :account])
 
     %MessageComment{}
     |> MessageComment.changeset(attrs)
