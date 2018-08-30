@@ -30,6 +30,18 @@ config :palapa, Palapa.Repo,
   password: System.get_env("POSTGRESQL_ADDON_PASSWORD"),
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "1")
 
+config :arc,
+  storage: Arc.Storage.S3,
+  bucket: "palapa"
+
+config :ex_aws,
+  access_key_id: System.get_env("CELLAR_ADDON_KEY_ID"),
+  secret_access_key: System.get_env("CELLAR_ADDON_KEY_SECRET"),
+  s3: [
+    scheme: "https://",
+    host: System.get_env("CELLAR_ADDON_HOST")
+  ]
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
