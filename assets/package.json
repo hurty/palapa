@@ -4,8 +4,8 @@
   "repository": {},
   "license": "MIT",
   "scripts": {
-    "build": "webpack --mode production",
-    "watch": "webpack --mode development --watch"
+    "build": "./node_modules/webpack/bin/webpack.js --mode production",
+    "watch": "./node_modules/webpack/bin/webpack.js --mode development --watch"
   },
   "dependencies": {
     "autosize": "^4.0.2",
