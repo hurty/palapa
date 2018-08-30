@@ -19,14 +19,17 @@ defmodule PalapaWeb.Authentication do
         conn
 
       account_id && organization_id ->
-        account = Accounts.get!(account_id)
-        organization = Accounts.organization_for_account(account, organization_id)
-        member = Accounts.member_for_organization(account, organization)
-        set_assigns(conn, account, organization, member)
+        try do
+          account = Accounts.get!(account_id)
+          organization = Accounts.organization_for_account(account, organization_id)
+          member = Accounts.member_for_organization(account, organization)
+          set_assigns(conn, account, organization, member)
+        rescue
+          _ -> clear_assigns(conn)
+        end
 
       true ->
-        conn
-        |> clear_assigns
+        clear_assigns(conn)
     end
   end
 

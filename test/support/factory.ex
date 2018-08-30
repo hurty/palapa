@@ -1,7 +1,7 @@
 defmodule Palapa.Factory do
   alias Palapa.Repo
 
-  alias Palapa.Organizations.{Organization, Member}
+  alias Palapa.Organizations.{Organization, Member, MemberInformation}
   alias Palapa.Accounts.Account
   alias Palapa.Teams.{Team}
 
@@ -28,7 +28,7 @@ defmodule Palapa.Factory do
   # Factories
   #
 
-  def insert_pied_piper! do
+  def insert_pied_piper!() do
     # -- Organization
     pied_piper = insert!(:organization)
 
@@ -51,6 +51,166 @@ defmodule Palapa.Factory do
       gilfoyle: gilfoyle,
       tech_team: tech_team,
       management_team: management_team
+    }
+  end
+
+  def insert_pied_piper!(:full) do
+    # -- Organization
+    pied_piper = insert!(:organization)
+
+    # -- Members
+    richard =
+      insert!(:owner,
+        organization: pied_piper,
+        member_informations: [
+          %MemberInformation{
+            type: :email,
+            value: "richard.hendricks@piedpiper.com"
+          },
+          %MemberInformation{
+            type: :custom,
+            custom_label: "My best quote",
+            value: "Piss. Kiss my piss. Kiss my piss. (starts dancing)"
+          }
+        ]
+      )
+
+    jared =
+      insert!(:admin,
+        organization: pied_piper,
+        title: "Head of Business Development",
+        member_informations: [
+          %MemberInformation{
+            type: :email,
+            value: "jared.dunn@piedpiper.com"
+          },
+          %MemberInformation{
+            type: :office_hours,
+            value: "Mon-Fri 9-5"
+          },
+          %MemberInformation{
+            type: :custom,
+            custom_label: "My best quote",
+            value: "How would you like to die today, motherfucker? "
+          }
+        ]
+      )
+
+    gilfoyle =
+      insert!(:member,
+        organization: pied_piper,
+        title: "Nerd",
+        member_informations: [
+          %MemberInformation{
+            type: :email,
+            value: "bertram.gilfoyle@piedpiper.com"
+          },
+          %MemberInformation{
+            type: :custom,
+            custom_label: "My best quote",
+            value:
+              "Our process sucks. Your inability to stop us from sucking is a failure of leadership."
+          }
+        ]
+      )
+
+    dinesh =
+      insert!(:member,
+        organization: pied_piper,
+        account: build(:dinesh),
+        title: "Developer",
+        member_informations: [
+          %MemberInformation{
+            type: :email,
+            value: "dinesh.chugtai@piedpiper.com"
+          },
+          %MemberInformation{
+            type: :person_to_contact,
+            value: "My girlfriend 06729824042"
+          },
+          %MemberInformation{
+            type: :twitter,
+            value: "https://twitter.com/dineshisreal"
+          }
+        ]
+      )
+
+    monica =
+      insert!(:member,
+        organization: pied_piper,
+        account: build(:monica),
+        title: "VC",
+        member_informations: [
+          %MemberInformation{
+            type: :email,
+            value: "monica.hall@piedpiper.com"
+          },
+          %MemberInformation{
+            type: :office_hours,
+            value: "Mon-Fri 9-5"
+          }
+        ]
+      )
+
+    laurie = insert!(:member, organization: pied_piper, account: build(:laurie), title: "VC")
+    ron = insert!(:member, organization: pied_piper, account: build(:ron), title: "Lawyer")
+
+    big_head =
+      insert!(:member, organization: pied_piper, account: build(:big_head), title: "Clueless guy")
+
+    erlich =
+      insert!(:member,
+        organization: pied_piper,
+        account: build(:erlich),
+        title: "Roommate",
+        member_informations: [
+          %MemberInformation{
+            type: :email,
+            value: "erlich.bachman@piedpiper.com"
+          },
+          %MemberInformation{
+            type: :person_to_contact,
+            value: "My mum 06729824042"
+          },
+          %MemberInformation{
+            type: :twitter,
+            value: "https://twitter.com/erlichbachman"
+          }
+        ]
+      )
+
+    # -- Teams
+    tech_team =
+      insert!(:team, organization: pied_piper, name: "Tech", members: [richard, gilfoyle, dinesh])
+
+    management_team =
+      insert!(:team,
+        organization: pied_piper,
+        name: "Management",
+        private: true,
+        members: [richard, jared, monica, laurie]
+      )
+
+    vulture_team =
+      insert!(:team,
+        organization: pied_piper,
+        name: "Vulture",
+        members: [monica, big_head, erlich, laurie]
+      )
+
+    %{
+      organization: pied_piper,
+      richard: richard,
+      jared: jared,
+      gilfoyle: gilfoyle,
+      dinesh: dinesh,
+      monica: monica,
+      big_head: big_head,
+      erlich: erlich,
+      ron: ron,
+      tech_team: tech_team,
+      management_team: management_team,
+      vulture_team: vulture_team
     }
   end
 
@@ -82,8 +242,7 @@ defmodule Palapa.Factory do
     %Member{
       organization: build(:organization),
       account: build(:jared),
-      role: :admin,
-      title: "Head of Business Development"
+      role: :admin
     }
   end
 
@@ -107,6 +266,54 @@ defmodule Palapa.Factory do
     %Account{
       name: "Bertram Gilfoyle",
       email: "bertram.gilfoyle@piedpiper.com",
+      password_hash: @password_hash
+    }
+  end
+
+  def build(:dinesh) do
+    %Account{
+      name: "Dinesh Chugtai",
+      email: "dinesh.chugtai@piedpiper.com",
+      password_hash: @password_hash
+    }
+  end
+
+  def build(:monica) do
+    %Account{
+      name: "Monica Hall",
+      email: "monica.hall@piedpiper.com",
+      password_hash: @password_hash
+    }
+  end
+
+  def build(:laurie) do
+    %Account{
+      name: "Laurie Bream",
+      email: "laurie.bream@piedpiper.com",
+      password_hash: @password_hash
+    }
+  end
+
+  def build(:big_head) do
+    %Account{
+      name: "Big Head",
+      email: "nelson.bighetti@piedpiper.com",
+      password_hash: @password_hash
+    }
+  end
+
+  def build(:erlich) do
+    %Account{
+      name: "Erlich Bachman",
+      email: "erlich.bachman@piedpiper.com",
+      password_hash: @password_hash
+    }
+  end
+
+  def build(:ron) do
+    %Account{
+      name: "Ron LaFlamme",
+      email: "ron.laflamme@laflamme-lawyers.com",
       password_hash: @password_hash
     }
   end
