@@ -35,12 +35,9 @@ config :arc,
   bucket: "palapa"
 
 config :ex_aws,
-  access_key_id: System.get_env("CELLAR_ADDON_KEY_ID"),
-  secret_access_key: System.get_env("CELLAR_ADDON_KEY_SECRET"),
-  s3: [
-    scheme: "https://",
-    host: System.get_env("CELLAR_ADDON_HOST")
-  ]
+  access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
+  secret_access_key: System.get_env("AWS_SECRET_KEY"),
+  region: "eu-west-3"
 
 # ## SSL Support
 #

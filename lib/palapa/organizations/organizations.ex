@@ -130,9 +130,14 @@ defmodule Palapa.Organizations do
   end
 
   def update_member(%Member{} = member, attrs) do
-    member
-    |> Member.update_profile_changeset(attrs)
+    member = Repo.preload(member, :account)
+
+    Account.changeset(member.account, attrs)
     |> Repo.update()
+
+    # member
+    # |> Member.update_profile_changeset(attrs)
+    # |> Repo.update()
   end
 
   def member_change(%Member{} = member) do
