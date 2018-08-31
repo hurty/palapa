@@ -30,6 +30,12 @@ config :palapa, Palapa.Repo,
   password: System.get_env("POSTGRESQL_ADDON_PASSWORD"),
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "1")
 
+config :palapa, Palapa.Mailer,
+  adapter: Bamboo.MailgunAdapter,
+  deliver_later_strategy: Palapa.Mailer.DeliverLaterStrategy
+  api_key: System.get_env("MAILGUN_API_KEY"),
+  domain: System.get_env("MAILGUN_DOMAIN"),
+
 config :arc,
   storage: Arc.Storage.S3,
   bucket: "palapa"
