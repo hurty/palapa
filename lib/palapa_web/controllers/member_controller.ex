@@ -96,8 +96,8 @@ defmodule PalapaWeb.MemberController do
 
     with :ok <- permit(Organizations, :edit_member, current_member()) do
       case Organizations.update_member(member, params["member"]) do
-        {:ok, struct} ->
-          redirect(conn, to: member_path(conn, :show, current_organization(), struct))
+        {:ok, _account} ->
+          redirect(conn, to: member_path(conn, :show, current_organization(), member))
 
         {:error, changeset} ->
           render(

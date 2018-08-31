@@ -8,7 +8,7 @@ defmodule PalapaWeb.MemberView do
   end
 
   def avatar(account, size \\ nil) do
-    url = Palapa.Avatar.url({account.avatar, account}, :thumb)
+    url = Palapa.Avatar.url({account.avatar, account}, :thumb, signed: true)
     img_attributes = [alt: account.name, title: account.name]
 
     img_attributes =
