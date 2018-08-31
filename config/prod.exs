@@ -34,7 +34,7 @@ config :palapa, Palapa.Mailer,
   adapter: Bamboo.MailgunAdapter,
   deliver_later_strategy: Palapa.Mailer.DeliverLaterStrategy
   api_key: System.get_env("MAILGUN_API_KEY"),
-  domain: System.get_env("MAILGUN_DOMAIN"),
+  domain: System.get_env("MAILGUN_DOMAIN")
 
 config :arc,
   storage: Arc.Storage.S3,
