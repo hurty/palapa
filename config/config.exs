@@ -15,7 +15,8 @@ config :palapa, PalapaWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "tQLdy7coYkn7is0vc8/NkVWR8dx8F40oC7QWhY2k74ZjKJ22i7nTsOnqp4NUUeDN",
   render_errors: [view: PalapaWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Palapa.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Palapa.PubSub, adapter: Phoenix.PubSub.PG2],
+  instrumenters: [Appsignal.Phoenix.Instrumenter]
 
 config :palapa,
   email_support: "help@palapa.app"
@@ -42,6 +43,14 @@ config :verk,
   node_id: "1",
   redis_url: {:system, "REDIS_URL", "redis://127.0.0.1:6379"}
 
+config :phoenix, :template_engines,
+  eex: Appsignal.Phoenix.Template.EExEngine,
+  exs: Appsignal.Phoenix.Template.ExsEngine
+
+config :palapa, Palapa.Repo, loggers: [Appsignal.Ecto, Ecto.LogEntry]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
+
+import_config "appsignal.exs"

@@ -46,6 +46,8 @@ config :ex_aws,
   secret_access_key: System.get_env("AWS_SECRET_KEY"),
   region: "eu-west-3"
 
+config :appsignal, :config, active: true
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

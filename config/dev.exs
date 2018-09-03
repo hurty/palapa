@@ -62,3 +62,5 @@ config :palapa, Palapa.Repo,
   database: "palapa_dev",
   hostname: "localhost",
   pool_size: 10
+
+# config :appsignal, :config, active: true

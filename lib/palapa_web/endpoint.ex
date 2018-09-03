@@ -1,5 +1,6 @@
 defmodule PalapaWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :palapa
+  use Appsignal.Phoenix
 
   if Application.get_env(:palapa, :sql_sandbox) do
     plug(Phoenix.Ecto.SQL.Sandbox)

@@ -21,6 +21,7 @@ defmodule Palapa.Mixfile do
     [
       mod: {Palapa.Application, []},
       extra_applications: [
+        :appsignal,
         :logger,
         :runtime_tools,
         :timex,
@@ -75,7 +76,8 @@ defmodule Palapa.Mixfile do
       {:scrivener_ecto, "~> 1.0"},
       {:scrivener_html, "~> 1.7"},
       {:verk, "~> 1.4.0"},
-      {:hackney, "~> 1.13.0", override: true}
+      {:hackney, "~> 1.13.0", override: true},
+      {:appsignal, "~> 1.0"}
     ]
   end
 
