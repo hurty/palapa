@@ -85,7 +85,7 @@ defmodule Palapa.Attachments do
 
   # the 'version' can be :original or :thumb
   def url(%Attachment{} = attachment, version \\ :original) do
-    AttachmentUploader.url({attachment.filename, attachment}, version)
+    AttachmentUploader.url({attachment.filename, attachment}, version, signed: true)
   end
 
   def put_attachments(%Ecto.Changeset{} = changeset) do
