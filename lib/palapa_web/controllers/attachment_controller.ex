@@ -45,17 +45,17 @@ defmodule PalapaWeb.AttachmentController do
 
   def original(conn, %{"attachment_id" => id}) do
     attachment = find_attachment(conn, id)
-    redirect(conn, to: Attachments.url(attachment, :original))
+    redirect(conn, external: Attachments.url(attachment, :original))
   end
 
   def thumb(conn, %{"attachment_id" => id}) do
     attachment = find_attachment(conn, id)
-    redirect(conn, to: Attachments.url(attachment, :original))
+    redirect(conn, external: Attachments.url(attachment, :thumb))
   end
 
   def download(conn, %{"attachment_id" => id}) do
     attachment = find_attachment(conn, id)
-    redirect(conn, to: Attachments.url(attachment, :original))
+    redirect(conn, external: Attachments.url(attachment, :original))
   end
 
   defp find_attachment(conn, id) do
