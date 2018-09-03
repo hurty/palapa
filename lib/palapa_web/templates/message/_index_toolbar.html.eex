@@ -4,7 +4,7 @@
       <%= if @selected_team do %> 
         <span title="<%= @selected_team.name %>"><%= @selected_team.name %></span>
       <% else %>
-        <span title="All my teams">All my teams</span>
+        <span title="All messages">All messages</span>
       <% end %>
       <i class="fas fa-angle-down"></i>
     </div>
@@ -12,7 +12,7 @@
     <div data-target="popover.content" class="popover hidden">
       <div data-target="popover.arrow" class="popover__arrow"></div>
       <div class="flex flex-col">
-        <%= link("All my teams", to: message_path(@conn, :index, @current_organization), class: "selector-item truncate selector-item-default") %>
+        <%= link("All messages", to: message_path(@conn, :index, @current_organization), class: "selector-item truncate selector-item-default") %>
         <%= for team <- @teams do %>
           <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
           <%= link(team.name, to: message_path(@conn, :index, @current_organization.id, team_id: team.id), class: item_class, title: team.name) %>
