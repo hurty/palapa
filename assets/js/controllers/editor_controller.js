@@ -239,8 +239,12 @@ export default class extends Controller {
 
     xhr.upload.onprogress = function (event) {
       var progress;
-      progress = event.loaded / event.total * 100;
-      return attachment.setUploadProgress(progress);
+      if (event.total > 0) {
+        progress = event.loaded / event.total * 100;
+        return attachment.setUploadProgress(progress);
+      } else {
+        return attachment.setUploadProgress(100);
+      }
     };
 
     xhr.onload = function () {

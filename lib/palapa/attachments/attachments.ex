@@ -16,7 +16,7 @@ defmodule Palapa.Attachments do
 
   def visible_to(queryable \\ Attachment, %Member{} = member) do
     queryable
-    |> where_organization(member.organization)
+    |> where(organization_id: ^member.organization_id)
   end
 
   def where_organization(queryable \\ Attachment, %Organization{} = organization) do
