@@ -1,8 +1,12 @@
 defmodule PalapaWeb.InvitationView do
   use PalapaWeb, :view
 
-  def fresh?(invitation) do
-    five_minutes_ago = Timex.shift(Timex.now(), minutes: -5)
-    is_nil(invitation.email_sent_at) || Timex.after?(invitation.email_sent_at, five_minutes_ago)
+  def sent_a_minute_ago?(invitation) do
+    if invitation.email_sent_at do
+      a_minute_after_sending = Timex.shift(invitation.email_sent_at, minutes: 1)
+      Timex.after?(Timex.now(), a_minute_after_sending)
+    else
+      false
+    end
   end
 end
