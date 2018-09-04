@@ -1,17 +1,18 @@
 <div class="content article-layout">
   <div class="main-content">
-    <div class="card ">
+    <div class="card">
 
-      <div class="card-toolbar flex justify-between">
-        <%= link(to: member_path(@conn, :index, @current_organization), class: "my-auto text-black font-bold uppercase text-sm") do %>
+      <div class="card-toolbar flex flex-wrap justify-center sm:justify-between">
+        <%= link(to: member_path(@conn, :index, @current_organization), class: "my-auto text-black font-bold uppercase text-sm p-2") do %>
           <i class="fa fa-chevron-circle-left"></i> Back to people & teams
         <% end %>
-        <%= link("Manage my account", to: member_path(@conn, :edit, @current_organization, @member), class: "btn")%>
+
+        <%= link("Manage my account", to: member_path(@conn, :edit, @current_organization, @member), class: "btn") %>
       </div>
 
-      <div class="p-4">
-        <div class="flex flex-wrap mb-8">
-          <div class="sm:w-2/5 p-2 border-r border-grey-lightest">
+      <div class="">
+        <div class="flex flex-col">
+          <div class="sm:w-2/5 sm:p-2 mx-auto my-4">
             <div class="text-center">
               <%= avatar(@member.account) %>
             </div>
@@ -35,14 +36,16 @@
                 <%= PalapaWeb.TeamView.team_tag(@conn, team) %>
               <% end %>
             </div>
-
           </div>
           
-            <div data-controller="member-information" 
-              data-member-information-attachment-url="<%= attachment_url(@conn, :create, @current_organization) %>" 
-              data-member-information-types="<%= PalapaWeb.MemberInformationView.types %>"
-              class="p-2 flex-1 p-4">
-        
+          <div data-controller="member-information" 
+            data-member-information-attachment-url="<%= attachment_url(@conn, :create, @current_organization) %>" 
+            data-member-information-types="<%= PalapaWeb.MemberInformationView.types %>"
+            class="flex-1 p-2 sm:p-4">
+            
+            <hr class="border border-grey-lighter mx-8">
+            
+            <div class="sm:w-2/3 mx-auto">
               <div data-target="member-information.list">
                 <%= render "_member_informations.html", assigns %>
               </div>
@@ -54,14 +57,9 @@
                 </button>
               <% end %>
             </div>
-
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-  <%= if Palapa.Access.permit? Palapa.Teams, :create, @current_member do %>
-    <%= link "Manage member's teams", to: member_team_member_path(@conn, :edit, @current_organization, @member) %>
-  <% end %>

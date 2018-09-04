@@ -68,7 +68,7 @@ defmodule PalapaWeb.MemberInformationView do
 
     ~E"""
     <span class="">
-      <i class="text-green-light <%= information_types[info.type][:icon] %>"></i>&nbsp
+      <i class="<%= information_types[info.type][:icon] %>"></i>&nbsp
 
       <%= if info.type == :custom do %>
         <%= info.custom_label %>
