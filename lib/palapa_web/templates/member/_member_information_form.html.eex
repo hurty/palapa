@@ -31,7 +31,7 @@
       %>
     </div>
   <% else %>
-    <%= checkbox form, :private, class: "field" %>
+    <%= checkbox form, :private, class: "field", "data-target": "member-information.privateCheckbox" %>
     <%= label form, :private, "Visible only to me"%>
   <% end %>
 
