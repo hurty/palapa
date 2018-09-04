@@ -15,19 +15,27 @@
     Drag and drop files or click here to upload attachments
   </div>
   
-  <%= checkbox form, :private, class: "field", 
-    "data-action": "member-information#toggleVisibilities", "data-target": "member-information.privateCheckbox" %>
-  <%= label form, :private, "Visible only to me and..." %>
 
-  <div data-target="member-information.visibilities" class="hidden">
-    <%= multiple_select form, :visibilities, 
-      [
-        "People": Enum.map(Palapa.Organizations.list_members(@current_organization), fn m -> [key: m.account.name, value: to_string(Palapa.Access.GlobalId.create("palapa", m))] end),
-        "Teams": Enum.map(Palapa.Teams.where_organization(@current_organization) |> Palapa.Teams.list, fn t -> [key: t.name, value: to_string(Palapa.Access.GlobalId.create("palapa", t))] end)
-      ],
-      "data-controller": "choice", "data-target": "choice.select"
-    %>
-  </div>
+  <%= if PalapaWeb.MemberInformationView.show_visibility_whitelist?(@current_organization) do %>
+    <%= checkbox form, :private, class: "field", 
+      "data-action": "member-information#toggleVisibilities", "data-target": "member-information.privateCheckbox" %>
+    <%= label form, :private, "Visible only to me and..." %>
+
+    <div data-target="member-information.visibilities" class="hidden">
+      <%= multiple_select form, :visibilities, 
+        [
+          "People": Enum.map(Palapa.Organizations.list_members(@current_organization), fn m -> [key: m.account.name, value: to_string(Palapa.Access.GlobalId.create("palapa", m))] end),
+          "Teams": Enum.map(Palapa.Teams.where_organization(@current_organization) |> Palapa.Teams.list, fn t -> [key: t.name, value: to_string(Palapa.Access.GlobalId.create("palapa", t))] end)
+        ],
+        "data-controller": "choice", "data-target": "choice.select"
+      %>
+    </div>
+  <% else %>
+    <%= checkbox form, :private, class: "field" %>
+    <%= label form, :private, "Visible only to me"%>
+  <% end %>
+
+  <%= %>
 
   <div class="card-actions">
     <%= submit "Add information", "data-action": "member-information#create", class: "btn btn-green" %> 

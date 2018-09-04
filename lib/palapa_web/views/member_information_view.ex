@@ -86,4 +86,9 @@ defmodule PalapaWeb.MemberInformationView do
       text
     end
   end
+
+  def show_visibility_whitelist?(organization) do
+    Palapa.Teams.organization_has_teams?(organization) ||
+      Palapa.Organizations.members_count(organization) > 1
+  end
 end
