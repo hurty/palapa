@@ -9,9 +9,9 @@
 </div>
 
 <div class="field" data-controller="choice">
-  <%= label @form, :members, "Members", class: "label" %>
+  <%= label @form, :members, "Team members", class: "label" %>
   <%= multiple_select @form, :members, PalapaWeb.MemberView.organization_members(@current_organization), 
-    placeholder: "Choose members in the list",
+    placeholder: "Select people",
     "data-target": "choice.select", 
     selected: (@selected_members |> Enum.map(fn m -> m.id end)) || [],
     class: "w-full" %>

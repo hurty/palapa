@@ -6,7 +6,9 @@ export default class extends Controller {
 
   connect() {
     new Choices(this.selectTarget, {
-      removeItemButton: true
+      removeItemButton: true,
+      placeholder: true,
+      placeholderValue: this.data.get("placeholder")
     })
   }
 }
