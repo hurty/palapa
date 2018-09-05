@@ -12,7 +12,7 @@
 
         <div class="flex flex-col">
           <div id="member-profile-main">
-            <div class="sm:w-2/5 sm:p-2 mx-auto my-4">
+            <div class="sm:w-full sm:p-2 mx-auto my-4">
               <div class="text-center">
                 <%= avatar(@member.account) %>
               </div>

@@ -11,12 +11,12 @@
 </h2>
 
 <%= for info <- @member_informations do %>
-  <div class="js-member-information flex flex-col text-sm border-4 border-grey-lighter rounded my-2 <%= if assigns[:new_info] && info.id == @new_info.id do %> border-green-light <% end %>">
-    <div class="bg-grey-lightest p-1 py-2 font-bold overflow-hidden text-grey-darker text-sm">
+  <div class="js-member-information flex flex-col text-sm border border-grey-lighter rounded my-3 <%= if assigns[:new_info] && info.id == @new_info.id do %> border-green-light <% end %>">
+    <div class="bg-grey-lightest p-2 py-2 font-bold overflow-hidden text-grey-darker text-sm">
       <%= PalapaWeb.MemberInformationView.information_type_label(info)%>
     </div>
     
-    <div class="p-1 text-sm overflow-auto bg-white">
+    <div class="p-2 text-sm overflow-auto bg-white">
       <%= PalapaWeb.MemberInformationView.autolink info.value %>
       <%= if Enum.any?(info.attachments) do %>
         <%= for attachment <- info.attachments do %>
