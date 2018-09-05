@@ -32,7 +32,7 @@
           <% end %>
         </div>
 
-        <button class="text-xs text-grey hover:text-grey-darkest" title="Copy to clipboard" data-action="clipboard#copy" data-target="clipboard.copyButton">
+        <button class="text-xs text-grey hover:text-grey-darkest whitespace-no-wrap" title="Copy to clipboard" data-action="clipboard#copy" data-target="clipboard.copyButton">
           <i class="fas fa-copy"></i> Copy
         </button>
       </div>
