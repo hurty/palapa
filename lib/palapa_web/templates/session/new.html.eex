@@ -8,16 +8,16 @@
       <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
         <div class="field">
           <%= label f, :email, "Email address", class: "label" %>
-          <%= email_input f, :email, class: "input" %>
+          <%= email_input f, :email, class: "input", tabindex: 1 %>
         </div>
 
         <div class="field">
           <%= label f, :password, "Password", class: "label" %>
-          <%= password_input f, :password, class: "input" %>
+          <%= password_input f, :password, class: "input", tabindex: 2 %>
         </div>
 
         <div class="card-actions">
-          <%= submit "Log in", class: "btn btn-green" %>
+          <%= submit "Log in", class: "btn btn-green", tabindex: 3 %>
         </div>
       <% end %>
     </div>
