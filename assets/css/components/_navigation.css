@@ -21,7 +21,7 @@
     @apply text-sm text-black font-bold uppercase tracking-wide p-1;
 
     &:hover {
-      @apply border-b-2 border-purple-dark;
+      @apply border-b-2 border-black;
     }
   }
 }
@@ -34,7 +34,7 @@
 
 .header-link--active {
   a {
-    @apply border-b-2 border-purple-dark;
+    @apply border-b-2 border-black;
   }
 }
 
