@@ -1,7 +1,7 @@
-import { Controller } from "stimulus"
+import BaseController from "./base_controller"
 import PopperJs from 'popper.js'
 
-export default class extends Controller {
+export default class extends BaseController {
   static targets = ["textToCopy", "popperContent", "copyButton"]
 
   connect() {
@@ -18,13 +18,13 @@ export default class extends Controller {
     selection.addRange(range);
 
     document.querySelectorAll('.js-clipboard-popper-content').forEach(popperContent => {
-      popperContent.classList.add("hidden")
+      this.hide(popperContent)
     });
 
     try {
       document.execCommand('copy');
       selection.removeAllRanges();
-      this.popperContentTarget.classList.remove("hidden")
+      this.show(this.popperContentTarget)
       this.popover.update()
     } catch (e) {
       console.error("Clipboard copy failed")

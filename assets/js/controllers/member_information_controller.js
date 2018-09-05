@@ -1,7 +1,7 @@
-import { Controller } from "stimulus"
+import BaseController from "./base_controller"
 import Dropzone from "../vendor/dropzone"
 
-export default class extends Controller {
+export default class extends BaseController {
   static targets = ["addInformationButton", "form", "list", "type", "customLabel", "value",
     "attachment", "visibilities", "privateCheckbox"]
 
@@ -100,17 +100,5 @@ export default class extends Controller {
 
   toggleVisibilities() {
     this.toggle(this.visibilitiesTarget)
-  }
-
-  show(element) {
-    element.classList.remove("hidden")
-  }
-
-  hide(element) {
-    element.classList.add("hidden")
-  }
-
-  toggle(element) {
-    element.classList.toggle("hidden")
   }
 }
