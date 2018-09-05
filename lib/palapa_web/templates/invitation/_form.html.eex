@@ -2,10 +2,10 @@
   <p>Enter one email address per line:</p>
   
   <div class="field">
-    <%= textarea form, :email_addresses, value: @prefill, class: "w-full h-24 border" %>
+    <%= textarea form, :email_addresses, value: @prefill, class: "w-full h-24 border", tabindex: 1 %>
   </div>
   
   <div class="card-actions">
-    <%= submit "Send invitations", class: "btn btn-green" %>
+    <%= submit "Send invitations", class: "btn btn-green", tabindex: 1 %>
   </div>
 <% end %>

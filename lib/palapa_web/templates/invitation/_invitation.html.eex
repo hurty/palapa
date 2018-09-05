@@ -6,6 +6,7 @@
       <%= link "Send again", to: invitation_renew_path(@conn, :renew, @current_organization, @invitation), 
         method: "post",
         class: "btn", 
+        tabindex: 1,
         data: [
           target: "invitation.renewButton"
         ]
@@ -14,6 +15,7 @@
     
     <%= link "Cancel", to: invitation_path(@conn, :delete, @current_organization, @invitation), 
       class: "btn btn-purple ml-1",
+      tabindex: 1,
       data: [
         target: "invitation.cancelButton", 
         action: "invitation#cancel", 
