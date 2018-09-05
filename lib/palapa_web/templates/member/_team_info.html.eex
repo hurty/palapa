@@ -14,7 +14,7 @@
         <i class="fas fa-users text-sm"></i> <%= length(@members) %> member(s)
       </div>
 
-      <div class="bg-grey-lighter p-3 rounded-lg text-xs font-bold m-2">
+      <div class="bg-grey-lighter p-3 rounded-lg text-xs font-bold m-2 text-center">
         <%= if Palapa.Teams.member?(@selected_team, @current_member) do %>
           You are a member of this team
           <%= link(to: team_team_membership_path(@conn, :delete, @current_organization, @selected_team), method: :delete, 
@@ -24,7 +24,7 @@
         <% else %>
           <%= if Palapa.Access.permit? Palapa.Teams, :join, @current_member, @selected_team do %>
             You are not member of this team
-            <%= link(to: team_team_membership_path(@conn, :create, @current_organization, @selected_team), method: :post, class: "tag text-xs") do %>
+            <%= link(to: team_team_membership_path(@conn, :create, @current_organization, @selected_team), method: :post, class: "tag text-xs whitespace-no-wrap") do %>
               <i class="text-green fas fa-sign-in-alt"></i>&nbsp;Join
             <% end %>
           <% else %>

@@ -16,15 +16,28 @@
       <%= PalapaWeb.MemberInformationView.information_type_label(info)%>
     </div>
     
-    <div class="p-2 text-sm overflow-auto bg-white">
-      <%= PalapaWeb.MemberInformationView.autolink info.value %>
-      <%= if Enum.any?(info.attachments) do %>
-        <%= for attachment <- info.attachments do %>
-          <%= link to: Palapa.Attachments.url(attachment), target: "_blank", class: "text-blue" do %>
-            <br><i class="fas fa-paperclip"></i>&nbsp;<%= attachment.filename %>
+    <div data-controller="clipboard">
+      <div class="flex justify-between p-2 text-sm bg-white">
+        <div>
+          <div data-target="clipboard.textToCopy">
+          <%= PalapaWeb.MemberInformationView.autolink info.value %>
+          </div>
+
+          <%= if Enum.any?(info.attachments) do %>
+            <%= for attachment <- info.attachments do %>
+              <%= link to: Palapa.Attachments.url(attachment), target: "_blank", class: "text-blue" do %>
+                <br><i class="fas fa-paperclip"></i>&nbsp;<%= attachment.filename %>
+              <% end %>
+            <% end %>
           <% end %>
-        <% end %>
-      <% end %>
+        </div>
+
+        <button class="text-xs text-green" title="Copy to clipboard" data-action="clipboard#copy" data-target="clipboard.copyButton">
+          <i class="fas fa-copy text-green"></i> Copy
+        </button>
+      </div>
+
+      <div data-target="clipboard.popperContent" class="js-clipboard-popper-content hidden mx-1 p-1 bg-green text-xs text-white rounded">Copied!</div>
     </div>
   </div>
 <% end %>
