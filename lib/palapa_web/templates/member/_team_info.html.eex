@@ -2,7 +2,7 @@
   <div class="my-4">
     <div class="flex flex-wrap justify-center self-center">
 
-      <div class="bg-grey-lightest p-3 rounded-lg text-xs font-bold m-2">
+      <div class="bg-grey-lighter p-3 rounded-lg text-xs font-bold m-2">
         <%= if @selected_team.private do %>
           <i class="fas fa-lock text-sm"></i> Private team
         <% else %>
@@ -10,11 +10,11 @@
         <% end %>
       </div>
 
-      <div class="bg-grey-lightest p-3 rounded-lg text-xs font-bold m-2">
+      <div class="bg-grey-lighter p-3 rounded-lg text-xs font-bold m-2">
         <i class="fas fa-users text-sm"></i> <%= length(@members) %> member(s)
       </div>
 
-      <div class="bg-grey-lightest p-3 rounded-lg text-xs font-bold m-2">
+      <div class="bg-grey-lighter p-3 rounded-lg text-xs font-bold m-2">
         <%= if Palapa.Teams.member?(@selected_team, @current_member) do %>
           You are a member of this team
           <%= link(to: team_team_membership_path(@conn, :delete, @current_organization, @selected_team), method: :delete, 

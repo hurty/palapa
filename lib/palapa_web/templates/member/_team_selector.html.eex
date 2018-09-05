@@ -1,14 +1,16 @@
 <%= if Enum.any?(@teams) do %>
   <div class="flex justify-center">
-    <div data-controller="popover" data-target="popover.button">
-      <div class="text-normal text-center border-2 rounded-lg shadow border-black p-2 my-4 font-bold cursor-pointer">
+    <button data-controller="popover" data-target="popover.button" 
+    class="text-normal text-center border border-b-2 border-r-2 rounded-lg border-black p-2 my-4 font-bold cursor-pointer" 
+    tabindex="0" aria-haspopup="true">
+
         <%= if @selected_team do %> 
           <span class="" title="<%= @selected_team.name %>"><%= @selected_team.name %></span>
         <% else %>
           <span class="" title="Everyone in the organization">Everyone in the organization</span>
         <% end %>
         <i class="fas fa-angle-down"></i>
-      </div>
+
       
         <div data-target="popover.content" class="popover hidden">
         <div data-target="popover.arrow" class="popover__arrow"></div>
@@ -22,6 +24,6 @@
           <% end %>
         </div>
       </div>
-    </div>
+    </button>
   </div>
 <% end %>
