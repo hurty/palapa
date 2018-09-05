@@ -32,12 +32,12 @@
           <% end %>
         </div>
 
-        <button class="text-xs text-green" title="Copy to clipboard" data-action="clipboard#copy" data-target="clipboard.copyButton">
-          <i class="fas fa-copy text-green"></i> Copy
+        <button class="text-xs text-grey hover:text-grey-darkest" title="Copy to clipboard" data-action="clipboard#copy" data-target="clipboard.copyButton">
+          <i class="fas fa-copy"></i> Copy
         </button>
       </div>
 
-      <div data-target="clipboard.popperContent" class="js-clipboard-popper-content hidden mx-1 p-1 bg-green text-xs text-white rounded">Copied!</div>
+      <div data-target="clipboard.popperContent" class="js-clipboard-popper-content hidden mx-1 p-1 bg-green text-xs text-white rounded">Copied to clipboard!</div>
     </div>
   </div>
 <% end %>
