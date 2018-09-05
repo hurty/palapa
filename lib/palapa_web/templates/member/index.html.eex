@@ -24,9 +24,11 @@
       </div>
 
       <div class="my-4 p-4">
-        <%= render "_team_info.html", assigns %>
+        <%= render "_team_selector.html", assigns %>
 
+          <%= render "_team_info.html", assigns %>
         <div class="members-grid my-8">
+
           <%= if Enum.any?(@members) do %>
             <%= for member <- @members do %> 
               <%= render @view_module, "_member.html", %{conn: @conn, member: member} %>

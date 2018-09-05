@@ -1,0 +1,27 @@
+<%= if Enum.any?(@teams) do %>
+  <div class="flex justify-center">
+    <div data-controller="popover" data-target="popover.button">
+      <div class="text-normal text-center border-2 rounded-lg shadow border-black p-2 my-4 font-bold cursor-pointer">
+        <%= if @selected_team do %> 
+          <span class="" title="<%= @selected_team.name %>"><%= @selected_team.name %></span>
+        <% else %>
+          <span class="" title="Everyone in the organization">Everyone in the organization</span>
+        <% end %>
+        <i class="fas fa-angle-down"></i>
+      </div>
+      
+        <div data-target="popover.content" class="popover hidden">
+        <div data-target="popover.arrow" class="popover__arrow"></div>
+        <div class="flex flex-col">
+          <%= link("Everyone in the organization", to: member_path(@conn, :index, @current_organization), class: "selector-item truncate selector-item-default") %>
+          <%= for team <- @teams do %>
+            <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
+            <%= link(to: member_path(@conn, :index, @current_organization, team_id: team.id), class: item_class, title: team.name) do %>
+              <%= team.name %><%= if team.private do %>&nbsp;<i class="text-xs text-grey fas fa-lock"></i><% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,5 +1,5 @@
 .tag {
-  @apply px-2 py-1;
+  @apply px-2 py-1 mx-1;
   @apply bg-grey-lighter rounded;
   @apply text-grey-darker text-sm;
 

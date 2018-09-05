@@ -106,7 +106,7 @@
 .breadcrumb-item {
   @apply inline-block;
   @apply text-grey-dark align-middle;
-  max-width: 300px;
+  max-width: 260px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

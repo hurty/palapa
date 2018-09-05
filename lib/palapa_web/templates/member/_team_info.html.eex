@@ -1,53 +1,43 @@
-<%= if Enum.any?(@teams) do %>
+<%= if @selected_team do %>
+  <div class="my-4">
+    <div class="flex flex-wrap justify-center self-center">
 
-  <div class="flex justify-center">
-    <div data-controller="popover" data-target="popover.button" class="btn pl-0 text-sm truncate w-auto text-center rounded-lg">
-      <span class="bg-grey-lighter p-4 border-r mr-2">Choose team</span>
-      <%= if @selected_team do %> 
-        <span class="mx-auto" title="<%= @selected_team.name %>"><%= @selected_team.name %></span>
-      <% else %>
-        <span class="mx-auto" title="Everyone in the organization">Everyone in the organization</span>
-      <% end %>
-      <i class="fas fa-angle-down"></i>
-      
-        <div data-target="popover.content" class="popover hidden">
-        <div data-target="popover.arrow" class="popover__arrow"></div>
-        <div class="flex flex-col">
-          <%= link("Everyone in the organization", to: member_path(@conn, :index, @current_organization), class: "selector-item truncate selector-item-default") %>
-          <%= for team <- @teams do %>
-            <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
-            <%= link(to: member_path(@conn, :index, @current_organization, team_id: team.id), class: item_class, title: team.name) do %>
-              <%= team.name %><%= if team.private do %>&nbsp;<i class="text-xs text-grey fas fa-lock"></i><% end %>
-            <% end %>
-          <% end %>
-        </div>
+      <div class="bg-grey-lightest p-3 rounded-lg text-xs font-bold m-2">
+        <%= if @selected_team.private do %>
+          <i class="fas fa-lock text-sm"></i> Private team
+        <% else %>
+          <i class="fas fa-door-open text-sm"></i> Public team
+        <% end %>
       </div>
+
+      <div class="bg-grey-lightest p-3 rounded-lg text-xs font-bold m-2">
+        <i class="fas fa-users text-sm"></i> <%= length(@members) %> member(s)
+      </div>
+
+      <div class="bg-grey-lightest p-3 rounded-lg text-xs font-bold m-2">
+        <%= if Palapa.Teams.member?(@selected_team, @current_member) do %>
+          You are a member of this team
+          <%= link(to: team_team_membership_path(@conn, :delete, @current_organization, @selected_team), method: :delete, 
+            class: "tag text-xs", data: [confirm: "Are you sure you want to leave this team?"]) do %>
+            <i class="text-black fas fa-sign-out-alt"></i>&nbsp;Leave
+          <% end %>
+        <% else %>
+          <%= if Palapa.Access.permit? Palapa.Teams, :join, @current_member, @selected_team do %>
+            You are not member of this team
+            <%= link(to: team_team_membership_path(@conn, :create, @current_organization, @selected_team), method: :post, class: "tag text-xs") do %>
+              <i class="text-green fas fa-sign-in-alt"></i>&nbsp;Join
+            <% end %>
+          <% else %>
+            Only an admin can invite you
+          <% end %>
+        <% end %>
+      </div>
+
+      <%= if Palapa.Access.permit? Palapa.Teams, :edit, @current_member, @selected_team do %>
+        <div class="m-2 self-center">
+          <%= link "Edit team", to: team_path(@conn, :edit, @current_organization, @selected_team), class: "btn" %>
+        </div>
+      <% end %>
     </div>
   </div>
-  
-  <%= if @selected_team do %>
-    <div class="flex flex-wrap justify-center mt-4 p-2 pb-4 pt-4 border-b border-t border-grey-lighter text-sm">
-      <div class="mr-8">
-        <div class="text-sm uppercase"><span class="font-bold"><%= length(@members) %> member(s)</div>
-        <div class="text-sm uppercase"><span class="font-bold">
-          <%= if @selected_team.private do %>
-            <i class="fas fa-lock text-red-light"></i> Private team
-          <% else %>
-           Public team
-          <% end %>
-        </div>
-        
-      </div>
-
-      <div class="text-left">
-        <%= if Palapa.Access.permit? Palapa.Teams, :edit, @current_member, @selected_team do %>
-          <div class="text-sm text-grey-dark"><span class="font-bold">
-          <%= link "Edit this team", to: team_path(@conn, :edit, @current_organization, @selected_team), class: "text-green" %>
-          </div>
-        <% end %>
-        <%= render "_team_membership.html", assigns %>
-      </div>
-    </div>
-  <% end %>
-
 <% end %>
