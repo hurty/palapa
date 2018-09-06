@@ -13,6 +13,14 @@ defmodule Palapa.Organizations.Policy do
     member.id == target_member.id
   end
 
+  def authorize(:update_member_information, %Member{} = member, target_member) do
+    member.id == target_member.id
+  end
+
+  def authorize(:delete_member_information, %Member{} = member, target_member) do
+    member.id == target_member.id || member.role in [:owner, :admin]
+  end
+
   # Catch-all: deny everything else
   def authorize(_, _, _), do: false
 end

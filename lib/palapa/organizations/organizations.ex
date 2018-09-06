@@ -225,4 +225,12 @@ defmodule Palapa.Organizations do
     |> Repo.load_raw(MemberInformation)
     |> Repo.preload(:attachments)
   end
+
+  def get_member_information!(id) do
+    Repo.get!(MemberInformation, id)
+  end
+
+  def delete_member_information(%MemberInformation{} = member_information) do
+    Repo.delete(member_information)
+  end
 end

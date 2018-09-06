@@ -1,43 +1,17 @@
-<h2 class="text-grey-darker text-sm py-2 text-center">
-  <%= if Enum.any?(@member_informations) do %>
-    Personal information shared within <%= @current_organization.name %>
-  <% else %>
-    <%= if @current_member.id == @member.id do %>
-      You have not shared any information yet.
-    <% else %>
-      This member hasn't shared personal information yet.
+<div data-controller="member-informations"
+  data-member-informations-attachment-url="<%= attachment_url(@conn, :create, @current_organization) %>" 
+  data-member-informations-types="<%= PalapaWeb.MemberInformationView.types %>"
+  class="flex-1 p-2 sm:p-4">
+  
+  <div class="sm:w-2/3 mx-auto">
+    <%= render "_member_informations_list.html", assigns %>
+
+    <%= if Palapa.Access.permit?(Palapa.Organizations, :create_member_information, @current_member, @member) do %>
+      <%= render "_member_information_form.html", assigns %>
+
+      <button class="w-full p-2 mt-2 btn" data-target="member-informations.addInformationButton" data-action="click->member-informations#showForm">
+        <i class="fas fa-plus-circle"></i>&nbsp;Add information
+      </button>
     <% end %>
-  <% end %>
-</h2>
-
-<%= for info <- @member_informations do %>
-  <div class="js-member-information flex flex-col text-sm border border-grey-lighter rounded my-3 <%= if assigns[:new_info] && info.id == @new_info.id do %> border-green-light <% end %>">
-    <div class="bg-grey-lightest p-2 py-2 font-bold overflow-hidden text-grey-darker text-sm">
-      <%= PalapaWeb.MemberInformationView.information_type_label(info)%>
-    </div>
-    
-    <div data-controller="clipboard">
-      <div class="flex justify-between p-2 text-sm bg-white">
-        <div>
-          <div data-target="clipboard.textToCopy">
-          <%= PalapaWeb.MemberInformationView.autolink info.value %>
-          </div>
-
-          <%= if Enum.any?(info.attachments) do %>
-            <%= for attachment <- info.attachments do %>
-              <%= link to: Palapa.Attachments.url(attachment), target: "_blank", class: "text-blue" do %>
-                <br><i class="fas fa-paperclip"></i>&nbsp;<%= attachment.filename %>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-
-        <button class="text-xs text-grey hover:text-grey-darkest whitespace-no-wrap" title="Copy to clipboard" data-action="clipboard#copy" data-target="clipboard.copyButton">
-          <i class="fas fa-copy"></i> Copy
-        </button>
-      </div>
-
-      <div data-target="clipboard.popperContent" class="js-clipboard-popper-content hidden mx-1 p-1 bg-green text-xs text-white rounded">Copied to clipboard!</div>
-    </div>
   </div>
-<% end %>
+</div>
