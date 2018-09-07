@@ -10,7 +10,7 @@ export default class extends BaseController {
       return;
     }
 
-    PA.remoteLink(event.target).then(html => {
+    PA.remoteLink(event.target, { method: "delete" }).then(html => {
       this.element.remove()
     })
   }

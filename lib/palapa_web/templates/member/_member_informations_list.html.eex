@@ -37,7 +37,7 @@
                     <% end %>
                   <% end %>
 
-                  <%= link to: member_member_information_path(@conn, :delete, @current_organization, @member, info), method: :delete,
+                  <%= link to: member_member_information_path(@conn, :delete, @current_organization, @member, info),
                   data: [confirm: "Are you sure you want to delete this information?", action: "member-information#delete"], class: "popover__link" do %>
                     <i class="fas fa-trash text-red-light"></i>&nbsp;Delete
                   <% end %>
