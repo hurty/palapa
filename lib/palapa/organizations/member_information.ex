@@ -38,6 +38,16 @@ defmodule Palapa.Organizations.MemberInformation do
     |> validate_custom_information
   end
 
+  def update_changeset(%__MODULE__{} = member_information, attrs) do
+    member_information
+    |> cast(attrs, [:type, :custom_label, :value, :private])
+    |> put_attachments(attrs)
+    |> put_teams_visibilities(attrs)
+    |> put_members_visibilities(attrs)
+    |> validate_required([:type, :value])
+    |> validate_custom_information
+  end
+
   defp put_attachments(changeset, attrs) do
     if is_list(attrs["attachments"]) do
       attachments = Attachments.list_attachments_from_signed_ids(attrs["attachments"])

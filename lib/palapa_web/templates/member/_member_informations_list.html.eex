@@ -1,4 +1,4 @@
-<div data-target="member-informations.list">
+<div id="member-informations-list">
   <h2 class="text-grey-darker text-sm py-2 text-center">
     <%= if Enum.any?(@member_informations) do %>
       Personal information shared within <%= @current_organization.name %>
@@ -12,66 +12,9 @@
   </h2>
 
   <%= for info <- @member_informations do %>
-    <div class="js-member-information flex flex-col text-sm border border-grey-lighter rounded my-3 <%= if assigns[:new_info] && info.id == @new_info.id do %> shadow <% end %>"
-      data-controller="member-information" 
+  <div data-controller="member-information"
       data-action="mouseover->member-information#showCopyButton focus->member-information#showCopyButton mouseout->member-information#hideCopyButton blur->member-information#hideCopyButton">
-      <div class="flex justify-between items-center bg-grey-lightest px-2 py-1 font-bold text-grey-darker text-sm">
-        <div>
-          <%= PalapaWeb.MemberInformationView.information_type_label(info) %>
-        </div>
-
-        <div>
-          <%= if Palapa.Access.permit?(Palapa.Organizations, :delete_member_information, @current_member, @member) do %>
-            <div data-controller="popover">
-              <button data-target="popover.button" class="m-1 bg-grey rounded-full h-6 w-6 flex items-center justify-center bg-grey text-blue-darker font-bold border-2 border-transparent hover:border-grey-dark">
-                <i class="fas fa-ellipsis-h"></i>
-              </button>
-
-              <div data-target="popover.content" class="popover hidden">
-                <div data-target="popover.arrow" class="popover__arrow"></div>
-                <nav class="flex flex-col">
-                  <%= if Palapa.Access.permit?(Palapa.Organizations, :update_member_information, @current_member, @member) do %>
-                    <%= link to: member_member_information_path(@conn, :update, @current_organization, @member, info), 
-                    data: [action: ""], class: "popover__link" do %>
-                      <i class="fas fa-pencil-alt"></i>&nbsp;Edit
-                    <% end %>
-                  <% end %>
-
-                  <%= link to: member_member_information_path(@conn, :delete, @current_organization, @member, info),
-                  data: [confirm: "Are you sure you want to delete this information?", action: "member-information#delete"], class: "popover__link" do %>
-                    <i class="fas fa-trash text-red-light"></i>&nbsp;Delete
-                  <% end %>
-                </nav>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
-      
-      <div data-controller="clipboard">
-        <div class="flex justify-between p-2 text-sm bg-white">
-          <div>
-            <div data-target="clipboard.textToCopy">
-            <%= PalapaWeb.MemberInformationView.autolink info.value %>
-            </div>
-
-            <%= if Enum.any?(info.attachments) do %>
-              <%= for attachment <- info.attachments do %>
-                <%= link to: Palapa.Attachments.url(attachment), target: "_blank", class: "text-blue" do %>
-                  <br><i class="fas fa-paperclip"></i>&nbsp;<%= attachment.filename %>
-                <% end %>
-              <% end %>
-            <% end %>
-          </div>
-
-          <button class="hidden text-xs text-grey hover:text-grey-darkest whitespace-no-wrap" title="Copy to clipboard" 
-          data-action="clipboard#copy" data-target="clipboard.copyButton member-information.copyButton">
-            <i class="fas fa-copy"></i> Copy
-          </button>
-        </div>
-
-        <div data-target="clipboard.popperContent" class="js-clipboard-popper-content hidden mx-1 p-1 bg-green text-xs text-white rounded">Copied to clipboard!</div>
-      </div>
-    </div>
+    <%= render "_member_information.html", Map.put(assigns, :info, info) %>
+  </div>
   <% end %>
 </div>

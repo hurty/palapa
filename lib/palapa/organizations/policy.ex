@@ -1,5 +1,6 @@
 defmodule Palapa.Organizations.Policy do
   use Palapa.Policy
+  alias Palapa.Organizations.MemberInformation
 
   # Anybody can see the list of members within an organization
   def authorize(:list_members, %Member{}, _), do: true
@@ -9,16 +10,28 @@ defmodule Palapa.Organizations.Policy do
 
   def authorize(:edit_member, %Member{}, _), do: true
 
-  def authorize(:create_member_information, %Member{} = member, target_member) do
+  def authorize(
+        :create_member_information,
+        %Member{} = member,
+        %Member{} = target_member
+      ) do
     member.id == target_member.id
   end
 
-  def authorize(:update_member_information, %Member{} = member, target_member) do
-    member.id == target_member.id
+  def authorize(
+        :update_member_information,
+        %Member{} = member,
+        %MemberInformation{} = member_information
+      ) do
+    member.id == member_information.member_id
   end
 
-  def authorize(:delete_member_information, %Member{} = member, target_member) do
-    member.id == target_member.id || member.role in [:owner, :admin]
+  def authorize(
+        :delete_member_information,
+        %Member{} = member,
+        %MemberInformation{} = member_information
+      ) do
+    member.id == member_information.member_id || member.role in [:owner, :admin]
   end
 
   # Catch-all: deny everything else

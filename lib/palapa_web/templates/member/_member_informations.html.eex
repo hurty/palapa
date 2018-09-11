@@ -1,16 +1,22 @@
-<div data-controller="member-informations"
-  data-member-informations-attachment-url="<%= attachment_url(@conn, :create, @current_organization) %>" 
-  data-member-informations-types="<%= PalapaWeb.MemberInformationView.types %>"
-  class="flex-1 p-2 sm:p-4">
-  
+<div data-controller="member-informations" class="flex-1 p-2 sm:p-4">
   <div class="sm:w-2/3 mx-auto">
     <%= render "_member_informations_list.html", assigns %>
 
     <%= if Palapa.Access.permit?(Palapa.Organizations, :create_member_information, @current_member, @member) do %>
-      <%= render "_member_information_form.html", assigns %>
+      <div data-target="member-informations.form" class="hidden">
+        <%= render "_member_information_form.html", 
+          conn: @conn, 
+          current_organization: @current_organization, 
+          member_information_changeset: @member_information_changeset,
+          action: member_member_information_path(@conn, :create, @current_organization, @member),
+          action_type: :create
+        %>
+      </div>
 
-      <button class="w-full p-2 mt-2 btn" data-target="member-informations.addInformationButton" data-action="click->member-informations#showForm">
-        <i class="fas fa-plus-circle"></i>&nbsp;Add information
+      <button class="w-full p-2 mt-2 btn" 
+        data-target="member-informations.addInformationButton" 
+        data-action="click->member-informations#showForm">
+          <i class="fas fa-plus-circle"></i>&nbsp;Add information
       </button>
     <% end %>
   </div>

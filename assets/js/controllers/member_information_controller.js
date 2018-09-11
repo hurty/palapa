@@ -1,7 +1,7 @@
 import BaseController from "./base_controller"
 
 export default class extends BaseController {
-  static targets = ["copyButton"]
+  static targets = ["content", "copyButton", "formContainer"]
 
   delete(event) {
     event.preventDefault()
@@ -15,11 +15,51 @@ export default class extends BaseController {
     })
   }
 
+  edit(event) {
+    event.preventDefault()
+    PA.remoteLink(event.target).then(html => {
+      this.formContainerTarget.innerHTML = html
+      this.show(this.formContainerTarget)
+      this.hide(this.contentTarget)
+    })
+  }
+
+  update(event) {
+    event.preventDefault()
+    event.target.disabled = true
+
+    let form = event.target.closest("form")
+    let url = form.getAttribute("action")
+
+    PA.fetchHTML(url, {
+      method: "put",
+      body: new FormData(form)
+    }).then(html => {
+      this.element.innerHTML = html
+      event.target.disabled = false
+    }).catch(error => {
+      event.target.disabled = false
+      if (error.response && error.response.status === 422) {
+        error.response.text().then(html => {
+          this.element.innerHTML = html
+        })
+      }
+    })
+  }
+
   showCopyButton() {
-    this.show(this.copyButtonTarget)
+    if (this.targets.has("copyButton"))
+      this.show(this.copyButtonTarget)
   }
 
   hideCopyButton() {
-    this.hide(this.copyButtonTarget)
+    if (this.targets.has("copyButton"))
+      this.hide(this.copyButtonTarget)
+  }
+
+  hideUpdateForm(event) {
+    event.preventDefault()
+    this.hide(this.formContainerTarget)
+    this.show(this.contentTarget)
   }
 }

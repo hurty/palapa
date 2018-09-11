@@ -227,7 +227,14 @@ defmodule Palapa.Organizations do
   end
 
   def get_member_information!(id) do
-    Repo.get!(MemberInformation, id)
+    MemberInformation
+    |> preload([:attachments, :teams, :members])
+    |> Repo.get!(id)
+  end
+
+  def update_member_information(member_information, attrs) do
+    MemberInformation.update_changeset(member_information, attrs)
+    |> Repo.update()
   end
 
   def delete_member_information(%MemberInformation{} = member_information) do
