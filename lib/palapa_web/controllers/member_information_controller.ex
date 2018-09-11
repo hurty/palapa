@@ -77,6 +77,7 @@ defmodule PalapaWeb.MemberInformationController do
         {:error, changeset} ->
           conn
           |> put_view(PalapaWeb.MemberView)
+          |> put_status(:unprocessable_entity)
           |> render(
             "_member_information_form.html",
             layout: false,

@@ -41,7 +41,7 @@ export default class extends BaseController {
       event.target.disabled = false
       if (error.response && error.response.status === 422) {
         error.response.text().then(html => {
-          this.element.innerHTML = html
+          this.formContainerTarget.innerHTML = html
         })
       }
     })
