@@ -153,20 +153,6 @@ defmodule Palapa.Organizations do
   end
 
   def create_member_information(%Member{} = member, attrs) do
-    attrs =
-      if attrs["visibilities"] do
-        teams = Palapa.Access.GlobalId.locate_all(attrs["visibilities"], Palapa.Teams.Team)
-
-        members =
-          Palapa.Access.GlobalId.locate_all(attrs["visibilities"], Palapa.Organizations.Member)
-
-        attrs
-        |> Map.put("teams", teams)
-        |> Map.put("members", members)
-      else
-        attrs
-      end
-
     MemberInformation.changeset(%MemberInformation{}, member, attrs)
     |> Repo.insert()
   end
