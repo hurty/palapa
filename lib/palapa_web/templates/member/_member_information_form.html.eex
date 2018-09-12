@@ -14,8 +14,12 @@
   <%= text_input form, :value, placeholder: "Value", class: "field input", "data-target": "member-information-form.value" %>
   <%= error_tag form, :value %>
   
-  <div class="hidden field input" data-target="member-information-form.attachment">
-    Drag and drop files or click here to upload attachments
+  <div class="hidden field input dropzone" data-target="member-information-form.attachment">
+    <div class="dz-message" data-dz-message>
+      <i class="fas fa-paperclip text-grey text-xl"></i>
+      <div>Attachments</div>
+      <div>Click here or drag and drop some files</div>
+    </div>
   </div>
   
   <%= if PalapaWeb.MemberInformationView.show_visibility_whitelist?(@current_organization) do %>

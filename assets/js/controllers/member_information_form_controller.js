@@ -1,11 +1,17 @@
 import BaseController from "./base_controller"
-import Dropzone from "../vendor/dropzone"
+import Dropzone from "dropzone"
 
 export default class extends BaseController {
   static targets = ["type", "customLabel", "value", "attachment", "visibilities", "privateCheckbox"]
 
   connect() {
+    Dropzone.autoDiscover = false;
     this.displayFields()
+    this.setAttachmentDropzone()
+  }
+
+  disconnect() {
+    this.dropzone.removeAllFiles()
   }
 
   displayFields() {
@@ -16,7 +22,6 @@ export default class extends BaseController {
 
     if (this.typeTarget.value === "custom") {
       this.show(this.customLabelTarget)
-      this.setAttachmentDropzone()
       this.show(this.attachmentTarget)
 
     } else {
@@ -27,15 +32,13 @@ export default class extends BaseController {
   }
 
   setAttachmentDropzone() {
-    if (this.dropzone != undefined) {
-      return
-    }
 
     this.dropzone = new Dropzone(this.attachmentTarget, {
       url: this.data.get("attachment-url"),
       headers: {
         "X-CSRF-Token": PA.getMetaValue("csrf-token")
-      }
+      },
+      addRemoveLinks: true
     });
 
     let self = this
@@ -45,14 +48,13 @@ export default class extends BaseController {
       attachmentIdElement.setAttribute("type", "hidden")
       attachmentIdElement.setAttribute("name", "member_information[attachments][]")
       attachmentIdElement.setAttribute("value", response.attachment_sid)
-      self.formTarget.appendChild(attachmentIdElement)
+      self.element.appendChild(attachmentIdElement)
     });
   }
 
   clearForm() {
     this.element.querySelectorAll(".input").forEach((node, index) => { node.value = null })
     this.element.querySelectorAll(".error").forEach((node, index) => { node.remove() })
-    this.removeAllFiles()
   }
 
   removeAllFiles() {
