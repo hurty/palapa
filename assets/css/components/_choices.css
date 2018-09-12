@@ -178,7 +178,7 @@
   font-weight: 500;
   margin-right: 3.75px;
   margin-bottom: 3.75px;
-  @apply bg-grey-dark;
+  @apply bg-green;
   color: #FFFFFF;
   word-break: break-all;
 }
@@ -193,8 +193,7 @@
 }
 
 .choices__list--multiple .choices__item.is-highlighted {
-  background-color: #00a5bb;
-  border: 1px solid #008fa1;
+  @apply bg-green-light;
 }
 
 .is-disabled .choices__list--multiple .choices__item {
@@ -305,8 +304,8 @@
   font-weight: 600;
   font-size: 12px;
   padding: 10px;
-  border-bottom: 1px solid #f7f7f7;
-  color: gray;
+  @apply border-t border-grey-light;
+  @apply text-green font-bold;
 }
 
 .choices__button {
