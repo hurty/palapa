@@ -8,7 +8,11 @@
         <%= PalapaWeb.MemberInformationView.information_type_label(@info) %>
       </div>
 
-      <div>
+      <div class="flex justify-between items-center">
+        <%= if @info.private do %>
+          <i class="fas fa-lock text-grey mx-2" title="<%= PalapaWeb.MemberInformationView.visibility_text(@info) %>"></i>
+        <% end %>
+
         <%= if Palapa.Access.permit?(Palapa.Organizations, :delete_member_information, @current_member, @info) do %>
           <div data-controller="popover">
             <button data-target="popover.button" class="m-1 bg-grey rounded-full h-6 w-6 flex items-center justify-center bg-grey text-blue-darker font-bold border-2 border-transparent hover:border-grey-dark">

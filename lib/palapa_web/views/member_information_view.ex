@@ -91,4 +91,24 @@ defmodule PalapaWeb.MemberInformationView do
     Palapa.Teams.organization_has_teams?(organization) ||
       Palapa.Organizations.members_count(organization) > 1
   end
+
+  def visibility_text(%MemberInformation{} = information) do
+    IO.inspect(information)
+    nb_teams = length(information.teams)
+    nb_members = length(information.members)
+
+    cond do
+      nb_teams > 0 && nb_members > 0 ->
+        "This information is only visible to you, #{nb_teams} team(s) and #{nb_members} other member(s)"
+
+      nb_teams > 0 && nb_members == 0 ->
+        "This information is only visible to you and #{nb_teams} team(s)"
+
+      nb_teams == 0 && nb_members > 0 ->
+        "This information is only visible to you and #{nb_members} other member(s)"
+
+      true ->
+        "This information is only visible to you"
+    end
+  end
 end

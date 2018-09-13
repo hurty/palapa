@@ -209,7 +209,7 @@ defmodule Palapa.Organizations do
       viewer_id
     ])
     |> Repo.load_raw(MemberInformation)
-    |> Repo.preload(:attachments)
+    |> Repo.preload([:attachments, :teams, :members])
   end
 
   def get_member_information!(id) do
