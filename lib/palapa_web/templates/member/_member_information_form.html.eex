@@ -1,5 +1,5 @@
 <%= form_for @member_information_changeset, @action, 
-  [multipart: true, class: "border border-grey-lighter rounded p-2 text-sm bg-grey-lightest",
+  [multipart: true, class: "border border-grey-lighter rounded p-2 text-sm bg-grey-lightest", autocomplete: "off",
   "data-controller": "member-information-form",
   "data-member-information-form-types":  PalapaWeb.MemberInformationView.types,
   "data-member-information-form-attachment-url": attachment_url(@conn, :create, @current_organization)], fn form -> %> 
