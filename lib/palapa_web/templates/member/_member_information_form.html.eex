@@ -1,71 +1,82 @@
 <%= form_for @member_information_changeset, @action, 
-  [multipart: true, class: "border border-grey-lighter rounded p-2 text-sm bg-grey-lightest", autocomplete: "off",
+  [multipart: true, autocomplete: "off",
   "data-controller": "member-information-form",
   "data-member-information-form-types":  PalapaWeb.MemberInformationView.types,
   "data-member-information-form-attachment-url": attachment_url(@conn, :create, @current_organization), 
   ], fn form -> %> 
 
-  <%= select form, :type, PalapaWeb.MemberInformationView.information_types_for_select, class: "field w-full", 
-    "data-target": "member-information-form.type", "data-action": "member-information-form#displayFields" %>
-  <%= error_tag form, :type %>
-  
-  <%= text_input form, :custom_label, placeholder: "Custom label", class: "hidden field input", "data-target": "member-information-form.customLabel" %>
-  <%= error_tag form, :custom_label %>
+  <div class="<%= if @action_type == :create do %>hidden<% end %> border border-grey-lighter rounded p-2 text-sm bg-grey-lightest"
+  data-target="member-information-form.formContent">
+    <%= select form, :type, PalapaWeb.MemberInformationView.information_types_for_select, class: "field w-full", 
+      "data-target": "member-information-form.type", "data-action": "member-information-form#displayFields" %>
+    <%= error_tag form, :type %>
+    
+    <%= text_input form, :custom_label, placeholder: "Custom label", class: "hidden field input", "data-target": "member-information-form.customLabel" %>
+    <%= error_tag form, :custom_label %>
 
-  <%= text_input form, :value, placeholder: "Value", class: "field input", "data-target": "member-information-form.value" %>
-  <%= error_tag form, :value %>
-  
-  <div class="hidden field input dropzone" data-target="member-information-form.attachment">
-    <div class="dz-message" data-dz-message>
-      <i class="fas fa-paperclip text-grey text-xl"></i>
-      <div>Attachments</div>
-      <div>Click here or drag and drop some files</div>
+    <%= text_input form, :value, placeholder: "Value", class: "field input", "data-target": "member-information-form.value" %>
+    <%= error_tag form, :value %>
+    
+    <div class="hidden field input dropzone" data-target="member-information-form.attachment">
+      <div class="dz-message" data-dz-message>
+        <i class="fas fa-paperclip text-grey text-xl"></i>
+        <div>Attachments</div>
+        <div>Click here or drag and drop some files</div>
+      </div>
     </div>
-  </div>
 
-  <div>
-    <%= for attachment <- Ecto.Changeset.get_field(@member_information_changeset, :attachments) do %>
-      <input type="hidden" 
-        data-target="member-information-form.attachmentHiddenInput"
-        name="member_information[attachments][]"
-        value="<%= Palapa.Access.generate_signed_id(attachment.id) %>"
-        data-filename="<%= attachment.filename %>"
-        data-size="<%= attachment.byte_size %>"
-        data-is-image="<%= Palapa.Attachments.image?(attachment) %>"
-        data-thumb-url="<%= attachment_attachment_url(@conn, :thumb, attachment.organization_id, attachment.id, attachment.filename ) %>" /> 
-    <% end %>
-  </div>
-  
-  <%= if PalapaWeb.MemberInformationView.show_visibility_whitelist?(@current_organization) do %>
     <div>
-      <%= checkbox form, :private, class: "field", id: "member_information_private_#{Ecto.Changeset.get_field(@member_information_changeset, :id)}",
-      "data-action": "member-information-form#toggleVisibilities", "data-target": "member-information-form.privateCheckbox" %>
-      <%= label form, "private_#{Ecto.Changeset.get_field(@member_information_changeset, :id)}", "Visible only to me and..." %>
+      <%= for attachment <- Ecto.Changeset.get_field(@member_information_changeset, :attachments) do %>
+        <input type="hidden" 
+          data-target="member-information-form.attachmentHiddenInput"
+          name="member_information[attachments][]"
+          value="<%= Palapa.Access.generate_signed_id(attachment.id) %>"
+          data-filename="<%= attachment.filename %>"
+          data-size="<%= attachment.byte_size %>"
+          data-is-image="<%= Palapa.Attachments.image?(attachment) %>"
+          data-thumb-url="<%= attachment_attachment_url(@conn, :thumb, attachment.organization_id, attachment.id, attachment.filename ) %>" /> 
+      <% end %>
     </div>
+    
+    <%= if PalapaWeb.MemberInformationView.show_visibility_whitelist?(@current_organization) do %>
+      <div>
+        <%= checkbox form, :private, class: "field", id: "member_information_private_#{Ecto.Changeset.get_field(@member_information_changeset, :id)}",
+        "data-action": "member-information-form#toggleVisibilities", "data-target": "member-information-form.privateCheckbox" %>
+        <%= label form, "private_#{Ecto.Changeset.get_field(@member_information_changeset, :id)}", "Visible only to me and..." %>
+      </div>
 
-    <div data-target="member-information-form.visibilities" class="hidden">
-      <%= multiple_select form, :visibilities, 
-        [
-          "People": Enum.map(Palapa.Organizations.list_members(@current_organization), fn m -> [key: m.account.name, value: to_string(Palapa.Access.GlobalId.create("palapa", m))] end),
-          "Teams": Enum.map(Palapa.Teams.where_organization(@current_organization) |> Palapa.Teams.list, fn t -> [key: t.name, value: to_string(Palapa.Access.GlobalId.create("palapa", t))] end)
-        ],
-        "data-controller": "choice", "data-target": "choice.select", "data-choice-placeholder": "Select people and/or teams"
-      %>
-    </div>
-  <% else %>
-    <div>
-      <%= checkbox form, :private, class: "field", "data-target": "member-information-form.privateCheckbox" %>
-      <%= label form, :private, "Visible only to me"%>
-    </div>
-  <% end %>
-
-  <div class="card-actions">
-    <%= if @action_type == :create do %>
-      <%= submit "Add information", "data-action": "member-information-form#create", class: "btn btn-green" %> 
-      <%= link "Cancel", to: "#", "data-action": "member-informations#hideForm", class: "btn" %>
+      <div data-target="member-information-form.visibilities" class="hidden">
+        <%= multiple_select form, :visibilities, 
+          [
+            "People": Enum.map(Palapa.Organizations.list_members(@current_organization), fn m -> [key: m.account.name, value: to_string(Palapa.Access.GlobalId.create("palapa", m))] end),
+            "Teams": Enum.map(Palapa.Teams.where_organization(@current_organization) |> Palapa.Teams.list, fn t -> [key: t.name, value: to_string(Palapa.Access.GlobalId.create("palapa", t))] end)
+          ],
+          "data-controller": "choice", "data-target": "choice.select", "data-choice-placeholder": "Select people and/or teams"
+        %>
+      </div>
     <% else %>
-      <%= submit "Update information", "data-action": "member-information#update", class: "btn btn-green" %> 
-      <%= link "Cancel", to: "#", "data-action": "member-information#hideUpdateForm", class: "btn" %>
+      <div>
+        <%= checkbox form, :private, class: "field", "data-target": "member-information-form.privateCheckbox" %>
+        <%= label form, :private, "Visible only to me"%>
+      </div>
     <% end %>
+
+    <div class="card-actions">
+      <%= if @action_type == :create do %>
+        <%= submit "Add information", "data-action": "member-information-form#create", class: "btn btn-green" %> 
+        <%= link "Cancel", to: "#", "data-action": "member-information-form#hideForm", class: "btn" %>
+      <% else %>
+        <%= submit "Update information", "data-action": "member-information#update", class: "btn btn-green" %> 
+        <%= link "Cancel", to: "#", "data-action": "member-information#hideUpdateForm", class: "btn" %>
+      <% end %>
+    </div>
   </div>
+
+ <%= if @action_type == :create do %>
+    <button class="w-full p-2 mt-2 btn" 
+      data-target="member-information-form.addInformationButton" 
+      data-action="click->member-information-form#showForm">
+        <i class="fas fa-plus-circle"></i>&nbsp;Add information
+    </button>
+  <% end %>
 <% end %>

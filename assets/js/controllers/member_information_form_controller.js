@@ -2,16 +2,26 @@ import BaseController from "./base_controller"
 import Dropzone from "dropzone"
 
 export default class extends BaseController {
-  static targets = ["type", "customLabel", "value", "attachment",
+  static targets = ["addInformationButton", "formContent", "type", "customLabel", "value", "attachment",
     "visibilities", "privateCheckbox", "attachmentHiddenInput"]
 
   connect() {
-    Dropzone.autoDiscover = false;
+    Dropzone.autoDiscover = false
     this.displayFields()
   }
 
-  disconnect() {
-    this.dropzone.removeAllFiles()
+  showForm(event) {
+    if (event)
+      event.preventDefault()
+    this.show(this.formContentTarget)
+    this.hide(this.addInformationButtonTarget)
+  }
+
+  hideForm(event) {
+    if (event)
+      event.preventDefault()
+    this.hide(this.formContentTarget)
+    this.show(this.addInformationButtonTarget)
   }
 
   displayFields() {
@@ -22,7 +32,6 @@ export default class extends BaseController {
 
     if (this.typeTarget.value === "custom") {
       this.setAttachmentDropzone()
-
       this.show(this.customLabelTarget)
       this.show(this.attachmentTarget)
 
@@ -34,7 +43,7 @@ export default class extends BaseController {
   }
 
   setAttachmentDropzone() {
-    if (typeof this.dropzone !== "undefined")
+    if (this.hasDropzone())
       this.dropzone = null
 
     this.dropzone = new Dropzone(this.attachmentTarget, {
@@ -80,6 +89,9 @@ export default class extends BaseController {
   clearForm() {
     this.element.querySelectorAll(".input").forEach((node, index) => { node.value = null })
     this.element.querySelectorAll(".error").forEach((node, index) => { node.remove() })
+
+    if (this.hasDropzone())
+      this.dropzone.removeAllFiles()
   }
 
   removeAllFiles() {
@@ -113,6 +125,7 @@ export default class extends BaseController {
         list.innerHTML = html
         this.clearForm()
         event.target.disabled = false
+        this.hideForm()
       })
       .catch(error => {
         event.target.disabled = false
@@ -123,5 +136,9 @@ export default class extends BaseController {
           })
         }
       })
+  }
+
+  hasDropzone() {
+    typeof this.dropzone !== "undefined"
   }
 }

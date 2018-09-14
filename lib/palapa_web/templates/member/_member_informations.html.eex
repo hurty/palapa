@@ -3,7 +3,7 @@
     <%= render "_member_informations_list.html", assigns %>
 
     <%= if Palapa.Access.permit?(Palapa.Organizations, :create_member_information, @current_member, @member) do %>
-      <div data-target="member-informations.form" class="hidden">
+      <div data-target="member-informations.form">
         <%= render "_member_information_form.html", 
           conn: @conn, 
           current_organization: @current_organization, 
@@ -13,12 +13,6 @@
           action_type: :create
         %>
       </div>
-
-      <button class="w-full p-2 mt-2 btn" 
-        data-target="member-informations.addInformationButton" 
-        data-action="click->member-informations#showForm">
-          <i class="fas fa-plus-circle"></i>&nbsp;Add information
-      </button>
     <% end %>
   </div>
 </div>
