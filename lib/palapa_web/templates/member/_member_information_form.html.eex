@@ -2,7 +2,8 @@
   [multipart: true, class: "border border-grey-lighter rounded p-2 text-sm bg-grey-lightest", autocomplete: "off",
   "data-controller": "member-information-form",
   "data-member-information-form-types":  PalapaWeb.MemberInformationView.types,
-  "data-member-information-form-attachment-url": attachment_url(@conn, :create, @current_organization)], fn form -> %> 
+  "data-member-information-form-attachment-url": attachment_url(@conn, :create, @current_organization), 
+  ], fn form -> %> 
 
   <%= select form, :type, PalapaWeb.MemberInformationView.information_types_for_select, class: "field w-full", 
     "data-target": "member-information-form.type", "data-action": "member-information-form#displayFields" %>
@@ -20,6 +21,17 @@
       <div>Attachments</div>
       <div>Click here or drag and drop some files</div>
     </div>
+  </div>
+
+  <div>
+    <%= for attachment <- Ecto.Changeset.get_field(@member_information_changeset, :attachments) do %>
+      <input type="hidden" 
+        data-target="member-information-form.attachmentHiddenInput"
+        name="member_information[attachments][]" 
+        value="<%= Palapa.Access.generate_signed_id(attachment.id) %>"
+        data-size="<%= attachment.byte_size %>"
+        data-thumb-url="<%= attachment_attachment_url(@conn,:thumb, attachment.organization_id, attachment.id, attachment.filename )  %>" /> 
+    <% end %>
   </div>
   
   <%= if PalapaWeb.MemberInformationView.show_visibility_whitelist?(@current_organization) do %>

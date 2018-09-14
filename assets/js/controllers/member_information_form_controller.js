@@ -2,12 +2,12 @@ import BaseController from "./base_controller"
 import Dropzone from "dropzone"
 
 export default class extends BaseController {
-  static targets = ["type", "customLabel", "value", "attachment", "visibilities", "privateCheckbox"]
+  static targets = ["type", "customLabel", "value", "attachment",
+    "visibilities", "privateCheckbox", "attachmentHiddenInput"]
 
   connect() {
     Dropzone.autoDiscover = false;
     this.displayFields()
-    this.setAttachmentDropzone()
   }
 
   disconnect() {
@@ -21,6 +21,8 @@ export default class extends BaseController {
       this.show(this.visibilitiesTarget)
 
     if (this.typeTarget.value === "custom") {
+      this.setAttachmentDropzone()
+
       this.show(this.customLabelTarget)
       this.show(this.attachmentTarget)
 
@@ -32,6 +34,8 @@ export default class extends BaseController {
   }
 
   setAttachmentDropzone() {
+    if (typeof this.dropzone !== "undefined")
+      this.dropzone = null
 
     this.dropzone = new Dropzone(this.attachmentTarget, {
       url: this.data.get("attachment-url"),
@@ -41,15 +45,33 @@ export default class extends BaseController {
       addRemoveLinks: true
     });
 
+    let hiddenAttachments = this.attachmentHiddenInputTargets
+
+    hiddenAttachments.forEach((attachment) => {
+      let file = {
+        sid: attachment.value,
+        thumb_url: attachment.getAttribute("data-thumb-url"),
+        size: attachment.getAttribute("data-size")
+      }
+
+      this.dropzone.emit("addedfile", file)
+      this.dropzone.emit("thumbnail", file, file.thumb_url)
+      this.dropzone.emit("complete", file)
+    })
+
     let self = this
 
-    this.dropzone.on("success", function (file, response) {
-      let attachmentIdElement = document.createElement("input")
-      attachmentIdElement.setAttribute("type", "hidden")
-      attachmentIdElement.setAttribute("name", "member_information[attachments][]")
-      attachmentIdElement.setAttribute("value", response.attachment_sid)
-      self.element.appendChild(attachmentIdElement)
+    this.dropzone.on("success", (file, response) => {
+      this.addAttachmentToForm(response.attachment_sid)
     });
+  }
+
+  addAttachmentToForm(attachment_sid) {
+    let attachmentIdElement = document.createElement("input")
+    attachmentIdElement.setAttribute("type", "hidden")
+    attachmentIdElement.setAttribute("name", "member_information[attachments][]")
+    attachmentIdElement.setAttribute("value", attachment_sid)
+    this.element.appendChild(attachmentIdElement)
   }
 
   clearForm() {

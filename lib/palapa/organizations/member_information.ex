@@ -66,6 +66,7 @@ defmodule Palapa.Organizations.MemberInformation do
   defp put_attachments(changeset, attrs) do
     if is_list(attrs["attachments"]) do
       attachments = Attachments.list_attachments_from_signed_ids(attrs["attachments"])
+
       put_assoc(changeset, :attachments, attachments)
     else
       changeset

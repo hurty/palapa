@@ -8,6 +8,7 @@
           conn: @conn, 
           current_organization: @current_organization, 
           member_information_changeset: @member_information_changeset,
+          member_information: nil,
           action: member_member_information_path(@conn, :create, @current_organization, @member),
           action_type: :create
         %>

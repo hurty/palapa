@@ -8,6 +8,7 @@ defmodule Palapa.Attachments.Attachment do
     belongs_to(:organization, Organization)
     field(:filename, :string)
     field(:content_type, :string)
+    field(:byte_size, :integer)
     timestamps()
     field(:deleted_at, :utc_datetime)
 

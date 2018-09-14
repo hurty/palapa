@@ -109,7 +109,6 @@ defmodule Palapa.Attachments do
       |> Enum.reject(&is_nil/1)
 
     Attachment
-    |> orphan
     |> Palapa.Access.scope_by_ids(attachments_ids)
     |> Repo.all()
   end

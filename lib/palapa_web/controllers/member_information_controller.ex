@@ -12,6 +12,8 @@ defmodule PalapaWeb.MemberInformationController do
            Organizations.create_member_information(member, params["member_information"]) do
       member_informations = Organizations.list_member_informations(member, current_member())
 
+      new_info = Palapa.Repo.preload(new_info, [:attachments])
+
       conn
       |> put_view(PalapaWeb.MemberView)
       |> render(
