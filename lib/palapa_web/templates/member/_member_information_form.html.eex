@@ -30,7 +30,8 @@
         name="member_information[attachments][]" 
         value="<%= Palapa.Access.generate_signed_id(attachment.id) %>"
         data-size="<%= attachment.byte_size %>"
-        data-thumb-url="<%= attachment_attachment_url(@conn,:thumb, attachment.organization_id, attachment.id, attachment.filename )  %>" /> 
+        data-is-image="<%= Palapa.Attachments.image?(attachment) %>"
+        data-thumb-url="<%= attachment_attachment_url(@conn, :thumb, attachment.organization_id, attachment.id, attachment.filename ) %>" /> 
     <% end %>
   </div>
   

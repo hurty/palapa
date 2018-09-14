@@ -51,15 +51,17 @@ export default class extends BaseController {
       let file = {
         sid: attachment.value,
         thumb_url: attachment.getAttribute("data-thumb-url"),
-        size: attachment.getAttribute("data-size")
+        size: attachment.getAttribute("data-size"),
+        is_image: attachment.getAttribute("data-is-image")
       }
 
       this.dropzone.emit("addedfile", file)
-      this.dropzone.emit("thumbnail", file, file.thumb_url)
+
+      if (file.is_image === "true")
+        this.dropzone.emit("thumbnail", file, file.thumb_url)
+
       this.dropzone.emit("complete", file)
     })
-
-    let self = this
 
     this.dropzone.on("success", (file, response) => {
       this.addAttachmentToForm(response.attachment_sid)

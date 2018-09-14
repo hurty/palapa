@@ -85,7 +85,15 @@ defmodule Palapa.Attachments do
 
   # the 'version' can be :original or :thumb
   def url(%Attachment{} = attachment, version \\ :original) do
-    AttachmentUploader.url({attachment.filename, attachment}, version, signed: true)
+    if image?(attachment) do
+      AttachmentImageUploader.url({attachment.filename, attachment}, version, signed: true)
+    else
+      if version == :original do
+        AttachmentUploader.url({attachment.filename, attachment}, :original, signed: true)
+      else
+        nil
+      end
+    end
   end
 
   def put_attachments(%Ecto.Changeset{} = changeset) do
@@ -118,15 +126,7 @@ defmodule Palapa.Attachments do
     |> Repo.delete_all()
   end
 
-  defp find_attachments_in_content(text, organization) do
-    ids = AttachmentParser.extract_attachments_ids(text)
-
-    where_organization(organization)
-    |> where_ids(ids)
-    |> list
-  end
-
-  defp image?(attachment) do
+  def image?(attachment) do
     image_types = [
       "image/gif",
       "image/jpeg",
@@ -134,9 +134,18 @@ defmodule Palapa.Attachments do
       "image/png",
       "image/tiff",
       "image/bmp",
-      "image/x-bmp"
+      "image/x-bmp",
+      "image/webp"
     ]
 
     Enum.member?(image_types, attachment.content_type)
+  end
+
+  defp find_attachments_in_content(text, organization) do
+    ids = AttachmentParser.extract_attachments_ids(text)
+
+    where_organization(organization)
+    |> where_ids(ids)
+    |> list
   end
 end
