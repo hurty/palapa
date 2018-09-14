@@ -50,6 +50,7 @@ export default class extends BaseController {
     hiddenAttachments.forEach((attachment) => {
       let file = {
         sid: attachment.value,
+        name: attachment.getAttribute("data-filename"),
         thumb_url: attachment.getAttribute("data-thumb-url"),
         size: attachment.getAttribute("data-size"),
         is_image: attachment.getAttribute("data-is-image")

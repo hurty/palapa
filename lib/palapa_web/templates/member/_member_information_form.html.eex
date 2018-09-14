@@ -27,8 +27,9 @@
     <%= for attachment <- Ecto.Changeset.get_field(@member_information_changeset, :attachments) do %>
       <input type="hidden" 
         data-target="member-information-form.attachmentHiddenInput"
-        name="member_information[attachments][]" 
+        name="member_information[attachments][]"
         value="<%= Palapa.Access.generate_signed_id(attachment.id) %>"
+        data-filename="<%= attachment.filename %>"
         data-size="<%= attachment.byte_size %>"
         data-is-image="<%= Palapa.Attachments.image?(attachment) %>"
         data-thumb-url="<%= attachment_attachment_url(@conn, :thumb, attachment.organization_id, attachment.id, attachment.filename ) %>" /> 
