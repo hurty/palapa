@@ -49,9 +49,17 @@ defmodule Palapa.Attachments do
   end
 
   def create(%Organizations.Organization{} = organization, %Plug.Upload{} = file) do
+    file_stats = File.stat!(file.path)
+
+    attrs = %{
+      filename: file.filename,
+      content_type: file.content_type,
+      byte_size: file_stats.size
+    }
+
     {:ok, attachment} =
       %Attachment{}
-      |> Attachment.changeset(Map.take(file, [:filename, :content_type]))
+      |> Attachment.changeset(attrs)
       |> put_change(:organization_id, organization.id)
       |> Repo.insert()
 
