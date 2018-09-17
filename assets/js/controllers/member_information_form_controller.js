@@ -43,8 +43,8 @@ export default class extends BaseController {
   }
 
   setAttachmentDropzone() {
-    if (this.hasDropzone())
-      this.dropzone = null
+    if (typeof this.dropzone !== "undefined")
+      return
 
     this.dropzone = new Dropzone(this.attachmentTarget, {
       url: this.data.get("attachment-url"),
@@ -90,7 +90,7 @@ export default class extends BaseController {
     this.element.querySelectorAll(".input").forEach((node, index) => { node.value = null })
     this.element.querySelectorAll(".error").forEach((node, index) => { node.remove() })
 
-    if (this.hasDropzone())
+    if (typeof this.dropzone !== "undefined")
       this.dropzone.removeAllFiles()
   }
 
@@ -136,9 +136,5 @@ export default class extends BaseController {
           })
         }
       })
-  }
-
-  hasDropzone() {
-    typeof this.dropzone !== "undefined"
   }
 }
