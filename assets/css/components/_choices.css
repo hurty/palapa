@@ -203,7 +203,7 @@
 
 .choices__list--dropdown {
   display: none;
-  z-index: 1;
+  z-index: 100;
   position: absolute;
   width: 100%;
   background-color: #FFFFFF;
