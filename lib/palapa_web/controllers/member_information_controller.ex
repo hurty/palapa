@@ -22,7 +22,7 @@ defmodule PalapaWeb.MemberInformationController do
         member_informations: member_informations,
         new_info: new_info,
         member: member,
-        action: :create
+        action_type: :create
       )
     else
       {:error, changeset} ->
@@ -35,7 +35,7 @@ defmodule PalapaWeb.MemberInformationController do
           member: member,
           member_information_changeset: changeset,
           action: member_member_information_path(conn, :create, current_organization(), member),
-          action_type: :create
+          action_type: :create_with_error
         )
     end
   end

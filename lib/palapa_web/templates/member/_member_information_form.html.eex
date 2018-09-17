@@ -5,7 +5,7 @@
   "data-member-information-form-attachment-url": attachment_url(@conn, :create, @current_organization), 
   ], fn form -> %> 
 
-  <div class="<%= if @action_type == :create do %>hidden<% end %> border border-grey-lighter rounded p-2 text-sm bg-grey-lightest"
+  <div class="<%= if @action_type not in [:edit, :update, :create_with_error] do %>hidden<% end %> border border-grey-lighter rounded p-2 text-sm bg-grey-lightest"
   data-target="member-information-form.formContent">
     <%= select form, :type, PalapaWeb.MemberInformationView.information_types_for_select, class: "field w-full", 
       "data-target": "member-information-form.type", "data-action": "member-information-form#displayFields" %>
@@ -62,21 +62,19 @@
     <% end %>
 
     <div class="card-actions">
-      <%= if @action_type == :create do %>
-        <%= submit "Add information", "data-action": "member-information-form#create", class: "btn btn-green" %> 
-        <%= link "Cancel", to: "#", "data-action": "member-information-form#hideForm", class: "btn" %>
-      <% else %>
+      <%= if @action_type == :update do %>
         <%= submit "Update information", "data-action": "member-information#update", class: "btn btn-green" %> 
         <%= link "Cancel", to: "#", "data-action": "member-information#hideUpdateForm", class: "btn" %>
+      <% else %>
+        <%= submit "Add information", "data-action": "member-information-form#create", class: "btn btn-green" %> 
+        <%= link "Cancel", to: "#", "data-action": "member-information-form#hideForm", class: "btn" %>
       <% end %>
     </div>
   </div>
 
- <%= if @action_type == :create do %>
-    <button class="w-full p-2 mt-2 btn" 
-      data-target="member-information-form.addInformationButton" 
-      data-action="click->member-information-form#showForm">
-        <i class="fas fa-plus-circle"></i>&nbsp;Add information
-    </button>
-  <% end %>
+  <button class="<%= if @action_type != :create do %>hidden<% end %> w-full p-2 mt-2 btn" 
+    data-target="member-information-form.addInformationButton" 
+    data-action="click->member-information-form#showForm">
+      <i class="fas fa-plus-circle"></i>&nbsp;Add information
+  </button>
 <% end %>
