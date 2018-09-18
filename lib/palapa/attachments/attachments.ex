@@ -91,6 +91,22 @@ defmodule Palapa.Attachments do
     |> Repo.update!()
   end
 
+  def get_attachable(%Attachment{} = attachment) do
+    cond do
+      attachment.message_id ->
+        Repo.preload(attachment, :message).message
+
+      attachment.message_comment_id ->
+        Repo.preload(attachment, :message_comment).message_comment
+
+      attachment.member_information_id ->
+        Repo.preload(attachment, :member_information).member_information
+
+      true ->
+        nil
+    end
+  end
+
   # the 'version' can be :original or :thumb
   def url(%Attachment{} = attachment, version \\ :original) do
     if image?(attachment) do

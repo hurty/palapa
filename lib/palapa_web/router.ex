@@ -45,7 +45,7 @@ defmodule PalapaWeb.Router do
       get("/sessions/switcher", SessionController, :switcher)
       get("/dashboard", DashboardController, :index)
 
-      resources("/attachments", AttachmentController, only: [:create]) do
+      resources("/attachments", AttachmentController, only: [:create, :delete]) do
         get("/original/:filename", AttachmentController, :original)
         get("/thumb/:filename", AttachmentController, :thumb)
         get("/download/:filename", AttachmentController, :download)

@@ -61,6 +61,7 @@ export default class extends BaseController {
         sid: attachment.value,
         name: attachment.getAttribute("data-filename"),
         thumb_url: attachment.getAttribute("data-thumb-url"),
+        delete_url: attachment.getAttribute("data-delete-url"),
         size: attachment.getAttribute("data-size"),
         is_image: attachment.getAttribute("data-is-image")
       }
@@ -74,15 +75,24 @@ export default class extends BaseController {
     })
 
     this.dropzone.on("success", (file, response) => {
-      this.addAttachmentToForm(response.attachment_sid)
-    });
+      file.delete_url = response.delete_url
+      this.addAttachmentToForm(response)
+    })
+
+    this.dropzone.on("removedfile", (file) => {
+      let url = file.delete_url
+
+      if (url) {
+        PA.fetchHTML(url, { method: "delete" })
+      }
+    })
   }
 
-  addAttachmentToForm(attachment_sid) {
+  addAttachmentToForm(attachment) {
     let attachmentIdElement = document.createElement("input")
     attachmentIdElement.setAttribute("type", "hidden")
     attachmentIdElement.setAttribute("name", "member_information[attachments][]")
-    attachmentIdElement.setAttribute("value", attachment_sid)
+    attachmentIdElement.setAttribute("value", attachment.attachment_sid)
     this.element.appendChild(attachmentIdElement)
   }
 

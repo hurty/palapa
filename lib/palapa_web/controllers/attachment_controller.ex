@@ -2,6 +2,7 @@ defmodule PalapaWeb.AttachmentController do
   use PalapaWeb, :controller
 
   alias Palapa.Attachments
+  import PalapaWeb.Router.Helpers
 
   def create(conn, %{"file" => file}) do
     case Palapa.Attachments.create(current_organization(), file) do
@@ -11,7 +12,7 @@ defmodule PalapaWeb.AttachmentController do
         |> json(%{
           attachment_sid: Palapa.Access.generate_signed_id(attachment.id),
           original_url:
-            PalapaWeb.Router.Helpers.attachment_attachment_path(
+            attachment_attachment_url(
               conn,
               :original,
               current_organization(),
@@ -19,7 +20,7 @@ defmodule PalapaWeb.AttachmentController do
               attachment.filename
             ),
           thumb_url:
-            PalapaWeb.Router.Helpers.attachment_attachment_path(
+            attachment_attachment_url(
               conn,
               :thumb,
               current_organization(),
@@ -27,13 +28,14 @@ defmodule PalapaWeb.AttachmentController do
               attachment.filename
             ),
           download_url:
-            PalapaWeb.Router.Helpers.attachment_attachment_path(
+            attachment_attachment_url(
               conn,
               :download,
               current_organization(),
               attachment.id,
               attachment.filename
-            )
+            ),
+          delete_url: attachment_url(conn, :delete, current_organization(), attachment)
         })
 
       {:error} ->
@@ -56,6 +58,17 @@ defmodule PalapaWeb.AttachmentController do
   def download(conn, %{"attachment_id" => id}) do
     attachment = find_attachment(conn, id)
     redirect(conn, external: Attachments.url(attachment, :original))
+  end
+
+  def delete(conn, %{"id" => id}) do
+    attachment = find_attachment(conn, id)
+
+    with :ok <- permit(Attachments, :delete, current_member(), attachment) do
+      Attachments.delete!(attachment)
+
+      conn
+      |> send_resp(:no_content, "")
+    end
   end
 
   defp find_attachment(conn, id) do
