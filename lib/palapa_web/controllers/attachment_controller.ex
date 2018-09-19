@@ -5,7 +5,7 @@ defmodule PalapaWeb.AttachmentController do
   import PalapaWeb.Router.Helpers
 
   def create(conn, %{"file" => file}) do
-    case Palapa.Attachments.create(current_organization(), file) do
+    case Palapa.Attachments.create(current_organization(), file, current_member()) do
       {:ok, attachment} ->
         conn
         |> put_status(201)

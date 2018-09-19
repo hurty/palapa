@@ -48,7 +48,11 @@ defmodule Palapa.Attachments do
     |> Repo.all()
   end
 
-  def create(%Organizations.Organization{} = organization, %Plug.Upload{} = file) do
+  def create(
+        %Organizations.Organization{} = organization,
+        %Plug.Upload{} = file,
+        %Member{} = creator
+      ) do
     file_stats = File.stat!(file.path)
 
     attrs = %{
@@ -60,7 +64,8 @@ defmodule Palapa.Attachments do
     {:ok, attachment} =
       %Attachment{}
       |> Attachment.changeset(attrs)
-      |> put_change(:organization_id, organization.id)
+      |> put_assoc(:organization, organization)
+      |> put_assoc(:creator, creator)
       |> Repo.insert()
 
     # We have 2 different uploaders because Arc doesn't support skipping versions
