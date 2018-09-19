@@ -74,6 +74,12 @@ defmodule Palapa.Messages do
     |> Repo.paginate(page: page, page_size: 10)
   end
 
+  def visible_to?(%Message{} = message, %Member{} = member) do
+    visible_to(member)
+    |> where(id: ^message.id)
+    |> Repo.exists?()
+  end
+
   def get!(queryable \\ Message, id) do
     queryable
     |> non_deleted

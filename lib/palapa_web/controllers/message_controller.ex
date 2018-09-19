@@ -84,7 +84,7 @@ defmodule PalapaWeb.MessageController do
 
     new_message_comment = Messages.change_comment(%MessageComment{})
 
-    with :ok <- permit(Messages, :show, current_member()) do
+    with :ok <- permit(Messages, :show, current_member(), message) do
       conn
       |> put_breadcrumb(message.title, message_path(conn, :show, current_organization(), message))
       |> render(

@@ -115,6 +115,11 @@ defmodule Palapa.Organizations do
     |> Repo.get!(member_id)
   end
 
+  def get_member!(member_id) do
+    Member
+    |> Repo.get!(member_id)
+  end
+
   def get_member_from_account(%Organization{} = organization, %Account{} = account) do
     account
     |> Ecto.assoc(:members)

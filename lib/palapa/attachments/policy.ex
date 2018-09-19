@@ -10,6 +10,27 @@ defmodule Palapa.Attachments.Policy do
     true
   end
 
+  def authorize(:show, %Member{} = member, attachment) do
+    if attachable = Attachments.get_attachable(attachment) do
+      case attachable do
+        %MemberInformation{} ->
+          Palapa.Organizations.Policy.authorize(:delete_member_information, member, attachable)
+
+        %Message{} ->
+          Palapa.Messages.Policy.authorize(:show, member, attachable)
+
+        %MessageComment{} ->
+          Palapa.Messages.Policy.authorize(:show_comment, member, attachable)
+
+        _ ->
+          false
+      end
+    else
+      # In case the attachment is an orphan, only the creator can see it
+      member.id == attachment.creator_id
+    end
+  end
+
   def authorize(:delete, %Member{} = member, attachment) do
     if attachable = Attachments.get_attachable(attachment) do
       case attachable do
@@ -26,8 +47,8 @@ defmodule Palapa.Attachments.Policy do
           false
       end
     else
-      # The attachment is still an orphan, we can allow the deletion
-      true
+      # In case the attachment is an orphan, only the creator can delete it
+      member.id == attachment.creator_id
     end
   end
 
