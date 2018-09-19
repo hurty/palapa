@@ -22,7 +22,6 @@ config :palapa, Palapa.Repo,
 
 # Reduce the complexity of the password hashing calculation for much faster tests
 config :bcrypt_elixir, :log_rounds, 4
-config :wallaby, driver: Wallaby.Experimental.Chrome
 
 config :palapa, Palapa.Mailer,
   adapter: Bamboo.TestAdapter,
