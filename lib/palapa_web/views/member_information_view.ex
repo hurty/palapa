@@ -93,7 +93,6 @@ defmodule PalapaWeb.MemberInformationView do
   end
 
   def visibility_text(%MemberInformation{} = information) do
-    IO.inspect(information)
     nb_teams = length(information.teams)
     nb_members = length(information.members)
 
