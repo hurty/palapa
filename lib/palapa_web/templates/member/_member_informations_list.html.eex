@@ -6,7 +6,7 @@
       <%= if @current_member.id == @member.id do %>
         You have not shared any information yet.
       <% else %>
-        This member hasn't shared personal information yet.
+        This member hasn't shared any personal information with you.
       <% end %>
     <% end %>
   </h2>

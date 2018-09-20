@@ -1,6 +1,8 @@
 defmodule PalapaWeb.MemberControllerTest do
   use PalapaWeb.ConnCase
 
+  alias Palapa.Access.GlobalId
+
   describe "as regular member" do
     setup do
       member = insert!(:member)
@@ -113,12 +115,19 @@ defmodule PalapaWeb.MemberControllerTest do
     } do
       jared = insert!(:admin, organization: member.organization)
 
-      Palapa.Organizations.create_member_information(jared, %{
-        "type" => :email,
-        "value" => "jared.dunn@piedpiper.com",
-        "private" => true,
-        "members" => [member]
-      })
+      {:ok, _} =
+        Palapa.Organizations.create_member_information(jared, %{
+          "type" => :skype,
+          "value" => "mister.jared"
+        })
+
+      {:ok, _} =
+        Palapa.Organizations.create_member_information(jared, %{
+          "type" => :email,
+          "value" => "jared.dunn@piedpiper.com",
+          "private" => true,
+          "visibilities" => [to_string(GlobalId.create("palapa", member))]
+        })
 
       tech_team =
         insert!(:team,
@@ -127,20 +136,24 @@ defmodule PalapaWeb.MemberControllerTest do
           members: [member]
         )
 
-      Palapa.Organizations.create_member_information(jared, %{
-        "type" => :github,
-        "value" => "jared-knows-code",
-        "private" => true,
-        "teams" => [tech_team]
-      })
+      {:ok, _} =
+        Palapa.Organizations.create_member_information(jared, %{
+          "type" => :github,
+          "value" => "jared-knows-code",
+          "private" => true,
+          "visibilities" => [to_string(GlobalId.create("palapa", tech_team))]
+        })
 
-      Palapa.Organizations.create_member_information(jared, %{
-        type: :address,
-        value: "The basement",
-        private: true
-      })
+      {:ok, _} =
+        Palapa.Organizations.create_member_information(jared, %{
+          "type" => :address,
+          "value" => "The basement",
+          "private" => true
+        })
 
       conn = get(conn, member_path(conn, :show, org, jared))
+
+      assert html_response(conn, 200) =~ "mister.jared"
       assert html_response(conn, 200) =~ "jared.dunn@piedpiper.com"
       assert html_response(conn, 200) =~ "jared-knows-code"
       refute html_response(conn, 200) =~ "The basement"

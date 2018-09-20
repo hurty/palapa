@@ -32,11 +32,10 @@ defmodule Palapa.Organizations.MemberInformation do
   def changeset(%__MODULE__{} = member_information, %Member{} = member, attrs) do
     member_information
     |> cast(attrs, [:type, :custom_label, :value, :private, :visibilities])
-    |> force_change(:member_id, member.id)
+    |> put_assoc(:member, member)
     |> put_attachments(attrs)
-    |> put_teams
-    |> put_members
-    |> validate_required([:member_id, :type, :value])
+    |> put_visibilities(attrs)
+    |> validate_required([:member, :type, :value])
     |> validate_custom_information
   end
 
@@ -44,23 +43,40 @@ defmodule Palapa.Organizations.MemberInformation do
     member_information
     |> cast(attrs, [:type, :custom_label, :value, :private, :visibilities])
     |> put_attachments(attrs)
-    |> put_teams
-    |> put_members
-    |> put_visibilities(member_information)
+    |> put_visibilities(attrs)
     |> validate_required([:type, :value])
     |> validate_custom_information
   end
 
-  def put_visibilities(changeset, member_information) do
-    teams_sids =
-      member_information.teams
-      |> Enum.map(fn team -> to_string(Palapa.Access.GlobalId.create("palapa", team)) end)
+  def put_visibilities(changeset, attrs) do
+    cond do
+      attrs["visibilities"] ->
+        teams = Palapa.Access.GlobalId.locate_all(attrs["visibilities"], Team)
+        members = Palapa.Access.GlobalId.locate_all(attrs["visibilities"], Member)
 
-    members_sids =
-      member_information.members
-      |> Enum.map(fn member -> to_string(Palapa.Access.GlobalId.create("palapa", member)) end)
+        changeset
+        |> put_assoc(:teams, teams)
+        |> put_assoc(:members, members)
 
-    put_change(changeset, :visibilities, teams_sids ++ members_sids)
+      get_field(changeset, :teams) || get_field(changeset, :members) ->
+        teams_sids =
+          get_field(changeset, :teams, [])
+          |> Enum.map(fn team ->
+            to_string(Palapa.Access.GlobalId.create("palapa", team))
+          end)
+
+        members_sids =
+          get_field(changeset, :members, [])
+          |> Enum.map(fn member ->
+            to_string(Palapa.Access.GlobalId.create("palapa", member))
+          end)
+
+        changeset
+        |> put_change(:visibilities, teams_sids ++ members_sids)
+
+      true ->
+        changeset
+    end
   end
 
   defp put_attachments(changeset, attrs) do
@@ -68,29 +84,6 @@ defmodule Palapa.Organizations.MemberInformation do
       attachments = Attachments.list_attachments_from_signed_ids(attrs["attachments"])
 
       put_assoc(changeset, :attachments, attachments)
-    else
-      changeset
-    end
-  end
-
-  defp put_teams(changeset) do
-    visibilities = get_change(changeset, :visibilities)
-
-    if visibilities do
-      teams = Palapa.Access.GlobalId.locate_all(visibilities, Palapa.Teams.Team)
-      put_assoc(changeset, :teams, teams)
-    else
-      changeset
-    end
-  end
-
-  defp put_members(changeset) do
-    visibilities = get_change(changeset, :visibilities)
-
-    if visibilities do
-      members = Palapa.Access.GlobalId.locate_all(visibilities, Palapa.Organizations.Member)
-
-      put_assoc(changeset, :members, members)
     else
       changeset
     end
