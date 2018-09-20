@@ -12,7 +12,7 @@ defmodule Palapa.Organizations.MemberInformation do
     field(:value, :string)
     field(:private, :boolean, default: false)
     timestamps()
-    has_many(:attachments, Attachments.Attachment, on_replace: :delete)
+    has_many(:attachments, Attachments.Attachment, on_replace: :nilify)
 
     many_to_many(:teams, Team,
       join_through: "member_information_visibilities",

@@ -58,12 +58,13 @@ export default class extends BaseController {
 
     hiddenAttachments.forEach((attachment) => {
       let file = {
+        id: attachment.getAttribute("id"),
         sid: attachment.value,
         name: attachment.getAttribute("data-filename"),
         thumb_url: attachment.getAttribute("data-thumb-url"),
         delete_url: attachment.getAttribute("data-delete-url"),
         size: attachment.getAttribute("data-size"),
-        is_image: attachment.getAttribute("data-is-image")
+        is_image: attachment.getAttribute("data-is-image"),
       }
 
       this.dropzone.emit("addedfile", file)
@@ -84,6 +85,7 @@ export default class extends BaseController {
 
       if (url) {
         PA.fetchHTML(url, { method: "delete" })
+        document.getElementById(file.id).remove()
       }
     })
   }
@@ -92,6 +94,7 @@ export default class extends BaseController {
     let attachmentIdElement = document.createElement("input")
     attachmentIdElement.setAttribute("type", "hidden")
     attachmentIdElement.setAttribute("name", "member_information[attachments][]")
+    attachmentIdElement.setAttribute("id", attachment.attachment_id)
     attachmentIdElement.setAttribute("value", attachment.attachment_sid)
     this.element.appendChild(attachmentIdElement)
   }

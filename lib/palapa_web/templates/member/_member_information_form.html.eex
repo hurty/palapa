@@ -25,10 +25,17 @@
       </div>
     </div>
 
-    <div>
+    <div class="hidden-attachments">
+      <%# We add an empty attachment because the 'attachments' param would not be 
+        sent to the server if there is 0 input %>
+      <input type="hidden" 
+        data-target="member-information-form.emptyAttachmentHiddenInput"
+        name="member_information[attachments][]"
+        value="false" />
       <%= for attachment <- Ecto.Changeset.get_field(@member_information_changeset, :attachments) do %>
         <input type="hidden" 
           data-target="member-information-form.attachmentHiddenInput"
+          id="<%= attachment.id %>"
           name="member_information[attachments][]"
           value="<%= Palapa.Access.generate_signed_id(attachment.id) %>"
           data-filename="<%= attachment.filename %>"
