@@ -1,24 +1,59 @@
 <div class="content article-layout">
-  <div class="main-content"> 
-    <div class="card-shadow">
+  <div class="left-sidebar ml-auto mr-4 pt-4">
+    <h2 class="text-blue">Employee Handbook</h2>
+
+    <div class="separator"></div>
     
-        <div class="card-toolbar">
-          <div>
-            <h2><%= @current_organization.name %></h2>
-            <div class="text-xl"><span class="text-green">12</span> members</div>
-            <div class="text-xl"><span class="text-green">5</span> teams</div>
-          </div>
-
-          <div>
-
-          </div>
-        </div>
-
-        <div class="card-content bg-white">
-          Hello la teerre
-
-
-        </div>
+    <div class="text-grey-darker">
+      <h3 class="my-2">Welcome</h3>
+      <h3 class="my-2 text-black">Life at the office</h3>
+        <ul class="list-reset pl-4 border-l">
+          <li class="my-2">Entering and leaving the building</li>
+          <li class="my-2 underlisne text-green">Working remotely</li>
+          <li class="my-2">What about lunch?</li>
+          <li class="my-2">Taking holidays</li>
+          <li class="my-2">Sick leave</li>
+          <li class="my-2">Expenses reimbursement</li>
+        </ul>
+      <h3 class="my-2">How we work</h3>
+      <h3 class="my-2">Security concerns</h3>
+      <h3 class="my-2">Recruiting new employees</h3>
     </div>
+  </div>
+
+  <div class="main-content ml-4">
+    
+    <%# ----- DOCS ----- %>
+    
+    <div class="rounded shadow bg-white p-8 ">
+      <h1 class="text-green">Working remotely</h1>
+      <p class="my-2 text-grey-darker text-sm">Last modified 12 days ago by Richard Dunn</p>
+      <div class="separator"></div>
+      
+      <div class="message-content">
+        <p>Don't hesitate to work from home if you need to. Especially if you need calm to concentrate, if the subway broke down or if you have a doctor's appointment.</p>
+        <p>Just check the following points and you're good to go!</p>
+
+        <ul>
+          <li>Make sure your contract has been updated with the new 'Home Office' section. If not, ask Laurie.</li>
+          <li>Make sure your laptop is properly configured (See <a href="#">Security concerns</a>).</li>
+          <li>Make sure your collegues can always call you on your cellphone in case of an emergency during your working hours.</li>
+        </ul>
+
+        <div class="p-4 max-w-xs mx-auto">
+          <img src="/images/working-remotely.jpg"/>
+        </div>
+
+        <div class="border-t flex justify-between pt-4 ">
+          <a href="#"><i class="fas fa-arrow-left mx-2"></i>Entering and leaving the building</a>
+          <a href="#">What about lunch? <i class="fas fa-arrow-right mx-2"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-8 flex justify-center">
+      <a class="btn">Suggest an improvement</a>
+    </div>
+    
   </div>
 </div>
