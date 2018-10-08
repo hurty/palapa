@@ -13,7 +13,7 @@
         <%= link("Messages", to: message_path(@conn, :index, @current_organization)) %>
       </li>
       <li class="header-link  <%= if @navigation == "documents" do %>header-link--active<% end %>">
-        <%= link("Documents", to: "#") %>
+        <%= link("Documents", to: document_path(@conn, :index, @current_organization)) %>
       </li>
       <li class="header-link  <%= if @navigation == "members" do %>header-link--active<% end %>">
         <%= link("People & Teams", to: member_path(@conn, :index, @current_organization)) %>

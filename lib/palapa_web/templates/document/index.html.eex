@@ -1,0 +1,14 @@
+<div class="content article-layout">
+  <div class="main-content">
+    <div class="card">
+
+      <div class="card-toolbar flex flex-wrap justify-center sm:justify-between">
+        <%= link "New document", to: document_path(@conn, :new, @current_organization) %>
+      </div>
+
+      <%= for document <- @documents do %>
+        <div class="p-2"><%= link document.title, to: document_path(@conn, :show, @current_organization, document) %></div>
+      <% end %>
+    </div>
+  </div>
+</div>

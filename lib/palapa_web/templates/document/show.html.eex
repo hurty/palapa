@@ -1,0 +1,51 @@
+<div class="content article-layout" data-controller="document">
+  <div class="left-sidebar pl-8 pr-4 pt-4">
+    <div class="text-grey-darker ">
+    <h2 class="text-lg text-blue"><%= @document.title %></h2>
+
+    <div class="separator"></div>
+    
+      <ul>
+        <%= for section <- @document.sections do %>
+          <li><%= section.title %></li>
+
+          <ul class="">
+            <%= for page <- section.pages do %>
+              <li><%= link page.title, to: document_path(@conn, :show, @current_organization, @document, page_id: page.id) %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </ul>
+
+      <div>
+        <button class=""><i class="fas fa-plus-circle"></i> Add a section</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content ml-4">
+    
+    <%# ----- DOCS ----- %>
+    
+    <div class="rounded shadow bg-white p-8 ">
+      <h1 class="text-green"><%= @current_page.title %></h1>
+      <p class="my-2 text-grey-darker text-sm">
+        Last modified: <%= format_datetime(@current_page.updated_at, @current_account) %> by <%= @current_page.last_author.account.name %>
+      </p>
+      <div class="separator"></div>
+      
+      <div class="message-content">
+      </div>
+
+      <div class="border-t flex justify-between pt-4 ">
+        <a href="#"><i class="fas fa-arrow-left mx-2"></i>Entering and leaving the building</a>
+        <a href="#">What about lunch? <i class="fas fa-arrow-right mx-2"></i></a>
+      </div>
+    </div>
+
+    <div class="my-8 flex justify-center">
+      <a class="btn">Suggest an improvement</a>
+    </div>
+    
+  </div>
+</div>
