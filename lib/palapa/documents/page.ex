@@ -8,7 +8,6 @@ defmodule Palapa.Documents.Page do
     field(:title, :string)
     timestamps()
 
-    belongs_to(:organization, Organizations.Organization)
     belongs_to(:document, Documents.Document)
     belongs_to(:section, Documents.Section)
     belongs_to(:last_author, Organizations.Member)

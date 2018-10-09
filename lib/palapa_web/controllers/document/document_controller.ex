@@ -1,9 +1,11 @@
-defmodule PalapaWeb.DocumentController do
+defmodule PalapaWeb.Document.DocumentController do
   use PalapaWeb, :controller
-  alias Palapa.Documents
 
-  plug(:put_navigation, "documents")
+  alias Palapa.Documents
+  alias Palapa.Documents.{Document, Section}
+
   plug(:put_common_breadcrumbs)
+  plug(:put_navigation, "documents")
 
   def put_common_breadcrumbs(conn, _params) do
     conn
@@ -16,7 +18,7 @@ defmodule PalapaWeb.DocumentController do
   end
 
   def new(conn, _params) do
-    changeset = Documents.change_document(%Documents.Document{})
+    changeset = Documents.change_document(%Document{})
     render(conn, "new.html", changeset: changeset)
   end
 
@@ -37,11 +39,17 @@ defmodule PalapaWeb.DocumentController do
         Documents.get_page!(document.first_page_id)
       end
 
+    section_changeset = Documents.change_section(%Section{})
+
     conn
     |> put_breadcrumb(
       document.title,
       document_path(conn, :show, current_organization(), document)
     )
-    |> render("show.html", document: document, current_page: current_page)
+    |> render("show.html",
+      document: document,
+      current_page: current_page,
+      section_changeset: section_changeset
+    )
   end
 end

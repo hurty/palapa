@@ -1,13 +1,11 @@
 <div class="content article-layout" data-controller="document">
   <div class="left-sidebar pl-8 pr-4 pt-4">
     <div class="text-grey-darker ">
-    <h2 class="text-lg text-blue"><%= @document.title %></h2>
-
-    <div class="separator"></div>
+    <h2 class="text-lg text-blue border-b border-grey-light py-2"><%= @document.title %></h2>
     
-      <ul>
+      <ul data-target="document.tableOfContents">
         <%= for section <- @document.sections do %>
-          <li><%= section.title %></li>
+          <%= render PalapaWeb.Document.SectionView, "_section.html", section: section %>
 
           <ul class="">
             <%= for page <- section.pages do %>
@@ -18,7 +16,21 @@
       </ul>
 
       <div>
-        <button class=""><i class="fas fa-plus-circle"></i> Add a section</button>
+        <button data-target="document.newSectionButton" data-action="document#showNewSectionForm" class="p-1 hover:bg-white rounded">
+          <i class="fas fa-plus-circle"></i> Add a section
+        </button>
+
+        <%= form_for @section_changeset, document_section_path(@conn, :create, @current_organization, @document), 
+          ["data-target": "document.newSectionForm", "data-action": "document#createSection", class: "hidden"], fn form -> %>
+          <div class="field">
+            <%= text_input form, :title, "data-target": "document.newSectionInput", class: "input", placeholder: "Section's name" %>
+          </div>
+          
+          <div class="py-2">
+            <%= submit "Add section", class: "btn btn-green" %>
+            <button data-action="document#hideNewSectionForm" class="btn">Cancel</button>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

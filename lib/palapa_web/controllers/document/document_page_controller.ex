@@ -1,4 +1,4 @@
-defmodule PalapaWeb.DocumentPageController do
+defmodule PalapaWeb.Document.PageController do
   use PalapaWeb, :controller
 
   plug(:put_navigation, "documents")

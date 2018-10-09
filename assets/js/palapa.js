@@ -16,16 +16,16 @@ function fetchWithDefaultOptions(url, options = {}) {
   return fetch(url, Object.assign(defaultOptions, options))
 }
 
-function fetchHTML(url, options = {}) {
-  return fetchWithDefaultOptions(url, options).then(response => {
-    if (response.status >= 200 && response.status < 300) {
-      return response.text()
-    } else {
-      let error = new Error(response.status)
-      error.response = response
-      throw error
-    }
-  })
+async function fetchHTML(url, options = {}) {
+  const response = await fetchWithDefaultOptions(url, options);
+  if (response.status >= 200 && response.status < 300) {
+    return response.text();
+  }
+  else {
+    let error = new Error(response.status);
+    error.response = response;
+    throw error;
+  }
 }
 
 function remoteLink(link, options = {}) {

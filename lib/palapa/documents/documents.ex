@@ -4,42 +4,21 @@ defmodule Palapa.Documents do
   """
   use Palapa.Context
 
-  alias Palapa.Documents.{Document, Page}
+  alias Palapa.Documents.{Document, Section, Page}
+  alias Palapa.Position
 
-  @doc """
-  Returns the list of documents.
-
-  ## Examples
-
-      iex> list_documents()
-      [%Document{}, ...]
-
-  """
   def list_documents(organization) do
     Document
     |> where(organization_id: ^organization.id)
     |> Repo.all()
   end
 
-  @doc """
-  Gets a single document.
-
-  Raises `Ecto.NoResultsError` if the Document does not exist.
-
-  ## Examples
-
-      iex> get_document!(123)
-      %Document{}
-
-      iex> get_document!(456)
-      ** (Ecto.NoResultsError)
-
-  """
   def get_document!(id) do
+    pages_query = from(s in Page, order_by: s.position)
+    sections_query = from(s in Section, order_by: s.position, preload: [pages: ^pages_query])
+
     from(document in Document,
-      left_join: sections in assoc(document, :sections),
-      left_join: pages in assoc(sections, :pages),
-      preload: [sections: {sections, pages: pages}]
+      preload: [sections: ^sections_query, pages: ^pages_query]
     )
     |> Repo.get!(id)
   end
@@ -56,7 +35,6 @@ defmodule Palapa.Documents do
       first_page =
         %Page{}
         |> Page.changeset(%{title: param(attrs, :title), position: 0})
-        |> put_assoc(:organization, organization)
         |> put_assoc(:document, document)
         |> put_assoc(:last_author, author)
         |> Repo.insert!()
@@ -67,49 +45,16 @@ defmodule Palapa.Documents do
     end)
   end
 
-  @doc """
-  Updates a document.
-
-  ## Examples
-
-      iex> update_document(document, %{field: new_value})
-      {:ok, %Document{}}
-
-      iex> update_document(document, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def update_document(%Document{} = document, attrs) do
     document
     |> Document.changeset(attrs)
     |> Repo.update()
   end
 
-  @doc """
-  Deletes a Document.
-
-  ## Examples
-
-      iex> delete_document(document)
-      {:ok, %Document{}}
-
-      iex> delete_document(document)
-      {:error, %Ecto.Changeset{}}
-
-  """
   def delete_document(%Document{} = document) do
     Repo.delete(document)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking document changes.
-
-  ## Examples
-
-      iex> change_document(document)
-      %Ecto.Changeset{source: %Document{}}
-
-  """
   def change_document(%Document{} = document) do
     Document.changeset(document, %{})
   end
@@ -118,5 +63,17 @@ defmodule Palapa.Documents do
     Page
     |> preload(last_author: :account)
     |> Repo.get!(id)
+  end
+
+  def create_section(document, attrs) do
+    document
+    |> Ecto.build_assoc(:sections)
+    |> Section.changeset(attrs)
+    |> Position.move_to_bottom()
+    |> Repo.insert()
+  end
+
+  def change_section(section) do
+    Section.changeset(section, %{})
   end
 end

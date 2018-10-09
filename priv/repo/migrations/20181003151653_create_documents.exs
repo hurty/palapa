@@ -31,12 +31,6 @@ defmodule Palapa.Repo.Migrations.CreateDocuments do
       add(:id, :uuid, primary_key: true)
 
       add(
-        :organization_id,
-        references(:organizations, on_delete: :delete_all, type: :uuid),
-        null: false
-      )
-
-      add(
         :document_id,
         references(:documents, on_delete: :delete_all, type: :uuid),
         null: false
@@ -49,7 +43,6 @@ defmodule Palapa.Repo.Migrations.CreateDocuments do
       add(:position, :integer, null: false, default: 0)
     end
 
-    create(index(:document_sections, :organization_id))
     create(index(:document_sections, :document_id))
     create(index(:document_sections, :last_author_id))
     create(index(:document_sections, :position))
@@ -58,12 +51,6 @@ defmodule Palapa.Repo.Migrations.CreateDocuments do
 
     create table(:document_pages, primary_key: false) do
       add(:id, :uuid, primary_key: true)
-
-      add(
-        :organization_id,
-        references(:organizations, on_delete: :delete_all, type: :uuid),
-        null: false
-      )
 
       add(:document_id, references(:documents, on_delete: :delete_all, type: :uuid))
 
@@ -79,7 +66,7 @@ defmodule Palapa.Repo.Migrations.CreateDocuments do
       add(:position, :integer, null: false, default: 0)
     end
 
-    create(index(:document_pages, :organization_id))
+    create(index(:document_pages, :document_id))
     create(index(:document_pages, :section_id))
     create(index(:document_pages, :last_author_id))
     create(index(:document_pages, :position))
