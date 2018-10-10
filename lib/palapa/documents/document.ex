@@ -19,7 +19,7 @@ defmodule Palapa.Documents.Document do
   end
 
   @doc false
-  def changeset(document, attrs) do
+  def changeset(document \\ %__MODULE__{}, attrs) do
     document
     |> cast(attrs, [:title])
     |> validate_required([:title])

@@ -32,8 +32,8 @@ defmodule Palapa.Documents do
   def create_document(organization, author, attrs \\ %{}) do
     Repo.transaction(fn ->
       document =
-        %Document{}
-        |> Document.changeset(attrs)
+        Document.changeset(attrs)
+        |> put_change(:public, true)
         |> put_assoc(:organization, organization)
         |> put_assoc(:last_author, author)
         |> Repo.insert!()
