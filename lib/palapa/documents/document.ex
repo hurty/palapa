@@ -1,18 +1,21 @@
 defmodule Palapa.Documents.Document do
   use Palapa.Schema
 
-  alias Palapa.Organizations
-  alias Palapa.Documents
+  alias Palapa.Organizations.{Organization, Member}
+  alias Palapa.Teams.Team
+  alias Palapa.Documents.{Section, Page}
 
   schema "documents" do
     field(:title, :string)
+    field(:public, :boolean)
     timestamps()
 
-    belongs_to(:organization, Organizations.Organization)
-    belongs_to(:last_author, Organizations.Member)
-    has_many(:sections, Documents.Section)
-    has_many(:pages, Documents.Page)
-    belongs_to(:first_page, Documents.Page)
+    belongs_to(:organization, Organization)
+    belongs_to(:team, Team)
+    belongs_to(:last_author, Member)
+    has_many(:sections, Section)
+    has_many(:pages, Page)
+    belongs_to(:first_page, Page)
   end
 
   @doc false

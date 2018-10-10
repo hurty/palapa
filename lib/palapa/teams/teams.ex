@@ -136,9 +136,9 @@ defmodule Palapa.Teams do
     end
   end
 
-  def member?(%Team{} = team, %Member{} = member) do
+  def member?(team, member) do
     TeamMember
-    |> where(member_id: ^member.id, team_id: ^team.id)
+    |> where(team_id: ^team.id, member_id: ^member.id)
     |> Repo.exists?()
   end
 

@@ -1,22 +1,22 @@
 <div class="content article-layout" data-controller="document">
-  <div class="left-sidebar pl-8 pr-4 pt-4">
-    <div class="text-grey-darker ">
-    <h2 class="text-lg text-blue border-b border-grey-light py-2"><%= @document.title %></h2>
+  <div class="left-sidebar pl-8">
+    <div class="text-grey-darker border rounded bg-white shadow text-sm">
+    <h2 class="text-lg border-b border-grey-light py-2"><%= @document.title %></h2>
     
-      <ul data-target="document.tableOfContents">
+      <ul data-target="document.tableOfContents" class="list-reset">
         <%= for section <- @document.sections do %>
-          <%= render PalapaWeb.Document.SectionView, "_section.html", section: section %>
+          <%= render PalapaWeb.Document.SectionView, "_section.html", Map.put(assigns, :section, section) %>
 
-          <ul class="">
+          <ul class="list-reset pl-1 bg-grey-lighter">
             <%= for page <- section.pages do %>
-              <li><%= link page.title, to: document_path(@conn, :show, @current_organization, @document, page_id: page.id) %></li>
+              <li class="py-2 px-4"><%= link page.title, to: document_path(@conn, :show, @current_organization, @document, page_id: page.id) %></li>
             <% end %>
           </ul>
         <% end %>
       </ul>
 
-      <div>
-        <button data-target="document.newSectionButton" data-action="document#showNewSectionForm" class="p-1 hover:bg-white rounded">
+      <div class="py-2 px-2 bg-grey-lighter">
+        <button data-target="document.newSectionButton" data-action="document#showNewSectionForm" class="p-1 hover:bg-grey-light rounded">
           <i class="fas fa-plus-circle"></i> Add a section
         </button>
 

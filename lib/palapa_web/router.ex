@@ -58,8 +58,10 @@ defmodule PalapaWeb.Router do
       resources("/messages/comments", MessageCommentController, only: [:edit, :update, :delete])
 
       resources("/documents", Document.DocumentController) do
-        resources("/sections", Document.SectionController, only: [:create, :delete])
+        resources("/sections", Document.SectionController, only: [:create])
       end
+
+      resources("/documents/sections", Document.SectionController, only: [:update, :delete])
 
       resources "/members", MemberController do
         resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)

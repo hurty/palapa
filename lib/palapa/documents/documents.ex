@@ -7,6 +7,12 @@ defmodule Palapa.Documents do
   alias Palapa.Documents.{Document, Section, Page}
   alias Palapa.Position
 
+  # --- Authorizations
+
+  defdelegate(authorize(action, member, params), to: Palapa.Documents.Policy)
+
+  # --- Actions
+
   def list_documents(organization) do
     Document
     |> where(organization_id: ^organization.id)
