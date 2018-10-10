@@ -17,6 +17,11 @@ defmodule Palapa.Documents.Policy do
     document.public || (!is_nil(document.team) && Teams.member?(document.team, member))
   end
 
+  def authorize(:create_page, member, document) do
+    document = Repo.preload(document, :team)
+    document.public || (!is_nil(document.team) && Teams.member?(document.team, member))
+  end
+
   # Deny everything else
   def authorize(_, _, _) do
     false

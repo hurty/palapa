@@ -65,21 +65,35 @@ defmodule Palapa.Documents do
     Document.changeset(document, %{})
   end
 
-  def get_page!(id) do
-    Page
-    |> preload(last_author: :account)
-    |> Repo.get!(id)
-  end
-
-  def create_section(document, attrs) do
+  def create_section(document, author, attrs) do
     document
     |> Ecto.build_assoc(:sections)
     |> Section.changeset(attrs)
+    |> put_assoc(:last_author, author)
     |> Position.move_to_bottom()
     |> Repo.insert()
   end
 
   def change_section(section) do
     Section.changeset(section, %{})
+  end
+
+  def get_page!(id) do
+    Page
+    |> preload(last_author: :account)
+    |> Repo.get!(id)
+  end
+
+  def create_page(document, author, attrs) do
+    %Page{}
+    |> Page.changeset(%{title: param(attrs, :title)})
+    |> put_assoc(:document, document)
+    |> put_assoc(:last_author, author)
+    |> Position.move_to_bottom()
+    |> Repo.insert()
+  end
+
+  def change_page(page) do
+    Page.changeset(page, %{})
   end
 end

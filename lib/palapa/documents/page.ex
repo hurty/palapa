@@ -6,6 +6,7 @@ defmodule Palapa.Documents.Page do
 
   schema "document_pages" do
     field(:title, :string)
+    field(:position, :integer)
     timestamps()
 
     belongs_to(:document, Documents.Document)

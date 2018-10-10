@@ -59,9 +59,11 @@ defmodule PalapaWeb.Router do
 
       resources("/documents", Document.DocumentController) do
         resources("/sections", Document.SectionController, only: [:create])
+        resources("/page", Document.PageController, only: [:create])
       end
 
       resources("/documents/sections", Document.SectionController, only: [:update, :delete])
+      resources("/documents/page", Document.PageController, only: [:update, :delete])
 
       resources "/members", MemberController do
         resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)
