@@ -1,9 +1,18 @@
 import BaseController from "./base_controller"
 import Popper from 'popper.js'
+import { LuminousGallery } from 'luminous-lightbox'
 
 export default class extends BaseController {
   static targets = ["pagesList", "sectionsList", "newPageButton", "newPageForm", "newPageInput",
     "newSectionButton", "newSectionForm", "newSectionInput"]
+
+  connect() {
+    this.handleImageGallery()
+  }
+
+  handleImageGallery() {
+    new LuminousGallery(document.querySelectorAll("a[data-trix-content-type^='image']"))
+  }
 
   showNewSectionForm(event) {
     if (event)
