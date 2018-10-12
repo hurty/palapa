@@ -1,7 +1,6 @@
 <div class="content article-layout">
   <div class="main-content">
     <div class="card">
-
       <div class="card-toolbar flex flex-wrap justify-center sm:justify-between">
         <%= link "New document", to: document_path(@conn, :new, @current_organization) %>
       </div>

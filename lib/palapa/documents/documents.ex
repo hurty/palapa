@@ -20,11 +20,14 @@ defmodule Palapa.Documents do
   end
 
   def get_document!(id) do
-    pages_query = from(s in Page, order_by: s.position)
-    sections_query = from(s in Section, order_by: s.position, preload: [pages: ^pages_query])
+    root_pages_query = from(p in Page, where: is_nil(p.section_id), order_by: p.position)
+    section_pages_query = from(p in Page, where: not is_nil(p.section_id), order_by: p.position)
+
+    sections_query =
+      from(s in Section, order_by: s.position, preload: [pages: ^section_pages_query])
 
     from(document in Document,
-      preload: [sections: ^sections_query, pages: ^pages_query]
+      preload: [sections: ^sections_query, pages: ^root_pages_query]
     )
     |> Repo.get!(id)
   end
