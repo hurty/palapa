@@ -28,30 +28,4 @@ defmodule PalapaWeb.Document.DocumentController do
 
     redirect(conn, to: document_path(conn, :show, current_organization(), document))
   end
-
-  def show(conn, params) do
-    document = Documents.get_document!(params["id"]) |> IO.inspect()
-
-    current_page =
-      if params["page_id"] do
-        Documents.get_page!(params["page_id"])
-      else
-        Documents.get_page!(document.first_page_id)
-      end
-
-    section_changeset = Documents.change_section(%Section{})
-    page_changeset = Documents.change_page(%Page{})
-
-    conn
-    |> put_breadcrumb(
-      document.title,
-      document_path(conn, :show, current_organization(), document)
-    )
-    |> render("show.html",
-      document: document,
-      current_page: current_page,
-      section_changeset: section_changeset,
-      page_changeset: page_changeset
-    )
-  end
 end

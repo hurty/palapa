@@ -1,0 +1,19 @@
+<%= form_for @changeset, @action, fn form -> %>
+  <%= if @changeset.action do %>
+    <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+  <% end %>
+
+  <div class="my-4">
+    <%= textarea form, :title, placeholder: "Title...", autocomplete: "off", rows: "1", 
+      "data-controller": "textarea_autoresize", "data-target": "message.title",
+      class: "input resize-none overflow-hidden p-2 sm:p-4 w-full font-bold sm:text-xl" %>
+    <%= error_tag form, :title %>
+  </div>
+
+  <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization) %>
+  <%= hidden_input form, :body, id: "content" %>
+
+  <div class="card-actions">
+    <%= submit "Save page", class: "btn btn-green" %>
+  </div>  
+<% end %>

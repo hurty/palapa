@@ -74,14 +74,22 @@ defmodule Palapa.Documents do
     |> Repo.insert()
   end
 
-  def change_section(section) do
+  def change_section(section \\ %Section{}) do
     Section.changeset(section, %{})
   end
 
   def get_page!(id) do
-    Page
-    |> preload(last_author: :account)
-    |> Repo.get!(id)
+    page =
+      Page
+      |> Page.with_last_author()
+      |> Page.with_rich_text()
+      |> Repo.get!(id)
+
+    if page.rich_text && page.rich_text.body do
+      Map.put(page, :body, page.rich_text.body)
+    else
+      page
+    end
   end
 
   def create_page(document, author, attrs) do
@@ -93,7 +101,13 @@ defmodule Palapa.Documents do
     |> Repo.insert()
   end
 
-  def change_page(page) do
+  def update_page(page, attrs) do
+    page
+    |> Page.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def change_page(page \\ %Page{}) do
     Page.changeset(page, %{})
   end
 end

@@ -1,0 +1,35 @@
+<div class="content article-layout" data-controller="document">
+  <div class="left-sidebar pl-8">
+    <%= render PalapaWeb.Document.DocumentView, "_table_of_contents.html", assigns %>
+  </div>
+
+  <div class="main-content ml-4">
+    
+    <%# ----- DOCS ----- %>
+    
+    <div class="rounded shadow bg-white p-8 ">
+      <h1 class="text-green"><%= @page.title %></h1>
+      <p class="my-2 text-grey-darker text-sm">
+        Last modified: <%= format_datetime(@page.updated_at, @current_account) %> by <%= @page.last_author.account.name %>
+      </p>
+      <%= link "edit", to: document_page_path(@conn, :edit, @current_organization, @page) %>
+      <div class="separator"></div>
+      
+      <%= if @page.rich_text && @page.rich_text.body do %>
+        <section class="message-content">
+          <%= raw(sanitize_html(@page.rich_text.body)) %>
+        </section>
+      <% end %>
+
+      <div class="border-t flex justify-between pt-4 mt-8">
+        <a href="#"><i class="fas fa-arrow-left mx-2"></i>previous</a>
+        <a href="#">next<i class="fas fa-arrow-right mx-2"></i></a>
+      </div>
+    </div>
+
+    <div class="my-8 flex justify-center">
+      <a class="btn">Suggest an improvement</a>
+    </div>
+    
+  </div>
+</div>

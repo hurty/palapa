@@ -4,7 +4,7 @@ defmodule Palapa.Documents.Section do
   alias Palapa.Documents.{Document, Page}
   alias Palapa.Organizations
 
-  schema "document_sections" do
+  schema "sections" do
     field(:title, :string)
     field(:position, :integer)
     timestamps()

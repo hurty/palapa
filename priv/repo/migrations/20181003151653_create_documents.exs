@@ -27,7 +27,7 @@ defmodule Palapa.Repo.Migrations.CreateDocuments do
 
     # --------- SECTION --------------
 
-    create table(:document_sections, primary_key: false) do
+    create table(:sections, primary_key: false) do
       add(:id, :uuid, primary_key: true)
 
       add(
@@ -43,20 +43,20 @@ defmodule Palapa.Repo.Migrations.CreateDocuments do
       add(:position, :integer, null: false, default: 0)
     end
 
-    create(index(:document_sections, :document_id))
-    create(index(:document_sections, :last_author_id))
-    create(index(:document_sections, :position))
+    create(index(:sections, :document_id))
+    create(index(:sections, :last_author_id))
+    create(index(:sections, :position))
 
     # --------- PAGES --------------
 
-    create table(:document_pages, primary_key: false) do
+    create table(:pages, primary_key: false) do
       add(:id, :uuid, primary_key: true)
 
       add(:document_id, references(:documents, on_delete: :delete_all, type: :uuid))
 
       add(
         :section_id,
-        references(:document_sections, on_delete: :delete_all, type: :uuid)
+        references(:sections, on_delete: :delete_all, type: :uuid)
       )
 
       add(:title, :string)
@@ -66,13 +66,13 @@ defmodule Palapa.Repo.Migrations.CreateDocuments do
       add(:position, :integer, null: false, default: 0)
     end
 
-    create(index(:document_pages, :document_id))
-    create(index(:document_pages, :section_id))
-    create(index(:document_pages, :last_author_id))
-    create(index(:document_pages, :position))
+    create(index(:pages, :document_id))
+    create(index(:pages, :section_id))
+    create(index(:pages, :last_author_id))
+    create(index(:pages, :position))
 
     alter table(:documents) do
-      add(:first_page_id, references(:document_pages, on_delete: :nilify_all, type: :uuid))
+      add(:first_page_id, references(:pages, on_delete: :nilify_all, type: :uuid))
     end
 
     create(index(:documents, :first_page_id))

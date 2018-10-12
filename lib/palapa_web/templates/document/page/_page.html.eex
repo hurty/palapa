@@ -1,4 +1,4 @@
-<li data-delete-url="<%= page_url(@conn, :delete, @current_organization, @page) %>" class="py-2 px-4 border-b">
-  <%= link @page.title, to: document_path(@conn, :show, @current_organization, @page.document_id, page_id: @page.id), 
-  class: if(@conn.params["page_id"] == @page.id, do: "text-green font-bold", else: "text-grey-darker") %>
+<li data-delete-url="<%= document_page_url(@conn, :delete, @current_organization, @page) %>" class="py-2 px-4 border-b">
+  <%= link @page.title, to: document_page_path(@conn, :show, @current_organization, @page), 
+  class: if(@conn.params["id"] == @page.id, do: "text-green font-bold", else: "text-grey-darker") %>
 </li>

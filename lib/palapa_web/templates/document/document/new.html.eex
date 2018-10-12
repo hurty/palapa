@@ -1,7 +1,7 @@
 <div class="content article-layout">
   <div class="main-content">
     <div class="card p1 sm:p-8">
-      <%= form_for @changeset, document_path(@conn, :create, @current_organization), fn form ->%>
+      <%= form_for @changeset, document_path(@conn, :create, @current_organization), fn form -> %>
         <%= if @changeset.action do %>
           <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
         <% end %>

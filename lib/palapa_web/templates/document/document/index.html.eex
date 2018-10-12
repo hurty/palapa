@@ -7,7 +7,9 @@
       </div>
 
       <%= for document <- @documents do %>
-        <div class="p-2"><%= link document.title, to: document_path(@conn, :show, @current_organization, document) %></div>
+        <div class="p-2">
+          <%= link document.title, to: document_page_path(@conn, :show, @current_organization, document.first_page_id) %>
+        </div>
       <% end %>
     </div>
   </div>
