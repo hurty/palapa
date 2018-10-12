@@ -4,7 +4,7 @@ import { LuminousGallery } from 'luminous-lightbox'
 
 export default class extends BaseController {
   static targets = ["pagesList", "sectionsList", "newPageButton", "newPageForm", "newPageInput",
-    "newSectionButton", "newSectionForm", "newSectionInput"]
+    "newSectionButton", "newSectionForm", "newSectionInput", "section"]
 
   connect() {
     this.handleImageGallery()
@@ -76,5 +76,19 @@ export default class extends BaseController {
         this.hideNewPageForm()
         this.newPageInputTarget.value = ""
       })
+  }
+
+  toggleSection(event) {
+    let clickedSectionId = "section_" + event.currentTarget.getAttribute("data-section-id")
+
+    this.sectionTargets.forEach((section) => {
+      let sectionId = section.getAttribute("id")
+      section.classList.toggle("section-pages--closed", sectionId != clickedSectionId)
+    })
+
+    let icon = event.currentTarget.querySelector(".fa-caret-right")
+    console.log(icon)
+    icon.classList.remove("fa-caret-right")
+    icon.classList.add("fa-caret-down")
   }
 }

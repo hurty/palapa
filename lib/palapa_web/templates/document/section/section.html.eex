@@ -1,0 +1,6 @@
+<li data-action="click->document#toggleSection"
+  data-section-id="<%= @section.id %>"
+  data-delete-url="<%= document_section_url(@conn, :delete, @current_organization, @section) %>" 
+  class="py-2 px-4 border-b cursor-pointer">
+  <i class="fas fa-caret-right mr-1"></i> <%= @section.title %>
+</li>

@@ -36,7 +36,7 @@ defmodule PalapaWeb.Document.PageController do
 
     with :ok <- permit(Documents, :create_page, current_member(), document) do
       case Documents.create_page(document, current_member(), page_params) do
-        {:ok, page} -> render(conn, "_page.html", layout: false, page: page)
+        {:ok, page} -> render(conn, "page.html", layout: false, page: page)
         _ -> send_resp(conn, 400, "")
       end
     end

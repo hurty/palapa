@@ -42,19 +42,21 @@
 
   <ul data-target="document.pagesList" class="list-reset">
     <%= for page <- @document.pages do %>
-      <%= render PalapaWeb.Document.PageView, "_page.html", Map.put(assigns, :page, page) %>
+      <%= render PalapaWeb.Document.PageView, "page.html", Map.put(assigns, :page, page) %>
     <% end %>
   </ul>
 
   <ul data-target="document.sectionsList" class="list-reset">
     <%= for section <- @document.sections do %>
-      <%= render PalapaWeb.Document.SectionView, "_section.html", Map.put(assigns, :section, section) %>
+      <%= render PalapaWeb.Document.SectionView, "section.html", Map.put(assigns, :section, section) %>
 
-      <ul class="list-reset bg-grey-lighter">
+      <li data-target="document.section" id="section_<%= section.id %>" class="list-reset bg-grey-lighter section-pages--closed">
+        <ul class="list-reset">
         <%= for page <- section.pages do %>
-          <%= render PalapaWeb.Document.PageView, "_page.html", Map.put(assigns, :page, page) %>
+          <%= render PalapaWeb.Document.PageView, "page.html", Map.put(assigns, :page, page) %>
         <% end %>
-      </ul>
+        </ul>
+      </li>
     <% end %>
   </ul>
 </div>

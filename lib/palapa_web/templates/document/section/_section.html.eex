@@ -1,3 +1,0 @@
-<li data-delete-url="<%= document_section_url(@conn, :delete, @current_organization, @section) %>" class="py-2 px-4 border-b">
-  <i class="fas fa-caret-right mr-1"></i> <%= @section.title %>
-</li>
