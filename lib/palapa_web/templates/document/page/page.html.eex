@@ -1,4 +1,6 @@
-<li data-delete-url="<%= document_page_url(@conn, :delete, @current_organization, @page) %>" class="py-2 px-4 border-b">
+<li data-action="click->document#clickPage"
+  data-delete-url="<%= document_page_url(@conn, :delete, @current_organization, @page) %>" 
+  class="cursor-pointer py-2 pr-4 pl-8 border-b <%= if @page.section_id do %>hover:bg-grey-light<% else %>hover:bg-grey-lighter<% end %>">
   <%= link @page.title, to: document_page_path(@conn, :show, @current_organization, @page), 
   class: if(@conn.params["id"] == @page.id, do: "text-green font-bold", else: "text-grey-darker") %>
 </li>
