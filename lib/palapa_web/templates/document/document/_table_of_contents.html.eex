@@ -51,7 +51,7 @@
       <li data-controller="document-section">
         <%= render PalapaWeb.Document.SectionView, "section_title.html", Map.put(assigns, :section, section) %>
 
-        <ul data-target="document-section.pagesList" class="hidden list-reset bg-grey-lightest">
+        <ul data-target="document-section.pagesList" class="<%= unless @page.section_id == section.id do %>hidden<% end %> list-reset bg-grey-lightest">
           <%= if Enum.any?(section.pages) do %>
             <%= for page <- section.pages do %>
               <%= render PalapaWeb.Document.PageView, "page.html", Map.put(assigns, :page, page) %>
