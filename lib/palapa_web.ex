@@ -60,6 +60,7 @@ defmodule PalapaWeb do
       import PalapaWeb.Gettext
       import PalapaWeb.Helpers
       import Scrivener.HTML
+      import Palapa.Access, only: [permit?: 4]
     end
   end
 

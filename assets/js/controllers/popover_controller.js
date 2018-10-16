@@ -2,16 +2,11 @@ import { Controller } from "stimulus"
 import PopperJs from 'popper.js'
 
 export default class extends Controller {
-  static targets = ["button", "content", "arrow"]
+  static targets = ["button", "content"]
 
   connect() {
     this.popover = new PopperJs(this.buttonTarget, this.contentTarget, {
-      placement: "auto",
-      modifiers: {
-        arrow: {
-          element: this.arrowTarget
-        }
-      }
+      placement: "bottom"
     })
 
     let controller = this

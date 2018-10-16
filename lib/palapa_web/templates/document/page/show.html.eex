@@ -7,12 +7,16 @@
     
     <%# ----- DOCS ----- %>
     
-    <div class="rounded shadow bg-white p-8 ">
-      <h1 class="text-green"><%= @page.title %></h1>
-      <p class="my-2 text-grey-darker text-sm">
-        Last modified: <%= format_datetime(@page.updated_at, @current_account) %> by <%= @page.last_author.account.name %>
-      </p>
-      <%= link "edit", to: document_page_path(@conn, :edit, @current_organization, @page) %>
+    <div class="card p-8">
+      <div class="flex justify-between">
+        <div>
+          <h1 class="text-green"><%= @page.title %></h1>
+          <p class="my-2 text-grey-darker text-sm">
+            Last modified: <%= format_datetime(@page.updated_at, @current_account) %> by <%= @page.last_author.account.name %>
+          </p>
+        </div>
+        <%= render "page_actions.html", assigns %>
+      </div>
       <div class="separator"></div>
       
       <%= if @page.rich_text && @page.rich_text.body do %>
