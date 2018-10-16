@@ -1,6 +1,8 @@
 import BaseController from "./base_controller"
 import Popper from 'popper.js'
 import { LuminousGallery } from 'luminous-lightbox'
+import { Sortable } from '@shopify/draggable';
+import SwapAnimation from '@shopify/draggable/lib/plugins/swap-animation';
 
 export default class extends BaseController {
   static targets = ["pagesList", "sectionsList", "newPageButton", "newPageForm", "newPageInput",
@@ -8,10 +10,30 @@ export default class extends BaseController {
 
   connect() {
     this.handleImageGallery()
+    this.handlePageSorting()
   }
 
   handleImageGallery() {
     new LuminousGallery(document.querySelectorAll("a[data-trix-content-type^='image']"))
+  }
+
+  handlePageSorting() {
+    const sortable = new Sortable(this.pagesListTarget,
+      {
+        draggable: ".draggable-source",
+        handle: ".draggable-handle",
+        swapAnimation: {
+          duration: 200,
+          easingFunction: 'ease-in-out',
+        },
+        mirror: {
+          constrainDimensions: true,
+          xAxis: false
+        },
+        plugins: [SwapAnimation]
+      }
+    )
+    console.log(sortable)
   }
 
   showNewSectionForm(event) {

@@ -1,0 +1,15 @@
+.draggable-handle {
+  cursor: grab;
+}
+
+.draggable-mirror {
+  @apply shadow bg-white border-t border-b;
+}
+
+.draggable-container--is-dragging {
+  @apply shadow-inner;
+}
+
+.draggable-source--is-dragging {
+  @apply bg-grey-lightest opacity-25;
+}

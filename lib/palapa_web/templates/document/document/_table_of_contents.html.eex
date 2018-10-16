@@ -39,14 +39,12 @@
       <% end %>
     </div>
   </div>
-
+ 
   <ul data-target="document.pagesList" class="list-reset">
     <%= for page <- @document.pages do %>
       <%= render PalapaWeb.Document.PageView, "page.html", Map.put(assigns, :page, page) %>
     <% end %>
-  </ul>
 
-  <ul data-target="document.sectionsList" class="list-reset">
     <%= for section <- @document.sections do %>
       <li data-controller="document-section">
         <%= render PalapaWeb.Document.SectionView, "section_title.html", Map.put(assigns, :section, section) %>
@@ -57,7 +55,7 @@
               <%= render PalapaWeb.Document.PageView, "page.html", Map.put(assigns, :page, page) %>
             <% end %>
           <% else %>
-            <li class="py-2 pl-8 pr-4 border-b italic text-grey">Empty section</li>
+            <li class="py-2 pl-8 pr-4 italic text-grey">Empty section</li>
           <% end %>
         </ul>
       </li>

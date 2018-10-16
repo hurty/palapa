@@ -30,6 +30,7 @@
   * @import "components/forms";
   */
 @import "components/_autocomplete";
+@import "components/_draggable";
 @import "components/_avatars";
 @import "components/_blankslates";
 @import "components/_buttons";
