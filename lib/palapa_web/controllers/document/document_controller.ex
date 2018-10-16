@@ -2,7 +2,7 @@ defmodule PalapaWeb.Document.DocumentController do
   use PalapaWeb, :controller
 
   alias Palapa.Documents
-  alias Palapa.Documents.{Document, Section, Page}
+  alias Palapa.Documents.{Document}
 
   plug(:put_common_breadcrumbs)
   plug(:put_navigation, "documents")
