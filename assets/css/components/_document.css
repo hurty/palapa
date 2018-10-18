@@ -1,3 +1,26 @@
-.section-pages--closed {
-  @apply hidden;
+.document-section {
+  @apply cursor-pointer;
+}
+.document-section-list {
+  @apply list-reset;
+}
+
+.document-section--closed {
+  .document-section-icon-open {
+    @apply hidden;
+  }
+
+  .document-page {
+    @apply hidden;
+  }
+}
+
+.document-section--open {
+  .document-section-icon-closed {
+    @apply hidden;
+  }
+}
+
+.document-section-title {
+  @apply text-sm font-bold;
 }

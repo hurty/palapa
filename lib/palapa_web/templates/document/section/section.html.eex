@@ -1,0 +1,23 @@
+<li data-controller="document-section" 
+data-action="click->document-section#toggleSection"
+data-document-section-delete-url="<%= document_section_url(@conn, :delete, @current_organization, @section) %>"
+class="document-section">
+  
+  <ul data-target="document-section.pagesList document.draggableContainer" class="document-section-list <%= if @page.section_id == @section.id do %>document-section--open<% else %>document-section--closed<% end %>">
+    <li class="py-2 px-4 border-t">
+      <span data-target="document-section.iconClosed" class="document-section-icon-closed">
+        <i class="fas fa-caret-right mr-1"></i>
+      </span>
+      
+      <span data-target="document-section.iconOpened" class="document-section-icon-open">
+        <i class="fas fa-caret-down mr-1"></i>
+      </span>
+      
+      <span class="document-section-title"><%= @section.title %></span>
+    </li>
+    
+    <%= for page <- @section.pages do %>
+      <%= render PalapaWeb.Document.PageView, "page.html", Map.put(assigns, :page, page) %>
+    <% end %>
+  </ul>
+</li>

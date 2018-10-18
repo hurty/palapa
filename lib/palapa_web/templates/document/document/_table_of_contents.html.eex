@@ -40,25 +40,17 @@
     </div>
   </div>
  
-  <ul data-target="document.pagesList" class="list-reset">
-    <%= for page <- @document.pages do %>
-      <%= render PalapaWeb.Document.PageView, "page.html", Map.put(assigns, :page, page) %>
-    <% end %>
+  <div>
+    <ul data-target="document.pagesList document.draggableContainer" class="list-reset">
+      <%= for page <- @document.pages do %>
+        <%= render PalapaWeb.Document.PageView, "page.html", Map.put(assigns, :page, page) %>
+      <% end %>
+    </ul>
 
-    <%= for section <- @document.sections do %>
-      <li data-controller="document-section">
-        <%= render PalapaWeb.Document.SectionView, "section_title.html", Map.put(assigns, :section, section) %>
-
-        <ul data-target="document-section.pagesList" class="<%= unless @page.section_id == section.id do %>hidden<% end %> list-reset bg-grey-lightest">
-          <%= if Enum.any?(section.pages) do %>
-            <%= for page <- section.pages do %>
-              <%= render PalapaWeb.Document.PageView, "page.html", Map.put(assigns, :page, page) %>
-            <% end %>
-          <% else %>
-            <li class="py-2 pl-8 pr-4 italic text-grey">Empty section</li>
-          <% end %>
-        </ul>
-      </li>
-    <% end %>
-  </ul>
+    <ul data-target="document.draggableContainer" class="list-reset">
+      <%= for section <- @document.sections do %>
+        <%= render PalapaWeb.Document.SectionView, "section.html", Map.put(assigns, :section, section) %>
+      <% end %>
+    </ul>
+  </div>
 </div>
