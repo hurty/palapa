@@ -5,12 +5,13 @@ import { Sortable } from '@shopify/draggable';
 import SwapAnimation from '@shopify/draggable/lib/plugins/swap-animation';
 
 export default class extends BaseController {
-  static targets = ["pagesList", "sectionsList", "newPageButton", "newPageForm", "newPageInput",
+  static targets = ["pagesList", "sectionsList", "sectionsContainer", "newPageButton", "newPageForm", "newPageInput",
     "newSectionButton", "newSectionForm", "newSectionInput", "draggableContainer"]
 
   connect() {
     this.handleImageGallery()
     this.handlePageSorting()
+    this.handleSectionSorting()
   }
 
   handleImageGallery() {
@@ -30,7 +31,7 @@ export default class extends BaseController {
           constrainDimensions: true,
           xAxis: false
         },
-        plugins: [SwapAnimation]
+        // plugins: [SwapAnimation]
       }
     )
 
@@ -52,6 +53,24 @@ export default class extends BaseController {
       let dragStopEvent = new CustomEvent("dragStopEvent", { 'detail': event })
       document.dispatchEvent(dragStopEvent)
     })
+  }
+
+  handleSectionSorting() {
+    const sortable = new Sortable(this.sectionsContainerTarget,
+      {
+        draggable: ".document-section",
+        handle: ".document-section-handle",
+        swapAnimation: {
+          duration: 250,
+          easingFunction: 'ease-in-out',
+        },
+        mirror: {
+          constrainDimensions: true,
+          xAxis: false
+        },
+        // plugins: [SwapAnimation]
+      }
+    )
   }
 
   showNewSectionForm(event) {

@@ -11,14 +11,13 @@ export default class extends BaseController {
     document.addEventListener("dragOverSection", (event) => {
       if (event.detail.overContainer === this.pagesListTarget) {
         this.pagesListTarget.classList.add("bg-grey-lighter")
-        this.openSection()
+        // this.openSection()
       }
     })
 
     document.addEventListener("dragOutOfSection", (event) => {
       if (event.detail.overContainer === this.pagesListTarget) {
         this.pagesListTarget.classList.remove("bg-grey-lighter")
-        this.closeSection()
       }
     })
 

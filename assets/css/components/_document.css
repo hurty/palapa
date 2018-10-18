@@ -1,6 +1,18 @@
 .document-section {
   @apply cursor-pointer;
+
+  .document-section-handle {
+    display: none;
+    cursor: grab;
+  } 
+  
+  &:hover {
+    .document-section-handle {
+      display: block;
+    }
+  }
 }
+
 .document-section-list {
   @apply list-reset;
 }

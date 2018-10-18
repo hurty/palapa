@@ -47,7 +47,7 @@
       <% end %>
     </ul>
 
-    <ul data-target="document.draggableContainer" class="list-reset">
+    <ul data-target="document.sectionsContainer" class="list-reset">
       <%= for section <- @document.sections do %>
         <%= render PalapaWeb.Document.SectionView, "section.html", Map.put(assigns, :section, section) %>
       <% end %>
