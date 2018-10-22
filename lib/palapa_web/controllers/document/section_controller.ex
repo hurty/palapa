@@ -13,4 +13,15 @@ defmodule PalapaWeb.Document.SectionController do
       end
     end
   end
+
+  def update(conn, %{"id" => id, "section" => section_params}) do
+    section = Documents.get_section!(id)
+
+    with :ok <- permit(Documents, :update_section, current_member(), section) do
+      case Documents.update_section(section, section_params) do
+        {:ok, _updated_section} -> send_resp(conn, :ok, "")
+        {:error, _changeset} -> send_resp(conn, :bad_request, "")
+      end
+    end
+  end
 end

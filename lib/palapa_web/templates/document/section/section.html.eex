@@ -1,7 +1,7 @@
 <li data-controller="document-section" 
 data-target="document.section"
 data-action="click->document-section#toggleSection"
-data-document-section-delete-url="<%= document_section_url(@conn, :delete, @current_organization, @section) %>"
+data-document-section-url="<%= document_section_url(@conn, :update, @current_organization, @section) %>"
 class="document-section">
   
   <ul data-target="document-section.pagesList document.draggableContainer" class="document-section-list <%= if @page.section_id == @section.id do %>document-section--open<% else %>document-section--closed<% end %>">

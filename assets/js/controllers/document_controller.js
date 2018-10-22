@@ -3,6 +3,7 @@ import Popper from 'popper.js'
 import { LuminousGallery } from 'luminous-lightbox'
 import { Sortable } from '@shopify/draggable';
 import SwapAnimation from '@shopify/draggable/lib/plugins/swap-animation';
+import debounce from 'lodash.debounce'
 
 export default class extends BaseController {
   static targets = ["pagesList", "sectionsList", "sectionsContainer", "newPageButton", "newPageForm", "newPageInput",
@@ -31,7 +32,7 @@ export default class extends BaseController {
           constrainDimensions: true,
           xAxis: false
         },
-        // plugins: [SwapAnimation]
+        plugins: [SwapAnimation]
       }
     )
 
@@ -68,9 +69,26 @@ export default class extends BaseController {
           constrainDimensions: true,
           xAxis: false
         },
-        // plugins: [SwapAnimation]
+        plugins: [SwapAnimation]
       }
     )
+
+    sortable.on('sortable:sorted',
+      debounce(this.syncSortSection, 800)
+    )
+  }
+
+  syncSortSection(event) {
+    let section = event.dragEvent.source
+    let updateSectionURL = section.getAttribute("data-document-section-url")
+
+    let formData = new FormData();
+    formData.append("section[position]", event.newIndex)
+
+    PA.fetchHTML(updateSectionURL, {
+      method: "put",
+      body: formData
+    })
   }
 
   showNewSectionForm(event) {

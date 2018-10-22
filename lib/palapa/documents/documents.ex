@@ -77,8 +77,19 @@ defmodule Palapa.Documents do
     |> Repo.insert()
   end
 
+  def get_section!(id) do
+    Section
+    |> preload(document: [:team])
+    |> Repo.get!(id)
+  end
+
   def change_section(section \\ %Section{}) do
     Section.changeset(section, %{})
+  end
+
+  def update_section(section, attrs) do
+    Section.changeset(section, attrs)
+    |> Repo.update()
   end
 
   def get_page!(id) do
