@@ -73,6 +73,7 @@ defmodule Palapa.Documents do
     |> Ecto.build_assoc(:sections)
     |> Section.changeset(attrs)
     |> put_assoc(:last_author, author)
+    |> put_assoc(:pages, [])
     |> Position.move_to_bottom()
     |> Repo.insert()
   end

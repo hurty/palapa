@@ -8,7 +8,7 @@ defmodule PalapaWeb.Document.SectionController do
 
     with :ok <- permit(Documents, :create_section, current_member(), document) do
       case Documents.create_section(document, current_member(), section_params) do
-        {:ok, section} -> render(conn, "section_title.html", layout: false, section: section)
+        {:ok, section} -> render(conn, "section.html", layout: false, section: section)
         _ -> send_resp(conn, 400, "")
       end
     end

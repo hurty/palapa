@@ -4,7 +4,7 @@ data-action="click->document-section#toggleSection"
 data-document-section-url="<%= document_section_url(@conn, :update, @current_organization, @section) %>"
 class="document-section">
   
-  <ul data-target="document-section.pagesList document.draggableContainer" class="document-section-list <%= if @page.section_id == @section.id do %>document-section--open<% else %>document-section--closed<% end %>">
+  <ul data-target="document-section.pagesList document.draggableContainer" class="document-section-list <%= if assigns[:page] && @page.section_id == @section.id do %>document-section--open<% else %>document-section--closed<% end %>">
     <li class="flex justify-between py-2 px-4 border-t">
       <div>
         <span data-target="document-section.iconClosed" class="document-section-icon-closed">

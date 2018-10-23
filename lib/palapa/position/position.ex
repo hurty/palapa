@@ -16,9 +16,9 @@ defmodule Palapa.Position do
     end)
   end
 
-  def current_bottom_position(schema) do
+  def current_bottom_position(queryable) do
     last =
-      schema
+      queryable
       |> select([:position])
       |> order_by(desc: :position)
       |> limit(1)

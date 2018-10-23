@@ -117,7 +117,7 @@ export default class extends BaseController {
 
     PA.fetchHTML(url, { method: "post", body: body })
       .then((html) => {
-        this.sectionsListTarget.innerHTML += html
+        this.sectionsContainerTarget.innerHTML += html
         this.hideNewSectionForm()
         this.newSectionInputTarget.value = ""
       })
