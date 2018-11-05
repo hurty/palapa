@@ -23,11 +23,11 @@ defmodule Palapa.Documents.Section do
   end
 
   defp set_position(changeset) do
+    new_position = get_change(changeset, :position)
     document_id = get_field(changeset, :document_id)
     old_position = changeset.data.position
-    new_position = get_change(changeset, :position)
 
-    if new_position != old_position do
+    if new_position && new_position != old_position do
       base_query =
         from(s in Section,
           where: s.document_id == ^document_id

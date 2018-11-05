@@ -67,7 +67,7 @@ export default class extends BaseController {
           constrainDimensions: true,
           xAxis: false
         },
-        plugins: [SwapAnimation]
+        // plugins: [SwapAnimation]
       }
     )
 

@@ -1,15 +1,16 @@
 <li data-controller="document-section" 
 data-target="document.section"
-data-action="click->document-section#toggleSection"
 data-document-section-url="<%= document_section_url(@conn, :update, @current_organization, @section) %>"
+data-document-section-title="<%= @section.title %>" 
 class="document-section">
   
   <ul data-target="document-section.pagesList document.draggableContainer" 
+  data-action="click->document-section#toggleSection"
   class="document-section-list <%= if assigns[:page] && @page.section_id == @section.id do %>document-section--open<% else %>document-section--closed<% end %>"
   data-document-section-id="<%= @section.id %>">
     <%= unless @section.id == @document.main_section_id do %>
       <li class="flex justify-between py-2 px-4 border-t">
-        <div>
+        <div class="flex-1">
           <span data-target="document-section.iconClosed" class="document-section-icon-closed">
             <i class="fas fa-caret-right mr-1"></i>
           </span>
@@ -18,21 +19,29 @@ class="document-section">
             <i class="fas fa-caret-down mr-1"></i>
           </span>
 
-          <span class="document-section-title"><%= @section.title %></span>
+          <span data-target="document-section.title" class="document-section-title"><%= @section.title %></span>
         </div>
 
         <div class="flex">
           <div data-controller="popover">
             <%= if permit?(Palapa.Documents, :edit_page, @current_member, @page) do %>
-              <button data-target="popover.button" class="bg-grey rounded-full h-6 w-6 bg-grey text-blue-darker font-bold border-2 border-transparent hover:border-grey-dark">
+              <button data-target="document-section.menu popover.button" class="bg-grey rounded-full h-6 w-6 bg-grey text-blue-darker font-bold border-2 border-transparent hover:border-grey-dark">
                 <i class="fas fa-ellipsis-h"></i>
               </button>
               
               <div data-target="popover.content" class="popover hidden">
                 <div data-target="popover.arrow" class="popover__arrow"></div>
                 <nav class="flex flex-col">
-                  <%= link to: document_page_path(@conn, :edit, @current_organization, @page), class: "popover__link" do %>
-                    <i class="fas fa-pencil-alt"></i>&nbsp;Edit page
+                  <%= link to: document_section_path(@conn, :update, @current_organization, @section), class: "popover__link" do %>
+                    <i class="fas fa-file-alt"></i>&nbsp;Create a page in this section
+                  <% end %>
+
+                  <%= link to: document_section_path(@conn, :update, @current_organization, @section), class: "popover__link", "data-action": "document-section#showForm" do %>
+                    <i class="fas fa-pencil-alt"></i>&nbsp;Rename this section
+                  <% end %>
+
+                  <%= link to: document_section_path(@conn, :delete, @current_organization, @section), class: "popover__link" do %>
+                    <i class="fas fa-trash"></i>&nbsp;Delete this section
                   <% end %>
                 </nav>
               </div>
@@ -43,6 +52,20 @@ class="document-section">
             <i class="text-grey fas fa-bars"></i>
           </div>
         </div>
+        
+        <%= form_for @conn, document_section_path(@conn, :update, @current_organization, @section), 
+          ["data-target": "document-section.form", "data-action": "document-section#rename", 
+          class: "hidden bg-white border shadow-lg p-2 rounded"], fn form -> %>
+          <div class="field">
+            <%= text_input form, :title, value: @section.title, "data-target": "document-section.titleInput", class: "input", placeholder: "Section's name" %>
+            <span data-target="document-section.errorMessage" class="hidden error">Can't be blank</span>
+          </div>
+          
+          <div class="py-2">
+            <%= submit "Rename section", class: "btn btn-green" %>
+            <button data-action="document-section#cancelRename" class="btn">Cancel</button>
+          </div>
+        <% end %>
       </li>
     <% end %>
     

@@ -1,7 +1,8 @@
 import BaseController from "./base_controller"
+import PopperJs from 'popper.js'
 
 export default class extends BaseController {
-  static targets = ["iconOpened", "iconClosed", "pagesList"]
+  static targets = ["menu", "title", "iconOpened", "iconClosed", "pagesList", "form", "titleInput", "errorMessage"]
 
   connect() {
     this.handleDragPageOverSection()
@@ -46,4 +47,41 @@ export default class extends BaseController {
     this.pagesListTarget.classList.replace("document-section--open", "document-section--closed")
   }
 
+  showForm(event) {
+    event.preventDefault()
+
+    let popper = new PopperJs(this.menuTarget, this.formTarget, {
+      placement: "bottom"
+    })
+    this.hide(this.errorMessageTarget)
+    this.show(this.formTarget)
+  }
+
+  rename(event) {
+    event.preventDefault()
+    let newTitle = this.titleInputTarget.value
+
+    if (newTitle === "") {
+      this.show(this.errorMessageTarget)
+      return
+    }
+
+    let formData = new FormData()
+    formData.append("section[title]", newTitle)
+
+    PA.fetchHTML(this.data.get("url"), { method: "put", body: formData }).then(() => {
+      this.title = newTitle
+      this.hide(this.formTarget)
+    })
+  }
+
+  set title(value) {
+    this.data.set("title", value)
+    this.titleTarget.innerHTML = value
+  }
+
+  cancelRename(event) {
+    event.preventDefault()
+    this.hide(this.formTarget)
+  }
 }
