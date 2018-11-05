@@ -36,9 +36,7 @@ export default class extends BaseController {
       }
     )
 
-    sortable.on('sortable:sorted', (event) => {
-
-    })
+    sortable.on('sortable:sorted', debounce(this.syncSortPage, 800))
 
     sortable.on('drag:over:container', (event) => {
       let dragOverSectionEvent = new CustomEvent("dragOverSection", { 'detail': event })
@@ -86,6 +84,21 @@ export default class extends BaseController {
     formData.append("section[position]", event.newIndex)
 
     PA.fetchHTML(updateSectionURL, {
+      method: "put",
+      body: formData
+    })
+  }
+
+  syncSortPage(event) {
+    let page = event.dragEvent.source
+    let updatePageURL = page.getAttribute("data-document-page-url")
+    let newSectionId = event.newContainer.getAttribute("data-document-section-id")
+
+    let formData = new FormData();
+    formData.append("new_section_id", newSectionId)
+    formData.append("new_position", event.newIndex)
+
+    PA.fetchHTML(updatePageURL, {
       method: "put",
       body: formData
     })

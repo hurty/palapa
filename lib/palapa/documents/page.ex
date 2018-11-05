@@ -18,9 +18,9 @@ defmodule Palapa.Documents.Page do
     has_one(:rich_text, RichText, on_replace: :delete)
   end
 
-  def changeset(document, attrs) do
-    document
-    |> cast(attrs, [:title, :body])
+  def changeset(page, attrs) do
+    page
+    |> cast(attrs, [:title, :body, :position, :section_id])
     |> put_body
     |> validate_required([:title])
   end

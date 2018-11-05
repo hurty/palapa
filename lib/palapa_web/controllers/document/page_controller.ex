@@ -35,7 +35,7 @@ defmodule PalapaWeb.Document.PageController do
     document = Documents.get_document!(document_id)
 
     with :ok <- permit(Documents, :create_page, current_member(), document) do
-      case Documents.create_page(document, current_member(), page_params) do
+      case Documents.create_page(document, document.main_section, current_member(), page_params) do
         {:ok, page} -> render(conn, "page.html", layout: false, page: page)
         _ -> send_resp(conn, 400, "")
       end
@@ -71,6 +71,25 @@ defmodule PalapaWeb.Document.PageController do
           |> assign(:changeset, changeset)
           |> render("edit.html", document: document, page: page)
       end
+    end
+  end
+
+  def update(conn, %{
+        "id" => id,
+        "new_section_id" => new_section_id,
+        "new_position" => new_position
+      }) do
+    page = Documents.get_page!(id)
+    new_section = Documents.get_section!(new_section_id)
+
+    with :ok <-
+           permit(Documents, :move_page, current_member(),
+             page: page,
+             new_section: new_section,
+             new_position: new_position
+           ) do
+      Documents.move_page!(page, new_section, new_position)
+      send_resp(conn, 200, "")
     end
   end
 end

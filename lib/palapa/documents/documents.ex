@@ -27,31 +27,35 @@ defmodule Palapa.Documents do
       from(s in Section, order_by: s.position, preload: [pages: ^section_pages_query])
 
     from(document in Document,
-      preload: [sections: ^sections_query, pages: ^root_pages_query]
+      preload: [sections: ^sections_query, pages: ^root_pages_query],
+      preload: [:main_section]
     )
     |> Repo.get!(id)
   end
 
   def create_document(organization, author, attrs \\ %{}) do
-    Repo.transaction(fn ->
-      document =
-        Document.changeset(attrs)
-        |> put_change(:public, true)
-        |> put_assoc(:organization, organization)
-        |> put_assoc(:last_author, author)
-        |> Repo.insert!()
+    document_changeset =
+      %Document{}
+      |> Document.changeset(attrs)
+      |> put_change(:public, true)
+      |> put_assoc(:organization, organization)
+      |> put_assoc(:last_author, author)
 
-      first_page =
-        %Page{}
-        |> Page.changeset(%{title: param(attrs, :title), position: 0})
-        |> put_assoc(:document, document)
-        |> put_assoc(:last_author, author)
-        |> Repo.insert!()
-
-      document
-      |> change(first_page_id: first_page.id)
-      |> Repo.update!()
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:document, document_changeset)
+    |> Ecto.Multi.run(:main_section, fn changes ->
+      create_section(changes.document, author, %{title: "__main_section__"})
     end)
+    |> Ecto.Multi.run(:main_page, fn changes ->
+      create_page(changes.document, changes.main_section, author, attrs)
+    end)
+    |> Ecto.Multi.run(:link_main_page, fn changes ->
+      changes.document
+      |> change(main_section_id: changes.main_section.id)
+      |> change(main_page_id: changes.main_page.id)
+      |> Repo.update()
+    end)
+    |> Repo.transaction()
   end
 
   def update_document(%Document{} = document, attrs) do
@@ -74,7 +78,7 @@ defmodule Palapa.Documents do
     |> Section.changeset(attrs)
     |> put_assoc(:last_author, author)
     |> put_assoc(:pages, [])
-    |> Position.move_to_bottom()
+    |> Position.move_to_bottom(:document_id)
     |> Repo.insert()
   end
 
@@ -107,12 +111,13 @@ defmodule Palapa.Documents do
     end
   end
 
-  def create_page(document, author, attrs) do
+  def create_page(document, section, author, attrs) do
     %Page{}
     |> Page.changeset(%{title: param(attrs, :title)})
     |> put_assoc(:document, document)
     |> put_assoc(:last_author, author)
-    |> Position.move_to_bottom()
+    |> put_change(:section_id, section.id)
+    |> Position.move_to_bottom(:section_id)
     |> Repo.insert()
   end
 
@@ -124,5 +129,15 @@ defmodule Palapa.Documents do
 
   def change_page(page \\ %Page{}) do
     Page.changeset(page, %{})
+  end
+
+  def move_page!(page, new_section, new_position) do
+    page
+    |> Page.changeset(%{
+      "section_id" => new_section.id,
+      "position" => new_position
+    })
+    |> Position.recompute_positions()
+    |> Repo.update!()
   end
 end

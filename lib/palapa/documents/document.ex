@@ -13,9 +13,10 @@ defmodule Palapa.Documents.Document do
     belongs_to(:organization, Organization)
     belongs_to(:team, Team)
     belongs_to(:last_author, Member)
+    belongs_to(:main_section, Section)
+    belongs_to(:main_page, Page)
     has_many(:sections, Section)
     has_many(:pages, Page)
-    belongs_to(:first_page, Page)
   end
 
   @doc false
