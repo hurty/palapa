@@ -75,13 +75,15 @@ export default class extends BaseController {
     })
   }
 
+  cancelRename(event) {
+    event.preventDefault()
+    this.hide(this.formTarget)
+  }
+
   set title(value) {
     this.data.set("title", value)
     this.titleTarget.innerHTML = value
   }
 
-  cancelRename(event) {
-    event.preventDefault()
-    this.hide(this.formTarget)
-  }
+
 }

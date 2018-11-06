@@ -11,6 +11,13 @@ defmodule Palapa.Documents do
 
   defdelegate(authorize(action, member, params), to: Palapa.Documents.Policy)
 
+  # --- Scopes
+
+  def non_deleted(queryable) do
+    queryable
+    |> where([q], is_nil(q.deleted_at))
+  end
+
   # --- Actions
 
   def list_documents(organization) do
@@ -20,11 +27,17 @@ defmodule Palapa.Documents do
   end
 
   def get_document!(id) do
-    root_pages_query = from(p in Page, where: is_nil(p.section_id), order_by: p.position)
-    section_pages_query = from(p in Page, where: not is_nil(p.section_id), order_by: p.position)
+    root_pages_query =
+      from(p in Page, where: is_nil(p.section_id), order_by: p.position)
+      |> non_deleted()
+
+    section_pages_query =
+      from(p in Page, where: not is_nil(p.section_id), order_by: p.position)
+      |> non_deleted()
 
     sections_query =
       from(s in Section, order_by: s.position, preload: [pages: ^section_pages_query])
+      |> non_deleted()
 
     from(document in Document,
       preload: [sections: ^sections_query, pages: ^root_pages_query],
@@ -94,6 +107,13 @@ defmodule Palapa.Documents do
 
   def update_section(section, attrs) do
     Section.changeset(section, attrs)
+    |> Repo.update()
+  end
+
+  def delete_section(section) do
+    section
+    |> change
+    |> put_change(:deleted_at, Timex.now())
     |> Repo.update()
   end
 

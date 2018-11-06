@@ -8,6 +8,7 @@ defmodule Palapa.Documents.Section do
   schema "sections" do
     field(:title, :string)
     field(:position, :integer)
+    field(:deleted_at, :utc_datetime)
     timestamps()
 
     belongs_to(:document, Document)

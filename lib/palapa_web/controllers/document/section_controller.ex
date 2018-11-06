@@ -27,4 +27,46 @@ defmodule PalapaWeb.Document.SectionController do
       end
     end
   end
+
+  def delete(conn, %{"id" => id, "current_page_id" => current_page_id}) do
+    section = Documents.get_section!(id)
+    current_page = Documents.get_page!(current_page_id)
+
+    with :ok <- permit(Documents, :delete_section, current_member(), section) do
+      case Documents.delete_section(section) do
+        {:ok, _} ->
+          redirect_page_id =
+            if current_page.section_id == section.id do
+              section.document.main_page_id
+            else
+              current_page_id
+            end
+
+          conn
+          |> put_flash(:success, "The section \"#{section.title}\" has been deleted")
+          |> redirect(
+            to:
+              document_page_path(
+                conn,
+                :show,
+                current_organization(),
+                redirect_page_id
+              )
+          )
+
+        {:error, _changeset} ->
+          conn
+          |> put_flash(:error, "The section \"#{section.title}\" could not be deleted")
+          |> redirect(
+            to:
+              document_page_path(
+                conn,
+                :show,
+                current_organization(),
+                current_page
+              )
+          )
+      end
+    end
+  end
 end

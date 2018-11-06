@@ -39,6 +39,10 @@ defmodule Palapa.Documents.Policy do
     authorize(:update_document, member, section.document)
   end
 
+  def authorize(:delete_section, member, section) do
+    authorize(:update_document, member, section.document)
+  end
+
   # Deny everything else
   def authorize(_, _, _) do
     false

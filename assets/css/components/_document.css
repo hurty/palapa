@@ -1,6 +1,13 @@
 .document-section {
   @apply cursor-pointer;
+}
 
+.document-section .document-section-actions {
+  display: none;
+}
+
+.document-section:hover .document-section-actions {
+  @apply flex py-1 items-center;
 }
 
 .document-section-handle {
