@@ -10,6 +10,7 @@ defmodule Palapa.Documents.Page do
     field(:title, :string)
     field(:position, :integer)
     field(:body, :string, virtual: true, default: nil)
+    field(:deleted_at, :utc_datetime)
     timestamps()
 
     belongs_to(:document, Document)
@@ -34,6 +35,7 @@ defmodule Palapa.Documents.Page do
     end
   end
 
+  def with_document(query), do: preload(query, :document)
   def with_last_author(query), do: preload(query, last_author: :account)
   def with_rich_text(query), do: preload(query, :rich_text)
 end

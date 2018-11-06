@@ -92,4 +92,23 @@ defmodule PalapaWeb.Document.PageController do
       send_resp(conn, 200, "")
     end
   end
+
+  def delete(conn, %{"id" => id, "current_page_id" => current_page_id}) do
+    page = Documents.get_page!(id)
+
+    with :ok <- permit(Documents, :delete_page, current_member(), page) do
+      Documents.delete_page!(page)
+
+      redirect_page =
+        if current_page_id == page.id do
+          page.document.main_page_id
+        else
+          current_page_id
+        end
+
+      conn
+      |> put_flash(:success, "The page \"#{page.title}\" has been deleted.")
+      |> redirect(to: document_page_path(conn, :show, current_organization(), redirect_page))
+    end
+  end
 end

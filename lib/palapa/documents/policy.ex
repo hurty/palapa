@@ -16,6 +16,18 @@ defmodule Palapa.Documents.Policy do
     document.public || (document.team && Teams.member?(document.team, member))
   end
 
+  def authorize(:create_section, member, document) do
+    authorize(:create_page, member, document)
+  end
+
+  def authorize(:update_section, member, section) do
+    authorize(:update_document, member, section.document)
+  end
+
+  def authorize(:delete_section, member, section) do
+    authorize(:update_document, member, section.document)
+  end
+
   def authorize(:create_page, member, document) do
     document = Repo.preload(document, :team)
     document.public || (!is_nil(document.team) && Teams.member?(document.team, member))
@@ -31,16 +43,8 @@ defmodule Palapa.Documents.Policy do
       authorize(:edit_page, member, params.page)
   end
 
-  def authorize(:create_section, member, document) do
-    authorize(:create_page, member, document)
-  end
-
-  def authorize(:update_section, member, section) do
-    authorize(:update_document, member, section.document)
-  end
-
-  def authorize(:delete_section, member, section) do
-    authorize(:update_document, member, section.document)
+  def authorize(:delete_page, member, page) do
+    authorize(:update_document, member, page.document)
   end
 
   # Deny everything else

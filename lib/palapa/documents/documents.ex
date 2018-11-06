@@ -120,6 +120,7 @@ defmodule Palapa.Documents do
   def get_page!(id) do
     page =
       Page
+      |> Page.with_document()
       |> Page.with_last_author()
       |> Page.with_rich_text()
       |> Repo.get!(id)
@@ -158,6 +159,13 @@ defmodule Palapa.Documents do
       "position" => new_position
     })
     |> Position.recompute_positions()
+    |> Repo.update!()
+  end
+
+  def delete_page!(page) do
+    page
+    |> change
+    |> put_change(:deleted_at, Timex.now())
     |> Repo.update!()
   end
 end
