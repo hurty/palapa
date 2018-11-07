@@ -27,21 +27,22 @@ defmodule Palapa.Documents do
   end
 
   def get_document!(id) do
-    root_pages_query =
-      from(p in Page, where: is_nil(p.section_id), order_by: p.position)
-      |> non_deleted()
-
     section_pages_query =
-      from(p in Page, where: not is_nil(p.section_id), order_by: p.position)
+      from(p in Page,
+        order_by: p.position
+      )
       |> non_deleted()
 
     sections_query =
-      from(s in Section, order_by: s.position, preload: [pages: ^section_pages_query])
+      from(s in Section,
+        order_by: s.position,
+        preload: [pages: ^section_pages_query]
+      )
       |> non_deleted()
 
     from(document in Document,
-      preload: [sections: ^sections_query, pages: ^root_pages_query],
-      preload: [:main_section]
+      preload: [sections: ^sections_query],
+      preload: [main_section: [pages: ^section_pages_query]]
     )
     |> Repo.get!(id)
   end

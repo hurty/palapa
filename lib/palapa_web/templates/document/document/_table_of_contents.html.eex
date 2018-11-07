@@ -1,5 +1,4 @@
 <div class="text-grey-darker border rounded bg-white shadow text-sm">
-  <h2 class="text-lg bg-white rounded-t py-2 px-4"><%= @document.title %></h2>
   <div class="flex bg-white border-b text-white">
     <div class="py-1 px-4">
       <button data-target="document.newPageButton" data-action="document#showNewPageForm" class="p-1 hover:bg-grey-lighter text-grey-darker rounded">
@@ -42,7 +41,9 @@
  
   <div>
     <ul data-target="document.sectionsContainer" class="list-reset">
-      <%= for section <- @document.sections do %>
+      <%= render PalapaWeb.Document.SectionView, "main_section.html", Map.put(assigns, :section, @document.main_section) %>
+
+      <%= for section <- Enum.reject(@document.sections, fn (section) -> section.id == @document.main_section_id end) do %>
         <%= render PalapaWeb.Document.SectionView, "section.html", Map.put(assigns, :section, section) %>
       <% end %>
     </ul>

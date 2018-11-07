@@ -7,7 +7,6 @@ class="document-section">
   <ul data-target="document-section.pagesList document.draggableContainer" 
   class="document-section-list <%= if assigns[:page] && @page.section_id == @section.id do %>document-section--open<% else %>document-section--closed<% end %>"
   data-document-section-id="<%= @section.id %>">
-    <%= unless @section.id == @document.main_section_id do %>
       <li class="flex justify-between border-t">
         <div data-action="click->document-section#toggleSection" class="flex-1 py-2 px-4">
           <span data-target="document-section.iconClosed" class="document-section-icon-closed">
@@ -23,7 +22,7 @@ class="document-section">
 
         <div class="document-section-actions">
           <div data-controller="popover">
-            <%= if permit?(Palapa.Documents, :edit_page, @current_member, @section) do %>
+            <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
               <button data-target="document-section.menu popover.button" class="bg-white h-6 w-6 text-grey-dark font-bold border rounded-lg border-transparent hover:border-grey-light">
                 <i class="fas fa-plus-circle"></i>
               </button>
@@ -66,7 +65,6 @@ class="document-section">
           </div>
         <% end %>
       </li>
-    <% end %>
     
     <%= for page <- @section.pages do %>
       <%= render PalapaWeb.Document.PageView, "page.html", Map.put(assigns, :page, page) %>
