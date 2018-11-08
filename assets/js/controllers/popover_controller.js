@@ -12,7 +12,7 @@ export default class extends Controller {
   }
 
   hide(event) {
-    if (event.target != this.buttonTarget) {
+    if (event.target != this.buttonTarget && !this.contentTarget.contains(event.target)) {
       this.contentTarget.classList.add("hidden")
       this.popover = null
     }
