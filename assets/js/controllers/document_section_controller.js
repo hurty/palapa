@@ -1,8 +1,9 @@
 import BaseController from "./base_controller"
-import PopperJs from 'popper.js'
+import Popper from 'popper.js'
 
 export default class extends BaseController {
-  static targets = ["menu", "title", "iconOpened", "iconClosed", "pagesList", "form", "titleInput", "errorMessage"]
+  static targets = ["menuButton", "menuContent", "title", "iconOpened", "iconClosed",
+    "pagesList", "form", "titleInput", "errorMessage"]
 
   connect() {
     this.handleDragPageOverSection()
@@ -47,14 +48,34 @@ export default class extends BaseController {
     this.pagesListTarget.classList.replace("document-section--open", "document-section--closed")
   }
 
-  showForm(event) {
-    event.preventDefault()
-
-    let popper = new PopperJs(this.menuTarget, this.formTarget, {
+  toggleMenu(event) {
+    this.menuPopover = new Popper(this.menuButtonTarget, this.menuContentTarget, {
       placement: "bottom"
     })
+    this.menuContentTarget.classList.toggle("hidden")
+
+  }
+
+  hideMenu(event) {
+    if (event == null || (event.target != this.menuButtonTarget && !this.menuContentTarget.contains(event.target))) {
+      this.menuContentTarget.classList.add("hidden")
+      this.menuPopover = null
+    }
+  }
+
+
+  showRenameForm(event) {
+    if (event)
+      event.preventDefault()
+
+    this.hideMenu()
+    let popper = new Popper(this.menuButtonTarget, this.formTarget, {
+      placement: "bottom"
+    })
+
     this.hide(this.errorMessageTarget)
     this.show(this.formTarget)
+    this.focusWithCursorAtTheEnd(this.titleInputTarget)
   }
 
   rename(event) {

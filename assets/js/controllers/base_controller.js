@@ -17,4 +17,11 @@ export default class extends Controller {
   toggle(element) {
     element.classList.toggle("hidden")
   }
+
+  focusWithCursorAtTheEnd(element) {
+    let val = element.value
+    element.value = ' '
+    element.value = val
+    element.focus()
+  }
 }
