@@ -1,5 +1,5 @@
 <li data-controller="document-section" 
-data-target="document.section"
+data-action="mouseover->document-section#showActionsIcons mouseout->document-section#hideActionsIcons"
 data-document-section-url="<%= document_section_url(@conn, :update, @current_organization, @section) %>"
 data-document-section-title="<%= @section.title %>" 
 class="document-section">
@@ -20,7 +20,7 @@ class="document-section">
           <span data-target="document-section.title" class="document-section-title"><%= @section.title %></span>
         </div>
 
-        <div class="document-actions">
+        <div class="document-actions hidden" data-target="document-section.actionsIcons">
           <div data-action="mousedown@window->document-section#hideMenu">
             <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
               <button data-target="document-section.menuButton" data-action="document-section#toggleMenu"class="bg-white h-6 w-6 text-grey-dark font-bold border rounded-lg border-transparent hover:border-grey-light">

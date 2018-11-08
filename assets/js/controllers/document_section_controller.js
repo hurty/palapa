@@ -2,11 +2,19 @@ import BaseController from "./base_controller"
 import Popper from 'popper.js'
 
 export default class extends BaseController {
-  static targets = ["menuButton", "menuContent", "title", "iconOpened", "iconClosed",
+  static targets = ["actionsIcons", "menuButton", "menuContent", "title", "iconOpened", "iconClosed",
     "pagesList", "form", "titleInput", "errorMessage"]
 
   connect() {
     this.handleDragPageOverSection()
+  }
+
+  showActionsIcons() {
+    this.show(this.actionsIconsTarget)
+  }
+
+  hideActionsIcons() {
+    this.hide(this.actionsIconsTarget)
   }
 
   handleDragPageOverSection() {
