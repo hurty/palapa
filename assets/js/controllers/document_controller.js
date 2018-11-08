@@ -2,12 +2,12 @@ import BaseController from "./base_controller"
 import Popper from 'popper.js'
 import { LuminousGallery } from 'luminous-lightbox'
 import { Sortable } from '@shopify/draggable';
-import SwapAnimation from '@shopify/draggable/lib/plugins/swap-animation';
 import debounce from 'lodash.debounce'
 
 export default class extends BaseController {
-  static targets = ["pagesList", "sectionsList", "sectionsContainer", "newPageButton", "newPageForm", "newPageInput",
-    "newSectionButton", "newSectionForm", "newSectionInput", "draggableContainer"]
+  static targets = ["draggableContainer", "pagesList", "sectionsList", "sectionsContainer",
+    "newPageButton", "newPageForm", "newPageInput",
+    "newSectionButton", "newSectionForm", "newSectionInput"]
 
   connect() {
     this.handleImageGallery()
@@ -24,15 +24,10 @@ export default class extends BaseController {
       {
         draggable: ".draggable-source",
         handle: ".draggable-handle",
-        swapAnimation: {
-          duration: 250,
-          easingFunction: 'ease-in-out',
-        },
         mirror: {
           constrainDimensions: true,
           xAxis: false
-        },
-        plugins: [SwapAnimation]
+        }
       }
     )
 
@@ -59,15 +54,10 @@ export default class extends BaseController {
       {
         draggable: ".document-section",
         handle: ".document-section-handle",
-        swapAnimation: {
-          duration: 250,
-          easingFunction: 'ease-in-out',
-        },
         mirror: {
           constrainDimensions: true,
           xAxis: false
-        },
-        // plugins: [SwapAnimation]
+        }
       }
     )
 

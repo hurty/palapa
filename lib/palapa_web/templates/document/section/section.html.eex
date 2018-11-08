@@ -20,10 +20,10 @@ class="document-section">
           <span data-target="document-section.title" class="document-section-title"><%= @section.title %></span>
         </div>
 
-        <div class="document-section-actions">
-          <div data-controller="popover">
+        <div class="document-actions">
+          <div data-controller="popover" data-action="mousedown@window->popover#hide">
             <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
-              <button data-target="document-section.menu popover.button" class="bg-white h-6 w-6 text-grey-dark font-bold border rounded-lg border-transparent hover:border-grey-light">
+              <button data-target="document-section.menu popover.button" data-action="popover#toggle" class="bg-white h-6 w-6 text-grey-dark font-bold border rounded-lg border-transparent hover:border-grey-light">
                 <i class="fas fa-plus-circle"></i>
               </button>
               

@@ -2,11 +2,7 @@
   @apply cursor-pointer;
 }
 
-.document-section .document-section-actions {
-  display: none;
-}
-
-.document-section:hover .document-section-actions {
+.document-actions {
   @apply flex py-1 items-center;
 }
 
@@ -39,7 +35,7 @@
 }
 
 .document-page {
-  .draggable-handle {
+  /* .draggable-handle {
     display: none;
   } 
   
@@ -47,5 +43,5 @@
     .draggable-handle {
       display: block;
     }
-  }
+  } */
 }

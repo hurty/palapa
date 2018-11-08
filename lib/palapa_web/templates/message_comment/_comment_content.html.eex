@@ -9,8 +9,8 @@
     </div>
 
     <%= if Palapa.Access.permit? Palapa.Messages, :delete_comment, @conn.assigns.current_member, @comment do %>
-      <div data-controller="popover">
-        <button data-target="popover.button" class="m-1 bg-grey rounded-full h-8 w-8 flex items-center justify-center bg-grey text-blue-darker font-bold border-2 border-transparent hover:border-grey-dark">
+      <div data-controller="popover" data-action="mousedown@window->popover#hide">
+        <button data-target="popover.button" data-action="popover#toggle" class="m-1 bg-grey rounded-full h-8 w-8 flex items-center justify-center bg-grey text-blue-darker font-bold border-2 border-transparent hover:border-grey-dark">
           <i class="fas fa-ellipsis-h"></i>
         </button>
         

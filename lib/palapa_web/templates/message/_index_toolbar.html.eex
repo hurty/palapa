@@ -1,13 +1,13 @@
-<div data-controller="popover" class="messages__team-filter">
+<div data-controller="popover" data-action="mousedown@window->popover#hide" class="messages__team-filter">
   <%= if Enum.any?(@teams) do %>
-    <div data-target="popover.button" class="btn text-sm truncate">
+    <button data-target="popover.button" data-action="popover#toggle" class="btn text-sm truncate">
       <%= if @selected_team do %> 
         <span title="<%= @selected_team.name %>"><%= @selected_team.name %></span>
       <% else %>
         <span title="All messages">All messages</span>
       <% end %>
       <i class="fas fa-angle-down"></i>
-    </div>
+    </button>
     
     <div data-target="popover.content" class="popover hidden">
       <div data-target="popover.arrow" class="popover__arrow"></div>

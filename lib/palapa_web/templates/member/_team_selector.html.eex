@@ -1,6 +1,6 @@
 <%= if Enum.any?(@teams) do %>
-  <div class="flex justify-center">
-    <button data-controller="popover" data-target="popover.button" 
+  <div data-controller="popover" data-action="mousedown@window->popover#hide" class="flex justify-center">
+    <button data-action="popover#toggle" data-target="popover.button" 
     class="text-normal text-center border border-b-2 border-r-2 rounded-lg border-black p-2 my-4 font-bold cursor-pointer" 
     tabindex="0" aria-haspopup="true">
 
