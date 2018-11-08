@@ -18,6 +18,9 @@ config :palapa, PalapaWeb.Endpoint,
   pubsub: [name: Palapa.PubSub, adapter: Phoenix.PubSub.PG2],
   instrumenters: [Appsignal.Phoenix.Instrumenter]
 
+# Use Jason for JSON parsing in Phoenix
+config :phoenix, :json_library, Jason
+
 config :palapa,
   email_support: "help@palapa.app"
 
@@ -47,7 +50,7 @@ config :phoenix, :template_engines,
   eex: Appsignal.Phoenix.Template.EExEngine,
   exs: Appsignal.Phoenix.Template.ExsEngine
 
-config :palapa, Palapa.Repo, loggers: [Appsignal.Ecto, Ecto.LogEntry]
+config :palapa, Palapa.Repo, log: :debug
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -23,16 +23,16 @@ defmodule Palapa.Accounts.Registrations do
     }
 
     Ecto.Multi.new()
-    |> Ecto.Multi.run(:registration, fn _ ->
+    |> Ecto.Multi.run(:registration, fn _repo, _ ->
       Registration.validate(changeset)
     end)
-    |> Ecto.Multi.run(:account, fn _changes ->
+    |> Ecto.Multi.run(:account, fn _repo, _changes ->
       Accounts.create(account_attrs)
     end)
-    |> Ecto.Multi.run(:organization, fn _changes ->
+    |> Ecto.Multi.run(:organization, fn _repo, _changes ->
       Organizations.create(organization_attrs)
     end)
-    |> Ecto.Multi.run(:member, fn changes ->
+    |> Ecto.Multi.run(:member, fn _repo, changes ->
       Organizations.create_member(%{
         organization_id: changes.organization.id,
         account_id: changes.account.id,

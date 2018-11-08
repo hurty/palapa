@@ -6,7 +6,7 @@ defmodule PalapaWeb.Endpoint do
     plug(Phoenix.Ecto.SQL.Sandbox)
   end
 
-  socket("/socket", PalapaWeb.UserSocket)
+  socket "/socket", PalapaWeb.UserSocket, websocket: true
 
   # Serve at "/" the static files from "priv/static" directory.
   #

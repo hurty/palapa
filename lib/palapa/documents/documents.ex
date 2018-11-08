@@ -57,13 +57,13 @@ defmodule Palapa.Documents do
 
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:document, document_changeset)
-    |> Ecto.Multi.run(:main_section, fn changes ->
+    |> Ecto.Multi.run(:main_section, fn _repo, changes ->
       create_section(changes.document, author, %{title: "__main_section__"})
     end)
-    |> Ecto.Multi.run(:main_page, fn changes ->
+    |> Ecto.Multi.run(:main_page, fn _repo, changes ->
       create_page(changes.document, changes.main_section, author, attrs)
     end)
-    |> Ecto.Multi.run(:link_main_page, fn changes ->
+    |> Ecto.Multi.run(:link_main_page, fn _repo, changes ->
       changes.document
       |> change(main_section_id: changes.main_section.id)
       |> change(main_page_id: changes.main_page.id)
@@ -114,7 +114,7 @@ defmodule Palapa.Documents do
   def delete_section(section) do
     section
     |> change
-    |> put_change(:deleted_at, Timex.now())
+    |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
     |> Repo.update()
   end
 
@@ -166,7 +166,7 @@ defmodule Palapa.Documents do
   def delete_page!(page) do
     page
     |> change
-    |> put_change(:deleted_at, Timex.now())
+    |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
     |> Repo.update!()
   end
 end

@@ -92,7 +92,7 @@ defmodule Palapa.Attachments do
 
   def delete!(%Attachment{} = attachment) do
     Attachment.changeset(attachment, %{})
-    |> put_change(:deleted_at, DateTime.utc_now())
+    |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
     |> Repo.update!()
   end
 

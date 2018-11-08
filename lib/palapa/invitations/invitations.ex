@@ -83,22 +83,23 @@ defmodule Palapa.Invitations do
       email: email,
       creator_id: creator.id,
       token: Palapa.Access.generate_token(),
-      expire_at: Timex.shift(Timex.now(), days: @expiration_days),
+      expire_at:
+        Timex.shift(DateTime.utc_now(), days: @expiration_days) |> DateTime.truncate(:second),
       email_sent_at: nil
     }
 
     Ecto.Multi.new()
-    |> Ecto.Multi.run(:delete_existing_invitation, fn _ ->
+    |> Ecto.Multi.run(:delete_existing_invitation, fn _repo, _changes ->
       if existing_invitation do
         delete(existing_invitation)
       else
         {:ok, nil}
       end
     end)
-    |> Ecto.Multi.run(:invitation, fn _ ->
+    |> Ecto.Multi.run(:invitation, fn _repo, _changes ->
       Repo.insert(new_invitation)
     end)
-    |> Ecto.Multi.run(:send_invitation_job, fn changes ->
+    |> Ecto.Multi.run(:send_invitation_job, fn _repo, changes ->
       Verk.enqueue(%Verk.Job{
         queue: :default,
         class: "Palapa.Invitations.Jobs.SendInvitationJob",
@@ -120,15 +121,15 @@ defmodule Palapa.Invitations do
     |> Repo.delete()
   end
 
-  def mark_as_sent(%Invitation{} = invitation, at \\ Timex.now()) do
+  def mark_as_sent(%Invitation{} = invitation, at \\ DateTime.utc_now()) do
     invitation
     |> change()
-    |> put_change(:email_sent_at, at)
+    |> put_change(:email_sent_at, DateTime.truncate(at, :second))
     |> Repo.update()
   end
 
   def authorized?(%Invitation{} = invitation, token) when is_binary(token) do
-    invitation.token == token && Timex.after?(invitation.expire_at, Timex.now())
+    invitation.token == token && Timex.after?(invitation.expire_at, DateTime.utc_now())
   end
 
   def retrieve_account_from_invitation(invitation) do
@@ -178,13 +179,13 @@ defmodule Palapa.Invitations do
     changeset = JoinForm.changeset(%JoinForm{}, attrs)
 
     Ecto.Multi.new()
-    |> Ecto.Multi.run(:validation, fn _ ->
+    |> Ecto.Multi.run(:validation, fn _repo, _changes ->
       JoinForm.validate(changeset)
     end)
-    |> Ecto.Multi.run(:account, fn _changes ->
+    |> Ecto.Multi.run(:account, fn _repo, _changes ->
       Accounts.create(account_attrs)
     end)
-    |> Ecto.Multi.run(:member, fn changes ->
+    |> Ecto.Multi.run(:member, fn _repo, changes ->
       Organizations.create_member(%{
         organization_id: invitation.organization_id,
         account_id: changes.account.id,
@@ -192,7 +193,7 @@ defmodule Palapa.Invitations do
         role: :member
       })
     end)
-    |> Ecto.Multi.run(:delete_invitation, fn _changes ->
+    |> Ecto.Multi.run(:delete_invitation, fn _repo, _changes ->
       delete(invitation)
     end)
     |> Repo.transaction()
@@ -203,11 +204,11 @@ defmodule Palapa.Invitations do
     changeset = JoinForm.changeset(%JoinForm{}, attrs)
 
     Ecto.Multi.new()
-    |> Ecto.Multi.run(:validation, fn _ ->
+    |> Ecto.Multi.run(:validation, fn _repo, _changes ->
       JoinForm.validate(changeset)
     end)
-    |> Ecto.Multi.run(:account, fn _ -> {:ok, account} end)
-    |> Ecto.Multi.run(:member, fn _changes ->
+    |> Ecto.Multi.run(:account, fn _repo, _changes -> {:ok, account} end)
+    |> Ecto.Multi.run(:member, fn _repo, _changes ->
       Organizations.create_member(%{
         organization_id: invitation.organization_id,
         account_id: account.id,
@@ -215,7 +216,7 @@ defmodule Palapa.Invitations do
         role: :member
       })
     end)
-    |> Ecto.Multi.run(:delete_invitation, fn _changes ->
+    |> Ecto.Multi.run(:delete_invitation, fn _repo, _changes ->
       delete(invitation)
     end)
     |> Repo.transaction()

@@ -1,5 +1,5 @@
 defmodule Palapa.Repo do
-  use Ecto.Repo, otp_app: :palapa
+  use Ecto.Repo, otp_app: :palapa, adapter: Ecto.Adapters.Postgres
   use Scrivener, page_size: 100
   import Ecto.Query
 
@@ -25,16 +25,6 @@ defmodule Palapa.Repo do
 
   def decrement(struct, field, value \\ -1) do
     increment(struct, field, value)
-  end
-
-  @doc "Returns true if at least one record exists for the given query, or false otherwise."
-  def exists?(queryable) do
-    from(x in queryable, select: 1, limit: 1)
-    |> all()
-    |> case do
-      [1] -> true
-      [] -> false
-    end
   end
 
   def count(queryable) do

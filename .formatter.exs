@@ -1,4 +1,4 @@
 [
-  inputs: ["mix.exs", "{config,lib,test}/**/*.{ex,exs}"],
-  locals_without_parens: []
+  import_deps: [:phoenix],
+  inputs: ["*.{ex,exs}", "{config,lib,priv,test}/**/*.{ex,exs}"]
 ]

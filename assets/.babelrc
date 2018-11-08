@@ -13,9 +13,6 @@
       }
     ]
   ],
-  "ignore": [
-    "/vendor/"
-  ],
   "plugins": [
     "transform-class-properties"
   ]

@@ -15,7 +15,7 @@ defmodule PalapaWeb.JoinControllerTest do
       {:ok, invitation} = Invitations.create_or_renew("dinesh@piedpiper.com", workspace.richard)
 
       invitation
-      |> Ecto.Changeset.change(%{expire_at: Timex.now()})
+      |> Ecto.Changeset.change(%{expire_at: DateTime.utc_now() |> DateTime.truncate(:second)})
       |> Repo.update!()
 
       conn = get(conn, join_path(conn, :new, invitation.id, invitation.token))

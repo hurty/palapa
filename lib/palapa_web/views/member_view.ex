@@ -37,7 +37,7 @@ defmodule PalapaWeb.MemberView do
     format = "{h24}:{m}"
 
     datetime =
-      Timex.now()
+      DateTime.utc_now()
       |> Timex.Timezone.convert(timezone)
       |> Timex.lformat!(format, locale)
 

@@ -5,7 +5,7 @@ defmodule PalapaWeb.Helpers do
 
   def format_datetime(datetime, account) do
     more_than_a_week_old? =
-      Timex.now()
+      DateTime.utc_now()
       |> Timex.shift(days: -7)
       |> Timex.beginning_of_day()
       |> Timex.after?(datetime)

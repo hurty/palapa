@@ -57,7 +57,11 @@ defmodule Palapa.Invitations.InvitationsTest do
     {:ok, invitation} =
       Invitations.create_or_renew("dinesh.chugtai@piedpiper.com", workspace.richard)
 
-    invitation = invitation |> Ecto.Changeset.change(%{expire_at: Timex.now()}) |> Repo.update!()
+    invitation =
+      invitation
+      |> Ecto.Changeset.change(%{expire_at: DateTime.utc_now() |> DateTime.truncate(:second)})
+      |> Repo.update!()
+
     refute Invitations.authorized?(invitation, invitation.token)
   end
 

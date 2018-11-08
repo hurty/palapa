@@ -114,7 +114,7 @@ defmodule Palapa.Messages do
 
   def delete!(%Message{} = message) do
     __MODULE__.change(message)
-    |> put_change(:deleted_at, DateTime.utc_now())
+    |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
     |> Repo.update!()
   end
 

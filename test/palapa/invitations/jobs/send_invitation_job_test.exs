@@ -17,7 +17,9 @@ defmodule Palapa.Invitations.Jobs.SendInvitationJobTest do
       Invitations.create_or_renew("dinesh.chugtai@piedpiper.com", workspace.richard)
 
     # Pretend the invitation has already been sent
-    invitation |> change(%{email_sent_at: Timex.now()}) |> Repo.update!()
+    invitation
+    |> change(%{email_sent_at: DateTime.utc_now() |> DateTime.truncate(:second)})
+    |> Repo.update!()
 
     assert {:ignore, _} = SendInvitationJob.perform(invitation.id)
   end
