@@ -1,11 +1,11 @@
 <li data-controller="document-page"
   data-action="mouseover->document-page#showActionsIcons mouseout->document-page#hideActionsIcons"
-  data-document-page-url="<%= document_page_url(@conn, :update, @current_organization, @page) %>"
-  class="document-page draggable-source flex justify-between items-center cursor-pointer <%= if @page.section_id do %>hover:bg-grey-lightest<% else %>hover:bg-grey-lighter<% end %>">
+  data-document-page-url="<%= document_page_url(@conn, :update, @current_organization, @toc_page) %>"
+  class="document-page draggable-source flex justify-between items-center cursor-pointer <%= if @toc_page.section_id do %>hover:bg-grey-lightest<% else %>hover:bg-grey-lighter<% end %>">
   
   <div data-action="click->document#clickPage" class="flex-1 py-2 pl-8">
-    <%= link @page.title, to: document_page_path(@conn, :show, @current_organization, @page), 
-  class: if(@conn.params["id"] == @page.id, do: "text-green font-bold", else: "text-grey-darker") %>
+    <%= link @toc_page.title, to: document_page_path(@conn, :show, @current_organization, @toc_page), 
+  class: if(@conn.params["id"] == @toc_page.id, do: "text-green font-bold", else: "text-grey-darker") %>
   </div>
 
   <div class="document-actions hidden" data-target="document-page.actionsIcons">
@@ -19,11 +19,11 @@
         
         <div data-target="popover.content" class="popover hidden">
           <nav class="flex flex-col">
-            <%= link to: document_page_path(@conn, :update, @current_organization, @page), class: "popover__link", "data-action": "document-page#showForm" do %>
-              <i class="fas fa-pencil-alt"></i>&nbsp;Rename this page
+            <%= link to: document_page_path(@conn, :edit, @current_organization, @toc_page), class: "popover__link" do %>
+              <i class="fas fa-pencil-alt"></i>&nbsp;Edit this page
             <% end %>
 
-            <%= link to: document_page_path(@conn, :delete, @current_organization, @page), method: :delete, class: "popover__link", "data-confirm": "Are you sure you want to delete this page?" do %>
+            <%= link to: document_page_path(@conn, :delete, @current_organization, @toc_page, current_page_id: @page.id), method: :delete, class: "popover__link", "data-confirm": "Are you sure you want to delete this page?" do %>
               <i class="fas fa-trash"></i>&nbsp;Delete this page
             <% end %>
           </nav>

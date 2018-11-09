@@ -19,7 +19,7 @@ class="document-section">
     </li>
 
     <%= for page <- Enum.reject(@section.pages, fn page -> page.id == @document.main_page_id end) do %>
-      <%= render PalapaWeb.Document.PageView, "page.html", Map.put(assigns, :page, page) %>
+      <%= render PalapaWeb.Document.PageView, "page.html", Map.put(assigns, :toc_page, page) %>
     <% end %>
   </ul>
 </li>

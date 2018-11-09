@@ -33,15 +33,3 @@
 .document-section-title {
   @apply text-sm font-bold;
 }
-
-.document-page {
-  /* .draggable-handle {
-    display: none;
-  } 
-  
-  &:hover {
-    .draggable-handle {
-      display: block;
-    }
-  } */
-}
