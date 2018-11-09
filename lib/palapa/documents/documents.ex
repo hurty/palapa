@@ -169,4 +169,55 @@ defmodule Palapa.Documents do
     |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
     |> Repo.update!()
   end
+
+  def get_previous_page(page) do
+    # prendre la page avec l'id de position n+1
+    # si elle n'existe pas, prendre l'id 1 de la section précédente s'il y en a une
+
+    page = Repo.preload(page, :section)
+
+    case page.position do
+      0 -> fetch_last_page_in_previous_section(page)
+      _ -> fetch_previous_page_in_the_same_section(page)
+    end
+  end
+
+  defp fetch_last_page_in_previous_section(page) do
+    case page.section.position do
+      # if we are in the main section of the document there is no previous section.
+      0 -> nil
+      _ -> fetch_last_page_in_section_with_position(page.document, page.section.position - 1)
+    end
+  end
+
+  defp fetch_last_page_in_section_with_position(document, position) do
+    # section_id_query =
+    #   from(s in Section,
+    #     where: is_nil(s.deleted_at),
+    #     where: s.document_id == ^document.id and s.position == ^position
+    #   )
+
+    from(p in Page,
+      join: s in Section,
+      on: p.section_id == s.id,
+      where: is_nil(p.deleted_at),
+      where: is_nil(s.deleted_at),
+      where: s.document_id == ^document.id and s.position == ^position,
+      order_by: [desc_nulls_last: :position],
+      limit: 1
+    )
+    |> Repo.one()
+  end
+
+  defp fetch_previous_page_in_the_same_section(page) do
+    IO.puts("fetch_previous_page_in_the_same_section")
+
+    from(p in Page,
+      where: is_nil(p.deleted_at),
+      where:
+        p.document_id == ^page.document_id and p.section_id == ^page.section_id and
+          p.position == ^(page.position - 1)
+    )
+    |> Repo.one()
+  end
 end

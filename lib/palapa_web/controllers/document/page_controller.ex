@@ -15,6 +15,8 @@ defmodule PalapaWeb.Document.PageController do
     page = Documents.get_page!(id)
     document = Documents.get_document!(page.document_id)
 
+    previous_page = Documents.get_previous_page(page)
+
     section_changeset = Documents.change_section()
     page_changeset = Documents.change_page()
 
@@ -26,6 +28,7 @@ defmodule PalapaWeb.Document.PageController do
     |> render("show.html",
       document: document,
       page: page,
+      previous_page: previous_page,
       section_changeset: section_changeset,
       page_changeset: page_changeset
     )
