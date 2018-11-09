@@ -12,7 +12,7 @@
     <div data-controller="popover" data-action="mousedown@window->popover#hide">
       <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
         <button data-target="popover.button" data-action="popover#toggle" 
-          class="h-6 w-6 text-grey-darker font-bold hover:text-green hover:cursor-pointer"
+          class="h-6 w-6 text-grey-dark font-bold hover:text-green hover:cursor-pointer"
           title="Actions on this page">
           <i class="fas fa-plus-circle"></i>
         </button>
@@ -31,7 +31,7 @@
       <% end %>
     </div>
     
-    <div class="draggable-handle px-2 hover:text-green" title="Drag to reorder">
+    <div class="draggable-handle px-2 text-grey-dark hover:text-green" title="Drag to reorder">
       <i class="fas fa-bars"></i>
     </div>
   </div>

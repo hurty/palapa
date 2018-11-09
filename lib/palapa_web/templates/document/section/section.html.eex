@@ -23,7 +23,8 @@ class="document-section">
         <div class="document-actions hidden" data-target="document-section.actionsIcons">
           <div data-action="mousedown@window->document-section#hideMenu">
             <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
-              <button data-target="document-section.menuButton" data-action="document-section#toggleMenu"class="bg-white h-6 w-6 text-grey-dark font-bold border rounded-lg border-transparent hover:border-grey-light">
+              <button data-target="document-section.menuButton" data-action="document-section#toggleMenu" 
+                class="bg-white h-6 w-6 text-grey-dark font-bold hover:text-green hover:cursor-pointer">
                 <i class="fas fa-plus-circle"></i>
               </button>
               
@@ -46,8 +47,8 @@ class="document-section">
             <% end %>
           </div>
           
-          <div class="document-section-handle px-2" title="Drag to reorder">
-            <i class="text-grey fas fa-bars"></i>
+          <div class="document-section-handle px-2 text-grey-dark hover:text-green" title="Drag to reorder">
+            <i class="fas fa-bars"></i>
           </div>
         </div>
         
