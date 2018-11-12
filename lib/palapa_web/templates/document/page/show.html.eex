@@ -26,15 +26,21 @@
       <% end %>
 
       <div class="border-t flex justify-between pt-4 mt-8">
-        <%= if @previous_page do %>
-          <%= link to: document_page_path(@conn, :show, @current_organization, @previous_page) do %>
-            <i class="fas fa-arrow-left mx-2"></i><%= @previous_page.title %>
+        <div class="w-1/2">
+          <%= if @previous_page do %>
+            <%= link to: document_page_path(@conn, :show, @current_organization, @previous_page), class: "text-green hover:underline" do %>
+              <i class="fas fa-arrow-left mx-2"></i><%= @previous_page.title %>
+            <% end %>
           <% end %>
-          <% else %>
-          <span></span>
-        <% end %>
+        </div>
 
-        <a href="#">next<i class="fas fa-arrow-right mx-2"></i></a>
+        <div class="w-1/2 text-right">
+          <%= if @next_page do %>
+            <%= link to: document_page_path(@conn, :show, @current_organization, @next_page), class: "text-green hover:underline" do %>
+              <%= @next_page.title %><i class="fas fa-arrow-right mx-2"></i>
+            <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
 

@@ -182,6 +182,11 @@ defmodule Palapa.Documents do
     end
   end
 
+  def get_next_page(page) do
+    page = Repo.preload(page, :section)
+    fetch_next_page_in_the_same_section(page) || fetch_first_page_in_the_next_section(page)
+  end
+
   defp fetch_last_page_in_previous_section(page) do
     case page.section.position do
       # if we are in the main section of the document there is no previous section.
@@ -191,12 +196,6 @@ defmodule Palapa.Documents do
   end
 
   defp fetch_last_page_in_section_with_position(document, position) do
-    # section_id_query =
-    #   from(s in Section,
-    #     where: is_nil(s.deleted_at),
-    #     where: s.document_id == ^document.id and s.position == ^position
-    #   )
-
     from(p in Page,
       join: s in Section,
       on: p.section_id == s.id,
@@ -210,13 +209,34 @@ defmodule Palapa.Documents do
   end
 
   defp fetch_previous_page_in_the_same_section(page) do
-    IO.puts("fetch_previous_page_in_the_same_section")
-
     from(p in Page,
       where: is_nil(p.deleted_at),
       where:
         p.document_id == ^page.document_id and p.section_id == ^page.section_id and
           p.position == ^(page.position - 1)
+    )
+    |> Repo.one()
+  end
+
+  defp fetch_next_page_in_the_same_section(page) do
+    from(p in Page,
+      where: is_nil(p.deleted_at),
+      where:
+        p.document_id == ^page.document_id and p.section_id == ^page.section_id and
+          p.position == ^(page.position + 1)
+    )
+    |> Repo.one()
+  end
+
+  defp fetch_first_page_in_the_next_section(page) do
+    from(p in Page,
+      join: s in Section,
+      on: p.section_id == s.id,
+      where: is_nil(p.deleted_at),
+      where: is_nil(s.deleted_at),
+      where: s.document_id == ^page.document_id and s.position == ^(page.section.position + 1),
+      order_by: [asc_nulls_last: :position],
+      limit: 1
     )
     |> Repo.one()
   end
