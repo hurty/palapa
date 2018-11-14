@@ -7,6 +7,12 @@ defmodule Palapa.Documents do
   alias Palapa.Documents.{Document, Section, Page}
   alias Palapa.Position
 
+  # --- Errors
+
+  defmodule DeleteMainPageError do
+    defexception message: "Cannot delete the main page of a document."
+  end
+
   # --- Authorizations
 
   defdelegate(authorize(action, member, params), to: Palapa.Documents.Policy)
@@ -58,10 +64,10 @@ defmodule Palapa.Documents do
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:document, document_changeset)
     |> Ecto.Multi.run(:main_section, fn _repo, changes ->
-      create_section(changes.document, author, %{title: "__main_section__"})
+      create_main_section(changes.document, author)
     end)
     |> Ecto.Multi.run(:main_page, fn _repo, changes ->
-      create_page(changes.document, changes.main_section, author, attrs)
+      create_main_page(changes.document, author, attrs)
     end)
     |> Ecto.Multi.run(:link_main_page, fn _repo, changes ->
       changes.document
@@ -93,6 +99,15 @@ defmodule Palapa.Documents do
     |> put_assoc(:last_author, author)
     |> put_assoc(:pages, [])
     |> Position.move_to_bottom(:document_id)
+    |> Repo.insert()
+  end
+
+  def create_main_section(document, author) do
+    document
+    |> Ecto.build_assoc(:sections)
+    |> Section.changeset(%{title: "__main_section__"})
+    |> put_assoc(:last_author, author)
+    |> put_assoc(:pages, [])
     |> Repo.insert()
   end
 
@@ -143,6 +158,14 @@ defmodule Palapa.Documents do
     |> Repo.insert()
   end
 
+  def create_main_page(document, author, attrs) do
+    %Page{}
+    |> Page.changeset(%{title: param(attrs, :title)})
+    |> put_assoc(:document, document)
+    |> put_assoc(:last_author, author)
+    |> Repo.insert()
+  end
+
   def update_page(page, attrs) do
     page
     |> Page.changeset(attrs)
@@ -164,10 +187,19 @@ defmodule Palapa.Documents do
   end
 
   def delete_page!(page) do
+    if main_page?(page) do
+      raise DeleteMainPageError
+    end
+
     page
     |> change
     |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
     |> Repo.update!()
+  end
+
+  def main_page?(page) do
+    page = Repo.preload(page, :document)
+    page.id == page.document.main_page_id
   end
 
   def get_previous_page(page) do

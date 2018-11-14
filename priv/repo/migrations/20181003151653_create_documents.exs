@@ -42,7 +42,7 @@ defmodule Palapa.Repo.Migrations.CreateDocuments do
       timestamps()
 
       add(:last_author_id, references(:members, on_delete: :nilify_all, type: :uuid))
-      add(:position, :integer, null: false, default: 0)
+      add(:position, :integer, null: true)
       add(:deleted_at, :utc_datetime, default: nil)
     end
 
@@ -67,7 +67,7 @@ defmodule Palapa.Repo.Migrations.CreateDocuments do
       timestamps()
 
       add(:last_author_id, references(:members, on_delete: :nilify_all, type: :uuid))
-      add(:position, :integer, null: false, default: 0)
+      add(:position, :integer, null: true)
       add(:deleted_at, :utc_datetime, default: nil)
     end
 
