@@ -29,6 +29,7 @@ defmodule Palapa.Documents do
   def list_documents(organization) do
     Document
     |> where(organization_id: ^organization.id)
+    |> non_deleted()
     |> Repo.all()
   end
 
@@ -50,6 +51,7 @@ defmodule Palapa.Documents do
       preload: [sections: ^sections_query],
       preload: [main_section: [pages: ^section_pages_query]]
     )
+    |> non_deleted()
     |> Repo.get!(id)
   end
 
@@ -69,26 +71,34 @@ defmodule Palapa.Documents do
     |> Ecto.Multi.run(:main_page, fn _repo, changes ->
       create_main_page(changes.document, author, attrs)
     end)
-    |> Ecto.Multi.run(:link_main_page, fn _repo, changes ->
+    |> Ecto.Multi.run(:linked_document, fn _repo, changes ->
       changes.document
       |> change(main_section_id: changes.main_section.id)
       |> change(main_page_id: changes.main_page.id)
       |> Repo.update()
     end)
     |> Repo.transaction()
+    |> case do
+      {:ok, result} ->
+        {:ok, result.linked_document}
+
+      {:error, _step, changeset, _changes} ->
+        {:error, changeset}
+    end
   end
 
-  def update_document(%Document{} = document, attrs) do
+  def update_document(document, author, attrs) do
     document
     |> Document.changeset(attrs)
+    |> put_assoc(:last_author, author)
     |> Repo.update()
   end
 
-  def delete_document(%Document{} = document) do
+  def delete_document(document) do
     Repo.delete(document)
   end
 
-  def change_document(%Document{} = document) do
+  def change_document(document) do
     Document.changeset(document, %{})
   end
 

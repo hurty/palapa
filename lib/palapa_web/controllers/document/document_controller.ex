@@ -24,12 +24,12 @@ defmodule PalapaWeb.Document.DocumentController do
 
   def create(conn, %{"document" => document_attrs}) do
     case Documents.create_document(current_organization(), current_member(), document_attrs) do
-      {:ok, %{main_page: main_page}} ->
+      {:ok, document} ->
         redirect(conn,
-          to: document_page_path(conn, :show, current_organization(), main_page)
+          to: document_page_path(conn, :show, current_organization(), document.main_page_id)
         )
 
-      {:ok, changeset} ->
+      {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
   end

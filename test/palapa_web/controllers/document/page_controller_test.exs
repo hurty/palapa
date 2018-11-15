@@ -2,6 +2,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
   use PalapaWeb.ConnCase
 
   alias Palapa.Documents
+  alias Palapa.Repo
 
   @doc_title "My awesome book"
 
@@ -19,55 +20,57 @@ defmodule PalapaWeb.Document.PageControllerTest do
     end
 
     test "show page", %{conn: conn, org: org, member: member} do
-      {:ok, %{main_page: main_page}} =
-        Documents.create_document(org, member, %{title: @doc_title})
+      {:ok, document} = Documents.create_document(org, member, %{title: @doc_title})
 
-      conn = get(conn, document_page_path(conn, :show, org, main_page))
+      conn = get(conn, document_page_path(conn, :show, org, document.main_page_id))
       assert html_response(conn, 200) =~ @doc_title
     end
 
     test "edit page", %{conn: conn, org: org, member: member} do
-      {:ok, %{main_page: main_page}} =
-        Documents.create_document(org, member, %{title: @doc_title})
+      {:ok, document} = Documents.create_document(org, member, %{title: @doc_title})
 
-      conn = get(conn, document_page_path(conn, :edit, org, main_page))
+      conn = get(conn, document_page_path(conn, :edit, org, document.main_page_id))
       assert html_response(conn, 200)
     end
 
     test "update page", %{conn: conn, org: org, member: member} do
-      {:ok, %{main_page: main_page}} =
-        Documents.create_document(org, member, %{title: @doc_title})
+      {:ok, document} = Documents.create_document(org, member, %{title: @doc_title})
 
       payload = %{"page" => %{"title" => "My awesome page", "body" => "updated page content"}}
 
       conn =
         patch(
           conn,
-          document_page_path(conn, :update, org, main_page, payload)
+          document_page_path(conn, :update, org, document.main_page_id, payload)
         )
 
-      assert redirected_to(conn, 302) =~ document_page_path(conn, :show, org, main_page)
-      reloaded_page = Documents.get_page!(main_page.id)
+      assert redirected_to(conn, 302) =~
+               document_page_path(conn, :show, org, document.main_page_id)
+
+      reloaded_page = Documents.get_page!(document.main_page_id)
       assert "updated page content" == reloaded_page.body
     end
 
     test "main page of a document can't be deleted", %{conn: conn, org: org, member: member} do
-      {:ok, %{main_page: main_page}} =
-        Documents.create_document(org, member, %{title: @doc_title})
+      {:ok, document} = Documents.create_document(org, member, %{title: @doc_title})
 
       assert_raise(Palapa.Documents.DeleteMainPageError, fn ->
         delete(
           conn,
-          document_page_path(conn, :delete, org, main_page, current_page_id: main_page.id)
+          document_page_path(conn, :delete, org, document.main_page_id,
+            current_page_id: document.main_page_id
+          )
         )
       end)
     end
 
     test "delete page", %{conn: conn, org: org, member: member} do
-      {:ok, %{document: document, main_section: main_section}} =
-        Documents.create_document(org, member, %{title: @doc_title})
+      {:ok, document} = Documents.create_document(org, member, %{title: @doc_title})
 
-      {:ok, page} = Documents.create_page(document, main_section, member, %{title: "new page"})
+      document = Repo.preload(document, :main_section)
+
+      {:ok, page} =
+        Documents.create_page(document, document.main_section, member, %{title: "new page"})
 
       conn =
         delete(
