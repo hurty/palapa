@@ -69,8 +69,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
 
       document = Repo.preload(document, :main_section)
 
-      {:ok, page} =
-        Documents.create_page(document, document.main_section, member, %{title: "new page"})
+      {:ok, page} = Documents.create_page(document.main_section, member, %{title: "new page"})
 
       conn =
         delete(

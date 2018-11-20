@@ -66,10 +66,10 @@ defmodule Palapa.Documents do
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:document, document_changeset)
     |> Ecto.Multi.run(:main_section, fn _repo, changes ->
-      create_main_section(changes.document, author)
+      create_section(changes.document, author, attrs)
     end)
     |> Ecto.Multi.run(:main_page, fn _repo, changes ->
-      create_main_page(changes.document, author, attrs)
+      create_page(changes.main_section, author, attrs)
     end)
     |> Ecto.Multi.run(:linked_document, fn _repo, changes ->
       changes.document
@@ -112,15 +112,6 @@ defmodule Palapa.Documents do
     |> Repo.insert()
   end
 
-  def create_main_section(document, author) do
-    document
-    |> Ecto.build_assoc(:sections)
-    |> Section.changeset(%{title: "__main_section__"})
-    |> put_assoc(:last_author, author)
-    |> put_assoc(:pages, [])
-    |> Repo.insert()
-  end
-
   def get_section!(id) do
     Section
     |> preload(document: [:team])
@@ -158,26 +149,19 @@ defmodule Palapa.Documents do
     end
   end
 
-  def create_page(document, section, author, attrs) do
+  def create_page(section, author, attrs) do
     %Page{}
-    |> Page.changeset(%{title: param(attrs, :title)})
-    |> put_assoc(:document, document)
+    |> Page.changeset(attrs)
+    |> put_change(:document_id, section.document_id)
     |> put_assoc(:last_author, author)
     |> put_change(:section_id, section.id)
     |> Position.move_to_bottom(:section_id)
     |> Repo.insert()
   end
 
-  def create_main_page(document, author, attrs) do
-    %Page{}
-    |> Page.changeset(%{title: param(attrs, :title)})
-    |> put_assoc(:document, document)
-    |> put_assoc(:last_author, author)
-    |> Repo.insert()
-  end
-
   def update_page(page, attrs) do
     page
+    |> Repo.preload(:rich_text)
     |> Page.changeset(attrs)
     |> Repo.update()
   end
@@ -212,72 +196,47 @@ defmodule Palapa.Documents do
     page.id == page.document.main_page_id
   end
 
+  ###
+  # All the previous/next page implementation needs to be rethinked
+  # We can see it like a linked list, it needs work to update pointers
+  # in case when adding/moving/marking as deleted/restoring.
+  #
+  # Or we can optimize query to detect previous/next page without
+  # doing a huge amount of queries in case of empty sections.
+  # The API would be:
+  # - Search for the last page when looking upwards
+  # - Search for the first page when looking downwards.
+  # The query should join pages and sections, order by section order then page order
+  ###
+
   def get_previous_page(page) do
-    # prendre la page avec l'id de position n+1
-    # si elle n'existe pas, prendre l'id 1 de la section précédente s'il y en a une
+    page = Repo.preload(page, [:section, document: :main_page])
 
-    page = Repo.preload(page, :section)
-
-    case page.position do
-      0 -> fetch_last_page_in_previous_section(page)
-      _ -> fetch_previous_page_in_the_same_section(page)
+    if main_page?(page) do
+      nil
+    else
+      get_adjacent_page_upwards(page)
     end
   end
 
-  def get_next_page(page) do
-    page = Repo.preload(page, :section)
-    fetch_next_page_in_the_same_section(page) || fetch_first_page_in_the_next_section(page)
-  end
+  # def get_next_page(page) do
+  #   page = Repo.preload(page, :section)
+  #   fetch_next_page_in_the_same_section(page) || fetch_first_page_in_the_next_section(page)
+  # end
 
-  defp fetch_last_page_in_previous_section(page) do
-    case page.section.position do
-      # if we are in the main section of the document there is no previous section.
-      0 -> nil
-      _ -> fetch_last_page_in_section_with_position(page.document, page.section.position - 1)
-    end
-  end
+  defp get_adjacent_page_upwards(page) do
+    page = Repo.preload(page, [:section])
 
-  defp fetch_last_page_in_section_with_position(document, position) do
     from(p in Page,
       join: s in Section,
+      as: :section,
       on: p.section_id == s.id,
       where: is_nil(p.deleted_at),
       where: is_nil(s.deleted_at),
-      where: s.document_id == ^document.id and s.position == ^position,
-      order_by: [desc_nulls_last: :position],
-      limit: 1
-    )
-    |> Repo.one()
-  end
-
-  defp fetch_previous_page_in_the_same_section(page) do
-    from(p in Page,
-      where: is_nil(p.deleted_at),
-      where:
-        p.document_id == ^page.document_id and p.section_id == ^page.section_id and
-          p.position == ^(page.position - 1)
-    )
-    |> Repo.one()
-  end
-
-  defp fetch_next_page_in_the_same_section(page) do
-    from(p in Page,
-      where: is_nil(p.deleted_at),
-      where:
-        p.document_id == ^page.document_id and p.section_id == ^page.section_id and
-          p.position == ^(page.position + 1)
-    )
-    |> Repo.one()
-  end
-
-  defp fetch_first_page_in_the_next_section(page) do
-    from(p in Page,
-      join: s in Section,
-      on: p.section_id == s.id,
-      where: is_nil(p.deleted_at),
-      where: is_nil(s.deleted_at),
-      where: s.document_id == ^page.document_id and s.position == ^(page.section.position + 1),
-      order_by: [asc_nulls_last: :position],
+      where: p.document_id == ^page.document_id,
+      where: p.id != ^page.id,
+      where: s.position <= ^page.section.position,
+      order_by: [desc_nulls_last: s.position, desc_nulls_last: p.position],
       limit: 1
     )
     |> Repo.one()
