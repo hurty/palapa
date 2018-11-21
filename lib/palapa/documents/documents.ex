@@ -196,35 +196,7 @@ defmodule Palapa.Documents do
     page.id == page.document.main_page_id
   end
 
-  ###
-  # All the previous/next page implementation needs to be rethinked
-  # We can see it like a linked list, it needs work to update pointers
-  # in case when adding/moving/marking as deleted/restoring.
-  #
-  # Or we can optimize query to detect previous/next page without
-  # doing a huge amount of queries in case of empty sections.
-  # The API would be:
-  # - Search for the last page when looking upwards
-  # - Search for the first page when looking downwards.
-  # The query should join pages and sections, order by section order then page order
-  ###
-
   def get_previous_page(page) do
-    page = Repo.preload(page, [:section, document: :main_page])
-
-    if main_page?(page) do
-      nil
-    else
-      get_adjacent_page_upwards(page)
-    end
-  end
-
-  # def get_next_page(page) do
-  #   page = Repo.preload(page, :section)
-  #   fetch_next_page_in_the_same_section(page) || fetch_first_page_in_the_next_section(page)
-  # end
-
-  defp get_adjacent_page_upwards(page) do
     page = Repo.preload(page, [:section])
 
     from(p in Page,
@@ -234,9 +206,29 @@ defmodule Palapa.Documents do
       where: is_nil(p.deleted_at),
       where: is_nil(s.deleted_at),
       where: p.document_id == ^page.document_id,
-      where: p.id != ^page.id,
-      where: s.position <= ^page.section.position,
-      order_by: [desc_nulls_last: s.position, desc_nulls_last: p.position],
+      where:
+        (s.position == ^page.section.position and p.position < ^page.position) or
+          s.position < ^page.section.position,
+      order_by: [desc: s.position, desc: p.position],
+      limit: 1
+    )
+    |> Repo.one()
+  end
+
+  def get_next_page(page) do
+    page = Repo.preload(page, [:section])
+
+    from(p in Page,
+      join: s in Section,
+      as: :section,
+      on: p.section_id == s.id,
+      where: is_nil(p.deleted_at),
+      where: is_nil(s.deleted_at),
+      where: p.document_id == ^page.document_id,
+      where:
+        (s.position == ^page.section.position and p.position > ^page.position) or
+          s.position > ^page.section.position,
+      order_by: [asc: s.position, asc: p.position],
       limit: 1
     )
     |> Repo.one()

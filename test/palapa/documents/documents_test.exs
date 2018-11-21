@@ -301,5 +301,17 @@ defmodule Palapa.DocumentsTest do
       {:ok, pink_page} = Documents.create_page(angry_section, author, %{title: "pink page"})
       assert yellow_page.id == Documents.get_previous_page(pink_page).id
     end
+
+    test "next page of last page is nil", %{yellow_page: yellow_page} do
+      refute Documents.get_next_page(yellow_page)
+    end
+
+    test "next page inside the same section", %{blue_page: blue_page, red_page: red_page} do
+      assert red_page.id == Documents.get_next_page(blue_page).id
+    end
+
+    test "next page accross sections", %{red_page: red_page, yellow_page: yellow_page} do
+      assert yellow_page.id == Documents.get_next_page(red_page).id
+    end
   end
 end
