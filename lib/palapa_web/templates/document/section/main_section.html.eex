@@ -8,7 +8,7 @@ class="document-section">
   class="document-section-list"
   data-document-section-id="<%= @document.main_section_id %>">
     <li data-action="click->document#clickPage"
-      class="document-page flex cursor-pointer py-2 pl-3 <%= if @page.section_id do %>hover:bg-grey-lightest<% else %>hover:bg-grey-lighter<% end %>">
+      class="document-page draggable-source flex cursor-pointer py-2 pl-3 <%= if @page.section_id do %>hover:bg-grey-lightest<% else %>hover:bg-grey-lighter<% end %>">
 
       <span>
         <i class="fas fa-home text-xs text-grey mr-2"></i>

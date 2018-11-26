@@ -13,6 +13,10 @@ defmodule Palapa.Documents do
     defexception message: "Cannot delete the main page of a document."
   end
 
+  defmodule ForbiddenPositionError do
+    defexception message: "This position is forbidden"
+  end
+
   # --- Authorizations
 
   defdelegate(authorize(action, member, params), to: Palapa.Documents.Policy)
@@ -108,7 +112,7 @@ defmodule Palapa.Documents do
     |> Section.changeset(attrs)
     |> put_assoc(:last_author, author)
     |> put_assoc(:pages, [])
-    |> Position.move_to_bottom(:document_id)
+    |> Position.insert_at_bottom(:document_id, document.id, :position)
     |> Repo.insert()
   end
 
@@ -124,6 +128,7 @@ defmodule Palapa.Documents do
 
   def update_section(section, attrs) do
     Section.changeset(section, attrs)
+    |> Palapa.Position.recompute_positions(:document_id, :position)
     |> Repo.update()
   end
 
@@ -131,7 +136,13 @@ defmodule Palapa.Documents do
     section
     |> change
     |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
+    |> Palapa.Position.recompute_positions(:document_id, :position)
     |> Repo.update()
+  end
+
+  def main_section?(section) do
+    section = Repo.preload(section, :document)
+    section.id == section.document.main_section_id
   end
 
   def get_page!(id) do
@@ -155,7 +166,7 @@ defmodule Palapa.Documents do
     |> put_change(:document_id, section.document_id)
     |> put_assoc(:last_author, author)
     |> put_change(:section_id, section.id)
-    |> Position.move_to_bottom(:section_id)
+    |> Position.insert_at_bottom(:section_id, section.id, :position)
     |> Repo.insert()
   end
 
@@ -163,6 +174,7 @@ defmodule Palapa.Documents do
     page
     |> Repo.preload(:rich_text)
     |> Page.changeset(attrs)
+    |> Palapa.Position.recompute_positions(:section_id, :position)
     |> Repo.update()
   end
 
@@ -171,13 +183,21 @@ defmodule Palapa.Documents do
   end
 
   def move_page!(page, new_section, new_position) do
-    page
-    |> Page.changeset(%{
-      "section_id" => new_section.id,
-      "position" => new_position
-    })
-    |> Position.recompute_positions()
-    |> Repo.update!()
+    if main_section?(new_section) && new_position == 0 do
+      raise ForbiddenPositionError
+    end
+
+    try do
+      page
+      |> Page.changeset(%{
+        "section_id" => new_section.id,
+        "position" => new_position
+      })
+      |> Palapa.Position.recompute_positions(:section_id, :position)
+      |> Repo.update!()
+    rescue
+      _ -> raise ForbiddenPositionError
+    end
   end
 
   def delete_page!(page) do
@@ -188,6 +208,7 @@ defmodule Palapa.Documents do
     page
     |> change
     |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
+    |> Palapa.Position.recompute_positions(:section_id, :position)
     |> Repo.update!()
   end
 

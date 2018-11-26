@@ -222,12 +222,12 @@ defmodule Palapa.DocumentsTest do
     end
   end
 
-  describe "pages and sections order" do
+  describe "Pages and Sections ordering." do
     # We have the following setup
     #
-    # -- main_page (order cannot be changed)
     #
     # - main_section (order cannot be changed)
+    #   -- main_page (order cannot be changed)
     #   -- blue page
     #   -- red page
     #
@@ -312,6 +312,89 @@ defmodule Palapa.DocumentsTest do
 
     test "next page accross sections", %{red_page: red_page, yellow_page: yellow_page} do
       assert yellow_page.id == Documents.get_next_page(red_page).id
+    end
+
+    test "can't move a page before the main page", %{
+      document: document,
+      blue_page: blue_page
+    } do
+      assert_raise Documents.ForbiddenPositionError, fn ->
+        Documents.move_page!(blue_page, document.main_section, 0)
+      end
+    end
+
+    test "can't move a page at wrong (negative) position", %{
+      document: document,
+      blue_page: blue_page
+    } do
+      assert_raise Documents.ForbiddenPositionError, fn ->
+        Documents.move_page!(blue_page, document.main_section, -1)
+      end
+    end
+
+    test "can't move a page higher than the maximum position", %{
+      document: document,
+      blue_page: blue_page
+    } do
+      assert_raise Documents.ForbiddenPositionError, fn ->
+        Documents.move_page!(blue_page, document.main_section, 100)
+      end
+    end
+
+    test "moving a page inside the same section at a lower position", %{
+      document: document,
+      blue_page: blue_page,
+      red_page: red_page
+    } do
+      # Moving the red page before the red page
+      red_page = Repo.preload(red_page, :section)
+
+      Documents.move_page!(red_page, red_page.section, red_page.position - 1)
+
+      document = Repo.reload(document) |> Repo.preload(:main_page)
+      blue_page = Repo.reload(blue_page)
+      red_page = Repo.reload(red_page)
+
+      assert 0 == document.main_page.position
+      assert 1 == red_page.position
+      assert 2 == blue_page.position
+    end
+
+    test "moving a page inside the same section at a higher position", %{
+      document: document,
+      blue_page: blue_page,
+      red_page: red_page
+    } do
+      # Moving the blue page above the red page
+      blue_page = Repo.preload(blue_page, :section)
+      Documents.move_page!(blue_page, blue_page.section, blue_page.position + 1)
+
+      document = Repo.reload(document) |> Repo.preload(:main_page)
+      red_page = Repo.reload(red_page)
+      blue_page = Repo.reload(blue_page)
+
+      assert 0 == document.main_page.position
+      assert 1 == red_page.position
+      assert 2 == blue_page.position
+    end
+
+    test "moving a page in another section", %{
+      document: document,
+      blue_page: blue_page,
+      red_page: red_page,
+      yellow_page: yellow_page
+    } do
+      Documents.move_page!(yellow_page, document.main_section, 1)
+
+      document = Repo.reload(document) |> Repo.preload(:main_page)
+      red_page = Repo.reload(red_page)
+      blue_page = Repo.reload(blue_page)
+      yellow_page = Repo.reload(yellow_page)
+
+      assert 0 == document.main_page.position
+      assert 1 == yellow_page.position
+      assert 2 == blue_page.position
+      assert 3 == red_page.position
     end
   end
 end
