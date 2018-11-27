@@ -178,8 +178,8 @@ defmodule Palapa.Documents do
     |> Repo.update()
   end
 
-  def change_page(page \\ %Page{}) do
-    Page.changeset(page, %{})
+  def change_page(page \\ %Page{}, attrs \\ %{}) do
+    Page.changeset(page, attrs)
   end
 
   def move_page!(page, new_section, new_position) do

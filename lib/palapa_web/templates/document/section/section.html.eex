@@ -31,7 +31,7 @@ class="document-section">
               <div data-target="document-section.menuContent" class="popover hidden">
                 <div data-target="popover.arrow" class="popover__arrow"></div>
                 <nav class="flex flex-col">
-                  <%= link to: document_section_path(@conn, :update, @current_organization, @section), class: "popover__link" do %>
+                  <%= link to: document_page_path(@conn, :new, @current_organization, @document, section_id: @section.id), class: "popover__link" do %>
                     <i class="fas fa-file-alt"></i>&nbsp;Create a page in this section
                   <% end %>
 
@@ -39,7 +39,7 @@ class="document-section">
                     <i class="fas fa-pencil-alt"></i>&nbsp;Rename this section
                   <% end %>
 
-                  <%= link to: document_section_path(@conn, :delete, @current_organization, @section, current_page_id: @page), method: :delete, class: "popover__link", "data-confirm": "Are you sure you want to delete this section and all its pages?" do %>
+                  <%= link to: document_section_path(@conn, :delete, @current_organization, @section, current_page_id: if(@conn.assigns[:page], do: @page.id)), method: :delete, class: "popover__link", "data-confirm": "Are you sure you want to delete this section and all its pages?" do %>
                     <i class="fas fa-trash"></i>&nbsp;Delete this section
                   <% end %>
                 </nav>

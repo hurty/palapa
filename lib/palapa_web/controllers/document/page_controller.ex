@@ -2,6 +2,7 @@ defmodule PalapaWeb.Document.PageController do
   use PalapaWeb, :controller
 
   alias Palapa.Documents
+  alias Palapa.Documents.Page
 
   plug(:put_common_breadcrumbs)
   plug(:put_navigation, "documents")
@@ -9,6 +10,41 @@ defmodule PalapaWeb.Document.PageController do
   def put_common_breadcrumbs(conn, _params) do
     conn
     |> put_breadcrumb("Documents", document_path(conn, :index, current_organization()))
+  end
+
+  def new(conn, params) do
+    document = Documents.get_document!(params["document_id"])
+
+    with :ok <- permit(Documents, :create_page, current_member(), document) do
+      section_id = params["section_id"] || document.main_section_id
+      page_changeset = Documents.change_page(%Page{}, %{section_id: section_id})
+      section_changeset = Documents.change_section()
+
+      conn
+      |> render("new.html",
+        document: document,
+        section_changeset: section_changeset,
+        changeset: page_changeset
+      )
+    end
+  end
+
+  def create(conn, %{"page" => page_params}) do
+    section = Documents.get_section!(page_params["section_id"])
+
+    with :ok <- permit(Documents, :create_page, current_member(), section.document) do
+      case Documents.create_page(section, current_member(), page_params) do
+        {:ok, page} ->
+          redirect(conn, to: document_page_path(conn, :show, current_organization(), page))
+
+        {:error, changeset} ->
+          document = Documents.get_document!(section.document_id)
+
+          conn
+          |> assign(:section_changeset, Documents.change_section())
+          |> render("new.html", changeset: changeset, document: document)
+      end
+    end
   end
 
   def show(conn, %{"id" => id}) do
@@ -34,17 +70,6 @@ defmodule PalapaWeb.Document.PageController do
       section_changeset: section_changeset,
       page_changeset: page_changeset
     )
-  end
-
-  def create(conn, %{"document_id" => document_id, "page" => page_params}) do
-    document = Documents.get_document!(document_id)
-
-    with :ok <- permit(Documents, :create_page, current_member(), document) do
-      case Documents.create_page(document.main_section, current_member(), page_params) do
-        {:ok, page} -> render(conn, "page.html", layout: false, page: page)
-        _ -> send_resp(conn, 400, "")
-      end
-    end
   end
 
   def edit(conn, %{"id" => id}) do

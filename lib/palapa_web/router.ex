@@ -59,7 +59,7 @@ defmodule PalapaWeb.Router do
 
       resources("/documents", Document.DocumentController) do
         resources("/sections", Document.SectionController, only: [:create])
-        resources("/page", Document.PageController, only: [:create])
+        resources("/page", Document.PageController, only: [:new, :create])
       end
 
       resources("/documents/sections", Document.SectionController,

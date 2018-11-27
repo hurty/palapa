@@ -1,6 +1,6 @@
 <div data-controller="popover" data-action="mousedown@window->popover#hide">
   <%= if permit?(Palapa.Documents, :edit_page, @current_member, @page) do %>
-    <button data-target="popover.button" data-action="popover#toggle" class="bg-grey rounded-full h-8 w-8 bg-grey text-blue-darker font-bold border-2 border-transparent hover:border-grey-dark">
+    <button data-target="popover.button" data-action="popover#toggle" class="bg-grey rounded-full h-8 w-8 bg-grey-lightest text-green font-bold border-2 border-transparent hover:border-grey-dark">
       <i class="fas fa-ellipsis-h"></i>
     </button>
     

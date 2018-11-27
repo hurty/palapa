@@ -1,44 +1,32 @@
-<div class="text-grey-darker border rounded bg-white shadow text-sm">
-  <div class="flex bg-white border-b text-white">
-    <div class="py-1 px-4">
-      <button data-target="document.newPageButton" data-action="document#showNewPageForm" class="p-1 hover:bg-grey-lighter text-grey-darker rounded">
-        <i class="fas fa-file-alt"></i> New page
-      </button>
-
-      <%= form_for @page_changeset, document_page_path(@conn, :create, @current_organization, @document), 
-        ["data-target": "document.newPageForm", "data-action": "document#createPage", 
-        class: "hidden bg-white border shadow-lg p-2 rounded"], fn form -> %>
-        <div class="field">
-          <%= text_input form, :title, "data-target": "document.newPageInput", class: "input", placeholder: "Page's name" %>
-        </div>
-        
-        <div class="py-2">
-          <%= submit "Add page", class: "btn btn-green" %>
-          <button data-action="document#hideNewPageForm" class="btn">Cancel</button>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="py-1 px-2">
-      <button data-target="document.newSectionButton" data-action="document#showNewSectionForm" class="p-1 hover:bg-grey-lighter text-grey-darker rounded">
-        <i class="fas fa-folder"></i> New section
-      </button>
-
-      <%= form_for @section_changeset, document_section_path(@conn, :create, @current_organization, @document), 
-        ["data-target": "document.newSectionForm", "data-action": "document#createSection", 
-        class: "hidden bg-white border shadow-lg p-2 rounded"], fn form -> %>
-        <div class="field">
-          <%= text_input form, :title, "data-target": "document.newSectionInput", class: "input", placeholder: "Section's name" %>
-        </div>
-        
-        <div class="py-2">
-          <%= submit "Add section", class: "btn btn-green" %>
-          <button data-action="document#hideNewSectionForm" class="btn">Cancel</button>
-        </div>
-      <% end %>
-    </div>
+<div class="flex justify-left text-grey-darker text-sm mb-4">
+  <div>
+    <%= link to: document_page_path(@conn, :new, @current_organization, @document, section_id: @document.main_section_id), class: "btn text-xs" do %>
+      <i class="fas fa-file-alt"></i> New page
+    <% end %>
   </div>
- 
+
+  <div class="ml-2">
+    <a data-target="document.newSectionButton" data-action="document#showNewSectionForm" class="btn text-xs">
+      <i class="fas fa-folder"></i> New section
+    </a>
+
+    <%= form_for @section_changeset, document_section_path(@conn, :create, @current_organization, @document), 
+      ["data-target": "document.newSectionForm", "data-action": "document#createSection", 
+      class: "hidden bg-white border shadow-lg p-2 rounded"], fn form -> %>
+      <div class="field">
+        <%= text_input form, :title, "data-target": "document.newSectionInput", class: "input", placeholder: "Section name" %>
+      </div>
+      
+      <div class="py-2">
+        <%= submit "Add section", class: "btn btn-green" %>
+        <button data-action="document#hideNewSectionForm" class="btn">Cancel</button>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+<div class="text-grey-darker border rounded bg-white shadow text-sm">
   <div>
     <ul data-target="document.sectionsContainer" class="list-reset">
       <%= render PalapaWeb.Document.SectionView, "main_section.html", Map.put(assigns, :section, @document.main_section) %>

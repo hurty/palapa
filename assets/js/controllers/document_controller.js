@@ -6,13 +6,18 @@ import debounce from 'lodash.debounce'
 
 export default class extends BaseController {
   static targets = ["draggableContainer", "pagesList", "sectionsList", "sectionsContainer",
-    "newPageButton", "newPageForm", "newPageInput",
-    "newSectionButton", "newSectionForm", "newSectionInput"]
+    "newSectionButton", "newSectionForm", "newSectionInput", "pageTitleInput"]
 
   connect() {
+    this.setFocus()
     this.handleImageGallery()
     this.handlePageSorting()
     this.handleSectionSorting()
+  }
+
+  setFocus() {
+    if (this.targets.has("pageTitleInput"))
+      this.pageTitleInputTarget.focus()
   }
 
   handleImageGallery() {
@@ -98,7 +103,6 @@ export default class extends BaseController {
     if (event)
       event.preventDefault()
 
-    this.hide(this.newPageFormTarget)
     this.show(this.newSectionFormTarget)
     let popper = new Popper(this.newSectionButtonTarget, this.newSectionFormTarget, {
       placement: "bottom-start"
@@ -123,38 +127,6 @@ export default class extends BaseController {
         this.sectionsContainerTarget.innerHTML += html
         this.hideNewSectionForm()
         this.newSectionInputTarget.value = ""
-      })
-  }
-
-  showNewPageForm(event) {
-    if (event)
-      event.preventDefault()
-
-    this.hide(this.newSectionFormTarget)
-    this.show(this.newPageFormTarget)
-    let popper = new Popper(this.newPageButtonTarget, this.newPageFormTarget, {
-      placement: "bottom-start"
-    });
-    this.newPageInputTarget.focus()
-  }
-
-  hideNewPageForm(event) {
-    if (event)
-      event.preventDefault()
-    this.hide(this.newPageFormTarget)
-    this.show(this.newPageButtonTarget)
-  }
-
-  createPage(event) {
-    event.preventDefault()
-    let url = event.target.getAttribute("action")
-    let body = new FormData(this.newPageFormTarget)
-
-    PA.fetchHTML(url, { method: "post", body: body })
-      .then((html) => {
-        this.pagesListTarget.innerHTML += html
-        this.hideNewPageForm()
-        this.newPageInputTarget.value = ""
       })
   }
 

@@ -4,16 +4,22 @@
   <% end %>
 
   <div class="my-4">
-    <%= textarea form, :title, placeholder: "Title...", autocomplete: "off", rows: "1", 
-      "data-controller": "textarea_autoresize", "data-target": "message.title",
-      class: "input resize-none overflow-hidden p-2 sm:p-4 w-full font-bold sm:text-xl" %>
-    <%= error_tag form, :title %>
+    <div class="field">
+      <%= select form, :section_id, Enum.map(@document.sections, fn section -> {section.title, section.id} end), class: "font-bold" %>
+    </div>
+
+    <div class="field">
+      <%= textarea form, :title, placeholder: "Page title", autocomplete: "off", rows: "1", 
+        "data-controller": "textarea_autoresize", "data-target": "document.pageTitleInput",
+        class: "input resize-none overflow-hidden p-2 sm:p-4 w-full font-bold sm:text-xl" %>
+      <%= error_tag form, :title %>
+    </div>
   </div>
 
   <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization) %>
   <%= hidden_input form, :body, id: "content" %>
 
-  <div class="card-actions">
+  <div class="card-actions sticky pin-b bg-white">
     <%= submit "Save page", class: "btn btn-green" %>
   </div>  
 <% end %>

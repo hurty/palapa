@@ -16,26 +16,28 @@ defmodule PalapaWeb.Document.PageControllerTest do
         |> assign(:current_account, member.account)
         |> assign(:current_organization, member.organization)
 
-      {:ok, conn: conn, member: member, org: member.organization}
+      {:ok, document} =
+        Documents.create_document(member.organization, member, %{title: @doc_title})
+
+      {:ok, conn: conn, member: member, org: member.organization, document: document}
     end
 
-    test "show page", %{conn: conn, org: org, member: member} do
-      {:ok, document} = Documents.create_document(org, member, %{title: @doc_title})
+    test "new page", %{conn: conn, org: org, document: document} do
+      conn = get(conn, document_page_path(conn, :new, org, document))
+      assert html_response(conn, 200) =~ "New page"
+    end
 
+    test "show page", %{conn: conn, org: org, document: document} do
       conn = get(conn, document_page_path(conn, :show, org, document.main_page_id))
       assert html_response(conn, 200) =~ @doc_title
     end
 
-    test "edit page", %{conn: conn, org: org, member: member} do
-      {:ok, document} = Documents.create_document(org, member, %{title: @doc_title})
-
+    test "edit page", %{conn: conn, org: org, document: document} do
       conn = get(conn, document_page_path(conn, :edit, org, document.main_page_id))
       assert html_response(conn, 200)
     end
 
-    test "update page", %{conn: conn, org: org, member: member} do
-      {:ok, document} = Documents.create_document(org, member, %{title: @doc_title})
-
+    test "update page", %{conn: conn, org: org, document: document} do
       payload = %{"page" => %{"title" => "My awesome page", "body" => "updated page content"}}
 
       conn =
@@ -51,9 +53,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
       assert "updated page content" == reloaded_page.body
     end
 
-    test "main page of a document can't be deleted", %{conn: conn, org: org, member: member} do
-      {:ok, document} = Documents.create_document(org, member, %{title: @doc_title})
-
+    test "main page of a document can't be deleted", %{conn: conn, org: org, document: document} do
       assert_raise(Palapa.Documents.DeleteMainPageError, fn ->
         delete(
           conn,
@@ -64,9 +64,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
       end)
     end
 
-    test "delete page", %{conn: conn, org: org, member: member} do
-      {:ok, document} = Documents.create_document(org, member, %{title: @doc_title})
-
+    test "delete page", %{conn: conn, org: org, member: member, document: document} do
       document = Repo.preload(document, :main_section)
 
       {:ok, page} = Documents.create_page(document.main_section, member, %{title: "new page"})
