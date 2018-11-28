@@ -2,13 +2,13 @@
 data-target="document.section"
 data-document-section-url="<%= document_section_url(@conn, :update, @current_organization, @document.main_section_id) %>"
 data-document-section-title="<%= @document.title %>" 
-class="document-section">
+class="draggable-section-collidable">
   
   <ul data-target="document-section.pagesList document.draggableContainer" 
   class="document-section-list"
   data-document-section-id="<%= @document.main_section_id %>">
     <li data-action="click->document#clickPage"
-      class="document-page draggable-source flex cursor-pointer py-2 pl-3 <%= if @conn.assigns[:page] && @page.section_id do %>hover:bg-grey-lightest<% else %>hover:bg-grey-lighter<% end %>">
+      class="document-page draggable-collidable border-b flex cursor-pointer py-2 pl-3 <%= if @conn.assigns[:page] && @page.section_id do %>hover:bg-grey-lightest<% else %>hover:bg-grey-lighter<% end %>">
 
       <span>
         <i class="fas fa-home text-xs text-grey mr-2"></i>

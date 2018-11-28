@@ -2,6 +2,7 @@ import BaseController from "./base_controller"
 import Popper from 'popper.js'
 import { LuminousGallery } from 'luminous-lightbox'
 import { Sortable } from '@shopify/draggable';
+import Collidable from '@shopify/draggable/lib/plugins/collidable';
 import debounce from 'lodash.debounce'
 
 export default class extends BaseController {
@@ -32,7 +33,9 @@ export default class extends BaseController {
         mirror: {
           constrainDimensions: true,
           xAxis: false
-        }
+        },
+        plugins: [Collidable],
+        collidables: '.draggable-collidable',
       }
     )
 
@@ -62,7 +65,9 @@ export default class extends BaseController {
         mirror: {
           constrainDimensions: true,
           xAxis: false
-        }
+        },
+        plugins: [Collidable],
+        collidables: '.draggable-section-collidable'
       }
     )
 
