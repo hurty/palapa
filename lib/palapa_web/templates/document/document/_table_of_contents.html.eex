@@ -14,7 +14,7 @@
       ["data-target": "document.newSectionForm", "data-action": "document#createSection", 
       class: "hidden bg-white border shadow-lg p-2 rounded"], fn form -> %>
       <div class="field">
-        <%= text_input form, :title, "data-target": "document.newSectionInput", class: "input", placeholder: "Section name" %>
+        <%= text_input form, :title, "data-target": "document.newSectionInput", class: "input", placeholder: "Section name", autocomplete: "off" %>
       </div>
       
       <div class="py-2">
