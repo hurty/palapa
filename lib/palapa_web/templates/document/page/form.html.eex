@@ -5,14 +5,14 @@
 
   <div class="my-4">
     <div class="field">
-      <%= select form, :section_id, Enum.map(@document.sections, fn section -> {section.title, section.id} end), class: "font-bold" %>
-    </div>
-
-    <div class="field">
       <%= textarea form, :title, placeholder: "Page title", autocomplete: "off", rows: "1", 
         "data-controller": "textarea_autoresize", "data-target": "document.pageTitleInput",
         class: "input resize-none overflow-hidden p-2 sm:p-4 w-full font-bold sm:text-xl" %>
       <%= error_tag form, :title %>
+    </div>
+
+    <div class="field">
+      <%= select form, :section_id, Enum.map(@document.sections, fn section -> {section.title, section.id} end), class: "font-bold" %>
     </div>
   </div>
 
