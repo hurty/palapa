@@ -1,4 +1,16 @@
-<div class="flex justify-left text-grey-darker text-sm mb-4">
+<div class="text-grey-darker border rounded bg-white shadow text-sm">
+  <div>
+    <ul data-target="document.sectionsContainer" class="list-reset">
+      <%= render PalapaWeb.Document.SectionView, "main_section.html", Map.put(assigns, :section, @document.main_section) %>
+
+      <%= for section <- Enum.reject(@document.sections, fn (section) -> section.id == @document.main_section_id end) do %>
+        <%= render PalapaWeb.Document.SectionView, "section.html", Map.put(assigns, :section, section) %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="flex justify-left text-grey-darker text-sm mt-4">
   <div>
     <%= link to: document_page_path(@conn, :new, @current_organization, @document, section_id: @document.main_section_id), class: "btn text-xs" do %>
       <i class="fas fa-file-alt"></i> New page
@@ -22,18 +34,5 @@
         <button data-action="document#hideNewSectionForm" class="btn">Cancel</button>
       </div>
     <% end %>
-  </div>
-</div>
-
-
-<div class="text-grey-darker border rounded bg-white shadow text-sm">
-  <div>
-    <ul data-target="document.sectionsContainer" class="list-reset">
-      <%= render PalapaWeb.Document.SectionView, "main_section.html", Map.put(assigns, :section, @document.main_section) %>
-
-      <%= for section <- Enum.reject(@document.sections, fn (section) -> section.id == @document.main_section_id end) do %>
-        <%= render PalapaWeb.Document.SectionView, "section.html", Map.put(assigns, :section, section) %>
-      <% end %>
-    </ul>
   </div>
 </div>

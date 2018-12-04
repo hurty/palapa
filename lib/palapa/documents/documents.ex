@@ -146,18 +146,10 @@ defmodule Palapa.Documents do
   end
 
   def get_page!(id) do
-    page =
-      Page
-      |> Page.with_document()
-      |> Page.with_last_author()
-      |> Page.with_rich_text()
-      |> Repo.get!(id)
-
-    if page.rich_text && page.rich_text.body do
-      Map.put(page, :body, page.rich_text.body)
-    else
-      page
-    end
+    Page
+    |> Page.with_document()
+    |> Page.with_last_author()
+    |> Repo.get!(id)
   end
 
   def create_page(section, author, attrs) do
@@ -172,7 +164,6 @@ defmodule Palapa.Documents do
 
   def update_page(page, attrs) do
     page
-    |> Repo.preload(:rich_text)
     |> Page.changeset(attrs)
     |> Palapa.Position.recompute_positions(:section_id, :position)
     |> Repo.update()

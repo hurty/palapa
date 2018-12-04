@@ -64,6 +64,7 @@ defmodule Palapa.Repo.Migrations.CreateDocuments do
       )
 
       add(:title, :string)
+      add(:body, :text)
       timestamps()
 
       add(:last_author_id, references(:members, on_delete: :nilify_all, type: :uuid))

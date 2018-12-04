@@ -172,18 +172,6 @@ defmodule Palapa.DocumentsTest do
       assert 2 == second_page.position
     end
 
-    test "creating a page creates an associated rich text record", %{document: document} do
-      {:ok, %Page{} = page} =
-        Documents.create_page(
-          document.main_section,
-          document.last_author,
-          @valid_page_attrs
-        )
-
-      page = Repo.preload(page, :rich_text)
-      assert page.rich_text.body == page.body
-    end
-
     test "update page", %{document: document} do
       {:ok, %Page{} = page} =
         Documents.create_page(
@@ -194,7 +182,6 @@ defmodule Palapa.DocumentsTest do
 
       update_attrs = %{title: "New page title", body: "Updated body"}
       assert {:ok, page} = Documents.update_page(page, update_attrs)
-      assert update_attrs.body == page.rich_text.body
       assert update_attrs.body == page.body
     end
 

@@ -19,9 +19,9 @@
       </div>
       <div class="separator"></div>
       
-      <%= if @page.rich_text && @page.rich_text.body do %>
+      <%= if @page.body do %>
         <section class="message-content">
-          <%= raw(sanitize_html(@page.rich_text.body)) %>
+          <%= raw(sanitize_html(@page.body)) %>
         </section>
       <% end %>
 
