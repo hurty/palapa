@@ -18,8 +18,14 @@
       <li class="header-link  <%= if @navigation == "members" do %>header-link--active<% end %>">
         <%= link("People & Teams", to: member_path(@conn, :index, @current_organization)) %>
       </li>
-      <li id="global-search" class="flex-1 sm:mx-4 ">
-        <input type="text" placeholder="Search" class="search-bar" />
+      <li id="global-search" data-controller="search" class="flex-1 sm:mx-4 ">
+        <%= form_for @conn, search_path(@conn, :index, @current_organization), [method: :get, "data-target": "search.form"], fn form -> %>
+          <input type="text" name="query" data-target="search.queryInput" data-action="keyup->search#runSearch" autocomplete="off" placeholder="Search" class="search-bar" />
+        <% end %>
+
+        <div data-target="search.resultsContainer" class="shadow border-2 z-100 bg-white p-2 rounded hidden">
+          <div class="text-grey text-sm">Searching...</div>
+        </div>
       </li>
     </ul>
 

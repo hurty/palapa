@@ -1,0 +1,11 @@
+<%= if Enum.any?(@search_results) do %>
+  <ul>
+    <%= for search_result <- @search_results do %>            
+      <li class="flex flex-col list-reset py-4 border-b border-grey-lightest">
+        <%= render search_result_template_path(search_result), Map.put(assigns, :search_result, search_result) %>
+      </li>
+    <% end %>
+  </ul>  
+<% else %>
+  <span class="text-sm text-grey font-bold">No results.</span>
+<% end %>

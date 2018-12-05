@@ -14,14 +14,16 @@ defmodule Palapa.Teams do
     Ecto.assoc(member, :teams)
   end
 
-  def where_organization(queryable \\ Team, organization) do
-    if %Organization{} = organization do
-      queryable
-      |> where(organization_id: ^organization.id)
-    else
-      queryable
-      |> where(organization_id: ^organization)
-    end
+  def where_organization(queryable \\ Team, organization)
+
+  def where_organization(queryable, %Organization{} = organization) do
+    queryable
+    |> where(organization_id: ^organization.id)
+  end
+
+  def where_organization(queryable, organization_id) when is_binary(organization_id) do
+    queryable
+    |> where(organization_id: ^organization_id)
   end
 
   def where_organization_id(queryable \\ Team, organization_id) do

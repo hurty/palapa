@@ -1,0 +1,9 @@
+<div>
+  <i class="fas fa-users text-grey-dark"></i>
+  <%= link @search_result.title, to: resource_path(@conn, @search_result), class: "text-green hover:underline font-bold" %>
+  <span class="text-xs text-grey-dark font-bold">[<%= formatted_resource_type(@search_result) %>]</span>
+</div>
+
+<%= if @search_result.resource_type in [:message, :page] do %>
+  <div class="text-xs text-blue"><%= format_datetime @search_result.updated_at, @current_account %></div>
+<% end %>
