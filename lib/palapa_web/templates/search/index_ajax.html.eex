@@ -1,11 +1,16 @@
 <%= if Enum.any?(@search_results) do %>
-  <ul>
+  <ul class="list-reset">
     <%= for search_result <- @search_results do %>            
-      <li class="flex flex-col list-reset py-4 border-b border-grey-lightest">
+      <li class="py-4 border-b border-grey-lightest rounded" data-target="search.result">
         <%= render search_result_template_path(search_result), Map.put(assigns, :search_result, search_result) %>
       </li>
     <% end %>
+
+    
+    <%= link to: search_path(@conn, :index, @current_organization, query: @conn.params["query"]) do %>
+      <li class="mt-2 text-center btn bg-grey-light rounded text-grey-darkest font-bold" data-target="search.result">See all the results</li>
+    <% end %>
   </ul>  
 <% else %>
-  <span class="text-sm text-grey font-bold">No results.</span>
+  <div class="text-center text-sm text-grey font-bold w-64">No results</div>
 <% end %>

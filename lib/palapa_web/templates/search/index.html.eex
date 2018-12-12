@@ -5,15 +5,13 @@
         Search results for "<%= @conn.params["query"] %>"
       </div>
 
-      <div class="p-2">
-      <ul>
+      <ul class="list-reset px-4">
         <%= for search_result <- @search_results do %>            
-          <li class="flex flex-col list-reset py-4 border-b border-grey-lightest">
+          <li class="py-4 border-b border-grey-lightest">
             <%= render search_result_template_path(search_result), Map.put(assigns, :search_result, search_result) %>
           </li>
         <% end %>
       </ul>  
-      </div>
     </div>
   </div>
 </div>

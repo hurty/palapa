@@ -1,11 +1,11 @@
 body {
   @apply font-sans text-black leading-normal;
-  background: #FFFFFF;
+  background-color: #ffffff;
 }
 
 @screen sm {
   body {
-    background: #F6F7F9;
+    background-color: rgb(243, 248, 251);
   }
 }
 

@@ -1,5 +1,13 @@
-<div>
-  <i class="fas fa-comment text-grey-dark text-sm"></i> <%= link @search_result.title, to: resource_path(@conn, @search_result), class: "text-green hover:underline font-bold" %>
-  <span class="text-xs text-grey-dark font-bold">[<%= formatted_resource_type(@search_result) %>]</span>
+<div class="flex px-2">
+  <div class="w-8">
+    <i class="fas fa-comment text-grey-dark text-sm"></i>
+  </div>
+
+  <div class="flex-1">
+    <%= link @search_result.title, to: resource_path(@conn, @search_result), class: "text-green hover:underline font-bold text-sm" %>
+    <div>
+      <span class="text-xs text-grey-dark font-bold"><%= formatted_resource_type(@search_result) %></span>
+      <span class="text-xs text-blue"><%= format_datetime @search_result.updated_at, @current_account %></span>
+    </div>
+  </div>
 </div>
-<div class="text-xs text-blue"><%= format_datetime @search_result.updated_at, @current_account %></div>

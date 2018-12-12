@@ -8,7 +8,7 @@ defmodule PalapaWeb.SearchController do
   def index(conn, %{"query" => query}) do
     search_results = Searches.search(current_member(), query)
 
-    if get_req_header(conn, "X-Requested-With") do
+    if "XMLHttpRequest" in get_req_header(conn, "x-requested-with") do
       render(conn, "index_ajax.html", layout: false, search_results: search_results)
     else
       render(conn, "index.html", search_results: search_results)
