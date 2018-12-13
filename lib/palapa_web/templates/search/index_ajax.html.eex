@@ -6,10 +6,9 @@
       </li>
     <% end %>
 
-    
-    <%= link to: search_path(@conn, :index, @current_organization, query: @conn.params["query"]) do %>
-      <li class="mt-2 text-center btn bg-grey-light rounded text-grey-darkest font-bold" data-target="search.result">See all the results</li>
-    <% end %>
+    <li class="mt-2 text-center btn bg-grey-light rounded" data-target="search.result">
+      <%= link "See all the results", to: search_path(@conn, :index, @current_organization, query: @conn.params["query"]), class: "text-grey-darkest font-bold" %>
+    </li>
   </ul>  
 <% else %>
   <div class="text-center text-sm text-grey font-bold w-64">No results</div>

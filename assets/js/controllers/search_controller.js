@@ -39,9 +39,8 @@ export default class extends BaseController {
   }
 
   escapeSearchDialog(event) {
-    if (event.target && !this.element.contains(event.target)) {
-      event.preventDefault()
-      this.hide(this.searchDialogTarget)
+    if (this.searchIsActive && event.target && !this.element.contains(event.target)) {
+      this.deactivateSearchDialog()
     }
   }
 
