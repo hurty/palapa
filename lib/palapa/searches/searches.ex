@@ -15,7 +15,7 @@ defmodule Palapa.Searches do
 
   def search(""), do: nil
 
-  def search(%Member{} = member, search_string) do
+  def search(%Member{} = member, search_string, opts \\ []) do
     search_string = clean_search_string(search_string)
 
     member = Repo.preload(member, :organization)
@@ -55,6 +55,7 @@ defmodule Palapa.Searches do
         },
         distinct: [searches.member_id, searches.team_id, searches.message_id, searches.page_id]
       )
+      |> limit_results(opts)
       |> Repo.all()
 
     Enum.map(results, fn result -> Repo.load(SearchResult, result) end)
@@ -64,5 +65,13 @@ defmodule Palapa.Searches do
     search_string
     |> String.split()
     |> Enum.join("&")
+  end
+
+  defp limit_results(query, opts) do
+    if Keyword.has_key?(opts, :limit) do
+      limit(query, ^Keyword.get(opts, :limit))
+    else
+      query
+    end
   end
 end
