@@ -4,7 +4,7 @@
   </div>
 
   <div class="flex-1">
-    <%= link @search_result.title, to: resource_path(@conn, @search_result), class: "text-green hover:underline font-bold text-sm" %>
+    <%= link truncate_string(@search_result.title), to: resource_path(@conn, @search_result), class: "text-green hover:underline font-bold text-sm" %>
     <div>
       <span class="text-xs text-grey-dark font-bold"><%= formatted_resource_type(@search_result) %></span>
     </div>

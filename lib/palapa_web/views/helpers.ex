@@ -38,4 +38,14 @@ defmodule PalapaWeb.Helpers do
   def sanitize_html(text) do
     HtmlSanitizeEx.Scrubber.scrub(text, PalapaWeb.TrixScrubber)
   end
+
+  def truncate_string(string, length \\ 80) do
+    if String.length(string) > length do
+      string
+      |> String.slice(0..length)
+      |> Kernel.<>("...")
+    else
+      string
+    end
+  end
 end
