@@ -2,7 +2,8 @@
   <div class="main-content">
     <div class="card">
       <div class="card-toolbar font-bold text-sm">
-        Search results for "<%= @conn.params["query"] %>"
+        <i class="fas fa-search"></i> Search results for "<%= @conn.params["query"] %>" 
+        <span class="font-normal">(<%= @search_results.total_entries %> results)</span>
       </div>
 
       <ul class="list-reset px-4">
@@ -10,8 +11,15 @@
           <li class="py-4 border-b border-grey-lightest">
             <%= render search_result_template_path(search_result), Map.put(assigns, :search_result, search_result) %>
           </li>
+
         <% end %>
-      </ul>  
+      </ul>
+
+      <%= if @search_results.total_pages > 1 do %>
+        <div class="px-4 py-2">
+          <%= pagination_links @search_results, query: @conn.params["query"],previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

@@ -13,9 +13,19 @@ defmodule Palapa.Searches do
     :page
   ])
 
-  def search(""), do: nil
+  @empty_page_result %Scrivener.Page{
+    entries: [],
+    page_number: 1,
+    page_size: 1,
+    total_entries: 0,
+    total_pages: 1
+  }
 
-  def search(%Member{} = member, search_string, opts \\ []) do
+  def search(member, search_string, opts \\ [])
+  def search(%Member{}, nil, _opts), do: @empty_page_result
+  def search(%Member{}, "", _opts), do: @empty_page_result
+
+  def search(%Member{} = member, search_string, opts) do
     search_string = clean_search_string(search_string)
 
     member = Repo.preload(member, :organization)
@@ -52,26 +62,22 @@ defmodule Palapa.Searches do
             |> coalesce(accounts.name)
             |> coalesce(pages.title),
           updated_at: searches.updated_at
-        },
-        distinct: [searches.member_id, searches.team_id, searches.message_id, searches.page_id]
+        }
       )
-      |> limit_results(opts)
-      |> Repo.all()
+      |> Repo.paginate(
+        page: Keyword.get(opts, :page, 1),
+        page_size: Keyword.get(opts, :page_size, 20)
+      )
 
-    Enum.map(results, fn result -> Repo.load(SearchResult, result) end)
+    cast_entries = Enum.map(results, fn result -> Repo.load(SearchResult, result) end)
+
+    Map.put(results, :entries, cast_entries)
   end
 
-  def clean_search_string(search_string) do
+  defp clean_search_string(search_string) do
     search_string
+    |> String.trim()
     |> String.split()
     |> Enum.join("&")
-  end
-
-  defp limit_results(query, opts) do
-    if Keyword.has_key?(opts, :limit) do
-      limit(query, ^Keyword.get(opts, :limit))
-    else
-      query
-    end
   end
 end

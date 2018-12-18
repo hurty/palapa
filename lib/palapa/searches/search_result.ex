@@ -3,7 +3,7 @@ defmodule Palapa.Searches.SearchResult do
 
   alias Palapa.Searches.{SearchResourceTypeEnum}
 
-  schema "virtual search result" do
+  schema "search result" do
     field(:resource_type, SearchResourceTypeEnum)
     field(:resource_id, Ecto.UUID)
     field(:title, :string)
