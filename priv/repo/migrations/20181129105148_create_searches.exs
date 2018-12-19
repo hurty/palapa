@@ -92,7 +92,7 @@ defmodule Palapa.Repo.Migrations.CreateSearches do
 
       index_value := setweight(to_tsvector('simple', unaccent(member_name)), 'A') ||
         setweight(to_tsvector('simple', unaccent(member_email)), 'B') ||
-        setweight(to_tsvector('simple', unaccent(NEW.title)), 'B');
+        setweight(to_tsvector('simple', coalesce(unaccent(NEW.title), '')), 'B');
 
       INSERT INTO searches (
         organization_id,
@@ -138,7 +138,7 @@ defmodule Palapa.Repo.Migrations.CreateSearches do
       index_value tsvector;
     BEGIN
       index_value := setweight(to_tsvector('simple', unaccent(NEW.title)), 'A') ||
-        setweight(to_tsvector('simple', unaccent(NEW.content)), 'B');
+        setweight(to_tsvector('simple', coalesce(unaccent(NEW.content), '')), 'B');
 
       INSERT INTO searches (
         organization_id,
@@ -192,7 +192,7 @@ defmodule Palapa.Repo.Migrations.CreateSearches do
 
       index_value := setweight(to_tsvector('simple', unaccent(NEW.title)), 'A') ||
         setweight(to_tsvector('simple', unaccent(document_title)), 'B') ||
-        setweight(to_tsvector('simple', unaccent(NEW.body)), 'C');
+        setweight(to_tsvector('simple', coalesce(unaccent(NEW.body), '')), 'C');
 
       INSERT INTO searches (
         organization_id,

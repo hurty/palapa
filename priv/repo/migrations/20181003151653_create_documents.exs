@@ -13,7 +13,7 @@ defmodule Palapa.Repo.Migrations.CreateDocuments do
         null: false
       )
 
-      add(:title, :string)
+      add(:title, :string, null: false)
       timestamps()
       add(:public, :boolean, default: false, null: false)
       add(:last_author_id, references(:members, on_delete: :nilify_all, type: :uuid))
@@ -63,7 +63,7 @@ defmodule Palapa.Repo.Migrations.CreateDocuments do
         references(:sections, on_delete: :delete_all, type: :uuid)
       )
 
-      add(:title, :string)
+      add(:title, :string, null: false)
       add(:body, :text)
       timestamps()
 

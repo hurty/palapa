@@ -74,6 +74,14 @@ defmodule Palapa.Searches do
     Map.put(results, :entries, cast_entries)
   end
 
+  def rebuild_entire_index!() do
+    Repo.query!("TRUNCATE searches")
+    Repo.query!("UPDATE members SET id=id")
+    Repo.query!("UPDATE teams SET id=id")
+    Repo.query!("UPDATE messages SET id=id")
+    Repo.query!("UPDATE pages SET id=id")
+  end
+
   defp clean_search_string(search_string) do
     search_string
     |> String.trim()
