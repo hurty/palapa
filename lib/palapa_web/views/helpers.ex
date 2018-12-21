@@ -39,7 +39,10 @@ defmodule PalapaWeb.Helpers do
     HtmlSanitizeEx.Scrubber.scrub(text, PalapaWeb.TrixScrubber)
   end
 
-  def truncate_string(string, length \\ 80) do
+  def truncate_string(string, length \\ 80)
+  def truncate_string(string, _length) when is_nil(string), do: nil
+
+  def truncate_string(string, length) do
     if String.length(string) > length do
       string
       |> String.slice(0..length)

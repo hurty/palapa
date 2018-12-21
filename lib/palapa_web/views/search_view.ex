@@ -5,48 +5,48 @@ defmodule PalapaWeb.SearchView do
     organization = conn.assigns.current_organization
 
     case search_result.resource_type do
-      :team ->
+      "team" ->
         member_path(conn, :index, organization, team_id: search_result.resource_id)
 
-      :member ->
+      "member" ->
         member_path(conn, :show, organization, search_result.resource_id)
 
-      :message ->
+      "message" ->
         message_path(conn, :show, organization, search_result.resource_id)
 
-      :page ->
+      "page" ->
         document_page_path(conn, :show, organization, search_result.resource_id)
     end
   end
 
   def search_result_template_path(search_result) do
     case search_result.resource_type do
-      :team ->
+      "team" ->
         "search_result_team.html"
 
-      :member ->
+      "member" ->
         "search_result_member.html"
 
-      :message ->
+      "message" ->
         "search_result_message.html"
 
-      :page ->
+      "page" ->
         "search_result_page.html"
     end
   end
 
   def formatted_resource_type(search_result) do
     case search_result.resource_type do
-      :team ->
+      "team" ->
         "Team"
 
-      :member ->
+      "member" ->
         "Member"
 
-      :message ->
+      "message" ->
         "Message"
 
-      :page ->
+      "page" ->
         "Document page"
     end
   end
