@@ -4,9 +4,9 @@
   </div>
 
   <div class="flex-1">
-    <%= link truncate_string(@search_result.title), to: resource_path(@conn, @search_result), class: "text-green hover:underline font-bold text-sm" %>
+    <%= link truncate_string(@search_result.title), to: member_path(@conn, :index, @current_organization, team_id: @search_result.resource_id), class: "text-green hover:underline font-bold text-sm" %>
     <div>
-      <span class="text-xs text-grey-dark font-bold"><%= formatted_resource_type(@search_result) %></span>
+      <span class="text-xs text-grey-dark font-bold">Team</span>
     </div>
   </div>
 </div>

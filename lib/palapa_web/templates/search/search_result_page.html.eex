@@ -4,10 +4,10 @@
   </div>
 
   <div class="flex-1">
-    <%= link truncate_string(@search_result.title), to: resource_path(@conn, @search_result), class: "text-green hover:underline font-bold text-sm" %>
+    <%= link truncate_string(@search_result.title), to: document_page_path(@conn, :show, @current_organization, @search_result.resource_id), class: "text-green hover:underline font-bold text-sm" %>
     <div>
-      <span class="text-xs text-grey-dark font-bold"><%= formatted_resource_type(@search_result) %></span>
-      <span class="text-xs text-blue"><%= format_datetime @search_result.updated_at, @current_account %></span>
+      <span class="text-xs text-grey-dark font-bold">Document page • </span>
+      <span class="text-xs text-blue">Last activity <%= Timex.from_now(@search_result.updated_at) %></span>
     </div>
   </div>
 </div>
