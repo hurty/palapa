@@ -5,6 +5,7 @@ defmodule PalapaWeb.FallbackController do
     conn
     |> put_status(:forbidden)
     |> put_layout(false)
-    |> render(PalapaWeb.ErrorView, :"403")
+    |> put_view(PalapaWeb.ErrorView)
+    |> render(:"403")
   end
 end
