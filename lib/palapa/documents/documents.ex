@@ -178,17 +178,13 @@ defmodule Palapa.Documents do
       raise ForbiddenPositionError
     end
 
-    try do
-      page
-      |> Page.changeset(%{
-        "section_id" => new_section.id,
-        "position" => new_position
-      })
-      |> Palapa.Position.recompute_positions(:section_id, :position)
-      |> Repo.update!()
-    rescue
-      _ -> raise ForbiddenPositionError
-    end
+    page
+    |> Page.changeset(%{
+      "section_id" => new_section.id,
+      "position" => new_position
+    })
+    |> Palapa.Position.recompute_positions(:section_id, :position)
+    |> Repo.update!()
   end
 
   def delete_page!(page) do

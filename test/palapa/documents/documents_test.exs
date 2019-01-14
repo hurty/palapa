@@ -314,7 +314,7 @@ defmodule Palapa.DocumentsTest do
       document: document,
       blue_page: blue_page
     } do
-      assert_raise Documents.ForbiddenPositionError, fn ->
+      assert_raise Ecto.InvalidChangesetError, fn ->
         Documents.move_page!(blue_page, document.main_section, -1)
       end
     end
@@ -323,7 +323,7 @@ defmodule Palapa.DocumentsTest do
       document: document,
       blue_page: blue_page
     } do
-      assert_raise Documents.ForbiddenPositionError, fn ->
+      assert_raise Ecto.InvalidChangesetError, fn ->
         Documents.move_page!(blue_page, document.main_section, 100)
       end
     end
