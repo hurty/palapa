@@ -209,7 +209,7 @@ defmodule Palapa.Repo.Migrations.CreateSearches do
         NEW.id
       )
 
-      ON CONFLICT (member_id) DO UPDATE SET
+      ON CONFLICT (page_id) DO UPDATE SET
         search_index = index_value,
         updated_at = NEW.updated_at
         WHERE searches.page_id = NEW.id;

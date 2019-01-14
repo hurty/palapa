@@ -336,7 +336,8 @@ defmodule Palapa.DocumentsTest do
       # Moving the red page before the red page
       red_page = Repo.preload(red_page, :section)
 
-      Documents.move_page!(red_page, red_page.section, red_page.position - 1)
+      new_position = red_page.position - 1
+      Documents.move_page!(red_page, red_page.section, new_position)
 
       document = Repo.reload(document) |> Repo.preload(:main_page)
       blue_page = Repo.reload(blue_page)
