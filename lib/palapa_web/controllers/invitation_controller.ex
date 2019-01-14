@@ -7,7 +7,7 @@ defmodule PalapaWeb.InvitationController do
   plug(:put_common_breadcrumbs)
 
   def put_common_breadcrumbs(conn, _params) do
-    put_breadcrumb(conn, "People & Teams", member_path(conn, :index, current_organization()))
+    put_breadcrumb(conn, "Your organization", member_path(conn, :index, current_organization()))
   end
 
   def new(conn, _params) do

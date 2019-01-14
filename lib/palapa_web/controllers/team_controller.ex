@@ -11,7 +11,7 @@ defmodule PalapaWeb.TeamController do
       team_changeset = Teams.change(%Team{})
 
       conn
-      |> put_breadcrumb("People & Teams", member_path(conn, :index, current_organization()))
+      |> put_breadcrumb("Your organization", member_path(conn, :index, current_organization()))
       |> put_breadcrumb(
         "New team",
         team_path(conn, :new, current_organization())

@@ -4,7 +4,7 @@
 
       <div class="card-toolbar flex flex-wrap justify-center sm:justify-between">
         <%= link(to: member_path(@conn, :index, @current_organization), class: "my-auto text-black font-bold uppercase text-sm p-2") do %>
-          <i class="fa fa-chevron-circle-left"></i> Back to people & teams
+          <i class="fa fa-chevron-circle-left"></i> Back to your organization
         <% end %>
 
         <%= link("Manage my account", to: member_path(@conn, :edit, @current_organization, @member), class: "btn") %>

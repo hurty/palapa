@@ -18,7 +18,7 @@
       </li>
 
       <li class="header-link  <%= if @navigation == "members" do %>header-link--active<% end %>">
-        <%= link("People & Teams", to: member_path(@conn, :index, @current_organization)) %>
+        <%= link("Your organization", to: member_path(@conn, :index, @current_organization)) %>
       </li>
 
       <li id="global-search" class="flex-1 sm:mx-4" data-controller="search" data-search-index="0" data-search-active="false">
