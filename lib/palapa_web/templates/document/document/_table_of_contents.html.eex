@@ -1,4 +1,4 @@
-<div class="text-grey-darker border rounded bg-white shadow text-sm">
+<div class="text-grey-darker bg-white border rounded text-sm">
   <div>
     <ul data-target="document.sectionsContainer" class="list-reset">
       <%= render PalapaWeb.Document.SectionView, "main_section.html", Map.put(assigns, :section, @document.main_section) %>
