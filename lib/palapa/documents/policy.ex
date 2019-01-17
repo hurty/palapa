@@ -1,50 +1,18 @@
 defmodule Palapa.Documents.Policy do
   use Palapa.Policy
 
-  alias Palapa.Repo
-  alias Palapa.Teams
+  alias Palapa.Documents
 
-  def authorize(:create_document, member, team) do
-    if team do
-      Teams.member?(team, member)
-    else
-      true
-    end
+  def authorize(:create_document, _member, _attrs) do
+    true
+  end
+
+  def authorize(:show_document, member, document) do
+    Documents.document_visible_to?(document, member)
   end
 
   def authorize(:update_document, member, document) do
-    document.public || (document.team && Teams.member?(document.team, member))
-  end
-
-  def authorize(:create_section, member, document) do
-    authorize(:create_page, member, document)
-  end
-
-  def authorize(:update_section, member, section) do
-    authorize(:update_document, member, section.document)
-  end
-
-  def authorize(:delete_section, member, section) do
-    authorize(:update_document, member, section.document)
-  end
-
-  def authorize(:create_page, member, document) do
-    document = Repo.preload(document, :team)
-    document.public || (!is_nil(document.team) && Teams.member?(document.team, member))
-  end
-
-  def authorize(:edit_page, member, page) do
-    page = Repo.preload(page, document: :team)
-    authorize(:create_page, member, page.document)
-  end
-
-  def authorize(:move_page, member, params) do
-    params.page.document_id == params.new_section.document_id &&
-      authorize(:edit_page, member, params.page)
-  end
-
-  def authorize(:delete_page, member, page) do
-    authorize(:update_document, member, page.document)
+    Documents.document_visible_to?(document, member)
   end
 
   # Deny everything else

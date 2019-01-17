@@ -1,39 +1,35 @@
+<div class="my-4">
+  <%= textarea @form, :title, placeholder: "Title...", autocomplete: "off", rows: "1", 
+    "data-controller": "textarea_autoresize", "data-target": "message.title",
+    class: "input resize-none overflow-hidden p-2 sm:p-4 w-full font-bold sm:text-xl" %>
+  <%= error_tag @form, :title %>
+</div>
 
-  <div class="my-4">
-    <%= textarea @form, :title, placeholder: "Title...", autocomplete: "off", rows: "1", 
-      "data-controller": "textarea_autoresize", "data-target": "message.title",
-      class: "input resize-none overflow-hidden p-2 sm:p-4 w-full font-bold sm:text-xl" %>
-    <%= error_tag @form, :title %>
-  </div>
+<%= PalapaWeb.EditorView.text_editor(@conn, @current_organization) %>
+<%= hidden_input @form, :content, id: "content" %>
 
-  <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization) %>
-  <%= hidden_input @form, :content, id: "content" %>
-
-  <%= if Enum.any?(@teams) do %>
-    <div class="rounded-lg my-4 text-xs sm:text-base">
-      <div class="my-2">
-        <%= radio_button @form, :published_to_everyone, true, "data-action": "message#publishToEveryone", "data-target": "message.publishToEveryone", checked: true %>
-        <%= label @form, :published_to_everyone_true, "Publish to everyone", class: "cursor-pointer" %>
-      </div>
-      
-      <div class="my-2">
-        <%= radio_button @form, :published_to_everyone, false, "data-action": "message#publishToSpecificTeams", "data-target": "message.publishToSpecificTeams" %>
-        <%= label @form, :published_to_everyone_false, "Publish to specific teams", class: "cursor-pointer" %>
-      </div>
-      
-      <div class="ml-4 hidden" data-target="message.teamsList">
-        <div class="flex flex-wrap">
-          <%= for team <- @teams do %>
-            
-              
-              <label class="m-1 tag align-middle cursor-pointer" for="team_<%= team.id %>">
-              <input type="checkbox" class="align-middle" name="message[publish_teams_ids][]" id="team_<%= team.id %>" 
-                value="<%= team.id %>" <%= if team_checked?(@message_changeset, team) do %>checked<% end %>>
-                <%= team.name %>
-              </label>
-
-          <% end %>
-        </div>
+<%= if Enum.any?(@teams) do %>
+  <div data-controller="team-sharing" class="rounded-lg my-4 text-xs sm:text-base">
+    <div class="my-2">
+      <%= radio_button @form, :published_to_everyone, true, "data-action": "team-sharing#publishToEveryone", "data-target": "team-sharing.publishToEveryone", checked: true %>
+      <%= label @form, :published_to_everyone_true, "Publish to everyone", class: "cursor-pointer" %>
+    </div>
+    
+    <div class="my-2">
+      <%= radio_button @form, :published_to_everyone, false, "data-action": "team-sharing#publishToSpecificTeams", "data-target": "team-sharing.publishToSpecificTeams" %>
+      <%= label @form, :published_to_everyone_false, "Publish to specific teams", class: "cursor-pointer" %>
+    </div>
+    
+    <div class="ml-4 hidden" data-target="team-sharing.teamsList">
+      <div class="flex flex-wrap">
+        <%= for team <- @teams do %>  
+          <label class="m-1 tag align-middle cursor-pointer" for="team_<%= team.id %>">
+          <input type="checkbox" class="align-middle" name="message[publish_teams_ids][]" id="team_<%= team.id %>" 
+            value="<%= team.id %>" <%= if PalapaWeb.TeamView.team_checked?(@message_changeset, team) do %>checked<% end %>>
+            <%= team.name %>
+          </label>
+        <% end %>
       </div>
     </div>
-  <% end %>    
+  </div>
+<% end %>    

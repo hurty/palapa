@@ -12,4 +12,9 @@ defmodule PalapaWeb.TeamView do
       class: "tag"
     )
   end
+
+  def team_checked?(changeset, team) do
+    teams = Ecto.Changeset.get_field(changeset, :teams)
+    teams && team.id in Enum.map(teams, & &1.id)
+  end
 end

@@ -1,16 +1,44 @@
 <div class="content article-layout">
   <div class="main-content">
     <div class="card p1 sm:p-8">
+      <h2 class="card-header">New document</h2>
+      <div class="card-header-separator"></div>
+      
       <%= form_for @changeset, document_path(@conn, :create, @current_organization), fn form -> %>
         <%= if @changeset.action do %>
           <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
         <% end %>
 
         <div class="field">
-          <%= label form, :title, "Title", class: "label" %>
-          <%= text_input form, :title, class: "input" %>
+          <%= text_input form, :title, placeholder: "Title", autocomplete: "off", class: "input p-2 w-full font-bold sm:text-xl" %>
           <%= error_tag form, :title %>
         </div>
+
+        <%= if Enum.any?(@teams) do %>
+          <div data-controller="team-sharing" class="rounded-lg my-4 text-xs sm:text-base">
+            <div class="my-2">
+              <%= radio_button form, :published_to_everyone, true, "data-action": "team-sharing#publishToEveryone", "data-target": "team-sharing.publishToEveryone", checked: true %>
+              <%= label form, :published_to_everyone_true, "Share with everyone in #{@current_organization.name}", class: "cursor-pointer" %>
+            </div>
+            
+            <div class="my-2">
+              <%= radio_button form, :published_to_everyone, false, "data-action": "team-sharing#publishToSpecificTeams", "data-target": "team-sharing.publishToSpecificTeams" %>
+              <%= label form, :published_to_everyone_false, "Share with specific teams...", class: "cursor-pointer" %>
+            </div>
+            
+            <div class="ml-4 hidden" data-target="team-sharing.teamsList">
+              <div class="flex flex-wrap">
+                <%= for team <- @teams do %>  
+                  <label class="m-1 tag align-middle cursor-pointer" for="team_<%= team.id %>">
+                  <input type="checkbox" class="align-middle" name="document[publish_teams_ids][]" id="team_<%= team.id %>" 
+                    value="<%= team.id %>" <%= if PalapaWeb.TeamView.team_checked?(@changeset, team) do %>checked<% end %>>
+                    <%= team.name %>
+                  </label>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>    
 
         <div class="card-actions">
           <%= submit "Create this document", class: "btn btn-green" %>

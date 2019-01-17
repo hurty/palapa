@@ -15,7 +15,7 @@ defmodule PalapaWeb.Document.PageController do
   def new(conn, params) do
     document = Documents.get_document!(params["document_id"])
 
-    with :ok <- permit(Documents, :create_page, current_member(), document) do
+    with :ok <- permit(Documents, :update_document, current_member(), document) do
       section_id = params["section_id"] || document.main_section_id
       page_changeset = Documents.change_page(%Page{}, %{section_id: section_id})
       section_changeset = Documents.change_section()
@@ -32,7 +32,7 @@ defmodule PalapaWeb.Document.PageController do
   def create(conn, %{"page" => page_params}) do
     section = Documents.get_section!(page_params["section_id"])
 
-    with :ok <- permit(Documents, :create_page, current_member(), section.document) do
+    with :ok <- permit(Documents, :update_document, current_member(), section.document) do
       case Documents.create_page(section, current_member(), page_params) do
         {:ok, page} ->
           redirect(conn, to: document_page_path(conn, :show, current_organization(), page))
@@ -76,20 +76,22 @@ defmodule PalapaWeb.Document.PageController do
     page = Documents.get_page!(id)
     document = Documents.get_document!(page.document_id)
 
-    with :ok <- permit(Documents, :edit_page, current_member(), page) do
+    with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       conn
-      |> assign(:section_changeset, Documents.change_section())
-      |> assign(:page_changeset, Documents.change_page())
-      |> assign(:changeset, Documents.change_page(page))
-      |> render("edit.html", document: document, page: page)
+      |> render("edit.html",
+        document: document,
+        page: page,
+        section_changeset: Documents.change_section(),
+        page_changeset: Documents.change_page(),
+        changeset: Documents.change_page(page)
+      )
     end
   end
 
   def update(conn, %{"id" => id, "page" => page_params}) do
     page = Documents.get_page!(id)
-    document = Documents.get_document!(page.document_id)
 
-    with :ok <- permit(Documents, :edit_page, current_member(), page) do
+    with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       case Documents.update_page(page, page_params) do
         {:ok, page} ->
           redirect(conn, to: document_page_path(conn, :show, current_organization(), page))
@@ -99,7 +101,7 @@ defmodule PalapaWeb.Document.PageController do
           |> assign(:section_changeset, Documents.change_section())
           |> assign(:page_changeset, Documents.change_page())
           |> assign(:changeset, changeset)
-          |> render("edit.html", document: document, page: page)
+          |> render("edit.html", document: page.document, page: page)
       end
     end
   end
@@ -112,12 +114,7 @@ defmodule PalapaWeb.Document.PageController do
     page = Documents.get_page!(id)
     new_section = Documents.get_section!(new_section_id)
 
-    with :ok <-
-           permit(Documents, :move_page, current_member(),
-             page: page,
-             new_section: new_section,
-             new_position: new_position
-           ) do
+    with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       Documents.move_page!(page, new_section, new_position)
       send_resp(conn, 200, "")
     end
@@ -126,7 +123,7 @@ defmodule PalapaWeb.Document.PageController do
   def delete(conn, %{"id" => id, "current_page_id" => current_page_id}) do
     page = Documents.get_page!(id)
 
-    with :ok <- permit(Documents, :delete_page, current_member(), page) do
+    with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       Documents.delete_page!(page)
 
       redirect_page =

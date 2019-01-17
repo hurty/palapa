@@ -16,8 +16,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
         |> assign(:current_account, member.account)
         |> assign(:current_organization, member.organization)
 
-      {:ok, document} =
-        Documents.create_document(member.organization, member, %{title: @doc_title})
+      {:ok, document} = Documents.create_document(member, %{title: @doc_title})
 
       {:ok, conn: conn, member: member, org: member.organization, document: document}
     end

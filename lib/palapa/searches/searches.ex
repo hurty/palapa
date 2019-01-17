@@ -2,6 +2,7 @@ defmodule Palapa.Searches do
   use Palapa.Context
 
   alias Palapa.Messages
+  alias Palapa.Documents
   import EctoEnum
 
   defenum(SearchResourceTypeEnum, :search_resource_type, [
@@ -124,10 +125,9 @@ defmodule Palapa.Searches do
     )
   end
 
-  # /!\ to be restrained to visible pages only
-  def pages_query(_member, search_string) do
+  def pages_query(member, search_string) do
     from(searches in matching_searches_query(search_string),
-      join: pages in Palapa.Documents.Page,
+      join: pages in ^subquery(Documents.pages_visible_to(member)),
       on: searches.page_id == pages.id,
       select: %{
         resource_type: searches.resource_type,

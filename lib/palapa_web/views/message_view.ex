@@ -39,11 +39,6 @@ defmodule PalapaWeb.MessageView do
     end
   end
 
-  def team_checked?(changeset, team) do
-    teams = Ecto.Changeset.get_field(changeset, :teams)
-    teams && team.id in Enum.map(teams, & &1.id)
-  end
-
   def message_blank?(message) do
     is_nil(message.content)
   end

@@ -2,8 +2,7 @@ import { Controller } from "stimulus"
 import { LuminousGallery } from 'luminous-lightbox'
 
 export default class extends Controller {
-  static targets = ["title", "teamsList", "publishToEveryone", "publishToSpecificTeams",
-    "editor", "commentForm", "commentsList", "commentsCount", "commentContent", "leaveComment"]
+  static targets = ["title", "editor", "commentForm", "commentsList", "commentsCount", "commentContent", "leaveComment"]
 
   connect() {
     if (this.targets.has("title"))
@@ -11,39 +10,10 @@ export default class extends Controller {
 
     if (this.data.get("page") == "show")
       this.handleImageGallery()
-
-    this.handleTeamListVisibility()
   }
 
   handleImageGallery() {
     new LuminousGallery(document.querySelectorAll("a[data-trix-content-type^='image']"))
-  }
-
-  handleTeamListVisibility() {
-    if (this.hasPublishToSpecificTeamsTarget) {
-      if (this.publishToSpecificTeamsTarget.checked) {
-        this.showTeamsList()
-      }
-    }
-  }
-
-  publishToEveryone() {
-    this.hideTeamsList()
-  }
-
-  publishToSpecificTeams() {
-    this.showTeamsList()
-    this.teamsListTarget.scrollIntoView({
-      behavior: 'smooth'
-    })
-  }
-
-  showTeamsList() {
-    this.teamsListTarget.classList.remove("hidden")
-  }
-
-  hideTeamsList() {
-    this.teamsListTarget.classList.add("hidden")
   }
 
   showCommentForm(event) {

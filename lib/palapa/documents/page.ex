@@ -16,6 +16,7 @@ defmodule Palapa.Documents.Page do
     belongs_to(:document, Document)
     belongs_to(:section, Section)
     belongs_to(:last_author, Member)
+    has_many(:teams, through: [:document, :teams])
   end
 
   def changeset(page, attrs) do
