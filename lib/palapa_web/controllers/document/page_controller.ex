@@ -13,7 +13,7 @@ defmodule PalapaWeb.Document.PageController do
   end
 
   def new(conn, params) do
-    document = Documents.get_document!(params["document_id"])
+    document = Documents.get_document!(params["document_id"], current_member())
 
     with :ok <- permit(Documents, :update_document, current_member(), document) do
       section_id = params["section_id"] || document.main_section_id
@@ -50,7 +50,7 @@ defmodule PalapaWeb.Document.PageController do
   def show(conn, %{"id" => id}) do
     page =
       Documents.pages_visible_to(current_member())
-      |> Documents.get_page!(id)
+      |> Documents.get_page!(id, current_member())
 
     document = Documents.get_document!(page.document_id)
 
@@ -78,9 +78,9 @@ defmodule PalapaWeb.Document.PageController do
   def edit(conn, %{"id" => id}) do
     page =
       Documents.pages_visible_to(current_member())
-      |> Documents.get_page!(id)
+      |> Documents.get_page!(id, current_member())
 
-    document = Documents.get_document!(page.document_id)
+    document = Documents.get_document!(page.document_id, current_member())
 
     with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       conn
@@ -97,7 +97,7 @@ defmodule PalapaWeb.Document.PageController do
   def update(conn, %{"id" => id, "page" => page_params}) do
     page =
       Documents.pages_visible_to(current_member())
-      |> Documents.get_page!(id)
+      |> Documents.get_page!(id, current_member())
 
     with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       case Documents.update_page(page, page_params) do
@@ -121,7 +121,7 @@ defmodule PalapaWeb.Document.PageController do
       }) do
     page =
       Documents.pages_visible_to(current_member())
-      |> Documents.get_page!(id)
+      |> Documents.get_page!(id, current_member())
 
     new_section =
       Documents.sections_visible_to(current_member())
@@ -136,7 +136,7 @@ defmodule PalapaWeb.Document.PageController do
   def delete(conn, %{"id" => id, "current_page_id" => current_page_id}) do
     page =
       Documents.pages_visible_to(current_member())
-      |> Documents.get_page!(id)
+      |> Documents.get_page!(id, current_member())
 
     with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       Documents.delete_page!(page)

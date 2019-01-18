@@ -4,7 +4,7 @@ defmodule Palapa.Documents do
   """
   use Palapa.Context
 
-  alias Palapa.Documents.{Document, Section, Page}
+  alias Palapa.Documents.{Document, Section, Page, DocumentAccess}
   alias Palapa.Position
 
   # --- Errors
@@ -82,10 +82,11 @@ defmodule Palapa.Documents do
   def list_documents(member) do
     documents_visible_to(member)
     |> non_deleted()
+    |> preload(:teams)
     |> Repo.all()
   end
 
-  def get_document!(queryable \\ Document, id) do
+  def get_document!(queryable \\ Document, id, accessing_member \\ nil) do
     section_pages_query =
       from(p in Page,
         order_by: p.position
@@ -99,12 +100,19 @@ defmodule Palapa.Documents do
       )
       |> non_deleted()
 
-    from(document in queryable,
-      preload: [sections: ^sections_query],
-      preload: [main_section: [pages: ^section_pages_query]]
-    )
-    |> non_deleted()
-    |> Repo.get!(id)
+    document =
+      from(document in queryable,
+        preload: [sections: ^sections_query],
+        preload: [main_section: [pages: ^section_pages_query]]
+      )
+      |> non_deleted()
+      |> Repo.get!(id)
+
+    if accessing_member do
+      mark_document_as_accessed!(document, accessing_member)
+    end
+
+    document
   end
 
   def create_document(author, attrs) do
@@ -205,11 +213,18 @@ defmodule Palapa.Documents do
     section.id == section.document.main_section_id
   end
 
-  def get_page!(queryable \\ Page, id) do
-    queryable
-    |> Page.with_document()
-    |> Page.with_last_author()
-    |> Repo.get!(id)
+  def get_page!(queryable \\ Page, id, accessing_member \\ nil) do
+    page =
+      queryable
+      |> Page.with_document()
+      |> Page.with_last_author()
+      |> Repo.get!(id)
+
+    if accessing_member do
+      mark_document_as_accessed!(page.document, accessing_member)
+    end
+
+    page
   end
 
   def create_page(section, author, attrs) do
@@ -300,5 +315,17 @@ defmodule Palapa.Documents do
       limit: 1
     )
     |> Repo.one()
+  end
+
+  def mark_document_as_accessed!(document, member) do
+    DocumentAccess.changeset(%{
+      document: document,
+      member: member,
+      last_access_at: DateTime.utc_now()
+    })
+    |> Repo.insert!(
+      on_conflict: :replace_all,
+      conflict_target: [:document_id, :member_id]
+    )
   end
 end

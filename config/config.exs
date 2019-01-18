@@ -50,7 +50,9 @@ config :phoenix, :template_engines,
   eex: Appsignal.Phoenix.Template.EExEngine,
   exs: Appsignal.Phoenix.Template.ExsEngine
 
-config :palapa, Palapa.Repo, log: :debug
+config :palapa, Palapa.Repo,
+  log: :debug,
+  migration_primary_key: [name: :id, type: :binary_id]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

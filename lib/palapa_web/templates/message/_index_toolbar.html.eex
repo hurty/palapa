@@ -23,5 +23,5 @@
 </div>
 
 <%= link(to: message_path(@conn, :new, @current_organization), class: "messages__new-message-button btn text-sm") do %>
-  <i class="fas fa-plus-circle text-green-light mr-2"></i>New message
+  <i class="fas fa-plus-circle text-green mr-2"></i>New message
 <% end %>
