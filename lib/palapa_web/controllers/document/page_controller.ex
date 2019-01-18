@@ -13,7 +13,7 @@ defmodule PalapaWeb.Document.PageController do
   end
 
   def new(conn, params) do
-    document = Documents.get_document!(params["document_id"], current_member())
+    document = Documents.get_document!(params["document_id"])
 
     with :ok <- permit(Documents, :update_document, current_member(), document) do
       section_id = params["section_id"] || document.main_section_id
@@ -80,7 +80,7 @@ defmodule PalapaWeb.Document.PageController do
       Documents.pages_visible_to(current_member())
       |> Documents.get_page!(id, current_member())
 
-    document = Documents.get_document!(page.document_id, current_member())
+    document = Documents.get_document!(page.document_id)
 
     with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       conn
