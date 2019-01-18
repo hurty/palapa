@@ -59,6 +59,24 @@ defmodule Palapa.Documents do
     |> distinct(true)
   end
 
+  def sections_visible_to(queryable \\ Section, %Member{} = member) do
+    member_teams_ids =
+      Ecto.assoc(member, :teams)
+      |> Repo.all()
+      |> Enum.map(fn team -> team.id end)
+
+    queryable
+    |> join(:left, [sections], documents in assoc(sections, :document))
+    |> join(:left, [sections, documents], document_teams in assoc(documents, :teams))
+    |> where([_, _, teams], teams.id in ^member_teams_ids)
+    |> or_where(
+      [_sections, documents, _teams],
+      documents.shared_with_everyone == true and
+        documents.organization_id == ^member.organization_id
+    )
+    |> distinct(true)
+  end
+
   # --- Actions
 
   def list_documents(member) do
@@ -67,7 +85,7 @@ defmodule Palapa.Documents do
     |> Repo.all()
   end
 
-  def get_document!(id) do
+  def get_document!(queryable \\ Document, id) do
     section_pages_query =
       from(p in Page,
         order_by: p.position
@@ -81,7 +99,7 @@ defmodule Palapa.Documents do
       )
       |> non_deleted()
 
-    from(document in Document,
+    from(document in queryable,
       preload: [sections: ^sections_query],
       preload: [main_section: [pages: ^section_pages_query]]
     )
@@ -158,8 +176,8 @@ defmodule Palapa.Documents do
     |> Repo.insert()
   end
 
-  def get_section!(id) do
-    Section
+  def get_section!(queryable \\ Section, id) do
+    queryable
     |> preload(document: [:teams])
     |> Repo.get!(id)
   end
@@ -187,8 +205,8 @@ defmodule Palapa.Documents do
     section.id == section.document.main_section_id
   end
 
-  def get_page!(id) do
-    Page
+  def get_page!(queryable \\ Page, id) do
+    queryable
     |> Page.with_document()
     |> Page.with_last_author()
     |> Repo.get!(id)

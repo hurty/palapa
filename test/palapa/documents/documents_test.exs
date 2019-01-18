@@ -207,7 +207,7 @@ defmodule Palapa.DocumentsTest do
     end
   end
 
-  describe "Pages and Sections ordering." do
+  describe "pages and Sections ordering." do
     # We have the following setup
     #
     #

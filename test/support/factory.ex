@@ -214,6 +214,19 @@ defmodule Palapa.Factory do
     }
   end
 
+  def insert_hooli!() do
+    # -- Organization
+    hooli = insert!(:organization)
+
+    # -- Members
+    gavin = insert!(:owner, organization: hooli, account: build(:gavin))
+
+    %{
+      organization: hooli,
+      gavin: gavin
+    }
+  end
+
   def build(:organization) do
     %Organization{
       name: "Pied Piper"
@@ -314,6 +327,14 @@ defmodule Palapa.Factory do
     %Account{
       name: "Ron LaFlamme",
       email: "ron.laflamme@laflamme-lawyers.com",
+      password_hash: @password_hash
+    }
+  end
+
+  def build(:gavin) do
+    %Account{
+      name: "Gavin Belson",
+      email: "gavin.belson@hooli.com",
       password_hash: @password_hash
     }
   end

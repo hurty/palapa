@@ -4,7 +4,9 @@ defmodule PalapaWeb.Document.SectionController do
   alias Palapa.Documents
 
   def create(conn, %{"document_id" => document_id, "section" => section_params}) do
-    document = Documents.get_document!(document_id)
+    document =
+      Documents.documents_visible_to(current_member())
+      |> Documents.get_document!(document_id)
 
     with :ok <- permit(Documents, :update_document, current_member(), document) do
       case Documents.create_section(document, current_member(), section_params) do
@@ -18,7 +20,9 @@ defmodule PalapaWeb.Document.SectionController do
   end
 
   def update(conn, %{"id" => id, "section" => section_params}) do
-    section = Documents.get_section!(id)
+    section =
+      Documents.sections_visible_to(current_member())
+      |> Documents.get_section!(id)
 
     with :ok <- permit(Documents, :update_document, current_member(), section.document) do
       case Documents.update_section(section, section_params) do
@@ -29,8 +33,13 @@ defmodule PalapaWeb.Document.SectionController do
   end
 
   def delete(conn, %{"id" => id, "current_page_id" => current_page_id}) do
-    section = Documents.get_section!(id)
-    current_page = Documents.get_page!(current_page_id)
+    section =
+      Documents.sections_visible_to(current_member())
+      |> Documents.get_section!(id)
+
+    current_page =
+      Documents.pages_visible_to(current_member())
+      |> Documents.get_page!(current_page_id)
 
     with :ok <- permit(Documents, :update_document, current_member(), section.document) do
       case Documents.delete_section(section) do

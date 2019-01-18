@@ -72,4 +72,6 @@ defmodule PalapaWeb.Document.SectionControllerTest do
       assert section.deleted_at
     end
   end
+
+  # TODO: Test section visibility
 end

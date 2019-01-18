@@ -48,7 +48,10 @@ defmodule PalapaWeb.Document.PageController do
   end
 
   def show(conn, %{"id" => id}) do
-    page = Documents.get_page!(id)
+    page =
+      Documents.pages_visible_to(current_member())
+      |> Documents.get_page!(id)
+
     document = Documents.get_document!(page.document_id)
 
     previous_page = Documents.get_previous_page(page)
@@ -73,7 +76,10 @@ defmodule PalapaWeb.Document.PageController do
   end
 
   def edit(conn, %{"id" => id}) do
-    page = Documents.get_page!(id)
+    page =
+      Documents.pages_visible_to(current_member())
+      |> Documents.get_page!(id)
+
     document = Documents.get_document!(page.document_id)
 
     with :ok <- permit(Documents, :update_document, current_member(), page.document) do
@@ -89,7 +95,9 @@ defmodule PalapaWeb.Document.PageController do
   end
 
   def update(conn, %{"id" => id, "page" => page_params}) do
-    page = Documents.get_page!(id)
+    page =
+      Documents.pages_visible_to(current_member())
+      |> Documents.get_page!(id)
 
     with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       case Documents.update_page(page, page_params) do
@@ -111,8 +119,13 @@ defmodule PalapaWeb.Document.PageController do
         "new_section_id" => new_section_id,
         "new_position" => new_position
       }) do
-    page = Documents.get_page!(id)
-    new_section = Documents.get_section!(new_section_id)
+    page =
+      Documents.pages_visible_to(current_member())
+      |> Documents.get_page!(id)
+
+    new_section =
+      Documents.sections_visible_to(current_member())
+      |> Documents.get_section!(new_section_id)
 
     with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       Documents.move_page!(page, new_section, new_position)
@@ -121,7 +134,9 @@ defmodule PalapaWeb.Document.PageController do
   end
 
   def delete(conn, %{"id" => id, "current_page_id" => current_page_id}) do
-    page = Documents.get_page!(id)
+    page =
+      Documents.pages_visible_to(current_member())
+      |> Documents.get_page!(id)
 
     with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       Documents.delete_page!(page)
