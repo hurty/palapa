@@ -8,7 +8,7 @@
       <h3><%= link @message.title, to: message_path(@conn, :show, @current_organization, @message), class: "text-green text-base hover:underline" %></h3>
       <%= link @message.creator.account.name, to: member_path(@conn, :show, @current_organization, @message.creator.id), class: "text-grey-darker font-bold hover:underline" %>
       <div class="text-xs text-grey-darker font-light">
-        Posted <%= format_datetime(@message.inserted_at, @current_account) %>
+        Posted <%= auto_format_datetime(@message.inserted_at, @current_account) %>
       </div>
       
       <%= if @message.content do %>

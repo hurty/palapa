@@ -22,6 +22,7 @@ defmodule PalapaWeb.MemberView do
       case size do
         :medium -> Keyword.put(img_attributes, :class, "avatar avatar--md")
         :small -> Keyword.put(img_attributes, :class, "avatar avatar--sm")
+        :xs -> Keyword.put(img_attributes, :class, "avatar avatar--xs")
         _ -> Keyword.put(img_attributes, :class, "avatar")
       end
 

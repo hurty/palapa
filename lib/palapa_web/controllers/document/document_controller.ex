@@ -15,7 +15,9 @@ defmodule PalapaWeb.Document.DocumentController do
 
   def index(conn, _params) do
     documents = Documents.list_documents(current_member())
-    render(conn, "index.html", documents: documents)
+
+    recent_documents = Documents.recent_documents(current_member())
+    render(conn, "index.html", documents: documents, recent_documents: recent_documents)
   end
 
   def new(conn, _params) do

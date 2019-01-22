@@ -3,7 +3,7 @@ defmodule Palapa.Documents.Document do
 
   alias Palapa.Organizations.{Organization, Member}
   alias Palapa.Teams.Team
-  alias Palapa.Documents.{Section, Page}
+  alias Palapa.Documents.{Section, Page, DocumentAccess}
 
   schema "documents" do
     field(:title, :string)
@@ -17,6 +17,7 @@ defmodule Palapa.Documents.Document do
     has_many(:sections, Section)
     has_many(:pages, Page)
     many_to_many(:teams, Team, join_through: "documents_teams", on_replace: :delete)
+    has_many(:document_accesses, DocumentAccess)
   end
 
   @doc false

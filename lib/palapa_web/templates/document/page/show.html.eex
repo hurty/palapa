@@ -12,7 +12,7 @@
         <div>
           <h1 class="text-green"><%= @page.title %></h1>
           <p class="my-2 text-grey-darker text-sm">
-            Last modified: <%= format_datetime(@page.updated_at, @current_account) %> by <%= @page.last_author.account.name %>
+            Last modified: <%= auto_format_datetime(@page.updated_at, @current_account) %> by <%= @page.last_author.account.name %>
           </p>
         </div>
         <%= render "page_actions.html", assigns %>

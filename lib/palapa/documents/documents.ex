@@ -77,13 +77,41 @@ defmodule Palapa.Documents do
     |> distinct(true)
   end
 
+  def order_by_last_modified_first(queryable) do
+    queryable
+    |> order_by(desc_nulls_first: :updated_at)
+  end
+
   # --- Actions
 
-  def list_documents(member) do
-    documents_visible_to(member)
+  def list_documents(queryable \\ Document, member) do
+    queryable
+    |> documents_visible_to(member)
+    |> non_deleted
+    |> order_by_last_modified_first
+    |> preload([:teams, [last_author: :account]])
+    |> Repo.all()
+  end
+
+  def recent_documents(member) do
+    last_accessed_documents_query =
+      from(da in DocumentAccess,
+        where: da.member_id == ^member.id,
+        order_by: [desc: :last_access_at],
+        limit: 6
+      )
+
+    Document
+    |> documents_visible_to(member)
+    |> join(:inner, [d], document_accesses in subquery(last_accessed_documents_query),
+      on: d.id == document_accesses.document_id
+    )
     |> non_deleted()
     |> preload(:teams)
+    |> select([documents, ..., document_accesses], {documents, document_accesses})
+    |> order_by([documents, ..., document_accesses], desc: document_accesses.last_access_at)
     |> Repo.all()
+    |> Enum.map(fn {doc, _access} -> doc end)
   end
 
   def get_document!(queryable \\ Document, id, accessing_member \\ nil) do

@@ -1,38 +1,66 @@
-<div class="content article-layout">
+<div class="content article-layout mx-4">
   <div class="main-content">
+
+
     <div class="card">
-      <div class="card-toolbar flex flex-wrap justify-between">
-        <div>
-          <h2 class="text-grey-darkest">Documents</h2>
-        </div>
-
-        <div>
-          <%= link(to: document_path(@conn, :new, @current_organization), class: "btn text-sm") do %>
-            <i class="fas fa-plus-circle text-green mr-2"></i>New document
-          <% end %>
-        </div>
-      </div>
-
-      <div class="p-4 border-bottom">
-        <h3 class="text-grey-darkest text-xl">Recently</h3>
-      </div>
-
       <div class="p-4">
-        <h3 class="text-grey-darkest text-xl">All documents</h3>
+        <div class="flex flex-wrap justify-between mb-4">
+          <div>
+            <h2 class="text-grey-darkest">All Documents</h2>
+          </div>
+
+          <div>
+            <%= link(to: document_path(@conn, :new, @current_organization), class: "btn text-sm") do %>
+              <i class="fas fa-plus-circle text-green mr-2"></i>New document
+            <% end %>
+          </div>
+        </div>
+
+        <div class="bg-grey-lightest py-4 rounded">
+          Showing documents from All Teams, ordered by Date
+        </div>
+
         <%= for document <- @documents do %>
-          <div class="flex justify-between flex-wrap p-2 my-2 border-b border-grey-lightest">
-            <div>
-              <i class="fas fa-file-alt text-grey text-lg mr-2"></i> 
-              <%= link document.title, to: document_page_path(@conn, :show, @current_organization, document.main_page_id), class: "text-green font-bold hover:underline" %>
+          <div class="flex flex-wrap py-2 border-b border-grey-lighter">
+            <div class="w-8">
+              <i class="fas fa-file-alt text-grey-dark text-sm"></i> 
             </div>
 
-            <div>
-              <%= for team <- document.teams do %>
-                <span class="tag text-xs"><%= team.name %></span>
-              <% end %>
+            <div class="flex-auto">
+              <%= link truncate_string(document.title), to: document_page_path(@conn, :show, @current_organization, document.main_page_id), class: "text-base text-green hover:underline font-bold text-sm" %>
+              <div>
+                <%= for team <- document.teams do %>
+                  <span class="text-xs font-bold text-grey-darker "><%= team.name %></span>
+                <% end %>
+              </div>
+            </div>
+            
+            <div class="">
+              <div class="text-sm text-grey-darker"><%= format_date(document.updated_at, @current_account) %>
+              <div class="flex mt-1">
+                <%= PalapaWeb.MemberView.avatar(document.last_author.account, :xs) %>
+                <span class="text-sm mx-2 text-grey-darkest"><%= document.last_author.account.name %></span>
+              </div>
+              </div>
+              
             </div>
           </div>
         <% end %>      
+      </div>
+    </div>
+  </div>
+
+  <div class="left-sidebar">
+    <div class="p-4 card">
+      <h3 class="text-grey-darkest text-xl mb-4">Recently viewed</h3>
+      <div class="card-header-separator"></div>
+      <div class="flex flex-wrap">
+        <%= for document <- @recent_documents do %>
+          <div class="w-full">
+            <i class="fas fa-file-alt text-grey text-lg mr-2"></i> 
+            <%= link document.title, to: document_page_path(@conn, :show, @current_organization, document.main_page_id), class: "text-green font-bold  hover:underline" %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

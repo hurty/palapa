@@ -1,6 +1,6 @@
 .tag {
-  @apply px-2 py-1 mx-1;
-  @apply bg-grey-lighter rounded;
+  @apply px-2 py-1 mr-1;
+  @apply border rounded;
   @apply text-grey-darker text-sm;
 
   &--active {

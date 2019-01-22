@@ -1,6 +1,6 @@
 <div data-controller="invitation" class="p-4 flex flex-col sm:flex-row flex-wrap border-t text-sm">
   <div class="flex-1 py-2"><%= @invitation.email %></div>
-  <div class="py-2 pr-2">Sent <%= format_datetime(@invitation.inserted_at, @current_account) %></div>
+  <div class="py-2 pr-2">Sent <%= auto_format_datetime(@invitation.inserted_at, @current_account) %></div>
   <div class="flex">
     <%= if Application.get_env(:palapa, :env) == :dev || sent_a_minute_ago?(@invitation) do %>
       <%= link "Send again", to: invitation_renew_path(@conn, :renew, @current_organization, @invitation), 

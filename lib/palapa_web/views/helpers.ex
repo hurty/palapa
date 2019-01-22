@@ -1,9 +1,9 @@
 defmodule PalapaWeb.Helpers do
   alias Phoenix.HTML
 
-  def format_datetime(datetime, _account) when is_nil(datetime), do: nil
+  def auto_format_datetime(datetime, _account) when is_nil(datetime), do: nil
 
-  def format_datetime(datetime, account) do
+  def auto_format_datetime(datetime, account) do
     more_than_a_week_old? =
       DateTime.utc_now()
       |> Timex.shift(days: -7)
@@ -27,6 +27,18 @@ defmodule PalapaWeb.Helpers do
     complete_datetime = datetime |> Timex.lformat!(complete_format, locale)
 
     HTML.Tag.content_tag(:span, short_datetime, title: complete_datetime)
+  end
+
+  def format_date(datetime, _account) when is_nil(datetime), do: nil
+
+  def format_date(datetime, account) do
+    timezone = Map.get(account, :timezone) || "UTC"
+    locale = Map.get(account, :locale) || "en"
+    short_format = "{Mfull} {D}, {YYYY}"
+
+    datetime = datetime |> Timex.Timezone.convert(timezone)
+
+    Timex.lformat!(datetime, short_format, locale)
   end
 
   def members_for_autocomplete(organization) do
