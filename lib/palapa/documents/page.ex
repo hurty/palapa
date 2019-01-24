@@ -3,6 +3,7 @@ defmodule Palapa.Documents.Page do
 
   alias Palapa.Documents.{Document, Section, Page}
   alias Palapa.Organizations.{Member}
+  alias Palapa.Searches.Search
 
   import Ecto.Query
 
@@ -17,6 +18,7 @@ defmodule Palapa.Documents.Page do
     belongs_to(:section, Section)
     belongs_to(:last_author, Member)
     has_many(:teams, through: [:document, :teams])
+    has_many(:searches, Search)
   end
 
   def changeset(page, attrs) do

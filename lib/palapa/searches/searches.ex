@@ -1,6 +1,7 @@
 defmodule Palapa.Searches do
   use Palapa.Context
 
+  alias Palapa.Searches.Search
   alias Palapa.Messages
   alias Palapa.Documents
   import EctoEnum
@@ -48,6 +49,21 @@ defmodule Palapa.Searches do
     )
   end
 
+  @blank_regex ~r/\A[[:space:]]*\z/u
+
+  def blank_query?(param) when is_nil(param), do: true
+  def blank_query?(""), do: true
+
+  def blank_query?(string) when is_binary(string) do
+    Regex.match?(@blank_regex, string)
+  end
+
+  def search_query(search_string) do
+    search_string
+    |> clean_search_string
+    |> matching_searches_query()
+  end
+
   def rebuild_entire_index!() do
     Repo.query!("TRUNCATE searches")
     Repo.query!("UPDATE members SET id=id")
@@ -63,13 +79,13 @@ defmodule Palapa.Searches do
     |> Enum.join("&")
   end
 
-  defp matching_searches_query(search_string) do
-    from(searches in "searches",
+  defp matching_searches_query(queryable \\ Search, search_string) do
+    from(searches in queryable,
       where: fragment("search_index @@ to_tsquery('simple', unaccent(?))", ^"#{search_string}:*")
     )
   end
 
-  def members_query(member, search_string) do
+  defp members_query(member, search_string) do
     from(searches in matching_searches_query(search_string),
       join: members in ^subquery(where(Member, organization_id: ^member.organization_id)),
       on: searches.member_id == members.id,
@@ -89,7 +105,7 @@ defmodule Palapa.Searches do
     )
   end
 
-  def teams_query(member, search_string) do
+  defp teams_query(member, search_string) do
     from(searches in matching_searches_query(search_string),
       join: teams in ^subquery(Teams.where_organization(member.organization_id)),
       on: searches.team_id == teams.id,
@@ -107,7 +123,7 @@ defmodule Palapa.Searches do
     )
   end
 
-  def messages_query(member, search_string) do
+  defp messages_query(member, search_string) do
     from(searches in matching_searches_query(search_string),
       join: messages in ^subquery(Messages.visible_to(member)),
       on: searches.message_id == messages.id,
@@ -125,7 +141,7 @@ defmodule Palapa.Searches do
     )
   end
 
-  def pages_query(member, search_string) do
+  defp pages_query(member, search_string) do
     from(searches in matching_searches_query(search_string),
       join: pages in ^subquery(Documents.pages_visible_to(member)),
       on: searches.page_id == pages.id,

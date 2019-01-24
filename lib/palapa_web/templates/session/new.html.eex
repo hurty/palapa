@@ -1,5 +1,5 @@
 <div class="flex justify-center mt-8">
-  <div class="flex-3 card-shadow">
+  <div class="w-full max-w-sm card-shadow">
     <div class="card p-8">
       <h2 class="card-header">Login</h2>
       

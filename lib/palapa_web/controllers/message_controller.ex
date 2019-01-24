@@ -19,8 +19,6 @@ defmodule PalapaWeb.MessageController do
       if params["team_id"] do
         Teams.where_organization(current_organization())
         |> Teams.get!(params["team_id"])
-      else
-        nil
       end
 
     messages =

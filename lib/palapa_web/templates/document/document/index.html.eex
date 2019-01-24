@@ -1,64 +1,122 @@
 <div class="content article-layout mx-4">
   <div class="main-content">
 
-
     <div class="card">
-      <div class="p-4">
-        <div class="flex flex-wrap justify-between mb-4">
-          <div>
-            <h2 class="text-grey-darkest">All Documents</h2>
-          </div>
 
-          <div>
+        <div class="flex flex-wrap justify-between">
+          <h2 class="p-4 text-purple-darker">All documents and files</h2>
+
+          <div class="p-4">
             <%= link(to: document_path(@conn, :new, @current_organization), class: "btn text-sm") do %>
               <i class="fas fa-plus-circle text-green mr-2"></i>New document
             <% end %>
           </div>
         </div>
 
-        <div class="bg-grey-lightest py-4 rounded">
-          Showing documents from All Teams, ordered by Date
-        </div>
-
-        <%= for document <- @documents do %>
-          <div class="flex flex-wrap py-2 border-b border-grey-lighter">
-            <div class="w-8">
-              <i class="fas fa-file-alt text-grey-dark text-sm"></i> 
-            </div>
-
-            <div class="flex-auto">
-              <%= link truncate_string(document.title), to: document_page_path(@conn, :show, @current_organization, document.main_page_id), class: "text-base text-green hover:underline font-bold text-sm" %>
-              <div>
-                <%= for team <- document.teams do %>
-                  <span class="text-xs font-bold text-grey-darker "><%= team.name %></span>
+        <div class="flex justify-between items-center px-4 py-2 bg-grey-lightest border-b-2 border-grey-lighter">
+          <div data-controller="popover" data-action="mousedown@window->popover#hide">
+            <%= if Enum.any?(@teams) do %>
+              <button data-target="popover.button" data-action="popover#toggle" class="btn text-sm truncate">
+                <%= if @selected_team do %> 
+                  <span title="<%= @selected_team.name %>" class="text-green"><%= @selected_team.name %></span>
+                <% else %>
+                  <span title="All messages">All teams</span>
                 <% end %>
+                <i class="fas fa-angle-down"></i>
+              </button>
+              
+              <div data-target="popover.content" class="popover hidden">
+                <div data-target="popover.arrow" class="popover__arrow"></div>
+                <div class="flex flex-col">
+                  <%= link("All teams", to: document_path(@conn, :index, @current_organization, @conn.params), class: "selector-item truncate selector-item-default") %>
+                  <%= for team <- @teams do %>
+                    <% item_class = "text-green selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
+                    <%= link(team.name, to: document_path(@conn, :index, @current_organization.id, team_id: team.id, search: @conn.params["search"]), class: item_class, title: team.name) %>
+                  <% end %>
+                </div>
               </div>
-            </div>
-            
-            <div class="">
-              <div class="text-sm text-grey-darker"><%= format_date(document.updated_at, @current_account) %>
-              <div class="flex mt-1">
-                <%= PalapaWeb.MemberView.avatar(document.last_author.account, :xs) %>
-                <span class="text-sm mx-2 text-grey-darkest"><%= document.last_author.account.name %></span>
+            <% end %>
+          </div>
+
+          <div class="flex">
+            <%= form_for @conn, document_path(@conn, :index, @current_organization), [method: "get"], fn form -> %>
+              <%= if @conn.params["team_id"] do %>
+                <%= hidden_input form, :team_id, value: @conn.params["team_id"] %>
+              <% end %>
+              <%= text_input form, "search", value: @conn.params["search"], autocomplete: "off", class: "input", placeholder: "Search in documents" %>
+              <%= submit "Search", class: "btn" %>
+            <% end %>
+          </div>
+        </div>
+        
+        <%= if search_filters_applied?(@conn) do %>
+          <%= link to: document_path(@conn, :index, @current_organization) do %>
+            <div class="py-1 bg-blue-lightest text-center text-sm text-blue-dark font-bold hover:underline">Reset filters</div>
+          <% end %>
+        <% end %>
+
+        <div class="py-4">
+
+            <div class="flex items-center py-2 border-b border-grey-lighter p-4">
+              <div class="w-8">
               </div>
+
+              <div class="flex-1">
+                NAME
               </div>
               
+              <div class="flex-none">
+                LAST MODIFIED
+              </div>
+            </div>         
+
+          <%= for document <- @documents do %>
+            <div class="flex items-center py-2 border-b border-grey-lighter p-4">
+              <div class="w-8">
+                <i class="fas fa-file-alt text-grey-dark text-base" title="Document"></i> 
+              </div>
+
+              <div class="flex-1">
+                <%= link truncate_string(document.title, 150), to: document_page_path(@conn, :show, @current_organization, document.main_page_id), class: "text-base text-green font-bold hover:underline text-sm" %>
+                <div>
+                  <%= for team <- document.teams do %>
+                    <span class="text-xs font-bold text-grey-darker mr-2 rounded">#<%= team.name %></span>
+                  <% end %>
+                </div>
+              </div>
+              
+              <div class="flex-none">
+                <div class="text-sm text-grey-darker"><%= format_date(document.updated_at, @current_account) %>
+                  <div class="flex mt-2">
+                    <%= PalapaWeb.MemberView.avatar(document.last_author.account, :xs) %>
+                    <span class="text-xs mx-2 text-grey-darkest">
+                      <%= link document.last_author.account.name, to: member_path(@conn, :show, @current_organization, document.last_author), class: "text-grey-darkest font-bold hover:underline" %>
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        <% end %>      
-      </div>
+          <% end %>
+
+          <%= if @documents.total_pages > 1 do %>
+            <div class="text-center py-2">
+              <%= pagination_links @documents, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>    
+            </div>
+          <% end %>
+        </div>
+
     </div>
   </div>
 
-  <div class="left-sidebar">
-    <div class="p-4 card">
-      <h3 class="text-grey-darkest text-xl mb-4">Recently viewed</h3>
+  <div class="right-sidebar mx-4">
+    <div class="card p-4">
+      <h3 class="text-purple-darker text-lg mb-4">Recently viewed</h3>
       <div class="card-header-separator"></div>
       <div class="flex flex-wrap">
         <%= for document <- @recent_documents do %>
-          <div class="w-full">
-            <i class="fas fa-file-alt text-grey text-lg mr-2"></i> 
-            <%= link document.title, to: document_page_path(@conn, :show, @current_organization, document.main_page_id), class: "text-green font-bold  hover:underline" %>
+          <div class="w-full my-1">
+            <i class="fas fa-file-alt text-grey-dark text-sm mr-2"></i> 
+            <%= link truncate_string(document.title), to: document_page_path(@conn, :show, @current_organization, document.main_page_id), class: "text-sm font-bold text-green hover:underline" %>
           </div>
         <% end %>
       </div>

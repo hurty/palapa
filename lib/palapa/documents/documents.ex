@@ -5,6 +5,7 @@ defmodule Palapa.Documents do
   use Palapa.Context
 
   alias Palapa.Documents.{Document, Section, Page, DocumentAccess}
+  alias Palapa.Teams.Team
   alias Palapa.Position
 
   # --- Errors
@@ -82,15 +83,42 @@ defmodule Palapa.Documents do
     |> order_by(desc_nulls_first: :updated_at)
   end
 
+  def shared_with_team(querybale \\ Document, team)
+  def shared_with_team(queryable, team) when is_nil(team), do: queryable
+
+  def shared_with_team(queryable, %Team{} = team) do
+    from(q in queryable,
+      join: t in assoc(q, :teams),
+      where: t.id == ^team.id
+    )
+  end
+
+  def with_search_query(queryable \\ Document, search_string) do
+    if Palapa.Searches.blank_query?(search_string) do
+      queryable
+    else
+      matching_documents_query =
+        from(searches in Palapa.Searches.search_query(search_string),
+          join: pages in assoc(searches, :page),
+          join: documents in assoc(pages, :document),
+          select: documents.id
+        )
+
+      from(q in queryable,
+        join: matching_docs in ^subquery(matching_documents_query),
+        on: q.id == matching_docs.id
+      )
+    end
+  end
+
   # --- Actions
 
-  def list_documents(queryable \\ Document, member) do
+  def list_documents(queryable \\ Document, page \\ 1) do
     queryable
-    |> documents_visible_to(member)
     |> non_deleted
     |> order_by_last_modified_first
     |> preload([:teams, [last_author: :account]])
-    |> Repo.all()
+    |> Repo.paginate(page: page, page_size: 50)
   end
 
   def recent_documents(member) do

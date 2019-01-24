@@ -13,11 +13,31 @@ defmodule PalapaWeb.Document.DocumentController do
     |> put_breadcrumb("Documents", document_path(conn, :index, current_organization()))
   end
 
-  def index(conn, _params) do
-    documents = Documents.list_documents(current_member())
+  def index(conn, params) do
+    selected_team =
+      if params["team_id"] do
+        Teams.where_organization(current_organization())
+        |> Teams.get!(params["team_id"])
+      end
 
-    recent_documents = Documents.recent_documents(current_member())
-    render(conn, "index.html", documents: documents, recent_documents: recent_documents)
+    documents =
+      Documents.documents_visible_to(current_member())
+      |> Documents.shared_with_team(selected_team)
+      |> Documents.with_search_query(params["search"])
+      |> Documents.list_documents(params["page"])
+
+    recent_documents =
+      current_member()
+      |> Documents.recent_documents()
+
+    teams = Teams.list_for_member(current_member())
+
+    render(conn, "index.html",
+      documents: documents,
+      recent_documents: recent_documents,
+      teams: teams,
+      selected_team: selected_team
+    )
   end
 
   def new(conn, _params) do

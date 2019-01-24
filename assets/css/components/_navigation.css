@@ -50,13 +50,15 @@
     }
 
     &.active {
+      @apply bg-green rounded;
+
       a {
-        @apply bg-grey-light rounded;
-        @apply text-green !important;
+        
+        @apply text-white !important;
       }
 
       a:visited {
-        @apply text-green !important;
+        @apply text-white !important;
       }
     }
   }

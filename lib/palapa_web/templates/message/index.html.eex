@@ -20,7 +20,7 @@
             </ul>
 
             <%= if @messages.total_pages > 1 do %>
-              <div class="text-center my-2">
+              <div class="py-2 text-center">
                 <%= render "_index_pagination.html", assigns %>
               </div>
             <% end %>
