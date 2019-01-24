@@ -3,10 +3,10 @@
 
     <div class="card">
 
-        <div class="flex flex-wrap justify-between">
-          <h2 class="p-4 text-purple">All documents and files</h2>
+        <div class="flex flex-wrap items-center justify-between p-4">
+          <h2 class="text-grey-darkest">All documents and files</h2>
 
-          <div class="p-4">
+          <div>
             <%= link(to: document_path(@conn, :new, @current_organization), class: "btn text-sm") do %>
               <i class="fas fa-plus-circle text-green mr-2"></i>New document
             <% end %>
@@ -128,7 +128,7 @@
 
   <div class="right-sidebar mx-4">
     <div class="card p-4">
-      <h3 class="text-purple text-lg mb-4">Recently viewed</h3>
+      <h3 class="text-grey-darkest text-lg mb-4">Recently viewed</h3>
       <div class="card-header-separator"></div>
       <div class="flex flex-wrap">
         <%= for document <- @recent_documents do %>
