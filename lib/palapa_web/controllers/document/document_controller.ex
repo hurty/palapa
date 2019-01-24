@@ -22,8 +22,9 @@ defmodule PalapaWeb.Document.DocumentController do
 
     documents =
       Documents.documents_visible_to(current_member())
-      |> Documents.shared_with_team(selected_team)
-      |> Documents.with_search_query(params["search"])
+      |> Documents.documents_shared_with_team(selected_team)
+      |> Documents.documents_with_search_query(params["search"])
+      |> Documents.documents_sorted_by(params["sort_by"])
       |> Documents.list_documents(params["page"])
 
     recent_documents =

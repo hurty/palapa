@@ -18,7 +18,7 @@
   @apply text-grey-darkest font-semibold text-sm;
   
   &:hover {
-    @apply bg-green-light text-white;
+    @apply bg-green text-white;
   }
 }
 

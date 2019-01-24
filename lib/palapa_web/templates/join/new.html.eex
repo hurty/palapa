@@ -8,7 +8,7 @@
 
         <div class="card-header-separator"></div>
 
-        <p>You are about to join <span class="text-purple-dark font-bold"><%= @invitation.organization.name %></span>!<br>
+        <p>You are about to join <span class="text-purple font-bold"><%= @invitation.organization.name %></span>!<br>
           <%= if @existing_account do %>
           But first, let's set up your profile for this workspace:
           <% else %>

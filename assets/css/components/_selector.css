@@ -7,7 +7,7 @@
   }
 
   &:hover {
-    @apply bg-green text-white;
+    @apply bg-grey-lighter;
   }
 }
 

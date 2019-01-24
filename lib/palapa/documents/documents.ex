@@ -78,22 +78,24 @@ defmodule Palapa.Documents do
     |> distinct(true)
   end
 
-  def order_by_last_modified_first(queryable) do
-    queryable
-    |> order_by(desc_nulls_first: :updated_at)
+  def documents_sorted_by(queryable, field) do
+    case field do
+      "title" -> order_by(queryable, asc: :title)
+      _ -> order_by(queryable, desc_nulls_first: :updated_at)
+    end
   end
 
-  def shared_with_team(querybale \\ Document, team)
-  def shared_with_team(queryable, team) when is_nil(team), do: queryable
+  def documents_shared_with_team(querybale \\ Document, team)
+  def documents_shared_with_team(queryable, team) when is_nil(team), do: queryable
 
-  def shared_with_team(queryable, %Team{} = team) do
+  def documents_shared_with_team(queryable, %Team{} = team) do
     from(q in queryable,
       join: t in assoc(q, :teams),
       where: t.id == ^team.id
     )
   end
 
-  def with_search_query(queryable \\ Document, search_string) do
+  def documents_with_search_query(queryable \\ Document, search_string) do
     if Palapa.Searches.blank_query?(search_string) do
       queryable
     else
@@ -116,7 +118,6 @@ defmodule Palapa.Documents do
   def list_documents(queryable \\ Document, page \\ 1) do
     queryable
     |> non_deleted
-    |> order_by_last_modified_first
     |> preload([:teams, [last_author: :account]])
     |> Repo.paginate(page: page, page_size: 50)
   end
