@@ -15,21 +15,15 @@ defmodule Palapa.Repo.Migrations.CreateDocuments do
 
       add(:title, :string, null: false)
       timestamps()
-      add(:shared_with_everyone, :boolean, default: false, null: false)
+      add(:team_id, references(:teams, on_delete: :delete_all, type: :uuid))
       add(:last_author_id, references(:members, on_delete: :nilify_all, type: :uuid))
       add(:deleted_at, :utc_datetime, default: nil)
     end
 
+    create(index(:documents, [:team_id]))
     create(index(:documents, [:last_author_id]))
-    create(index(:documents, [:shared_with_everyone]))
     create(index(:documents, [:organization_id]))
     create(index(:documents, [:deleted_at]))
-
-    # --------- DOCUMENTS VISIBILITY --------------
-    create(table(:documents_teams, primary_key: false)) do
-      add(:document_id, references(:documents, on_delete: :delete_all, type: :uuid))
-      add(:team_id, references(:teams, on_delete: :delete_all, type: :uuid))
-    end
 
     # --------- SECTION --------------
 

@@ -17,7 +17,7 @@ defmodule Palapa.Documents.Page do
     belongs_to(:document, Document)
     belongs_to(:section, Section)
     belongs_to(:last_author, Member)
-    has_many(:teams, through: [:document, :teams])
+    has_one(:team, through: [:document, :team])
     has_many(:searches, Search)
   end
 

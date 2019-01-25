@@ -82,17 +82,19 @@
             </div>         
 
           <%= for document <- @documents do %>
-            <div class="flex items-center py-2 border-b border-grey-lighter p-4">
+            <div class="flex py-2 border-b border-grey-lighter p-4">
               <div class="w-8">
                 <i class="fas fa-file-alt text-grey-dark text-base" title="Document"></i> 
               </div>
 
               <div class="flex-1">
                 <%= link truncate_string(document.title, 150), to: document_page_path(@conn, :show, @current_organization, document.main_page_id), class: "text-base text-green font-bold hover:underline text-sm" %>
-                <div>
-                  <%= for team <- document.teams do %>
-                    <span class="text-xs font-bold text-grey-darker mr-2 rounded">#<%= team.name %></span>
-                  <% end %>
+                <div class="text-xs font-bold text-grey-darker mr-2 rounded">
+                <%= if document.team do %>
+                  <%= document.team.name %>
+                <% else %>
+                  Shared with everyone
+                <% end %>
                 </div>
               </div>
               

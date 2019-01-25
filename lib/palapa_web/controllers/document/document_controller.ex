@@ -48,10 +48,10 @@ defmodule PalapaWeb.Document.DocumentController do
   end
 
   def create(conn, %{"document" => document_attrs}) do
-    document_teams = find_teams(document_attrs, current_member())
+    team = if document_attrs["team"], do: Teams.list_for_member(document_attrs["team"]), else: nil
 
     with :ok <- permit(Documents, :create_document, current_member()) do
-      case Documents.create_document(current_member(), document_teams, document_attrs) do
+      case Documents.create_document(current_member(), team, document_attrs) do
         {:ok, document} ->
           redirect(conn,
             to: document_page_path(conn, :show, current_organization(), document.main_page_id)
@@ -61,18 +61,6 @@ defmodule PalapaWeb.Document.DocumentController do
           teams = Teams.list_for_member(current_member())
           render(conn, "new.html", changeset: changeset, teams: teams)
       end
-    end
-  end
-
-  defp find_teams(document_attrs, member) do
-    teams_ids = document_attrs["publish_teams_ids"] || []
-
-    if document_attrs["published_to_everyone"] == "false" && Enum.any?(teams_ids) do
-      Teams.visible_to(member)
-      |> Teams.where_ids(teams_ids)
-      |> Teams.list()
-    else
-      []
     end
   end
 end

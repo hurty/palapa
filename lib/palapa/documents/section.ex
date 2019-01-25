@@ -11,6 +11,7 @@ defmodule Palapa.Documents.Section do
 
     belongs_to(:document, Document)
     belongs_to(:last_author, Organizations.Member)
+    has_one(:team, through: [:document, :team])
     has_many(:pages, Page)
   end
 

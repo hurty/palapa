@@ -59,8 +59,14 @@ defmodule Palapa.Teams do
   end
 
   def list_for_member(%Member{} = member) do
-    Ecto.assoc(member, :teams)
+    visible_to(member)
     |> list()
+  end
+
+  def list_ids_for_member(%Member{} = member) do
+    visible_to(member)
+    |> Repo.all()
+    |> Enum.map(fn team -> team.id end)
   end
 
   def organization_has_teams?(%Organization{} = organization) do
