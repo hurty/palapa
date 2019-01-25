@@ -47,6 +47,7 @@ defmodule Palapa.Searches do
       page: Keyword.get(opts, :page, 1),
       page_size: Keyword.get(opts, :page_size, 20)
     )
+    |> IO.inspect()
   end
 
   @blank_regex ~r/\A[[:space:]]*\z/u
