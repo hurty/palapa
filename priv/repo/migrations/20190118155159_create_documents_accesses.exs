@@ -3,8 +3,8 @@ defmodule Palapa.Repo.Migrations.CreateDocumentsAccesses do
 
   def change do
     create table(:documents_accesses) do
-      add(:document_id, references(:documents), null: false)
-      add(:member_id, references(:members), null: false)
+      add(:document_id, references(:documents, on_delete: :delete_all), null: false)
+      add(:member_id, references(:members, on_delete: :delete_all), null: false)
       add(:last_access_at, :utc_datetime, null: false)
     end
 
