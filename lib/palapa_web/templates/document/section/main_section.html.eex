@@ -8,13 +8,13 @@ class="draggable-section-collidable">
   class="document-section-list"
   data-document-section-id="<%= @document.main_section_id %>">
     <li data-action="click->document#clickPage"
-      class="document-page draggable-collidable border-b flex cursor-pointer py-2 pl-3 <%= if @conn.assigns[:page] && @page.section_id do %>hover:bg-grey-lightest<% else %>hover:bg-grey-lighter<% end %>">
+      class="document-page draggable-collidable flex cursor-pointer py-2 pl-3 <%= if @conn.assigns[:page] && @page.section_id do %>hover:bg-grey-lightest<% else %>hover:bg-grey-lighter<% end %>">
 
       <span>
         <i class="fas fa-home text-xs text-grey mr-2"></i>
       </span>
 
-      <%= link @document.title, to: document_page_path(@conn, :show, @current_organization, @document.main_page_id), 
+      <%= link truncate_string(@document.title), to: document_page_path(@conn, :show, @current_organization, @document.main_page_id), 
       class: if(@conn.params["id"] == @document.main_page_id, do: "text-green font-bold", else: "text-grey-darker font-bold") %>
     </li>
 
