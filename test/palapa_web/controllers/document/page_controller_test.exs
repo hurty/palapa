@@ -16,7 +16,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
         |> assign(:current_account, member.account)
         |> assign(:current_organization, member.organization)
 
-      {:ok, document} = Documents.create_document(member, %{title: @doc_title})
+      {:ok, document} = Documents.create_document(member, nil, %{title: @doc_title})
 
       {:ok, conn: conn, member: member, org: member.organization, document: document}
     end
@@ -96,7 +96,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
            conn: conn,
            workspace: workspace
          } do
-      {:ok, document} = Documents.create_document(workspace.richard, %{title: "Open doc"})
+      {:ok, document} = Documents.create_document(workspace.richard, nil, %{title: "Open doc"})
 
       conn =
         get(conn, document_page_path(conn, :show, workspace.organization, document.main_page_id))
@@ -110,7 +110,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
            workspace: workspace
          } do
       {:ok, document} =
-        Documents.create_document(workspace.richard, [workspace.tech_team], %{
+        Documents.create_document(workspace.richard, workspace.tech_team, %{
           title: "tech doc"
         })
 
@@ -123,7 +123,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
     test "a page of a document shared with a specific team is not accessible by a member outside this team",
          %{conn: conn, workspace: workspace} do
       {:ok, document} =
-        Documents.create_document(workspace.richard, [workspace.management_team], %{
+        Documents.create_document(workspace.richard, workspace.management_team, %{
           title: "management doc"
         })
 
@@ -142,7 +142,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
       workspace2 = insert_hooli!()
 
       {:ok, document} =
-        Documents.create_document(workspace2.gavin, %{
+        Documents.create_document(workspace2.gavin, nil, %{
           title: "other workspace doc"
         })
 

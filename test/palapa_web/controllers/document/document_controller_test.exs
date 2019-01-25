@@ -57,7 +57,7 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
       conn: conn,
       workspace: workspace
     } do
-      Documents.create_document(workspace.richard, %{title: "Open doc"})
+      Documents.create_document(workspace.richard, nil, %{title: "Open doc"})
       conn = get(conn, document_path(conn, :index, workspace.organization))
       assert html_response(conn, 200) =~ "Open doc"
     end
@@ -66,7 +66,7 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
       conn: conn,
       workspace: workspace
     } do
-      Documents.create_document(workspace.richard, [workspace.tech_team], %{
+      Documents.create_document(workspace.richard, workspace.tech_team, %{
         title: "tech doc"
       })
 
@@ -76,7 +76,7 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
 
     test "a document shared with a specific team is not accessible by a member outside this team",
          %{conn: conn, workspace: workspace} do
-      Documents.create_document(workspace.richard, [workspace.management_team], %{
+      Documents.create_document(workspace.richard, workspace.management_team, %{
         title: "management doc"
       })
 
@@ -90,7 +90,7 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
     } do
       workspace2 = insert_hooli!()
 
-      Documents.create_document(workspace2.gavin, %{
+      Documents.create_document(workspace2.gavin, nil, %{
         title: "other workspace doc"
       })
 

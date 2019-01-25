@@ -14,7 +14,7 @@ defmodule Palapa.DocumentsTest do
     organization = insert!(:organization)
     author = insert!(:member, organization: organization)
 
-    {:ok, document} = Documents.create_document(author, @valid_attrs)
+    {:ok, document} = Documents.create_document(author, nil, @valid_attrs)
 
     document
   end
@@ -24,7 +24,7 @@ defmodule Palapa.DocumentsTest do
 
     test "list_documents/0 returns all documents" do
       document = document_fixture()
-      doc_ids = Documents.list_documents(document.last_author) |> Enum.map(fn doc -> doc.id end)
+      doc_ids = Documents.list_documents() |> Enum.map(fn doc -> doc.id end)
       assert doc_ids == [document.id]
     end
 
@@ -37,7 +37,7 @@ defmodule Palapa.DocumentsTest do
       organization = insert!(:organization)
       author = insert!(:member, organization: organization)
 
-      assert {:ok, %Document{} = document} = Documents.create_document(author, @valid_attrs)
+      assert {:ok, %Document{} = document} = Documents.create_document(author, nil, @valid_attrs)
 
       assert document.title == "some title"
       assert document.main_section_id
@@ -48,7 +48,7 @@ defmodule Palapa.DocumentsTest do
       organization = insert!(:organization)
       author = insert!(:member, organization: organization)
 
-      assert {:error, %Ecto.Changeset{}} = Documents.create_document(author, @invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} = Documents.create_document(author, nil, @invalid_attrs)
     end
 
     test "update_document/2 with valid data updates the document" do
