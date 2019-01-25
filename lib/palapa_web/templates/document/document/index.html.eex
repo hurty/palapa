@@ -4,7 +4,7 @@
     <div class="card">
 
         <div class="flex flex-wrap items-center justify-between p-4">
-          <h2 class="text-grey-darkest">All documents and files</h2>
+          <h2 class="text-grey-darkest">Documents and files</h2>
 
           <div>
             <%= link(to: document_path(@conn, :new, @current_organization), class: "btn text-sm") do %>
@@ -20,7 +20,7 @@
                 <%= if @selected_team do %> 
                   <span title="<%= @selected_team.name %>" class="text-blue font-bold"><%= @selected_team.name %></span>
                 <% else %>
-                  <span title="All messages" class="font-bold">All teams</span>
+                  <span title="All documents" class="font-bold">All documents</span>
                 <% end %>
                 <i class="fas fa-angle-down ml-2"></i>
               </button>
@@ -28,7 +28,7 @@
               <div data-target="popover.content" class="popover hidden">
                 <div data-target="popover.arrow" class="popover__arrow"></div>
                 <div class="flex flex-col">
-                  <%= link("All teams", to: document_path(@conn, :index, @current_organization, Map.delete(@conn.params, "team_id")), class: "selector-item truncate selector-item-default") %>
+                  <%= link("All documents", to: document_path(@conn, :index, @current_organization, Map.delete(@conn.params, "team_id")), class: "selector-item truncate selector-item-default") %>
                   <%= for team <- @teams do %>
                     <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
                     <%= link(team.name, to: document_path(@conn, :index, @current_organization.id, Map.put(@conn.params, "team_id", team.id)), class: item_class, title: team.name) %>
