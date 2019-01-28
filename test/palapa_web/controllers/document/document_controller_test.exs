@@ -8,35 +8,100 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
 
   describe "as regular member" do
     setup do
-      member = insert!(:member)
+      workspace = insert_pied_piper!(:full)
 
       conn =
         build_conn()
-        |> assign(:current_member, member)
-        |> assign(:current_account, member.account)
-        |> assign(:current_organization, member.organization)
+        |> assign(:current_member, workspace.gilfoyle)
+        |> assign(:current_account, workspace.gilfoyle.account)
+        |> assign(:current_organization, workspace.organization)
 
-      {:ok, conn: conn, member: member, org: member.organization}
+      {:ok, conn: conn, workspace: workspace}
     end
 
-    test "list all documents", %{conn: conn, org: org} do
-      conn = get(conn, document_path(conn, :index, org))
+    test "list all documents", %{conn: conn, workspace: workspace} do
+      Palapa.Documents.create_document(workspace.richard, nil, %{
+        title: "This is a styleguide for everyone"
+      })
+
+      Palapa.Documents.create_document(workspace.richard, workspace.tech_team, %{
+        title: "This is a technical doc"
+      })
+
+      Palapa.Documents.create_document(workspace.richard, workspace.management_team, %{
+        title: "This is a secret doc for management"
+      })
+
+      conn = get(conn, document_path(conn, :index, workspace.organization))
+      assert html_response(conn, 200) =~ "This is a styleguide for everyone"
+      assert html_response(conn, 200) =~ "This is a technical doc"
+      refute html_response(conn, 200) =~ "This is a secret doc for management"
+    end
+
+    test "list all documents having title like 'tech'", %{conn: conn, workspace: workspace} do
+      Palapa.Documents.create_document(workspace.richard, nil, %{
+        title: "This is a styleguide for everyone"
+      })
+
+      Palapa.Documents.create_document(workspace.richard, workspace.tech_team, %{
+        title: "This is a technical doc"
+      })
+
+      Palapa.Documents.create_document(workspace.richard, workspace.management_team, %{
+        title: "This is a secret doc for management"
+      })
+
+      conn = get(conn, document_path(conn, :index, workspace.organization, search: "tech"))
+      refute html_response(conn, 200) =~ "This is a styleguide for everyone"
+      assert html_response(conn, 200) =~ "This is a technical doc"
+      refute html_response(conn, 200) =~ "This is a secret doc for management"
+    end
+
+    test "list all documents from the tech team", %{conn: conn, workspace: workspace} do
+      Palapa.Documents.create_document(workspace.richard, nil, %{
+        title: "This is a styleguide for everyone"
+      })
+
+      Palapa.Documents.create_document(workspace.richard, workspace.tech_team, %{
+        title: "This is a technical doc"
+      })
+
+      Palapa.Documents.create_document(workspace.richard, workspace.management_team, %{
+        title: "This is a secret doc for management"
+      })
+
+      conn =
+        get(
+          conn,
+          document_path(conn, :index, workspace.organization, team_id: workspace.tech_team.id)
+        )
+
+      refute html_response(conn, 200) =~ "This is a styleguide for everyone"
+      assert html_response(conn, 200) =~ "This is a technical doc"
+      refute html_response(conn, 200) =~ "This is a secret doc for management"
+    end
+
+    test "new document form", %{conn: conn, workspace: workspace} do
+      conn = get(conn, document_path(conn, :new, workspace.organization))
       assert html_response(conn, 200)
     end
 
-    test "new document form", %{conn: conn, org: org} do
-      conn = get(conn, document_path(conn, :new, org))
-      assert html_response(conn, 200)
-    end
-
-    test "create a document", %{conn: conn, org: org} do
+    test "create a document", %{conn: conn, workspace: workspace} do
       payload = %{"document" => %{"title" => "My awesome book"}}
-      conn = post(conn, document_path(conn, :create, org, payload))
+      conn = post(conn, document_path(conn, :create, workspace.organization, payload))
 
       last_document = Query.first(Document) |> Repo.one!()
 
       assert redirected_to(conn, 302) =~
-               document_page_path(conn, :show, org, last_document.main_page_id)
+               document_page_path(conn, :show, workspace.organization, last_document.main_page_id)
+    end
+
+    test "create a document with missing title", %{conn: conn, workspace: workspace} do
+      payload = %{"document" => %{"title" => ""}}
+      conn = post(conn, document_path(conn, :create, workspace.organization, payload))
+
+      assert Repo.count(Document) == 0
+      assert html_response(conn, 200) =~ "Check the errors below"
     end
   end
 
