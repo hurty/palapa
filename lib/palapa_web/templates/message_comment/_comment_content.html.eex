@@ -1,5 +1,5 @@
   <div class="flex">
-    <div class="w-10 mx-2">
+    <div class="mx-2">
       <%= PalapaWeb.MemberView.avatar(@comment.creator.account, :small) %>
     </div>
 
