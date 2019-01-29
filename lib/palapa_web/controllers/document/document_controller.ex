@@ -5,8 +5,10 @@ defmodule PalapaWeb.Document.DocumentController do
   alias Palapa.Documents.{Document}
   alias Palapa.Teams
 
-  plug(:put_common_breadcrumbs)
-  plug(:put_navigation, "documents")
+  plug :scrub_params, "document" when action in [:create, :update]
+
+  plug :put_common_breadcrumbs
+  plug :put_navigation, "documents"
 
   def put_common_breadcrumbs(conn, _params) do
     conn
@@ -44,22 +46,34 @@ defmodule PalapaWeb.Document.DocumentController do
   def new(conn, _params) do
     changeset = Documents.change_document(%Document{})
     teams = Teams.list_for_member(current_member())
-    render(conn, "new.html", changeset: changeset, teams: teams)
+
+    conn
+    |> put_breadcrumb("New document", document_path(conn, :new, current_organization()))
+    |> render("new.html", changeset: changeset, teams: teams)
   end
 
   def create(conn, %{"document" => document_attrs}) do
-    team = if document_attrs["team"], do: Teams.list_for_member(document_attrs["team"]), else: nil
+    team =
+      if document_attrs["team_id"] do
+        Teams.visible_to(current_member())
+        |> Teams.get!(document_attrs["team_id"])
+      else
+        nil
+      end
 
     with :ok <- permit(Documents, :create_document, current_member()) do
       case Documents.create_document(current_member(), team, document_attrs) do
         {:ok, document} ->
           redirect(conn,
-            to: document_page_path(conn, :show, current_organization(), document.main_page_id)
+            to: document_page_path(conn, :edit, current_organization(), document.main_page_id)
           )
 
         {:error, changeset} ->
           teams = Teams.list_for_member(current_member())
-          render(conn, "new.html", changeset: changeset, teams: teams)
+
+          conn
+          |> put_breadcrumb("New document", document_path(conn, :new, current_organization()))
+          |> render("new.html", changeset: changeset, teams: teams)
       end
     end
   end

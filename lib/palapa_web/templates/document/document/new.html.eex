@@ -10,34 +10,19 @@
         <% end %>
 
         <div class="field">
-          <%= text_input form, :title, placeholder: "Title", autocomplete: "off", class: "input p-2 w-full font-bold sm:text-xl" %>
+          <%= text_input form, :title, placeholder: "Title...", "data-controller": "focus", autocomplete: "off", class: "input p-2 w-full font-bold sm:text-xl" %>
           <%= error_tag form, :title %>
         </div>
 
         <%= if Enum.any?(@teams) do %>
-          <div data-controller="team-sharing" class="rounded-lg my-4 text-xs sm:text-base">
-            <div class="my-2">
-              <%= radio_button form, :published_to_everyone, true, "data-action": "team-sharing#publishToEveryone", "data-target": "team-sharing.publishToEveryone", checked: true %>
-              <%= label form, :published_to_everyone_true, "Share with everyone in #{@current_organization.name}", class: "cursor-pointer" %>
-            </div>
-            
-            <div class="my-2">
-              <%= radio_button form, :published_to_everyone, false, "data-action": "team-sharing#publishToSpecificTeams", "data-target": "team-sharing.publishToSpecificTeams" %>
-              <%= label form, :published_to_everyone_false, "Share with specific teams...", class: "cursor-pointer" %>
-            </div>
-            
-            <div class="ml-4 hidden" data-target="team-sharing.teamsList">
-              <div class="flex flex-wrap">
-                <%= for team <- @teams do %>  
-                  <label class="m-1 tag align-middle cursor-pointer" for="team_<%= team.id %>">
-                  <input type="checkbox" class="align-middle" name="document[publish_teams_ids][]" id="team_<%= team.id %>" 
-                    value="<%= team.id %>" <%= if PalapaWeb.TeamView.team_checked?(@changeset, team) do %>checked<% end %>>
-                    <%= team.name %>
-                  </label>
-                <% end %>
-              </div>
-            </div>
-          </div>
+          <div class="field">
+            <%= label form, :team_id, "Who can see this document?", class: "label" %>
+            <%= select form, :team_id, 
+              List.insert_at(Enum.map(@teams, fn team -> {team.name, team.id} end), 0, {"Everyone in #{@current_organization.name}", nil}), 
+              class: "bg-grey-lightest",
+              "data-controller": "choice"
+            %>
+          </div>            
         <% end %>    
 
         <div class="card-actions">

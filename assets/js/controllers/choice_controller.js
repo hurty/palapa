@@ -5,10 +5,10 @@ export default class extends Controller {
   static targets = ["select"]
 
   connect() {
-    new Choices(this.selectTarget, {
+    new Choices(this.element, {
       removeItemButton: true,
       placeholder: true,
-      placeholderValue: this.data.get("placeholder")
+      placeholderValue: this.element.getAttribute("placeholder")
     })
   }
 }

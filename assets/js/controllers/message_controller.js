@@ -2,12 +2,9 @@ import { Controller } from "stimulus"
 import { LuminousGallery } from 'luminous-lightbox'
 
 export default class extends Controller {
-  static targets = ["title", "editor", "commentForm", "commentsList", "commentsCount", "commentContent", "leaveComment"]
+  static targets = ["editor", "commentForm", "commentsList", "commentsCount", "commentContent", "leaveComment"]
 
   connect() {
-    if (this.targets.has("title"))
-      this.titleTarget.focus()
-
     if (this.data.get("page") == "show")
       this.handleImageGallery()
   }

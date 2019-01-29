@@ -60,7 +60,7 @@
             "People": Enum.map(Palapa.Organizations.list_members(@current_organization), fn m -> [key: m.account.name, value: to_string(Palapa.Access.GlobalId.create("palapa", m))] end),
             "Teams": Enum.map(Palapa.Teams.where_organization(@current_organization) |> Palapa.Teams.list, fn t -> [key: t.name, value: to_string(Palapa.Access.GlobalId.create("palapa", t))] end)
           ],
-          "data-controller": "choice", "data-target": "choice.select", "data-choice-placeholder": "Select people and/or teams"
+          "data-controller": "choice", placeholder: "Select people and/or teams"
         %>
       </div>
     <% else %>

@@ -8,11 +8,11 @@
   <%= error_tag @form, :name %>
 </div>
 
-<div class="field" data-controller="choice">
+<div class="field">
   <%= label @form, :members, "Team members", class: "label" %>
-  <%= multiple_select @form, :members, PalapaWeb.MemberView.organization_members(@current_organization), 
+  <%= multiple_select @form, :members, PalapaWeb.MemberView.organization_members(@current_organization),
+   "data-controller": "choice",
     placeholder: "Select people",
-    "data-target": "choice.select", 
     selected: (@selected_members |> Enum.map(fn m -> m.id end)) || [],
     class: "w-full" %>
   <%= error_tag @form, :members %>
