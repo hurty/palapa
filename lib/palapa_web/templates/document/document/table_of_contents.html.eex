@@ -1,5 +1,5 @@
 <div class="text-grey-darker bg-white border rounded text-sm">
-  <div class="text-xs p-2 font-bold text-center rounded-t bg-grey-lightest uppercase tracking-wide" >Table of contents</div>
+  <div class="text-xs p-2 font-bold text-center rounded-t bg-grey-lightest uppercase tracking-wide" >Pages</div>
   <div>
     <ul data-target="document.sectionsContainer" class="list-reset">
       <%= render PalapaWeb.Document.SectionView, "main_section.html", Map.put(assigns, :section, @document.main_section) %>

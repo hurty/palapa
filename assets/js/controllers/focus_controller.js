@@ -1,8 +1,9 @@
 import { Controller } from "stimulus"
+import BaseController from "./base_controller"
 
-export default class extends Controller {
+export default class extends BaseController {
 
   connect() {
-    this.element.focus()
+    this.focusWithCursorAtTheEnd(this.element)
   }
 }

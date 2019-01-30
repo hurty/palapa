@@ -133,6 +133,7 @@ defmodule Palapa.Documents do
 
     document =
       from(document in queryable,
+        preload: [:team, :last_author],
         preload: [sections: ^sections_query],
         preload: [main_section: [pages: ^section_pages_query]]
       )
@@ -178,9 +179,11 @@ defmodule Palapa.Documents do
     end
   end
 
-  def update_document(document, author, attrs) do
+  def update_document(document, author, team, attrs) do
     document
+    |> IO.inspect()
     |> Document.changeset(attrs)
+    |> put_assoc(:team, team)
     |> put_assoc(:last_author, author)
     |> Repo.update()
   end

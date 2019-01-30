@@ -1,6 +1,6 @@
 <div class="content article-layout" data-controller="document">
   <div class="left-sidebar pl-8">
-    <%= render PalapaWeb.Document.DocumentView, "_table_of_contents.html", assigns %>
+    <%= render PalapaWeb.Document.DocumentView, "table_of_contents.html", assigns %>
   </div>
 
   <div class="main-content ml-4">
@@ -9,16 +9,19 @@
     <div class="card">
         <div class="flex justify-between bg-grey-lightest px-8 py-4">
           <div>
-            <h2 class="text-grey-darkest text-sm"><%= @document.title %></h2>
-            <h1 class="text-green"><%= page_title(@page) %></h1>
-            <p class="my-2 text-grey-darker text-xs">
-              This page has been edited <%= auto_format_datetime(@page.updated_at, @current_account) %> by <%= link @page.last_author.account.name, to: member_path(@conn, :show, @current_organization, @page.last_author), class: "text-grey-darkest hover:underline" %>
-            </p>
+            <h2 class="font-bold text-grey-darker text-lg"><%= @document.title %></h2>
+            <%= if @document.team do %>
+              <div class="my-1"><span class="tag"><%= @document.team.name %></span></div>
+            <% end %>
           </div>
           <%= render "page_actions.html", assigns %>
         </div>
       
       <div class="p-8">        
+            <h1 class="text-green"><%= page_title(@page) %></h1>
+            <p class="py-2 text-grey-darker text-xs border-b border-grey-lighter">
+              This page has been edited <%= auto_format_datetime(@page.updated_at, @current_account) %> by <%= link @page.last_author.account.name, to: member_path(@conn, :show, @current_organization, @page.last_author), class: "text-grey-darkest hover:underline" %>
+            </p>
         <%= if @page.body do %>
           <section class="message-content">
             <%= raw(sanitize_html(@page.body)) %>

@@ -1,0 +1,17 @@
+<div class="content article-layout">
+  <div class="main-content">
+    <div class="card p1 sm:p-8">
+      <h2 class="card-header">Edit document</h2>
+      <div class="card-header-separator"></div>
+        <%= form_for @changeset, document_path(@conn, :update, @current_organization, @document), fn form -> %>
+          
+          <%= render "form.html", Map.put(assigns, :form, form) %>
+
+          <div class="card-actions">
+            <%= submit "Update this document", class: "btn btn-green" %>
+            <%= link "Cancel", to: document_page_path(@conn, :show, @current_organization, @document.main_page_id), class: "btn" %>
+          </div>
+        <% end %>
+    </div>
+  </div>
+</div>

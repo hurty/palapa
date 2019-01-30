@@ -20,7 +20,7 @@
             <%= if Palapa.Access.permit? Palapa.Messages, :edit_comment, @conn.assigns.current_member, @comment do %>
               <%= link to: message_comment_path(@conn, :edit, @conn.assigns.current_organization, @comment), 
               data: [action: "message-comment#editComment"], class: "popover__link" do %>
-                <i class="fas fa-pencil-alt"></i>&nbsp;Edit comment
+                <i class="fas fa-pen"></i>&nbsp;Edit comment
               <% end %>
             <% end %>
             <%= link to: message_comment_path(@conn, :delete, @conn.assigns.current_organization, @comment),

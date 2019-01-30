@@ -25,7 +25,7 @@
                 <%= if Palapa.Access.permit?(Palapa.Organizations, :update_member_information, @current_member, @info) do %>
                   <%= link to: member_information_path(@conn, :edit, @current_organization, @info), 
                   data: [action: "member-information#edit"], class: "popover__link" do %>
-                    <i class="fas fa-pencil-alt"></i>&nbsp;Edit
+                    <i class="fas fa-pen"></i>&nbsp;Edit
                   <% end %>
                 <% end %>
 

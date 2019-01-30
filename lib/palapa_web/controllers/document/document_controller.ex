@@ -53,13 +53,7 @@ defmodule PalapaWeb.Document.DocumentController do
   end
 
   def create(conn, %{"document" => document_attrs}) do
-    team =
-      if document_attrs["team_id"] do
-        Teams.visible_to(current_member())
-        |> Teams.get!(document_attrs["team_id"])
-      else
-        nil
-      end
+    team = find_team(conn, document_attrs["team_id"])
 
     with :ok <- permit(Documents, :create_document, current_member()) do
       case Documents.create_document(current_member(), team, document_attrs) do
@@ -75,6 +69,52 @@ defmodule PalapaWeb.Document.DocumentController do
           |> put_breadcrumb("New document", document_path(conn, :new, current_organization()))
           |> render("new.html", changeset: changeset, teams: teams)
       end
+    end
+  end
+
+  def edit(conn, %{"id" => id}) do
+    document = find_document(conn, id)
+
+    changeset = Documents.change_document(document)
+    teams = Teams.list_for_member(current_member())
+
+    conn
+    |> put_breadcrumb(
+      "Edit document",
+      document_path(conn, :edit, current_organization(), document)
+    )
+    |> render("edit.html", document: document, changeset: changeset, teams: teams)
+  end
+
+  def update(conn, %{"id" => id, "document" => document_attrs}) do
+    document = find_document(conn, id)
+    team = find_team(conn, document_attrs["team_id"])
+
+    case Documents.update_document(document, current_member(), team, document_attrs) do
+      {:ok, document} ->
+        redirect(conn,
+          to: document_page_path(conn, :show, current_organization(), document.main_page_id)
+        )
+
+      {:error, changeset} ->
+        teams = Teams.list_for_member(current_member())
+
+        conn
+        |> render("edit.html", document: document, changeset: changeset, teams: teams)
+    end
+  end
+
+  defp find_document(conn, id) do
+    Documents.documents_visible_to(current_member())
+    |> Documents.get_document!(id)
+  end
+
+  defp find_team(conn, id) do
+    if id do
+      Teams.visible_to(current_member())
+      |> Teams.get!(id)
+    else
+      nil
     end
   end
 end

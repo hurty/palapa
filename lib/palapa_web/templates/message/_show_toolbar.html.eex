@@ -21,7 +21,7 @@
         <nav class="flex flex-col">
           <%= if Palapa.Access.permit? Palapa.Messages, :edit_message, @current_member, @message do %>
             <%= link to: message_path(@conn, :edit, @current_organization, @message), class: "popover__link" do %>
-              <i class="fas fa-pencil-alt"></i>&nbsp;Edit message
+              <i class="fas fa-pen"></i>&nbsp;Edit message
             <% end %>
           <% end %>
 

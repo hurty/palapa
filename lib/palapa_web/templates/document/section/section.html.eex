@@ -36,7 +36,7 @@ class="document-section">
                   <% end %>
 
                   <%= link to: document_section_path(@conn, :update, @current_organization, @section), class: "popover__link", "data-action": "document-section#showRenameForm" do %>
-                    <i class="fas fa-pencil-alt"></i>&nbsp;Rename this section
+                    <i class="fas fa-pen"></i>&nbsp;Rename this section
                   <% end %>
 
                   <%= link to: document_section_path(@conn, :delete, @current_organization, @section, current_page_id: if(@conn.assigns[:page], do: @page.id)), method: :delete, class: "popover__link", "data-confirm": "Are you sure you want to delete this section and all its pages?" do %>

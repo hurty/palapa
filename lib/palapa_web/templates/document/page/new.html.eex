@@ -1,6 +1,6 @@
 <div class="content article-layout" data-controller="document">
   <div class="left-sidebar pl-8">
-    <%= render PalapaWeb.Document.DocumentView, "_table_of_contents.html", assigns %>
+    <%= render PalapaWeb.Document.DocumentView, "table_of_contents.html", assigns %>
   </div>
 
   <div class="main-content ml-4">

@@ -7,15 +7,23 @@
     <div data-target="popover.content" class="popover hidden">
       <div data-target="popover.arrow" class="popover__arrow"></div>
       <nav class="flex flex-col">
-        <%= link to: document_page_path(@conn, :edit, @current_organization, @page), class: "popover__link" do %>
-          <i class="fas fa-pencil-alt"></i>&nbsp;Edit this page
-        <% end %>
-
-        <%= unless @page.id == @document.main_page_id do %>
-          <%= link to: document_page_path(@conn, :delete, @current_organization, @page, current_page_id: @page.id), method: :delete, class: "popover__link", "data-confirm": "Are your sure you want to delete this page?" do %>
-            <i class="fas fa-trash"></i>&nbsp;Delete this page
+        <div class="flex flex-col border-t">
+          <%= link to: document_path(@conn, :edit, @current_organization, @document), class: "popover__link" do %>
+            <i class="fas fa-pen"></i>&nbsp;Edit this document
           <% end %>
-        <% end %>
+        </div>
+
+        <div class="flex flex-col border-t">
+          <%= link to: document_page_path(@conn, :edit, @current_organization, @page), class: "popover__link" do %>
+            <i class="fas fa-pen"></i>&nbsp;Edit this page
+          <% end %>
+
+          <%= unless @page.id == @document.main_page_id do %>
+            <%= link to: document_page_path(@conn, :delete, @current_organization, @page, current_page_id: @page.id), method: :delete, class: "popover__link", "data-confirm": "Are your sure you want to delete this page?" do %>
+              <i class="fas fa-trash"></i>&nbsp;Delete this page
+            <% end %>
+          <% end %>
+        </div>
       </nav>
     </div>
   <% end %>
