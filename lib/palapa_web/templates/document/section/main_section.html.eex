@@ -14,7 +14,7 @@ class="draggable-section-collidable">
         <i class="fas fa-home text-xs text-grey mr-2"></i>
       </span>
 
-      <%= link truncate_string(@document.title), to: document_page_path(@conn, :show, @current_organization, @document.main_page_id), 
+      <%= link "Home", to: document_page_path(@conn, :show, @current_organization, @document.main_page_id), 
       class: if(@conn.params["id"] == @document.main_page_id, do: "text-green font-bold", else: "text-grey-darker font-bold") %>
     </li>
 

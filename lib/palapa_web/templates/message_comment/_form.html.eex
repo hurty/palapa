@@ -1,7 +1,7 @@
 <%= form_for @changeset, message_comment_path(@conn, :update, @current_organization, @comment), 
   ["data-target": "message-comment.commentForm", "data-action": "message-comment#updateComment"], fn form -> %> 
 
-  <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization, content_input_id: "message_comment_#{@comment.id}", data_target: "message-comment.editor") %>
+  <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization, placeholder: "Your message here...", content_input_id: "message_comment_#{@comment.id}", data_target: "message-comment.editor") %>
   <%= hidden_input form, :content, "data-target": "message-comment.hiddenInput", id: "message_comment_#{@comment.id}" %>
 
   <div class="card-actions">

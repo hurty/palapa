@@ -6,43 +6,45 @@
   <div class="main-content ml-4">
     
     <%# ----- DOCS ----- %>
-    
-    <div class="card p-8">
-      <div class="flex justify-between">
-        <div>
-          <h1 class="text-green"><%= @page.title %></h1>
-          <p class="my-2 text-grey-darker text-sm">
-            Last modified: <%= auto_format_datetime(@page.updated_at, @current_account) %> by <%= @page.last_author.account.name %>
-          </p>
+    <div class="card">
+        <div class="flex justify-between bg-grey-lightest px-8 py-4">
+          <div>
+            <h2 class="text-grey-darkest text-sm"><%= @document.title %></h2>
+            <h1 class="text-green"><%= page_title(@page) %></h1>
+            <p class="my-2 text-grey-darker text-xs">
+              Last modified: <%= auto_format_datetime(@page.updated_at, @current_account) %> by <%= link @page.last_author.account.name, to: member_path(@conn, :show, @current_organization, @page.last_author), class: "text-grey-darkest hover:underline" %>
+            </p>
+          </div>
+          <%= render "page_actions.html", assigns %>
         </div>
-        <%= render "page_actions.html", assigns %>
-      </div>
-      <div class="separator"></div>
       
-      <%= if @page.body do %>
-        <section class="message-content">
-          <%= raw(sanitize_html(@page.body)) %>
-        </section>
-      <% end %>
+      <div class="p-8">        
+        <%= if @page.body do %>
+          <section class="message-content">
+            <%= raw(sanitize_html(@page.body)) %>
+          </section>
+        <% end %>
 
-      <div class="border-t flex justify-between pt-4 mt-8">
-        <div class="w-1/2">
-          <%= if @previous_page do %>
-            <%= link to: document_page_path(@conn, :show, @current_organization, @previous_page), class: "text-green hover:underline" do %>
-              <i class="fas fa-arrow-left mx-2"></i><%= @previous_page.title %>
+        <div class="border-t border-grey-lighter flex justify-between pt-4 mt-8">
+          <div class="w-1/2">
+            <%= if @previous_page do %>
+              <%= link to: document_page_path(@conn, :show, @current_organization, @previous_page), class: "text-green hover:underline" do %>
+                <i class="fas fa-arrow-left mx-2"></i><%= @previous_page.title %>
+              <% end %>
             <% end %>
-          <% end %>
+          </div>
+
+          <div class="w-1/2 text-right">
+            <%= if @next_page do %>
+              <%= link to: document_page_path(@conn, :show, @current_organization, @next_page), class: "text-green hover:underline" do %>
+                <%= @next_page.title %><i class="fas fa-arrow-right mx-2"></i>
+              <% end %>
+            <% end %>
+          </div>
         </div>
-
-        <div class="w-1/2 text-right">
-          <%= if @next_page do %>
-            <%= link to: document_page_path(@conn, :show, @current_organization, @next_page), class: "text-green hover:underline" do %>
-              <%= @next_page.title %><i class="fas fa-arrow-right mx-2"></i>
-            <% end %>
-          <% end %>
         </div>
       </div>
-    </div>
+      
 
     <div class="my-8 flex justify-center">
       <a class="btn">Suggest an improvement</a>

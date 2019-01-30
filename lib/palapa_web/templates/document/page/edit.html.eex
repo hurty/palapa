@@ -8,7 +8,14 @@
     <%# ----- DOCS ----- %>
     
     <div class="rounded shadow bg-white p-8 ">
-      <h2 class="card-header">Edit page</h2>
+      <h2 class="card-header">
+        <%= if @page.id == @document.main_page_id do %>
+          Edit document main page
+        <% else %>
+          Edit page
+        <% end %>
+      </h2>
+      
       <div class="card-header-separator"></div>
       <%= render "form.html", Map.put(assigns, :action, document_page_path(@conn, :update, @current_organization, @page)) %>
     </div>    
