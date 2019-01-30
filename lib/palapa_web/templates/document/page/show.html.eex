@@ -12,7 +12,7 @@
             <h2 class="text-grey-darkest text-sm"><%= @document.title %></h2>
             <h1 class="text-green"><%= page_title(@page) %></h1>
             <p class="my-2 text-grey-darker text-xs">
-              Last modified: <%= auto_format_datetime(@page.updated_at, @current_account) %> by <%= link @page.last_author.account.name, to: member_path(@conn, :show, @current_organization, @page.last_author), class: "text-grey-darkest hover:underline" %>
+              This page has been edited <%= auto_format_datetime(@page.updated_at, @current_account) %> by <%= link @page.last_author.account.name, to: member_path(@conn, :show, @current_organization, @page.last_author), class: "text-grey-darkest hover:underline" %>
             </p>
           </div>
           <%= render "page_actions.html", assigns %>
@@ -22,6 +22,11 @@
         <%= if @page.body do %>
           <section class="message-content">
             <%= raw(sanitize_html(@page.body)) %>
+          </section>
+        <% else %>
+          <section class="blankslate">
+            <p class="py-2">This page is empty</p>
+            <p class="py-2"><%= link "Edit page", to: document_page_path(@conn, :edit, @current_organization, @page), class: "btn" %></p>
           </section>
         <% end %>
 
