@@ -10,16 +10,16 @@ defmodule Palapa.Documents.Document do
     timestamps()
 
     belongs_to(:organization, Organization)
-    belongs_to(:last_author, Member, on_replace: :update)
+    belongs_to(:last_author, Member, on_replace: :nilify)
     belongs_to(:main_section, Section)
-    belongs_to(:main_page, Page, on_replace: :update)
-    belongs_to(:team, Team, on_replace: :update)
+    belongs_to(:main_page, Page, on_replace: :nilify)
+    belongs_to(:team, Team, on_replace: :nilify)
     has_many(:sections, Section)
     has_many(:pages, Page)
     has_many(:document_accesses, DocumentAccess)
 
     field(:deleted_at, :utc_datetime)
-    belongs_to(:deletion_author, Member, on_replace: :update)
+    belongs_to(:deletion_author, Member, on_replace: :nilify)
   end
 
   @doc false

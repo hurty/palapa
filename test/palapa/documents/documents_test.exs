@@ -54,8 +54,11 @@ defmodule Palapa.DocumentsTest do
     test "update_document/2 with valid data updates the document" do
       document = document_fixture() |> Repo.preload(:organization)
       second_author = insert!(:admin, organization: document.organization)
+      team = insert!(:team, organization: document.organization)
 
-      assert {:ok, document} = Documents.update_document(document, second_author, @update_attrs)
+      assert {:ok, document} =
+               Documents.update_document(document, second_author, team, @update_attrs)
+
       assert %Document{} = document
       assert document.title == "some updated title"
     end
@@ -65,7 +68,7 @@ defmodule Palapa.DocumentsTest do
       second_author = insert!(:admin, organization: document.organization)
 
       assert {:error, %Ecto.Changeset{}} =
-               Documents.update_document(document, second_author, @invalid_attrs)
+               Documents.update_document(document, second_author, nil, @invalid_attrs)
 
       assert document.title == Documents.get_document!(document.id).title
     end
