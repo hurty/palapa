@@ -2,8 +2,6 @@ defmodule PalapaWeb.EditorView do
   use PalapaWeb, :view
 
   def text_editor(conn, organization, options \\ []) do
-    IO.inspect(options)
-
     render("editor.html", %{
       conn: conn,
       organization: organization,

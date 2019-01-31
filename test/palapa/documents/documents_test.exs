@@ -70,10 +70,22 @@ defmodule Palapa.DocumentsTest do
       assert document.title == Documents.get_document!(document.id).title
     end
 
-    test "delete_document/1 deletes the document" do
-      document = document_fixture()
-      assert {:ok, %Document{}} = Documents.delete_document(document)
-      assert_raise Ecto.NoResultsError, fn -> Documents.get_document!(document.id) end
+    test "delete_document/2 marks the document as deleted" do
+      document = document_fixture() |> Repo.preload(:last_author)
+      assert Documents.delete_document!(document, document.last_author)
+
+      document = Repo.reload(document)
+      assert Documents.deleted?(document)
+    end
+
+    test "restore_document/1 unmarks the document as deleted" do
+      document = document_fixture() |> Repo.preload(:last_author)
+      Documents.delete_document!(document, document.last_author)
+      document = Repo.reload(document)
+
+      assert Documents.restore_document!(document)
+      document = Repo.reload(document)
+      refute Documents.deleted?(document)
     end
 
     test "change_document/1 returns a document changeset" do

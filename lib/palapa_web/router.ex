@@ -41,8 +41,10 @@ defmodule PalapaWeb.Router do
 
     resources("/org", OrganizationController, as: nil, only: []) do
       get("/sketch", SketchController, :index)
+
       get("/sessions/switch_organization", SessionController, :switch_organization)
       get("/sessions/switcher", SessionController, :switcher)
+
       get("/dashboard", DashboardController, :index)
       get("/search", SearchController, :index)
 
@@ -58,7 +60,15 @@ defmodule PalapaWeb.Router do
 
       resources("/messages/comments", MessageCommentController, only: [:edit, :update, :delete])
 
+      # --- DOCUMENTS
+
       resources("/documents", Document.DocumentController) do
+        resources("/trash", Document.DocumentTrashController,
+          singleton: true,
+          only: [:create, :delete],
+          as: :trash
+        )
+
         resources("/sections", Document.SectionController, only: [:create])
         resources("/page", Document.PageController, only: [:new, :create])
       end

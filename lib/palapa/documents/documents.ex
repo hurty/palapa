@@ -122,14 +122,12 @@ defmodule Palapa.Documents do
       from(p in Page,
         order_by: p.position
       )
-      |> non_deleted()
 
     sections_query =
       from(s in Section,
         order_by: s.position,
         preload: [pages: ^section_pages_query]
       )
-      |> non_deleted()
 
     document =
       from(document in queryable,
@@ -137,7 +135,6 @@ defmodule Palapa.Documents do
         preload: [sections: ^sections_query],
         preload: [main_section: [pages: ^section_pages_query]]
       )
-      |> non_deleted()
       |> Repo.get!(id)
 
     if accessing_member do
@@ -181,15 +178,28 @@ defmodule Palapa.Documents do
 
   def update_document(document, author, team, attrs) do
     document
-    |> IO.inspect()
     |> Document.changeset(attrs)
     |> put_assoc(:team, team)
     |> put_assoc(:last_author, author)
     |> Repo.update()
   end
 
-  def delete_document(document) do
-    Repo.delete(document)
+  def delete_document!(document, author) do
+    unless deleted?(document) do
+      document
+      |> Document.delete_changeset(author)
+      |> Repo.update!()
+    end
+  end
+
+  def deleted?(item) do
+    !is_nil(item.deleted_at)
+  end
+
+  def restore_document!(document) do
+    document
+    |> Document.restore_changeset()
+    |> Repo.update!()
   end
 
   def change_document(document) do

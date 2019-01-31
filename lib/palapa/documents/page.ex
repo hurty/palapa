@@ -11,7 +11,6 @@ defmodule Palapa.Documents.Page do
     field(:title, :string)
     field(:position, :integer)
     field(:body, :string)
-    field(:deleted_at, :utc_datetime)
     timestamps()
 
     belongs_to(:document, Document)
@@ -19,6 +18,9 @@ defmodule Palapa.Documents.Page do
     belongs_to(:last_author, Member)
     has_one(:team, through: [:document, :team])
     has_many(:searches, Search)
+
+    field(:deleted_at, :utc_datetime)
+    belongs_to(:deletion_author, Member, on_replace: :update)
   end
 
   def changeset(page, attrs) do

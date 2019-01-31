@@ -106,6 +106,7 @@ defmodule PalapaWeb.Document.DocumentController do
 
   defp find_document(conn, id) do
     Documents.documents_visible_to(current_member())
+    |> Documents.non_deleted()
     |> Documents.get_document!(id)
   end
 

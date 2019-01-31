@@ -142,5 +142,8 @@
         </div>
       </div>
     <% end %>
+
+    <div class="card p-4 my-4">
+      View documents in the trash
   </div>
 </div>
