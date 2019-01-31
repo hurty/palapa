@@ -23,13 +23,14 @@ defmodule Palapa.Documents.Page do
     belongs_to(:deletion_author, Member, on_replace: :update)
   end
 
+  def with_document(query), do: preload(query, :document)
+  def with_section(query), do: preload(query, :section)
+  def with_last_author(query), do: preload(query, last_author: :account)
+  def without_body(query), do: select(query, ^(Page.__schema__(:fields) -- [:body]))
+
   def changeset(page, attrs) do
     page
     |> cast(attrs, [:title, :body, :position, :section_id])
     |> validate_required([:title])
   end
-
-  def with_document(query), do: preload(query, :document)
-  def with_last_author(query), do: preload(query, last_author: :account)
-  def without_body(query), do: select(query, ^(Page.__schema__(:fields) -- [:body]))
 end

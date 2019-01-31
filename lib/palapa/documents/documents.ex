@@ -255,6 +255,7 @@ defmodule Palapa.Documents do
     page =
       queryable
       |> Page.with_document()
+      |> Page.with_section()
       |> Page.with_last_author()
       |> Repo.get!(id)
 
