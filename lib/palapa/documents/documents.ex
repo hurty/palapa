@@ -276,9 +276,10 @@ defmodule Palapa.Documents do
     |> Repo.insert()
   end
 
-  def update_page(page, attrs) do
+  def update_page(page, author, attrs) do
     page
     |> Page.changeset(attrs)
+    |> put_assoc(:last_author, author)
     |> Palapa.Position.recompute_positions(:section_id, :position)
     |> Repo.update()
   end

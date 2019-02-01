@@ -100,7 +100,7 @@ defmodule PalapaWeb.Document.PageController do
       |> Documents.get_page!(id, current_member())
 
     with :ok <- permit(Documents, :update_document, current_member(), page.document) do
-      case Documents.update_page(page, page_params) do
+      case Documents.update_page(page, current_member(), page_params) do
         {:ok, page} ->
           redirect(conn, to: document_page_path(conn, :show, current_organization(), page))
 
