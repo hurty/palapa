@@ -1,7 +1,6 @@
 .header {
   grid-area: header;
   z-index: 90;
-  @apply mb-8;
 }
 
 /* Don't make the header sticky on small screens */
@@ -11,10 +10,6 @@
     position: -webkit-sticky;
     top: 0;
   }
-}  
-
-.tab-navigation {
-  grid-area: tab-navigation;
 }
 
 .flash {
@@ -33,10 +28,10 @@
   display: grid;
   min-height: 100vh;
   grid-template-columns: 1fr;
+  grid-gap: 1em;
   grid-template-rows: min-content min-content min-content 1fr min-content;
   grid-template-areas: 
     "header"
-    "tab-navigation"
     "flash"
     "content"
     "footer";
