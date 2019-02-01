@@ -4,7 +4,7 @@ defmodule Palapa.Documents do
   """
   use Palapa.Context
 
-  alias Palapa.Documents.{Document, Section, Page, DocumentAccess}
+  alias Palapa.Documents.{Document, Section, Page, Suggestion, DocumentAccess}
   alias Palapa.Teams.Team
   alias Palapa.Position
 
@@ -367,5 +367,27 @@ defmodule Palapa.Documents do
       on_conflict: :replace_all,
       conflict_target: [:document_id, :member_id]
     )
+  end
+
+  def list_suggestions(queryable \\ Suggestion, page) do
+    queryable
+    |> where(page_id: ^page.id)
+    |> preload(author: :account)
+    |> Repo.all()
+  end
+
+  def create_suggestion(page, author, parent_suggestion, attrs) do
+    author = Repo.preload(author, :account)
+
+    page
+    |> Ecto.build_assoc(:suggestions)
+    |> Suggestion.changeset(attrs)
+    |> put_assoc(:author, author)
+    |> put_assoc(:parent_suggestion, parent_suggestion)
+    |> Repo.insert()
+  end
+
+  def change_suggestion(suggestion \\ %Suggestion{}) do
+    Suggestion.changeset(suggestion, %{})
   end
 end

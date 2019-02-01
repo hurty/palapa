@@ -1,0 +1,12 @@
+<%= form_for @suggestion_changeset, document_page_suggestion_path(@conn, :create, @current_organization, @page), 
+  ["data-target": "document-suggestion.form", "data-action": "document-suggestion#createSuggestion", class: "hidden"], fn form -> %> 
+
+  <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization, placeholder: "Your message here...", 
+    content_input_id: "document_suggestion_#{@page.id}", data_target: "document-suggestion.editor") %>
+
+  <%= hidden_input form, :content, "data-target": "document-suggestion.suggestionContent", id: "document_suggestion_#{@page.id}" %>
+
+  <div class="card-actions">
+    <%= submit "Post", class: "btn btn-green" %>
+  </div>
+<% end %>

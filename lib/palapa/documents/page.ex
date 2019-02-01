@@ -1,7 +1,7 @@
 defmodule Palapa.Documents.Page do
   use Palapa.Schema
 
-  alias Palapa.Documents.{Document, Section, Page}
+  alias Palapa.Documents.{Document, Section, Page, Suggestion}
   alias Palapa.Organizations.{Member}
   alias Palapa.Searches.Search
 
@@ -21,6 +21,8 @@ defmodule Palapa.Documents.Page do
 
     field(:deleted_at, :utc_datetime)
     belongs_to(:deletion_author, Member, on_replace: :update)
+
+    has_many(:suggestions, Suggestion)
   end
 
   def with_document(query), do: preload(query, :document)

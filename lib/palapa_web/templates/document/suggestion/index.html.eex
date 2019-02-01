@@ -1,0 +1,8 @@
+<div class="flex justify-between border-b-2 my-4">
+  <a class="font-bold ">Open suggestions</a>
+  <a class="">Closed suggestions</a>
+</div>
+
+<ul class="list-reset flex flex-col" data-target="document-suggestion.suggestionsList">
+  <%= render_many @suggestions, PalapaWeb.Document.SuggestionView, "suggestion.html", as: :suggestion, conn: @conn %>
+</ul>

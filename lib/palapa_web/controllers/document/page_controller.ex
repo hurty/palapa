@@ -1,5 +1,6 @@
 defmodule PalapaWeb.Document.PageController do
   use PalapaWeb, :controller
+  import PalapaWeb.Document.BaseController
 
   alias Palapa.Documents
   alias Palapa.Documents.Page
@@ -48,17 +49,15 @@ defmodule PalapaWeb.Document.PageController do
   end
 
   def show(conn, %{"id" => id}) do
-    page =
-      Documents.pages_visible_to(current_member())
-      |> Documents.get_page!(id, current_member())
-
-    document = Documents.get_document!(page.document_id)
-
+    page = get_page(conn, id)
     previous_page = Documents.get_previous_page(page)
     next_page = Documents.get_next_page(page)
+    document = Documents.get_document!(page.document_id)
+    suggestions = Documents.list_suggestions(page)
 
     section_changeset = Documents.change_section()
     page_changeset = Documents.change_page()
+    suggestion_changeset = Documents.change_suggestion()
 
     conn
     |> put_breadcrumb(
@@ -66,20 +65,19 @@ defmodule PalapaWeb.Document.PageController do
       document_path(conn, :show, current_organization(), document)
     )
     |> render("show.html",
-      document: document,
       page: page,
       previous_page: previous_page,
       next_page: next_page,
+      document: document,
+      suggestions: suggestions,
       section_changeset: section_changeset,
-      page_changeset: page_changeset
+      page_changeset: page_changeset,
+      suggestion_changeset: suggestion_changeset
     )
   end
 
   def edit(conn, %{"id" => id}) do
-    page =
-      Documents.pages_visible_to(current_member())
-      |> Documents.get_page!(id, current_member())
-
+    page = get_page(conn, id)
     document = Documents.get_document!(page.document_id)
 
     with :ok <- permit(Documents, :update_document, current_member(), page.document) do
@@ -95,9 +93,7 @@ defmodule PalapaWeb.Document.PageController do
   end
 
   def update(conn, %{"id" => id, "page" => page_params}) do
-    page =
-      Documents.pages_visible_to(current_member())
-      |> Documents.get_page!(id, current_member())
+    page = get_page(conn, id)
 
     with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       case Documents.update_page(page, current_member(), page_params) do
@@ -119,9 +115,7 @@ defmodule PalapaWeb.Document.PageController do
         "new_section_id" => new_section_id,
         "new_position" => new_position
       }) do
-    page =
-      Documents.pages_visible_to(current_member())
-      |> Documents.get_page!(id, current_member())
+    page = get_page(conn, id)
 
     new_section =
       Documents.sections_visible_to(current_member())
@@ -134,9 +128,7 @@ defmodule PalapaWeb.Document.PageController do
   end
 
   def delete(conn, %{"id" => id, "current_page_id" => current_page_id}) do
-    page =
-      Documents.pages_visible_to(current_member())
-      |> Documents.get_page!(id, current_member())
+    page = get_page(conn, id)
 
     with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       Documents.delete_page!(page)

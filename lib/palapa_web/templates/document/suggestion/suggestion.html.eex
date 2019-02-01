@@ -1,0 +1,24 @@
+<li data-controller="document-suggestion" class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-4">
+  <div data-target="document-suggestion.formContainer"></div>
+
+  <div class="" data-target="document-suggestion.content">
+    <div class="flex mb-4">
+      <div class="mx-2">
+        <%= PalapaWeb.MemberView.avatar(@suggestion.author.account, :small) %>
+      </div>
+
+      <div class="text-xs my-auto">
+        <%= link @suggestion.author.account.name, to: member_path(@conn, :show, @conn.assigns.current_organization, @suggestion.author.id), class: "text-grey-darkest font-bold hover:underline" %>
+        <div class="text-grey-darker font-light"><%= auto_format_datetime(@suggestion.inserted_at, @conn.assigns.current_account) %></div>
+      </div>   
+    </div>
+    
+
+    <div class="text-grey-darkest mt-2 pl-2 pr-8"><%= raw(PalapaWeb.Helpers.sanitize_html(@suggestion.content)) %></div>
+  <div>
+
+  <div class="flex justify-end">
+    <a class="btn mx-2">Reply</a>
+    <a class="btn">Close suggestion</a>
+  <div>
+</li>

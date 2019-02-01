@@ -54,6 +54,8 @@ defmodule PalapaWeb.Router do
         get("/download/:filename", AttachmentController, :download)
       end
 
+      # --- MESSAGES
+
       resources("/messages", MessageController) do
         resources("/comments", MessageCommentController, only: [:create])
       end
@@ -81,7 +83,15 @@ defmodule PalapaWeb.Router do
       resources("/documents/pages", Document.PageController,
         only: [:show, :edit, :update, :delete],
         as: :document_page
+      ) do
+        resources("/suggestions", Document.SuggestionController, only: [:create])
+      end
+
+      resources("/documents/pages/suggestions", Document.SuggestionController,
+        only: [:edit, :update, :delete]
       )
+
+      # --- MEMBERS
 
       resources "/members", MemberController do
         resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)

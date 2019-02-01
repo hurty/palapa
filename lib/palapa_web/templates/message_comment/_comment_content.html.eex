@@ -1,11 +1,13 @@
-  <div class="flex">
-    <div class="mx-2">
-      <%= PalapaWeb.MemberView.avatar(@comment.creator.account, :small) %>
-    </div>
+  <div class="flex justify-between">
+    <div class="flex">
+      <div class="mx-2">
+        <%= PalapaWeb.MemberView.avatar(@comment.creator.account, :small) %>
+      </div>
 
-    <div class="w-full text-xs my-auto">
-      <%= link @comment.creator.account.name, to: member_path(@conn, :show, @conn.assigns.current_organization, @comment.creator.id), class: "text-grey-darkest font-bold hover:underline" %>
-      <div class="text-grey-darker font-light"><%= auto_format_datetime(@comment.inserted_at, @current_account) %></div>
+      <div class="text-xs my-auto">
+        <%= link @comment.creator.account.name, to: member_path(@conn, :show, @conn.assigns.current_organization, @comment.creator.id), class: "text-grey-darkest font-bold hover:underline" %>
+        <div class="text-grey-darker font-light"><%= auto_format_datetime(@comment.inserted_at, @current_account) %></div>
+      </div>
     </div>
 
     <%= if Palapa.Access.permit? Palapa.Messages, :delete_comment, @conn.assigns.current_member, @comment do %>
