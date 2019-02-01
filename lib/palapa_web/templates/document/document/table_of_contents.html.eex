@@ -1,5 +1,17 @@
 <div class="text-grey-darker bg-white border rounded text-sm">
-  <div class="text-xs p-2 font-bold text-center rounded-t bg-grey-lightest uppercase tracking-wide" >Pages</div>
+  <div class="flex justify-between bg-grey-lightest p-4 rounded-t">
+    <div>
+      <%= if @document.team do %>
+        <div class="text-xs font-bold mb-2">
+          <%= truncate_string(@document.team.name) %>
+        </div>
+      <% end %>
+
+      <h2 class="font-bold text-grey-darkest text-base"><%= @document.title %></h2>
+    </div>
+    <%= render "document_actions.html", assigns %>
+  </div>
+
   <div>
     <ul data-target="document.sectionsContainer" class="list-reset">
       <%= render PalapaWeb.Document.SectionView, "main_section.html", Map.put(assigns, :section, @document.main_section) %>

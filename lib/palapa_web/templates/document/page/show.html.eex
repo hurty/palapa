@@ -7,28 +7,18 @@
     
     <%# ----- DOCS ----- %>
     <div class="card">
-        <div class="flex justify-between bg-grey-lightest p-4">
-          <div>
-            <h2 class="font-bold text-grey-darkest text-lg"><%= @document.title %></h2>
-              <div class="mt-2 -ml-1">
-                <span class="tag">
-                  <%= if @document.team do %>
-                    <%= @document.team.name %>
-                  <% else %>
-                    Shared with everyone in <%= @current_organization.name %>
-                  <% end %>
-                </span>
-              </div>
-          </div>
-          <%= render "page_actions.html", assigns %>
+      <div class="flex justify-between border-b border-grey-lighter p-4">
+        <div>      
+          <%= if @page.section do %><h3 class="text-green-dark"><%= @page.section.title %></h3><% end %>
+          <h1 class="text-green"><%= page_title(@page) %></h1>
+          <p class="py-2 text-grey-darker text-xs">
+            This page has been edited <%= auto_format_datetime(@page.updated_at, @current_account) %> by <%= link @page.last_author.account.name, to: member_path(@conn, :show, @current_organization, @page.last_author), class: "text-grey-darkest hover:underline" %>
+          </p>
         </div>
-      
+
+        <%= render "page_actions.html", assigns %>
+      </div>
       <div class="p-4">    
-        <%= if @page.section do %><h3 class="text-green-dark"><%= @page.section.title %></h3><% end %>
-        <h1 class="text-green"><%= page_title(@page) %></h1>
-        <p class="py-2 text-grey-darker text-xs border-b border-grey-lighter">
-          This page has been edited <%= auto_format_datetime(@page.updated_at, @current_account) %> by <%= link @page.last_author.account.name, to: member_path(@conn, :show, @current_organization, @page.last_author), class: "text-grey-darkest hover:underline" %>
-        </p>
         <%= if @page.body do %>
           <section class="message-content">
             <%= raw(sanitize_html(@page.body)) %>
