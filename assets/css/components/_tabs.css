@@ -1,23 +1,19 @@
 .tabs {
-  @apply flex justify-center px-2 bg-grey-lightest h-16 items-end border-b border-grey-lighter list-reset;
+  @apply list-reset flex py-4 mb-4 border-b;
 }
 
 .tab {
-  @apply inline-block pt-2 pb-2 px-4 text-sm text-grey-darker;
+  @apply flex-1 text-grey-darker rounded-lg;
 
-  a {
+  a,a:visited {
     @apply text-grey-darker;
-    
-    &:visited {
-      @apply text-grey-darker;
-    }
   }
 
   &--selected {
-    @apply border border-b-0 rounded rounded-b-none bg-white py-2 -mb-px mr-1;
+    @apply bg-grey-light;
 
-    a, a:visited {
-      @apply font-bold;
+    a,a:visited {
+      @apply text-blue
     }
   }
 }

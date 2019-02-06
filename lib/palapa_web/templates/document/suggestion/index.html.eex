@@ -1,8 +1,23 @@
-<div class="flex justify-between border-b-2 my-4">
-  <a class="font-bold ">Open suggestions</a>
-  <a class="">Closed suggestions</a>
-</div>
+<div data-controller="document-suggestions" data-document-suggestions-selected-list="open" 
+  data-document-suggestions-list-url="<%= document_page_suggestion_url(@conn, :index, @conn.assigns.current_organization, @conn.assigns.page) %>" class="mx-auto sm:w-5/6 my-8">
+  <ul class="tabs">
+    <li data-target="document-suggestions.listTab" class="tab tab--selected">
+      <a data-action="document-suggestions#toggleList" class="text-center block py-2 px-4" href="#">Open suggestions</a>
+    </li>
 
-<ul class="list-reset flex flex-col" data-target="document-suggestion.suggestionsList">
-  <%= render_many @suggestions, PalapaWeb.Document.SuggestionView, "suggestion.html", as: :suggestion, conn: @conn %>
-</ul>
+    <li data-target="document-suggestions.listTab" data-action="document-suggestions#toggleList" class="tab">
+      <a data-action="document-suggestions#toggleList" class="text-center block py-2 px-4" href="#">Closed suggestions</a>
+    </li>
+  </ul>
+
+  <ul class="list-reset flex flex-col" data-target="document-suggestions.suggestionsList">
+  </ul>
+
+  <div class="text-center">
+    <a class="btn" data-target="document-suggestions.leaveSuggestionButton" data-action="document-suggestions#showForm">
+      Suggest an improvement
+    </a>
+  </div>
+  
+  <%= render "form.html", assigns %>
+</div>

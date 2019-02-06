@@ -84,12 +84,15 @@ defmodule PalapaWeb.Router do
         only: [:show, :edit, :update, :delete],
         as: :document_page
       ) do
-        resources("/suggestions", Document.SuggestionController, only: [:create])
+        resources("/suggestions", Document.SuggestionController, only: [:index, :create])
       end
 
       resources("/documents/pages/suggestions", Document.SuggestionController,
         only: [:edit, :update, :delete]
-      )
+      ) do
+        post("/close", Document.SuggestionController, :close, as: :close)
+        post("/reopen", Document.SuggestionController, :reopen, as: :reopen)
+      end
 
       # --- MEMBERS
 

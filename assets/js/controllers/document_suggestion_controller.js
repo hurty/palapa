@@ -1,38 +1,53 @@
 import BaseController from "./base_controller"
 
 export default class extends BaseController {
-  static targets = ["editor", "form", "suggestionsList",
-    "suggestionContent", "leaveSuggestionButton"]
+  static targets = ["replyForm", "replies", "actions", "passiveFormItems",
+    "activeFormItems", "replyEditor", "replyContentInput"]
 
-  showForm(event) {
-    this.show(this.formTarget)
-    this.hide(this.leaveSuggestionButtonTarget)
-    this.formTarget.querySelector("trix-editor").focus()
-    this.formTarget.scrollIntoView({
-      behavior: 'smooth'
-    })
+  showReplyForm(event) {
+    if (event)
+      event.preventDefault()
+
+    this.show(this.replyFormTarget)
+    this.focusWithCursorAtTheEnd(this.replyEditorTarget)
+    this.actionsTarget.classList.add("bg-grey-lightest")
+    this.hide(this.passiveFormItemsTarget)
+    this.show(this.activeFormItemsTarget)
   }
 
-  hideForm(event) {
-    this.hide(this.formTarget)
-    this.show(this.leaveSuggestionButtonTarget)
+  hideReplyForm(event) {
+    if (event)
+      event.preventDefault()
+
+    this.actionsTarget.classList.remove("bg-grey-lightest")
+    this.show(this.passiveFormItemsTarget)
+    this.hide(this.activeFormItemsTarget)
   }
 
-  createSuggestion(event) {
+  sendReply(event) {
     event.preventDefault();
 
-    // Do not post suggestion if the editor has the defaut empty content
-    if (this.suggestionContentTarget.value === "") {
+    if (this.replyContentInputTarget.value === "") {
       return
     }
 
-    PA.fetchHTML(this.formTarget.getAttribute("action"), {
+    PA.fetchHTML(this.replyFormTarget.getAttribute("action"), {
       method: "post",
-      body: new FormData(this.formTarget)
+      body: new FormData(this.replyFormTarget)
     }).then(html => {
-      this.suggestionsListTarget.innerHTML += html
-      this.editorTarget.editor.loadHTML("")
-      this.hideForm()
+      this.repliesTarget.innerHTML += html
+      this.replyEditorTarget.editor.loadHTML("")
+      this.hideReplyForm()
+    })
+  }
+
+  close(event) {
+    event.preventDefault()
+    let url = this.data.get("close-url")
+    PA.fetchHTML(url, {
+      method: "post",
+    }).then(html => {
+      this.element.remove()
     })
   }
 }

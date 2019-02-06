@@ -50,11 +50,6 @@
         </div>
       </div>
       
-
-    <div class="mx-auto sm:w-5/6 my-8" data-controller="document-suggestion">
       <%= render PalapaWeb.Document.SuggestionView, "index.html", assigns %>
-      <span data-target="document-suggestion.leaveSuggestionButton"><a class="btn" data-action="document-suggestion#showForm">Suggest an improvement</a></span>
-      <%= render PalapaWeb.Document.SuggestionView, "form.html", assigns %>
-    </div>
   </div>
 </div>

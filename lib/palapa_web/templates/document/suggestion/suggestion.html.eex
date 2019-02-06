@@ -1,7 +1,5 @@
-<li data-controller="document-suggestion" class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-4">
-  <div data-target="document-suggestion.formContainer"></div>
-
-  <div class="" data-target="document-suggestion.content">
+<li data-controller="document-suggestion" data-document-suggestion-close-url="<%= suggestion_close_url(@conn, :close, @conn.assigns.current_organization, @suggestion) %>" class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-4">
+  <div>
     <div class="flex mb-4">
       <div class="mx-2">
         <%= PalapaWeb.MemberView.avatar(@suggestion.author.account, :small) %>
@@ -14,11 +12,43 @@
     </div>
     
 
-    <div class="text-grey-darkest mt-2 pl-2 pr-8"><%= raw(PalapaWeb.Helpers.sanitize_html(@suggestion.content)) %></div>
+    <div class="text-grey-darkest mt-2 mb-4 pl-2 pb-2 pr-8"><%= raw(PalapaWeb.Helpers.sanitize_html(@suggestion.content)) %></div>
+
+    <div data-target="document-suggestion.replies">
+      <%= for reply <- @suggestion.replies do %>
+        <%= render "reply.html", Map.put(assigns, :suggestion, reply) %>
+      <% end %>
+    </div>
   <div>
 
-  <div class="flex justify-end">
-    <a class="btn mx-2">Reply</a>
-    <a class="btn">Close suggestion</a>
-  <div>
+  <div data-target="document-suggestion.actions" class="p-1 pt-4 rounded mt-4 border-t border-grey-lighter">
+
+    <%= form_for @conn, document_page_suggestion_path(@conn, :create, @conn.assigns.current_organization, @page), 
+      ["data-target": "document-suggestion.replyForm", "data-action": "document-suggestion#sendReply"], fn form -> %> 
+
+        <div data-target="document-suggestion.passiveFormItems">
+          <div class="flex justify-end">
+            <button data-action="document-suggestion#showReplyForm" class="btn mr-1"><i class="fas fa-reply"></i> Reply</button>
+            <button data-action="document-suggestion#close" class="btn">Close suggestion</button>
+          </div>
+        </div>
+
+        
+        <div data-target="document-suggestion.activeFormItems" class="hidden">
+          <div class="mb-1">
+            <%= PalapaWeb.EditorView.text_editor(@conn, @conn.assigns.current_organization, placeholder: "Your message here...", 
+              content_input_id: "document_suggestion_#{@suggestion.id}", data_target: "document-suggestion.replyEditor") %>
+
+            <%= hidden_input form, "suggestion[parent_suggestion_id]", value: @suggestion.id %>
+            <%= hidden_input form, "suggestion[content]", "data-target": "document-suggestion.replyContentInput", id: "document_suggestion_#{@suggestion.id}" %>
+          </div>
+
+
+          <div class="flex justify-end">
+            <button type="submit" class="btn btn-green mr-1">Send</button>
+            <button data-action="document-suggestion#hideReplyForm" class="btn">Cancel</button>
+          </div>
+        </div>  
+      <% end %>
+  </div>
 </li>

@@ -1,0 +1,1 @@
+<%= render_many @suggestions, PalapaWeb.Document.SuggestionView, "suggestion.html", as: :suggestion, conn: @conn, page: @page %>
