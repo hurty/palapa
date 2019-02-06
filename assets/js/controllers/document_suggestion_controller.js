@@ -9,10 +9,10 @@ export default class extends BaseController {
       event.preventDefault()
 
     this.show(this.replyFormTarget)
-    this.focusWithCursorAtTheEnd(this.replyEditorTarget)
     this.actionsTarget.classList.add("bg-grey-lightest")
     this.hide(this.passiveFormItemsTarget)
     this.show(this.activeFormItemsTarget)
+    this.activeFormItemsTarget.querySelector("trix-editor").focus()
   }
 
   hideReplyForm(event) {

@@ -2,11 +2,11 @@
   data-document-suggestions-list-url="<%= document_page_suggestion_url(@conn, :index, @conn.assigns.current_organization, @conn.assigns.page) %>" class="mx-auto sm:w-5/6 my-8">
   <ul class="tabs">
     <li data-target="document-suggestions.listTab" class="tab tab--selected">
-      <a data-action="document-suggestions#toggleList" class="text-center block py-2 px-4" href="#">Open suggestions</a>
+      <a data-action="document-suggestions#toggleList" class="text-center block py-2 px-4 hover:cursor-pointer" href="#">Open suggestions</a>
     </li>
 
     <li data-target="document-suggestions.listTab" data-action="document-suggestions#toggleList" class="tab">
-      <a data-action="document-suggestions#toggleList" class="text-center block py-2 px-4" href="#">Closed suggestions</a>
+      <a data-action="document-suggestions#toggleList" class="text-center block py-2 px-4 hover:cursor-pointer" href="#">Closed suggestions</a>
     </li>
   </ul>
 
