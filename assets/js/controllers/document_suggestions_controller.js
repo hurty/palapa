@@ -2,7 +2,7 @@ import BaseController from "./base_controller"
 
 export default class extends BaseController {
   static targets = ["listTab", "closedSuggestionsTab", "editor", "form",
-    "suggestionsList", "suggestionContentInput", "leaveSuggestionButton"]
+    "suggestionsList", "newSuggestion", "suggestionContentInput", "leaveSuggestionButton"]
 
   initialize() {
     this.refreshList()
@@ -31,8 +31,10 @@ export default class extends BaseController {
 
     if (this.selectedList == "open") {
       this.selectedList = "closed"
+      this.hide(this.newSuggestionTarget)
     } else {
       this.selectedList = "open"
+      this.show(this.newSuggestionTarget)
     }
 
     this.refreshList(this.selectedList)
