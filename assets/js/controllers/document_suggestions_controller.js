@@ -6,9 +6,16 @@ export default class extends BaseController {
 
   initialize() {
     this.refreshList()
+
+    document.addEventListener("documentSuggestionDidReopen", event => {
+      this.focusSuggestionId = event.detail.suggestionId
+      this.toggleList(event)
+    })
   }
 
   refreshList(filter) {
+    this.suggestionsListTarget.innerHTML = ""
+
     let url = this.data.get("list-url")
 
     if (filter == "closed")
@@ -18,6 +25,12 @@ export default class extends BaseController {
     PA.fetchHTML(url)
       .then(html => {
         this.suggestionsListTarget.innerHTML = html
+      }).then(() => {
+        if (this.focusSuggestionId) {
+          let suggestionElement = document.getElementById(this.focusSuggestionId)
+          suggestionElement.scrollIntoView({ behavior: 'smooth' })
+          this.focusSuggestionId = null
+        }
       })
   }
 
@@ -78,5 +91,13 @@ export default class extends BaseController {
 
   set selectedList(value) {
     this.data.set("selected-list", value)
+  }
+
+  set focusSuggestionId(id) {
+    this.data.set("focus-suggestion-id", id)
+  }
+
+  get focusSuggestionId() {
+    return this.data.get("focus-suggestion-id")
   }
 }

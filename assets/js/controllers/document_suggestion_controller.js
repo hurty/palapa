@@ -47,7 +47,7 @@ export default class extends BaseController {
     PA.fetchHTML(url, {
       method: "post",
     }).then(html => {
-      this.element.remove()
+      this.remove()
     })
   }
 
@@ -57,7 +57,19 @@ export default class extends BaseController {
     PA.fetchHTML(url, {
       method: "delete",
     }).then(html => {
-      this.element.remove()
+      let reopenEvent = new CustomEvent('documentSuggestionDidReopen',
+        {
+          detail:
+          {
+            suggestionId: this.element.getAttribute("id")
+          }
+        })
+      document.dispatchEvent(reopenEvent)
+      this.hide(this.element)
     })
+  }
+
+  remove() {
+    this.element.remove()
   }
 }
