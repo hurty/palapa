@@ -3,7 +3,6 @@ defmodule PalapaWeb.Document.PageController do
   import PalapaWeb.Document.BaseController
 
   alias Palapa.Documents
-  alias Palapa.Documents.Suggestions
   alias Palapa.Documents.Page
 
   plug(:put_common_breadcrumbs)
@@ -54,7 +53,6 @@ defmodule PalapaWeb.Document.PageController do
     previous_page = Documents.get_previous_page(page)
     next_page = Documents.get_next_page(page)
     document = Documents.get_document!(page.document_id)
-    suggestions = Suggestions.open_suggestions() |> Suggestions.list_suggestions(page)
 
     section_changeset = Documents.change_section()
     page_changeset = Documents.change_page()
@@ -70,7 +68,6 @@ defmodule PalapaWeb.Document.PageController do
       previous_page: previous_page,
       next_page: next_page,
       document: document,
-      suggestions: suggestions,
       section_changeset: section_changeset,
       page_changeset: page_changeset,
       suggestion_changeset: suggestion_changeset

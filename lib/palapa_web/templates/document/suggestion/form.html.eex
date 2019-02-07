@@ -10,3 +10,11 @@
     <%= submit "Post", class: "btn btn-green" %>
   </div>
 <% end %>
+
+<%= unless @conn.params["status"] == "closed" do %>
+  <div class="text-center">
+    <a class="btn" data-target="document-suggestions.leaveSuggestionButton" data-action="document-suggestions#showForm">
+      Suggest an improvement
+    </a>
+  </div>
+<% end %>

@@ -14,7 +14,11 @@ defmodule PalapaWeb.Document.SuggestionController do
         Suggestions.open_suggestions() |> Suggestions.list_suggestions(page)
       end
 
-    render(conn, "list.html", layout: false, suggestions: suggestions, page: page)
+    render(conn, "list.html",
+      layout: false,
+      suggestions: suggestions,
+      page: page
+    )
   end
 
   def create(conn, %{"page_id" => page_id, "suggestion" => suggestion_attrs}) do
@@ -44,20 +48,6 @@ defmodule PalapaWeb.Document.SuggestionController do
 
       {:error, _changeset} ->
         send_resp(conn, 400, "An unexpected error occured while posting the suggestion")
-    end
-  end
-
-  def close(conn, %{"suggestion_id" => suggestion_id}) do
-    suggestion =
-      Suggestions.suggestions_visible_to(current_member())
-      |> Suggestions.get_suggestion!(suggestion_id)
-
-    case Suggestions.close_suggestion(suggestion, current_member()) do
-      {:ok, _suggestion} ->
-        send_resp(conn, 200, "")
-
-      {:error, _changeset} ->
-        send_resp(conn, 400, "An unexpected error occured while closing the suggestion")
     end
   end
 end

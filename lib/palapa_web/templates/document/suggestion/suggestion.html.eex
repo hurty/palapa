@@ -1,4 +1,4 @@
-<li data-controller="document-suggestion" data-document-suggestion-close-url="<%= suggestion_close_url(@conn, :close, @conn.assigns.current_organization, @suggestion) %>" class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-4">
+<li data-controller="document-suggestion" data-document-suggestion-close-url="<%= suggestion_closure_url(@conn, :create, @conn.assigns.current_organization, @suggestion) %>" class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-4">
   <div>
     <div class="flex mb-4">
       <div class="mx-2">
@@ -29,7 +29,11 @@
         <div data-target="document-suggestion.passiveFormItems">
           <div class="flex justify-end">
             <button data-action="document-suggestion#showReplyForm" class="btn mr-1"><i class="fas fa-reply"></i> Reply</button>
-            <button data-action="document-suggestion#close" class="btn">Close suggestion</button>
+            <%= if @suggestion.closed_at do %>
+              <button data-action="document-suggestion#reopen" class="btn">Reopen suggestion</button>
+            <% else %>
+              <button data-action="document-suggestion#close" class="btn">Close suggestion</button>
+            <% end %>
           </div>
         </div>
 

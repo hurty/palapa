@@ -50,4 +50,14 @@ export default class extends BaseController {
       this.element.remove()
     })
   }
+
+  reopen(event) {
+    event.preventDefault()
+    let url = this.data.get("close-url")
+    PA.fetchHTML(url, {
+      method: "delete",
+    }).then(html => {
+      this.element.remove()
+    })
+  }
 }

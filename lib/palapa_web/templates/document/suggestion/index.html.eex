@@ -11,13 +11,8 @@
   </ul>
 
   <ul class="list-reset flex flex-col" data-target="document-suggestions.suggestionsList">
+    <%# Loaded asynchronously with ajax %>
   </ul>
 
-  <div class="text-center">
-    <a class="btn" data-target="document-suggestions.leaveSuggestionButton" data-action="document-suggestions#showForm">
-      Suggest an improvement
-    </a>
-  </div>
-  
   <%= render "form.html", assigns %>
 </div>

@@ -79,4 +79,13 @@ defmodule Palapa.Documents.Suggestions do
     })
     |> Repo.update()
   end
+
+  def reopen_suggestion(suggestion) do
+    suggestion
+    |> change(%{
+      closed_at: nil,
+      closure_author_id: nil
+    })
+    |> Repo.update()
+  end
 end
