@@ -31,6 +31,7 @@ defmodule Palapa.Documents.Suggestions do
     |> order_by(:inserted_at)
     |> preload(author: :account)
     |> preload(replies: [author: :account])
+    |> preload(closure_author: :account)
     |> Repo.all()
   end
 
@@ -52,6 +53,7 @@ defmodule Palapa.Documents.Suggestions do
     |> Ecto.assoc(:suggestions)
     |> where([s], s.id == ^suggestion_id)
     |> where([s], not is_nil(s.parent_suggestion_id))
+    |> preload(closure_author: :account)
     |> Repo.one()
   end
 

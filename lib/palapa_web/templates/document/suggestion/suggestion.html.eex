@@ -19,6 +19,12 @@
         <%= render "reply.html", Map.put(assigns, :suggestion, reply) %>
       <% end %>
     </div>
+
+    <%= if @suggestion.closed_at do %>
+      <div class="text-sm text-green-dark text-center bg-green-lightest rounded-full p-1">
+        Closed by <%= @suggestion.closure_author.account.name %> (<%= auto_format_datetime(@suggestion.closed_at, @conn.assigns.current_account ) %>)
+      </div>
+    <% end %>
   <div>
 
   <div data-target="document-suggestion.actions" class="p-1 pt-4 rounded mt-4 border-t border-grey-lighter">
