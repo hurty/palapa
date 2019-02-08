@@ -1,12 +1,13 @@
 defmodule Palapa.Documents.Suggestion do
   use Palapa.Schema
   alias Palapa.Documents.{Page, SuggestionComment}
-  alias Palapa.Organizations.{Member}
+  alias Palapa.Organizations.{Organization, Member}
 
   schema "document_suggestions" do
     field(:content, :string)
     timestamps()
 
+    belongs_to(:organization, Organization)
     belongs_to(:page, Page)
     has_one(:document, through: [:page, :document])
     belongs_to(:author, Member)

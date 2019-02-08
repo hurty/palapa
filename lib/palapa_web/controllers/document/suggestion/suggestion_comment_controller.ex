@@ -1,6 +1,7 @@
 defmodule PalapaWeb.Document.SuggestionCommentController do
   use PalapaWeb, :controller
 
+  alias Palapa.Documents
   alias Palapa.Documents.Suggestions
 
   def create(conn, %{
@@ -25,6 +26,25 @@ defmodule PalapaWeb.Document.SuggestionCommentController do
 
       {:error, _changeset} ->
         send_resp(conn, 400, "An unexpected error occured while posting the suggestion comment")
+    end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    suggestion_comment = Suggestions.get_suggestion_comment!(current_organization(), id)
+
+    with :ok <-
+           permit(Documents, :delete_suggestion_comment, current_member(), suggestion_comment) do
+      case Suggestions.delete_suggestion_comment(suggestion_comment) do
+        {:ok, _suggestion_comment} ->
+          send_resp(conn, 204, "")
+
+        {:error, _changeset} ->
+          send_resp(
+            conn,
+            400,
+            "An unexpected error occured while deleting the suggestion comment"
+          )
+      end
     end
   end
 end

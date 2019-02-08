@@ -1,13 +1,45 @@
-<div class="bg-grey-lightest rounded py-2 my-2">
-  <div class="flex mb-4">
-    <div class="mx-2">
-      <%= PalapaWeb.MemberView.avatar(@suggestion_comment.author.account, :small) %>
+<div data-controller="document-suggestion-comment" 
+  class="bg-grey-lightest rounded py-2 my-2">
+  <div class="flex justify-between mb-4 mx-2">
+    <div class="flex">
+      <div>
+        <%= PalapaWeb.MemberView.avatar(@suggestion_comment.author.account, :small) %>
+      </div>
+
+      <div class="text-xs my-auto ml-2">
+        <%= link @suggestion_comment.author.account.name, to: member_path(@conn, :show, @conn.assigns.current_organization, @suggestion_comment.author.id), class: "text-grey-darkest font-bold hover:underline" %>
+        <div class="text-grey-darker font-light"><%= auto_format_datetime(@suggestion_comment.inserted_at, @conn.assigns.current_account) %></div>
+      </div>
     </div>
 
-    <div class="text-xs my-auto">
-      <%= link @suggestion_comment.author.account.name, to: member_path(@conn, :show, @conn.assigns.current_organization, @suggestion_comment.author.id), class: "text-grey-darkest font-bold hover:underline" %>
-      <div class="text-grey-darker font-light"><%= auto_format_datetime(@suggestion_comment.inserted_at, @conn.assigns.current_account) %></div>
-    </div>   
+    <%= if permit?(Palapa.Documents, :delete_suggestion_comment, @conn.assigns.current_member, @suggestion_comment) do %>
+      <div data-controller="popover" data-action="mousedown@window->popover#hide">
+        <button data-target="popover.button" data-action="popover#toggle" 
+          class="h-6 w-6 text-grey-dark font-bold hover:text-green hover:cursor-pointer"
+          title="Actions on this comment">
+          <i class="fas fa-ellipsis-h"></i>
+        </button>
+        
+        <div data-target="popover.content" class="popover hidden">
+          <nav class="flex flex-col">
+          <%= if permit?(Palapa.Documents, :update_suggestion_comment, @conn.assigns.current_member, @suggestion_comment) do %>
+            <%= link to: suggestion_comment_path(@conn, :edit, @conn.assigns.current_organization, @suggestion_comment), class: "popover__link" do %>
+              <i class="fas fa-pen"></i>&nbsp;Edit comment
+            <% end %>
+          <% end %>
+          
+            <%= link to: suggestion_comment_path(@conn, :delete, @conn.assigns.current_organization, @suggestion_comment), class: "popover__link", 
+            data: [
+              action: "document-suggestion-comment#delete",
+              confirm: "Are your sure you want to delete this comment?"
+            ] 
+            do %>
+              <i class="fas fa-trash text-red"></i>&nbsp;Delete comment
+            <% end %>
+          </nav>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <div class="text-grey-darkest mt-2 pl-2 pr-8"><%= raw(PalapaWeb.Helpers.sanitize_html(@suggestion_comment.content)) %></div>

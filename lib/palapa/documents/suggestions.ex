@@ -48,21 +48,13 @@ defmodule Palapa.Documents.Suggestions do
     |> Repo.one!()
   end
 
-  # def get_suggestion!(%Page{} = page, suggestion_id, top_level: false) do
-  #   page
-  #   |> Ecto.assoc(:suggestions)
-  #   |> where([s], s.id == ^suggestion_id)
-  #   |> where([s], not is_nil(s.parent_suggestion_id))
-  #   |> preload(closure_author: :account)
-  #   |> Repo.one()
-  # end
-
   def create_suggestion(page, author, attrs) do
     author = Repo.preload(author, :account)
 
     page
     |> Ecto.build_assoc(:suggestions)
     |> Suggestion.changeset(attrs)
+    |> put_change(:organization_id, author.organization_id)
     |> put_assoc(:author, author)
     |> put_assoc(:suggestion_comments, [])
     |> Repo.insert()
@@ -90,13 +82,25 @@ defmodule Palapa.Documents.Suggestions do
     |> Repo.update()
   end
 
+  def get_suggestion_comment!(organization, id) do
+    SuggestionComment
+    |> where(organization_id: ^organization.id)
+    |> Repo.get!(id)
+  end
+
   def create_suggestion_comment(suggestion, author, attrs) do
     author = Repo.preload(author, :account)
 
     suggestion
     |> Ecto.build_assoc(:suggestion_comments)
     |> SuggestionComment.changeset(attrs)
+    |> put_change(:organization_id, author.organization_id)
     |> put_assoc(:author, author)
     |> Repo.insert()
+  end
+
+  def delete_suggestion_comment(suggestion) do
+    suggestion
+    |> Repo.delete()
   end
 end

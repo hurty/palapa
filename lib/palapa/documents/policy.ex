@@ -15,6 +15,14 @@ defmodule Palapa.Documents.Policy do
     Documents.document_visible_to?(document, member)
   end
 
+  def authorize(:update_suggestion_comment, member, suggestion_comment) do
+    suggestion_comment.author_id == member.id
+  end
+
+  def authorize(:delete_suggestion_comment, member, suggestion_comment) do
+    suggestion_comment.author_id == member.id || member.role in [:admin, :owner]
+  end
+
   # Deny everything else
   def authorize(_, _, _) do
     false
