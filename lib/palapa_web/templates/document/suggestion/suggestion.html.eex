@@ -4,7 +4,7 @@ data-document-suggestion-comment-url="<%= suggestion_comment_url(@conn, :create,
 class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-8">
   
   <div>
-    <div class="flex justify-between mb-4 mx-2">
+    <div class="flex justify-between mb-4">
       <div class="flex">
         <div class="mx-2">
           <%= PalapaWeb.MemberView.avatar(@suggestion.author.account, :small) %>
