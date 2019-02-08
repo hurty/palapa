@@ -64,6 +64,18 @@ defmodule Palapa.Documents.Suggestions do
     Suggestion.changeset(suggestion, %{})
   end
 
+  def update_suggestion(suggestion, attrs) do
+    suggestion = Repo.preload(suggestion, author: :account)
+
+    SuggestionComment.changeset(suggestion, attrs)
+    |> Repo.update()
+  end
+
+  def delete_suggestion(suggestion) do
+    suggestion
+    |> Repo.delete()
+  end
+
   def close_suggestion(suggestion, author) do
     suggestion
     |> change(%{
@@ -99,8 +111,8 @@ defmodule Palapa.Documents.Suggestions do
     |> Repo.insert()
   end
 
-  def change_suggestion_comment(suggestion) do
-    SuggestionComment.changeset(suggestion, %{})
+  def change_suggestion_comment(suggestion_comment) do
+    SuggestionComment.changeset(suggestion_comment, %{})
   end
 
   def update_suggestion_comment(suggestion_comment, attrs) do
@@ -110,8 +122,8 @@ defmodule Palapa.Documents.Suggestions do
     |> Repo.update()
   end
 
-  def delete_suggestion_comment(suggestion) do
-    suggestion
+  def delete_suggestion_comment(suggestion_comment) do
+    suggestion_comment
     |> Repo.delete()
   end
 end

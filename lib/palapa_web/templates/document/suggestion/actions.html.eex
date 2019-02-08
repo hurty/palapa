@@ -1,0 +1,29 @@
+<%= if permit?(Palapa.Documents, :delete_suggestion, @conn.assigns.current_member, @suggestion) do %>
+  <div data-controller="popover" data-action="mousedown@window->popover#hide">
+    <button data-target="popover.button" data-action="popover#toggle" 
+      class="h-6 w-6 text-grey-dark font-bold hover:text-green hover:cursor-pointer"
+      title="Actions on this comment">
+      <i class="fas fa-ellipsis-h"></i>
+    </button>
+    
+    <div data-target="popover.content" class="popover hidden">
+      <nav class="flex flex-col">
+      <%= if permit?(Palapa.Documents, :update_suggestion, @conn.assigns.current_member, @suggestion) do %>
+        <%= link to: suggestion_path(@conn, :edit, @conn.assigns.current_organization, @suggestion), class: "popover__link", 
+        data: [action: "document-suggestion#edit"] do %>
+          <i class="fas fa-pen"></i>&nbsp;Edit suggestion
+        <% end %>
+      <% end %>
+      
+        <%= link to: suggestion_path(@conn, :delete, @conn.assigns.current_organization, @suggestion), class: "popover__link", 
+        data: [
+          action: "document-suggestion#delete",
+          confirm: "Are your sure you want to delete this suggestion?"
+        ] 
+        do %>
+          <i class="fas fa-trash text-red"></i>&nbsp;Delete suggestion
+        <% end %>
+      </nav>
+    </div>
+  </div>
+<% end %>

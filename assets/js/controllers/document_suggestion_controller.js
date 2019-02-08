@@ -2,7 +2,7 @@ import BaseController from "./base_controller"
 
 export default class extends BaseController {
   static targets = ["commentForm", "comments", "actions", "passiveFormItems",
-    "activeFormItems", "commentEditor", "commentContentInput"]
+    "activeFormItems", "commentEditor", "commentContentInput", "content", "editForm", "editFormContainer"]
 
   showCommentForm(event) {
     if (event)
@@ -67,6 +67,43 @@ export default class extends BaseController {
       document.dispatchEvent(reopenEvent)
       this.hide(this.element)
     })
+  }
+
+  edit(event) {
+    event.preventDefault()
+
+    let url = event.target.getAttribute("href")
+
+    PA.fetchHTML(url).then(html => {
+      this.editFormContainerTarget.innerHTML = html
+      this.hide(this.contentTarget)
+      this.show(this.editFormContainerTarget)
+      this.editFormContainerTarget.querySelector("trix-editor").focus()
+    })
+  }
+
+  cancelEdit(event) {
+    event.preventDefault()
+    this.show(this.contentTarget)
+    this.hide(this.editFormContainerTarget)
+  }
+
+  update(event) {
+    event.preventDefault()
+    let updateUrl = this.editFormTarget.getAttribute("action")
+
+    PA.fetchHTML(updateUrl, {
+      method: "post",
+      body: new FormData(this.editFormTarget)
+    }).then(html => {
+      this.contentTarget.innerHTML = html
+      this.show(this.contentTarget)
+      this.hide(this.editFormContainerTarget)
+    })
+  }
+
+  delete(event) {
+    event.preventDefault()
   }
 
   remove() {
