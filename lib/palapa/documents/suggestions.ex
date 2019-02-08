@@ -1,7 +1,7 @@
 defmodule Palapa.Documents.Suggestions do
   use Palapa.Context
 
-  alias Palapa.Documents.{Page, Suggestion}
+  alias Palapa.Documents.{Page, Suggestion, SuggestionComment}
 
   # --- Scopes
 
@@ -30,7 +30,7 @@ defmodule Palapa.Documents.Suggestions do
     |> where([s], s.page_id == ^page.id and is_nil(s.parent_suggestion_id))
     |> order_by(:inserted_at)
     |> preload(author: :account)
-    |> preload(replies: [author: :account])
+    |> preload(suggestion_comments: [author: :account])
     |> preload(closure_author: :account)
     |> Repo.all()
   end
@@ -40,7 +40,7 @@ defmodule Palapa.Documents.Suggestions do
     |> Repo.get!(id)
   end
 
-  def get_suggestion!(%Page{} = page, suggestion_id, top_level: true) do
+  def get_page_suggestion!(%Page{} = page, suggestion_id) do
     page
     |> Ecto.assoc(:suggestions)
     |> where([s], s.id == ^suggestion_id)
@@ -48,24 +48,23 @@ defmodule Palapa.Documents.Suggestions do
     |> Repo.one!()
   end
 
-  def get_suggestion!(%Page{} = page, suggestion_id, top_level: false) do
-    page
-    |> Ecto.assoc(:suggestions)
-    |> where([s], s.id == ^suggestion_id)
-    |> where([s], not is_nil(s.parent_suggestion_id))
-    |> preload(closure_author: :account)
-    |> Repo.one()
-  end
+  # def get_suggestion!(%Page{} = page, suggestion_id, top_level: false) do
+  #   page
+  #   |> Ecto.assoc(:suggestions)
+  #   |> where([s], s.id == ^suggestion_id)
+  #   |> where([s], not is_nil(s.parent_suggestion_id))
+  #   |> preload(closure_author: :account)
+  #   |> Repo.one()
+  # end
 
-  def create_suggestion(page, author, parent_suggestion, attrs) do
+  def create_suggestion(page, author, attrs) do
     author = Repo.preload(author, :account)
 
     page
     |> Ecto.build_assoc(:suggestions)
     |> Suggestion.changeset(attrs)
     |> put_assoc(:author, author)
-    |> put_assoc(:parent_suggestion, parent_suggestion)
-    |> put_assoc(:replies, [])
+    |> put_assoc(:suggestion_comments, [])
     |> Repo.insert()
   end
 
@@ -89,5 +88,15 @@ defmodule Palapa.Documents.Suggestions do
       closure_author_id: nil
     })
     |> Repo.update()
+  end
+
+  def create_suggestion_comment(suggestion, author, attrs) do
+    author = Repo.preload(author, :account)
+
+    suggestion
+    |> Ecto.build_assoc(:suggestion_comments)
+    |> SuggestionComment.changeset(attrs)
+    |> put_assoc(:author, author)
+    |> Repo.insert()
   end
 end

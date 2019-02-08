@@ -19,5 +19,17 @@ defmodule Palapa.Repo.Migrations.CreateDocumentSuggestion do
     create(index(:document_suggestions, :author_id))
     create(index(:document_suggestions, :parent_suggestion_id))
     create(index(:document_suggestions, :closure_author_id))
+
+    create table(:document_suggestion_comments) do
+      add(:suggestion_id, references(:document_suggestions, on_delete: :delete_all), null: false)
+
+      add(:content, :text)
+      add(:author_id, references(:members, on_delete: :nilify_all, null: false))
+      timestamps()
+    end
+
+    create(index(:document_suggestion_comments, :suggestion_id))
+    create(index(:document_suggestion_comments, :inserted_at))
+    create(index(:document_suggestion_comments, :author_id))
   end
 end

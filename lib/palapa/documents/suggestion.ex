@@ -1,6 +1,6 @@
 defmodule Palapa.Documents.Suggestion do
   use Palapa.Schema
-  alias Palapa.Documents.{Page}
+  alias Palapa.Documents.{Page, SuggestionComment}
   alias Palapa.Organizations.{Member}
 
   schema "document_suggestions" do
@@ -10,8 +10,7 @@ defmodule Palapa.Documents.Suggestion do
     belongs_to(:page, Page)
     has_one(:document, through: [:page, :document])
     belongs_to(:author, Member)
-    belongs_to(:parent_suggestion, __MODULE__)
-    has_many(:replies, __MODULE__, foreign_key: :parent_suggestion_id)
+    has_many(:suggestion_comments, SuggestionComment)
 
     field(:closed_at, :utc_datetime)
     belongs_to(:closure_author, Member)

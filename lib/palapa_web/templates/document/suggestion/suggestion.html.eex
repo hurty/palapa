@@ -1,4 +1,7 @@
-<li id="<%= @suggestion.id %>" data-controller="document-suggestion" data-document-suggestion-close-url="<%= suggestion_closure_url(@conn, :create, @conn.assigns.current_organization, @suggestion) %>" class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-4">
+<li id="<%= @suggestion.id %>" data-controller="document-suggestion" 
+data-document-suggestion-close-url="<%= suggestion_closure_url(@conn, :create, @current_organization, @suggestion) %>" 
+data-document-suggestion-comment-url="<%= suggestion_comment_url(@conn, :create, @current_organization, @suggestion) %>" 
+class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-4">
   <div>
     <div class="flex mb-4">
       <div class="mx-2">
@@ -6,35 +9,33 @@
       </div>
 
       <div class="text-xs my-auto">
-        <%= link @suggestion.author.account.name, to: member_path(@conn, :show, @conn.assigns.current_organization, @suggestion.author.id), class: "text-grey-darkest font-bold hover:underline" %>
-        <div class="text-grey-darker font-light"><%= auto_format_datetime(@suggestion.inserted_at, @conn.assigns.current_account) %></div>
+        <%= link @suggestion.author.account.name, to: member_path(@conn, :show, @current_organization, @suggestion.author.id), class: "text-grey-darkest font-bold hover:underline" %>
+        <div class="text-grey-darker font-light"><%= auto_format_datetime(@suggestion.inserted_at, @current_account) %></div>
       </div>   
     </div>
     
 
     <div class="text-grey-darkest mt-2 mb-4 pl-2 pb-2 pr-8"><%= raw(PalapaWeb.Helpers.sanitize_html(@suggestion.content)) %></div>
 
-    <div data-target="document-suggestion.replies">
-      <%= for reply <- @suggestion.replies do %>
-        <%= render "reply.html", Map.put(assigns, :suggestion, reply) %>
-      <% end %>
+    <div data-target="document-suggestion.comments">
+      <%= render_many @suggestion.suggestion_comments, PalapaWeb.Document.SuggestionCommentView, "suggestion_comment.html", as: :suggestion_comment, conn: @conn %>
     </div>
 
     <%= if @suggestion.closed_at do %>
       <div class="text-sm text-green-dark text-center bg-green-lightest rounded-full p-1">
-        Closed by <%= @suggestion.closure_author.account.name %> (<%= auto_format_datetime(@suggestion.closed_at, @conn.assigns.current_account ) %>)
+        Closed by <%= @suggestion.closure_author.account.name %> (<%= auto_format_datetime(@suggestion.closed_at, @current_account ) %>)
       </div>
     <% end %>
   <div>
 
   <div data-target="document-suggestion.actions" class="p-1 pt-4 rounded mt-4 border-t border-grey-lighter">
 
-    <%= form_for @conn, document_page_suggestion_path(@conn, :create, @conn.assigns.current_organization, @page), 
-      ["data-target": "document-suggestion.replyForm", "data-action": "document-suggestion#sendReply"], fn form -> %> 
+    <%= form_for @conn, suggestion_comment_url(@conn, :create, @current_organization, @suggestion), 
+      ["data-target": "document-suggestion.commentForm", "data-action": "document-suggestion#postComment"], fn form -> %> 
 
         <div data-target="document-suggestion.passiveFormItems">
           <div class="flex justify-end">
-            <button data-action="document-suggestion#showReplyForm" class="btn mr-1"><i class="fas fa-reply"></i> Reply</button>
+            <button data-action="document-suggestion#showCommentForm" class="btn mr-1"><i class="fas fa-reply"></i> Reply</button>
             <%= if @suggestion.closed_at do %>
               <button data-action="document-suggestion#reopen" class="btn">Reopen suggestion</button>
             <% else %>
@@ -46,17 +47,16 @@
         
         <div data-target="document-suggestion.activeFormItems" class="hidden">
           <div class="mb-1">
-            <%= PalapaWeb.EditorView.text_editor(@conn, @conn.assigns.current_organization, placeholder: "Your message here...", 
-              content_input_id: "document_suggestion_#{@suggestion.id}", data_target: "document-suggestion.replyEditor") %>
+            <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization, placeholder: "Your comment here...", 
+              content_input_id: "document_suggestion_#{@suggestion.id}", data_target: "document-suggestion.commentEditor") %>
 
-            <%= hidden_input form, "suggestion[parent_suggestion_id]", value: @suggestion.id %>
-            <%= hidden_input form, "suggestion[content]", "data-target": "document-suggestion.replyContentInput", id: "document_suggestion_#{@suggestion.id}" %>
+            <%= hidden_input form, "suggestion_comment[content]", "data-target": "document-suggestion.commentContentInput", id: "document_suggestion_#{@suggestion.id}" %>
           </div>
 
 
           <div class="flex justify-end">
             <button type="submit" class="btn btn-green mr-1">Send</button>
-            <button data-action="document-suggestion#hideReplyForm" class="btn">Cancel</button>
+            <button data-action="document-suggestion#hideCommentForm" class="btn">Cancel</button>
           </div>
         </div>  
       <% end %>

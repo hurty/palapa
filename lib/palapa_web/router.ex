@@ -90,12 +90,21 @@ defmodule PalapaWeb.Router do
       resources("/documents/suggestions", Document.SuggestionController,
         only: [:edit, :update, :delete]
       ) do
+        resources("/comments", Document.SuggestionCommentController,
+          only: [:create],
+          as: :comment
+        )
+
         resources("/closure", Document.SuggestionClosureController,
           only: [:create, :delete],
           as: :closure,
           singleton: true
         )
       end
+
+      resources("/documents/suggestions/comments", Document.SuggestionCommentController,
+        only: [:edit, :update, :delete]
+      )
 
       # --- MEMBERS
 
