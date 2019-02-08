@@ -99,6 +99,17 @@ defmodule Palapa.Documents.Suggestions do
     |> Repo.insert()
   end
 
+  def change_suggestion_comment(suggestion) do
+    SuggestionComment.changeset(suggestion, %{})
+  end
+
+  def update_suggestion_comment(suggestion_comment, attrs) do
+    suggestion_comment = Repo.preload(suggestion_comment, author: :account)
+
+    SuggestionComment.changeset(suggestion_comment, attrs)
+    |> Repo.update()
+  end
+
   def delete_suggestion_comment(suggestion) do
     suggestion
     |> Repo.delete()

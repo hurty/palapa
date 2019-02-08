@@ -47,4 +47,41 @@ defmodule PalapaWeb.Document.SuggestionCommentController do
       end
     end
   end
+
+  def edit(conn, %{"id" => id}) do
+    suggestion_comment = Suggestions.get_suggestion_comment!(current_organization(), id)
+
+    with :ok <-
+           permit(Documents, :delete_suggestion_comment, current_member(), suggestion_comment) do
+      changeset = Suggestions.change_suggestion_comment(suggestion_comment)
+
+      render(conn, "edit.html",
+        layout: false,
+        suggestion_comment: suggestion_comment,
+        changeset: changeset
+      )
+    end
+  end
+
+  def update(conn, %{"id" => id, "suggestion_comment" => suggestion_comment_attrs}) do
+    suggestion_comment = Suggestions.get_suggestion_comment!(current_organization(), id)
+
+    with :ok <-
+           permit(Documents, :update_suggestion_comment, current_member(), suggestion_comment) do
+      case Suggestions.update_suggestion_comment(suggestion_comment, suggestion_comment_attrs) do
+        {:ok, updated_suggestion_comment} ->
+          render(conn, "suggestion_comment.html",
+            layout: false,
+            suggestion_comment: updated_suggestion_comment
+          )
+
+        {:error, changeset} ->
+          render(conn, "edit.html",
+            layout: false,
+            suggestion_comment: suggestion_comment,
+            changeset: changeset
+          )
+      end
+    end
+  end
 end
