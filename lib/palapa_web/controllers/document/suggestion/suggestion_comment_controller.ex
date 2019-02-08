@@ -29,25 +29,6 @@ defmodule PalapaWeb.Document.SuggestionCommentController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    suggestion_comment = Suggestions.get_suggestion_comment!(current_organization(), id)
-
-    with :ok <-
-           permit(Documents, :delete_suggestion_comment, current_member(), suggestion_comment) do
-      case Suggestions.delete_suggestion_comment(suggestion_comment) do
-        {:ok, _suggestion_comment} ->
-          send_resp(conn, 204, "")
-
-        {:error, _changeset} ->
-          send_resp(
-            conn,
-            400,
-            "An unexpected error occured while deleting the suggestion comment"
-          )
-      end
-    end
-  end
-
   def edit(conn, %{"id" => id}) do
     suggestion_comment = Suggestions.get_suggestion_comment!(current_organization(), id)
 
@@ -80,6 +61,25 @@ defmodule PalapaWeb.Document.SuggestionCommentController do
             layout: false,
             suggestion_comment: suggestion_comment,
             changeset: changeset
+          )
+      end
+    end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    suggestion_comment = Suggestions.get_suggestion_comment!(current_organization(), id)
+
+    with :ok <-
+           permit(Documents, :delete_suggestion_comment, current_member(), suggestion_comment) do
+      case Suggestions.delete_suggestion_comment(suggestion_comment) do
+        {:ok, _suggestion_comment} ->
+          send_resp(conn, 204, "")
+
+        {:error, _changeset} ->
+          send_resp(
+            conn,
+            400,
+            "An unexpected error occured while deleting the suggestion comment"
           )
       end
     end

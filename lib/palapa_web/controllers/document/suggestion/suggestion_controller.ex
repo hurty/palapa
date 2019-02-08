@@ -76,4 +76,20 @@ defmodule PalapaWeb.Document.SuggestionController do
       end
     end
   end
+
+  def delete(conn, %{"id" => id}) do
+    suggestion =
+      Suggestions.suggestions_visible_to(current_member())
+      |> Suggestions.get_suggestion!(id)
+
+    with :ok <- permit(Documents, :delete_suggestion, current_member(), suggestion) do
+      case Suggestions.delete_suggestion(suggestion) do
+        {:ok, _suggestion} ->
+          send_resp(conn, 204, "")
+
+        {:error, _changeset} ->
+          send_resp(conn, 400, "An unexpected error occured while deleting the suggestion")
+      end
+    end
+  end
 end

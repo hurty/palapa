@@ -104,6 +104,18 @@ export default class extends BaseController {
 
   delete(event) {
     event.preventDefault()
+
+    if (!PA.confirm(event.target)) {
+      return;
+    }
+
+    let url = event.target.getAttribute("href")
+
+    PA.fetchHTML(url, {
+      method: "delete",
+    }).then(html => {
+      this.remove()
+    })
   }
 
   remove() {
