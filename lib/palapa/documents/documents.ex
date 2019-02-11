@@ -86,7 +86,8 @@ defmodule Palapa.Documents do
 
       from(q in queryable,
         join: matching_docs in ^subquery(matching_documents_query),
-        on: q.id == matching_docs.id
+        on: q.id == matching_docs.id,
+        distinct: true
       )
     end
   end
