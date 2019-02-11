@@ -1,0 +1,22 @@
+<div class="flex flex-wrap items-center justify-between border-b border-grey-lightest p-2 hover:bg-grey-lightest rounded">
+  <div class="flex-no-shrink">
+    <%= link truncate_string(@document.title, 150), to: document_page_path(@conn, :show, @current_organization, @document.main_page_id), class: "text-base text-green font-bold hover:underline text-sm" %>
+    
+    <div class="text-xs font-bold text-grey-darker mr-2 rounded">
+      <%= if @document.team do %>
+        <%= @document.team.name %>
+      <% else %>
+        Shared with everyone
+      <% end %>
+      
+      <div class="text-blue text-xs font-normal">
+        Deleted <%= auto_format_datetime(@document.deleted_at, @current_account) %> by 
+        <%= link @document.deletion_author.account.name, to: member_path(@conn, :show, @current_organization, @document.deletion_author), class: "text-blue hover:underline" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-right">
+    <div><%= link "Restore", to: document_trash_path(@conn, :delete, @current_organization, @document), method: :delete, class: "btn py-1" %></div>
+  </div>
+</div>

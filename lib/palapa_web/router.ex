@@ -54,6 +54,8 @@ defmodule PalapaWeb.Router do
         get("/download/:filename", AttachmentController, :download)
       end
 
+      resources("/trash", TrashController, only: [:index])
+
       # --- MESSAGES
 
       resources("/messages", MessageController) do

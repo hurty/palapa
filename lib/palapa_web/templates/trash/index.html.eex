@@ -1,0 +1,28 @@
+<div class="content article-layout">
+  <div class="main-content"> 
+    <div class="card">
+      <h1 class="border-b p-4">Trash</h1>
+
+      <div class="p-4">
+        <p class="bg-grey-lighter rounded-full text-red px-1 py-2 text-center my-4">Items in the trash will be definitely deleted after 30 days.</p>
+        <h2>Documents</h2>
+        <div class="card-header-separator"></div>
+        
+        <%= if Enum.any?(@documents) do %>
+
+          <%= for document <- @documents do %>
+            <%= render "document.html", Map.put(assigns, :document, document) %>
+          <% end %>
+
+          <%= if @documents.total_pages > 1 do %>
+            <div class="text-center py-2">
+              <%= pagination_links @documents, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>    
+            </div>
+          <% end %>
+        <% else %>
+          The documents trash is empty.
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

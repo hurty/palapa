@@ -26,6 +26,13 @@ defmodule Palapa.Documents do
     |> where([q], is_nil(q.deleted_at))
   end
 
+  def deleted(queryable) do
+    queryable
+    |> where([q], not is_nil(q.deleted_at))
+    |> order_by(desc: :deleted_at)
+    |> preload(deletion_author: :account)
+  end
+
   def documents_visible_to(queryable \\ Document, %Member{} = member) do
     from(documents in queryable,
       where: documents.organization_id == ^member.organization_id and is_nil(documents.team_id),
@@ -88,9 +95,8 @@ defmodule Palapa.Documents do
 
   def list_documents(queryable \\ Document, page \\ 1) do
     queryable
-    |> non_deleted
     |> preload([:team, [last_author: :account]])
-    |> Repo.paginate(page: page, page_size: 50)
+    |> Repo.paginate(page: page, page_size: 5)
   end
 
   def recent_documents(member) do
