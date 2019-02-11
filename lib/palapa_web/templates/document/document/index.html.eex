@@ -145,8 +145,8 @@
 
     <div class="my-8 text-center">
       <%= link to: trash_path(@conn, :index, @current_organization), 
-        class: "bg-grey-light py-2 px-4 rounded-full text-center hover:bg-grey text-blue" do %>
-        <i class="fas fa-trash text-grey-darkest"></i> View documents in the trash
+        class: "border py-2 px-4 rounded-full text-center hover:bg-grey-light text-blue" do %>
+        <i class="fas fa-trash text-grey-darker"></i> View documents in the trash
       <% end %>
     </div>
   </div>
