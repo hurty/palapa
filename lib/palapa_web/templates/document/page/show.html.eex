@@ -18,7 +18,7 @@
           <%= if @page.section do %><h3 class="text-green-dark"><%= @page.section.title %></h3><% end %>
           <h1 class="text-green"><%= page_title(@page) %></h1>
           <p class="py-2 text-grey-darker text-xs">
-            This page has been edited <%= auto_format_datetime(@page.updated_at, @current_account) %> by <%= link @page.last_author.account.name, to: member_path(@conn, :show, @current_organization, @page.last_author), class: "text-grey-darkest hover:underline" %>
+            Edited <%= auto_format_datetime(@page.updated_at, @current_account) %> by <%= link @page.last_author.account.name, to: member_path(@conn, :show, @current_organization, @page.last_author), class: "text-grey-darkest hover:underline" %>
           </p>
         </div>
 

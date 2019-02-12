@@ -1,9 +1,9 @@
-<div class="text-grey-darker bg-white border rounded text-sm">
-  <div class="flex justify-between bg-grey-lightest p-4 rounded-t">
+<div class="card text-grey-darker bg-white rounded text-sm">
+  <div class="flex justify-between p-4 border-b border-grey-lighter">
     <div>
       <%= if @document.team do %>
         <div class="text-xs font-bold mb-2">
-          <%= truncate_string(@document.team.name) %>
+          #<%= truncate_string(@document.team.name) %>
         </div>
       <% end %>
 
@@ -14,15 +14,13 @@
 
   <div>
     <ul data-target="document.sectionsContainer" class="list-reset">
-      <%= render PalapaWeb.Document.SectionView, "main_section.html", Map.put(assigns, :section, @document.main_section) %>
-
-      <%= for section <- Enum.reject(@document.sections, fn (section) -> section.id == @document.main_section_id end) do %>
+      <%= for section <- @document.sections do %>
         <%= render PalapaWeb.Document.SectionView, "section.html", Map.put(assigns, :section, section) %>
       <% end %>
     </ul>
   </div>
 
-  <div class="flex justify-left p-4 border-t">
+  <div class="flex justify-left p-4 border-t border-grey-lighter">
     <div>
       <%= link to: document_page_path(@conn, :new, @current_organization, @document, section_id: @document.main_section_id), class: "text-xs btn" do %>
         <i class="fas fa-file-alt"></i> New page

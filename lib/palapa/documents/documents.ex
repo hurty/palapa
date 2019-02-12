@@ -162,7 +162,7 @@ defmodule Palapa.Documents do
       create_section(changes.document, author, attrs)
     end)
     |> Ecto.Multi.run(:main_page, fn _repo, changes ->
-      create_page(changes.main_section, author, attrs)
+      create_page(changes.main_section, author, %{title: "Home"})
     end)
     |> Ecto.Multi.run(:linked_document, fn _repo, changes ->
       changes.document
