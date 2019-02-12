@@ -1,5 +1,5 @@
 <li data-controller="document-toc-page"
-  data-action="mouseover->document-page#showActionsIcons mouseout->document-page#hideActionsIcons"
+  data-action="mouseover->document-toc-page#showActionsIcons mouseout->document-page#hideActionsIcons"
   data-document-page-url="<%= document_page_url(@conn, :update, @current_organization, @toc_page) %>"
   class="document-page draggable-source flex justify-between items-center cursor-pointer <%= if @toc_page.section_id do %>hover:bg-grey-lightest<% else %>hover:bg-grey-lighter<% end %>">
   
@@ -8,7 +8,7 @@
   class: if(@conn.params["id"] == @toc_page.id, do: "text-green font-bold", else: "text-grey-darker") %>
   </div>
 
-  <div class="document-actions hidden" data-target="document-page.actionsIcons">
+  <div class="document-actions hidden" data-target="document-toc-page.actionsIcons">
     <div data-controller="popover" data-action="mousedown@window->popover#hide">
       <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
         <button data-target="popover.button" data-action="popover#toggle" 
