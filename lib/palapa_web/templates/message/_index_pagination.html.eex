@@ -1,1 +1,5 @@
-<%= pagination_links @messages, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
+<%= if @conn.params["team_id"] do %>
+  <%= pagination_links @messages, team_id: @conn.params["team_id"], previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
+<% else %>
+  <%= pagination_links @messages, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
+<% end %>

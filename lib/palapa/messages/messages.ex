@@ -71,7 +71,7 @@ defmodule Palapa.Messages do
   def paginate(queryable \\ Message, page \\ 1) do
     queryable
     |> prepare_list
-    |> Repo.paginate(page: page, page_size: 25)
+    |> Repo.paginate(page: page, page_size: 1)
   end
 
   def visible_to?(%Message{} = message, %Member{} = member) do
