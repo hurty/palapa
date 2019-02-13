@@ -60,7 +60,7 @@ defmodule PalapaWeb.Document.DocumentController do
       case Documents.create_document(current_member(), team, document_attrs) do
         {:ok, document} ->
           redirect(conn,
-            to: document_path(conn, :edit, current_organization(), document)
+            to: document_path(conn, :show, current_organization(), document)
           )
 
         {:error, changeset} ->

@@ -14,6 +14,11 @@
           <%= error_tag form, :title %>
         </div>
 
+        <div class="field">
+          <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization, placeholder: "Content...") %>
+          <%= hidden_input form, :body, id: "content" %>
+        </div>
+
         <%= if Enum.any?(@teams) do %>
           <div class="field">
             <%= label form, :team_id, "Who can see this document?", class: "label" %>
