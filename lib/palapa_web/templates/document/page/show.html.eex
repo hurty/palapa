@@ -23,19 +23,19 @@
 
         <%= render "page_actions.html", assigns %>
       </div>
-      <div class="p-4">    
+      <div>
         <%= if @page.body do %>
-          <section class="message-content">
+          <section class="message-content p-4">
             <%= raw(sanitize_html(@page.body)) %>
           </section>
         <% else %>
-          <section class="blankslate">
+          <section class="blankslate p-4">
             <p class="py-2">This page is empty</p>
             <p class="py-2"><%= link "Edit page", to: document_page_path(@conn, :edit, @current_organization, @page), class: "btn" %></p>
           </section>
         <% end %>
 
-        <div class="border-t border-grey-lighter flex justify-between pt-4 mt-8">
+        <div class="border-t border-grey-lighter flex justify-between p-4 mt-8">
           <div class="w-1/2">
             <%= if @previous_page do %>
               <%= link to: document_page_path(@conn, :show, @current_organization, @previous_page), class: "text-green hover:underline" do %>
