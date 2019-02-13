@@ -24,9 +24,9 @@
         <%= render "page_actions.html", assigns %>
       </div>
       <div>
-        <%= if @page.body do %>
+        <%= if @page.content do %>
           <section class="message-content p-4">
-            <%= raw(sanitize_html(@page.body)) %>
+            <%= raw(sanitize_html(@page.content)) %>
           </section>
         <% else %>
           <section class="blankslate p-4">

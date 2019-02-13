@@ -192,7 +192,7 @@ defmodule Palapa.Repo.Migrations.CreateSearches do
 
       index_value := setweight(to_tsvector('simple', unaccent(NEW.title)), 'A') ||
         setweight(to_tsvector('simple', unaccent(document_title)), 'B') ||
-        setweight(to_tsvector('simple', coalesce(unaccent(NEW.body), '')), 'C');
+        setweight(to_tsvector('simple', coalesce(unaccent(NEW.content), '')), 'C');
 
       INSERT INTO searches (
         organization_id,

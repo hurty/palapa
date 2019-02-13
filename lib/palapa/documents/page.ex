@@ -10,7 +10,7 @@ defmodule Palapa.Documents.Page do
   schema "pages" do
     field(:title, :string)
     field(:position, :integer)
-    field(:body, :string)
+    field(:content, :string)
     timestamps()
 
     belongs_to(:document, Document)
@@ -28,11 +28,11 @@ defmodule Palapa.Documents.Page do
   def with_document(query), do: preload(query, :document)
   def with_section(query), do: preload(query, :section)
   def with_last_author(query), do: preload(query, last_author: :account)
-  def without_body(query), do: select(query, ^(Page.__schema__(:fields) -- [:body]))
+  def without_content(query), do: select(query, ^(Page.__schema__(:fields) -- [:content]))
 
   def changeset(page, attrs) do
     page
-    |> cast(attrs, [:title, :body, :position, :section_id])
+    |> cast(attrs, [:title, :content, :position, :section_id])
     |> validate_required([:title])
   end
 end

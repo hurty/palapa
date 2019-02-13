@@ -150,7 +150,7 @@ defmodule Palapa.DocumentsTest do
   describe "pages" do
     @valid_page_attrs %{
       title: "My page",
-      body: "Great content here"
+      content: "Great content here"
     }
 
     setup do
@@ -189,9 +189,9 @@ defmodule Palapa.DocumentsTest do
           @valid_page_attrs
         )
 
-      update_attrs = %{title: "New page title", body: "Updated body"}
+      update_attrs = %{title: "New page title", content: "Updated content"}
       assert {:ok, page} = Documents.update_page(page, page.last_author, update_attrs)
-      assert update_attrs.body == page.body
+      assert update_attrs.content == page.content
     end
 
     test "change page returns a changeset", %{document: document} do

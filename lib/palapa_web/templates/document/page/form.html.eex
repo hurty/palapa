@@ -19,7 +19,7 @@
   </div>
 
   <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization, placeholder: "Page content here...") %>
-  <%= hidden_input form, :body, id: "content" %>
+  <%= hidden_input form, :content, id: "content" %>
 
   <div class="card-actions sticky pin-b bg-white">
     <%= submit "Save page", class: "btn btn-green" %>

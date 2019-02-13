@@ -16,7 +16,7 @@
 
         <div class="field">
           <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization, placeholder: "Content...") %>
-          <%= hidden_input form, :body, id: "content" %>
+          <%= hidden_input form, :content, id: "content" %>
         </div>
 
         <%= if Enum.any?(@teams) do %>

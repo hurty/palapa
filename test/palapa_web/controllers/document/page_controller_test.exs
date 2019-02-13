@@ -36,7 +36,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
     end
 
     test "update page", %{conn: conn, org: org, document: document} do
-      payload = %{"page" => %{"title" => "My awesome page", "body" => "updated page content"}}
+      payload = %{"page" => %{"title" => "My awesome page", "content" => "updated page content"}}
       first_page = Documents.get_first_page!(document)
 
       conn =
@@ -48,7 +48,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
       assert redirected_to(conn, 302) =~ document_page_path(conn, :show, org, first_page)
 
       reloaded_page = Documents.get_page!(first_page.id)
-      assert "updated page content" == reloaded_page.body
+      assert "updated page content" == reloaded_page.content
     end
 
     test "delete page", %{conn: conn, org: org, member: member, document: document} do
