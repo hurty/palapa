@@ -1,5 +1,5 @@
 <li data-controller="document-toc-page"
-  data-action="mouseover->document-toc-page#showActionsIcons mouseout->document-page#hideActionsIcons"
+  data-action="mouseover->document-toc-page#showActionsIcons mouseout->document-toc-page#hideActionsIcons"
   data-document-page-url="<%= document_page_url(@conn, :update, @current_organization, @toc_page) %>"
   class="document-page draggable-source flex justify-between items-center cursor-pointer <%= if @toc_page.section_id do %>hover:bg-grey-lightest<% else %>hover:bg-grey-lighter<% end %>">
   
