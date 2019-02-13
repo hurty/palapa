@@ -60,7 +60,7 @@ defmodule PalapaWeb.Document.DocumentController do
       case Documents.create_document(current_member(), team, document_attrs) do
         {:ok, document} ->
           redirect(conn,
-            to: document_page_path(conn, :edit, current_organization(), document.main_page_id)
+            to: document_path(conn, :edit, current_organization(), document)
           )
 
         {:error, changeset} ->
@@ -71,6 +71,15 @@ defmodule PalapaWeb.Document.DocumentController do
           |> render("new.html", changeset: changeset, teams: teams)
       end
     end
+  end
+
+  def show(conn, %{"id" => id}) do
+    document = find_document(conn, id)
+    first_page = Documents.get_first_page!(document)
+
+    redirect(conn,
+      to: document_page_path(conn, :show, current_organization(), first_page)
+    )
   end
 
   def edit(conn, %{"id" => id}) do
@@ -94,7 +103,7 @@ defmodule PalapaWeb.Document.DocumentController do
     case Documents.update_document(document, current_member(), team, document_attrs) do
       {:ok, document} ->
         redirect(conn,
-          to: document_page_path(conn, :show, current_organization(), document.main_page_id)
+          to: document_path(conn, :show, current_organization(), document)
         )
 
       {:error, changeset} ->

@@ -11,8 +11,6 @@ defmodule Palapa.Documents.Document do
 
     belongs_to(:organization, Organization)
     belongs_to(:last_author, Member, on_replace: :nilify)
-    belongs_to(:main_section, Section)
-    belongs_to(:main_page, Page, on_replace: :nilify)
     belongs_to(:team, Team, on_replace: :nilify)
     has_many(:sections, Section)
     has_many(:pages, Page)

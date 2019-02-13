@@ -2,7 +2,6 @@ defmodule PalapaWeb.Document.PageControllerTest do
   use PalapaWeb.ConnCase
 
   alias Palapa.Documents
-  alias Palapa.Repo
 
   @doc_title "My awesome book"
 
@@ -27,46 +26,33 @@ defmodule PalapaWeb.Document.PageControllerTest do
     end
 
     test "show page", %{conn: conn, org: org, document: document} do
-      conn = get(conn, document_page_path(conn, :show, org, document.main_page_id))
+      conn = get(conn, document_page_path(conn, :show, org, Documents.get_first_page!(document)))
       assert html_response(conn, 200) =~ @doc_title
     end
 
     test "edit page", %{conn: conn, org: org, document: document} do
-      conn = get(conn, document_page_path(conn, :edit, org, document.main_page_id))
+      conn = get(conn, document_page_path(conn, :edit, org, Documents.get_first_page!(document)))
       assert html_response(conn, 200)
     end
 
     test "update page", %{conn: conn, org: org, document: document} do
       payload = %{"page" => %{"title" => "My awesome page", "body" => "updated page content"}}
+      first_page = Documents.get_first_page!(document)
 
       conn =
         patch(
           conn,
-          document_page_path(conn, :update, org, document.main_page_id, payload)
+          document_page_path(conn, :update, org, first_page, payload)
         )
 
-      assert redirected_to(conn, 302) =~
-               document_page_path(conn, :show, org, document.main_page_id)
+      assert redirected_to(conn, 302) =~ document_page_path(conn, :show, org, first_page)
 
-      reloaded_page = Documents.get_page!(document.main_page_id)
+      reloaded_page = Documents.get_page!(first_page.id)
       assert "updated page content" == reloaded_page.body
     end
 
-    test "main page of a document can't be deleted", %{conn: conn, org: org, document: document} do
-      assert_raise(Palapa.Documents.DeleteMainPageError, fn ->
-        delete(
-          conn,
-          document_page_path(conn, :delete, org, document.main_page_id,
-            current_page_id: document.main_page_id
-          )
-        )
-      end)
-    end
-
     test "delete page", %{conn: conn, org: org, member: member, document: document} do
-      document = Repo.preload(document, :main_section)
-
-      {:ok, page} = Documents.create_page(document.main_section, member, %{title: "new page"})
+      {:ok, page} = Documents.create_page(document, member, %{title: "new page"})
 
       conn =
         delete(
@@ -99,7 +85,15 @@ defmodule PalapaWeb.Document.PageControllerTest do
       {:ok, document} = Documents.create_document(workspace.richard, nil, %{title: "Open doc"})
 
       conn =
-        get(conn, document_page_path(conn, :show, workspace.organization, document.main_page_id))
+        get(
+          conn,
+          document_page_path(
+            conn,
+            :show,
+            workspace.organization,
+            Documents.get_first_page!(document)
+          )
+        )
 
       assert html_response(conn, 200) =~ "Open doc"
     end
@@ -115,7 +109,15 @@ defmodule PalapaWeb.Document.PageControllerTest do
         })
 
       conn =
-        get(conn, document_page_path(conn, :show, workspace.organization, document.main_page_id))
+        get(
+          conn,
+          document_page_path(
+            conn,
+            :show,
+            workspace.organization,
+            Documents.get_first_page!(document)
+          )
+        )
 
       assert html_response(conn, 200) =~ "tech doc"
     end
@@ -127,10 +129,17 @@ defmodule PalapaWeb.Document.PageControllerTest do
           title: "management doc"
         })
 
+      first_page = Documents.get_first_page!(document)
+
       assert_raise Ecto.NoResultsError, fn ->
         get(
           conn,
-          document_page_path(conn, :show, workspace.organization, document.main_page_id)
+          document_page_path(
+            conn,
+            :show,
+            workspace.organization,
+            first_page
+          )
         )
       end
     end
@@ -149,7 +158,12 @@ defmodule PalapaWeb.Document.PageControllerTest do
       assert_raise Ecto.NoResultsError, fn ->
         get(
           conn,
-          document_page_path(conn, :show, workspace.organization, document.main_page_id)
+          document_page_path(
+            conn,
+            :show,
+            workspace.organization,
+            Documents.get_first_page!(document)
+          )
         )
       end
     end

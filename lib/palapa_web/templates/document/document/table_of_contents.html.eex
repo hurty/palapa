@@ -22,7 +22,7 @@
 
   <div class="flex justify-left p-4 border-t border-grey-lighter">
     <div>
-      <%= link to: document_page_path(@conn, :new, @current_organization, @document, section_id: @document.main_section_id), class: "text-xs btn" do %>
+      <%= link to: document_page_path(@conn, :new, @current_organization, @document), class: "text-xs btn" do %>
         <i class="fas fa-file-alt"></i> New page
       <% end %>
     </div>

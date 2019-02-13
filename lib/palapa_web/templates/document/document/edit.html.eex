@@ -9,7 +9,7 @@
 
           <div class="card-actions">
             <%= submit "Update this document", class: "btn btn-green" %>
-            <%= link "Cancel", to: document_page_path(@conn, :show, @current_organization, @document.main_page_id), class: "btn" %>
+            <%= link "Cancel", to: document_path(@conn, :show, @current_organization, @document), class: "btn" %>
           </div>
         <% end %>
     </div>

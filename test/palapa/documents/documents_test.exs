@@ -37,11 +37,9 @@ defmodule Palapa.DocumentsTest do
       organization = insert!(:organization)
       author = insert!(:member, organization: organization)
 
-      assert {:ok, %Document{} = document} = Documents.create_document(author, nil, @valid_attrs)
+      assert {:ok, document} = Documents.create_document(author, nil, @valid_attrs)
 
       assert document.title == "some title"
-      assert document.main_section_id
-      assert document.main_page_id
     end
 
     test "create_document/1 with invalid data returns error changeset" do
@@ -156,9 +154,7 @@ defmodule Palapa.DocumentsTest do
     }
 
     setup do
-      document =
-        document_fixture()
-        |> Repo.preload([:main_section, :main_page])
+      document = document_fixture()
 
       %{document: document}
     end
@@ -166,7 +162,7 @@ defmodule Palapa.DocumentsTest do
     test "creating new pages at the bottom of a section", %{document: document} do
       assert {:ok, %Page{} = first_page} =
                Documents.create_page(
-                 document.main_section,
+                 document,
                  document.last_author,
                  @valid_page_attrs
                )
@@ -177,7 +173,7 @@ defmodule Palapa.DocumentsTest do
 
       assert {:ok, %Page{} = second_page} =
                Documents.create_page(
-                 document.main_section,
+                 document,
                  document.last_author,
                  @valid_page_attrs
                )
@@ -188,20 +184,20 @@ defmodule Palapa.DocumentsTest do
     test "update page", %{document: document} do
       {:ok, %Page{} = page} =
         Documents.create_page(
-          document.main_section,
+          document,
           document.last_author,
           @valid_page_attrs
         )
 
       update_attrs = %{title: "New page title", body: "Updated body"}
-      assert {:ok, page} = Documents.update_page(page, update_attrs)
+      assert {:ok, page} = Documents.update_page(page, page.last_author, update_attrs)
       assert update_attrs.body == page.body
     end
 
     test "change page returns a changeset", %{document: document} do
       {:ok, %Page{} = page} =
         Documents.create_page(
-          document.main_section,
+          document,
           document.last_author,
           @valid_page_attrs
         )
@@ -212,7 +208,7 @@ defmodule Palapa.DocumentsTest do
     test "delete page", %{document: document} do
       {:ok, %Page{} = page} =
         Documents.create_page(
-          document.main_section,
+          document,
           document.last_author,
           @valid_page_attrs
         )
@@ -226,8 +222,8 @@ defmodule Palapa.DocumentsTest do
     # We have the following setup
     #
     #
-    # - main_section (order cannot be changed)
-    #   -- main_page (order cannot be changed)
+    # - first_section
+    #   -- first page
     #   -- blue page
     #   -- red page
     #
@@ -237,19 +233,16 @@ defmodule Palapa.DocumentsTest do
     # - Angry Section (which has no page)
 
     setup do
-      document =
-        document_fixture()
-        |> Repo.preload([:main_section, :main_page])
+      document = document_fixture()
 
       author = document.last_author
 
       {:ok, nice_section} = Documents.create_section(document, author, %{title: "nice section"})
       {:ok, angry_section} = Documents.create_section(document, author, %{title: "angry section"})
 
-      {:ok, blue_page} =
-        Documents.create_page(document.main_section, author, %{title: "blue page"})
+      {:ok, blue_page} = Documents.create_page(document, author, %{title: "blue page"})
 
-      {:ok, red_page} = Documents.create_page(document.main_section, author, %{title: "red page"})
+      {:ok, red_page} = Documents.create_page(document, author, %{title: "red page"})
 
       {:ok, yellow_page} = Documents.create_page(nice_section, author, %{title: "yellow page"})
 
@@ -264,13 +257,11 @@ defmodule Palapa.DocumentsTest do
       }
     end
 
-    test "main page", %{document: document} do
-      assert Documents.main_page?(document.main_page)
-    end
+    test "previous page of first page is nil", %{document: document} do
+      first_page = Documents.get_first_page!(document)
 
-    test "previous page of main page is nil", %{document: document} do
-      assert 0 == document.main_page.position
-      refute Documents.get_previous_page(document.main_page)
+      assert 0 == first_page.position
+      refute Documents.get_previous_page(first_page)
     end
 
     test "previous page of a page inside the same section", %{
@@ -314,21 +305,14 @@ defmodule Palapa.DocumentsTest do
       assert yellow_page.id == Documents.get_next_page(red_page).id
     end
 
-    test "can't move a page before the main page", %{
-      document: document,
-      blue_page: blue_page
-    } do
-      assert_raise Documents.ForbiddenPositionError, fn ->
-        Documents.move_page!(blue_page, document.main_section, 0)
-      end
-    end
-
     test "can't move a page at wrong (negative) position", %{
       document: document,
       blue_page: blue_page
     } do
+      first_section = Documents.get_first_section!(document)
+
       assert_raise Ecto.InvalidChangesetError, fn ->
-        Documents.move_page!(blue_page, document.main_section, -1)
+        Documents.move_page!(blue_page, first_section, -1)
       end
     end
 
@@ -336,8 +320,10 @@ defmodule Palapa.DocumentsTest do
       document: document,
       blue_page: blue_page
     } do
+      first_section = Documents.get_first_section!(document)
+
       assert_raise Ecto.InvalidChangesetError, fn ->
-        Documents.move_page!(blue_page, document.main_section, 100)
+        Documents.move_page!(blue_page, first_section, 100)
       end
     end
 
@@ -352,11 +338,12 @@ defmodule Palapa.DocumentsTest do
       new_position = red_page.position - 1
       Documents.move_page!(red_page, red_page.section, new_position)
 
-      document = Repo.reload(document) |> Repo.preload(:main_page)
+      document = Repo.reload(document)
+      first_page = Documents.get_first_page!(document)
       blue_page = Repo.reload(blue_page)
       red_page = Repo.reload(red_page)
 
-      assert 0 == document.main_page.position
+      assert 0 == first_page.position
       assert 1 == red_page.position
       assert 2 == blue_page.position
     end
@@ -370,11 +357,12 @@ defmodule Palapa.DocumentsTest do
       blue_page = Repo.preload(blue_page, :section)
       Documents.move_page!(blue_page, blue_page.section, blue_page.position + 1)
 
-      document = Repo.reload(document) |> Repo.preload(:main_page)
+      document = Repo.reload(document)
+      first_page = Documents.get_first_page!(document)
       red_page = Repo.reload(red_page)
       blue_page = Repo.reload(blue_page)
 
-      assert 0 == document.main_page.position
+      assert 0 == first_page.position
       assert 1 == red_page.position
       assert 2 == blue_page.position
     end
@@ -385,14 +373,16 @@ defmodule Palapa.DocumentsTest do
       red_page: red_page,
       yellow_page: yellow_page
     } do
-      Documents.move_page!(yellow_page, document.main_section, 1)
+      first_section = Documents.get_first_section!(document)
+      Documents.move_page!(yellow_page, first_section, 1)
 
-      document = Repo.reload(document) |> Repo.preload(:main_page)
+      document = Repo.reload(document)
+      first_page = Documents.get_first_page!(document)
       red_page = Repo.reload(red_page)
       blue_page = Repo.reload(blue_page)
       yellow_page = Repo.reload(yellow_page)
 
-      assert 0 == document.main_page.position
+      assert 0 == first_page.position
       assert 1 == yellow_page.position
       assert 2 == blue_page.position
       assert 3 == red_page.position

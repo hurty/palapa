@@ -17,7 +17,7 @@ defmodule PalapaWeb.Document.PageController do
     document = Documents.get_document!(params["document_id"])
 
     with :ok <- permit(Documents, :update_document, current_member(), document) do
-      section_id = params["section_id"] || document.main_section_id
+      section_id = params["section_id"]
       page_changeset = Documents.change_page(%Page{}, %{section_id: section_id})
       section_changeset = Documents.change_section()
 
@@ -133,7 +133,7 @@ defmodule PalapaWeb.Document.PageController do
 
       redirect_page =
         if current_page_id == page.id do
-          page.document.main_page_id
+          Documents.get_first_page!(page.document)
         else
           current_page_id
         end

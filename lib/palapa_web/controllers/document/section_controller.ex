@@ -46,7 +46,7 @@ defmodule PalapaWeb.Document.SectionController do
         {:ok, _} ->
           redirect_page_id =
             if current_page.section_id == section.id do
-              section.document.main_page_id
+              Documents.get_first_page!(section.document)
             else
               current_page_id
             end

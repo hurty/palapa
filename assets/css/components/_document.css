@@ -31,5 +31,5 @@
 }
 
 .document-section-title {
-  @apply text-sm font-bold;
+  @apply text-sm font-bold text-grey-dark;
 }

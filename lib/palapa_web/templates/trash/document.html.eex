@@ -1,6 +1,6 @@
 <div class="flex flex-wrap items-center justify-between border-b border-grey-lightest p-2 hover:bg-grey-lightest rounded">
   <div class="flex-no-shrink">
-    <%= link truncate_string(@document.title, 150), to: document_page_path(@conn, :show, @current_organization, @document.main_page_id), class: "text-base text-green font-bold hover:underline text-sm" %>
+    <%= link truncate_string(@document.title, 150), to: document_path(@conn, :show, @current_organization, @document), class: "text-base text-green font-bold hover:underline text-sm" %>
     
     <div class="text-xs font-bold text-grey-darker mr-2 rounded">
       <%= if @document.team do %>

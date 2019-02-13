@@ -87,7 +87,7 @@
               </div>
 
               <div class="flex-1">
-                <%= link truncate_string(document.title, 150), to: document_page_path(@conn, :show, @current_organization, document.main_page_id), class: "text-base text-green font-bold hover:underline text-sm" %>
+                <%= link truncate_string(document.title, 150), to: document_path(@conn, :show, @current_organization, document), class: "text-base text-green font-bold hover:underline text-sm" %>
                 <div class="text-xs font-bold text-grey-darker mr-2 rounded">
                 <%= if document.team do %>
                   <%= document.team.name %>
@@ -136,7 +136,7 @@
           <%= for document <- @recent_documents do %>
             <div class="w-full my-1">
               <i class="fas fa-file-alt text-grey-dark text-sm mr-2"></i> 
-              <%= link truncate_string(document.title), to: document_page_path(@conn, :show, @current_organization, document.main_page_id), class: "text-sm font-bold text-green hover:underline" %>
+              <%= link truncate_string(document.title), to: document_path(@conn, :show, @current_organization, document), class: "text-sm font-bold text-green hover:underline" %>
             </div>
           <% end %>
         </div>

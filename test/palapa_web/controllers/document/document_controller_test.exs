@@ -93,7 +93,12 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
       last_document = Query.first(Document) |> Repo.one!()
 
       assert redirected_to(conn, 302) =~
-               document_page_path(conn, :show, workspace.organization, last_document.main_page_id)
+               document_path(
+                 conn,
+                 :show,
+                 workspace.organization,
+                 last_document
+               )
     end
 
     test "create a document with missing title", %{conn: conn, workspace: workspace} do

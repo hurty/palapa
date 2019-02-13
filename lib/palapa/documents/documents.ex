@@ -136,8 +136,7 @@ defmodule Palapa.Documents do
     document =
       from(document in queryable,
         preload: [:team, :last_author],
-        preload: [sections: ^sections_query],
-        preload: [main_section: [pages: ^section_pages_query]]
+        preload: [sections: ^sections_query]
       )
       |> Repo.get!(id)
 
@@ -146,6 +145,23 @@ defmodule Palapa.Documents do
     end
 
     document
+  end
+
+  def get_first_page!(document) do
+    from(sections in Ecto.assoc(document, :sections),
+      join: pages in assoc(sections, :pages),
+      where: sections.position == 0,
+      where: pages.position == 0,
+      select: pages
+    )
+    |> Repo.one!()
+  end
+
+  def get_first_section!(document) do
+    from(sections in Ecto.assoc(document, :sections),
+      where: sections.position == 0
+    )
+    |> Repo.one!()
   end
 
   def create_document(author, team, attrs) do
@@ -158,22 +174,16 @@ defmodule Palapa.Documents do
 
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:document, document_changeset)
-    |> Ecto.Multi.run(:main_section, fn _repo, changes ->
+    |> Ecto.Multi.run(:first_section, fn _repo, changes ->
       create_section(changes.document, author, attrs)
     end)
-    |> Ecto.Multi.run(:main_page, fn _repo, changes ->
-      create_page(changes.main_section, author, %{title: "Home"})
-    end)
-    |> Ecto.Multi.run(:linked_document, fn _repo, changes ->
-      changes.document
-      |> change(main_section_id: changes.main_section.id)
-      |> change(main_page_id: changes.main_page.id)
-      |> Repo.update()
+    |> Ecto.Multi.run(:first_page, fn _repo, changes ->
+      create_page(changes.first_section, author, %{title: "Home"})
     end)
     |> Repo.transaction()
     |> case do
       {:ok, result} ->
-        {:ok, result.linked_document}
+        {:ok, result.document}
 
       {:error, _step, changeset, _changes} ->
         {:error, changeset}
@@ -250,11 +260,6 @@ defmodule Palapa.Documents do
     |> Repo.update()
   end
 
-  def main_section?(section) do
-    section = Repo.preload(section, :document)
-    section.id == section.document.main_section_id
-  end
-
   def get_page!(queryable \\ Page, id, accessing_member \\ nil) do
     page =
       queryable
@@ -270,7 +275,7 @@ defmodule Palapa.Documents do
     page
   end
 
-  def create_page(section, author, attrs) do
+  def create_page(%Section{} = section, author, attrs) do
     %Page{}
     |> Page.changeset(attrs)
     |> put_change(:document_id, section.document_id)
@@ -278,6 +283,11 @@ defmodule Palapa.Documents do
     |> put_change(:section_id, section.id)
     |> Position.insert_at_bottom(:section_id, section.id, :position)
     |> Repo.insert()
+  end
+
+  def create_page(%Document{} = document, author, attrs) do
+    first_section = get_first_section!(document)
+    create_page(first_section, author, attrs)
   end
 
   def update_page(page, author, attrs) do
@@ -293,10 +303,6 @@ defmodule Palapa.Documents do
   end
 
   def move_page!(page, new_section, new_position) do
-    if main_section?(new_section) && new_position == 0 do
-      raise ForbiddenPositionError
-    end
-
     page
     |> Page.changeset(%{
       "section_id" => new_section.id,
@@ -307,20 +313,11 @@ defmodule Palapa.Documents do
   end
 
   def delete_page!(page) do
-    if main_page?(page) do
-      raise DeleteMainPageError
-    end
-
     page
     |> change
     |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
     |> Palapa.Position.recompute_positions(:section_id, :position)
     |> Repo.update!()
-  end
-
-  def main_page?(page) do
-    page = Repo.preload(page, :document)
-    page.id == page.document.main_page_id
   end
 
   def get_previous_page(page) do

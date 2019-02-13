@@ -30,9 +30,7 @@ defmodule PalapaWeb.Document.DocumentTrashController do
 
     conn
     |> put_flash(:success, "The document #{document.title} has been restored.")
-    |> redirect(
-      to: document_page_path(conn, :show, current_organization(), document.main_page_id)
-    )
+    |> redirect(to: document_path(conn, :show, current_organization(), document))
   end
 
   defp find_document(conn, id) do

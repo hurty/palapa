@@ -4,19 +4,17 @@
   <% end %>
 
   <div class="my-4">
-    <%= if @changeset.data.id != @document.main_page_id do %>
-      <div class="field bg-grey-lighter p-2 rounded">
-        <%= label form, :section_id, "Section", class: "label" %>
-        <%= select form, :section_id, PalapaWeb.Document.SectionView.list_sections_for_select(@document), class: "font-bold" %>
-      </div>
+    <div class="field bg-grey-lighter p-2 rounded">
+      <%= label form, :section_id, "Section", class: "label" %>
+      <%= select form, :section_id, PalapaWeb.Document.SectionView.list_sections_for_select(@document), class: "font-bold" %>
+    </div>
 
-      <div class="field">
-        <%= textarea form, :title, placeholder: "Page title", autocomplete: "off", rows: "1", 
-          "data-controller": "textarea_autoresize", "data-target": "document.pageTitleInput",
-          class: "input resize-none overflow-hidden p-2 sm:p-4 w-full font-bold sm:text-xl" %>
-        <%= error_tag form, :title %>
-      </div>
-    <% end %>
+    <div class="field">
+      <%= textarea form, :title, placeholder: "Page title", autocomplete: "off", rows: "1", 
+        "data-controller": "textarea_autoresize", "data-target": "document.pageTitleInput",
+        class: "input resize-none overflow-hidden p-2 sm:p-4 w-full font-bold sm:text-xl" %>
+      <%= error_tag form, :title %>
+    </div>
   </div>
 
   <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization, placeholder: "Page content here...") %>

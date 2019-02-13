@@ -82,14 +82,6 @@ defmodule Palapa.Repo.Migrations.CreateDocuments do
     create(index(:pages, :deleted_at))
     create(index(:pages, :deletion_author_id))
 
-    alter table(:documents) do
-      add(:main_section_id, references(:sections, on_delete: :nilify_all, type: :uuid))
-      add(:main_page_id, references(:pages, on_delete: :nilify_all, type: :uuid))
-    end
-
-    create(index(:documents, :main_section_id))
-    create(index(:documents, :main_page_id))
-
     # --------- ACCESSES --------------
 
     create table(:documents_accesses) do
