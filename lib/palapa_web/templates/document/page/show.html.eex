@@ -14,8 +14,7 @@
     <%# ----- DOCS ----- %>
     <div class="card">
       <div class="flex justify-between border-b border-grey-lighter p-4">
-        <div>      
-          <%= if @page.section do %><h3 class="text-green-dark"><%= @page.section.title %></h3><% end %>
+        <div>
           <h1 class="text-green"><%= @page.title %></h1>
           <p class="py-2 text-grey-darker text-xs">
             Edited <%= auto_format_datetime(@page.updated_at, @current_account) %> by <%= link @page.last_author.account.name, to: member_path(@conn, :show, @current_organization, @page.last_author), class: "text-grey-darkest hover:underline" %>

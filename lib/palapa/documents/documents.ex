@@ -175,7 +175,7 @@ defmodule Palapa.Documents do
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:document, document_changeset)
     |> Ecto.Multi.run(:first_section, fn _repo, changes ->
-      create_section(changes.document, author, attrs)
+      create_section(changes.document, author, %{title: "Pages"})
     end)
     |> Ecto.Multi.run(:first_page, fn _repo, changes ->
       create_page(changes.first_section, author, %{title: "Home"})
