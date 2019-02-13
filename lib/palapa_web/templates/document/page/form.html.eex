@@ -10,9 +10,10 @@
     </div>
 
     <div class="field">
-      <%= textarea form, :title, placeholder: "Page title", autocomplete: "off", rows: "1", 
-        "data-controller": "textarea_autoresize", "data-target": "document.pageTitleInput",
-        class: "input resize-none overflow-hidden p-2 sm:p-4 w-full font-bold sm:text-xl" %>
+      <%= text_input form, :title, placeholder: "Page title", autocomplete: "off",
+      "data-controller": "focus", 
+        "data-target": "document.pageTitleInput",
+        class: "input p-2 sm:p-4 w-full font-bold sm:text-xl" %>
       <%= error_tag form, :title %>
     </div>
   </div>

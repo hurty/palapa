@@ -1,7 +1,7 @@
 <div class="my-4">
-  <%= textarea @form, :title, placeholder: "Title", autocomplete: "off", rows: "1", 
-    "data-controller": "textarea_autoresize focus", "data-target": "message.title",
-    class: "input resize-none overflow-hidden p-2 sm:p-4 w-full font-bold sm:text-xl" %>
+  <%= text_input @form, :title, placeholder: "Title", autocomplete: "off",
+    "data-controller": "focus", "data-target": "message.title",
+    class: "input p-2 sm:p-4 w-full font-bold sm:text-xl" %>
   <%= error_tag @form, :title %>
 </div>
 
