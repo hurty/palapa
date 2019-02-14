@@ -4,7 +4,6 @@ import "./vendor/fontawesome-solid"
 import "./vendor/fontawesome-brands"
 
 import "./palapa"
-import "phoenix_html"
 import "trix"
 
 // Global events handlers

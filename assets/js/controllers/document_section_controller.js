@@ -1,5 +1,6 @@
 import BaseController from "./base_controller"
 import Popper from 'popper.js'
+import { Application } from "stimulus";
 
 export default class extends BaseController {
   static targets = ["actionsIcons", "menuButton", "menuContent", "title", "iconOpened", "iconClosed",
@@ -109,10 +110,44 @@ export default class extends BaseController {
     this.hide(this.formTarget)
   }
 
+  delete(event) {
+    event.preventDefault()
+    let url = event.target.getAttribute("href")
+    
+    if (!PA.confirm(event.target)) {
+      return;
+    }
+
+    PA.fetchHTML(url, {
+      method: "delete",
+    }).then(() => {
+      if (this.currentSectionId == this.id) {
+        window.location = this.documentUrl
+      } else {
+        this.element.remove()
+      }
+    })
+  }
+
+  get id() {
+    return this.data.get("id")
+  }
+
+  get documentController() {
+    let documentElement = document.getElementById("document")
+    return this.application.getControllerForElementAndIdentifier(documentElement, "document")
+  }
+
+  get currentSectionId() {
+    return this.documentController.currentSectionId
+  }
+
+  get documentUrl() {
+    return this.documentController.documentUrl
+  }
+
   set title(value) {
     this.data.set("title", value)
     this.titleTarget.innerHTML = value
   }
-
-
 }

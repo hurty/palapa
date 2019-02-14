@@ -138,4 +138,16 @@ export default class extends BaseController {
   clickPage(event) {
     event.currentTarget.querySelector("a").click()
   }
+
+  get currentSectionId() {
+    return this.data.get("current-section-id")
+  }
+
+  get currentPageId() {
+    return this.data.get("current-page-id")
+  }
+
+  get documentUrl() {
+    return this.data.get("url")
+  }
 }
