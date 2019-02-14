@@ -154,6 +154,7 @@ defmodule Palapa.Documents do
       join: pages in assoc(sections, :pages),
       where: sections.position == 0,
       where: pages.position == 0,
+      where: is_nil(pages.deleted_at),
       select: pages
     )
     |> Repo.one!()
