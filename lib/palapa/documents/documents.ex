@@ -126,12 +126,14 @@ defmodule Palapa.Documents do
       from(p in Page,
         order_by: p.position
       )
+      |> non_deleted
 
     sections_query =
       from(s in Section,
         order_by: s.position,
         preload: [pages: ^section_pages_query]
       )
+      |> non_deleted
 
     document =
       from(document in queryable,
@@ -259,6 +261,7 @@ defmodule Palapa.Documents do
     section
     |> change
     |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
+    |> put_change(:position, nil)
     |> Palapa.Position.recompute_positions(:document_id, :position)
     |> Repo.update()
   end
@@ -319,6 +322,7 @@ defmodule Palapa.Documents do
     page
     |> change
     |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
+    |> put_change(:position, nil)
     |> Palapa.Position.recompute_positions(:section_id, :position)
     |> Repo.update!()
   end
