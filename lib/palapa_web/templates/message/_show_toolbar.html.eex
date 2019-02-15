@@ -26,7 +26,8 @@
           <% end %>
 
           <%= if Palapa.Access.permit? Palapa.Messages, :delete_message, @current_member, @message do %>
-            <%= link to: message_path(@conn, :delete, @current_organization, @message), method: :delete, data: [confirm: "Are you sure you want to delete this message?"], class: "popover__link" do %>
+            <%= link to: message_path(@conn, :delete, @current_organization, @message), 
+              data: [controller: "link", action: "link#delete", confirm: "Are you sure you want to delete this message?"], class: "popover__link" do %>
               <i class="fas fa-trash text-red-light"></i>&nbsp;Delete message
             <% end %>
           <% end %> 

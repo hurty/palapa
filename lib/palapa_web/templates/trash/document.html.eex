@@ -17,6 +17,6 @@
   </div>
 
   <div class="text-right">
-    <div><%= link "Restore", to: document_trash_path(@conn, :delete, @current_organization, @document), method: :delete, class: "btn py-1" %></div>
+    <div><%= link "Restore", to: document_trash_path(@conn, :delete, @current_organization, @document), data: [controller: "link", action: "link#delete"], class: "btn py-1" %></div>
   </div>
 </div>

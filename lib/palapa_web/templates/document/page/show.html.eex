@@ -8,7 +8,7 @@
     <%= if Palapa.Documents.deleted?(@page.document) do %>
       <div class="bg-red-lightest text-red font-bold mb-4 p-4 rounded border border-red-lighter">
         <i class="fas fa-trash"></i> This document has been put in the trash. 
-        <%= link "Restore?", to: document_trash_path(@conn, :delete, @current_organization, @page.document), method: :delete, class: "text-blue hover:underline" %>
+        <%= link "Restore?", to: document_trash_path(@conn, :delete, @current_organization, @page.document), data: [controller: "link", action: "link#delete"] ,class: "text-blue hover:underline" %>
       </div>
     <% end %>
 

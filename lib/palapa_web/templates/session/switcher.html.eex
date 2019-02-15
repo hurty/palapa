@@ -1,5 +1,6 @@
 <%= link("My profile", to: member_path(@conn, :show, @current_organization, @current_member)) %>
-<%= link("Log out", to: session_path(@conn, :delete), method: :delete, class: "btn text-red") %>
+<%= link("Log out", to: session_path(@conn, :delete), class: "btn text-red",
+  data: [controller: "link", action: "link#delete"]) %>
 
 <ul class="list-reset">
   <span>Logged in as <%= @current_account.name %></span>

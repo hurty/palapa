@@ -17,14 +17,15 @@
       <div class="bg-grey-lighter p-3 rounded-lg text-xs font-bold m-2 text-center">
         <%= if Palapa.Teams.member?(@selected_team, @current_member) do %>
           You are a member of this team
-          <%= link(to: team_team_membership_path(@conn, :delete, @current_organization, @selected_team), method: :delete, 
-            class: "tag text-xs", data: [confirm: "Are you sure you want to leave this team?"]) do %>
+          <%= link to: team_team_membership_path(@conn, :delete, @current_organization, @selected_team), 
+            class: "tag text-xs", data: [controller: "link", action: "link#delete", confirm: "Are you sure you want to leave this team?"] do %>
             <i class="text-black fas fa-sign-out-alt"></i>&nbsp;Leave
           <% end %>
         <% else %>
           <%= if Palapa.Access.permit? Palapa.Teams, :join, @current_member, @selected_team do %>
             You are not member of this team
-            <%= link(to: team_team_membership_path(@conn, :create, @current_organization, @selected_team), method: :post, class: "tag text-xs whitespace-no-wrap") do %>
+            <%= link to: team_team_membership_path(@conn, :create, @current_organization, @selected_team), class: "tag text-xs whitespace-no-wrap", 
+            data: [controller: "link", action: "link#post"] do %>
               <i class="text-green fas fa-sign-in-alt"></i>&nbsp;Join
             <% end %>
           <% else %>
