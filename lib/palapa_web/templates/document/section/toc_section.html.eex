@@ -73,7 +73,7 @@ class="document-section">
       </li>
     
     <%= for page <- @section.pages do %>
-      <%= render PalapaWeb.Document.PageView, "page.html", Map.put(assigns, :toc_page, page) %>
+      <%= render PalapaWeb.Document.PageView, "toc_page.html", Map.put(assigns, :toc_page, page) %>
     <% end %>
   </ul>
 </li>

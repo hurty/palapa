@@ -15,7 +15,7 @@
   <div>
     <ul data-target="document.sectionsContainer" class="list-reset">
       <%= for section <- @document.sections do %>
-        <%= render PalapaWeb.Document.SectionView, "section.html", Map.put(assigns, :section, section) %>
+        <%= render PalapaWeb.Document.SectionView, "toc_section.html", Map.put(assigns, :section, section) %>
       <% end %>
     </ul>
   </div>
