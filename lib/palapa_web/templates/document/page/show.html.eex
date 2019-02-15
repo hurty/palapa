@@ -17,9 +17,12 @@
       <div class="flex justify-between border-b border-grey-lighter p-4">
         <div>
           <h1 class="text-green"><%= @page.title %></h1>
-          <p class="py-2 text-grey-darker text-xs">
-            Edited <%= auto_format_datetime(@page.updated_at, @current_account) %> by <%= link @page.last_author.account.name, to: member_path(@conn, :show, @current_organization, @page.last_author), class: "text-grey-darkest hover:underline" %>
-          </p>
+          <div class="py-2 text-grey-darker text-xs">
+            <span class="align-middle">Edited <%= auto_format_datetime(@page.updated_at, @current_account) %> by 
+            <%= link to: member_path(@conn, :show, @current_organization, @page.last_author), class: "align-middle text-grey-darkest hover:underline" do %>
+              <%= PalapaWeb.MemberView.avatar(@page.last_author.account, :xs) %> <%= @page.last_author.account.name %>
+            <% end %>
+          </div>
         </div>
 
         <%= render "page_actions.html", assigns %>

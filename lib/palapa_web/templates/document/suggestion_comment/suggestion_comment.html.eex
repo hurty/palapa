@@ -9,7 +9,7 @@
 
         <div class="text-xs my-auto ml-2">
           <%= link @suggestion_comment.author.account.name, to: member_path(@conn, :show, @conn.assigns.current_organization, @suggestion_comment.author.id), class: "text-grey-darkest font-bold hover:underline" %>
-          <div class="text-grey-darker font-light"><%= auto_format_datetime(@suggestion_comment.inserted_at, @conn.assigns.current_account) %></div>
+          <div class="text-grey-darker font-light">Posted <%= auto_format_datetime(@suggestion_comment.inserted_at, @conn.assigns.current_account) %></div>
         </div>
       </div>
 
