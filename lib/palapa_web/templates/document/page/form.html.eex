@@ -5,7 +5,7 @@
 
   <div class="my-4">
     <div class="field bg-grey-lighter p-2 rounded">
-      <%= label form, :section_id, "Section", class: "label" %>
+      <%= label form, :section_id, "Parent section", class: "label" %>
       <%= select form, :section_id, PalapaWeb.Document.SectionView.list_sections_for_select(@document), class: "font-bold" %>
     </div>
 
