@@ -149,7 +149,7 @@ defmodule Palapa.Documents do
     document
   end
 
-  def get_first_page!(document) do
+  def get_first_page(document) do
     from(sections in Ecto.assoc(document, :sections),
       join: pages in assoc(sections, :pages),
       where: sections.position == 0,
@@ -157,7 +157,7 @@ defmodule Palapa.Documents do
       where: is_nil(pages.deleted_at),
       select: pages
     )
-    |> Repo.one!()
+    |> Repo.one()
   end
 
   def get_first_section!(document) do

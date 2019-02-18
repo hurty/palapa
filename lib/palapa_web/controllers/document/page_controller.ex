@@ -133,7 +133,7 @@ defmodule PalapaWeb.Document.PageController do
 
       redirect_page =
         if current_page_id == page.id do
-          Documents.get_first_page!(page.document)
+          Documents.get_first_page(page.document)
         else
           current_page_id
         end

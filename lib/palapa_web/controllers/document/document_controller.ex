@@ -75,11 +75,21 @@ defmodule PalapaWeb.Document.DocumentController do
 
   def show(conn, %{"id" => id}) do
     document = find_document(conn, id)
-    first_page = Documents.get_first_page!(document)
 
-    redirect(conn,
-      to: document_page_path(conn, :show, current_organization(), first_page)
-    )
+    first_page = Documents.get_first_page(document)
+
+    if first_page do
+      redirect(conn,
+        to: document_page_path(conn, :show, current_organization(), first_page)
+      )
+    else
+      render(conn, "show.html",
+        document: document,
+        section_changeset: Documents.change_section(),
+        page_changeset: Documents.change_page(),
+        suggestion_changeset: Documents.Suggestions.change_suggestion()
+      )
+    end
   end
 
   def edit(conn, %{"id" => id}) do
