@@ -1,17 +1,17 @@
-<div id="document" class="content article-layout" 
+<div id="document" class="article-layout" 
   data-controller="document" data-document-url="<%= document_url(@conn, :show, @current_organization, @document) %>" data-document-current-page-id="<%= @page.id %>" data-document-current-section-id="<%= @page.section_id %>">
-  <div class="left-sidebar pl-8">
+  <div class="left-sidebar p-1 sm:p-0 sm:ml-8">
     <%= render PalapaWeb.Document.DocumentView, "table_of_contents.html", assigns %>
   </div>
 
-  <div class="main-content ml-4">
+  <div class="main-content p-1 sm:p-0">
     <%= render PalapaWeb.Document.DocumentView, "restore.html", assigns %>
 
     <%# ----- DOCS ----- %>
     <div class="card">
-      <div class="flex justify-between border-b border-grey-lighter p-4">
+      <div class="flex justify-between border-b border-grey-lighter p-1 sm:p-4">
         <div>
-          <h1 class="text-green"><%= @page.title %></h1>
+          <h1 class="text-green text-lg sm:text-2xl"><%= @page.title %></h1>
           <div class="py-2 text-grey-darker text-xs">
             <span class="align-middle">Edited <%= auto_format_datetime(@page.updated_at, @current_account) %> by 
             <%= link to: member_path(@conn, :show, @current_organization, @page.last_author), class: "align-middle text-grey-darkest hover:underline" do %>
@@ -24,7 +24,7 @@
       </div>
       <div>
         <%= if @page.content do %>
-          <section class="message-content p-4">
+          <section class="message-content sm:p-4">
             <%= raw(sanitize_html(@page.content)) %>
           </section>
         <% else %>
@@ -34,7 +34,7 @@
           </section>
         <% end %>
 
-        <div class="border-t border-grey-lighter flex justify-between p-4 mt-8">
+        <div class="border-t border-grey-lighter flex justify-between sm:p-4 mt-8">
           <div class="w-1/2">
             <%= if @previous_page do %>
               <%= link to: document_page_path(@conn, :show, @current_organization, @previous_page), class: "text-green hover:underline" do %>
