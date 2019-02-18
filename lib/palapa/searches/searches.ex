@@ -10,6 +10,7 @@ defmodule Palapa.Searches do
     :member,
     :team,
     :message,
+    :document,
     :page
   ])
 
@@ -34,13 +35,18 @@ defmodule Palapa.Searches do
         searches in members_query(member, search_string),
         union: ^teams_query(member, search_string),
         union: ^messages_query(member, search_string),
+        union: ^documents_query(member, search_string),
         union: ^pages_query(member, search_string)
       )
 
     # cannot use bindings in `order_by` when using `union` in the above query.
     # That's because the `order_by` applies to the whole `union` and not an individual query.
     # If you really want to order the results, you can wrap the existing query in a subquery and then order it.
-    search_query = from(q in subquery(union_query), order_by: [desc: q.rank, desc: q.updated_at])
+    search_query =
+      from(q in subquery(union_query),
+        order_by: [desc: q.rank, desc: q.updated_at],
+        preload: [[member: :account], :team, :message, :document, [page: :document]]
+      )
 
     search_query
     |> Repo.paginate(
@@ -69,6 +75,7 @@ defmodule Palapa.Searches do
     Repo.query!("UPDATE members SET id=id")
     Repo.query!("UPDATE teams SET id=id")
     Repo.query!("UPDATE messages SET id=id")
+    Repo.query!("UPDATE documents SET id=id")
     Repo.query!("UPDATE pages SET id=id")
   end
 
@@ -89,13 +96,7 @@ defmodule Palapa.Searches do
     from(searches in matching_searches_query(search_string),
       join: members in ^subquery(where(Member, organization_id: ^member.organization_id)),
       on: searches.member_id == members.id,
-      join: accounts in Palapa.Accounts.Account,
-      on: members.account_id == accounts.id,
-      select: %{
-        resource_type: searches.resource_type,
-        resource_id: members.id,
-        title: accounts.name,
-        updated_at: searches.updated_at,
+      select_merge: %{
         rank:
           fragment(
             "ts_rank(search_index, to_tsquery('simple', unaccent(?)))",
@@ -109,11 +110,7 @@ defmodule Palapa.Searches do
     from(searches in matching_searches_query(search_string),
       join: teams in ^subquery(Teams.where_organization(member.organization_id)),
       on: searches.team_id == teams.id,
-      select: %{
-        resource_type: searches.resource_type,
-        resource_id: searches.team_id,
-        title: teams.name,
-        updated_at: searches.updated_at,
+      select_merge: %{
         rank:
           fragment(
             "ts_rank(search_index, to_tsquery('simple', unaccent(?)))",
@@ -127,11 +124,21 @@ defmodule Palapa.Searches do
     from(searches in matching_searches_query(search_string),
       join: messages in ^subquery(Messages.visible_to(member)),
       on: searches.message_id == messages.id,
-      select: %{
-        resource_type: searches.resource_type,
-        resource_id: searches.message_id,
-        title: messages.title,
-        updated_at: searches.updated_at,
+      select_merge: %{
+        rank:
+          fragment(
+            "ts_rank(search_index, to_tsquery('simple', unaccent(?)))",
+            ^"#{search_string}:*"
+          )
+      }
+    )
+  end
+
+  defp documents_query(member, search_string) do
+    from(searches in matching_searches_query(search_string),
+      join: documents in ^subquery(Documents.documents_visible_to(member)),
+      on: searches.document_id == documents.id,
+      select_merge: %{
         rank:
           fragment(
             "ts_rank(search_index, to_tsquery('simple', unaccent(?)))",
@@ -145,11 +152,7 @@ defmodule Palapa.Searches do
     from(searches in matching_searches_query(search_string),
       join: pages in ^subquery(Documents.pages_visible_to(member)),
       on: searches.page_id == pages.id,
-      select: %{
-        resource_type: searches.resource_type,
-        resource_id: searches.page_id,
-        title: pages.title,
-        updated_at: searches.updated_at,
+      select_merge: %{
         rank:
           fragment(
             "ts_rank(search_index, to_tsquery('simple', unaccent(?)))",

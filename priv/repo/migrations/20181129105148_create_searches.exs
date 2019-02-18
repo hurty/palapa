@@ -19,12 +19,14 @@ defmodule Palapa.Repo.Migrations.CreateSearches do
       add(:team_id, references(:teams, type: :uuid, on_delete: :delete_all))
       add(:member_id, references(:members, type: :uuid, on_delete: :delete_all))
       add(:message_id, references(:messages, type: :uuid, on_delete: :delete_all))
+      add(:document_id, references(:documents, type: :uuid, on_delete: :delete_all))
       add(:page_id, references(:pages, type: :uuid, on_delete: :delete_all))
     end
 
     create(index(:searches, [:team_id], unique: true))
     create(index(:searches, [:member_id], unique: true))
     create(index(:searches, [:message_id], unique: true))
+    create(index(:searches, [:document_id], unique: true))
     create(index(:searches, [:page_id], unique: true))
 
     create(index(:searches, [:organization_id]))
@@ -174,6 +176,51 @@ defmodule Palapa.Repo.Migrations.CreateSearches do
     EXECUTE PROCEDURE refresh_messages_search();
     """)
 
+    # --- Documents
+
+    execute("""
+    CREATE OR REPLACE FUNCTION refresh_documents_search()
+    RETURNS TRIGGER LANGUAGE plpgsql
+    AS $$
+    DECLARE
+      index_value tsvector;
+    BEGIN
+       index_value := setweight(to_tsvector('simple', unaccent(NEW.title)), 'A');
+
+      INSERT INTO searches (
+        organization_id,
+        resource_type,
+        updated_at,
+        search_index,
+        document_id
+      )
+      VALUES (
+        NEW.organization_id,
+        'document',
+        NEW.updated_at,
+        index_value,
+        NEW.id
+      )
+
+      ON CONFLICT (document_id) DO UPDATE SET
+        search_index = index_value,
+        updated_at = NEW.updated_at
+        WHERE searches.document_id = NEW.id;
+
+      RETURN NEW;
+    END $$;
+    """)
+
+    execute("DROP TRIGGER IF EXISTS refresh_documents_search_trigger ON documents;")
+
+    execute("""
+    CREATE TRIGGER refresh_documents_search_trigger
+    AFTER INSERT OR UPDATE
+    ON documents
+    FOR EACH ROW
+    EXECUTE PROCEDURE refresh_documents_search();
+    """)
+
     # --- Documents pages
 
     execute("""
@@ -218,6 +265,8 @@ defmodule Palapa.Repo.Migrations.CreateSearches do
     END $$;
     """)
 
+    execute("DROP TRIGGER IF EXISTS refresh_pages_search_trigger ON pages;")
+
     execute("""
     CREATE TRIGGER refresh_pages_search_trigger
     AFTER INSERT OR UPDATE
@@ -236,6 +285,9 @@ defmodule Palapa.Repo.Migrations.CreateSearches do
 
     execute("DROP TRIGGER refresh_messages_search_trigger ON messages;")
     execute("DROP FUNCTION refresh_messages_search;")
+
+    execute("DROP TRIGGER refresh_documents_search_trigger ON documents;")
+    execute("DROP FUNCTION refresh_documents_search;")
 
     execute("DROP TRIGGER refresh_pages_search_trigger ON pages;")
     execute("DROP FUNCTION refresh_pages_search;")

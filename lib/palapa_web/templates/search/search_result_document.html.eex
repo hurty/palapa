@@ -1,0 +1,12 @@
+<div class="flex px-2">
+  <div class="w-8">
+    <i class="fas fa-file-alt text-grey-dark text-sm"></i> 
+  </div>
+
+  <div class="flex-1">
+    <%= link truncate_string(@search_result.document.title), to: document_path(@conn, :show, @current_organization, @search_result.document), class: "text-green hover:underline font-bold text-sm" %>
+    <div>
+      <span class="text-xs text-grey-dark font-bold">Document</span>
+    </div>
+  </div>
+</div>

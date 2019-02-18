@@ -1,10 +1,10 @@
 <div class="flex px-2">
   <div class="w-8">
-    <i class="fas fa-user-alt text-grey-dark text-sm"></i>
+    <%= PalapaWeb.MemberView.avatar(@search_result.member.account, :xs) %>
   </div>
 
   <div class="flex-1">
-    <%= link truncate_string(@search_result.title), to: member_path(@conn, :show, @current_organization, @search_result.resource_id), class: "text-green hover:underline font-bold text-sm" %>
+    <%= link truncate_string(@search_result.member.account.name), to: member_path(@conn, :show, @current_organization, @search_result.member), class: "text-green hover:underline font-bold text-sm" %>
     <div class="text-xs text-grey-dark font-bold">Member</div>
   </div>
 </div>

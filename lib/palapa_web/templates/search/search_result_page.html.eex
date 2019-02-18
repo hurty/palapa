@@ -4,10 +4,16 @@
   </div>
 
   <div class="flex-1">
-    <%= link truncate_string(@search_result.title), to: document_page_path(@conn, :show, @current_organization, @search_result.resource_id), class: "text-green hover:underline font-bold text-sm" %>
+    <%= link truncate_string(@search_result.page.title), to: document_page_path(@conn, :show, @current_organization, @search_result.page), class: "text-green hover:underline font-bold text-sm" %>
+
+    <%= if @search_result.page.document.title != @search_result.page.title do %>
+      <div class="text-grey-darker font-bold text-sm">
+        <%= truncate_string(@search_result.page.document.title) %>
+      </div>
+    <% end %>
+    
     <div>
-      <span class="text-xs text-grey-dark font-bold">Document page • </span>
-      <span class="text-xs text-blue">Last activity <%= Timex.from_now(@search_result.updated_at) %></span>
+      <span class="text-xs text-grey-dark font-bold">Document page</span>
     </div>
   </div>
 </div>

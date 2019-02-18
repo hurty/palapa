@@ -12,6 +12,9 @@ defmodule PalapaWeb.SearchView do
       :message ->
         "search_result_message.html"
 
+      :document ->
+        "search_result_document.html"
+
       :page ->
         "search_result_page.html"
     end
