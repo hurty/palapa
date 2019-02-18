@@ -8,11 +8,15 @@
       <% end %>
 
       <h2 class="font-bold text-grey-darkest text-base"><%= @document.title %></h2>
+      <div class="sm:hidden py-2">
+        <a class="text-blue" data-action="document#toggleToc">Toggle table of contents</a>
+      </div>
     </div>
     <%= render "document_actions.html", assigns %>
+    
   </div>
 
-  <div class="hidden sm:block">
+  <div class="hidden sm:block" data-target="document.toc">
     <div>
       <ul data-target="document.sectionsContainer" class="list-reset">
         <%= for section <- @document.sections do %>

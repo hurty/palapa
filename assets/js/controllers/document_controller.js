@@ -7,7 +7,7 @@ import debounce from 'lodash.debounce'
 
 export default class extends BaseController {
   static targets = ["draggableContainer", "pagesList", "sectionsList", "sectionsContainer",
-    "newSectionButton", "newSectionForm", "newSectionInput", "pageTitleInput"]
+    "newSectionButton", "newSectionForm", "newSectionInput", "pageTitleInput", "toc"]
 
   connect() {
     this.setFocus()
@@ -23,6 +23,11 @@ export default class extends BaseController {
 
   handleImageGallery() {
     new LuminousGallery(document.querySelectorAll("a[data-trix-content-type^='image']"))
+  }
+
+  toggleToc(event) {
+    event.preventDefault()
+    this.toggle(this.tocTarget)
   }
 
   handlePageSorting() {
