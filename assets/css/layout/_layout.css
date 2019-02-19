@@ -30,6 +30,8 @@
 .header {
   grid-area: header;
   z-index: 1000;
+  background-color: rgb(243, 248, 251);
+  @apply border-b;
 }
 
 /* Don't make the header sticky on small screens */
@@ -43,6 +45,7 @@
 
 .flash {
   grid-area: flash;
+  @apply py-4;
 }
 
 .content {

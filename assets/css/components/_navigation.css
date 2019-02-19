@@ -56,18 +56,14 @@
 }
 
 .search-bar {
-  @apply bg-white p-2 rounded text-grey-darkest text-sm border;
-
-  &::placeholder {
-    @apply text-grey-darker;
-  }  
+  @apply bg-grey-light p-2 rounded-full text-grey-darkest text-sm border;
   
-  &:focus {
-    @apply bg-grey-lightest;
+  input {
+    @apply bg-transparent;
+  }
 
-    &::placeholder {
-      @apply text-grey-darkest;
-    }
+  &:focus-within {
+    @apply bg-white;
   }
 }
 
@@ -76,8 +72,7 @@
 }
 
 .navigation {
-  @apply border-b  border-t py-2 px-4 text-xs border-grey-lighter;
-  background-color: rgb(243, 248, 251);
+  @apply py-2 px-4 text-xs border-grey-lighter;
 }
 
 .breadcrumbs {
