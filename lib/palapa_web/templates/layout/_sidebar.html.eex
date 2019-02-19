@@ -1,0 +1,37 @@
+<div class="sidebar">
+  <div class="mb-8">
+    <%= link(@current_organization.name, to: dashboard_path(@conn, :index, @current_organization), class: "organization-name") %>
+  </div>
+  
+  <ul data-target="navigation.links" class="header-links">
+    <li class="header-link <%= if @navigation == "dashboard" do %>header-link--active<% end %>"> 
+      <%= link(to: dashboard_path(@conn, :index, @current_organization)) do %>
+        <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+      <% end %>
+    </li>
+
+    <li class="header-link <%= if @navigation == "message" do %>header-link--active<% end %>"> 
+      <%= link(to: message_path(@conn, :index, @current_organization)) do %>
+        <i class="fas fa-comment mr-2"></i>Messages
+      <% end %>
+    </li>
+
+    <li class="header-link  <%= if @navigation == "documents" do %>header-link--active<% end %>">
+      <%= link(to: document_path(@conn, :index, @current_organization)) do %>
+        <i class="fas fa-file-alt mr-2"></i>Documents
+      <% end %>
+    </li>
+
+    <li class="header-link  <%= if @navigation == "contacts" do %>header-link--active<% end %>">
+      <%= link(to: "#") do %>
+        <i class="fas fa-address-book mr-2"></i>Contacts
+      <% end %>
+    </li>
+
+    <li class="header-link  <%= if @navigation == "members" do %>header-link--active<% end %>">
+      <%= link(to: member_path(@conn, :index, @current_organization)) do %>
+        <i class="fas fa-users mr-2"></i>Teams
+      <% end %>
+    </li>
+  </ul>
+</div>

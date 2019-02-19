@@ -1,5 +1,5 @@
-<div class="content article-layout">
-<div class="main-content w-2/3 mx-auto">
+<div class="content page-layout">
+<div class="main-content">
   <div class="card p-1 sm:p-8">
     <h2 class="card-header">New team</h2>
     <div class="card-header-separator"></div>

@@ -1,4 +1,4 @@
-<div class="content article-layout">
+<div class="content page-layout">
   <div class="main-content">
     <div class="card">
 
@@ -26,7 +26,7 @@
 
           <%= if @member.role in [:owner, :admin] do %>
             <div class="text-center my-6">
-              <span class="border-2 text-sm text-grey-darker rounded-full px-4 py-2">This member is <%= @member.role %></span>
+              <span class="border-2 text-sm text-grey-darker border-green rounded-full px-4 py-2">This member is <%= @member.role %></span>
             </div>
           <% end %>
 

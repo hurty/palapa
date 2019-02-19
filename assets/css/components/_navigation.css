@@ -1,40 +1,30 @@
 .organization-name {
-  @apply text-xl font-extrabold text-black;
+  @apply text-xl font-extrabold text-green;
 }
 
 .header-links {
   @apply flex flex-col list-reset;
-  @apply border-t-2 border-blue-darker;
-}
-
-@screen sm {
-  .header-links {
-    @apply flex-row items-center justify-between;
-    @apply border-none;
-  }  
 }
 
 .header-link {
-  @apply border-b-2 border-transparent;
-  
+  @apply py-2;
   a {
-    @apply text-sm text-black font-bold uppercase tracking-wide p-1;
+    @apply text-grey-darker font-bold px-4 py-1;
 
     &:hover {
-      @apply border-b-2 border-black;
+      @apply text-green;
     }
   }
-}
 
-@screen sm {
-  .header-link {
-    @apply mx-2;
-  } 
-}  
+}
 
 .header-link--active {
   a {
-    @apply border-b-2 border-black;
+    @apply text-white bg-green rounded-full;
+    
+    &:hover {
+      @apply text-white;
+    }
   }
 }
 
@@ -86,7 +76,8 @@
 }
 
 .navigation {
-  @apply bg-white border-b  border-t py-2 px-4 text-xs border-grey-lighter;
+  @apply border-b  border-t py-2 px-4 text-xs border-grey-lighter;
+  background-color: rgb(243, 248, 251);
 }
 
 .breadcrumbs {

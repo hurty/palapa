@@ -1,4 +1,4 @@
-<div data-controller="message" data-message-page="show" class="content article-layout">
+<div data-controller="message" data-message-page="show" class="content page-layout">
   <div class="main-content">
     <div class="card">
       <div class="card-toolbar message__toolbar">

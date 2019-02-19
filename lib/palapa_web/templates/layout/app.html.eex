@@ -13,12 +13,15 @@
   </head>
 
   <body class="layout">
-    <%= render PalapaWeb.LayoutView, "_private_navigation.html", assigns %>
-    <%= render PalapaWeb.LayoutView, "_flash_notice.html", assigns %>
-    
-    <%= render @view_module, @view_template, assigns %>
+    <%= render PalapaWeb.LayoutView, "_sidebar.html", assigns %>
 
-    <footer class="footer py-8 mt-8 text-center text-xs text-grey-dark">
-    </footer>
+    <div class="main">
+      <%= render PalapaWeb.LayoutView, "_private_navigation.html", assigns %>
+      <%= render PalapaWeb.LayoutView, "_flash_notice.html", assigns %>
+      <%= render @view_module, @view_template, assigns %>
+
+      <footer class="footer py-8 mt-8 text-center text-xs text-grey-dark">
+      </footer>
+    </div>
   </body>
 </html>

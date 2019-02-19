@@ -1,4 +1,4 @@
-<div class="content article-layout">
+<div class="content page-layout">
   <div class="main-content my-8 sm:w-4/5 mx-auto">
     <div class="card p-1 sm:p-8">
       <%= form_for @changeset, join_path(@conn, :create, @invitation.id, @invitation.token), [as: :join_form, multipart: true], fn f -> %>

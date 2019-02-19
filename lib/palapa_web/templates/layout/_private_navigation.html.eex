@@ -1,30 +1,16 @@
 <header class="header">
   <nav data-controller="navigation" data-navigation-switcher-url="<%= session_path(@conn, :switcher, @current_organization) %>" class="sm:flex items-center justify-between flex-wrap px-2 sm:pl-4 py-2 sm:py-1 bg-white w-full">
     <div class="flex justify-between items-center">
-      <%= link(@current_organization.name, to: dashboard_path(@conn, :index, @current_organization), class: "organization-name") %>
-      
       <button data-action="navigation#toggleLinks" class="sm:hidden flex items-center px-3 py-2 border-2 rounded text-green-lighter border-green-light hover:text-white hover:border-white">
         <i class="fas fa-bars"></i>
       </button>
     </div>
 
     <ul data-target="navigation.links" class="header-links hidden sm:flex">
-      <li class="header-link <%= if @navigation == "message" do %>header-link--active<% end %>"> 
-        <%= link("Messages", to: message_path(@conn, :index, @current_organization)) %>
-      </li>
-
-      <li class="header-link  <%= if @navigation == "documents" do %>header-link--active<% end %>">
-        <%= link("Documents", to: document_path(@conn, :index, @current_organization)) %>
-      </li>
-
-      <li class="header-link  <%= if @navigation == "members" do %>header-link--active<% end %>">
-        <%= link("Your organization", to: member_path(@conn, :index, @current_organization)) %>
-      </li>
-
       <li id="global-search" class="flex-1 sm:mx-4" data-controller="search" data-search-index="0" data-search-active="false">
         <div data-action="click@window->search#escapeSearchDialog">
           <%= form_for @conn, search_path(@conn, :index, @current_organization), [method: :get, "data-target": "search.form"], fn _form -> %>
-            <input type="text" name="query" data-target="search.queryInput" data-action="input->search#triggerSearch keydown->search#triggerKeyNavigation" autocomplete="off" placeholder="Search" class="search-bar" />
+            <input type="text" name="query" data-target="search.queryInput" data-action="input->search#triggerSearch keydown->search#triggerKeyNavigation" autocomplete="off" placeholder="Search anything" class="search-bar" />
           <% end %>
 
           <div data-target="search.searchDialog" class="search__results-container hidden">
@@ -45,6 +31,5 @@
       </div>
     </div>
   </nav>
-
   <%= render PalapaWeb.LayoutView, "_breadcrumbs.html", assigns %>
 </header>
