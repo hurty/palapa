@@ -1,5 +1,5 @@
 .search__results-container {
-  @apply shadow-lg border bg-white p-2 rounded;
+  @apply shadow-lg border bg-white p-2 my-2 rounded;
   min-width: 16em;
   max-width: 24em;
 }
