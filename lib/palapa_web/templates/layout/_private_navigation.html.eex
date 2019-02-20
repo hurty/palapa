@@ -7,6 +7,26 @@
     </div>
 
     <div class="flex items-center">
+
+      <div data-controller="popover" data-action="mousedown@window->popover#hide">
+        <button data-target="popover.button" data-action="popover#toggle" class="bg-grey rounded-full h-8 w-8 bg-grey-light text-green font-bold border-2 border-transparent hover:border-grey-dark">
+          <i class="fas fa-plus-circle"></i>
+        </button>
+        
+        <div data-target="popover.content" class="popover hidden">
+          <div data-target="popover.arrow" class="popover__arrow"></div>
+          <nav class="flex flex-col">
+            <%= link to: message_path(@conn, :new, @current_organization), class: "popover__link" do %>
+              <i class="fas fa-comment mr-2"></i>New message
+            <% end %>
+
+            <%= link to: document_path(@conn, :new, @current_organization), class: "popover__link" do %>
+              <i class="fas fa-file-alt mr-2"></i>New document
+            <% end %>
+          </nav>
+        </div>
+      </div>
+
       <ul data-target="navigation.links" class="header-links hidden sm:flex">
         <li id="global-search" class="flex-1 sm:mx-4" data-controller="search" data-search-index="0" data-search-active="false">
         <div data-action="click@window->search#escapeSearchDialog">

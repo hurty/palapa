@@ -1,4 +1,4 @@
-<div class="content article-layout">
+<div class="content page-layout">
   <div class="main-content">
     <div class="card p1 sm:p-8">
       <h2 class="card-header">New document</h2>
@@ -10,7 +10,7 @@
         <% end %>
 
         <div class="field">
-          <%= text_input form, :title, placeholder: "Title...", "data-controller": "focus", autocomplete: "off", class: "input p-2 w-full font-bold sm:text-xl" %>
+          <%= text_input form, :title, placeholder: "Title...", "data-controller": "focus", autocomplete: "off", class: "input p-2 sm:p-4 w-full font-bold sm:text-xl" %>
           <%= error_tag form, :title %>
         </div>
 
