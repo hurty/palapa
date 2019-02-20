@@ -3,13 +3,14 @@
 }
 
 .header-links {
-  @apply flex flex-col list-reset;
+  @apply list-reset mt-8;
 }
 
 .header-link {
-  @apply py-2;
+  @apply py-2 my-4;
+
   a {
-    @apply text-grey-darker font-bold px-4 py-1;
+    @apply text-grey-darker px-2 py-1;
 
     &:hover {
       @apply text-green;

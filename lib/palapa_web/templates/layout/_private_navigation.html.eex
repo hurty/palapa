@@ -2,6 +2,10 @@
   <nav data-controller="navigation" data-navigation-switcher-url="<%= session_path(@conn, :switcher, @current_organization) %>" 
   class="sm:flex items-center justify-between flex-wrap px-2 sm:pl-4 py-2 sm:py-1 w-full">
 
+    <button data-action="navigation#toggleMobileMenu" class="sm:hidden flex items-center px-3 py-2 border-2 rounded text-green border-green-light hover:text-white hover:border-white">
+      <i class="fas fa-bars"></i>
+    </button>
+
     <div>
       <%= render PalapaWeb.LayoutView, "_breadcrumbs.html", assigns %>
     </div>
@@ -27,7 +31,7 @@
         </div>
       </div>
 
-      <ul data-target="navigation.links" class="header-links hidden sm:flex">
+      <ul class="header-links flex">
         <li id="global-search" class="flex-1 sm:mx-4" data-controller="search" data-search-index="0" data-search-active="false">
         <div data-action="click@window->search#escapeSearchDialog">
           <%= form_for @conn, search_path(@conn, :index, @current_organization), [method: :get, "data-target": "search.form"], fn _form -> %>
@@ -46,19 +50,11 @@
         </li>
       </ul>
 
-      <button data-action="navigation#toggleLinks" class="sm:hidden flex items-center px-3 py-2 border-2 rounded text-green-lighter border-green-light hover:text-white hover:border-white">
-        <i class="fas fa-bars"></i>
-      </button>
-
-      <div data-target="navigation.searchLinks" class="hidden sm:flex">
-        <div class="flex items-center">
-          
-          <div class="sm:mx-4">
-            <a href="#" data-action="navigation#showSwitcher" title="Signed id as <%= @current_account.name %>"><%= PalapaWeb.MemberView.avatar(@current_account, :small) %></a>
-            <div data-target="navigation.switcher" class="absolute pin-r border z-50 p-4 bg-white shadow rounded opacity-0">
-          </div>
-        </div>
+      <div class="sm:mx-4">
+        <a href="#" data-action="navigation#showSwitcher" title="Signed id as <%= @current_account.name %>"><%= PalapaWeb.MemberView.avatar(@current_account, :small) %></a>
+        <div data-target="navigation.switcher" class="absolute pin-r border z-50 p-4 bg-white shadow rounded opacity-0">
       </div>
+
     </div>
 
   </nav>

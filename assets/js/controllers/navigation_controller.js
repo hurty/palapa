@@ -1,12 +1,13 @@
 import { Controller } from "stimulus"
+import BaseController from "./base_controller"
 
-export default class extends Controller {
-  static targets = ["switcher", "links", "searchLinks"]
+export default class extends BaseController {
+  static targets = ["switcher"]
 
-  toggleLinks(event) {
+  toggleMobileMenu(event) {
     event.preventDefault()
-    this.linksTarget.classList.toggle("hidden")
-    this.searchLinksTarget.classList.toggle("hidden")
+    document.body.classList.toggle("layout")
+    document.body.classList.toggle("menu-layout")
   }
 
   showSwitcher(event) {
