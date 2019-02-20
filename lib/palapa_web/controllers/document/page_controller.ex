@@ -138,9 +138,14 @@ defmodule PalapaWeb.Document.PageController do
           current_page_id
         end
 
-      conn
-      |> put_flash(:success, "The page \"#{page.title}\" has been deleted.")
-      |> redirect(to: document_page_path(conn, :show, current_organization(), redirect_page))
+      conn = put_flash(conn, :success, "The page \"#{page.title}\" has been deleted.")
+
+      if redirect_page do
+        redirect(conn, to: document_page_path(conn, :show, current_organization(), redirect_page))
+      else
+        # meaning the last page of the document has been deleted
+        redirect(conn, to: document_path(conn, :show, current_organization(), page.document))
+      end
     end
   end
 end
