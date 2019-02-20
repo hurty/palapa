@@ -6,8 +6,9 @@ export default class extends Controller {
 
   toggle() {
     this.popover = new Popper(this.buttonTarget, this.contentTarget, {
-      placement: "bottom"
+      placement: "auto"
     })
+    this.popover.scheduleUpdate()
     this.contentTarget.classList.toggle("hidden")
   }
 
