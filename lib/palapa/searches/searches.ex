@@ -124,6 +124,7 @@ defmodule Palapa.Searches do
     from(searches in matching_searches_query(search_string),
       join: messages in ^subquery(Messages.visible_to(member)),
       on: searches.message_id == messages.id,
+      where: is_nil(messages.deleted_at),
       select_merge: %{
         rank:
           fragment(
@@ -138,6 +139,7 @@ defmodule Palapa.Searches do
     from(searches in matching_searches_query(search_string),
       join: documents in ^subquery(Documents.documents_visible_to(member)),
       on: searches.document_id == documents.id,
+      where: is_nil(documents.deleted_at),
       select_merge: %{
         rank:
           fragment(
@@ -152,6 +154,7 @@ defmodule Palapa.Searches do
     from(searches in matching_searches_query(search_string),
       join: pages in ^subquery(Documents.pages_visible_to(member)),
       on: searches.page_id == pages.id,
+      where: is_nil(pages.deleted_at),
       select_merge: %{
         rank:
           fragment(
