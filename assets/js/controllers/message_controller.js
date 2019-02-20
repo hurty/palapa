@@ -10,7 +10,7 @@ export default class extends Controller {
   }
 
   handleImageGallery() {
-    new LuminousGallery(document.querySelectorAll("a[data-trix-content-type^='image']"))
+    new LuminousGallery(document.querySelectorAll("figure[class^='attachment attachment--preview'] > a"))
   }
 
   showCommentForm(event) {
