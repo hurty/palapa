@@ -1,5 +1,5 @@
 .organization-name {
-  @apply text-xl font-extrabold text-black;
+  @apply text-lg font-bold px-2 text-white;
 }
 
 .header-links {
@@ -10,18 +10,18 @@
   @apply py-2 my-4;
 
   a {
-    @apply text-grey-darker px-2 py-1;
+    @apply text-grey px-2 py-1;
 
     &:hover {
-      @apply text-green;
+      @apply text-white;
     }
   }
-
 }
 
 .header-link--active {
   a {
-    @apply text-white bg-green rounded-full;
+    @apply text-white rounded-lg;
+    background-color: rgb(84, 142, 227);
     
     &:hover {
       @apply text-white;
@@ -73,7 +73,7 @@
 }
 
 .navigation {
-  @apply py-2 px-4 text-xs border-grey-lighter;
+  @apply py-2 px-4 text-xs;
 }
 
 .breadcrumbs {

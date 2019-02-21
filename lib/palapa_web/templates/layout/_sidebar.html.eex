@@ -1,5 +1,5 @@
 <div class="sidebar">
-  <div class="mb-8" data-controller="navigation">
+  <div id="toggle-mobile-menu" class="mb-8" data-controller="navigation">
     <button data-action="navigation#toggleMobileMenu" class="flex items-center mx-auto px-3 py-2 border-2 rounded text-green border-green hover:text-green-dark hover:border-green-dark">
       <i class="fas fa-times mr-2"></i>Hide menu
     </button>

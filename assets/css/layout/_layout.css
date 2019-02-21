@@ -7,25 +7,29 @@
   .sidebar {
     display: none;
   }
+
+  #toggle-mobile-menu {
+    display: none;
+  }
 }
 
 @screen sm {
   .layout {
     display: grid;
     min-height: 100vh;
-    grid-template-columns: minmax(200px, 1fr) 5fr;
+    grid-template-columns: minmax(200px, 1fr) 6fr;
     grid-template-areas: "sidebar main";
 
     .sidebar {
-      display: block;
       grid-area: sidebar;
-      @apply h-screen overflow-y-auto overflow-x-hidden;
-      @apply bg-grey-lightest p-4 border-r border-grey-lighter;
+      display: block;
+      @apply h-screen overflow-y-auto overflow-x-hidden p-4;
       z-index: 1000;
       position: sticky;
       position: -webkit-sticky;
       left: 0;
       top: 0;
+      background-color: rgb(40, 45, 75);
     }
   }
 }
@@ -43,6 +47,7 @@
     @apply overflow-y-auto overflow-x-hidden;
     @apply bg-grey-lightest p-4 border-r border-grey-lighter;
     z-index: 1000;
+    background-color: rgb(40, 45, 75);
     /* position: sticky;
     position: -webkit-sticky;
     left: 0;
@@ -68,8 +73,8 @@
 .header {
   grid-area: header;
   z-index: 999;
-  background-color: rgb(243, 248, 251);
-  @apply border-b border-grey-light;
+  @apply bg-white border-b;
+  /* background-color: rgb(243, 248, 251); */
 }
 
 /* Don't make the header sticky on small screens */
