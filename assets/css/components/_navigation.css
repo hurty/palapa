@@ -57,6 +57,7 @@
 }
 
 .search-bar {
+  @apply flex flex-no-wrap items-center;
   @apply bg-grey-light p-2 rounded-full text-grey-darkest text-sm border;
   
   input {
