@@ -1,6 +1,9 @@
 <div class="content page-layout">
   <div class="main-content" data-controller="message">
-      <div class="card p-1 sm:p-8">
+      <div class="card p-2 sm:p-8">
+        <h2 class="card-header">Edit message</h2>
+        <div class="card-header-separator"></div>
+
         <%= form_for @message_changeset, message_path(@conn, :update, @current_organization, @message), fn form -> %>
           <%= render "_form.html", 
             conn: @conn,
