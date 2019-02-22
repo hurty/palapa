@@ -88,12 +88,18 @@
 
 .flash {
   grid-area: flash;
-  @apply py-4;
+}
+
+@screen sm {
+  .flash {
+    @apply p-4;
+  }
 }
 
 .content {
   grid-area: content;
 }
+
 
 .footer {
   grid-area: footer;
