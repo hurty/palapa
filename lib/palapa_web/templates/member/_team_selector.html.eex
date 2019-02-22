@@ -1,29 +1,27 @@
 <%= if Enum.any?(@teams) do %>
-  <div data-controller="popover" data-action="mousedown@window->popover#hide" class="flex justify-center">
-    <button data-action="popover#toggle" data-target="popover.button" 
-    class="text-normal text-center border border-b-2 border-r-2 rounded-lg border-black p-2 my-4 font-bold cursor-pointer" 
-    tabindex="0" aria-haspopup="true">
-
+  <div data-controller="popover" data-action="mousedown@window->popover#hide" class="flex flex-wrap justify-center items-center">
+    <div class="font-bold underline mr-4">Select a team: </div>
+    <button data-action="popover#toggle" data-target="popover.button" class="btn">
         <%= if @selected_team do %> 
           <span class="" title="<%= @selected_team.name %>"><%= @selected_team.name %></span>
         <% else %>
           <span class="" title="Everyone in the organization">Everyone in the organization</span>
         <% end %>
         <i class="fas fa-angle-down"></i>
+    </button>
 
       
-        <div data-target="popover.content" class="popover hidden">
-        <div data-target="popover.arrow" class="popover__arrow"></div>
-        <div class="flex flex-col">
-          <%= link("Everyone in the organization", to: member_path(@conn, :index, @current_organization), class: "selector-item truncate selector-item-default") %>
-          <%= for team <- @teams do %>
-            <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
-            <%= link(to: member_path(@conn, :index, @current_organization, team_id: team.id), class: item_class, title: team.name) do %>
-              <%= team.name %><%= if team.private do %>&nbsp;<i class="text-xs text-grey fas fa-lock"></i><% end %>
-            <% end %>
+    <div data-target="popover.content" class="popover hidden">
+      <div data-target="popover.arrow" class="popover__arrow"></div>
+      <div class="flex flex-col">
+        <%= link("Everyone in the organization", to: member_path(@conn, :index, @current_organization), class: "selector-item truncate") %>
+        <%= for team <- @teams do %>
+          <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
+          <%= link(to: member_path(@conn, :index, @current_organization, team_id: team.id), class: item_class, title: team.name) do %>
+            <%= team.name %><%= if team.private do %>&nbsp;<i class="text-xs text-grey fas fa-lock"></i><% end %>
           <% end %>
-        </div>
+        <% end %>
       </div>
-    </button>
+    </div>
   </div>
 <% end %>
