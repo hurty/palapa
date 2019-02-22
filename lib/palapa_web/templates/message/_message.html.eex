@@ -1,11 +1,11 @@
 <li class="border-b p-2 py-4 sm:p-8">
   <div class="flex">
-    <div class="w-10 sm:w-16 mx-2">
+    <div class="mx-2">
       <%= PalapaWeb.MemberView.avatar(@message.creator.account, :small) %>
     </div>
 
     <div class="w-full text-xs text-grey-darker my-auto">
-      <h3><%= link @message.title, to: message_path(@conn, :show, @current_organization, @message), class: "text-green text-base hover:underline" %></h3>
+      <h3><%= link @message.title, to: message_path(@conn, :show, @current_organization, @message), class: "text-green text-sm sm:text-base hover:underline" %></h3>
       <%= link @message.creator.account.name, to: member_path(@conn, :show, @current_organization, @message.creator.id), class: "text-grey-darker font-bold hover:underline" %>
       <div class="text-xs text-grey-darker font-light">
         Posted <%= auto_format_datetime(@message.inserted_at, @current_account) %>
