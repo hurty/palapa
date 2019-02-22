@@ -16,7 +16,7 @@
       <%= if permit?(Palapa.Documents, :delete_suggestion_comment, @conn.assigns.current_member, @suggestion_comment) do %>
         <div data-controller="popover" data-action="mousedown@window->popover#hide">
           <button data-target="popover.button" data-action="popover#toggle" 
-            class="h-6 w-6 text-grey-dark font-bold hover:text-green hover:cursor-pointer"
+            class="card-actions-button card-actions-button--sm"
             title="Actions on this comment">
             <i class="fas fa-ellipsis-h"></i>
           </button>

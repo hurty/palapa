@@ -15,7 +15,7 @@
     <div class="flex-initial flex items-center justify-between">
 
       <div data-controller="popover" data-action="mousedown@window->popover#hide">
-        <button data-target="popover.button" data-action="popover#toggle" class="bg-grey rounded-full h-8 w-8 bg-grey-light text-green font-bold border-2 border-transparent hover:border-grey-dark">
+        <button data-target="popover.button" data-action="popover#toggle" class="card-actions-button">
           <i class="fas fa-plus-circle"></i>
         </button>
         

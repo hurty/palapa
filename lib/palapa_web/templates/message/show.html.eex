@@ -7,7 +7,7 @@
 
 
       <article class="p-4 sm:p-12">
-        <h1 class="text-green text-2xl"><%= @message.title %></h1>
+        <h1 class="text-green text-base sm:text-2xl"><%= @message.title %></h1>
         
         <%= unless message_blank?(@message) do %>
           <div class="separator"></div>
