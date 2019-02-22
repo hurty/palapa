@@ -3,8 +3,8 @@
   class="flex items-center justify-between flex-wrap p-1 bg-grey-lighter sm:bg-white">
 
     <div class="flex-1">
-      <button data-action="navigation#toggleMobileMenu" class="sm:hidden mx-auto flex items-center px-2 py-1 hover:text-green-dark my-1 font-bold border-2 border-green rounded bg-green text-white">
-        <i class="fas fa-bars mr-2"></i>Menu
+      <button data-action="navigation#toggleMobileMenu" class="sm:hidden w-full mx-auto flex items-center justify-center px-2 py-1 hover:text-green-dark my-1 font-bold rounded bg-blue-darker text-white">
+          <i class="fas fa-angle-down mr-2"></i>Menu
       </button>
 
       <div class="hidden sm:block">
