@@ -1,6 +1,5 @@
-<div data-controller="popover" data-action="mousedown@window->popover#hide" class="messages__team-filter">
-  <div class="p-4">
-    <%= if Enum.any?(@teams) do %>
+<%= if Enum.any?(@teams) do %>
+  <div data-controller="popover" data-action="mousedown@window->popover#hide" class="messages__team-filter">
       <button data-target="popover.button" data-action="popover#toggle" class="btn text-sm truncate" title="<%= if @selected_team, do: @selected_team.name %>">
         <%= if @selected_team do %> 
           <span><%= truncate_string(@selected_team.name, 40) %></span>
@@ -20,14 +19,11 @@
           <% end %>
         </div>
       </div>
-    <% else %>
-      <h2 class="text-grey-darkest">All messages</h2>
-    <% end %>
   </div>
-</div>
+<% else %>
+  <h2 class="text-grey-darkest">All messages</h2>
+<% end %>
 
-<div class="p-4 messages__new-message-button ">
-  <%= link(to: message_path(@conn, :new, @current_organization), class: "btn text-sm") do %>
-    <i class="fas fa-plus-circle text-green mr-2"></i>New message
-  <% end %>
-</div>
+<%= link(to: message_path(@conn, :new, @current_organization), class: "messages__new-message-button btn text-sm") do %>
+  <i class="fas fa-plus-circle text-green mr-2"></i>New message
+<% end %>

@@ -1,10 +1,8 @@
-/* INDEX */
+/* Messages toolbar */
 
 .messages__actions {
-  @apply p-2;
   display: grid;
   justify-content: space-between;
-  grid-gap: 1em;
   grid-template-columns: minmax(1fr, max-content) minmax(max-content, 1fr);
   grid-template-areas: "messages__team-filter messages__new-message-button";
 }
