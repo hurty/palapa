@@ -1,7 +1,8 @@
 .popover {
-  @apply z-50 shadow-lg rounded bg-white;
+  @apply shadow-lg rounded bg-white;
   @apply border border-grey bg-white shadow-inner shadow overflow-y-auto;
   max-height: 16em;
+  z-index: 1001;
 
   .popover__arrow {
     width: 0;
