@@ -24,7 +24,6 @@
       grid-area: sidebar;
       display: block;
       @apply h-screen overflow-y-auto overflow-x-hidden p-4;
-      z-index: 1000;
       position: sticky;
       position: -webkit-sticky;
       left: 0;
@@ -125,17 +124,16 @@
   grid-template-columns: 1fr;
   grid-template-areas: 
   "right-sidebar"
-  "main-content"
-  ;
-  @apply p-4;
+  "main-content";
 }
 
 @screen sm {
   .article-layout {
     display: grid;
     grid-gap: 1em;
-    grid-template-columns: minmax(800px, 2fr) minmax(auto, 1fr);
+    grid-template-columns: minmax(50vw, 2fr) 1fr;
     grid-template-areas: "main-content right-sidebar";
+    @apply p-4;
   }
 }
 

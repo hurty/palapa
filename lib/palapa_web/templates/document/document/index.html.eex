@@ -3,23 +3,23 @@
     <div class="card">
 
         <div class="flex flex-wrap items-center justify-between p-4">
-          <h2 class="text-grey-darkest">Documents and files</h2>
+          <h2 class="text-grey-darkest">All documents</h2>
 
-          <div>
+          <div class="my-2 sm:m-0">
             <%= link(to: document_path(@conn, :new, @current_organization), class: "btn text-sm") do %>
               <i class="fas fa-plus-circle text-green mr-2"></i>New document
             <% end %>
           </div>
         </div>
 
-        <div class="flex justify-between items-center px-4 py-2 bg-grey-lightest border-b-2 border-grey-lighter">
+        <div class="flex flex-wrap justify-between items-center px-4 py-2 bg-grey-lightest border-b-2 border-grey-lighter">
           <div data-controller="popover" data-action="mousedown@window->popover#hide">
             <%= if Enum.any?(@teams) do %>
-              <button data-target="popover.button" data-action="popover#toggle" class="btn text-sm truncate" title="<%= if @selected_team, do: @selected_team.name %>">
+              <button data-target="popover.button" data-action="popover#toggle" class="btn text-sm truncate my-2 sm:my-0" title="<%= if @selected_team, do: @selected_team.name %>">
                 <%= if @selected_team do %> 
                   <span class="text-blue font-bold"><%= truncate_string(@selected_team.name, 40) %></span>
                 <% else %>
-                  <span class="font-bold">All documents</span>
+                  <span class="font-bold">All teams</span>
                 <% end %>
                 <i class="fas fa-angle-down ml-2"></i>
               </button>
@@ -27,7 +27,7 @@
               <div data-target="popover.content" class="popover hidden">
                 <div data-target="popover.arrow" class="popover__arrow"></div>
                 <div class="flex flex-col">
-                  <%= link("All documents", to: document_path(@conn, :index, @current_organization, Map.delete(@conn.params, "team_id")), class: "selector-item truncate selector-item-default") %>
+                  <%= link("All teams", to: document_path(@conn, :index, @current_organization, Map.delete(@conn.params, "team_id")), class: "selector-item truncate selector-item-default") %>
                   <%= for team <- @teams do %>
                     <% item_class = "selector-item" <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
                     <%= link(truncate_string(team.name, 40), to: document_path(@conn, :index, @current_organization.id, Map.put(@conn.params, "team_id", team.id)), class: item_class, title: team.name) %>
@@ -63,17 +63,18 @@
         <%= if Enum.any?(@documents) do %>
           <div class="py-4">
 
-            <div class="flex items-center py-2 border-b border-grey-lighter p-4">
-              <div class="w-8">
+            <div class="flex items-center justify-between py-2 border-b border-grey-lighter p-4">
+              <div class="sm:w-8">
+                <span class="sm:hidden font-bold text-xs uppercase">Sort by</span>
               </div>
 
-              <div class="flex-1">
+              <div class="sm:flex-1">
                 <%= if @conn.params["sort_by"] == "title" do %><span class="text-blue">•</span><% end %>
                 <%= link "Title", to: document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "title")), 
                   class: "uppercase text-xs text-blue font-bold hover:underline", title: "Sort by title" %>
               </div>
               
-              <div class="flex-none">
+              <div class="sm:flex-none">
                 <%= if @conn.params["sort_by"] == "updated_at" || is_nil(@conn.params["sort_by"]) do %><span class="text-blue">•</span><% end %>
                 <%= link "Last modified", to: document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "updated_at")), 
                   class: "uppercase text-xs text-blue font-bold hover:underline", title: "Sort by date" %>
@@ -81,24 +82,25 @@
             </div>         
 
           <%= for document <- @documents do %>
-            <div class="flex py-2 border-b border-grey-lighter p-4">
-              <div class="w-8">
-                <i class="fas fa-file-alt text-grey-dark text-base" title="Document"></i> 
+            <div class="flex flex-wrap py-2 border-b border-grey-lighter p-4">
+              <div class="sm:w-8">
+                <i class="hidden sm:block fas fa-file-alt text-grey-dark text-base" title="Document"></i> 
               </div>
 
-              <div class="flex-1">
+              <div class="w-full sm:flex-1">
+                <i class="sm:hidden fas fa-file-alt text-grey-dark text-base" title="Document"></i> 
                 <%= link truncate_string(document.title, 150), to: document_path(@conn, :show, @current_organization, document), class: "text-base text-green font-bold hover:underline text-sm" %>
-                <div class="text-xs font-bold text-grey-darker mr-2 rounded">
+                <div class="font-bold mr-2 rounded my-1">
                 <%= if document.team do %>
-                  <%= document.team.name %>
+                  <%= link(document.team.name, to: document_path(@conn, :index, @current_organization, team_id: document.team_id), title: "Show all team documents", class: "tag tag-team text-xs") %></span>
                 <% else %>
-                  Shared with everyone
+                  <%= link("Shared with everyone", to: document_path(@conn, :index, @current_organization), title: "Show all team documents", class: "text-grey-darker text-xs hover:underline") %>
                 <% end %>
                 </div>
               </div>
               
-              <div class="flex-none">
-                <div class="text-sm text-grey-darker"><%= format_date(document.updated_at, @current_account) %>
+              <div class="sm:flex-none">
+                <div class="text-xs sm:text-sm text-grey-darker"><span class="sm:hidden">Modified </span><%= format_date(document.updated_at, @current_account) %>
                   <div class="flex mt-2">
                     <%= PalapaWeb.MemberView.avatar(document.last_author.account, :xs) %>
                     <span class="text-xs mx-2 text-grey-darkest">
@@ -123,14 +125,19 @@
           </div>
         <% end %>
 
-
     </div>
+        <div class="my-8 text-center">
+          <%= link to: trash_path(@conn, :index, @current_organization), 
+            class: "border py-2 px-4 rounded-full text-center bg-white hover:bg-grey-light text-blue" do %>
+            <i class="fas fa-trash text-grey-darker"></i> View documents in the trash
+          <% end %>
+        </div>
   </div>
 
   <div class="right-sidebar">
     <%= if Enum.any?(@recent_documents) do %>
       <div class="card p-4">
-        <h3 class="text-grey-darkest text-lg mb-4">Recently viewed</h3>
+        <h3 class="text-grey-darkest text-lg mb-4">Documents recently viewed</h3>
         <div class="card-header-separator"></div>
         <div class="flex flex-wrap">
           <%= for document <- @recent_documents do %>
@@ -142,12 +149,5 @@
         </div>
       </div>
     <% end %>
-
-    <div class="my-8 text-center">
-      <%= link to: trash_path(@conn, :index, @current_organization), 
-        class: "border py-2 px-4 rounded-full text-center hover:bg-grey-light text-blue" do %>
-        <i class="fas fa-trash text-grey-darker"></i> View documents in the trash
-      <% end %>
-    </div>
   </div>
 </div>

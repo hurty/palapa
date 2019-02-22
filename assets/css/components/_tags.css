@@ -1,5 +1,5 @@
 .tag {
-  @apply px-2 py-1 mr-1;
+  @apply px-2 py-1;
   @apply border rounded;
   @apply text-grey-darker text-sm;
 
@@ -14,4 +14,8 @@
   &:hover {
     @apply bg-grey-light;
   }
+}
+
+.tag-team:before {
+  content: "#";
 }
