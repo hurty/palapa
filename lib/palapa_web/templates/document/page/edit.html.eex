@@ -1,13 +1,13 @@
 <div class="content article-layout" data-controller="document">
-  <div class="right-sidebar pl-8">
+  <div class="right-sidebar p-1 sm:p-0 sm:ml-8">
     <%= render PalapaWeb.Document.DocumentView, "table_of_contents.html", assigns %>
   </div>
 
-  <div class="main-content ml-4">
+  <div class="main-content p-1 sm:p-0">
     
     <%# ----- DOCS ----- %>
     
-    <div class="rounded shadow bg-white p-8 ">
+    <div class="rounded sm:shadow bg-white sm:p-8">
       <h2 class="card-header">
         Edit page
       </h2>

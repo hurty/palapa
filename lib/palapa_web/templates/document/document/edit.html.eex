@@ -1,6 +1,6 @@
-<div class="content article-layout">
+<div class="content page-layout">
   <div class="main-content">
-    <div class="card p1 sm:p-8">
+    <div class="card p-1 sm:p-8">
       <h2 class="card-header">Edit document</h2>
       <div class="card-header-separator"></div>
         <%= form_for @changeset, document_path(@conn, :update, @current_organization, @document), fn form -> %>
