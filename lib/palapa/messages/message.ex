@@ -10,7 +10,12 @@ defmodule Palapa.Messages.Message do
     belongs_to(:creator, Organizations.Member)
     many_to_many(:teams, Team, join_through: "messages_teams", on_replace: :delete)
     has_many(:comments, MessageComment)
-    has_many(:attachments, Attachment, on_replace: :nilify)
+
+    many_to_many(:attachments, Attachment,
+      join_through: "messages_attachments",
+      on_replace: :delete
+    )
+
     timestamps()
     field(:title, :string)
     field(:content, :string)

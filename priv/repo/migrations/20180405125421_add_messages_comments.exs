@@ -2,7 +2,7 @@ defmodule Palapa.Repo.Migrations.AddMessagesComments do
   use Ecto.Migration
 
   def change do
-    create table(:messages_comments, primary_key: false) do
+    create table(:message_comments, primary_key: false) do
       add(:id, :uuid, primary_key: true)
 
       add(
@@ -17,8 +17,8 @@ defmodule Palapa.Repo.Migrations.AddMessagesComments do
       add(:content, :text)
     end
 
-    create(index(:messages_comments, [:organization_id]))
-    create(index(:messages_comments, [:creator_id]))
-    create(index(:messages_comments, [:inserted_at]))
+    create(index(:message_comments, [:organization_id]))
+    create(index(:message_comments, [:creator_id]))
+    create(index(:message_comments, [:inserted_at]))
   end
 end

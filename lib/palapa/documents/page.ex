@@ -4,6 +4,7 @@ defmodule Palapa.Documents.Page do
   alias Palapa.Documents.{Document, Section, Page, Suggestion}
   alias Palapa.Organizations.{Member}
   alias Palapa.Searches.Search
+  alias Palapa.Attachments.Attachment
 
   import Ecto.Query
 
@@ -23,6 +24,11 @@ defmodule Palapa.Documents.Page do
     belongs_to(:deletion_author, Member, on_replace: :update)
 
     has_many(:suggestions, Suggestion)
+
+    many_to_many(:attachments, Attachment,
+      join_through: "pages_attachments",
+      on_replace: :delete
+    )
   end
 
   def with_document(query), do: preload(query, :document)

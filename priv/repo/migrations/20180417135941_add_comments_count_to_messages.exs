@@ -29,7 +29,7 @@ defmodule Palapa.Repo.Migrations.AddCommentsCountToMessages do
     execute("""
     CREATE TRIGGER update_comments_count_trigger
     AFTER INSERT OR DELETE
-    ON messages_comments
+    ON message_comments
     FOR EACH ROW
     EXECUTE PROCEDURE update_message_comments_count();
     """)
@@ -40,7 +40,7 @@ defmodule Palapa.Repo.Migrations.AddCommentsCountToMessages do
       remove(:comments_count)
     end
 
-    execute("DROP TRIGGER IF EXISTS update_comments_count_trigger ON messages_comments;")
+    execute("DROP TRIGGER IF EXISTS update_comments_count_trigger ON message_comments;")
     execute("DROP FUNCTION update_message_comments_count();")
   end
 end

@@ -4,32 +4,19 @@ defmodule Palapa.Attachments.AttachmentParserTest do
   alias Palapa.Attachments.AttachmentParser
 
   @input """
-    <a href="/uploads/organizations/ec07fbab-c812-4c1d-a292-f83a24bea805/attachments/c97dbdfc-0283-4ed1-a384-d4a5788183a3.jpg"
-      data-trix-attachment="{&quot;attachment_uuid&quot;:&quot;c97dbdfc-0283-4ed1-a384-d4a5788183a3&quot;,&quot;contentType&quot;:&quot;image/jpeg&quot;,&quot;filename&quot;:&quot;IMG_1185.jpg&quot;,&quot;filesize&quot;:2920952,&quot;height&quot;:450,&quot;href&quot;:&quot;/uploads/organizations/ec07fbab-c812-4c1d-a292-f83a24bea805/attachments/c97dbdfc-0283-4ed1-a384-d4a5788183a3.jpg&quot;,&quot;url&quot;:&quot;/uploads/organizations/ec07fbab-c812-4c1d-a292-f83a24bea805/attachments/c97dbdfc-0283-4ed1-a384-d4a5788183a3_thumb.jpg&quot;,&quot;width&quot;:600}"
-      data-trix-content-type="image/jpeg">
-    </a>
+  <div>Test attachment</div><div class="attachment-gallery attachment-gallery--2">
+    <figure data-trix-attachment="{&quot;attachment_sid&quot;:&quot;SFMyNTY.g3QAAAACZAAEZGF0YW0AAAAkNmFjNDJmOGYtMmUzMy00NDhhLWE1MTItZmI3ODgwYzQ1ZmQxZAAGc2lnbmVkbgYAfDihJWkB.mwEFvAcx3GJp7XKUd0ktXKGexwG3nFWv368ujlpLbOM&quot;,&quot;contentType&quot;:&quot;image/jpeg&quot;,&quot;filename&quot;:&quot;erlich.jpg&quot;,&quot;filesize&quot;:120786,&quot;height&quot;:512,&quot;href&quot;:&quot;https://localhost:4000/org/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/6ac42f8f-2e33-448a-a512-fb7880c45fd1/original/erlich.jpg&quot;,&quot;url&quot;:&quot;https://localhost:4000/org/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/6ac42f8f-2e33-448a-a512-fb7880c45fd1/thumb/erlich.jpg&quot;,&quot;width&quot;:512}" data-trix-content-type="image/jpeg" data-trix-attributes="{&quot;presentation&quot;:&quot;gallery&quot;}" class="attachment attachment--preview attachment--jpg">
+    <a href="https://localhost:4000/org/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/6ac42f8f-2e33-448a-a512-fb7880c45fd1/original/erlich.jpg"><img src="https://localhost:4000/org/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/6ac42f8f-2e33-448a-a512-fb7880c45fd1/thumb/erlich.jpg" width="512" height="512"><figcaption class="attachment__caption"><span class="attachment__name">erlich.jpg</span> <span class="attachment__size">117.96 KB</span></figcaption></a></figure>
 
-    <a href="/uploads/organizations/ec07fbab-c812-4c1d-a292-f83a24bea805/attachments/6b14fc08-65ac-4faa-b6a2-b17d904acec0_original.png"
-    data-trix-attachment="{&quot;attachment_uuid&quot;:&quot;6b14fc08-65ac-4faa-b6a2-b17d904acec0&quot;,&quot;contentType&quot;:&quot;image/png&quot;,&quot;filename&quot;:&quot;Capture d’écran 2018-05-02 à 18.45.58.png&quot;,&quot;filesize&quot;:563023,&quot;height&quot;:819,&quot;href&quot;:&quot;/uploads/organizations/ec07fbab-c812-4c1d-a292-f83a24bea805/attachments/6b14fc08-65ac-4faa-b6a2-b17d904acec0_original.png&quot;,&quot;url&quot;:&quot;/uploads/organizations/ec07fbab-c812-4c1d-a292-f83a24bea805/attachments/6b14fc08-65ac-4faa-b6a2-b17d904acec0_thumb.png&quot;,&quot;width&quot;:465}"
-    data-trix-content-type="image/png"><figure class="attachment attachment--preview attachment--png">
-    </a>
+    <figure data-trix-attachment="{&quot;attachment_sid&quot;:&quot;SFMyNTY.g3QAAAACZAAEZGF0YW0AAAAkNjBlZDk0MzctYzdmZi00OTc5LWI3YmUtYzEyYTdkM2IxNTZiZAAGc2lnbmVkbgYA-jihJWkB.-sNlpoN525f8Acjs8Nvf_Di6wAhmE7uKH-BeCTM4g6o&quot;,&quot;contentType&quot;:&quot;image/jpeg&quot;,&quot;filename&quot;:&quot;gilfoyle.jpg&quot;,&quot;filesize&quot;:109937,&quot;height&quot;:512,&quot;href&quot;:&quot;https://localhost:4000/org/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/60ed9437-c7ff-4979-b7be-c12a7d3b156b/original/gilfoyle.jpg&quot;,&quot;url&quot;:&quot;https://localhost:4000/org/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/60ed9437-c7ff-4979-b7be-c12a7d3b156b/thumb/gilfoyle.jpg&quot;,&quot;width&quot;:512}" data-trix-content-type="image/jpeg" data-trix-attributes="{&quot;presentation&quot;:&quot;gallery&quot;}" class="attachment attachment--preview attachment--jpg">
+    <a href="https://localhost:4000/org/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/60ed9437-c7ff-4979-b7be-c12a7d3b156b/original/gilfoyle.jpg"><img src="https://localhost:4000/org/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/60ed9437-c7ff-4979-b7be-c12a7d3b156b/thumb/gilfoyle.jpg" width="512" height="512"><figcaption class="attachment__caption"><span class="attachment__name">gilfoyle.jpg</span> <span class="attachment__size">107.36 KB</span></figcaption></a></figure>
+  </div>
   """
 
-  test "finds attachments ids in the content" do
-    assert ["c97dbdfc-0283-4ed1-a384-d4a5788183a3", "6b14fc08-65ac-4faa-b6a2-b17d904acec0"] ==
-             AttachmentParser.extract_attachments_ids(@input)
-  end
-
-  test "no attachments to create nor delete when there is nothing to attach" do
-    assert [] == AttachmentParser.diff([], [])
-  end
-
-  test "no attachments to create nor delete when attachments are still the same" do
-    assert [eq: ["a1"]] == AttachmentParser.diff(["a1"], ["a1"])
-  end
-
-  test "finds attachments ids to create or delete" do
-    assert [del: ["a1"], eq: ["a2"], ins: ["a3"]] ==
-             AttachmentParser.diff(["a1", "a2"], ["a2", "a3"])
+  test "finds attachments signed ids in the content" do
+    assert [
+             "SFMyNTY.g3QAAAACZAAEZGF0YW0AAAAkNmFjNDJmOGYtMmUzMy00NDhhLWE1MTItZmI3ODgwYzQ1ZmQxZAAGc2lnbmVkbgYAfDihJWkB.mwEFvAcx3GJp7XKUd0ktXKGexwG3nFWv368ujlpLbOM",
+             "SFMyNTY.g3QAAAACZAAEZGF0YW0AAAAkNjBlZDk0MzctYzdmZi00OTc5LWI3YmUtYzEyYTdkM2IxNTZiZAAGc2lnbmVkbgYA-jihJWkB.-sNlpoN525f8Acjs8Nvf_Di6wAhmE7uKH-BeCTM4g6o"
+           ] == AttachmentParser.extract_attachments_signed_ids(@input)
   end
 end

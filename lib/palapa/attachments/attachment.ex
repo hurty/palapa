@@ -13,8 +13,6 @@ defmodule Palapa.Attachments.Attachment do
     field(:deleted_at, :utc_datetime)
     belongs_to(:creator, Palapa.Organizations.Member)
 
-    belongs_to(:message, Palapa.Messages.Message)
-    belongs_to(:message_comment, Palapa.Messages.MessageComment)
     belongs_to(:member_information, Palapa.Organizations.MemberInformation)
   end
 

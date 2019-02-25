@@ -17,17 +17,9 @@ defmodule Palapa.Repo.Migrations.CreateAttachments do
       add(:checksum, :string)
       timestamps()
       add(:deleted_at, :utc_datetime, null: true, default: nil)
-      add(:message_id, references(:messages, on_delete: :delete_all, type: :uuid))
-
-      add(
-        :message_comment_id,
-        references(:messages_comments, on_delete: :delete_all, type: :uuid)
-      )
     end
 
     create(index(:attachments, [:organization_id]))
     create(index(:attachments, [:deleted_at]))
-    create(index(:attachments, [:message_id]))
-    create(index(:attachments, [:message_comment_id]))
   end
 end

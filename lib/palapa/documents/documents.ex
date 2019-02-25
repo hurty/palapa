@@ -4,6 +4,7 @@ defmodule Palapa.Documents do
   alias Palapa.Documents.{Document, Section, Page, DocumentAccess}
   alias Palapa.Teams.Team
   alias Palapa.Position
+  alias Palapa.Attachments
 
   # --- Errors
 
@@ -288,6 +289,7 @@ defmodule Palapa.Documents do
     |> put_change(:document_id, section.document_id)
     |> put_assoc(:last_author, author)
     |> put_change(:section_id, section.id)
+    |> Attachments.put_attachments()
     |> Position.insert_at_bottom(:section_id, section.id, :position)
     |> Repo.insert()
   end
@@ -299,8 +301,10 @@ defmodule Palapa.Documents do
 
   def update_page(page, author, attrs) do
     page
+    |> Repo.preload(:attachments)
     |> Page.changeset(attrs)
     |> put_assoc(:last_author, author)
+    |> Attachments.put_attachments()
     |> Palapa.Position.recompute_positions(:section_id, :position)
     |> Repo.update()
   end

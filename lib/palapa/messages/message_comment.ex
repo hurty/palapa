@@ -5,13 +5,18 @@ defmodule Palapa.Messages.MessageComment do
   alias Palapa.Messages.MessageComment
   alias Palapa.Attachments.Attachment
 
-  schema "messages_comments" do
+  schema "message_comments" do
+    field(:content, :string)
+    timestamps()
+
     belongs_to(:organization, Organization)
     belongs_to(:message, Message)
     belongs_to(:creator, Member)
-    has_many(:attachments, Attachment, on_replace: :nilify)
-    field(:content, :string)
-    timestamps()
+
+    many_to_many(:attachments, Attachment,
+      join_through: "message_comments_attachments",
+      on_replace: :delete
+    )
   end
 
   def changeset(%MessageComment{} = message_comment, attrs) do

@@ -127,8 +127,7 @@ defmodule Palapa.Attachments do
 
   def put_attachments(%Ecto.Changeset{} = changeset) do
     content = get_field(changeset, :content)
-    organization = get_field(changeset, :organization)
-    attachments = find_attachments_in_content(content, organization)
+    attachments = find_attachments_in_content(content)
 
     changeset
     |> put_assoc(:attachments, attachments)
@@ -170,11 +169,8 @@ defmodule Palapa.Attachments do
     Enum.member?(image_types, attachment.content_type)
   end
 
-  defp find_attachments_in_content(text, organization) do
-    ids = AttachmentParser.extract_attachments_ids(text)
-
-    where_organization(organization)
-    |> where_ids(ids)
-    |> list
+  defp find_attachments_in_content(content) do
+    signed_ids = AttachmentParser.extract_attachments_signed_ids(content)
+    list_attachments_from_signed_ids(signed_ids)
   end
 end
