@@ -33,12 +33,12 @@ input[type=checkbox] {
   -moz-appearance: none;
   -ms-appearance: none;
 
-  border-radius: 5px;
-  height: 18px;
-  width: 18px;
+  border-radius: 4px;
+  height: 16px;
+  width: 16px;
   background: #FFF;
   cursor: pointer;
-  @apply border;
+  @apply border mr-2 align-middle;
 }
 
 input[type="checkbox"]:checked {

@@ -19,7 +19,8 @@
 </div>
 
 <div class="field">
-  <%= checkbox @form, :private, class: "input" %>
-  <%= label @form, :private, "This team is private (only admins can add members)", class: "label" %>
+  <%= label @form, :private do %>
+    <%= checkbox @form, :private, class: "input" %>This team is private (only admins can add members)
+  <% end %>
   <%= error_tag @form, :private %>
 </div>
