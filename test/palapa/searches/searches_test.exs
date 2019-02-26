@@ -20,7 +20,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "dinesh")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Dinesh Chugtai" && entry.resource_type == :member
+               entry.member.account.name == "Dinesh Chugtai" && entry.resource_type == :member
              end)
     end
 
@@ -28,7 +28,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "chug")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Dinesh Chugtai" && entry.resource_type == :member
+               entry.member.account.name == "Dinesh Chugtai" && entry.resource_type == :member
              end)
     end
 
@@ -36,7 +36,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "  dinesh  ")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Dinesh Chugtai" && entry.resource_type == :member
+               entry.member.account.name == "Dinesh Chugtai" && entry.resource_type == :member
              end)
     end
 
@@ -44,7 +44,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "DinESH")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Dinesh Chugtai" && entry.resource_type == :member
+               entry.member.account.name == "Dinesh Chugtai" && entry.resource_type == :member
              end)
     end
   end
@@ -60,7 +60,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "management")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Management" && entry.resource_type == :team
+               entry.team.name == "Management" && entry.resource_type == :team
              end)
     end
 
@@ -68,7 +68,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "mana")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Management" && entry.resource_type == :team
+               entry.team.name == "Management" && entry.resource_type == :team
              end)
     end
 
@@ -76,7 +76,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "  management  ")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Management" && entry.resource_type == :team
+               entry.team.name == "Management" && entry.resource_type == :team
              end)
     end
 
@@ -84,7 +84,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "MaNaGement")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Management" && entry.resource_type == :team
+               entry.team.name == "Management" && entry.resource_type == :team
              end)
     end
   end
@@ -110,7 +110,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "welcome")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Welcome everyone" && entry.resource_type == :message
+               entry.message.title == "Welcome everyone" && entry.resource_type == :message
              end)
     end
 
@@ -118,7 +118,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "every")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Welcome everyone" && entry.resource_type == :message
+               entry.message.title == "Welcome everyone" && entry.resource_type == :message
              end)
     end
 
@@ -126,7 +126,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "  welcome  ")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Welcome everyone" && entry.resource_type == :message
+               entry.message.title == "Welcome everyone" && entry.resource_type == :message
              end)
     end
 
@@ -134,7 +134,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "WeLcOmE")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Welcome everyone" && entry.resource_type == :message
+               entry.message.title == "Welcome everyone" && entry.resource_type == :message
              end)
     end
 
@@ -142,7 +142,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "pleasure")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Welcome everyone" && entry.resource_type == :message
+               entry.message.title == "Welcome everyone" && entry.resource_type == :message
              end)
     end
   end
@@ -167,7 +167,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "styleguide")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Styleguide" && entry.resource_type == :page
+               entry.page.title == "Styleguide" && entry.resource_type == :page
              end)
     end
 
@@ -175,7 +175,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "style")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Styleguide" && entry.resource_type == :page
+               entry.page.title == "Styleguide" && entry.resource_type == :page
              end)
     end
 
@@ -183,7 +183,7 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "  styleguide  ")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Styleguide" && entry.resource_type == :page
+               entry.page.title == "Styleguide" && entry.resource_type == :page
              end)
     end
 
@@ -191,20 +191,20 @@ defmodule Palapa.SearchesTest do
       results = Searches.search(workspace.richard, "StYleGuidE")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Styleguide" && entry.resource_type == :page
+               entry.page.title == "Styleguide" && entry.resource_type == :page
              end)
     end
 
     test "search document page with content", %{workspace: workspace, document: document} do
       Palapa.Documents.get_first_page(document)
-      |> Palapa.Documents.update_page(%{
+      |> Palapa.Documents.update_page(workspace.richard, %{
         content: "<p>The style you must follow</p>"
       })
 
       results = Searches.search(workspace.richard, "follow")
 
       assert Enum.find_value(results.entries, fn entry ->
-               entry.title == "Styleguide" && entry.resource_type == :page
+               entry.page.title == "Styleguide" && entry.resource_type == :page
              end)
     end
   end

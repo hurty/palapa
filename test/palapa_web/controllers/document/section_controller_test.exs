@@ -64,8 +64,7 @@ defmodule PalapaWeb.Document.SectionControllerTest do
           )
         )
 
-      assert redirected_to(conn, 302) =~
-               document_page_path(conn, :show, org, Documents.get_first_page(document))
+      assert html_response(conn, 200)
 
       section = Repo.reload(section)
 

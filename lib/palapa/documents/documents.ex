@@ -298,7 +298,7 @@ defmodule Palapa.Documents do
 
   def update_page(page, author, attrs) do
     page
-    |> Repo.preload(:attachments)
+    |> Repo.preload([:attachments, :last_author])
     |> Page.changeset(attrs)
     |> put_assoc(:last_author, author)
     |> Attachments.put_attachments()
