@@ -6,12 +6,13 @@ export default class extends Controller {
   static targets = ["autocompleteList", "autocompleteChoice"]
 
   connect() {
-    // document.addEventListener("trix-initialize", e => {
-    //   this.editor = e.target.editor
-    //   this.members = JSON.parse(this.data.get("members"))
-    //   this.hideAutocomplete()
-    //   this.setUpKeyboardNavigation()
-    // })
+    document.addEventListener("trix-initialize", e => {
+      this.editor = e.target.editor
+      this.addAttachmentButton()
+      // this.members = JSON.parse(this.data.get("members"))
+      // this.hideAutocomplete()
+      // this.setUpKeyboardNavigation()
+    })
 
     // document.addEventListener("trix-change", e => {
     //   this.detectSearchTerm()
@@ -264,6 +265,25 @@ export default class extends Controller {
 
     return xhr.send(form);
   };
+
+  addAttachmentButton() {
+    document.addEventListener("trix-action-invoke", function (event) {
+      let editor = event.target.editor
+      console.log(editor)
+
+      if (event.actionName === "x-attachment") {
+        let input = document.createElement('input')
+        input.type = 'file'
+        input.multiple = true
+        input.click()
+
+        input.onchange = e => {
+          editor.insertFiles(e.target.files)
+        }
+      }
+    })
+
+  }
 
   get cursorPosition() {
     return this.editor.getPosition()
