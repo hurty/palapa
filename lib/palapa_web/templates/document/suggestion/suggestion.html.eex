@@ -1,4 +1,4 @@
-<li id="<%= @suggestion.id %>" data-controller="document-suggestion" 
+<li id="<%= @suggestion.id %>" data-controller="document-suggestion gallery" 
 data-document-suggestion-close-url="<%= suggestion_closure_url(@conn, :create, @current_organization, @suggestion) %>" 
 data-document-suggestion-comment-url="<%= suggestion_comment_url(@conn, :create, @current_organization, @suggestion) %>" 
 class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-8">

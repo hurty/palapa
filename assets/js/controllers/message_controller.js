@@ -1,17 +1,7 @@
 import { Controller } from "stimulus"
-import { LuminousGallery } from 'luminous-lightbox'
 
 export default class extends Controller {
   static targets = ["editor", "commentForm", "commentsList", "commentsCount", "commentContent", "leaveComment"]
-
-  connect() {
-    if (this.data.get("page") == "show")
-      this.handleImageGallery()
-  }
-
-  handleImageGallery() {
-    new LuminousGallery(document.querySelectorAll("figure[class^='attachment attachment--preview'] > a"))
-  }
 
   showCommentForm(event) {
     this.commentFormTarget.classList.remove("hidden")
