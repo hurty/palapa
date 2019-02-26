@@ -64,7 +64,7 @@ defmodule PalapaWeb.Document.SectionControllerTest do
           )
         )
 
-      assert html_response(conn, 200)
+      assert response(conn, 200)
 
       section = Repo.reload(section)
 
