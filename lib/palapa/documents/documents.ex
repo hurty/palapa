@@ -182,10 +182,7 @@ defmodule Palapa.Documents do
       create_section(changes.document, author, %{title: "Document pages"})
     end)
     |> Ecto.Multi.run(:first_page, fn _repo, changes ->
-      create_page(changes.first_section, author, %{
-        title: attrs["title"],
-        content: attrs["content"]
-      })
+      create_page(changes.first_section, author, attrs)
     end)
     |> Repo.transaction()
     |> case do
