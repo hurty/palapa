@@ -2,6 +2,7 @@ defmodule Palapa.Documents.Suggestions do
   use Palapa.Context
 
   alias Palapa.Documents.{Page, Suggestion, SuggestionComment}
+  alias Palapa.Attachments
 
   # --- Scopes
 
@@ -57,6 +58,7 @@ defmodule Palapa.Documents.Suggestions do
     |> put_change(:organization_id, author.organization_id)
     |> put_assoc(:author, author)
     |> put_assoc(:suggestion_comments, [])
+    |> Attachments.put_attachments()
     |> Repo.insert()
   end
 
@@ -65,9 +67,10 @@ defmodule Palapa.Documents.Suggestions do
   end
 
   def update_suggestion(suggestion, attrs) do
-    suggestion = Repo.preload(suggestion, author: :account)
+    suggestion = Repo.preload(suggestion, author: :account, attachments: [])
 
     SuggestionComment.changeset(suggestion, attrs)
+    |> Attachments.put_attachments()
     |> Repo.update()
   end
 
