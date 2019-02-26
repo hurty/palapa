@@ -269,7 +269,6 @@ export default class extends Controller {
   addAttachmentButton() {
     document.addEventListener("trix-action-invoke", function (event) {
       let editor = event.target.editor
-      console.log(editor)
 
       if (event.actionName === "x-attachment") {
         let input = document.createElement('input')
