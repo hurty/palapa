@@ -60,12 +60,12 @@ defmodule PalapaWeb.Document.SectionControllerTest do
         delete(
           conn,
           document_section_path(conn, :delete, org, section,
-            current_page_id: Documents.get_first_page!(document)
+            current_page_id: Documents.get_first_page(document)
           )
         )
 
       assert redirected_to(conn, 302) =~
-               document_page_path(conn, :show, org, Documents.get_first_page!(document))
+               document_page_path(conn, :show, org, Documents.get_first_page(document))
 
       section = Repo.reload(section)
 

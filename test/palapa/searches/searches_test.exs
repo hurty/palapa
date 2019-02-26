@@ -196,7 +196,7 @@ defmodule Palapa.SearchesTest do
     end
 
     test "search document page with content", %{workspace: workspace, document: document} do
-      Palapa.Documents.get_first_page!(document)
+      Palapa.Documents.get_first_page(document)
       |> Palapa.Documents.update_page(%{
         content: "<p>The style you must follow</p>"
       })

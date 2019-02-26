@@ -26,18 +26,18 @@ defmodule PalapaWeb.Document.PageControllerTest do
     end
 
     test "show page", %{conn: conn, org: org, document: document} do
-      conn = get(conn, document_page_path(conn, :show, org, Documents.get_first_page!(document)))
+      conn = get(conn, document_page_path(conn, :show, org, Documents.get_first_page(document)))
       assert html_response(conn, 200) =~ @doc_title
     end
 
     test "edit page", %{conn: conn, org: org, document: document} do
-      conn = get(conn, document_page_path(conn, :edit, org, Documents.get_first_page!(document)))
+      conn = get(conn, document_page_path(conn, :edit, org, Documents.get_first_page(document)))
       assert html_response(conn, 200)
     end
 
     test "update page", %{conn: conn, org: org, document: document} do
       payload = %{"page" => %{"title" => "My awesome page", "content" => "updated page content"}}
-      first_page = Documents.get_first_page!(document)
+      first_page = Documents.get_first_page(document)
 
       conn =
         patch(
@@ -91,7 +91,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
             conn,
             :show,
             workspace.organization,
-            Documents.get_first_page!(document)
+            Documents.get_first_page(document)
           )
         )
 
@@ -115,7 +115,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
             conn,
             :show,
             workspace.organization,
-            Documents.get_first_page!(document)
+            Documents.get_first_page(document)
           )
         )
 
@@ -129,7 +129,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
           title: "management doc"
         })
 
-      first_page = Documents.get_first_page!(document)
+      first_page = Documents.get_first_page(document)
 
       assert_raise Ecto.NoResultsError, fn ->
         get(
@@ -162,7 +162,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
             conn,
             :show,
             workspace.organization,
-            Documents.get_first_page!(document)
+            Documents.get_first_page(document)
           )
         )
       end

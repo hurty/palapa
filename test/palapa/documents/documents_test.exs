@@ -258,7 +258,7 @@ defmodule Palapa.DocumentsTest do
     end
 
     test "previous page of first page is nil", %{document: document} do
-      first_page = Documents.get_first_page!(document)
+      first_page = Documents.get_first_page(document)
 
       assert 0 == first_page.position
       refute Documents.get_previous_page(first_page)
@@ -339,7 +339,7 @@ defmodule Palapa.DocumentsTest do
       Documents.move_page!(red_page, red_page.section, new_position)
 
       document = Repo.reload(document)
-      first_page = Documents.get_first_page!(document)
+      first_page = Documents.get_first_page(document)
       blue_page = Repo.reload(blue_page)
       red_page = Repo.reload(red_page)
 
@@ -358,7 +358,7 @@ defmodule Palapa.DocumentsTest do
       Documents.move_page!(blue_page, blue_page.section, blue_page.position + 1)
 
       document = Repo.reload(document)
-      first_page = Documents.get_first_page!(document)
+      first_page = Documents.get_first_page(document)
       red_page = Repo.reload(red_page)
       blue_page = Repo.reload(blue_page)
 
@@ -377,7 +377,7 @@ defmodule Palapa.DocumentsTest do
       Documents.move_page!(yellow_page, first_section, 1)
 
       document = Repo.reload(document)
-      first_page = Documents.get_first_page!(document)
+      first_page = Documents.get_first_page(document)
       red_page = Repo.reload(red_page)
       blue_page = Repo.reload(blue_page)
       yellow_page = Repo.reload(yellow_page)
