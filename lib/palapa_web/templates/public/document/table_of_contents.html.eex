@@ -1,0 +1,21 @@
+<div class="card text-grey-darker bg-grey-lightest sm:bg-white rounded text-sm">
+  <div class="flex justify-between p-1 sm:p-4 border-b border-grey-lighter">
+    <div>
+      <h2 class="font-bold text-grey-darkest text-base">Table of contents</h2>
+      <div class="sm:hidden py-2">
+        <a class="text-blue" data-action="document#toggleToc">Toggle table of contents</a>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="hidden sm:block" data-target="document.toc">
+    <div>
+      <ul data-target="document.sectionsContainer" class="list-reset">
+        <%= for section <- @document.sections do %>
+          <%= render PalapaWeb.Public.DocumentView, "toc_section.html", Map.put(assigns, :section, section) %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

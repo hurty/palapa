@@ -378,4 +378,44 @@ defmodule Palapa.Documents do
       conflict_target: [:document_id, :member_id]
     )
   end
+
+  def get_document_by_public_token!(token) do
+    section_pages_query =
+      from(p in Page,
+        order_by: p.position
+      )
+      |> non_deleted
+
+    sections_query =
+      from(s in Section,
+        order_by: s.position,
+        preload: [pages: ^section_pages_query]
+      )
+      |> non_deleted
+
+    from(document in Document,
+      preload: [:team, :last_author],
+      preload: [sections: ^sections_query],
+      where: document.public_token == ^token
+    )
+    |> Repo.one!()
+  end
+
+  def document_public?(document) do
+    !is_nil(document.public_token)
+  end
+
+  def generate_public_token(document) do
+    token = Palapa.Access.generate_token()
+
+    document
+    |> change(%{public_token: token})
+    |> Repo.update()
+  end
+
+  def destroy_public_token(document) do
+    document
+    |> change(%{public_token: nil})
+    |> Repo.update()
+  end
 end

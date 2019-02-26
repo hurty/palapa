@@ -7,6 +7,8 @@ defmodule Palapa.Documents.Document do
 
   schema "documents" do
     field(:title, :string)
+    field(:deleted_at, :utc_datetime)
+    field(:public_token, :string)
     timestamps()
 
     belongs_to(:organization, Organization)
@@ -16,7 +18,6 @@ defmodule Palapa.Documents.Document do
     has_many(:pages, Page)
     has_many(:document_accesses, DocumentAccess)
 
-    field(:deleted_at, :utc_datetime)
     belongs_to(:deletion_author, Member, on_replace: :nilify)
   end
 

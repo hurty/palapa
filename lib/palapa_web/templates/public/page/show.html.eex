@@ -1,0 +1,52 @@
+<div id="document" class="article-layout" data-controller="document gallery"> 
+  <div class="right-sidebar p-1 sm:p-0 sm:ml-8">
+    <%= render PalapaWeb.Public.DocumentView, "table_of_contents.html", assigns %>
+  </div>
+
+  <div class="main-content p-1 sm:p-0">
+
+    <%# ----- DOCS ----- %>
+    <div class="card">
+      <div class="flex justify-between border-b border-grey-lighter p-1 sm:p-4">
+        <div>
+          <h1 class="text-grey-darkest text-2xl sm:text-2xl"><%= @document.title %></h1>
+          <h2 class="text-green text-lg sm:text-2xl"><%= @page.title %></h2>
+        </div>
+      </div>
+      <div>
+        <%= if @page.content do %>
+          <section class="message-content sm:p-4">
+            <%= raw(sanitize_html(@page.content)) %>
+          </section>
+        <% else %>
+          <section class="blankslate p-4">
+            <p class="py-2">This page is empty</p>
+          </section>
+        <% end %>
+
+        <div class="border-t border-grey-lighter flex justify-between sm:p-4 mt-8">
+          <div class="w-1/2">
+            <%= if @previous_page do %>
+              <%= link to: public_document_page_path(@conn, :show, @document.public_token, @previous_page), class: "text-green hover:underline" do %>
+                <i class="fas fa-arrow-left mx-2"></i><%= @previous_page.title %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="w-1/2 text-right">
+            <%= if @next_page do %>
+              <%= link to: public_document_page_path(@conn, :show, @document.public_token, @next_page), class: "text-green hover:underline" do %>
+                <%= @next_page.title %><i class="fas fa-arrow-right mx-2"></i>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        </div>
+      </div>
+      
+  </div>
+</div>
+
+<div class="footer">
+  Created with Palapa.
+</div>

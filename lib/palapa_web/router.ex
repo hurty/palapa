@@ -33,6 +33,12 @@ defmodule PalapaWeb.Router do
     resources("/sessions", SessionController, only: [:new, :create, :delete], singleton: true)
     get("/join/:invitation_id/:token", JoinController, :new)
     post("/join/:invitation_id/:token", JoinController, :create)
+
+    scope(path: "/public", as: :public, alias: Public) do
+      resources("/documents", DocumentController, only: [:show]) do
+        resources("/pages", PageController, only: [:show])
+      end
+    end
   end
 
   # Private pages for logged in members only
