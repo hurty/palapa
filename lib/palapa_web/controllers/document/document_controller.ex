@@ -1,6 +1,8 @@
 defmodule PalapaWeb.Document.DocumentController do
   use PalapaWeb, :controller
 
+  import PalapaWeb.Document.BaseController
+
   alias Palapa.Documents
   alias Palapa.Documents.{Document}
   alias Palapa.Teams
@@ -74,7 +76,7 @@ defmodule PalapaWeb.Document.DocumentController do
   end
 
   def show(conn, %{"id" => id}) do
-    document = find_document(conn, id)
+    document = find_document!(conn, id)
 
     first_page = Documents.get_first_page(document)
 
@@ -93,7 +95,7 @@ defmodule PalapaWeb.Document.DocumentController do
   end
 
   def edit(conn, %{"id" => id}) do
-    document = find_document(conn, id)
+    document = find_document!(conn, id)
 
     changeset = Documents.change_document(document)
     teams = Teams.list_for_member(current_member())
@@ -107,7 +109,7 @@ defmodule PalapaWeb.Document.DocumentController do
   end
 
   def update(conn, %{"id" => id, "document" => document_attrs}) do
-    document = find_document(conn, id)
+    document = find_document!(conn, id)
     team = find_team(conn, document_attrs["team_id"])
 
     case Documents.update_document(document, current_member(), team, document_attrs) do
@@ -122,11 +124,6 @@ defmodule PalapaWeb.Document.DocumentController do
         conn
         |> render("edit.html", document: document, changeset: changeset, teams: teams)
     end
-  end
-
-  defp find_document(conn, id) do
-    Documents.documents_visible_to(current_member())
-    |> Documents.get_document!(id)
   end
 
   defp find_team(conn, id) do
