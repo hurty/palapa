@@ -42,9 +42,9 @@ config :arc,
   bucket: "palapa"
 
 config :ex_aws,
-  access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
-  secret_access_key: System.get_env("AWS_SECRET_KEY"),
-  region: "eu-west-3"
+  access_key_id: System.get_env("S3_ACCESS_KEY"),
+  secret_access_key: System.get_env("S3_SECRET_KEY"),
+  region: System.get_env("S3_REGION")
 
 config :appsignal, :config, active: true
 
