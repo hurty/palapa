@@ -4,7 +4,7 @@ import "./vendor/fontawesome-solid"
 import "./vendor/fontawesome-brands"
 
 import "./palapa"
-import "trix"
+import Trix from "trix"
 
 // Global events handlers
 import "./handlers/external_links_handler"

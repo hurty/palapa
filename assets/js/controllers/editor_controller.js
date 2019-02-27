@@ -253,8 +253,6 @@ export default class extends Controller {
       if (xhr.status === 201) {
         let response = JSON.parse(xhr.responseText)
 
-        console.log(attachment)
-        console.log(response)
         return attachment.setAttributes({
           attachment_sid: response.attachment_sid,
           url: response.thumb_url,

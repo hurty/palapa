@@ -13,7 +13,7 @@
           <div class="separator"></div>
         <% end %>
         
-        <section class="message-content" data-controller="gallery">      
+        <section class="message-content" data-controller="rich-text">      
           <%= raw(PalapaWeb.Helpers.sanitize_html(@message.content)) %>
         </section>
       </article>
