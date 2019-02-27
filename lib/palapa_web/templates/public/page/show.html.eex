@@ -1,6 +1,10 @@
 <div id="document" class="article-layout" data-controller="document rich-text"> 
   <div class="right-sidebar p-1 sm:p-0 sm:ml-8">
     <%= render PalapaWeb.Public.DocumentView, "table_of_contents.html", assigns %>
+
+    <div class="text-center mt-8">
+      <%= link "Created with Palapa", to: home_url(@conn, :index), target: "_blank", class: "text-grey hover:underline text-sm" %>
+    </div>
   </div>
 
   <div class="main-content p-1 sm:p-0">
@@ -45,8 +49,4 @@
       </div>
       
   </div>
-</div>
-
-<div class="footer">
-  Created with Palapa.
 </div>

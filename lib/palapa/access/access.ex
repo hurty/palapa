@@ -20,8 +20,9 @@ defmodule Palapa.Access do
 
   def generate_token(length \\ 32) do
     :crypto.strong_rand_bytes(length)
-    |> Base.encode64()
-    |> String.replace("/", "-")
+    |> Base.url_encode64(case: :lower, padding: false)
+    |> String.replace(~r/\+/, "-")
+    |> String.replace(~r/\//, "_")
   end
 
   def generate_signed_id(id) do

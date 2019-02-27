@@ -79,6 +79,12 @@ defmodule PalapaWeb.Router do
           as: :trash
         )
 
+        resources("/public_link", Document.DocumentPublicLinkController,
+          singleton: true,
+          only: [:create, :delete],
+          as: :public_link
+        )
+
         resources("/sections", Document.SectionController, only: [:create])
         resources("/page", Document.PageController, only: [:new, :create])
       end

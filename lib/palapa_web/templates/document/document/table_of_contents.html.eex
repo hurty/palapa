@@ -8,6 +8,16 @@
       <% end %>
 
       <h2 class="font-bold text-grey-darkest text-base"><%= @document.title %></h2>
+      
+      <%= if @document.public_token do %>
+        <div data-controller="clipboard" class="my-2 bg-grey-lightest rounded p-2">
+          <div class="text-green font-bold mb-2"><i class="fas fa-link mr-1"></i>Public sharing is enabled</div>
+          <div data-target="clipboard.popperContent" class="js-clipboard-popper-content hidden mx-1 p-1 bg-green text-xs text-white rounded">Copied to clipboard!</div>
+          <a data-action="clipboard#copyInputValue" data-target="clipboard.copyButton" href="#" class="text-blue hover:underline btn p-1">Copy secret link</a>
+          <input type="text" readonly="readonly" data-target="clipboard.textToCopy" class="p-1 border rounded text-grey-dark" value="<%= public_document_url(@conn, :show, @document.public_token) %>"/>
+        </div>
+      <% end %>
+      
       <div class="sm:hidden py-2">
         <a class="text-blue" data-action="document#toggleToc">Toggle table of contents</a>
       </div>
