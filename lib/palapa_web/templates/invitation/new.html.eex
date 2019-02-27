@@ -10,7 +10,7 @@
     <%= if Enum.any?(@invitations) do %>
       <div id="pending_invitations_container" class="card my-8">
         <div class="border-b border-grey-lighter rounded-t">
-          <h3 class="p-4 text-purple">Pending invitations</h3>
+          <h3 class="p-4 text-blue">Pending invitations</h3>
             <div id="pending_invitations_list">
               <%= for invitation <- @invitations do %>
                 <%= render "_invitation.html", Map.put(assigns, :invitation, invitation) %>

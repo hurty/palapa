@@ -14,7 +14,7 @@
     <% end %>
     
     <%= link "Cancel", to: invitation_path(@conn, :delete, @current_organization, @invitation), 
-      class: "btn btn-purple ml-1",
+      class: "btn btn-red ml-1",
       tabindex: 1,
       data: [
         target: "invitation.cancelButton", 
