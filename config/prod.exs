@@ -40,12 +40,14 @@ config :palapa, Palapa.Mailer,
 
 config :arc,
   storage: Arc.Storage.S3,
-  bucket: "palapa"
+  bucket: System.get_env("S3_BUCKET")
 
 config :ex_aws,
+  host: System.get_env("S3_HOST"),
   access_key_id: System.get_env("S3_ACCESS_KEY"),
   secret_access_key: System.get_env("S3_SECRET_KEY"),
-  region: System.get_env("S3_REGION")
+  region: System.get_env("S3_REGION"),
+  json_codec: Jason
 
 config :appsignal, :config, active: true
 
