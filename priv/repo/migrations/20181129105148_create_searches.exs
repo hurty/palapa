@@ -5,7 +5,7 @@ defmodule Palapa.Repo.Migrations.CreateSearches do
     Palapa.Searches.SearchResourceTypeEnum.create_type()
 
     execute("CREATE EXTENSION IF NOT EXISTS unaccent;")
-    execute("CREATE EXTENSION IF NOT EXISTS pg_trgm;")
+    # execute("CREATE EXTENSION IF NOT EXISTS pg_trgm;")
 
     create(table(:searches, primary_key: false)) do
       add(:organization_id, references(:organizations, type: :uuid, on_delete: :delete_all),
