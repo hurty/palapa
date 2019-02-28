@@ -31,20 +31,20 @@ config :logger, :console,
 
 config :palapa, Palapa.Mailer,
   adapter: Bamboo.LocalAdapter,
-  deliver_later_strategy: Palapa.Mailer.DeliverLaterStrategy
+  deliver_later_strategy: Bamboo.TaskSupervisorStrategy
 
 config :arc, storage: Arc.Storage.Local
 config :scrivener_html, routes_helper: PalapaWeb.Router.Helpers
 
-config :verk,
-  queues: [default: 25, priority: 10],
-  max_retry_count: 10,
-  poll_interval: 5000,
-  start_job_log_level: :info,
-  done_job_log_level: :info,
-  fail_job_log_level: :info,
-  node_id: "1",
-  redis_url: {:system, "REDIS_URL", "redis://127.0.0.1:6379"}
+# config :verk,
+#   queues: [default: 25, priority: 10],
+#   max_retry_count: 10,
+#   poll_interval: 5000,
+#   start_job_log_level: :info,
+#   done_job_log_level: :info,
+#   fail_job_log_level: :info,
+#   node_id: "1",
+#   redis_url: {:system, "REDIS_URL", "redis://127.0.0.1:6379"}
 
 config :phoenix, :template_engines,
   eex: Appsignal.Phoenix.Template.EExEngine,

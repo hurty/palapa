@@ -1,5 +1,6 @@
 defmodule Palapa.Invitations do
   use Palapa.Context
+  alias Palapa.Invitations
   alias Palapa.Invitations.Invitation
   alias Palapa.Invitations.JoinForm
   alias Palapa.Organizations
@@ -99,12 +100,8 @@ defmodule Palapa.Invitations do
     |> Ecto.Multi.run(:invitation, fn _repo, _changes ->
       Repo.insert(new_invitation)
     end)
-    |> Ecto.Multi.run(:send_invitation_job, fn _repo, changes ->
-      Verk.enqueue(%Verk.Job{
-        queue: :default,
-        class: "Palapa.Invitations.Jobs.SendInvitationJob",
-        args: [changes.invitation.id]
-      })
+    |> Ecto.Multi.run(:send_invitation, fn _repo, changes ->
+      send_invitation(changes.invitation)
     end)
     |> Repo.transaction()
     |> case do
@@ -119,6 +116,21 @@ defmodule Palapa.Invitations do
   def delete(%Invitation{} = invitation) do
     invitation
     |> Repo.delete()
+  end
+
+  def send_invitation(%Invitation{} = invitation) do
+    if invitation_sent?(invitation) do
+      {:ignore, "invitation already sent"}
+    else
+      Invitations.Emails.invitation(invitation)
+      |> Palapa.Mailer.deliver_later()
+
+      Invitations.mark_as_sent(invitation)
+    end
+  end
+
+  def invitation_sent?(invitation) do
+    invitation.email_sent_at
   end
 
   def mark_as_sent(%Invitation{} = invitation, at \\ DateTime.utc_now()) do

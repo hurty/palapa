@@ -1,18 +1,14 @@
 defmodule Palapa.Invitations.Jobs.SendInvitationJob do
   alias Palapa.Invitations
+  alias Palapa.Invitations.Invitation
 
   def perform(invitation_id) do
-    invitation = Invitations.get(invitation_id)
+    case Invitations.get(invitation_id) do
+      %Invitation{} = invitation ->
+        Invitations.send_invitation(invitation)
 
-    if invitation && is_nil(invitation.email_sent_at) do
-      email =
-        Invitations.Emails.invitation(invitation)
-        |> Palapa.Mailer.deliver_now()
-
-      {:ok, invitation} = Invitations.mark_as_sent(invitation)
-      {:ok, invitation, email}
-    else
-      {:ignore, "Invitation not found or already sent"}
+      _ ->
+        {:ignore, "no invitation found"}
     end
   end
 end

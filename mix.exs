@@ -62,7 +62,7 @@ defmodule Palapa.Mixfile do
       {:bcrypt_elixir, "~> 1.0"},
       {:bodyguard, "~> 2.2"},
       {:ecto_enum, "~> 1.0"},
-      {:bamboo, "~> 1.1.0"},
+      {:bamboo, "~> 1.2.0"},
       {:timex, "~> 3.4"},
       {:arc, "~> 0.11.0"},
       {:ex_aws, "~> 2.1"},
@@ -73,7 +73,7 @@ defmodule Palapa.Mixfile do
        git: "https://github.com/drewolson/scrivener_ecto",
        ref: "4388b6598180ddd8e984c4371ce20dafcfe036d1"},
       {:scrivener_html, "~> 1.7"},
-      {:verk, "~> 1.4.0"},
+      # {:verk, "~> 1.4.0"},
       {:appsignal, "~> 1.0"}
     ]
   end

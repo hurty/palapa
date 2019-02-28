@@ -23,16 +23,4 @@ defmodule Palapa.Invitations.Jobs.SendInvitationJobTest do
 
     assert {:ignore, _} = SendInvitationJob.perform(invitation.id)
   end
-
-  test "sends an email and updates the sent date" do
-    workspace = Palapa.Factory.insert_pied_piper!()
-
-    {:ok, invitation} =
-      Invitations.create_or_renew("dinesh.chugtai@piedpiper.com", workspace.richard)
-
-    {:ok, invitation, email} = SendInvitationJob.perform(invitation.id)
-
-    refute is_nil(invitation.email_sent_at)
-    assert_delivered_email(email)
-  end
 end
