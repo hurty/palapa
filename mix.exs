@@ -26,6 +26,7 @@ defmodule Palapa.Mixfile do
         :runtime_tools,
         :timex,
         :bamboo,
+        :bamboo_mailjet,
         :arc_ecto,
         :scrivener_ecto,
         :scrivener_html
@@ -62,7 +63,8 @@ defmodule Palapa.Mixfile do
       {:bcrypt_elixir, "~> 1.0"},
       {:bodyguard, "~> 2.2"},
       {:ecto_enum, "~> 1.0"},
-      {:bamboo, "~> 1.2.0"},
+      {:bamboo, "~> 1.2.0", override: true},
+      {:bamboo_mailjet, "~> 0.0.1"},
       {:timex, "~> 3.4"},
       {:arc, "~> 0.11.0"},
       {:ex_aws, "~> 2.1"},

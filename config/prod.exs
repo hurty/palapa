@@ -32,11 +32,11 @@ config :palapa, Palapa.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "1")
 
 config :palapa, Palapa.Mailer,
-  adapter: Bamboo.MailgunAdapter,
-  # deliver_later_strategy: Palapa.Mailer.DeliverLaterStrategy,
+  adapter: Bamboo.MailjetAdapter,
   deliver_later_strategy: Bamboo.TaskSupervisorStrategy,
-  api_key: System.get_env("MAILGUN_API_KEY"),
-  domain: System.get_env("MAILGUN_DOMAIN")
+  api_key: System.get_env("MAILER_API_KEY"),
+  api_private_key: System.get_env("MAILER_API_PRIVATE_KEY"),
+  domain: System.get_env("MAILER_DOMAIN")
 
 config :arc,
   storage: Arc.Storage.S3,
