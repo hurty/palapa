@@ -23,7 +23,7 @@ defmodule Palapa.Invitations.Emails do
 
   def base_email() do
     new_email()
-    |> from("no-reply@palapa.com")
+    |> from("do-not-reply@palapa.io")
   end
 
   def invitation(%Palapa.Invitations.Invitation{} = invitation) do
