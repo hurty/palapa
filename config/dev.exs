@@ -69,4 +69,4 @@ config :palapa, Palapa.Repo,
   hostname: "localhost",
   pool_size: 10
 
-# config :appsignal, :config, active: true
+config :appsignal, :config, active: false

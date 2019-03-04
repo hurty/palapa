@@ -16,7 +16,7 @@ use Mix.Config
 config :palapa, PalapaWeb.Endpoint,
   load_from_system_env: true,
   url: [scheme: "https", host: "palapa.cleverapps.io", port: 443],
-  force_ssl: [rewrite_on: [:x_forwarded_proto]],
+  force_ssl: [hsts: true, rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
@@ -50,6 +50,11 @@ config :ex_aws, :s3,
   json_codec: Jason
 
 config :appsignal, :config, active: true
+
+config :appsignal, :config,
+  name: "palapa",
+  push_api_key: System.get_env("APPSIGNAL_API_KEY"),
+  env: Mix.env()
 
 # ## SSL Support
 #

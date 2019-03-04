@@ -26,3 +26,5 @@ config :bcrypt_elixir, :log_rounds, 4
 config :palapa, Palapa.Mailer,
   adapter: Bamboo.TestAdapter,
   deliver_later_strategy: Bamboo.ImmediateDeliveryStrategy
+
+config :appsignal, :config, active: false
