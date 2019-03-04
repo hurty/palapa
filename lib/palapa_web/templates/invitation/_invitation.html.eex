@@ -8,7 +8,9 @@
         class: "btn", 
         tabindex: 1,
         data: [
-          target: "invitation.renewButton"
+          target: "invitation.renewButton",
+          controller: "link",
+          action: "link#post"
         ]
       %>
     <% end %>
