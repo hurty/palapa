@@ -117,6 +117,7 @@ defmodule Palapa.Organizations do
 
   def get_member!(member_id) do
     Member
+    |> preload(:account)
     |> Repo.get!(member_id)
   end
 
@@ -130,23 +131,13 @@ defmodule Palapa.Organizations do
 
   def create_member(attrs \\ %{}) do
     %Member{}
-    |> Member.changeset(attrs)
+    |> Member.create_changeset(attrs)
     |> Repo.insert()
   end
 
-  def update_member(%Member{} = member, attrs) do
-    member = Repo.preload(member, :account)
-
-    Account.changeset(member.account, attrs)
+  def update_member_profile(%Member{} = member, attrs) do
+    Member.update_profile_changeset(member, attrs)
     |> Repo.update()
-
-    # member
-    # |> Member.update_profile_changeset(attrs)
-    # |> Repo.update()
-  end
-
-  def member_change(%Member{} = member) do
-    Member.update_profile_changeset(member, %{})
   end
 
   def change_member_information(

@@ -1,0 +1,78 @@
+<div class="content page-layout">
+  <div class="main-content" data-controller="message">
+    <div class="card p-1 sm:p-8">
+      <h2 class="card-header">Your account</h2>
+      <div class="card-header-separator"></div>
+
+      <%= form_for @account_changeset, account_path(@conn, :update), [as: :account, multipart: true], fn form -> %>
+        <%= if @account_changeset.action do %>
+          <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+        <% end %>
+
+        <div class="field">
+          <%= label form, :name, "Full name", class: "label" %>
+          <%= text_input form, :name, class: "input", autocomplete: "off" %>
+          <%= error_tag form, :name %>
+        </div>
+
+        <div class="field">
+          <%= label form, :email, "Email", class: "label" %>
+          <%= text_input form, :email, class: "input", autocomplete: "off" %>
+          <%= error_tag form, :email %>
+        </div>
+        
+        <div class="field">
+          <%= label form, :avatar, "Photo", class: "label" %>
+          <%= file_input form, :avatar, class: "input", autocomplete: "off" %>
+          <%= error_tag form, :avatar %>
+        </div>
+
+        <div class="field">
+          <%= label form, :timezone, "Timezone", class: "label" %>
+          <%= select form, :timezone, Enum.map(Palapa.Accounts.Timezones.timezones_list, fn {name, zone} -> {name, zone} end), class: "input", "data-controller": "choice" %>
+          <%= error_tag form, :timezone %>
+        </div>
+
+        <div class="card-actions">
+          <%= submit "Save my account settings", class: "btn btn-green"%>
+        </div>
+      <% end %>
+    </div>
+
+
+    <div class="card p-1 sm:p-8 my-8">
+      <h2 class="card-header">Change your password</h2>
+      <div class="card-header-separator"></div>
+
+      <%= form_for @password_changeset, account_path(@conn, :update), [as: :password, multipart: true], fn form -> %>
+        <%= if @password_changeset.action do %>
+          <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+        <% end %>
+
+        <div class="field">
+          <%= label form, :current_password, "Your current password", class: "label" %>
+          <%= password_input form, :current_password, class: "input", autocomplete: "off" %>
+          <%= error_tag form, :current_password %>
+        </div>
+
+        <div class="field">
+          <%= label form, :password, "New password", class: "label" %>
+          <%= password_input form, :password, class: "input", autocomplete: "off" %>
+          <%= error_tag form, :password %>
+        </div>
+
+        <div class="field">
+          <%= label form, :password_confirmation, "Confirm the new password", class: "label" %>
+          <%= password_input form, :password_confirmation, class: "input", autocomplete: "off" %>
+          <%= error_tag form, :password_confirmation %>
+        </div>
+
+        <%= hidden_input form, :email, value: @current_account.email %>
+        
+        <div class="card-actions">
+          <%= submit "Change password", class: "btn btn-green"%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

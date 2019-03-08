@@ -7,7 +7,7 @@
           <i class="fa fa-chevron-circle-left"></i> Back to your organization
         <% end %>
 
-        <%= link("Manage my account", to: member_path(@conn, :edit, @current_organization, @member), class: "btn") %>
+        <%= link("Manage my account", to: account_path(@conn, :edit), class: "btn") %>
       </div>
 
       <div id="member-profile-main">

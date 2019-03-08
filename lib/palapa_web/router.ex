@@ -29,8 +29,11 @@ defmodule PalapaWeb.Router do
     pipe_through(:browser)
 
     get("/", HomeController, :index)
+
     resources("/registrations", RegistrationController, only: [:new, :create])
     resources("/sessions", SessionController, only: [:new, :create, :delete], singleton: true)
+    resources("/account", AccountController, only: [:edit, :update, :delete], singleton: true)
+
     get("/join/:invitation_id/:token", JoinController, :new)
     post("/join/:invitation_id/:token", JoinController, :create)
 
@@ -122,7 +125,7 @@ defmodule PalapaWeb.Router do
 
       # --- MEMBERS
 
-      resources "/members", MemberController do
+      resources "/members", MemberController, only: [:index, :show] do
         resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)
         resources("/member_informations", MemberInformationController, only: [:create])
       end
@@ -143,6 +146,10 @@ defmodule PalapaWeb.Router do
           singleton: true
         )
       end
+
+      # --- PROFILE
+
+      resources("/profile", ProfileController, only: [:edit, :update])
     end
   end
 

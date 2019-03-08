@@ -22,7 +22,7 @@ defmodule Palapa.Accounts.Registration do
 
   # We don't want to stop the whole registration process if the timezone is not found/valid.
   def validate_or_nilify_timezone(changeset) do
-    tz = get_change(changeset, :timezone)
+    tz = get_field(changeset, :timezone)
 
     if Tzdata.zone_exists?(tz) do
       changeset

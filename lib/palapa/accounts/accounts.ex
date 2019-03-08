@@ -2,7 +2,6 @@ defmodule Palapa.Accounts do
   use Palapa.Context
 
   alias Palapa.Accounts.Account
-  alias Palapa.Organizations.Organization
 
   # --- Authorizations ---
 
@@ -20,42 +19,51 @@ defmodule Palapa.Accounts do
     |> Repo.insert()
   end
 
-  def update(%Account{} = user, attrs) do
-    user
+  def change_account(account) do
+    Account.changeset(account, %{})
+  end
+
+  def update_account(account, attrs) do
+    account
     |> Account.changeset(attrs)
     |> Repo.update()
   end
 
-  def delete(%Account{} = user) do
+  def change_password(account) do
+    Account.password_changeset(account, %{})
+  end
+
+  def update_password(account, attrs) do
+    Account.password_changeset(account, attrs)
+    |> Repo.update()
+  end
+
+  def delete(user) do
     Repo.delete(user)
   end
 
-  def change(%Account{} = user) do
-    Account.changeset(user, %{})
-  end
-
-  def list_organizations(%Account{} = account) do
+  def list_organizations(account) do
     account
     |> Ecto.assoc(:organizations)
     |> order_by(:name)
     |> Repo.all()
   end
 
-  def main_organization(%Account{} = account) do
+  def main_organization(account) do
     account
     |> Ecto.assoc(:organizations)
     |> first()
     |> Repo.one()
   end
 
-  def organization_for_account(%Account{} = account, organization_id) do
+  def organization_for_account(account, organization_id) do
     account
     |> Ecto.assoc(:organizations)
     |> where(id: ^organization_id)
     |> Repo.one()
   end
 
-  def member_for_organization(%Account{} = account, %Organization{} = organization) do
+  def member_for_organization(account, organization) do
     Palapa.Organizations.Member
     |> where(account_id: ^account.id, organization_id: ^organization.id)
     |> Repo.one()

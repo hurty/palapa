@@ -18,7 +18,7 @@ defmodule Palapa.Organizations.Member do
     has_many(:member_informations, MemberInformation)
   end
 
-  def changeset(%Member{} = member, attrs) do
+  def create_changeset(%Member{} = member, attrs) do
     member
     |> cast(attrs, [:organization_id, :account_id, :role, :title])
     |> validate_required([:organization_id, :account_id])
@@ -27,6 +27,6 @@ defmodule Palapa.Organizations.Member do
 
   def update_profile_changeset(%Member{} = member, attrs) do
     member
-    |> cast(attrs, [:role, :title])
+    |> cast(attrs, [:title])
   end
 end

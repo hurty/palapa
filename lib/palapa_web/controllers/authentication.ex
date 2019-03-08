@@ -14,8 +14,7 @@ defmodule PalapaWeb.Authentication do
     organization_id = conn.params["organization_id"]
 
     cond do
-      conn.assigns[:current_account] && conn.assigns[:current_organization] &&
-          conn.assigns[:current_member] ->
+      conn.assigns[:current_account] ->
         conn
 
       account_id && organization_id ->
@@ -24,6 +23,14 @@ defmodule PalapaWeb.Authentication do
           organization = Accounts.organization_for_account(account, organization_id)
           member = Accounts.member_for_organization(account, organization)
           set_assigns(conn, account, organization, member)
+        rescue
+          _ -> clear_assigns(conn)
+        end
+
+      account_id ->
+        try do
+          account = Accounts.get!(account_id)
+          assign(conn, :current_account, account)
         rescue
           _ -> clear_assigns(conn)
         end
