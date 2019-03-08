@@ -1,11 +1,9 @@
-<%= link("My profile", to: member_path(@conn, :show, @current_organization, @current_member)) %>
-<%= link("Log out", to: session_path(@conn, :delete), class: "btn text-red",
-  data: [controller: "link", action: "link#delete"]) %>
+<div class="p-1">
+  <div class="text-sm text-grey-darkest font-bold mb-4 border-b py-1"><%= @current_account.name %></div>
 
-<ul class="list-reset">
-  <span>Logged in as <%= @current_account.name %></span>
-  <hr class="border">
-  <%= for organization <- @organizations do %>
-    <li><%= link organization.name, to: dashboard_path(@conn, :index, organization) %></li>
-  <% end %>
-</ul>
+  <ul class="list-reset mb-2">
+    <li><%= link("My profile", to: member_path(@conn, :show, @current_organization, @current_member), class: "text-grey-darkest hover:underline") %></li>
+    <li><%= link("Account settings", to: account_path(@conn, :edit), target: "_blank", class: "text-grey-darkest hover:underline") %></li>
+    <li><%= link("Log out", to: session_path(@conn, :delete), class: "text-blue hover:underline", data: [controller: "link", action: "link#delete"]) %></li>
+  </ul>
+</div>
