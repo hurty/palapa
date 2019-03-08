@@ -1,7 +1,5 @@
 defmodule PalapaWeb.AccountControllerTest do
   use PalapaWeb.ConnCase
-  import Ecto.Query
-  alias Palapa.Repo
 
   describe "change account settings" do
     setup do
