@@ -71,10 +71,8 @@ defmodule Palapa.Mixfile do
       {:ex_aws_s3, "~> 2.0"},
       {:sweet_xml, "~> 0.6"},
       {:arc_ecto, "~> 0.11.0"},
-      {:scrivener_ecto,
-       git: "https://github.com/drewolson/scrivener_ecto",
-       ref: "4388b6598180ddd8e984c4371ce20dafcfe036d1"},
-      {:scrivener_html, "~> 1.7"},
+      {:scrivener_ecto, "~> 2.1.1"},
+      {:scrivener_html, "~> 1.8"},
       # {:verk, "~> 1.4.0"},
       {:appsignal, "~> 1.0"}
     ]

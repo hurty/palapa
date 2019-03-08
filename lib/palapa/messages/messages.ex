@@ -21,7 +21,7 @@ defmodule Palapa.Messages do
     |> join(:left, [messages], message_teams in assoc(messages, :teams))
     |> where([_, t], t.id in ^member_teams_ids)
     |> or_where(published_to_everyone: true, organization_id: ^member.organization_id)
-    |> distinct(true)
+    |> distinct(:id)
   end
 
   def where_organization(queryable \\ Message, %Organization{} = organization) do
@@ -71,7 +71,7 @@ defmodule Palapa.Messages do
   def paginate(queryable \\ Message, page \\ 1) do
     queryable
     |> prepare_list
-    |> Repo.paginate(page: page, page_size: 25)
+    |> Repo.paginate(page: page, page_size: 1)
   end
 
   def visible_to?(%Message{} = message, %Member{} = member) do
