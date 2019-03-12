@@ -254,7 +254,7 @@ export default class extends Controller {
         let response = JSON.parse(xhr.responseText)
 
         return attachment.setAttributes({
-          attachment_sid: response.attachment_sid,
+          sgid: response.sgid,
           url: response.thumb_url,
           href: response.original_url
         });

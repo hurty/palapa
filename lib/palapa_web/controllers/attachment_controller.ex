@@ -10,8 +10,8 @@ defmodule PalapaWeb.AttachmentController do
         conn
         |> put_status(201)
         |> json(%{
-          attachment_id: attachment.id,
-          attachment_sid: Palapa.Access.generate_signed_id(attachment.id),
+          id: attachment.id,
+          sgid: Palapa.Access.generate_signed_id(attachment.id),
           original_url:
             attachment_attachment_url(
               conn,

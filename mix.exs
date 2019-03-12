@@ -74,7 +74,8 @@ defmodule Palapa.Mixfile do
       {:scrivener_ecto, "~> 2.1.1"},
       {:scrivener_html, "~> 1.8"},
       # {:verk, "~> 1.4.0"},
-      {:appsignal, "~> 1.0"}
+      {:appsignal, "~> 1.0"},
+      {:floki, "~> 0.20.0"}
     ]
   end
 
