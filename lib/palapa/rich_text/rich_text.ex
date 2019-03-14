@@ -1,10 +1,43 @@
-require Logger
-
 defmodule Palapa.RichText do
-  alias Palapa.RichText.{Attachments, Content}
+  alias Palapa.RichText.Content
+  alias Palapa.RichText.ConversionFromTrix
 
-  def from_trix(rich_text) do
-    parse_from_trix(rich_text)
+  @doc """
+  Trix formats attachments in a <figure> element and stores attachment metadata in
+  multiple JSON encoded data attributes:
+
+    - data-trix-attachments
+    - data-trix-attributes
+    - data-trix-content-type
+
+  <figure
+    data-trix-attachment="{&quot;contentType&quot;:&quot;application/pdf&quot;,&quot;filename&quot;:&quot;Mind-is-not-consciousness.pdf&quot;,&quot;filesize&quot;:19491,&quot;sgid&quot;:&quot;BAh7CEkiCGdpZAY6BkVUSSI2Z2lkOi8vdGVzdHJhaWxzL0FjdGl2ZVN0b3JhZ2U6OkJsb2IvMTE_ZXhwaXJlc19pbgY7AFRJIgxwdXJwb3NlBjsAVEkiD2F0dGFjaGFibGUGOwBUSSIPZXhwaXJlc19hdAY7AFQw--c6552e94ccb5b9fa52dbc5bde5cfd548db53d917&quot;,&quot;url&quot;:&quot;http://localhost:3000/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBFQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--9a1753d5546bd5012157ca31c45242eae166e344/Mind-is-not-consciousness.pdf&quot;}"
+    data-trix-content-type="application/pdf"
+    class="attachment attachment--file attachment--pdf">
+
+    <figcaption class="attachment__caption">
+      <span class="attachment__name">Mind-is-not-consciousness.pdf</span>
+      <span class=\"attachment__size\">19.03 KB</span>
+    </figcaption>
+  </figure>
+
+  We want to transform this attachment figure into a <embedded-attachment> element and identify
+  associated attachments records:
+
+  <embedded-attachment
+    sgid="BAh7CEkiCGdpZAY6BkVUSSI2Z2lkOi8vdGVzdHJhaWxzL0FjdGl2ZVN0b3JhZ2U6OkJsb2IvMTA_ZXhwaXJlc19pbgY7AFRJIgxwdXJwb3NlBjsAVEkiD2F0dGFjaGFibGUGOwBUSSIPZXhwaXJlc19hdAY7AFQw--34f22939c406e0007a75a850037cf0f6dc25f5d8"
+    content-type="application/pdf"
+    url="http://localhost:3000/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--34c54b0506ecef1c0900cd651bb3fbda5271ea3b/Mind-is-not-consciousness.pdf"
+    filename="Mind-is-not-consciousness.pdf"
+    filesize="19491">
+  </embedded-attachment>
+
+
+  # TODO : handle galleries
+  """
+
+  def from_trix(rich_text_string) do
+    ConversionFromTrix.convert(rich_text_string)
   end
 
   def to_trix(%Content{} = content) do
@@ -15,15 +48,7 @@ defmodule Palapa.RichText do
     Floki.raw_html(content.nodes)
   end
 
-  defp parse_from_trix(rich_text) do
-    nodes = Floki.parse(rich_text)
-
-    embedded_attachments = Attachments.find_attachments(nodes)
-    nodes = Attachments.transform_embedded_attachments(nodes)
-
-    %Content{
-      embedded_attachments: embedded_attachments,
-      nodes: nodes
-    }
-  end
+  # def put_content(changeset, virtual_rich_text_field) do
+  #   changeset
+  # end
 end
