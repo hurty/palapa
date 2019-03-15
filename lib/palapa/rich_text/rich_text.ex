@@ -1,6 +1,5 @@
 defmodule Palapa.RichText do
-  alias Palapa.RichText.Content
-  alias Palapa.RichText.ConversionFromTrix
+  alias Palapa.RichText.{Content, Tree, ConversionFromTrix, ConversionToHTML}
 
   @doc """
   Trix formats attachments in a <figure> element and stores attachment metadata in
@@ -31,24 +30,32 @@ defmodule Palapa.RichText do
     filename="Mind-is-not-consciousness.pdf"
     filesize="19491">
   </embedded-attachment>
-
-
-  # TODO : handle galleries
   """
 
-  def from_trix(rich_text_string) do
-    ConversionFromTrix.convert(rich_text_string)
+  #####
+
+  def from_trix(html_string) when is_binary(html_string) do
+    html_string
+    |> build_content()
+    |> ConversionFromTrix.convert()
   end
 
-  def to_trix(%Content{} = content) do
-    Floki.raw_html(content.nodes)
+  def from_canonical(html_string) when is_binary(html_string) do
+  end
+
+  def to_trix(%Content{} = _content) do
+  end
+
+  def to_canonical(%Content{} = content) do
+    Floki.raw_html(content.tree)
   end
 
   def to_html(%Content{} = content) do
-    Floki.raw_html(content.nodes)
+    ConversionToHTML.convert(content)
   end
 
-  # def put_content(changeset, virtual_rich_text_field) do
-  #   changeset
-  # end
+  defp build_content(rich_text_string) do
+    tree = Tree.parse(rich_text_string)
+    %Content{tree: tree}
+  end
 end

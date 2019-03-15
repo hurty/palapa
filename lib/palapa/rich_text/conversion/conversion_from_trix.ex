@@ -8,18 +8,12 @@ defmodule Palapa.RichText.ConversionFromTrix do
   @trix_attachment_attribute "data-trix-attachment"
   @trix_presentation_attribute "data-trix-attributes"
 
-  def convert(rich_text_string) do
-    %Content{}
-    |> parse_html_tree(rich_text_string)
+  def convert(%Content{} = content) do
+    content
     |> canonicalize_trix_attachments()
     |> extract_attachments
 
     # Parse galleries ?
-  end
-
-  def parse_html_tree(content, rich_text_string) do
-    tree = Tree.parse(rich_text_string)
-    Map.put(content, :tree, tree)
   end
 
   def canonicalize_trix_attachments(content) do

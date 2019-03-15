@@ -61,6 +61,7 @@ defmodule PalapaWeb do
       import PalapaWeb.Helpers
       import Scrivener.HTML
       import Palapa.Access, only: [permit?: 4]
+      import Palapa.RichText.Helpers
     end
   end
 

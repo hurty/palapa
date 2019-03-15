@@ -1,10 +1,10 @@
 defmodule Palapa.RichText.ConversionToHTML do
-  alias Palapa.RichText.{Tree, TrixScrubber}
+  alias Palapa.RichText.{Content, Tree, TrixScrubber}
   alias PalapaWeb.RichTextView
 
   @embedded_attachment_tag "embedded-attachment"
 
-  def convert(content) do
+  def convert(%Content{} = content) do
     content
     |> render_attachments()
     |> to_raw_html()

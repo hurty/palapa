@@ -14,7 +14,7 @@
         <% end %>
         
         <section class="message-content" data-controller="rich-text">      
-          <%= raw(PalapaWeb.Helpers.sanitize_html(@message.content)) %>
+          <%= rich_text(@message.content) %>
         </section>
       </article>
     </div>
