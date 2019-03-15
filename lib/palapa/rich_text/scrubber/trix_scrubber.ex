@@ -1,4 +1,4 @@
-defmodule PalapaWeb.TrixScrubber do
+defmodule Palapa.RichText.TrixScrubber do
   @moduledoc """
   Allows basic HTML tags to support user input for writing relatively
   plain text but allowing headings, links, bold, and so on.
@@ -22,9 +22,11 @@ defmodule PalapaWeb.TrixScrubber do
     "name",
     "title",
     "data-trix-attachment",
-    "data-trix-content-type"
+    "data-trix-content-type",
+    "data-trix-attributes"
   ])
 
+  Meta.allow_tag_with_these_attributes("embedded-attachment", [])
   Meta.allow_tag_with_these_attributes("b", [])
   Meta.allow_tag_with_these_attributes("blockquote", [])
   Meta.allow_tag_with_these_attributes("br", [])

@@ -1,0 +1,8 @@
+<figure class="attachment attachment--preview">
+  <a href="<%= @url %>">
+    <img src="<%= @url %>" width="<%= @width %>" height="<%= @height %>">
+  </a>
+  
+  <figcaption><%= @caption %></figcaption>
+  <figcaption><%= @filesize %></figcaption>
+</figure>

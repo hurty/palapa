@@ -1,4 +1,4 @@
-defmodule PalapaWeb.EditorView do
+defmodule PalapaWeb.RichTextView do
   use PalapaWeb, :view
 
   def text_editor(conn, organization, options \\ []) do

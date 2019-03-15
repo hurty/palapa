@@ -1,7 +1,7 @@
 <%= form_for @changeset, suggestion_url(@conn, :update, @current_organization, @suggestion), 
   [data: [target: "document-suggestion.editForm", action: "document-suggestion#update"]], fn form -> %>
   <div class="mb-1">
-    <%= PalapaWeb.EditorView.text_editor(@conn, @current_organization, placeholder: "Your suggestion here...", 
+    <%= PalapaWeb.RichTextView.text_editor(@conn, @current_organization, placeholder: "Your suggestion here...", 
       content_input_id: "document_suggestion_#{@suggestion.id}") %>
 
     <%= hidden_input form, :content, "data-target": "document-suggestion.editContentInput", id: "document_suggestion_#{@suggestion.id}" %>

@@ -2,7 +2,7 @@ defmodule PalapaWeb.TrixScrubberTest do
   use ExUnit.Case
 
   defp basic_html_sanitize(text) do
-    HtmlSanitizeEx.Scrubber.scrub(text, PalapaWeb.TrixScrubber)
+    HtmlSanitizeEx.Scrubber.scrub(text, Palapa.RichText.TrixScrubber)
   end
 
   # Palapa & Trix specific tests

@@ -36,9 +36,7 @@ defmodule Palapa.RichText.ConversionFromTrix do
     end
   end
 
-  def canonicalize_trix_attachment({other_tag, attrs, rest}) do
-    {other_tag, attrs, rest}
-  end
+  def canonicalize_trix_attachment(other_tag), do: other_tag
 
   def has_trix_attributes?(attrs) do
     attrs
