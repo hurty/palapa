@@ -41,6 +41,8 @@ defmodule Palapa.RichText do
   end
 
   def from_canonical(html_string) when is_binary(html_string) do
+    build_content(html_string)
+    # load associated attachments
   end
 
   def to_trix(%Content{} = _content) do
@@ -54,8 +56,8 @@ defmodule Palapa.RichText do
     ConversionToHTML.convert(content)
   end
 
-  defp build_content(rich_text_string) do
-    tree = Tree.parse(rich_text_string)
+  defp build_content(html_string) do
+    tree = Tree.parse(html_string)
     %Content{tree: tree}
   end
 end

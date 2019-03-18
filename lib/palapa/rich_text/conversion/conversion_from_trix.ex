@@ -66,7 +66,7 @@ defmodule Palapa.RichText.ConversionFromTrix do
 
   defp build_embedded_attachments_structs(nodes) do
     Enum.map(nodes, fn {_tag, attrs, _children} ->
-      struct!(EmbeddedAttachment, attrs)
+      struct(EmbeddedAttachment, attrs)
     end)
   end
 

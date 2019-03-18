@@ -1,7 +1,5 @@
 defmodule Palapa.RichText.Tree do
-  def parse(html_string) do
-    Floki.parse(html_string)
-  end
+  defdelegate parse(html_string), to: Floki
 
   def map(html_tree_list, fun) when is_list(html_tree_list) do
     Enum.map(html_tree_list, &transform_node(&1, fun))

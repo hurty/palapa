@@ -1,8 +1,7 @@
 <figure class="attachment attachment--preview">
-  <a href="<%= @url %>">
-    <img src="<%= @url %>" width="<%= @width %>" height="<%= @height %>">
-  </a>
-  
-  <figcaption><%= @caption %></figcaption>
-  <figcaption><%= @filesize %></figcaption>
+  <%= link @attachment.filename, to: @attachment.url %>
+
+  <figcaption class="text-sm">
+    <span class="font-bold mr-2"><%= @attachment.caption %></span>  
+  </figcaption>
 </figure>
