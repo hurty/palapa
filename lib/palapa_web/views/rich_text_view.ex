@@ -1,6 +1,11 @@
 defmodule PalapaWeb.RichTextView do
   use PalapaWeb, :view
 
+  alias Palapa.RichText.EmbeddedAttachment
+
+  defdelegate human_filesize(embedded_attachment), to: EmbeddedAttachment
+  defdelegate image?(embedded_attachment), to: EmbeddedAttachment
+
   def text_editor(conn, organization, options \\ []) do
     toolbar_id = "editor_toolbar_#{Ecto.UUID.generate()}"
 

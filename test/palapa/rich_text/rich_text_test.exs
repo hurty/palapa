@@ -165,20 +165,6 @@ defmodule Palapa.RichTextTest do
     assert 2 == length(content.embedded_attachments)
   end
 
-  # test "to html" do
-  #   trix_html = "<div><h1>A nice document</h1>#{@trix_image_attachment}</div>"
-
-  #   html_content =
-  #     trix_html
-  #     |> RichText.from_trix()
-  #     |> RichText.to_html()
-
-  #   expected =
-  #     "<div><h1>A nice document</h1><embedded-attachment><figure class=\"attachment attachment--preview\"><a href=\"https://localhost:4000/org/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/fccf08e5-1101-49e9-8564-5162b001adde/thumb/hello.png\"><img src=\"https://localhost:4000/org/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/fccf08e5-1101-49e9-8564-5162b001adde/thumb/hello.png\" width=\"436\" height=\"525\" /></a><figcaption>Hello Caption</figcaption><figcaption>331291</figcaption></figure></embedded-attachment></div>"
-
-  #   assert expected == html_content
-  # end
-
   defp insert_attachment() do
     %Attachment{
       filename: "palapa.jpg",

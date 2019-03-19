@@ -1,7 +1,7 @@
-<figure class="attachment attachment--preview">
+<figure class="attachment text-center">
   <img src="<%= @attachment.url %>" width="<%= @attachment.width %>" height="<%= @attachment.height %>">
 
-  <figcaption class="text-sm text-center">
+  <figcaption class="text-sm">
     <span class="font-bold mr-2"><%= @attachment.caption %></span>
   </figcaption>
 </figure>

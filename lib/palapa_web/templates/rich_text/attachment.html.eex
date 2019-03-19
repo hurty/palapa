@@ -1,7 +1,14 @@
-<figure class="attachment attachment--preview">
-  <%= link @attachment.filename, to: @attachment.url %>
+<figure class="attachment">
+  <%= if image?(@attachment) do %>
+    <img src="<%= @attachment.url %>" width="<%= @attachment.width %>" height="<%= @attachment.height %>">
 
-  <figcaption class="text-sm">
-    <span class="font-bold mr-2"><%= @attachment.caption %></span>  
-  </figcaption>
+    <figcaption class="text-sm">
+      <span class="font-bold mr-2"><%= @attachment.caption %></span> 
+      <span><%= link "Download", to: @attachment.url %></span>
+    </figcaption>
+  <% else %>
+    <%= link to: @attachment.url, class: "p-2 border rounded" do %>
+      <i class="fas fa-paperclip mr-2"></i> <span class="font-bold"><%= @attachment.filename %></span> (<%= human_filesize(@attachment) %>)
+    <% end %>
+  <% end %>
 </figure>

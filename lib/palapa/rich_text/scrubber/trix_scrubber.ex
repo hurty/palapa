@@ -19,6 +19,7 @@ defmodule Palapa.RichText.TrixScrubber do
   Meta.allow_tag_with_uri_attributes("a", ["href"], @valid_schemes)
 
   Meta.allow_tag_with_these_attributes("a", [
+    "class",
     "name",
     "title",
     "data-trix-attachment",
@@ -42,7 +43,7 @@ defmodule Palapa.RichText.TrixScrubber do
   Meta.allow_tag_with_these_attributes("h4", [])
   Meta.allow_tag_with_these_attributes("h5", [])
   Meta.allow_tag_with_these_attributes("hr", [])
-  Meta.allow_tag_with_these_attributes("i", [])
+  Meta.allow_tag_with_these_attributes("i", ["class"])
 
   Meta.allow_tag_with_uri_attributes("img", ["src"], @valid_schemes)
 

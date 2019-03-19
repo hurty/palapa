@@ -1,9 +1,6 @@
 defmodule Palapa.RichText.Helpers do
   alias Palapa.RichText
   alias Palapa.RichText.Content
-  alias Palapa.RichText.EmbeddedAttachment
-
-  defdelegate human_filesize(embedded_attachment), to: EmbeddedAttachment
 
   def rich_text(content) when is_nil(content), do: nil
 
