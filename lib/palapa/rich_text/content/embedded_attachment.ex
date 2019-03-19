@@ -15,7 +15,7 @@ defmodule Palapa.RichText.EmbeddedAttachment do
   )a
 
   def has_associated_attachment?(attachment) do
-    attachment.attachment_id
+    attachment.sgid
   end
 
   def image?(attachment) do

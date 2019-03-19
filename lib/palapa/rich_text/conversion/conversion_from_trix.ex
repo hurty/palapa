@@ -76,9 +76,7 @@ defmodule Palapa.RichText.ConversionFromTrix do
         if(EmbeddedAttachment.has_associated_attachment?(embedded_attachment)) do
           case Palapa.Access.verify_signed_id(embedded_attachment.sgid) do
             {:ok, id} ->
-              embedded_attachment
-              |> Map.put(:id, id)
-              |> Map.put(:missing, false)
+              Map.put(embedded_attachment, :attachment_id, id)
 
             _ ->
               Logger.warn(

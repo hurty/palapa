@@ -31,6 +31,24 @@ defmodule Palapa.RichTextTest do
   </figure>
   """
 
+  @trix_pdf_file_attachment """
+  <figure data-trix-attachment="{&quot;contentType&quot;:&quot;application/pdf&quot;,&quot;filename&quot;:&quot;cerfa.pdf&quot;,&quot;filesize&quot;:415460,&quot;href&quot;:&quot;https://localhost:4000/org/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/9424cef9-831e-473b-a084-d138d14999b0/original/cerfa.pdf&quot;,&quot;sgid&quot;:&quot;#{
+    @attachment_sgid
+  }&quot;,&quot;url&quot;:&quot;https://localhost:4000/org/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/9424cef9-831e-473b-a084-d138d14999b0/thumb/cerfa.pdf&quot;}"
+  data-trix-content-type="application/pdf"
+  class="attachment attachment--file attachment--pdf">
+    <a href="https://localhost:4000/org/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/9424cef9-831e-473b-a084-d138d14999b0/original/cerfa.pdf">
+    <figcaption class="attachment__caption"><span class="attachment__name">cerfa.pdf</span> <span class="attachment__size">405.72 KB</span></figcaption></a>
+  </figure>
+  """
+
+  @trix_custom_attachment """
+  <figure data-trix-attachment="{&quot;content&quot;:&quot;<hr>&quot;,&quot;contentType&quot;:&quot;application/vnd.richtext.horizontal-rule.html&quot;}"
+    data-trix-content-type="application/vnd.richtext.horizontal-rule.html" class="attachment attachment--content"><hr>
+    <figcaption class="attachment__caption"></figcaption>
+  </figure>
+  """
+
   test "extracts an image attachment from trix" do
     html = "<div><h1>A nice document</h1>#{@trix_image_attachment}</div>"
 
@@ -41,19 +59,20 @@ defmodule Palapa.RichTextTest do
 
     assert @attachment_sgid == embedded_attachment.sgid
     assert @attachment_id == embedded_attachment.attachment_id
-    refute embedded_attachment.missing
 
     assert "hello.png" == embedded_attachment.filename
     assert "image/png" == embedded_attachment.content_type
     assert "331291" == embedded_attachment.filesize
     assert "525" == embedded_attachment.height
     assert "436" == embedded_attachment.width
-    assert is_nil(embedded_attachment.previewable)
 
     assert "Hello Caption" == embedded_attachment.caption
     assert "gallery" == embedded_attachment.presentation
 
+    assert EmbeddedAttachment.has_associated_attachment?(embedded_attachment)
     assert EmbeddedAttachment.image?(embedded_attachment)
+    refute EmbeddedAttachment.remote_image?(embedded_attachment)
+    refute EmbeddedAttachment.custom?(embedded_attachment)
   end
 
   test "extracts a remote image attachment from trix" do
@@ -75,8 +94,61 @@ defmodule Palapa.RichTextTest do
     assert "688" == embedded_attachment.width
     assert "Hello Caption" == embedded_attachment.caption
 
+    refute EmbeddedAttachment.has_associated_attachment?(embedded_attachment)
     assert EmbeddedAttachment.image?(embedded_attachment)
     assert EmbeddedAttachment.remote_image?(embedded_attachment)
+    refute EmbeddedAttachment.custom?(embedded_attachment)
+  end
+
+  test "extracts a non-previewable file attachment from trix" do
+    html = "<div><h1>A nice document</h1>#{@trix_pdf_file_attachment}</div>"
+
+    content = RichText.from_trix(html)
+    assert 1 == length(content.embedded_attachments)
+
+    embedded_attachment = Enum.at(content.embedded_attachments, 0)
+
+    assert @attachment_sgid == embedded_attachment.sgid
+    assert @attachment_id == embedded_attachment.attachment_id
+
+    assert "cerfa.pdf" == embedded_attachment.filename
+    assert "application/pdf" == embedded_attachment.content_type
+    assert "415460" == embedded_attachment.filesize
+
+    refute embedded_attachment.height
+    refute embedded_attachment.width
+    refute embedded_attachment.caption
+    refute embedded_attachment.presentation
+
+    assert EmbeddedAttachment.has_associated_attachment?(embedded_attachment)
+    refute EmbeddedAttachment.image?(embedded_attachment)
+    refute EmbeddedAttachment.remote_image?(embedded_attachment)
+    refute EmbeddedAttachment.custom?(embedded_attachment)
+  end
+
+  test "extracts a custom HTML attachment from trix" do
+    html = "<div><h1>A nice document</h1>#{@trix_custom_attachment}</div>"
+
+    content = RichText.from_trix(html)
+    assert 1 == length(content.embedded_attachments)
+
+    embedded_attachment = Enum.at(content.embedded_attachments, 0)
+
+    assert "application/vnd.richtext.horizontal-rule.html" == embedded_attachment.content_type
+
+    refute embedded_attachment.sgid
+    refute embedded_attachment.attachment_id
+    refute embedded_attachment.filename
+    refute embedded_attachment.filesize
+    refute embedded_attachment.presentation
+    refute embedded_attachment.caption
+    refute embedded_attachment.width
+    refute embedded_attachment.height
+
+    refute EmbeddedAttachment.has_associated_attachment?(embedded_attachment)
+    refute EmbeddedAttachment.image?(embedded_attachment)
+    refute EmbeddedAttachment.remote_image?(embedded_attachment)
+    assert EmbeddedAttachment.custom?(embedded_attachment)
   end
 
   test "extracts multiple attachments from trix html" do
