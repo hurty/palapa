@@ -8,6 +8,7 @@ defmodule Palapa.RichText.EmbeddedAttachment do
     filesize
     width
     height
+    custom_content
     previewable
     presentation
     caption
