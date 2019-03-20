@@ -1,49 +1,28 @@
 defmodule Palapa.RichText.TrixScrubber do
-  @moduledoc """
-  Allows basic HTML tags to support user input for writing relatively
-  plain text but allowing headings, links, bold, and so on.
-
-  Does not allow any mailto-links, styling, HTML5 tags, video embeds etc.
-  """
-
   require HtmlSanitizeEx.Scrubber.Meta
   alias HtmlSanitizeEx.Scrubber.Meta
 
-  @valid_schemes ["http", "https", "mailto"]
+  @valid_schemes ["http", "https"]
 
-  # Removes any CDATA tags before the traverser/scrubber runs.
   Meta.remove_cdata_sections_before_scrub()
 
   Meta.strip_comments()
 
-  Meta.allow_tag_with_uri_attributes("a", ["href"], @valid_schemes)
+  Meta.allow_tag_with_these_attributes("a", ["href", "name", "title"])
 
-  Meta.allow_tag_with_these_attributes("a", [
-    "class",
-    "name",
-    "title",
-    "data-trix-attachment",
-    "data-trix-content-type",
-    "data-trix-attributes"
-  ])
-
-  Meta.allow_tag_with_these_attributes("embedded-attachment", [])
   Meta.allow_tag_with_these_attributes("b", [])
   Meta.allow_tag_with_these_attributes("blockquote", [])
   Meta.allow_tag_with_these_attributes("br", [])
   Meta.allow_tag_with_these_attributes("code", [])
   Meta.allow_tag_with_these_attributes("del", [])
-  Meta.allow_tag_with_these_attributes("div", [])
   Meta.allow_tag_with_these_attributes("em", [])
-  Meta.allow_tag_with_these_attributes("figure", ["class"])
-  Meta.allow_tag_with_these_attributes("figcaption", ["class"])
   Meta.allow_tag_with_these_attributes("h1", [])
   Meta.allow_tag_with_these_attributes("h2", [])
   Meta.allow_tag_with_these_attributes("h3", [])
   Meta.allow_tag_with_these_attributes("h4", [])
   Meta.allow_tag_with_these_attributes("h5", [])
   Meta.allow_tag_with_these_attributes("hr", [])
-  Meta.allow_tag_with_these_attributes("i", ["class"])
+  Meta.allow_tag_with_these_attributes("i", [])
 
   Meta.allow_tag_with_uri_attributes("img", ["src"], @valid_schemes)
 
@@ -58,7 +37,6 @@ defmodule Palapa.RichText.TrixScrubber do
   Meta.allow_tag_with_these_attributes("ol", [])
   Meta.allow_tag_with_these_attributes("p", [])
   Meta.allow_tag_with_these_attributes("pre", [])
-  Meta.allow_tag_with_these_attributes("span", ["class"])
   Meta.allow_tag_with_these_attributes("strong", [])
   Meta.allow_tag_with_these_attributes("table", [])
   Meta.allow_tag_with_these_attributes("tbody", [])
@@ -68,6 +46,15 @@ defmodule Palapa.RichText.TrixScrubber do
   Meta.allow_tag_with_these_attributes("tr", [])
   Meta.allow_tag_with_these_attributes("u", [])
   Meta.allow_tag_with_these_attributes("ul", [])
+  Meta.allow_tag_with_these_attributes("div", [])
+  Meta.allow_tag_with_these_attributes("span", ["style"])
+
+  # Allow Trix-formatted attachments
+  Meta.allow_tag_with_these_attributes("figure", [
+    "data-trix-attachment",
+    "data-trix-content-type",
+    "data-trix-attributes"
+  ])
 
   Meta.strip_everything_not_covered()
 end

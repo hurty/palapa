@@ -1,5 +1,5 @@
 defmodule Palapa.RichText.ConversionToHTML do
-  alias Palapa.RichText.{Content, EmbeddedAttachment, Tree, TrixScrubber}
+  alias Palapa.RichText.{Content, EmbeddedAttachment, Tree}
   alias PalapaWeb.RichTextView
 
   @embedded_attachment_tag "embedded-attachment"
@@ -8,7 +8,6 @@ defmodule Palapa.RichText.ConversionToHTML do
     content
     |> render_attachments()
     |> to_raw_html()
-    |> sanitize()
   end
 
   defp render_attachments(content) do
@@ -51,9 +50,5 @@ defmodule Palapa.RichText.ConversionToHTML do
 
   defp to_raw_html(content) do
     Floki.raw_html(content.tree)
-  end
-
-  defp sanitize(html) do
-    HtmlSanitizeEx.Scrubber.scrub(html, TrixScrubber)
   end
 end

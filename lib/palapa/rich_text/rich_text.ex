@@ -1,5 +1,11 @@
 defmodule Palapa.RichText do
-  alias Palapa.RichText.{Content, Tree, ConversionFromTrix, ConversionToHTML}
+  alias Palapa.RichText.{
+    Content,
+    ConversionFromTrix,
+    ConversionToHTML,
+    Tree,
+    TrixScrubber
+  }
 
   @doc """
   Trix formats attachments in a <figure> element and stores attachment metadata in
@@ -36,6 +42,7 @@ defmodule Palapa.RichText do
 
   def from_trix(html_string) when is_binary(html_string) do
     html_string
+    |> sanitize
     |> build_content()
     |> ConversionFromTrix.convert()
   end
@@ -54,6 +61,10 @@ defmodule Palapa.RichText do
 
   def to_html(%Content{} = content) do
     ConversionToHTML.convert(content)
+  end
+
+  def sanitize(html_string) do
+    HtmlSanitizeEx.Scrubber.scrub(html_string, TrixScrubber)
   end
 
   defp build_content(html_string) do
