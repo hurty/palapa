@@ -4,6 +4,7 @@ defmodule Palapa.Messages.Message do
   alias Palapa.Messages.{Message, MessageComment}
   alias Palapa.Teams.Team
   alias Palapa.Attachments.Attachment
+  alias Palapa.RichText
 
   schema "messages" do
     belongs_to(:organization, Organizations.Organization)
@@ -28,6 +29,7 @@ defmodule Palapa.Messages.Message do
   def changeset(%Message{} = message, attrs) do
     message
     |> cast(attrs, [:title, :content, :published_to_everyone, :publish_teams_ids])
+    |> RichText.Changeset.put_rich_text(:content, :attachments)
     |> put_teams(attrs)
     |> validate_required(:title)
   end

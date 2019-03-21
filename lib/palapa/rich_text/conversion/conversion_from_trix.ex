@@ -12,6 +12,7 @@ defmodule Palapa.RichText.ConversionFromTrix do
     content
     |> canonicalize_trix_attachments()
     |> extract_attachments
+    |> IO.inspect(label: "final after from trix")
   end
 
   def canonicalize_trix_attachments(content) do
@@ -53,9 +54,15 @@ defmodule Palapa.RichText.ConversionFromTrix do
       content.tree
       |> find_attachments_nodes()
       |> build_embedded_attachments_structs()
-      |> resolve_attachments_ids()
 
-    Map.put(content, :embedded_attachments, attachments)
+    content = Map.put(content, :embedded_attachments, attachments)
+
+    associated_attachments =
+      attachments
+      |> resolve_attachments_ids()
+      |> retrieve_associated_attachments()
+
+    Map.put(content, :attachments, associated_attachments)
   end
 
   def find_attachments_nodes(nodes) do
@@ -87,6 +94,13 @@ defmodule Palapa.RichText.ConversionFromTrix do
 
       [embedded_attachment | acc]
     end)
+  end
+
+  def retrieve_associated_attachments(embedded_attachments) do
+    embedded_attachments
+    |> Enum.map(& &1.attachment_id)
+    |> Enum.reject(&is_nil(&1))
+    |> Palapa.Attachments.list_attachments_by_ids()
   end
 
   def decode_attribute!(json_string) do

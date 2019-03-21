@@ -95,7 +95,6 @@ defmodule Palapa.Messages do
     |> put_change(:organization, creator.organization)
     |> put_change(:creator, creator)
     |> put_teams(teams)
-    |> Attachments.put_attachments()
     |> Repo.insert()
   end
 

@@ -42,7 +42,6 @@ defmodule Palapa.RichText do
 
   def from_trix(html_string) when is_binary(html_string) do
     html_string
-    |> sanitize
     |> build_content()
     |> ConversionFromTrix.convert()
   end
@@ -68,7 +67,11 @@ defmodule Palapa.RichText do
   end
 
   defp build_content(html_string) do
-    tree = Tree.parse(html_string)
+    tree =
+      html_string
+      |> sanitize
+      |> Tree.parse()
+
     %Content{tree: tree}
   end
 end

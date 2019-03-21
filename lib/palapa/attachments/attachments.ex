@@ -144,8 +144,12 @@ defmodule Palapa.Attachments do
       end)
       |> Enum.reject(&is_nil/1)
 
+    list_attachments_by_ids(attachments_ids)
+  end
+
+  def list_attachments_by_ids(ids) do
     Attachment
-    |> Palapa.Access.scope_by_ids(attachments_ids)
+    |> Palapa.Access.scope_by_ids(ids)
     |> Repo.all()
   end
 
