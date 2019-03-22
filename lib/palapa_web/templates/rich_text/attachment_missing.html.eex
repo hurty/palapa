@@ -2,6 +2,6 @@
   <span class="text-xs italic border p-2 rounded bg-grey-lightest">Attachment is missing</span>
 
   <figcaption class="text-sm text-center">
-    <span class="font-bold mr-2"><%= @attachment.caption %></span>
+    <span class="font-bold mr-2"><%= @embedded_attachment.caption %></span>
   </figcaption>
 </figure>

@@ -42,6 +42,12 @@ defmodule PalapaWeb.Router do
         resources("/pages", PageController, only: [:show])
       end
     end
+
+    scope(path: "/attachments") do
+      get("/:id/original/:filename", AttachmentController, :original)
+      get("/:id/thumb/:filename", AttachmentController, :thumb)
+      get("/:id/download/:filename", AttachmentController, :download)
+    end
   end
 
   # Private pages for logged in members only
@@ -57,12 +63,7 @@ defmodule PalapaWeb.Router do
       get("/", DashboardController, :index)
       get("/search", SearchController, :index)
 
-      resources("/attachments", AttachmentController, only: [:create, :delete]) do
-        get("/original/:filename", AttachmentController, :original)
-        get("/thumb/:filename", AttachmentController, :thumb)
-        get("/download/:filename", AttachmentController, :download)
-      end
-
+      resources("/attachments", AttachmentController, only: [:create])
       resources("/trash", TrashController, only: [:index])
 
       # --- MESSAGES

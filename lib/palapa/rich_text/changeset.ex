@@ -18,7 +18,7 @@ defmodule Palapa.RichText.Changeset do
 
   def do_put_rich_text(changeset, rich_text_field, content) do
     changeset
-    |> force_change(rich_text_field, RichText.to_canonical(content))
+    |> force_change(rich_text_field, RichText.to_html(content))
   end
 
   def do_put_rich_text_attachments(changeset, nil, _content) do

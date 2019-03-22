@@ -40,38 +40,38 @@ defmodule Palapa.RichText do
 
   #####
 
-  def from_trix(html_string) when is_binary(html_string) do
+  def parse(html_string) do
+    tree = Tree.parse(html_string)
+    %Content{tree: tree}
+  end
+
+  @doc "Transforms a Trix-formatted text into a canonical struct"
+  def from_trix(html_string) do
     html_string
-    |> build_content()
+    |> sanitize()
+    |> parse()
     |> ConversionFromTrix.convert()
   end
 
-  def from_canonical(html_string) when is_binary(html_string) do
-    build_content(html_string)
-    # load associated attachments
+  @doc "Transforms a canonical text into a well formatted HTML"
+  def to_formatted_html(canonical_string) when is_nil(canonical_string), do: nil
+
+  def to_formatted_html(canonical_string) when is_binary(canonical_string) do
+    canonical_string
+    |> parse()
+    |> ConversionToHTML.convert()
+    |> to_html()
   end
 
+  @doc "Transforms a canonical text into a Trix-formatted HTML string"
   def to_trix(%Content{} = _content) do
   end
 
-  def to_canonical(%Content{} = content) do
+  def to_html(%Content{} = content) do
     Floki.raw_html(content.tree)
   end
 
-  def to_html(%Content{} = content) do
-    ConversionToHTML.convert(content)
-  end
-
-  def sanitize(html_string) do
+  defp sanitize(html_string) do
     HtmlSanitizeEx.Scrubber.scrub(html_string, TrixScrubber)
-  end
-
-  defp build_content(html_string) do
-    tree =
-      html_string
-      |> sanitize
-      |> Tree.parse()
-
-    %Content{tree: tree}
   end
 end

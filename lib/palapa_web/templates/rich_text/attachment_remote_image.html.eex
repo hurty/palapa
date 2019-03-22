@@ -1,7 +1,7 @@
 <figure class="attachment text-center">
-  <img src="<%= @attachment.url %>" width="<%= @attachment.width %>" height="<%= @attachment.height %>">
+  <img src="<%= @embedded_attachment.url %>" width="<%= @embedded_attachment.width %>" height="<%= @embedded_attachment.height %>">
 
   <figcaption class="text-sm">
-    <span class="font-bold mr-2"><%= @attachment.caption %></span>
+    <span class="font-bold mr-2"><%= @embedded_attachment.caption %></span>
   </figcaption>
 </figure>

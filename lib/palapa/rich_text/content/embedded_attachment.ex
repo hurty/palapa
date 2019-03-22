@@ -1,18 +1,17 @@
 defmodule Palapa.RichText.EmbeddedAttachment do
-  defstruct ~w(
-    sgid
-    attachment_id
-    content_type
-    url
-    filename
-    filesize
-    width
-    height
-    custom_content
-    previewable
-    presentation
-    caption
-  )a
+  @enforce_keys [:content_type]
+
+  defstruct sgid: nil,
+            attachment_id: nil,
+            content_type: "application/octet-stream",
+            url: nil,
+            filename: nil,
+            filesize: nil,
+            width: nil,
+            height: nil,
+            custom_content: nil,
+            presentation: nil,
+            caption: nil
 
   def has_associated_attachment?(attachment) do
     attachment.sgid

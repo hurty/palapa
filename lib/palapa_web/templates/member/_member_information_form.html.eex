@@ -41,8 +41,8 @@
           data-filename="<%= attachment.filename %>"
           data-size="<%= attachment.byte_size %>"
           data-is-image="<%= Palapa.Attachments.image?(attachment) %>"
-          data-thumb-url="<%= attachment_attachment_url(@conn, :thumb, attachment.organization_id, attachment.id, attachment.filename ) %>" 
-          data-delete-url="<%= attachment_url(@conn, :delete, attachment.organization_id, attachment.id) %>"  
+          data-thumb-url="<%= attachment_url(@conn, :thumb, attachment.id, attachment.filename ) %>" 
+          data-delete-url="<%= attachment_url(@conn, :delete, attachment.id) %>"  
         /> 
       <% end %>
     </div>

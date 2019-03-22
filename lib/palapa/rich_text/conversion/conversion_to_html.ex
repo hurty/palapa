@@ -7,7 +7,6 @@ defmodule Palapa.RichText.ConversionToHTML do
   def convert(%Content{} = content) do
     content
     |> render_attachments()
-    |> to_raw_html()
   end
 
   defp render_attachments(content) do
@@ -17,9 +16,10 @@ defmodule Palapa.RichText.ConversionToHTML do
 
   defp render_attachment({tag, attrs, rest}) do
     if tag == @embedded_attachment_tag do
+      attrs = Enum.into(attrs, %{}, fn {k, v} -> {String.to_atom(k), v} end)
+
       embedded_attachment_nodes =
         struct(EmbeddedAttachment, attrs)
-        # locate sgid () à faire
         |> to_attachment_template
         |> Tree.parse()
 
@@ -45,10 +45,8 @@ defmodule Palapa.RichText.ConversionToHTML do
           "attachment_missing.html"
       end
 
-    Phoenix.View.render_to_iodata(RichTextView, template_filename, attachment: embedded_attachment)
-  end
-
-  defp to_raw_html(content) do
-    Floki.raw_html(content.tree)
+    Phoenix.View.render_to_iodata(RichTextView, template_filename,
+      embedded_attachment: embedded_attachment
+    )
   end
 end

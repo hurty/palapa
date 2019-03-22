@@ -13,30 +13,26 @@ defmodule PalapaWeb.AttachmentController do
           id: attachment.id,
           sgid: Palapa.Access.generate_signed_id(attachment.id),
           original_url:
-            attachment_attachment_url(
+            attachment_url(
               conn,
               :original,
-              current_organization(),
               attachment.id,
               attachment.filename
             ),
           thumb_url:
-            attachment_attachment_url(
+            attachment_url(
               conn,
               :thumb,
-              current_organization(),
               attachment.id,
               attachment.filename
             ),
           download_url:
-            attachment_attachment_url(
+            attachment_url(
               conn,
               :download,
-              current_organization(),
               attachment.id,
               attachment.filename
-            ),
-          delete_url: attachment_url(conn, :delete, current_organization(), attachment)
+            )
         })
 
       {:error} ->
@@ -46,17 +42,17 @@ defmodule PalapaWeb.AttachmentController do
     end
   end
 
-  def original(conn, %{"attachment_id" => id}) do
+  def original(conn, %{"id" => id}) do
     attachment = find_attachment(conn, id)
     redirect(conn, external: Attachments.url(attachment, :original))
   end
 
-  def thumb(conn, %{"attachment_id" => id}) do
+  def thumb(conn, %{"id" => id}) do
     attachment = find_attachment(conn, id)
     redirect(conn, external: Attachments.url(attachment, :thumb))
   end
 
-  def download(conn, %{"attachment_id" => id}) do
+  def download(conn, %{"id" => id}) do
     attachment = find_attachment(conn, id)
     redirect(conn, external: Attachments.url(attachment, :original))
   end
