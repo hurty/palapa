@@ -7,10 +7,10 @@ export default class extends BaseController {
   }
 
   handleImagesGallery() {
-    new LuminousGallery(this.element.querySelectorAll("figure[class^='attachment attachment--preview'] > a"))
+    new LuminousGallery(this.imagesAttachmentsLinks)
   }
 
-  get attachmentsLinks() {
-    return this.element.querySelectorAll("figure[class^='attachment attachment--preview'] > a")
+  get imagesAttachmentsLinks() {
+    return this.element.querySelectorAll("a[class^='attachment-gallery-item']")
   }
 }
