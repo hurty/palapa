@@ -2,7 +2,6 @@ defmodule PalapaWeb.AttachmentController do
   use PalapaWeb, :controller
 
   alias Palapa.Attachments
-  import PalapaWeb.Router.Helpers
 
   def create(conn, %{"file" => file}) do
     case Palapa.Attachments.create(current_organization(), file, current_member()) do
@@ -23,17 +22,7 @@ defmodule PalapaWeb.AttachmentController do
     end
   end
 
-  def original(conn, %{"id" => id}) do
-    attachment = find_attachment(conn, id)
-    redirect(conn, external: Attachments.url(attachment, :original))
-  end
-
-  def thumb(conn, %{"id" => id}) do
-    attachment = find_attachment(conn, id)
-    redirect(conn, external: Attachments.url(attachment, :thumb))
-  end
-
-  def download(conn, %{"id" => id}) do
+  def show(conn, %{"id" => id}) do
     attachment = find_attachment(conn, id)
     redirect(conn, external: Attachments.url(attachment, :original))
   end

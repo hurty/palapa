@@ -18,7 +18,6 @@ defmodule PalapaWeb.RichTextView do
     end
   end
 
-  # Move this into rich text helpers
   def text_editor(conn, organization, options \\ []) do
     toolbar_id = "editor_toolbar_#{Ecto.UUID.generate()}"
 

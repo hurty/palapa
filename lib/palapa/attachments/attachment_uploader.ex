@@ -1,8 +1,8 @@
 defmodule Palapa.Attachments.AttachmentUploader do
   use Arc.Definition
 
-  def filename(_version, {_file, scope}) do
-    scope.id
+  def filename(version, {_file, scope}) do
+    "#{scope.id}/#{scope.id}_#{version}"
   end
 
   # Override the storage directory:

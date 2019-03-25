@@ -1,14 +1,20 @@
 defmodule Palapa.Attachments.AttachmentImageUploader do
   use Arc.Definition
 
-  @versions [:original, :thumb]
+  @versions [:original, :gallery, :thumb]
   @transform_extensions ~w(.jpg .jpeg .gif .png)
 
   # We only generate thumbnails for image formats
-  def transform(:thumb, {file, _scope}) do
-    file_extension = file.file_name |> Path.extname() |> String.downcase()
+  def transform(:gallery, {file, _scope}) do
+    if transformable_image?(file) do
+      {:convert, "-strip -thumbnail 1000x>"}
+    else
+      :noaction
+    end
+  end
 
-    if(Enum.member?(@transform_extensions, file_extension)) do
+  def transform(:thumb, {file, _scope}) do
+    if transformable_image?(file) do
       {:convert, "-strip -thumbnail 600x>"}
     else
       :noaction
@@ -16,10 +22,7 @@ defmodule Palapa.Attachments.AttachmentImageUploader do
   end
 
   def filename(version, {_file, scope}) do
-    case version do
-      :original -> scope.id
-      _ -> "#{scope.id}_#{version}"
-    end
+    "#{scope.id}/#{scope.id}_#{version}"
   end
 
   # Override the storage directory:
@@ -40,4 +43,9 @@ defmodule Palapa.Attachments.AttachmentImageUploader do
   # def s3_object_headers(version, {file, scope}) do
   #   [content_type: Plug.MIME.path(file.file_name)]
   # end
+
+  defp transformable_image?(file) do
+    file_extension = file.file_name |> Path.extname() |> String.downcase()
+    Enum.member?(@transform_extensions, file_extension)
+  end
 end
