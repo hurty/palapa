@@ -6,13 +6,13 @@ use Mix.Config
 # The watchers configuration can be used to run external
 # watchers to your application.
 config :palapa, PalapaWeb.Endpoint,
-  # http: [port: 4000],
-  https: [
-    port: 4000,
-    cipher_suite: :strong,
-    certfile: "priv/cert/selfsigned.pem",
-    keyfile: "priv/cert/selfsigned_key.pem"
-  ],
+  http: [port: 4000],
+  # https: [
+  #   port: 4001,
+  #   cipher_suite: :strong,
+  #   certfile: "priv/cert/selfsigned.pem",
+  #   keyfile: "priv/cert/selfsigned_key.pem"
+  # ],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
