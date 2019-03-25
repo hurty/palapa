@@ -255,8 +255,8 @@ export default class extends Controller {
 
         return attachment.setAttributes({
           sgid: response.sgid,
-          url: response.thumb_url,
-          href: response.original_url
+          url: response.url,
+          href: response.url
         });
       }
     };

@@ -12,27 +12,8 @@ defmodule PalapaWeb.AttachmentController do
         |> json(%{
           id: attachment.id,
           sgid: Palapa.Access.generate_signed_id(attachment.id),
-          original_url:
-            attachment_url(
-              conn,
-              :original,
-              attachment.id,
-              attachment.filename
-            ),
-          thumb_url:
-            attachment_url(
-              conn,
-              :thumb,
-              attachment.id,
-              attachment.filename
-            ),
-          download_url:
-            attachment_url(
-              conn,
-              :download,
-              attachment.id,
-              attachment.filename
-            )
+          url: Palapa.Attachments.url(attachment),
+          href: Palapa.Attachments.url(attachment)
         })
 
       {:error} ->

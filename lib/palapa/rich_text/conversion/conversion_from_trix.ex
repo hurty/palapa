@@ -12,7 +12,6 @@ defmodule Palapa.RichText.ConversionFromTrix do
     content
     |> canonicalize_trix_attachments()
     |> extract_attachments
-    |> IO.inspect(label: "final after from trix")
   end
 
   def canonicalize_trix_attachments(content) do
