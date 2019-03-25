@@ -99,7 +99,9 @@ defmodule Palapa.Messages do
   end
 
   def change(%Message{} = message) do
-    Message.changeset(message, %{})
+    message
+    |> Repo.preload([:attachments])
+    |> Message.changeset(%{})
   end
 
   def update(%Message{} = message, attrs, teams \\ nil) do

@@ -42,12 +42,6 @@ defmodule PalapaWeb.Router do
         resources("/pages", PageController, only: [:show])
       end
     end
-
-    scope(path: "/attachments") do
-      get("/:id/original/:filename", AttachmentController, :original)
-      get("/:id/thumb/:filename", AttachmentController, :thumb)
-      get("/:id/download/:filename", AttachmentController, :download)
-    end
   end
 
   # Private pages for logged in members only

@@ -1,11 +1,11 @@
 <figure class="attachment">
   <%= if image?(@embedded_attachment) do %>
-    <img src="<%= attachment_url(@embedded_attachment) %>" width="<%= @embedded_attachment.width %>" height="<%= @embedded_attachment.height %>">
+    <img src="<%= secure_attachment_url(@embedded_attachment, :thumb) %>" width="<%= @embedded_attachment.width %>" height="<%= @embedded_attachment.height %>">
 
     <figcaption class="text-sm text-center">
       <span class="font-bold mr-2"><%= @embedded_attachment.caption %></span> 
-      <span class="mr-2"><%= link "See full size", to: attachment_url(@embedded_attachment, :original), target: "_blank" %></span>
-      <span><%= link "Download", to: attachment_url(@embedded_attachment, :download) %></span>
+      <span class="mr-2"><%= link "See full size", to: secure_attachment_url(@embedded_attachment, :original), target: "_blank" %></span>
+      <span><%= link "Download", to: secure_attachment_url(@embedded_attachment, :original), download: true %></span>
     </figcaption>
   <% else %>
     <%= link to: @embedded_attachment.url, class: "p-2 border rounded" do %>
