@@ -7,7 +7,7 @@
     <figcaption class="text-sm text-center">
       <span class="font-bold mr-2"><%= @embedded_attachment.caption %></span> 
       <span class="mr-2"><%= link "See full size", to: secure_attachment_url(@embedded_attachment, :original), target: "_blank" %></span>
-      <span><%= link "Download", to: secure_attachment_url(@embedded_attachment, :original), download: true %></span>
+      <span><%= link "Download", to: secure_attachment_url(@embedded_attachment, :original), download: @embedded_attachment.filename %></span>
     </figcaption>
   <% else %>
     <%= link to: @embedded_attachment.url, class: "p-2 border rounded" do %>
