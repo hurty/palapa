@@ -39,7 +39,7 @@
 @import "components/_common";
 @import "components/_forms";
 @import "components/_luminous";
-@import "components/_message";
+@import "components/_rich_text.css";
 @import "components/_document";
 @import "components/_navigation";
 @import "components/_popover";

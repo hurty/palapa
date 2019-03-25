@@ -36,8 +36,10 @@
     @apply my-4 py-4 px-4;
   }
 
-  img {
+  .attachment {
+    text-align: center;
     width: auto;
     height: auto;
+    @apply my-4;
   }
 }
