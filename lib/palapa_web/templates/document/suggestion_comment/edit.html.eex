@@ -1,12 +1,8 @@
 <%= form_for @changeset, suggestion_comment_url(@conn, :update, @current_organization, @suggestion_comment), 
   [data: [target: "document-suggestion-comment.editForm", action: "document-suggestion-comment#update"]], fn form -> %>
   <div class="mb-1">
-    <%= PalapaWeb.RichTextView.text_editor(@conn, @current_organization, placeholder: "Your comment here...", 
-      content_input_id: "document_suggestion_comment_#{@suggestion_comment.id}") %>
-
-    <%= hidden_input form, :content, "data-target": "document-suggestion-comment.commentContentInput", id: "document_suggestion_comment_#{@suggestion_comment.id}" %>
+    <%= PalapaWeb.RichTextView.text_editor form, @conn, placeholder: "Your comment here", content_data_target: "document-suggestion-comment.commentContentInput" %>
   </div>
-
 
   <div class="flex justify-end">
     <button type="submit" class="btn btn-green mr-1">Save</button>

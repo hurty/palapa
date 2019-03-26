@@ -2,10 +2,7 @@
   <%= form_for @suggestion_changeset, document_page_suggestion_path(@conn, :create, @current_organization, @page), 
     ["data-target": "document-suggestions.form", "data-action": "document-suggestions#createSuggestion", class: "hidden"], fn form -> %> 
 
-    <%= PalapaWeb.RichTextView.text_editor(@conn, @current_organization, placeholder: "Your comment here...", 
-      content_input_id: "document_suggestion_#{@page.id}", data_target: "document-suggestions.editor") %>
-
-    <%= hidden_input form, :content, "data-target": "document-suggestions.suggestionContentInput", id: "document_suggestion_#{@page.id}" %>
+    <%= PalapaWeb.RichTextView.text_editor(form, @conn, placeholder: "Your comment here...", editor_data_target: "document-suggestions.editor", content_data_target: "document-suggestions.suggestionContentInput") %>
 
     <div class="card-actions">
       <%= submit "Post suggestion", class: "btn btn-green" %>

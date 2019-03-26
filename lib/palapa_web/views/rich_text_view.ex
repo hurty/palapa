@@ -18,16 +18,18 @@ defmodule PalapaWeb.RichTextView do
     end
   end
 
-  def text_editor(conn, organization, options \\ []) do
-    toolbar_id = "editor_toolbar_#{Ecto.UUID.generate()}"
+  def text_editor(form, conn, options \\ []) do
+    organization = conn.assigns.current_organization
 
     render("editor.html", %{
-      conn: conn,
+      form: form,
+      attachments_url: attachment_url(conn, :create, organization),
       organization: organization,
-      content_input_id: options[:content_input_id] || "content",
-      data_target: options[:data_target] || "",
+      content_input_id: "editor_content_#{Ecto.UUID.generate()}",
+      editor_data_target: options[:editor_data_target] || "",
+      content_data_target: options[:content_data_target] || "",
       placeholder: options[:placeholder],
-      toolbar_id: toolbar_id
+      toolbar_id: "editor_toolbar_#{Ecto.UUID.generate()}"
     })
   end
 end

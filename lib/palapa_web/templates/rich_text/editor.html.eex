@@ -1,7 +1,8 @@
-<div class="bg-white border rounded" data-controller="editor" 
-data-editor-autocomplete-index="0" 
-data-editor-members="<%= members_for_autocomplete(@organization) %>" 
-data-editor-attachments-url="<%= attachment_url(@conn, :create, @organization)%>">
+<div class="bg-white border rounded" 
+  data-controller="editor" 
+  data-editor-autocomplete-index="0" 
+  data-editor-members="<%= members_for_autocomplete(@organization) %>" 
+  data-editor-attachments-url="<%= @attachments_url %>">
   
   <trix-toolbar id="<%= @toolbar_id %>">
     <div class="trix-button-row">
@@ -27,6 +28,7 @@ data-editor-attachments-url="<%= attachment_url(@conn, :create, @organization)%>
         <button type="button" class="trix-button trix-button--icon trix-button--icon-redo" data-trix-action="redo" data-trix-key="shift+z" title="Redo" tabindex="-1">Redo</button>
       </span>
     </div>
+
     <div class="trix-dialogs" data-trix-dialogs>
       <div class="trix-dialog trix-dialog--link" data-trix-dialog="href" data-trix-dialog-attribute="href">
         <div class="trix-dialog__link-fields">
@@ -40,8 +42,10 @@ data-editor-attachments-url="<%= attachment_url(@conn, :create, @organization)%>
     </div>
   </trix-toolbar>
 
-  <trix-editor class="trix-content sm:p-4" toolbar="<%= @toolbar_id %>" input="<%= @content_input_id %>" placeholder="<%= @placeholder %>" data-target="<%= @data_target %>">
+  <trix-editor class="trix-content sm:p-4" toolbar="<%= @toolbar_id %>" input="<%= @content_input_id %>" placeholder="<%= @placeholder %>" data-target="<%= @editor_data_target %>">
   </trix-editor>
   
+  <%= hidden_input @form, :content, id: @content_input_id, "data-target": @content_data_target %>
+
   <ul class="autocomplete hidden" data-target="editor.autocompleteList"></ul>
 </div>

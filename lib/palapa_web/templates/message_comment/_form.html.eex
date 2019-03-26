@@ -1,8 +1,7 @@
 <%= form_for @changeset, message_comment_path(@conn, :update, @current_organization, @comment), 
   ["data-target": "message-comment.commentForm", "data-action": "message-comment#updateComment"], fn form -> %> 
 
-  <%= PalapaWeb.RichTextView.text_editor(@conn, @current_organization, placeholder: "Your message here...", content_input_id: "message_comment_#{@comment.id}", data_target: "message-comment.editor") %>
-  <%= hidden_input form, :content, "data-target": "message-comment.hiddenInput", id: "message_comment_#{@comment.id}" %>
+  <%= PalapaWeb.RichTextView.text_editor(form, @conn, placeholder: "Your message here...", editor_data_target: "message-comment.editor", content_data_target: "message-comment.hiddenInput") %>
 
   <div class="card-actions">
     <%= submit "Save comment", class: "btn btn-green" %>
