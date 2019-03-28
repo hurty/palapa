@@ -4,9 +4,10 @@ defmodule Palapa.Messages.MessageComment do
   alias Palapa.Messages.Message
   alias Palapa.Messages.MessageComment
   alias Palapa.Attachments.Attachment
+  alias Palapa.RichText
 
   schema "message_comments" do
-    field(:content, :string)
+    field(:content, RichText.Type)
     timestamps()
 
     belongs_to(:organization, Organization)
@@ -22,6 +23,7 @@ defmodule Palapa.Messages.MessageComment do
   def changeset(%MessageComment{} = message_comment, attrs) do
     message_comment
     |> cast(attrs, [:content])
+    |> RichText.Changeset.put_rich_text_attachments(:content, :attachments)
     |> validate_required(:content)
   end
 end

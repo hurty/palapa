@@ -57,6 +57,12 @@ defmodule Palapa.RichText do
   @doc "Transforms a canonical text into a well formatted HTML"
   def to_formatted_html(content) when is_nil(content), do: nil
 
+  def to_formatted_html(content) when is_binary(content) do
+    content
+    |> load()
+    |> to_formatted_html()
+  end
+
   def to_formatted_html(%Content{} = content) do
     content
     |> ConversionToHTML.convert()
@@ -65,6 +71,12 @@ defmodule Palapa.RichText do
 
   @doc "Transforms a canonical text into a Trix-formatted HTML string"
   def to_trix(content) when is_nil(content), do: nil
+
+  def to_trix(content) when is_binary(content) do
+    content
+    |> load()
+    |> to_trix()
+  end
 
   def to_trix(%Content{} = content) do
     content
@@ -78,11 +90,5 @@ defmodule Palapa.RichText do
 
   defp sanitize(html_string) do
     HtmlSanitizeEx.Scrubber.scrub(html_string, TrixScrubber)
-  end
-end
-
-defimpl String.Chars, for: Palapa.RichText.Content do
-  def to_string(content) do
-    Palapa.RichText.to_html(content)
   end
 end

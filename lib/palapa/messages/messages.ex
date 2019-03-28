@@ -124,6 +124,7 @@ defmodule Palapa.Messages do
   def get_comment!(queryable \\ MessageComment, id) do
     queryable
     |> preload(creator: :account)
+    |> preload(:attachments)
     |> Repo.get!(id)
   end
 
@@ -132,9 +133,9 @@ defmodule Palapa.Messages do
 
     %MessageComment{}
     |> MessageComment.changeset(attrs)
-    |> put_change(:message, message)
-    |> put_change(:organization, creator.organization)
-    |> put_change(:creator, creator)
+    |> put_assoc(:message, message)
+    |> put_assoc(:organization, creator.organization)
+    |> put_assoc(:creator, creator)
     |> Repo.insert()
   end
 

@@ -12,6 +12,7 @@ defmodule Palapa.RichText.ConversionFromTrix do
     content
     |> canonicalize_trix_attachments()
     |> extract_attachments
+    |> mark_as_resolved()
   end
 
   def canonicalize_trix_attachments(content) do
@@ -108,6 +109,10 @@ defmodule Palapa.RichText.ConversionFromTrix do
     rescue
       _ -> Logger.error("Couldn't parse JSON attachment attributes : #{json_string}")
     end
+  end
+
+  def mark_as_resolved(content) do
+    Map.put(content, :attachments_resolved, true)
   end
 
   defp atomize_keys(string_keys_map) do

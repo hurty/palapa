@@ -47,10 +47,6 @@ defmodule PalapaWeb.Helpers do
     |> Jason.encode!()
   end
 
-  def sanitize_html(text) do
-    HtmlSanitizeEx.Scrubber.scrub(text, Palapa.RichText.TrixScrubber)
-  end
-
   def truncate_string(string, length \\ 80)
   def truncate_string(string, _length) when is_nil(string), do: nil
 

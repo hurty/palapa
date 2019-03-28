@@ -10,13 +10,18 @@ defmodule Palapa.RichText.ConversionToHTML do
   end
 
   defp render_attachments(content) do
-    tree = Tree.map(content.tree, &render_attachment(&1))
+    tree = Tree.map(content.tree, &render_attachment(content, &1))
     Map.put(content, :tree, tree)
   end
 
-  defp render_attachment({tag, attrs, rest}) do
+  defp render_attachment(content, {tag, attrs, rest}) do
     if tag == @embedded_attachment_tag do
-      attrs = Enum.into(attrs, %{}, fn {k, v} -> {String.to_atom(k), v} end)
+      attrs =
+        if content.attachments_resolved do
+          attrs
+        else
+          Enum.into(attrs, %{}, fn {k, v} -> {String.to_atom(k), v} end)
+        end
 
       embedded_attachment_nodes =
         struct(EmbeddedAttachment, attrs)

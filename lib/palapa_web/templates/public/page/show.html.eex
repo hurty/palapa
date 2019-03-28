@@ -20,7 +20,7 @@
       <div>
         <%= if @page.content do %>
           <section class="message-content sm:p-4">
-            <%= raw(sanitize_html(@page.content)) %>
+            <%= rich_text @page.content %>
           </section>
         <% else %>
           <section class="blankslate p-4">

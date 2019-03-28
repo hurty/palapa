@@ -1,1 +1,1 @@
-<%= raw(PalapaWeb.Helpers.sanitize_html(@suggestion.content)) %>
+<%= rich_text @suggestion.content %>

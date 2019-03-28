@@ -81,7 +81,7 @@ defmodule Palapa.MessagesTest do
       assert member.organization_id == comment.organization.id
       assert member.id == comment.creator.id
       assert message.id == comment.message_id
-      assert "My 2 cents" == comment.content
+      assert "My 2 cents" == to_string(comment.content)
     end
 
     test "change_comment/1 returns a comment changeset", %{comment: comment} do
@@ -90,7 +90,7 @@ defmodule Palapa.MessagesTest do
 
     test "update_comment/2 updates a comment attributes", %{comment: comment} do
       {:ok, updated_comment} = Messages.update_comment(comment, %{content: "updated content"})
-      assert "updated content" == updated_comment.content
+      assert "updated content" == to_string(updated_comment.content)
     end
 
     test "delete_comment!", %{comment: comment} do
