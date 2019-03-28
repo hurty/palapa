@@ -10,13 +10,8 @@ defmodule Palapa.MessagesTest do
       organization = insert!(:organization)
       member = insert!(:member, organization: organization)
 
-      message =
-        Repo.insert!(%Message{
-          organization: organization,
-          creator: member,
-          title: "My message",
-          content: "<p>Cool story</p>"
-        })
+      {:ok, message} =
+        Messages.create(member, %{title: "My message", content: "<p>Cool story</p>"})
 
       %{message: message, member: member, organization: organization}
     end
@@ -65,21 +60,10 @@ defmodule Palapa.MessagesTest do
       organization = insert!(:organization)
       member = insert!(:member, organization: organization)
 
-      message =
-        Repo.insert!(%Message{
-          organization: organization,
-          creator: member,
-          title: "My message",
-          content: "<p>Cool story</p>"
-        })
+      {:ok, message} =
+        Messages.create(member, %{title: "My message", content: "<p>Cool story</p>"})
 
-      comment =
-        Repo.insert!(%MessageComment{
-          organization: organization,
-          creator: member,
-          message: message,
-          content: "my comment"
-        })
+      {:ok, comment} = Messages.create_comment(message, member, %{content: "my comment"})
 
       %{message: message, comment: comment, organization: organization, member: member}
     end

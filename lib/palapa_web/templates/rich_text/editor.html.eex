@@ -45,7 +45,7 @@
   <trix-editor class="trix-content sm:p-4" toolbar="<%= @toolbar_id %>" input="<%= @content_input_id %>" placeholder="<%= @placeholder %>" data-target="<%= @editor_data_target %>">
   </trix-editor>
   
-  <%= hidden_input @form, :content, id: @content_input_id, "data-target": @content_data_target %>
+  <%= hidden_input @form, :content, value: @content_input_value, id: @content_input_id, "data-target": @content_data_target %>
 
   <ul class="autocomplete hidden" data-target="editor.autocompleteList"></ul>
 </div>

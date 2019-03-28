@@ -3,7 +3,6 @@ defmodule Palapa.Messages do
   alias Palapa.Messages.Message
   alias Palapa.Messages.MessageComment
   alias Palapa.Teams.Team
-  alias Palapa.Attachments
 
   # --- Authorizations
 
@@ -109,7 +108,6 @@ defmodule Palapa.Messages do
     |> Repo.preload([:organization, :attachments, :teams])
     |> Message.changeset(attrs)
     |> put_teams(teams)
-    |> Attachments.put_attachments()
     |> Repo.update()
   end
 
@@ -137,7 +135,6 @@ defmodule Palapa.Messages do
     |> put_change(:message, message)
     |> put_change(:organization, creator.organization)
     |> put_change(:creator, creator)
-    |> Attachments.put_attachments()
     |> Repo.insert()
   end
 
@@ -149,7 +146,6 @@ defmodule Palapa.Messages do
     message_comment
     |> Repo.preload([:organization, :attachments])
     |> MessageComment.changeset(attrs)
-    |> Attachments.put_attachments()
     |> Repo.update()
   end
 

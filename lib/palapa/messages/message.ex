@@ -19,7 +19,7 @@ defmodule Palapa.Messages.Message do
 
     timestamps()
     field(:title, :string)
-    field(:content, :string)
+    field(:content, RichText.Type)
     field(:published_to_everyone, :boolean)
     field(:publish_teams_ids, {:array, :binary}, virtual: true)
     field(:deleted_at, :utc_datetime)
@@ -29,7 +29,7 @@ defmodule Palapa.Messages.Message do
   def changeset(%Message{} = message, attrs) do
     message
     |> cast(attrs, [:title, :content, :published_to_everyone, :publish_teams_ids])
-    |> RichText.Changeset.put_rich_text(:content, :attachments)
+    |> RichText.Changeset.put_rich_text_attachments(:content, :attachments)
     |> put_teams(attrs)
     |> validate_required(:title)
   end

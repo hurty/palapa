@@ -1,16 +1,20 @@
 defmodule PalapaWeb.MessageView do
   use PalapaWeb, :view
 
+  alias Palapa.RichText
+
   @excerpt_length 380
 
   def excerpt(content) do
+    html_content = RichText.to_html(content)
+
     first_words =
-      content
+      html_content
       |> HtmlSanitizeEx.Scrubber.scrub(PalapaWeb.MessageScrubber)
       |> strip_html_tags()
       |> String.slice(0..@excerpt_length)
 
-    if String.length(content) > @excerpt_length do
+    if String.length(html_content) > @excerpt_length do
       first_words <> "…"
     else
       first_words

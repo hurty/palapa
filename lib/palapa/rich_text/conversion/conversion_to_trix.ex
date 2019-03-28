@@ -1,11 +1,7 @@
 defmodule Palapa.RichText.ConversionToTrix do
-  alias Palapa.RichText.{Content, EmbeddedAttachment, Tree}
+  alias Palapa.RichText.{Content, Tree}
 
   @embedded_attachment_tag "embedded-attachment"
-
-  def convert(%Content{} = content) do
-    content
-  end
 
   def convert(%Content{} = content) do
     content
@@ -21,19 +17,32 @@ defmodule Palapa.RichText.ConversionToTrix do
     if tag == @embedded_attachment_tag do
       attrs = Enum.into(attrs, %{}, fn {k, v} -> {String.to_atom(k), v} end)
 
-      embedded_attachment_nodes =
-        attrs
-        |> IO.inspect()
+      trix_formatted_attrs = [
+        {"data-trix-attachment", data_trix_attachment(attrs)},
+        {"data-trix-content-type", Map.get(attrs, :content_type)},
+        {"data-trix-attributes", data_trix_attributes(attrs)}
+      ]
 
-      # struct(EmbeddedAttachment, attrs)
-      # |> Tree.parse()
-
-      {tag, attrs, [embedded_attachment_nodes]}
+      {"figure", trix_formatted_attrs, []}
     else
       {tag, attrs, rest}
     end
   end
 
-  defp data_trix_attachment_attribute(attrs) do
+  @trix_attachment_fields [:sgid, :filename, :filesize, :href, :url, :width, :height]
+
+  defp data_trix_attachment(attrs) do
+    attrs
+    |> Map.take(@trix_attachment_fields)
+    |> Map.put(:contentType, attrs.content_type)
+    |> Jason.encode!()
+  end
+
+  @trix_attributes_fields [:caption, :presentation]
+
+  defp data_trix_attributes(attrs) do
+    attrs
+    |> Map.take(@trix_attributes_fields)
+    |> Jason.encode!()
   end
 end

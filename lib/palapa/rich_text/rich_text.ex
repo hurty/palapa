@@ -2,6 +2,7 @@ defmodule Palapa.RichText do
   alias Palapa.RichText.{
     Content,
     ConversionFromTrix,
+    ConversionToTrix,
     ConversionToHTML,
     Tree,
     TrixScrubber
@@ -40,7 +41,7 @@ defmodule Palapa.RichText do
 
   #####
 
-  def parse(html_string) do
+  def load(html_string) do
     tree = Tree.parse(html_string)
     %Content{tree: tree}
   end
@@ -49,22 +50,26 @@ defmodule Palapa.RichText do
   def from_trix(html_string) do
     html_string
     |> sanitize()
-    |> parse()
+    |> load()
     |> ConversionFromTrix.convert()
   end
 
   @doc "Transforms a canonical text into a well formatted HTML"
-  def to_formatted_html(canonical_string) when is_nil(canonical_string), do: nil
+  def to_formatted_html(content) when is_nil(content), do: nil
 
-  def to_formatted_html(canonical_string) when is_binary(canonical_string) do
-    canonical_string
-    |> parse()
+  def to_formatted_html(%Content{} = content) do
+    content
     |> ConversionToHTML.convert()
     |> to_html()
   end
 
   @doc "Transforms a canonical text into a Trix-formatted HTML string"
-  def to_trix(%Content{} = _content) do
+  def to_trix(content) when is_nil(content), do: nil
+
+  def to_trix(%Content{} = content) do
+    content
+    |> ConversionToTrix.convert()
+    |> to_html()
   end
 
   def to_html(%Content{} = content) do
@@ -73,5 +78,11 @@ defmodule Palapa.RichText do
 
   defp sanitize(html_string) do
     HtmlSanitizeEx.Scrubber.scrub(html_string, TrixScrubber)
+  end
+end
+
+defimpl String.Chars, for: Palapa.RichText.Content do
+  def to_string(content) do
+    Palapa.RichText.to_html(content)
   end
 end

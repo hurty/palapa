@@ -15,7 +15,7 @@
         </div>
 
         <div class="field">
-          <%= PalapaWeb.RichTextView.text_editor(form, @conn, placeholder: "Content...") %>
+          <%= PalapaWeb.RichTextView.text_editor(form, :content, @conn, placeholder: "Content...") %>
         </div>
 
         <%= if Enum.any?(@teams) do %>

@@ -35,7 +35,7 @@
       <%= form_for @new_message_comment, message_message_comment_path(@conn, :create, @current_organization, @message), 
         ["data-target": "message.commentForm", "data-action": "message#submitComment", class: "hidden"], fn form -> %> 
 
-        <%= PalapaWeb.RichTextView.text_editor(form, @conn, placeholder: "Your message here...", content_data_target: "message.commentContent", editor_data_target: "message.editor") %>
+        <%= PalapaWeb.RichTextView.text_editor(form, :content, @conn, placeholder: "Your message here...", content_data_target: "message.commentContent", editor_data_target: "message.editor") %>
 
         <div class="card-actions">
           <%= submit "Post this comment", class: "btn btn-green" %>

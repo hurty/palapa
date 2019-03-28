@@ -195,4 +195,25 @@ defmodule Palapa.RichTextTest do
     content = RichText.from_trix(html)
     assert 2 == length(content.embedded_attachments)
   end
+
+  test "turns a canonical attachment into a trix-formatted attachment" do
+    canonical_attachment =
+      """
+      <embedded-attachment
+        content_type="image/jpeg"
+        filename="29072014-P7292367.jpg"
+        filesize="1394841" height="3024"
+        href="/uploads/organizations/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/fdfc67e9-a840-461a-a30a-17c751f79951/original.jpg"
+        presentation="gallery"
+        sgid="SFMyNTY.g3QAAAACZAAEZGF0YW0AAAAkZmRmYzY3ZTktYTg0MC00NjFhLWEzMGEtMTdjNzUxZjc5OTUxZAAGc2lnbmVkbgYAQCh_tWkB.Pd9ezyReUUrPf4wwP2LPR2EHoc-T7xXN2oQAn-Qn1Tk" url="/uploads/organizations/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/fdfc67e9-a840-461a-a30a-17c751f79951/original.jpg"
+        width="4032">
+      </embedded-attachment>
+      """
+      |> RichText.load()
+
+    expected_html =
+      "<figure data-trix-attachment='{\"contentType\":\"image/jpeg\",\"filename\":\"29072014-P7292367.jpg\",\"filesize\":\"1394841\",\"height\":\"3024\",\"href\":\"/uploads/organizations/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/fdfc67e9-a840-461a-a30a-17c751f79951/original.jpg\",\"sgid\":\"SFMyNTY.g3QAAAACZAAEZGF0YW0AAAAkZmRmYzY3ZTktYTg0MC00NjFhLWEzMGEtMTdjNzUxZjc5OTUxZAAGc2lnbmVkbgYAQCh_tWkB.Pd9ezyReUUrPf4wwP2LPR2EHoc-T7xXN2oQAn-Qn1Tk\",\"url\":\"/uploads/organizations/bc9333ad-7988-4482-a49f-f25b64361c82/attachments/fdfc67e9-a840-461a-a30a-17c751f79951/original.jpg\",\"width\":\"4032\"}' data-trix-content-type=\"image/jpeg\" data-trix-attributes='{\"presentation\":\"gallery\"}'></figure>"
+
+    assert expected_html == RichText.to_trix(canonical_attachment)
+  end
 end

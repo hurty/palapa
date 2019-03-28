@@ -18,13 +18,18 @@ defmodule PalapaWeb.RichTextView do
     end
   end
 
-  def text_editor(form, conn, options \\ []) do
+  def text_editor(form, field, conn, options \\ []) do
     organization = conn.assigns.current_organization
+
+    trix_formatted_value =
+      Phoenix.HTML.Form.input_value(form, field)
+      |> Palapa.RichText.to_trix()
 
     render("editor.html", %{
       form: form,
       attachments_url: attachment_url(conn, :create, organization),
       organization: organization,
+      content_input_value: trix_formatted_value,
       content_input_id: "editor_content_#{Ecto.UUID.generate()}",
       editor_data_target: options[:editor_data_target] || "",
       content_data_target: options[:content_data_target] || "",

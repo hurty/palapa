@@ -1,3 +1,6 @@
 defmodule Palapa.RichText.Content do
-  defstruct tree: [], embedded_attachments: [], attachments: []
+  defstruct html: nil,
+            tree: [],
+            embedded_attachments: [],
+            attachments: []
 end

@@ -9,22 +9,15 @@ defmodule PalapaWeb.MessageCommentControllerTest do
     setup do
       workspace = insert_pied_piper!()
 
-      message =
-        Repo.insert!(%Message{
-          organization: workspace.organization,
-          creator: workspace.richard,
-          published_to_everyone: true,
+      {:ok, message} =
+        Messages.create(workspace.richard, %{
           title: "I have a great announcement to make to everyone",
+          published_to_everyone: true,
           content: "<p>This is so great</p>"
         })
 
-      message_comment =
-        Repo.insert!(%MessageComment{
-          organization: workspace.organization,
-          message: message,
-          creator: workspace.gilfoyle,
-          content: "Yes indeed"
-        })
+      {:ok, message_comment} =
+        Messages.create_comment(message, workspace.gilfoyle, %{content: "Yes indeed"})
 
       conn = login(workspace.gilfoyle)
 
@@ -110,22 +103,15 @@ defmodule PalapaWeb.MessageCommentControllerTest do
     setup do
       workspace = insert_pied_piper!()
 
-      message =
-        Repo.insert!(%Message{
-          organization: workspace.organization,
-          creator: workspace.richard,
-          published_to_everyone: true,
+      {:ok, message} =
+        Messages.create(workspace.richard, %{
           title: "I have a great announcement to make to everyone",
+          published_to_everyone: true,
           content: "<p>This is so great</p>"
         })
 
-      message_comment =
-        Repo.insert!(%MessageComment{
-          organization: workspace.organization,
-          message: message,
-          creator: workspace.jared,
-          content: "Yes indeed"
-        })
+      {:ok, message_comment} =
+        Messages.create_comment(message, workspace.jared, %{content: "Yes indeed"})
 
       conn = login(workspace.richard)
 
