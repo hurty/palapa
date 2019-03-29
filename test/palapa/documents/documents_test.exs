@@ -191,7 +191,7 @@ defmodule Palapa.DocumentsTest do
 
       update_attrs = %{title: "New page title", content: "Updated content"}
       assert {:ok, page} = Documents.update_page(page, page.last_author, update_attrs)
-      assert update_attrs.content == page.content
+      assert update_attrs.content == to_string(page.content)
     end
 
     test "change page returns a changeset", %{document: document} do

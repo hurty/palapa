@@ -1,7 +1,7 @@
 defmodule Palapa.RichText.Changeset do
   import Ecto.Changeset
 
-  def put_rich_text_attachments(changeset, rich_text_field, attachments_assoc \\ nil) do
+  def put_rich_text_attachments(changeset, rich_text_field, attachments_assoc) do
     content = get_field(changeset, rich_text_field)
 
     if content do

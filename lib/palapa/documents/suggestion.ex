@@ -1,12 +1,14 @@
 defmodule Palapa.Documents.Suggestion do
   use Palapa.Schema
 
+  alias Palapa.Repo
   alias Palapa.Documents.{Page, SuggestionComment}
   alias Palapa.Organizations.{Organization, Member}
   alias Palapa.Attachments.Attachment
+  alias Palapa.RichText
 
   schema "document_suggestions" do
-    field(:content, :string)
+    field(:content, RichText.Type)
     field(:closed_at, :utc_datetime)
     timestamps()
 
@@ -26,7 +28,9 @@ defmodule Palapa.Documents.Suggestion do
 
   def changeset(suggestion, attrs) do
     suggestion
+    |> Repo.preload(:attachments)
     |> cast(attrs, [:content])
+    |> RichText.Changeset.put_rich_text_attachments(:content, :attachments)
     |> validate_required([:content])
   end
 end

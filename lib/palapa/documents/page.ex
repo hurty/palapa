@@ -2,16 +2,16 @@ defmodule Palapa.Documents.Page do
   use Palapa.Schema
 
   alias Palapa.Documents.{Document, Section, Page, Suggestion}
+  alias Palapa.RichText
   alias Palapa.Organizations.{Member}
   alias Palapa.Searches.Search
   alias Palapa.Attachments.Attachment
-
   import Ecto.Query
 
   schema "pages" do
     field(:title, :string)
     field(:position, :integer)
-    field(:content, :string)
+    field(:content, RichText.Type)
     timestamps()
 
     belongs_to(:document, Document)
@@ -39,6 +39,7 @@ defmodule Palapa.Documents.Page do
   def changeset(page, attrs) do
     page
     |> cast(attrs, [:title, :content, :position, :section_id])
+    |> RichText.Changeset.put_rich_text_attachments(:content, :attachments)
     |> validate_required([:title])
   end
 end
