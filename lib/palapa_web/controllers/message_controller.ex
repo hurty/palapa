@@ -37,15 +37,6 @@ defmodule PalapaWeb.MessageController do
     )
   end
 
-  defp filter_team(query, team) do
-    if team do
-      query
-      |> Messages.published_to(team)
-    else
-      query
-    end
-  end
-
   def new(conn, _params) do
     message_changeset = Messages.change(%Message{})
     teams = Teams.list_for_member(current_member())
@@ -167,6 +158,15 @@ defmodule PalapaWeb.MessageController do
       |> Teams.list()
     else
       []
+    end
+  end
+
+  defp filter_team(query, team) do
+    if team do
+      query
+      |> Messages.published_to(team)
+    else
+      query
     end
   end
 end

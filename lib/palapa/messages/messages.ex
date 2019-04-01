@@ -20,7 +20,7 @@ defmodule Palapa.Messages do
     |> join(:left, [messages], message_teams in assoc(messages, :teams))
     |> where([_, t], t.id in ^member_teams_ids)
     |> or_where(published_to_everyone: true, organization_id: ^member.organization_id)
-    |> distinct(:id)
+    |> distinct(true)
   end
 
   def where_organization(queryable \\ Message, %Organization{} = organization) do
@@ -164,7 +164,7 @@ defmodule Palapa.Messages do
   defp prepare_list(queryable) do
     queryable
     |> non_deleted
-    |> order_by(desc: :inserted_at)
+    |> order_by([m], desc: m.inserted_at)
     |> preload([[creator: :account], :teams])
   end
 
