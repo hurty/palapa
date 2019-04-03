@@ -5,6 +5,7 @@ defmodule Palapa.Organizations.Organization do
   alias Palapa.Organizations.{Organization, Member}
   alias Palapa.Invitations
   alias Palapa.Teams
+  alias Palapa.Events.Event
 
   schema "organizations" do
     field(:name, :string)
@@ -14,6 +15,7 @@ defmodule Palapa.Organizations.Organization do
     has_many(:members, Member)
     has_many(:invitations, Invitations.Invitation)
     has_many(:teams, Teams.Team)
+    has_many(:events, Event)
   end
 
   @doc false

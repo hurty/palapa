@@ -3,6 +3,7 @@ defmodule Palapa.Messages do
   alias Palapa.Messages.Message
   alias Palapa.Messages.MessageComment
   alias Palapa.Teams.Team
+  alias Palapa.Events.Event
 
   # --- Authorizations
 
@@ -16,11 +17,22 @@ defmodule Palapa.Messages do
       |> Repo.all()
       |> Enum.map(fn team -> team.id end)
 
-    queryable
-    |> join(:left, [messages], message_teams in assoc(messages, :teams))
-    |> where([_, t], t.id in ^member_teams_ids)
-    |> or_where(published_to_everyone: true, organization_id: ^member.organization_id)
-    |> distinct(true)
+    queryable =
+      if(has_named_binding?(queryable, :messages)) do
+        queryable
+      else
+        from(q in queryable, as: :messages)
+      end
+
+    from(
+      [messages: messages] in queryable,
+      left_join: teams in assoc(messages, :teams),
+      where: teams.id in ^member_teams_ids,
+      or_where:
+        messages.published_to_everyone == true and
+          messages.organization_id == ^member.organization_id,
+      distinct: true
+    )
   end
 
   def where_organization(queryable \\ Message, %Organization{} = organization) do
@@ -89,12 +101,32 @@ defmodule Palapa.Messages do
   def create(%Organizations.Member{} = creator, attrs, teams \\ nil) do
     creator = Repo.preload(creator, :organization)
 
-    %Message{}
-    |> Message.changeset(attrs)
-    |> put_change(:organization, creator.organization)
-    |> put_change(:creator, creator)
-    |> put_teams(teams)
-    |> Repo.insert()
+    message_changeset =
+      %Message{}
+      |> Message.changeset(attrs)
+      |> put_change(:organization, creator.organization)
+      |> put_change(:creator, creator)
+      |> put_teams(teams)
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:message, message_changeset)
+    |> Ecto.Multi.run(:event, fn _repo, %{message: message} ->
+      %Event{
+        action: :new_message,
+        organization: creator.organization,
+        author: creator,
+        message: message
+      }
+      |> Repo.insert()
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{message: message}} ->
+        {:ok, message}
+
+      {:error, _action, changeset, _changes} ->
+        {:error, changeset}
+    end
   end
 
   def change(%Message{} = message) do
@@ -131,12 +163,33 @@ defmodule Palapa.Messages do
   def create_comment(%Message{} = message, %Member{} = creator, attrs) do
     creator = Repo.preload(creator, [:organization, :account])
 
-    %MessageComment{}
-    |> MessageComment.changeset(attrs)
-    |> put_assoc(:message, message)
-    |> put_assoc(:organization, creator.organization)
-    |> put_assoc(:creator, creator)
-    |> Repo.insert()
+    message_comment_changeset =
+      %MessageComment{}
+      |> MessageComment.changeset(attrs)
+      |> put_assoc(:message, message)
+      |> put_assoc(:organization, creator.organization)
+      |> put_assoc(:creator, creator)
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:message_comment, message_comment_changeset)
+    |> Ecto.Multi.run(:event, fn _repo, %{message_comment: message_comment} ->
+      %Event{
+        action: :new_message_comment,
+        organization: creator.organization,
+        author: creator,
+        message: message,
+        message_comment: message_comment
+      }
+      |> Repo.insert()
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{message_comment: message_comment}} ->
+        {:ok, message_comment}
+
+      {:error, _action, changeset, _changes} ->
+        {:error, changeset}
+    end
   end
 
   def change_comment(%MessageComment{} = message_comment) do

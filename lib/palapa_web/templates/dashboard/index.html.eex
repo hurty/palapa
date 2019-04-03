@@ -1,1 +1,11 @@
-<h2 class="my-8">Dashboard</h2>
+<div class="content page-layout">
+  <div class="main-content"> 
+    <h2 class="">Last activity</h2>
+
+    <ul>
+      <%= for event <- @events do %>
+        <li><%= event.author.account.name %> <%= event.action %> <%= event.inserted_at %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

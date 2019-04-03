@@ -4,6 +4,7 @@ defmodule Palapa.Documents do
   alias Palapa.Documents.{Document, Section, Page, DocumentAccess}
   alias Palapa.Teams.Team
   alias Palapa.Position
+  alias Palapa.Events.Event
 
   # --- Errors
 
@@ -183,6 +184,14 @@ defmodule Palapa.Documents do
     |> Ecto.Multi.run(:first_page, fn _repo, changes ->
       create_page(changes.first_section, author, attrs)
     end)
+    |> Ecto.Multi.insert(:event, fn %{document: document} ->
+      %Event{
+        action: :new_document,
+        organization_id: author.organization_id,
+        author: author,
+        document: document
+      }
+    end)
     |> Repo.transaction()
     |> case do
       {:ok, result} ->
@@ -280,13 +289,36 @@ defmodule Palapa.Documents do
   end
 
   def create_page(%Section{} = section, author, attrs) do
-    %Page{}
-    |> Page.changeset(attrs)
-    |> put_change(:document_id, section.document_id)
-    |> put_assoc(:last_author, author)
-    |> put_change(:section_id, section.id)
-    |> Position.insert_at_bottom(:section_id, section.id, :position)
-    |> Repo.insert()
+    page_changeset =
+      %Page{}
+      |> Page.changeset(attrs)
+      |> put_change(:document_id, section.document_id)
+      |> put_assoc(:last_author, author)
+      |> put_change(:section_id, section.id)
+      |> Position.insert_at_bottom(:section_id, section.id, :position)
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:page, page_changeset)
+    |> Ecto.Multi.insert(
+      :event,
+      fn %{page: page} ->
+        %Event{
+          action: :new_document_page,
+          organization_id: author.organization_id,
+          author: author,
+          document_id: page.document_id,
+          page_id: page.id
+        }
+      end
+    )
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{page: page}} ->
+        {:ok, page}
+
+      {:error, _action, changeset, _changes} ->
+        {:error, changeset}
+    end
   end
 
   def create_page(%Document{} = document, author, attrs) do

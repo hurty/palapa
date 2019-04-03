@@ -3,6 +3,7 @@ defmodule Palapa.DocumentsTest do
 
   alias Palapa.Documents
   alias Palapa.Documents.{Document, Section, Page}
+  alias Palapa.Events.Event
 
   import Palapa.Factory
 
@@ -40,6 +41,9 @@ defmodule Palapa.DocumentsTest do
       assert {:ok, document} = Documents.create_document(author, nil, @valid_attrs)
 
       assert document.title == "some title"
+
+      event_query = from(events in Event, where: events.document_id == ^document.id)
+      assert Repo.exists?(event_query)
     end
 
     test "create_document/1 with invalid data returns error changeset" do
@@ -166,6 +170,13 @@ defmodule Palapa.DocumentsTest do
                  document.last_author,
                  @valid_page_attrs
                )
+
+      event_query =
+        from(events in Event,
+          where: events.document_id == ^document.id and events.page_id == ^first_page.id
+        )
+
+      assert Repo.exists?(event_query)
 
       # Main section has a main page with position 0,
       # so following pages start at position 1

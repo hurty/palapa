@@ -4,6 +4,7 @@ defmodule Palapa.MessagesTest do
   import Palapa.Factory
   alias Palapa.Messages
   alias Palapa.Messages.{Message, MessageComment}
+  alias Palapa.Events.Event
 
   describe "messages" do
     setup do
@@ -21,8 +22,11 @@ defmodule Palapa.MessagesTest do
     end
 
     test "create/3 with a public message", %{member: member} do
-      assert {:ok, %Message{}} =
+      assert {:ok, %Message{} = message} =
                Messages.create(member, %{title: "Hello World", content: "<h1>Hello</h1"})
+
+      event_query = from(events in Event, where: events.message_id == ^message.id)
+      assert Repo.exists?(event_query)
     end
 
     test "create/3 with a message for a specific team", %{
@@ -82,6 +86,13 @@ defmodule Palapa.MessagesTest do
       assert member.id == comment.creator.id
       assert message.id == comment.message_id
       assert "My 2 cents" == to_string(comment.content)
+
+      event_query =
+        from(events in Event,
+          where: events.message_comment_id == ^comment.id
+        )
+
+      assert Repo.exists?(event_query)
     end
 
     test "change_comment/1 returns a comment changeset", %{comment: comment} do
