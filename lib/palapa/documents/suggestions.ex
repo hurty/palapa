@@ -2,6 +2,7 @@ defmodule Palapa.Documents.Suggestions do
   use Palapa.Context
 
   alias Palapa.Documents.{Page, Suggestion, SuggestionComment}
+  alias Palapa.Events.Event
 
   # --- Scopes
 
@@ -51,13 +52,33 @@ defmodule Palapa.Documents.Suggestions do
   def create_suggestion(page, author, attrs) do
     author = Repo.preload(author, :account)
 
-    page
-    |> Ecto.build_assoc(:suggestions)
-    |> Suggestion.changeset(attrs)
-    |> put_change(:organization_id, author.organization_id)
-    |> put_assoc(:author, author)
-    |> put_assoc(:suggestion_comments, [])
-    |> Repo.insert()
+    suggestion_changeset =
+      page
+      |> Ecto.build_assoc(:suggestions)
+      |> Suggestion.changeset(attrs)
+      |> put_change(:organization_id, author.organization_id)
+      |> put_assoc(:author, author)
+      |> put_assoc(:suggestion_comments, [])
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:suggestion, suggestion_changeset)
+    |> Ecto.Multi.insert(:event, fn %{suggestion: suggestion} ->
+      %Event{
+        action: :new_document_suggestion,
+        organization_id: author.organization_id,
+        author: author,
+        document_id: page.document_id,
+        document_suggestion_id: suggestion.id
+      }
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{suggestion: suggestion}} ->
+        {:ok, suggestion}
+
+      {:error, _action, changeset, _changes} ->
+        {:error, changeset}
+    end
   end
 
   def change_suggestion(suggestion \\ %Suggestion{}) do
@@ -102,13 +123,34 @@ defmodule Palapa.Documents.Suggestions do
 
   def create_suggestion_comment(suggestion, author, attrs) do
     author = Repo.preload(author, :account)
+    suggestion = Repo.preload(suggestion, :page)
 
-    suggestion
-    |> Ecto.build_assoc(:suggestion_comments)
-    |> SuggestionComment.changeset(attrs)
-    |> put_change(:organization_id, author.organization_id)
-    |> put_assoc(:author, author)
-    |> Repo.insert()
+    suggestion_comment_changeset =
+      suggestion
+      |> Ecto.build_assoc(:suggestion_comments)
+      |> SuggestionComment.changeset(attrs)
+      |> put_change(:organization_id, author.organization_id)
+      |> put_assoc(:author, author)
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:suggestion_comment, suggestion_comment_changeset)
+    |> Ecto.Multi.insert(:event, fn %{suggestion_comment: suggestion_comment} ->
+      %Event{
+        action: :new_document_suggestion_comment,
+        organization_id: author.organization_id,
+        author: author,
+        document_id: suggestion.page.document_id,
+        document_suggestion_comment_id: suggestion_comment.id
+      }
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{suggestion_comment: suggestion_comment}} ->
+        {:ok, suggestion_comment}
+
+      {:error, _action, changeset, _changes} ->
+        {:error, changeset}
+    end
   end
 
   def change_suggestion_comment(suggestion_comment) do
