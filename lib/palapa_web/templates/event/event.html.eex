@@ -1,0 +1,15 @@
+<li class="event">
+  <div class="mr-3"><%= PalapaWeb.MemberView.avatar(@event.author.account, :small) %></div>
+
+  <div class="w-full">
+    <div>
+      <span class="event-summary mr-2"><%= event_summary(@conn, @event) %></span>
+      <span class="text-xs text-grey-dark whitespace-no-wrap"><%= auto_format_datetime(@event.inserted_at, @conn.assigns.current_account) %></span>
+    </div>
+
+    <div class="event-details">
+      <h3 class="event-target-title"><%= event_target_title(@conn, @event) %></h3>
+      <p><%= event_target_excerpt(@conn, @event) %></p>
+    </div>
+  </div>
+</li>

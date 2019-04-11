@@ -5,6 +5,8 @@ defmodule PalapaWeb.MessageView do
 
   @excerpt_length 380
 
+  def excerpt(content) when is_nil(content), do: nil
+
   def excerpt(content) do
     html_content = RichText.to_html(content)
 

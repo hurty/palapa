@@ -59,4 +59,16 @@ defmodule PalapaWeb.Helpers do
       string
     end
   end
+
+  def dom_id(struct) do
+    if Map.get(struct, :id) do
+      resource_name =
+        struct.__struct__
+        |> Module.split()
+        |> List.last()
+        |> Macro.underscore()
+
+      "#{resource_name}_#{struct.id}"
+    end
+  end
 end

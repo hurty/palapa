@@ -4,8 +4,8 @@ defmodule Palapa.Events do
   import Ecto.Query
   import EctoEnum
 
-  alias Palapa.Events.Event, warn: false
   alias Palapa.Messages
+  alias Palapa.Documents
 
   defenum(EventAction, :event_action, ~w(
     new_message
@@ -18,17 +18,40 @@ defmodule Palapa.Events do
   )s)
 
   def list_events(organization, member) do
-    from(events in Ecto.assoc(organization, :events),
-      order_by: [desc: :inserted_at],
+    from(events in subquery(all_events_query(organization, member)),
       limit: 30,
-      left_join: messages in Messages.Message,
-      on: events.message_id == messages.id,
-      as: :messages,
-      preload: [message: messages],
+      order_by: [desc: :inserted_at],
+      distinct: true,
       preload: [author: :account],
-      join: m in subquery(Messages.visible_to(member)),
-      distinct: true
+      preload: [
+        :message,
+        :message_comment,
+        :document,
+        :page,
+        :document_suggestion_comment
+      ],
+      preload: [document_suggestion: [author: :account]]
     )
     |> Repo.all()
+  end
+
+  def all_events_query(organization, member) do
+    from(messages_events_query(organization, member),
+      union: ^documents_events_query(organization, member)
+    )
+  end
+
+  def messages_events_query(organization, member) do
+    from(events in Ecto.assoc(organization, :events),
+      join: messages in subquery(Messages.visible_to(member)),
+      on: events.message_id == messages.id
+    )
+  end
+
+  def documents_events_query(organization, member) do
+    from(events in Ecto.assoc(organization, :events),
+      join: documents in subquery(Documents.documents_visible_to(member)),
+      on: events.document_id == documents.id
+    )
   end
 end

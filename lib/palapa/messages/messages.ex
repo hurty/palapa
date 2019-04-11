@@ -12,11 +12,6 @@ defmodule Palapa.Messages do
   # --- Scopes
 
   def visible_to(queryable \\ Message, %Member{} = member) do
-    member_teams_ids =
-      Ecto.assoc(member, :teams)
-      |> Repo.all()
-      |> Enum.map(fn team -> team.id end)
-
     queryable =
       if(has_named_binding?(queryable, :messages)) do
         queryable
@@ -27,7 +22,7 @@ defmodule Palapa.Messages do
     from(
       [messages: messages] in queryable,
       left_join: teams in assoc(messages, :teams),
-      where: teams.id in ^member_teams_ids,
+      where: teams.id in ^Teams.list_ids_for_member(member),
       or_where:
         messages.published_to_everyone == true and
           messages.organization_id == ^member.organization_id,

@@ -1,0 +1,25 @@
+.event {
+  @apply flex p-2 my-4 rounded border-b;
+
+  a {
+    @apply text-grey-darkest;
+  }
+}
+
+.event-target-title {
+  a {
+    @apply text-green;
+
+    &:hover {
+      @apply underline;
+    }
+  }
+}
+
+.event-summary {
+  @apply text-base font-bold text-grey-darker;
+}
+
+.event-details {
+  @apply p-2 my-2 w-full text-sm rounded-lg bg-white rounded-lg;
+}

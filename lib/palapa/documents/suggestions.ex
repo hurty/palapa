@@ -68,6 +68,7 @@ defmodule Palapa.Documents.Suggestions do
         organization_id: author.organization_id,
         author: author,
         document_id: page.document_id,
+        page_id: page.id,
         document_suggestion_id: suggestion.id
       }
     end)
@@ -140,6 +141,8 @@ defmodule Palapa.Documents.Suggestions do
         organization_id: author.organization_id,
         author: author,
         document_id: suggestion.page.document_id,
+        page_id: suggestion.page_id,
+        document_suggestion_id: suggestion.id,
         document_suggestion_comment_id: suggestion_comment.id
       }
     end)

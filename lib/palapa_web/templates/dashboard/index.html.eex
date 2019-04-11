@@ -1,11 +1,9 @@
-<div class="content page-layout">
+<div class="content article-layout">
   <div class="main-content"> 
-    <h2 class="">Last activity</h2>
+    <h2 class="text-grey-darkest"><%= gettext "Last activity" %></h2>
 
-    <ul>
-      <%= for event <- @events do %>
-        <li><%= event.author.account.name %> <%= event.action %> <%= event.inserted_at %></li>
-      <% end %>
+    <ul class="list-reset">
+      <%= render_many @events, PalapaWeb.EventView, "event.html", conn: @conn %>
     </ul>
   </div>
 </div>

@@ -182,7 +182,7 @@ defmodule Palapa.Documents do
       create_section(changes.document, author, %{title: "Document pages"})
     end)
     |> Ecto.Multi.run(:first_page, fn _repo, changes ->
-      create_page(changes.first_section, author, attrs)
+      create_page(changes.first_section, author, attrs, true)
     end)
     |> Ecto.Multi.insert(:event, fn %{document: document} ->
       %Event{
@@ -288,7 +288,9 @@ defmodule Palapa.Documents do
     page
   end
 
-  def create_page(%Section{} = section, author, attrs) do
+  def create_page(document_or_section, author, attrs, skip_event \\ false)
+
+  def create_page(%Section{} = section, author, attrs, skip_event) do
     page_changeset =
       %Page{}
       |> Page.changeset(attrs)
@@ -299,16 +301,21 @@ defmodule Palapa.Documents do
 
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:page, page_changeset)
-    |> Ecto.Multi.insert(
+    |> Ecto.Multi.run(
       :event,
       fn %{page: page} ->
-        %Event{
-          action: :new_document_page,
-          organization_id: author.organization_id,
-          author: author,
-          document_id: page.document_id,
-          page_id: page.id
-        }
+        if skip_event do
+          {:ok, nil}
+        else
+          %Event{
+            action: :new_document_page,
+            organization_id: author.organization_id,
+            author: author,
+            document_id: page.document_id,
+            page_id: page.id
+          }
+          |> Repo.insert()
+        end
       end
     )
     |> Repo.transaction()
@@ -321,9 +328,9 @@ defmodule Palapa.Documents do
     end
   end
 
-  def create_page(%Document{} = document, author, attrs) do
+  def create_page(%Document{} = document, author, attrs, skip_event) do
     first_section = get_first_section!(document)
-    create_page(first_section, author, attrs)
+    create_page(first_section, author, attrs, skip_event)
   end
 
   def update_page(page, author, attrs) do
