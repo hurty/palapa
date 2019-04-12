@@ -129,15 +129,17 @@ defmodule PalapaWeb.EventView do
       :new_document_suggestion ->
         suggestion = event.document_suggestion
 
-        tag(:div) do
-        end
-
         link(PalapaWeb.MessageView.excerpt(suggestion.content),
           to: document_page_path(conn, :show, event.organization_id, suggestion.page_id)
         )
 
       :new_document_suggestion_comment ->
-        "suggestion comment"
+        page = event.page
+        suggestion_comment = event.document_suggestion_comment
+
+        link(PalapaWeb.MessageView.excerpt(suggestion_comment.content),
+          to: document_page_path(conn, :show, event.organization_id, page.id)
+        )
 
       _ ->
         nil
