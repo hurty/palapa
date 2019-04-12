@@ -303,7 +303,7 @@ defmodule Palapa.Documents do
     |> Ecto.Multi.insert(:page, page_changeset)
     |> Ecto.Multi.run(
       :event,
-      fn %{page: page} ->
+      fn _repo, %{page: page} ->
         if skip_event do
           {:ok, nil}
         else
