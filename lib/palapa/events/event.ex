@@ -15,11 +15,8 @@ defmodule Palapa.Events.Event do
     belongs_to(:author, Member)
 
     # Event targets
-    belongs_to(:member, Member)
-
     belongs_to(:message, Message)
     belongs_to(:message_comment, MessageComment)
-
     belongs_to(:document, Document)
     belongs_to(:page, Page)
     belongs_to(:document_suggestion, Suggestion)

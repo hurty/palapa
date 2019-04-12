@@ -3,6 +3,7 @@ defmodule Palapa.Accounts.Registrations do
   alias Palapa.Accounts.Registration
   alias Palapa.Accounts
   alias Palapa.Organizations
+  alias Palapa.Events.Event
 
   @doc """
   Creates a new organization and a new user account in this organization.
@@ -38,6 +39,13 @@ defmodule Palapa.Accounts.Registrations do
         account_id: changes.account.id,
         role: :owner
       })
+    end)
+    |> Ecto.Multi.insert(:event, fn %{organization: organization, member: member} ->
+      %Event{
+        action: :new_organization,
+        organization: organization,
+        author: member
+      }
     end)
     |> Repo.transaction()
   end

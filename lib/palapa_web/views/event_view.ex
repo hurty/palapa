@@ -5,6 +5,15 @@ defmodule PalapaWeb.EventView do
     author = event.author.account.name
 
     case event.action do
+      :new_organization ->
+        gettext("%{author} created the %{organization} workspace",
+          author: author,
+          organization: event.organization.name
+        )
+
+      :new_member ->
+        gettext("%{member} joined the workspace", member: author)
+
       :new_message ->
         gettext("%{author} posted a new message", author: author)
 
@@ -66,9 +75,6 @@ defmodule PalapaWeb.EventView do
             )
         )
         |> raw()
-
-      :new_member ->
-        gettext("%{member} joined the workspace")
 
       _ ->
         nil

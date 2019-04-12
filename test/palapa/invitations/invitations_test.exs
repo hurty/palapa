@@ -3,6 +3,7 @@ defmodule Palapa.Invitations.InvitationsTest do
 
   alias Palapa.Invitations
   alias Palapa.Invitations.Invitation
+  alias Palapa.Events.Event
 
   test "create/2 generate an invitation" do
     workspace = Palapa.Factory.insert_pied_piper!()
@@ -81,6 +82,29 @@ defmodule Palapa.Invitations.InvitationsTest do
       Invitations.create_or_renew("dinesh.chugtai@piedpiper.com", workspace.richard)
 
     assert Invitations.authorized?(invitation, invitation.token)
+  end
+
+  test "join/2 creates membership" do
+    workspace = Palapa.Factory.insert_pied_piper!()
+
+    {:ok, invitation} =
+      Invitations.create_or_renew("dinesh.chugtai@piedpiper.com", workspace.richard)
+
+    {:ok, result} =
+      Invitations.join(invitation, %{
+        "name" => "Dinesh C",
+        "password" => "password",
+        "title" => "CTO"
+      })
+
+    event_query =
+      from(events in Event,
+        where:
+          events.organization_id == ^workspace.organization.id and
+            events.author_id == ^result.member.id and events.action == ^:new_member
+      )
+
+    assert Repo.exists?(event_query)
   end
 
   describe "Email addresses parsing" do

@@ -5,7 +5,7 @@ defmodule Palapa.RegistrationsTest do
   import Palapa.Factory
 
   test "create/1 with valid data creates an account, a organization and a member" do
-    assert {:ok, %{account: account, organization: organization, member: member}} =
+    assert {:ok, %{account: account, organization: organization, member: member, event: event}} =
              Registrations.create(%{
                email: "richard.hendricks@piedpiper.com",
                name: "Richard Hendricks",
@@ -18,6 +18,8 @@ defmodule Palapa.RegistrationsTest do
     assert account.password_hash
     assert organization.name == "Pied Piper"
     assert member.role == :owner
+
+    assert event.action == :new_organization
   end
 
   test "create/1 with invalid data returns an error and a changeset" do

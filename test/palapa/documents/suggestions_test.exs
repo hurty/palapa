@@ -1,4 +1,4 @@
-defmodule Palapa.DocumentsTest do
+defmodule Palapa.SuggestionTest do
   use Palapa.DataCase
 
   alias Palapa.Documents

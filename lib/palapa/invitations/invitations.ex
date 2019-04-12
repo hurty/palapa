@@ -6,6 +6,7 @@ defmodule Palapa.Invitations do
   alias Palapa.Organizations
   alias Palapa.Organizations.Organization
   alias Palapa.Accounts
+  alias Palapa.Events.Event
 
   @expiration_days 30
 
@@ -205,6 +206,13 @@ defmodule Palapa.Invitations do
         role: :member
       })
     end)
+    |> Ecto.Multi.insert(:event, fn %{member: member} ->
+      %Event{
+        action: :new_member,
+        organization_id: member.organization_id,
+        author: member
+      }
+    end)
     |> Ecto.Multi.run(:delete_invitation, fn _repo, _changes ->
       delete(invitation)
     end)
@@ -227,6 +235,13 @@ defmodule Palapa.Invitations do
         title: member_attrs["title"],
         role: :member
       })
+    end)
+    |> Ecto.Multi.insert(:event, fn %{member: member} ->
+      %Event{
+        action: :new_member,
+        organization_id: member.organization_id,
+        author: member
+      }
     end)
     |> Ecto.Multi.run(:delete_invitation, fn _repo, _changes ->
       delete(invitation)

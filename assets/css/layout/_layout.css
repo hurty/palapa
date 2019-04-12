@@ -133,7 +133,7 @@
     grid-gap: 1em;
     grid-template-columns: minmax(50vw, 2fr) 1fr;
     grid-template-areas: "main-content right-sidebar";
-    @apply p-4;
+    @apply pl-4 pr-4;
   }
 }
 
