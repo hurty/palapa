@@ -87,6 +87,11 @@ defmodule Palapa.Organizations do
     Organization.changeset(organization, %{})
   end
 
+  def update_billing(%Organization{} = organization, attrs) do
+    Organization.billing_changeset(organization, attrs)
+    |> Repo.update()
+  end
+
   def list_members(queryable \\ Organization, name_pattern \\ nil) do
     queryable
     |> Ecto.assoc(:members)

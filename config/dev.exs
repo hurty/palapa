@@ -69,4 +69,7 @@ config :palapa, Palapa.Repo,
   hostname: "localhost",
   pool_size: 10
 
+config :stripity_stripe, api_key: "sk_test_oU4pHn8mHni24tRxngf5eRHy00Yg3UvggS"
+config :stripity_stripe, json_library: Jason
+
 config :appsignal, :config, active: false

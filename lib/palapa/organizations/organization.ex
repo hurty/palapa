@@ -2,10 +2,11 @@ defmodule Palapa.Organizations.Organization do
   use Palapa.Schema
 
   import Ecto.Query, warn: false
-  alias Palapa.Organizations.{Organization, Member}
+  alias Palapa.Organizations.{Member}
   alias Palapa.Invitations
   alias Palapa.Teams
   alias Palapa.Events.Event
+  alias Palapa.Billing.Customer
 
   schema "organizations" do
     field(:name, :string)
@@ -16,12 +17,20 @@ defmodule Palapa.Organizations.Organization do
     has_many(:invitations, Invitations.Invitation)
     has_many(:teams, Teams.Team)
     has_many(:events, Event)
+
+    field(:valid_until, :utc_datetime)
+    belongs_to(:customer, Customer)
   end
 
   @doc false
-  def changeset(%Organization{} = organization, attrs) do
+  def changeset(organization, attrs) do
     organization
     |> cast(attrs, [:name, :default_timezone])
     |> validate_required([:name])
+  end
+
+  def billing_changeset(organization, attrs) do
+    organization
+    |> cast(attrs, [:customer_id, :valid_until])
   end
 end

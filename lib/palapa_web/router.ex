@@ -11,8 +11,9 @@ defmodule PalapaWeb.Router do
     plug(PalapaWeb.Authentication)
   end
 
-  pipeline :enforce_account_authentication do
+  pipeline :organization_access do
     plug(:enforce_authentication)
+    plug(:enforce_billing)
   end
 
   pipeline :api do
@@ -37,6 +38,9 @@ defmodule PalapaWeb.Router do
     get("/join/:invitation_id/:token", JoinController, :new)
     post("/join/:invitation_id/:token", JoinController, :create)
 
+    resources("/billing", Billing.BillingController, only: [:index])
+    resources("/billing_error", Billing.BillingErrorController, only: [:show], singleton: true)
+
     scope(path: "/public", as: :public, alias: Public) do
       resources("/documents", DocumentController, only: [:show]) do
         resources("/pages", PageController, only: [:show])
@@ -46,7 +50,7 @@ defmodule PalapaWeb.Router do
 
   # Private pages for logged in members only
   scope "/", PalapaWeb do
-    pipe_through([:browser, :enforce_account_authentication])
+    pipe_through([:browser, :organization_access])
 
     resources("/org", OrganizationController, as: nil, only: []) do
       get("/sketch", SketchController, :index)

@@ -71,6 +71,7 @@ defmodule PalapaWeb do
       import Plug.Conn
       import Phoenix.Controller
       import PalapaWeb.Authentication, only: [enforce_authentication: 2]
+      import PalapaWeb.BillingPlug, only: [enforce_billing: 2]
     end
   end
 

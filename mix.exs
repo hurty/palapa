@@ -73,9 +73,10 @@ defmodule Palapa.Mixfile do
       {:arc_ecto, "~> 0.11.0"},
       {:scrivener_ecto, "~> 2.1.1"},
       {:scrivener_html, "~> 1.8"},
-      # {:verk, "~> 1.4.0"},
       {:appsignal, "~> 1.0"},
-      {:floki, "~> 0.20.0"}
+      {:floki, "~> 0.20.0"},
+      {:stripity_stripe, "~> 2.2.0"},
+      {:mox, "~> 0.5", only: :test}
     ]
   end
 
