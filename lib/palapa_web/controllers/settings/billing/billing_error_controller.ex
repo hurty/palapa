@@ -1,4 +1,4 @@
-defmodule PalapaWeb.Billing.BillingErrorController do
+defmodule PalapaWeb.Settings.Billing.BillingErrorController do
   use PalapaWeb, :controller
   alias Palapa.Billing
 

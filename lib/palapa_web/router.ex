@@ -38,7 +38,6 @@ defmodule PalapaWeb.Router do
     get("/join/:invitation_id/:token", JoinController, :new)
     post("/join/:invitation_id/:token", JoinController, :create)
 
-    resources("/billing", Billing.BillingController, only: [:index])
     resources("/billing_error", Billing.BillingErrorController, only: [:show], singleton: true)
 
     scope(path: "/public", as: :public, alias: Public) do
@@ -57,6 +56,12 @@ defmodule PalapaWeb.Router do
 
       get("/sessions/switch_organization", SessionController, :switch_organization)
       get("/sessions/switcher", SessionController, :switcher)
+
+      scope "/", Settings do
+        resources("/workspace", WorkspaceController, singleton: true)
+        resources("/billing", Billing.BillingController, only: [:index])
+        resources("/customer", Billing.CustomerController, singleton: true)
+      end
 
       get("/", DashboardController, :index)
       get("/search", SearchController, :index)

@@ -11,10 +11,26 @@ defmodule Palapa.Billing do
     StripeAdapter
   end
 
-  def create_customer(organization, attrs) do
-    Customer.changeset(%Customer{}, attrs)
-    |> put_assoc(:organization, organization)
+  def get_customer(organization) do
+    organization = Repo.preload(organization, :customer)
+    organization.customer
+  end
+
+  def change_customer_infos(customer) do
+    Customer.billing_infos_changeset(customer, %{})
+  end
+
+  def create_customer_infos(organization, attrs) do
+    Customer.billing_infos_changeset(%Customer{}, attrs)
+    |> put_assoc(:organizations, [organization])
     |> Repo.insert()
+
+    # sync with stripe in a background job
+  end
+
+  def update_customer_infos(customer, attrs) do
+    Customer.billing_infos_changeset(customer, attrs)
+    |> Repo.update()
 
     # sync with stripe in a background job
   end
