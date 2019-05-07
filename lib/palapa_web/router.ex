@@ -11,8 +11,11 @@ defmodule PalapaWeb.Router do
     plug(PalapaWeb.Authentication)
   end
 
-  pipeline :organization_access do
+  pipeline :authentication do
     plug(:enforce_authentication)
+  end
+
+  pipeline :billing do
     plug(:enforce_billing)
   end
 
@@ -38,8 +41,6 @@ defmodule PalapaWeb.Router do
     get("/join/:invitation_id/:token", JoinController, :new)
     post("/join/:invitation_id/:token", JoinController, :create)
 
-    resources("/billing_error", Billing.BillingErrorController, only: [:show], singleton: true)
-
     scope(path: "/public", as: :public, alias: Public) do
       resources("/documents", DocumentController, only: [:show]) do
         resources("/pages", PageController, only: [:show])
@@ -47,21 +48,32 @@ defmodule PalapaWeb.Router do
     end
   end
 
+  scope("/", PalapaWeb) do
+    pipe_through([:browser, :authentication])
+
+    resources("/org", OrganizationController, as: nil, only: []) do
+      scope "/", Settings do
+        resources("/billing_error", Billing.BillingErrorController,
+          only: [:show],
+          singleton: true
+        )
+
+        resources("/workspace", WorkspaceController, singleton: true)
+        resources("/billing", Billing.BillingController, only: [:index])
+        resources("/customer", Billing.CustomerController, singleton: true)
+      end
+    end
+  end
+
   # Private pages for logged in members only
   scope "/", PalapaWeb do
-    pipe_through([:browser, :organization_access])
+    pipe_through([:browser, :authentication, :billing])
 
     resources("/org", OrganizationController, as: nil, only: []) do
       get("/sketch", SketchController, :index)
 
       get("/sessions/switch_organization", SessionController, :switch_organization)
       get("/sessions/switcher", SessionController, :switcher)
-
-      scope "/", Settings do
-        resources("/workspace", WorkspaceController, singleton: true)
-        resources("/billing", Billing.BillingController, only: [:index])
-        resources("/customer", Billing.CustomerController, singleton: true)
-      end
 
       get("/", DashboardController, :index)
       get("/search", SearchController, :index)

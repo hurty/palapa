@@ -1,18 +1,18 @@
-button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
-    border-style: none;
-    padding: 0;
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
 }
 
 .btn {
   white-space: nowrap;
-  vertical-align: middle;
   cursor: pointer;
-  -ms-user-select: none;
-  user-select: none;
   background-repeat: repeat-x;
   background-position: -1px -1px;
   background-size: 110% 110%;
-  border: 1px solid rgba(27,31,35,0.1);
+  border: 1px solid rgba(27, 31, 35, 0.1);
   @apply rounded;
   @apply font-medium border-b-2 border-r-2;
   @apply p-2 h-10 align-middle;
@@ -20,20 +20,20 @@ button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-mo
   -moz-appearance: none;
   appearance: none;
   @apply text-sm text-grey-darkest;
-  background-color: config('colors.white');
+  background-color: config("colors.white");
 
   &:hover {
-    background-color: config('colors.grey-white');
+    background-color: config("colors.grey-white");
     background-position: -0.5em;
     border-color: rgba(27, 31, 35, 0.2);
   }
 
   &:focus {
-    box-shadow: 0 0 0 0.2em config('colors.blue-lightest');
+    box-shadow: 0 0 0 0.2em config("colors.blue-lightest");
   }
 
   &:active {
-    border-color: rgba(27,31,35,0.2);
+    border-color: rgba(27, 31, 35, 0.2);
     box-shadow: inset 0 0.15em 0.3em rgba(27, 31, 35, 0.1);
     @apply border;
   }
@@ -45,34 +45,50 @@ button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-mo
 
 .btn-green {
   color: #fff;
-  background-color: config('colors.green');
-  background-image: linear-gradient(-180deg, #34d058 0%, config('colors.green') 90%);
+  background-color: config("colors.green");
+  background-image: linear-gradient(
+    -180deg,
+    #34d058 0%,
+    config("colors.green") 90%
+  );
 
   &:hover {
-    background-color: config('colors.green-dark');
-    background-image: linear-gradient(-180deg, config('colors.green-light') 0%, config('colors.green') 90%);
+    background-color: config("colors.green-dark");
+    background-image: linear-gradient(
+      -180deg,
+      config("colors.green-light") 0%,
+      config("colors.green") 90%
+    );
     background-position: -0.5em;
     border-color: rgba(27, 31, 35, 0.1);
   }
 
   &:focus {
-    box-shadow: 0 0 0 0.2em config('colors.blue-light');
+    box-shadow: 0 0 0 0.2em config("colors.blue-light");
   }
 }
 
 .btn-red {
   color: #fff;
-  background-color: config('colors.red');
-  background-image: linear-gradient(-180deg, config('colors.red-light') 0%, config('colors.red') 90%);
+  background-color: config("colors.red");
+  background-image: linear-gradient(
+    -180deg,
+    config("colors.red-light") 0%,
+    config("colors.red") 90%
+  );
 
   &:hover {
-    background-color: config('colors.red-dark');
-    background-image: linear-gradient(-180deg, config('colors.red-lighter') 0%, config('colors.red-light') 90%);
+    background-color: config("colors.red-dark");
+    background-image: linear-gradient(
+      -180deg,
+      config("colors.red-lighter") 0%,
+      config("colors.red-light") 90%
+    );
     background-position: -0.5em;
     border-color: rgba(27, 31, 35, 0.1);
   }
 
   &:focus {
-    box-shadow: 0 0 0 0.2em config('colors.red-lightest');
+    box-shadow: 0 0 0 0.2em config("colors.red-lightest");
   }
 }

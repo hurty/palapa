@@ -1,0 +1,55 @@
+<h2 class="text-grey-darkest">Billing overview</h2>
+<div class="card-header-separator"></div>
+
+<%= if Palapa.Billing.organization_state(@current_organization) == :trial do %>
+  <div class="text-green bg-grey-lightest rounded-lg p-1"><%= gettext("%{number_of_days} left on your trial period.") %></div>
+  <%= link "Upgrade to a paid account now", to: customer_path(@conn, :new, @current_organization), class: "btn" %>
+<% else %>
+  <%= if @customer do %>
+    <div class="border rounded p-1 my-4 font-bold">
+      Current plan: x members at z€/member/month, total Y€/month
+
+      <%= if @current_organization.valid_until do %>
+        <div>
+          Next payment due <%= format_date(@current_organization.valid_until, @current_account) %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex flex-col flex-wrap">
+      <div class="bg-grey-lightest rounded-lg p-2 my-8">
+        <h3 class="text-green">Payment method</h3>
+        
+        <div class="my-2">
+          <i class="fas fa-credit-card"></i> <%= @customer.card_brand %>
+          **** **** **** <%= @customer.card_last_4 %>
+          <br>Cardholder: <%= @customer.cardholder_name %>
+        </div>
+        
+        <div class="my-4">
+          <%= link "Update payment method", to: customer_path(@conn, :edit, @current_organization), class: "btn" %>
+        </div>
+      </div>
+
+      <div class="bg-grey-lightest rounded-lg p-2">
+        <h3 class="text-green">Billing information</h3>
+
+        <div class="my-2">
+          Invoices are sent to <%= @customer.billing_email %><br>
+          <%= @customer.billing_name %><br>
+          <%= @customer.billing_address %><br>
+          <%= @customer.billing_postcode %> <%= @customer.billing_city %><br>
+          <%= @customer.billing_country %><br>
+        </div>
+        
+        <div class="my-2">
+          <%= if @customer.vat_number do %>VAT number: <%= @customer.vat_number %><% end %>
+        </div>
+
+        <div class="my-4">
+          <%= link "Update billing information", to: customer_path(@conn, :edit, @current_organization), class: "btn" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

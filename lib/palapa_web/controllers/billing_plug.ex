@@ -9,9 +9,7 @@ defmodule PalapaWeb.BillingPlug do
 
     if organization && Billing.organization_frozen?(organization) do
       conn
-      |> redirect(
-        to: Router.Helpers.billing_error_path(conn, :show, organization_id: organization.id)
-      )
+      |> redirect(to: Router.Helpers.billing_error_path(conn, :show, organization))
       |> halt()
     else
       conn
