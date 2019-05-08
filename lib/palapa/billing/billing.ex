@@ -4,7 +4,7 @@ defmodule Palapa.Billing do
   alias Palapa.Billing.StripeAdapter
 
   @trial_duration_days 14
-  @grace_period_days 15
+  @grace_period_days 14
   @price_per_member_per_month 7
 
   def adapter do
@@ -49,28 +49,28 @@ defmodule Palapa.Billing do
       true
     else
       grace_period_end = Timex.shift(organization.valid_until, days: @grace_period_days)
-      Timex.after?(Timex.now(), grace_period_end)
+      Timex.after?(grace_period_end, Timex.now())
     end
   end
 
   def organization_state(organization) do
     cond do
+      valid?(organization) && billing_information_exists?(organization) ->
+        :ok
+
       valid?(organization) &&
           !billing_information_exists?(organization) ->
         :trial
+
+      !valid?(organization) && billing_information_exists?(organization) ->
+        :waiting_for_payment
 
       !valid?(organization) &&
           !billing_information_exists?(organization) ->
         :trial_has_ended
 
-      !valid?(organization) && billing_information_exists?(organization) ->
-        :waiting_for_payment
-
-      valid?(organization) ->
-        :ok
-
       true ->
-        :unknown_state
+        :unknown
     end
   end
 
