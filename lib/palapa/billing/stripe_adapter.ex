@@ -1,31 +1,41 @@
 defmodule Palapa.Billing.StripeAdapter do
   @behaviour Palapa.Billing.BillingPlatform
 
-  @montly_plan_id "plan_EsBkLn7BGeJMDN"
-
-  def create_customer(account) do
+  def create_customer(customer, stripe_token_id) do
     Stripe.Customer.create(%{
-      email: account.email,
-      description: account.name,
-      metadata: %{account_id: account.id}
+      source: stripe_token_id,
+      email: customer.billing_email,
+      name: customer.billing_name,
+      address: %{
+        line1: customer.billing_address,
+        postal_code: customer.billing_postcode,
+        city: customer.billing_city,
+        state: customer.billing_state,
+        country: customer.billing_country
+      },
+      invoice_settings: %{
+        custom_fields: [
+          %{
+            name: "VAT number",
+            value: customer.vat_number
+          }
+        ]
+      },
+      metadata: %{
+        customer_id: customer.id
+      }
     })
   end
 
   @doc """
   Link a customer to an already defined Stripe plan
-  The trial period is handled on Stripe's side.
   """
-  def create_subscription(account, organization) do
+  def create_subscription(stripe_customer_id, stripe_plan_id) do
     Stripe.Subscription.create(%{
-      customer: account.customer_id,
+      customer: stripe_customer_id,
       items: [
         %{
-          plan: @montly_plan_id,
-          metadata: %{
-            account_id: account.id,
-            organization_id: organization.id,
-            organization_name: organization.name
-          }
+          plan: stripe_plan_id
         }
       ]
     })

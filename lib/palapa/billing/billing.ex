@@ -1,31 +1,74 @@
 defmodule Palapa.Billing do
   use Palapa.Context
+
+  alias Palapa.Billing
   alias Palapa.Billing.Customer
   alias Palapa.Billing.StripeAdapter
 
   @trial_duration_days 14
   @grace_period_days 14
   @price_per_member_per_month 7
+  @monthly_plan_id "plan_EuPumUi7Lb5R7w"
+
+  defdelegate(authorize(action, user, params), to: Palapa.Billing.Policy)
 
   def adapter do
     StripeAdapter
   end
 
-  def get_customer(organization) do
+  def get_customer(organization = %Palapa.Organizations.Organization{}) do
     organization = Repo.preload(organization, :customer)
     organization.customer
+  end
+
+  def get_customer(id) when is_binary(id) do
+    Repo.get!(Customer, id)
   end
 
   def change_customer_infos(customer) do
     Customer.billing_infos_changeset(customer, %{})
   end
 
-  def create_customer_infos(organization, attrs) do
-    Customer.billing_infos_changeset(%Customer{}, attrs)
-    |> put_assoc(:organizations, [organization])
-    |> Repo.insert()
+  def create_customer_infos(organization, customer_attrs) do
+    customer_changeset =
+      Customer.billing_infos_changeset(%Customer{}, customer_attrs)
+      |> put_assoc(:organizations, [organization])
 
-    # sync with stripe in a background job
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:customer, customer_changeset)
+    |> Ecto.Multi.insert(:stripe_customer, fn %{customer: customer} ->
+      Palapa.JobQueue.new(%{
+        "type" => "billing_create_stripe_subscription",
+        "customer_id" => customer.id,
+        "stripe_token_id" => customer.stripe_token_id
+      })
+    end)
+    |> Repo.transaction()
+  end
+
+  def create_stripe_customer_and_subscription(multi, customer, stripe_token_id) do
+    multi
+    |> Ecto.Multi.run(:stripe_customer, fn _repo, _changes ->
+      Billing.create_stripe_customer(customer, stripe_token_id)
+    end)
+    |> Ecto.Multi.run(:stripe_subscription, fn _repo, %{stripe_customer: stripe_customer} ->
+      Billing.create_stripe_subscription(stripe_customer.id)
+    end)
+    |> Ecto.Multi.update(:updated_customer, fn %{stripe_subscription: stripe_subscription} ->
+      Billing.Customer.changeset(customer, %{
+        stripe_subscription_id: stripe_subscription.id,
+        stripe_customer_id: stripe_subscription.customer
+      })
+    end)
+    |> Repo.transaction()
+  end
+
+  def create_stripe_customer(%Customer{} = customer, stripe_token_id) do
+    adapter().create_customer(customer, stripe_token_id)
+  end
+
+  def create_stripe_subscription(stripe_customer_id) do
+    adapter().create_subscription(stripe_customer_id, @monthly_plan_id)
   end
 
   def update_customer_infos(customer, attrs) do

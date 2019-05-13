@@ -23,10 +23,10 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
 
   def create(conn, %{"customer" => customer_attrs}) do
     case Billing.create_customer_infos(current_organization(), customer_attrs) do
-      {:ok, _customer} ->
+      {:ok, _} ->
         redirect(conn, to: billing_path(conn, :index, current_organization()))
 
-      {:error, customer_changeset} ->
+      {:error, :customer, customer_changeset, _changes_so_far} ->
         render(conn, "new.html", customer_changeset: customer_changeset)
     end
   end

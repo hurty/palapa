@@ -4,17 +4,17 @@
     <div class="card-header-separator"></div>
 
     <%= form_for @customer_changeset, customer_path(@conn, :create, @current_organization), [id: "payment-form"], fn form -> %>
-      <%= if Enum.any?(@customer_changeset.errors) do %>
+      <%= if @customer_changeset.action do %>
         <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
       <% end %>
 
-      <p class="text-sm text-grey-dark">* Required fields</p>
+      <p class="text-sm text-blue">* Required fields</p>
 
       <div class="bg-grey-lightest rounded-lg p-2 my-4">
         <h3 class="text-green"><%= gettext("Payment") %></h3>
         <div class="field">
           <label for="card-element" class="label">
-            <%= gettext("Credit or debit card*") %>
+            <%= gettext("Credit card*") %>
           </label>
           
           <div id="card-element" class="border rounded p-4 bg-white">
@@ -23,27 +23,23 @@
           
           <div id="card-errors" role="alert" class="text-red"></div>
         </div>
-
-        <div class="field">
-          <%= label form, :cardholder_name, gettext("Cardholder name*"), class: "label" %>
-          <%= text_input form, :cardholder_name, class: "input", placeholder: "Name on the card" %>
-          <%= error_tag form, :cardholder_name %>
-        </div>
       </div>
 
       
       <div class="bg-grey-lightest rounded-lg p-2 my-2">
         <h3 class="text-green"><%= gettext("Billing information") %></h3>
         
+        <p class="text-sm text-blue">These informations will appear on your invoices</p>
+
         <div class="field">
-          <%= label form, :billing_email, gettext("Billing email*"), class: "label" %>
-          <%= text_input form, :billing_email, class: "input", placeholder: "email_for_invoices@your-company.com" %>
+          <%= label form, :billing_email, gettext("Billing email address*"), class: "label" %>
+          <%= email_input form, :billing_email, value: @current_account.email, class: "input", placeholder: "accounting@your-company.com" %>
           <%= error_tag form, :billing_email %>
         </div>
 
         <div class="field">
           <%= label form, :billing_name, gettext("Your name or company name*"), class: "label" %>
-          <%= text_input form, :billing_name, class: "input" %>
+          <%= text_input form, :billing_name, value: @current_account.name, class: "input" %>
           <%= error_tag form, :billing_name %>
         </div>
 
@@ -65,16 +61,22 @@
             <%= text_input form, :billing_city, class: "input" %>
             <%= error_tag form, :billing_city %>
           </div>
-
+        
           <div class="field">
-            <%= label form, :billing_country, gettext("State/Country"), class: "label" %>
+            <%= label form, :billing_state, gettext("State"), class: "label" %>
+            <%= text_input form, :billing_state, class: "input" %>
+            <%= error_tag form, :billing_state %>
+          </div>
+          
+          <div class="field">
+            <%= label form, :billing_country, gettext("Country"), class: "label" %>
             <%= text_input form, :billing_country, class: "input" %>
             <%= error_tag form, :billing_country %>
           </div>
         </div>
 
         <div class="field">
-          <%= label form, :vat_number, gettext("VAT number"), class: "label" %>
+          <%= label form, :vat_number, gettext("VAT number (if your company is in the European Union)"), class: "label" %>
           <%= text_input form, :vat_number, class: "input" %>
           <%= error_tag form, :vat_number %>
         </div>
@@ -84,8 +86,6 @@
         <button class="btn btn-green">Submit</button>
       </div>
     <% end %>
-
-    
   </div>
 </div>
 
@@ -123,6 +123,7 @@
     });
   });
 
+
   function stripeTokenHandler(token) {
     // Insert the token ID into the form so it gets submitted to the server
     var form = document.getElementById('payment-form');
@@ -144,6 +145,18 @@
     cardLast4Input.setAttribute('name', 'customer[card_last_4]');
     cardLast4Input.setAttribute('value', token.card.last4);
     form.appendChild(cardLast4Input);
+
+    var cardExpirationMonthInput = document.createElement('input');
+    cardExpirationMonthInput.setAttribute('type', 'hidden');
+    cardExpirationMonthInput.setAttribute('name', 'customer[card_expiration_month]');
+    cardExpirationMonthInput.setAttribute('value', token.card.exp_month);
+    form.appendChild(cardExpirationMonthInput);
+
+    var cardExpirationMonthInput = document.createElement('input');
+    cardExpirationMonthInput.setAttribute('type', 'hidden');
+    cardExpirationMonthInput.setAttribute('name', 'customer[card_expiration_year]');
+    cardExpirationMonthInput.setAttribute('value', token.card.exp_year);
+    form.appendChild(cardExpirationMonthInput);
 
     form.submit();
   }
