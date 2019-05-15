@@ -61,6 +61,7 @@ defmodule PalapaWeb.Router do
         resources("/workspace", WorkspaceController, singleton: true)
         resources("/billing", Billing.BillingController, only: [:index])
         resources("/customer", Billing.CustomerController, singleton: true)
+        resources("/payment_authentication", Billing.PaymentAuthenticationController)
       end
     end
   end

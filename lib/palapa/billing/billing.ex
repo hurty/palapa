@@ -36,31 +36,27 @@ defmodule Palapa.Billing do
 
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:customer, customer_changeset)
-    |> Ecto.Multi.insert(:stripe_customer, fn %{customer: customer} ->
-      Palapa.JobQueue.new(%{
-        "type" => "billing_create_stripe_subscription",
-        "customer_id" => customer.id,
-        "stripe_token_id" => customer.stripe_token_id
+    |> Ecto.Multi.run(:stripe_customer, fn _repo, %{customer: customer} ->
+      Billing.create_stripe_customer(customer, customer.stripe_token_id)
+    end)
+    |> Ecto.Multi.run(:stripe_subscription, fn _repo, %{stripe_customer: stripe_customer} ->
+      Billing.create_stripe_subscription(stripe_customer.id)
+    end)
+    |> Ecto.Multi.update(:updated_customer, fn %{
+                                                 customer: customer,
+                                                 stripe_subscription: stripe_subscription
+                                               } ->
+      Billing.Customer.changeset(customer, %{
+        stripe_subscription_id: stripe_subscription["id"],
+        stripe_customer_id: stripe_subscription["customer"]
       })
     end)
     |> Repo.transaction()
   end
 
-  def create_stripe_customer_and_subscription(multi, customer, stripe_token_id) do
-    multi
-    |> Ecto.Multi.run(:stripe_customer, fn _repo, _changes ->
-      Billing.create_stripe_customer(customer, stripe_token_id)
-    end)
-    |> Ecto.Multi.run(:stripe_subscription, fn _repo, %{stripe_customer: stripe_customer} ->
-      Billing.create_stripe_subscription(stripe_customer.id)
-    end)
-    |> Ecto.Multi.update(:updated_customer, fn %{stripe_subscription: stripe_subscription} ->
-      Billing.Customer.changeset(customer, %{
-        stripe_subscription_id: stripe_subscription.id,
-        stripe_customer_id: stripe_subscription.customer
-      })
-    end)
-    |> Repo.transaction()
+  def payment_needs_authentication?(stripe_subscription) do
+    status = stripe_subscription["latest_invoice"]["payment_intent"]["status"]
+    status in ["requires_source_action", "requires_action"]
   end
 
   def create_stripe_customer(%Customer{} = customer, stripe_token_id) do

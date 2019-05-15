@@ -23,8 +23,22 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
 
   def create(conn, %{"customer" => customer_attrs}) do
     case Billing.create_customer_infos(current_organization(), customer_attrs) do
-      {:ok, _} ->
-        redirect(conn, to: billing_path(conn, :index, current_organization()))
+      {:ok, result} ->
+        if Billing.payment_needs_authentication?(result.stripe_subscription) do
+          IO.inspect(result.stripe_subscription["latest_invoice"]["payment_intent"])
+
+          client_secret =
+            result.stripe_subscription["latest_invoice"]["payment_intent"]["client_secret"]
+
+          redirect(conn,
+            to:
+              payment_authentication_path(conn, :new, current_organization(),
+                client_secret: client_secret
+              )
+          )
+        else
+          redirect(conn, to: billing_path(conn, :index, current_organization()))
+        end
 
       {:error, :customer, customer_changeset, _changes_so_far} ->
         render(conn, "new.html", customer_changeset: customer_changeset)
