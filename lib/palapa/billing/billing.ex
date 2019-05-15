@@ -54,9 +54,14 @@ defmodule Palapa.Billing do
     |> Repo.transaction()
   end
 
-  def payment_needs_authentication?(stripe_subscription) do
+  def payment_next_action(stripe_subscription) do
     status = stripe_subscription["latest_invoice"]["payment_intent"]["status"]
-    status in ["requires_source_action", "requires_action"]
+
+    cond do
+      status in ["requires_source_action", "requires_action"] -> :requires_action
+      status == "requires_payment_method" -> :requires_payment_method
+      true -> :ok
+    end
   end
 
   def create_stripe_customer(%Customer{} = customer, stripe_token_id) do
@@ -68,15 +73,17 @@ defmodule Palapa.Billing do
   end
 
   def update_customer_infos(customer, attrs) do
-    Customer.billing_infos_changeset(customer, attrs)
-    |> Repo.update()
-
-    # sync with stripe in a background job
+    Ecto.Multi.new()
+    |> Ecto.Multi.update(:customer, Customer.edit_billing_infos_changeset(customer, attrs))
+    |> Palapa.JobQueue.enqueue(:update_stripe_customer, %{
+      type: "update_stripe_customer",
+      customer_id: customer.id
+    })
+    |> Repo.transaction()
   end
 
-  def update_customer(customer, attrs) do
-    Customer.changeset(customer, attrs)
-    |> Repo.update()
+  def update_stripe_customer(customer) do
+    adapter().update_customer(customer)
   end
 
   def billing_information_exists?(organization) do

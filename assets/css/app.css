@@ -13,8 +13,8 @@
  */
 
 @import "./_tailwind-preflight";
- 
- /**
+
+/**
   * Here you would add any of your custom component classes; stuff that you'd
   * want loaded *before* the utilities so that the utilities could still
   * override them.
@@ -47,6 +47,7 @@
 @import "components/_profile";
 @import "components/_search";
 @import "components/_selector";
+@import "components/_spinner";
 @import "components/_tabs";
 @import "components/_tags";
 @import "components/_text_editor";
@@ -57,7 +58,7 @@
 @import "pages/_members";
 @import "pages/_messages";
 
- /**
+/**
   * This injects all of Tailwind's utility classes, generated based on your
   * config file.
   *
@@ -67,10 +68,10 @@
   *
   * See: https://github.com/tailwindcss/tailwindcss/issues/53#issuecomment-341413622
   */
- 
- @import "./_tailwind-utilities";
- 
- /**
+
+@import "./_tailwind-utilities";
+
+/**
   * Here you would add any custom utilities you need that don't come out of the
   * box with Tailwind.
   *

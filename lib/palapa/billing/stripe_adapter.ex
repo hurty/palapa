@@ -54,4 +54,35 @@ defmodule Palapa.Billing.StripeAdapter do
       expand: ["latest_invoice.payment_intent"]
     )
   end
+
+  def update_customer(customer) do
+    custom_fields =
+      if customer.vat_number do
+        [
+          %{
+            name: "VAT number",
+            value: customer.vat_number
+          }
+        ]
+      else
+        []
+      end
+
+    customer_attrs = %{
+      email: customer.billing_email,
+      name: customer.billing_name,
+      address: %{
+        line1: customer.billing_address,
+        postal_code: customer.billing_postcode,
+        city: customer.billing_city,
+        state: customer.billing_state,
+        country: customer.billing_country
+      },
+      invoice_settings: %{
+        custom_fields: custom_fields
+      }
+    }
+
+    Stripe.Customer.update(customer.stripe_customer_id, customer_attrs)
+  end
 end

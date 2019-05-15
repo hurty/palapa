@@ -17,27 +17,32 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
     customer_changeset = Billing.change_customer_infos(%Customer{})
 
     conn
-    |> put_breadcrumb("Upgrade your account", customer_path(conn, :edit, current_organization()))
+    |> put_breadcrumb("Upgrade your account", customer_path(conn, :new, current_organization()))
     |> render("new.html", customer_changeset: customer_changeset)
   end
 
   def create(conn, %{"customer" => customer_attrs}) do
     case Billing.create_customer_infos(current_organization(), customer_attrs) do
       {:ok, result} ->
-        if Billing.payment_needs_authentication?(result.stripe_subscription) do
-          IO.inspect(result.stripe_subscription["latest_invoice"]["payment_intent"])
+        case Billing.payment_next_action(result.stripe_subscription) do
+          :requires_action ->
+            client_secret =
+              result.stripe_subscription["latest_invoice"]["payment_intent"]["client_secret"]
 
-          client_secret =
-            result.stripe_subscription["latest_invoice"]["payment_intent"]["client_secret"]
+            redirect(conn,
+              to:
+                payment_authentication_path(conn, :new, current_organization(),
+                  client_secret: client_secret
+                )
+            )
 
-          redirect(conn,
-            to:
-              payment_authentication_path(conn, :new, current_organization(),
-                client_secret: client_secret
-              )
-          )
-        else
-          redirect(conn, to: billing_path(conn, :index, current_organization()))
+          :requires_payment_method ->
+            nil
+
+          # Ask just for the card details
+
+          :ok ->
+            redirect(conn, to: billing_path(conn, :index, current_organization()))
         end
 
       {:error, :customer, customer_changeset, _changes_so_far} ->
@@ -46,7 +51,41 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
   end
 
   def edit(conn, _) do
-    customer_changeset = Billing.change_customer_infos(%Customer{})
-    render(conn, "edit.html", customer_changeset: customer_changeset)
+    conn =
+      conn
+      |> put_breadcrumb(
+        "Update billing information",
+        customer_path(conn, :edit, current_organization())
+      )
+
+    customer = Billing.get_customer(current_organization())
+
+    if customer do
+      customer_changeset = Billing.change_customer_infos(customer)
+      render(conn, "edit.html", customer_changeset: customer_changeset)
+    else
+      conn
+      |> put_flash(
+        :error,
+        "This workspace does not have a paid subscription / billing information"
+      )
+      |> redirect(to: billing_path(conn, :index, current_organization()))
+    end
+  end
+
+  def update(conn, %{"customer" => customer_attrs}) do
+    customer = Billing.get_customer(current_organization())
+
+    case Billing.update_customer_infos(customer, customer_attrs) do
+      {:ok, _customer} ->
+        conn
+        |> put_flash(:success, "Billing information has been updated successfully")
+        |> redirect(to: billing_path(conn, :index, current_organization()))
+
+      {:error, customer_changeset} ->
+        conn
+        |> put_flash(:error, "Billing information couldn't be updated")
+        |> render("edit.html", customer_changeset: customer_changeset)
+    end
   end
 end

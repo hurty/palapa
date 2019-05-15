@@ -57,4 +57,22 @@ defmodule Palapa.Billing.Customer do
       :card_expiration_year
     ])
   end
+
+  def edit_billing_infos_changeset(customer, attrs) do
+    customer
+    |> cast(attrs, [
+      :billing_name,
+      :billing_email,
+      :billing_address,
+      :billing_postcode,
+      :billing_city,
+      :billing_state,
+      :billing_country,
+      :vat_number
+    ])
+    |> validate_required([
+      :billing_name,
+      :billing_email
+    ])
+  end
 end
