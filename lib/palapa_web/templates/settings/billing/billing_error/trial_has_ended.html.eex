@@ -28,7 +28,7 @@
           </div>
 
           <p class="my-8 text-center">
-            <%= link("Upgrade your account", to: billing_path(@conn, :index, organization_id: @organization.id), class: "btn btn-green text-xl my-4") %>
+            <%= link("Upgrade your account", to: customer_path(@conn, :show, @organization), class: "btn btn-green text-xl my-4") %>
           </p>
         </section>
       </div>

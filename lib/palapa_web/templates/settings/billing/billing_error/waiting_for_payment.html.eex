@@ -14,7 +14,7 @@
           </p>
 
           <p class="my-8 text-center">
-            <%= link("Manage billing", to: billing_path(@conn, :index, @organization), class: "btn btn-green text-xl my-4") %>
+            <%= link("Manage billing", to: customer_path(@conn, :show, @organization), class: "btn btn-green text-xl my-4") %>
           </p>
         </section>
       </div>

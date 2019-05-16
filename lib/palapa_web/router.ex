@@ -53,15 +53,14 @@ defmodule PalapaWeb.Router do
 
     resources("/org", OrganizationController, as: nil, only: []) do
       scope "/", Settings do
+        resources("/workspace", WorkspaceController, singleton: true)
+        resources("/customer", Billing.CustomerController, singleton: true)
+        resources("/payment_authentication", Billing.PaymentAuthenticationController)
+
         resources("/billing_error", Billing.BillingErrorController,
           only: [:show],
           singleton: true
         )
-
-        resources("/workspace", WorkspaceController, singleton: true)
-        resources("/billing", Billing.BillingController, only: [:index])
-        resources("/customer", Billing.CustomerController, singleton: true)
-        resources("/payment_authentication", Billing.PaymentAuthenticationController)
       end
     end
   end

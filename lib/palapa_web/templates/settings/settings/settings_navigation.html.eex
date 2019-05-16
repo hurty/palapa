@@ -2,7 +2,7 @@
   <nav>
     <ul class="list-reset">
       <li class="p-2"><%= link "Workspace settings", to: workspace_path(@conn, :show, @current_organization) %></li>
-      <li class="p-2"><%= link "Billing", to: billing_path(@conn, :index, @current_organization) %></li>
+      <li class="p-2"><%= link "Billing", to: customer_path(@conn, :show, @current_organization) %></li>
     </ul>
   </nav>
 </div>
