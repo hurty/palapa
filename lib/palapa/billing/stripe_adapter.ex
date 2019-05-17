@@ -85,4 +85,9 @@ defmodule Palapa.Billing.StripeAdapter do
 
     Stripe.Customer.update(customer.stripe_customer_id, customer_attrs)
   end
+
+  def update_payment_method(customer) do
+    body = %{source: customer.stripe_token_id}
+    Stripe.Customer.update(customer.stripe_customer_id, body)
+  end
 end

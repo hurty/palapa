@@ -55,6 +55,12 @@ defmodule PalapaWeb.Router do
       scope "/", Settings do
         resources("/workspace", WorkspaceController, singleton: true)
         resources("/customer", Billing.CustomerController, singleton: true)
+
+        resources("/payment_method", Billing.PaymentMethodController,
+          singleton: true,
+          only: [:edit, :update]
+        )
+
         resources("/payment_authentication", Billing.PaymentAuthenticationController)
 
         resources("/billing_error", Billing.BillingErrorController,

@@ -14,8 +14,8 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
   end
 
   def show(conn, _params) do
-    with :ok <- permit(Billing, :show_billing, current_member()) do
-      customer = Billing.get_customer(current_organization())
+    with :ok <- permit(Billing, :update_billing, current_member()),
+         customer = Billing.get_customer(current_organization()) do
       render(conn, "show.html", customer: customer)
     end
   end

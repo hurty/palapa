@@ -1,0 +1,99 @@
+<div class="content page-layout">
+  <div class="main-content card p-4">
+    <h2 class="card-header">Update the payment method</h2>
+    <div class="card-header-separator"></div>
+    <%= form_for @customer_changeset, payment_method_path(@conn, :update, @current_organization), [id: "payment-form"], fn form -> %>
+      <%= if @customer_changeset.action do %>
+        <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+      <% end %>
+
+      <div class="field">
+        <label for="card-element" class="label">
+          <%= gettext("Credit card*") %>
+        </label>
+        
+        <div id="card-element" class="border rounded p-4 bg-white">
+          <!-- A Stripe Element will be inserted here. -->
+        </div>
+        
+        <div id="card-errors" role="alert" class="text-red"></div>
+      </div>
+
+      <div class="card-actions">
+        <button class="btn btn-green">Save</button>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript">
+  var stripe = Stripe('pk_test_q0YfdqC7bsahlMzdz5BHcXXJ00973FKvkj');
+  var elements = stripe.elements();
+  var card = elements.create('card');
+  card.mount('#card-element');
+
+  card.addEventListener('change', function(event) {
+    var displayError = document.getElementById('card-errors');
+    if (event.error) {
+      displayError.textContent = event.error.message;
+    } else {
+      displayError.textContent = '';
+    }
+  });
+
+  // Create a token or display an error when the form is submitted.
+  var form = document.getElementById('payment-form');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    stripe.createToken(card).then(function(result) {
+      if (result.error) {
+        // Inform the customer that there was an error.
+        var errorElement = document.getElementById('card-errors');
+        errorElement.textContent = result.error.message;
+        
+      } else {
+        // Send the token to your server.
+        stripeTokenHandler(result.token);
+      }
+    });
+  });
+
+  function stripeTokenHandler(token) {
+    // Insert the token ID into the form so it gets submitted to the server
+    var form = document.getElementById('payment-form');
+
+    var tokenIdInput = document.createElement('input');
+    tokenIdInput.setAttribute('type', 'hidden');
+    tokenIdInput.setAttribute('name', 'customer[stripe_token_id]');
+    tokenIdInput.setAttribute('value', token.id);
+    form.appendChild(tokenIdInput);
+
+   var cardBrandInput = document.createElement('input');
+    cardBrandInput.setAttribute('type', 'hidden');
+    cardBrandInput.setAttribute('name', 'customer[card_brand]');
+    cardBrandInput.setAttribute('value', token.card.brand);
+    form.appendChild(cardBrandInput);
+
+    var cardLast4Input = document.createElement('input');
+    cardLast4Input.setAttribute('type', 'hidden');
+    cardLast4Input.setAttribute('name', 'customer[card_last_4]');
+    cardLast4Input.setAttribute('value', token.card.last4);
+    form.appendChild(cardLast4Input);
+
+    var cardExpirationMonthInput = document.createElement('input');
+    cardExpirationMonthInput.setAttribute('type', 'hidden');
+    cardExpirationMonthInput.setAttribute('name', 'customer[card_expiration_month]');
+    cardExpirationMonthInput.setAttribute('value', token.card.exp_month);
+    form.appendChild(cardExpirationMonthInput);
+
+    var cardExpirationMonthInput = document.createElement('input');
+    cardExpirationMonthInput.setAttribute('type', 'hidden');
+    cardExpirationMonthInput.setAttribute('name', 'customer[card_expiration_year]');
+    cardExpirationMonthInput.setAttribute('value', token.card.exp_year);
+    form.appendChild(cardExpirationMonthInput);
+    
+    form.submit();
+  }
+</script>

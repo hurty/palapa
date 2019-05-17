@@ -75,4 +75,22 @@ defmodule Palapa.Billing.Customer do
       :billing_email
     ])
   end
+
+  def payment_method_changeset(customer, attrs) do
+    customer
+    |> cast(attrs, [
+      :stripe_token_id,
+      :card_brand,
+      :card_last_4,
+      :card_expiration_month,
+      :card_expiration_year
+    ])
+    |> validate_required([
+      :stripe_token_id,
+      :card_brand,
+      :card_last_4,
+      :card_expiration_month,
+      :card_expiration_year
+    ])
+  end
 end

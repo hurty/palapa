@@ -29,6 +29,10 @@ defmodule Palapa.Billing do
     Customer.billing_infos_changeset(customer, %{})
   end
 
+  def change_customer_payment_method(customer) do
+    Customer.payment_method_changeset(customer, %{})
+  end
+
   def create_customer_infos(organization, customer_attrs) do
     customer_changeset =
       Customer.billing_infos_changeset(%Customer{}, customer_attrs)
@@ -82,8 +86,26 @@ defmodule Palapa.Billing do
     |> Repo.transaction()
   end
 
+  def update_customer_payment_method(customer, attrs) do
+    Ecto.Multi.new()
+    |> Ecto.Multi.update(:customer, Customer.payment_method_changeset(customer, attrs))
+    # |> Palapa.JobQueue.enqueue(:update_stripe_customer_payment_method, %{
+    #   type: "update_stripe_customer_payment_method",
+    #   customer_id: customer.id
+    # })
+    |> Ecto.Multi.run(:update_stripe_customer_payment_method, fn _repo,
+                                                                 %{customer: customer_with_token} ->
+      Billing.update_stripe_customer_payment_method(customer_with_token)
+    end)
+    |> Repo.transaction()
+  end
+
   def update_stripe_customer(customer) do
     adapter().update_customer(customer)
+  end
+
+  def update_stripe_customer_payment_method(customer_with_token) do
+    adapter().update_payment_method(customer_with_token)
   end
 
   def billing_information_exists?(organization) do

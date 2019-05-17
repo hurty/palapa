@@ -25,7 +25,6 @@
         </div>
       </div>
 
-      
       <div class="bg-grey-lightest rounded-lg p-2 my-2">
         <h3 class="text-green"><%= gettext("Billing information") %></h3>
         
