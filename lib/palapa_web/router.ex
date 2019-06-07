@@ -175,6 +175,10 @@ defmodule PalapaWeb.Router do
     end
   end
 
+  scope "/", PalapaWeb do
+    post("/stripe_webhooks", StripeWebhookController, :create)
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", PalapaWeb do
   #   pipe_through :api
