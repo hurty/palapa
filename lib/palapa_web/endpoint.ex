@@ -10,7 +10,7 @@ defmodule PalapaWeb.Endpoint do
 
   plug(
     Plug.Parsers,
-    parsers: [:urlencoded, :json],
+    parsers: [:urlencoded, :multipart, :json],
     pass: ["text/*"],
     body_reader: {PalapaWeb.CacheRawBody, :read_body, []},
     json_decoder: Jason
