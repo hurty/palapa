@@ -60,9 +60,12 @@ defmodule Palapa.TeamsTest do
   end
 
   test "list/2 returns all teams" do
-    organization = insert!(:organization)
-    insert!(:team, organization: organization, name: "Engineering")
-    insert!(:team, organization: organization, name: "Sales")
+    insert!(:organization,
+      teams: [
+        insert!(:team, name: "Engineering"),
+        insert!(:team, name: "Sales")
+      ]
+    )
 
     [team1, team2] = Teams.list()
     assert team1.name == "Engineering"

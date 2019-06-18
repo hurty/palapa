@@ -26,8 +26,7 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
       customer = Billing.get_customer(current_organization())
 
       case Billing.update_customer_payment_method(customer, customer_attrs) do
-        {:ok, result} ->
-          IO.inspect(result)
+        {:ok, _result} ->
           redirect(conn, to: customer_path(conn, :show, current_organization()))
 
         {:error, customer_changeset} ->

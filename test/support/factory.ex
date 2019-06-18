@@ -2,8 +2,9 @@ defmodule Palapa.Factory do
   alias Palapa.Repo
 
   alias Palapa.Organizations.{Organization, Member, MemberInformation}
+  alias Palapa.Billing.{Customer, Invoice}
   alias Palapa.Accounts.Account
-  alias Palapa.Teams.{Team}
+  alias Palapa.Teams.Team
 
   #
   # Convenience functions
@@ -30,7 +31,7 @@ defmodule Palapa.Factory do
 
   def insert_pied_piper!() do
     # -- Organization
-    pied_piper = insert!(:organization)
+    pied_piper = insert!(:organization, customer: insert!(:customer))
 
     # -- Members
     richard = insert!(:owner, organization: pied_piper)
@@ -56,7 +57,7 @@ defmodule Palapa.Factory do
 
   def insert_pied_piper!(:full) do
     # -- Organization
-    pied_piper = insert!(:organization)
+    pied_piper = insert!(:organization, customer: insert!(:customer))
 
     # -- Members
     richard =
@@ -230,6 +231,33 @@ defmodule Palapa.Factory do
   def build(:organization) do
     %Organization{
       name: "Pied Piper"
+    }
+  end
+
+  def build(:customer) do
+    %Customer{
+      stripe_customer_id: "cus_123",
+      stripe_subscription_id: "sub_123",
+      billing_name: "Richard Hendricks",
+      billing_email: "richard@piedpiper.com",
+      billing_address: "28 rue Saint Antoine",
+      billing_city: "Nantes",
+      billing_postcode: "44000",
+      billing_state: "Loire Atlantique",
+      billing_country: "France",
+      vat_number: "vat_123"
+    }
+  end
+
+  def build(:invoice) do
+    %Invoice{
+      stripe_invoice_id: "in_000",
+      total: 2900,
+      status: "open",
+      number: "ABC123",
+      hosted_invoice_url: "https://pay.stripe.com/invoice/invst_GkUH2ES1UzkOOc9L4Iip6xIQH2",
+      pdf_url: "https://pay.stripe.com/invoice/invst_GkUH2ES1UzkOOc9L4Iip6xIQH2/pdf",
+      period_start: DateTime.utc_now() |> DateTime.truncate(:second)
     }
   end
 

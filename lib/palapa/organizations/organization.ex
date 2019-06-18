@@ -11,15 +11,14 @@ defmodule Palapa.Organizations.Organization do
   schema "organizations" do
     field(:name, :string)
     field(:default_timezone, :string)
+    field(:valid_until, :utc_datetime)
     timestamps()
 
+    belongs_to(:customer, Customer)
     has_many(:members, Member)
     has_many(:invitations, Invitations.Invitation)
     has_many(:teams, Teams.Team)
     has_many(:events, Event)
-
-    field(:valid_until, :utc_datetime)
-    belongs_to(:customer, Customer)
   end
 
   @doc false

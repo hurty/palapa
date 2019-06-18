@@ -2,7 +2,7 @@ defmodule Palapa.Billing do
   use Palapa.Context
 
   alias Palapa.Billing
-  alias Palapa.Billing.Customer
+  alias Palapa.Billing.{Customer, Invoice}
   alias Palapa.Billing.StripeAdapter
 
   @trial_duration_days 14
@@ -25,6 +25,10 @@ defmodule Palapa.Billing do
     Repo.get!(Customer, id)
   end
 
+  def get_customer_by_stripe_id!(customer_id) do
+    Repo.get_by!(Customer, stripe_customer_id: customer_id)
+  end
+
   def change_customer_infos(customer) do
     Customer.billing_infos_changeset(customer, %{})
   end
@@ -36,7 +40,7 @@ defmodule Palapa.Billing do
   def create_customer_infos(organization, customer_attrs) do
     customer_changeset =
       Customer.billing_infos_changeset(%Customer{}, customer_attrs)
-      |> put_assoc(:organizations, [organization])
+      |> put_assoc(:organization, organization)
 
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:customer, customer_changeset)
@@ -108,6 +112,12 @@ defmodule Palapa.Billing do
     adapter().update_payment_method(customer_with_token)
   end
 
+  def update_customer_subscription_status(customer, status) do
+    customer
+    |> Customer.subscription_status_changeset(%{subscription_status: status})
+    |> Repo.update()
+  end
+
   def billing_information_exists?(organization) do
     !!organization.customer_id
   end
@@ -156,5 +166,22 @@ defmodule Palapa.Billing do
 
   def generate_trial_end_datetime() do
     Timex.shift(Timex.now(), days: @trial_duration_days)
+  end
+
+  def get_invoice_by_stripe_id!(stripe_invoice_id) do
+    Repo.get_by!(Invoice, stripe_invoice_id: stripe_invoice_id)
+  end
+
+  def create_invoice(customer, attrs) do
+    %Invoice{}
+    |> Invoice.changeset(attrs)
+    |> put_assoc(:customer, customer)
+    |> Repo.insert(on_conflict: :nothing)
+  end
+
+  def update_invoice(invoice, attrs) do
+    invoice
+    |> Invoice.changeset(attrs)
+    |> Repo.update()
   end
 end

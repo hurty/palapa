@@ -3,10 +3,12 @@ defmodule Palapa.Billing.Customer do
   alias Palapa.Organizations.Organization
 
   schema "customers" do
-    has_many(:organizations, Organization)
+    has_one(:organization, Organization)
+    timestamps()
 
     field(:stripe_customer_id, :string)
     field(:stripe_subscription_id, :string)
+    field(:subscription_status, :string)
     field(:stripe_token_id, :string, virtual: true)
 
     field(:billing_name, :string)
@@ -28,6 +30,13 @@ defmodule Palapa.Billing.Customer do
   def changeset(customer, attrs) do
     customer
     |> cast(attrs, [:last_payment_at, :stripe_customer_id, :stripe_subscription_id])
+    |> unique_constraint(:stripe_customer_id, name: "customers_stripe_customer_id_index")
+    |> unique_constraint(:stripe_subscription_id, name: "customers_stripe_subscription_id_index")
+  end
+
+  def subscription_status_changeset(customer, attrs) do
+    customer
+    |> cast(attrs, [:subscription_status])
   end
 
   def billing_infos_changeset(customer, attrs) do
