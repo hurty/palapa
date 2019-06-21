@@ -6,15 +6,15 @@ defmodule Palapa.Organizations.Organization do
   alias Palapa.Invitations
   alias Palapa.Teams
   alias Palapa.Events.Event
-  alias Palapa.Billing.Customer
+  alias Palapa.Billing.{Customer, Subscription}
 
   schema "organizations" do
     field(:name, :string)
     field(:default_timezone, :string)
-    field(:valid_until, :utc_datetime)
     timestamps()
 
     belongs_to(:customer, Customer)
+    has_one(:subscription, Subscription)
     has_many(:members, Member)
     has_many(:invitations, Invitations.Invitation)
     has_many(:teams, Teams.Team)
@@ -30,6 +30,6 @@ defmodule Palapa.Organizations.Organization do
 
   def billing_changeset(organization, attrs) do
     organization
-    |> cast(attrs, [:customer_id, :valid_until])
+    |> cast(attrs, [:customer_id])
   end
 end

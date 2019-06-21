@@ -60,6 +60,7 @@ defmodule Palapa.Accounts do
     account
     |> Ecto.assoc(:organizations)
     |> where(id: ^organization_id)
+    |> preload(:subscription)
     |> Repo.one()
   end
 

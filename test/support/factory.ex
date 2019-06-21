@@ -237,7 +237,6 @@ defmodule Palapa.Factory do
   def build(:customer) do
     %Customer{
       stripe_customer_id: "cus_123",
-      stripe_subscription_id: "sub_123",
       billing_name: "Richard Hendricks",
       billing_email: "richard@piedpiper.com",
       billing_address: "28 rue Saint Antoine",

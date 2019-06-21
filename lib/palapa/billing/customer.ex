@@ -7,8 +7,6 @@ defmodule Palapa.Billing.Customer do
     timestamps()
 
     field(:stripe_customer_id, :string)
-    field(:stripe_subscription_id, :string)
-    field(:subscription_status, :string)
     field(:stripe_token_id, :string, virtual: true)
 
     field(:billing_name, :string)
@@ -24,19 +22,12 @@ defmodule Palapa.Billing.Customer do
     field(:card_last_4, :string)
     field(:card_expiration_month, :integer)
     field(:card_expiration_year, :integer)
-    field(:last_payment_at, :utc_datetime)
   end
 
   def changeset(customer, attrs) do
     customer
-    |> cast(attrs, [:last_payment_at, :stripe_customer_id, :stripe_subscription_id])
-    |> unique_constraint(:stripe_customer_id, name: "customers_stripe_customer_id_index")
-    |> unique_constraint(:stripe_subscription_id, name: "customers_stripe_subscription_id_index")
-  end
-
-  def subscription_status_changeset(customer, attrs) do
-    customer
-    |> cast(attrs, [:subscription_status])
+    |> cast(attrs, [:stripe_customer_id])
+    |> unique_constraint(:stripe_customer_id)
   end
 
   def billing_infos_changeset(customer, attrs) do

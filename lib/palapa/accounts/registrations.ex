@@ -4,7 +4,6 @@ defmodule Palapa.Accounts.Registrations do
   alias Palapa.Accounts
   alias Palapa.Organizations
   alias Palapa.Events.Event
-  alias Palapa.Billing
 
   @doc """
   Creates a new organization and a new user account in this organization.
@@ -39,11 +38,6 @@ defmodule Palapa.Accounts.Registrations do
         organization_id: changes.organization.id,
         account_id: changes.account.id,
         role: :owner
-      })
-    end)
-    |> Ecto.Multi.run(:trial_period, fn _repo, %{organization: organization} ->
-      Organizations.update_billing(organization, %{
-        valid_until: Billing.generate_trial_end_datetime()
       })
     end)
     |> Ecto.Multi.insert(:event, fn %{organization: organization, member: member} ->

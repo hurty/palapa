@@ -6,14 +6,6 @@
   <%= link "Upgrade to a paid account now", to: customer_path(@conn, :new, @current_organization), class: "btn" %>
 <% else %>
   <%= if @customer do %>
-    <%= if @current_organization.valid_until do %>
-      <div class="border rounded p-1 my-4 font-bold">
-        <div>
-          Next payment due <%= format_date(@current_organization.valid_until, @current_account) %>
-        </div>
-      </div>
-    <% end %>
-
     <div class="flex flex-wrap">
       <div class="flex-1 bg-grey-lightest rounded-lg p-4 m-2">
         <h3 class="text-green">Billing information</h3>
