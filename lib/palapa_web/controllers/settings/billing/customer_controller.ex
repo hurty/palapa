@@ -29,7 +29,10 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
   end
 
   def create(conn, %{"customer" => customer_attrs}) do
-    case Billing.create_customer_subscription(current_organization(), customer_attrs) do
+    case Billing.create_customer_and_synchronize_subscription(
+           current_organization(),
+           customer_attrs
+         ) do
       {:ok, result} ->
         case Billing.payment_next_action(result.stripe_subscription) do
           :requires_action ->
@@ -55,7 +58,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
       {:error, :customer, customer_changeset, _changes_so_far} ->
         render(conn, "new.html", customer_changeset: customer_changeset)
 
-      {:error, :stripe_customer, error, changes} ->
+      {:error, :stripe_customer, error, _changes} ->
         conn
         |> put_flash(:error, error.message)
         |> redirect(to: customer_path(conn, :new, current_organization()))

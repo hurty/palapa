@@ -73,8 +73,8 @@ defmodule PalapaWeb.Settings.Billing.StripeWebhookController do
     subscription = Billing.get_subscription_by_stripe_id!(stripe_subscription.id)
 
     case Billing.update_subscription(subscription, %{status: stripe_subscription.status}) do
-      {:ok, customer} ->
-        send_resp(conn, :ok, "Updated subscription status : #{customer.subscription.status}")
+      {:ok, subscription} ->
+        send_resp(conn, :ok, "Updated subscription status : #{subscription.status}")
 
       {:error, _changeset} ->
         send_resp(conn, :bad_request, "Error while updating subscription status")

@@ -1,7 +1,7 @@
 defmodule Palapa.Repo.Migrations.CreateCustomers do
   use Ecto.Migration
 
-  def change do
+  def up do
     create(table(:customers)) do
       timestamps()
       add(:stripe_customer_id, :string)
@@ -23,7 +23,7 @@ defmodule Palapa.Repo.Migrations.CreateCustomers do
     create(unique_index(:customers, :stripe_customer_id))
     create(unique_index(:customers, :stripe_subscription_id))
 
-    # Palapa.Billing.SubscriptionStatusEnum.create_type()
+    Palapa.Billing.SubscriptionStatusEnum.create_type()
 
     create(table(:subscriptions)) do
       add(:customer_id, references(:customers, on_delete: :delete_all))
@@ -38,5 +38,16 @@ defmodule Palapa.Repo.Migrations.CreateCustomers do
     alter(table(:organizations)) do
       add(:customer_id, references(:customers, on_delete: :nilify_all))
     end
+  end
+
+  def down do
+    alter(table(:organizations)) do
+      remove(:customer_id)
+    end
+
+    drop(table(:subscriptions))
+    drop(table(:customers))
+
+    Palapa.Billing.SubscriptionStatusEnum.drop_type()
   end
 end

@@ -8,7 +8,7 @@ defmodule PalapaWeb.Settings.Billing.BillingErrorController do
     organization = Palapa.Organizations.get!(organization_id)
     # Check visibility
 
-    case Billing.organization_state(organization) do
+    case Billing.workspace_frozen_reason(organization) do
       :trial_has_ended ->
         render(conn, "trial_has_ended.html", organization: organization)
 

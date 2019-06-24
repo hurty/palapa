@@ -2,7 +2,7 @@ defmodule Palapa.Factory do
   alias Palapa.Repo
 
   alias Palapa.Organizations.{Organization, Member, MemberInformation}
-  alias Palapa.Billing.{Customer, Invoice}
+  alias Palapa.Billing.{Customer, Invoice, Subscription}
   alias Palapa.Accounts.Account
   alias Palapa.Teams.Team
 
@@ -31,7 +31,8 @@ defmodule Palapa.Factory do
 
   def insert_pied_piper!() do
     # -- Organization
-    pied_piper = insert!(:organization, customer: insert!(:customer))
+    pied_piper =
+      insert!(:organization, customer: insert!(:customer), subscription: insert!(:subscription))
 
     # -- Members
     richard = insert!(:owner, organization: pied_piper)
@@ -246,6 +247,10 @@ defmodule Palapa.Factory do
       billing_country: "France",
       vat_number: "vat_123"
     }
+  end
+
+  def build(:subscription) do
+    %Subscription{status: :trialing, stripe_subscription_id: "sub_000"}
   end
 
   def build(:invoice) do

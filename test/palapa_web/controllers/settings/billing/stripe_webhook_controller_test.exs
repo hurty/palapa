@@ -95,8 +95,8 @@ defmodule PalapaWeb.Settings.Billing.StripeWebhookControllerTest do
       |> assign(:event, @subscription_updated_event)
       |> post(stripe_webhook_path(conn, :create))
 
-    subscription = Repo.reload(workspace.organization.subscription)
+    subscription = Palapa.Repo.reload(workspace.organization.subscription)
     assert response(conn, :ok)
-    assert subscription.status == "active"
+    assert subscription.status == :active
   end
 end

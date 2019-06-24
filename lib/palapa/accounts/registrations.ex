@@ -3,6 +3,7 @@ defmodule Palapa.Accounts.Registrations do
   alias Palapa.Accounts.Registration
   alias Palapa.Accounts
   alias Palapa.Organizations
+  alias Palapa.Billing
   alias Palapa.Events.Event
 
   @doc """
@@ -32,6 +33,9 @@ defmodule Palapa.Accounts.Registrations do
     end)
     |> Ecto.Multi.run(:organization, fn _repo, _changes ->
       Organizations.create(organization_attrs)
+    end)
+    |> Ecto.Multi.run(:subscription, fn _repo, %{organization: organization} ->
+      Billing.create_subscription(organization)
     end)
     |> Ecto.Multi.run(:member, fn _repo, changes ->
       Organizations.create_member(%{

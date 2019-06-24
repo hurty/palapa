@@ -7,12 +7,12 @@ defmodule Palapa.Billing do
   alias Palapa.Billing.{Customer, Invoice, Subscription, StripeAdapter}
 
   @trial_duration_days 14
-  @grace_period_days 14
   @price_per_member_per_month 7
   @monthly_plan_id "plan_EuPumUi7Lb5R7w"
 
   defdelegate(authorize(action, user, params), to: Palapa.Billing.Policy)
 
+  # Some of these statuses will be set via Stripe webhooks
   # https://stripe.com/docs/billing/lifecycle#subscription-states
   defenum(SubscriptionStatusEnum, :subscription_status, [
     :trialing,
@@ -85,10 +85,9 @@ defmodule Palapa.Billing do
 
   # SUBSCRIPTIONS
 
-  def create_subscription(organization, customer, attrs) do
-    Subscription.changeset(attrs)
-    |> put_assoc(:organization, organization)
-    |> put_assoc(:customer, customer)
+  def create_subscription(organization) do
+    %Subscription{}
+    |> change(%{organization_id: organization.id, status: :trialing})
     |> Repo.insert()
   end
 
@@ -97,7 +96,7 @@ defmodule Palapa.Billing do
   end
 
   def get_subscription_by_stripe_id!(stripe_id) do
-    Repo.get_by!(Subscription, :stripe_subscription_id, stripe_id)
+    Repo.get_by!(Subscription, stripe_subscription_id: stripe_id)
   end
 
   def update_subscription(subscription, attrs) do
@@ -127,10 +126,12 @@ defmodule Palapa.Billing do
 
   # --- BILLING LIFECYCLE
 
-  def create_customer_subscription(organization, customer_attrs) do
+  def create_customer_and_synchronize_subscription(organization, customer_attrs) do
     customer_changeset =
       Customer.billing_infos_changeset(%Customer{}, customer_attrs)
       |> put_assoc(:organization, organization)
+
+    organization = Repo.preload(organization, :subscription)
 
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:customer, customer_changeset)
@@ -148,14 +149,14 @@ defmodule Palapa.Billing do
         stripe_customer_id: stripe_subscription["customer"]
       })
     end)
-    |> Ecto.Multi.run(:subscription, fn _repo,
-                                        %{
-                                          stripe_subscription: stripe_subscription,
-                                          customer: customer
-                                        } ->
-      Billing.create_subscription(organization, customer, %{
-        stripe_subscription_id: stripe_subscription["id"]
-      })
+    |> Ecto.Multi.run(:updated_subscription, fn _repo,
+                                                %{
+                                                  stripe_subscription: stripe_subscription,
+                                                  customer: customer
+                                                } ->
+      organization.subscription
+      |> change(%{customer_id: customer.id, stripe_subscription: stripe_subscription["id"]})
+      |> Repo.update()
     end)
     |> Repo.transaction()
   end
@@ -174,40 +175,38 @@ defmodule Palapa.Billing do
     !!organization.customer_id
   end
 
-  def valid?(organization) do
-    # if is_nil(organization.valid_until) do
-    #   true
-    # else
-    #   grace_period_end = Timex.shift(organization.valid_until, days: @grace_period_days)
-    #   Timex.after?(grace_period_end, Timex.now())
-    # end
-    true
-  end
+  def get_subscription_status(organization) do
+    subscription = Repo.preload(organization, :subscription).subscription
 
-  def organization_state(organization) do
-    cond do
-      valid?(organization) && billing_information_exists?(organization) ->
-        :ok
-
-      valid?(organization) &&
-          !billing_information_exists?(organization) ->
-        :trial
-
-      !valid?(organization) && billing_information_exists?(organization) ->
-        :waiting_for_payment
-
-      !valid?(organization) &&
-          !billing_information_exists?(organization) ->
-        :trial_has_ended
-
-      true ->
-        :unknown
+    if subscription do
+      subscription.status
+    else
+      :trialing
     end
   end
 
-  def organization_frozen?(organization) do
+  def trial_expired?(organization) do
+    trial_end = Timex.shift(organization.inserted_at, days: @trial_duration_days)
+    Timex.after?(Timex.now(), trial_end)
+  end
+
+  def workspace_frozen?(organization) do
     subscription = Repo.preload(organization, :subscription).subscription
-    subscription && subscription.status not in [:trialing, :ok]
+
+    (!subscription && trial_expired?(organization)) ||
+      (subscription && subscription.status not in [:just_created, :active])
+  end
+
+  def workspace_frozen_reason(organization) do
+    subscription = Repo.preload(organization, :subscription).subscription
+
+    cond do
+      !subscription && trial_expired?(organization) ->
+        :trial_has_ended
+
+      subscription && subscription.status != :active ->
+        :waiting_for_payment
+    end
   end
 
   def price_per_member_per_month do
