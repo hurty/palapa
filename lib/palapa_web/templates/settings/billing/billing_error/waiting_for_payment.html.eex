@@ -6,8 +6,7 @@
 
         <section>
           <p>
-            <%= gettext("We didn't receive any payment for the period after %{valid_until}. An owner of the workspace must update his billing informations in order to restore access to the workspace.", 
-              valid_until: format_date(@current_organization.valid_until, @current_account)) %>
+            <%= gettext("We didn't receive any payment for the current period. An owner of the workspace must update his billing informations in order to restore access to the workspace.") %>
             
             <%= gettext("Don't worry, all the data associated with this workspace is safe.") %>
             <%= gettext("Don't hesitate to ask support if you need help or have questions.") %>

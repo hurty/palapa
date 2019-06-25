@@ -126,6 +126,14 @@ defmodule Palapa.Billing do
 
   # --- BILLING LIFECYCLE
 
+  def price_per_member_per_month do
+    @price_per_member_per_month
+  end
+
+  def trial_duration_days do
+    @trial_duration_days
+  end
+
   def create_customer_and_synchronize_subscription(organization, customer_attrs) do
     customer_changeset =
       Customer.billing_infos_changeset(%Customer{}, customer_attrs)
@@ -175,13 +183,21 @@ defmodule Palapa.Billing do
     !!organization.customer_id
   end
 
-  def get_subscription_status(organization) do
+  def get_workspace_status(organization) do
     subscription = Repo.preload(organization, :subscription).subscription
 
-    if subscription do
-      subscription.status
-    else
-      :trialing
+    cond do
+      subscription.status == :active ->
+        :active
+
+      subscription.status == :trialing && !trial_expired?(organization) ->
+        :trialing
+
+      subscription.status == :trialing && trial_expired?(organization) ->
+        :trial_has_ended
+
+      true ->
+        :waiting_for_payment
     end
   end
 
@@ -191,33 +207,6 @@ defmodule Palapa.Billing do
   end
 
   def workspace_frozen?(organization) do
-    subscription = Repo.preload(organization, :subscription).subscription
-
-    (!subscription && trial_expired?(organization)) ||
-      (subscription && subscription.status not in [:just_created, :active])
-  end
-
-  def workspace_frozen_reason(organization) do
-    subscription = Repo.preload(organization, :subscription).subscription
-
-    cond do
-      !subscription && trial_expired?(organization) ->
-        :trial_has_ended
-
-      subscription && subscription.status != :active ->
-        :waiting_for_payment
-    end
-  end
-
-  def price_per_member_per_month do
-    @price_per_member_per_month
-  end
-
-  def trial_duration_days do
-    @trial_duration_days
-  end
-
-  def generate_trial_end_datetime() do
-    Timex.shift(Timex.now(), days: @trial_duration_days)
+    Billing.get_workspace_status(organization) not in [:trialing, :active]
   end
 end
