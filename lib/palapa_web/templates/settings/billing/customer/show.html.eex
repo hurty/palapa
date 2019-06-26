@@ -1,5 +1,5 @@
-<div class="content article-layout">
-  <div class="right-sidebar">
+<div class="content left-sidebar-layout">
+  <div class="page-sidebar">
     <%= render PalapaWeb.Settings.SettingsView, "settings_navigation.html", assigns %>
   </div>
 

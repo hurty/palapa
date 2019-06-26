@@ -1,8 +1,12 @@
-<div class="card">
-  <nav>
-    <ul class="list-reset">
-      <li class="p-2"><%= link "Workspace settings", to: workspace_path(@conn, :show, @current_organization) %></li>
-      <li class="p-2"><%= link "Billing", to: customer_path(@conn, :show, @current_organization) %></li>
-    </ul>
-  </nav>
-</div>
+<nav class="page-menu">
+  <h3 class="page-menu-title">Settings</h3>
+  <ul class="page-menu-items">
+    <li class="page-menu-item <%= if @settings_navigation == "workspace" do %>page-menu-item--active<% end %>">
+      <%= link "Workspace", to: workspace_path(@conn, :show, @current_organization), class: "page-menu-link" %>
+    </li>
+    
+    <li class="page-menu-item <%= if @settings_navigation == "billing" do %>page-menu-item--active<% end %>">
+      <%= link "Billing", to: customer_path(@conn, :show, @current_organization) %>
+    </li>
+  </ul>
+</nav>

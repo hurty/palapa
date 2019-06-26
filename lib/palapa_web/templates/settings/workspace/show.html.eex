@@ -1,15 +1,12 @@
-<div class="content article-layout">
-  <div class="right-sidebar">
-    <div class="card">
-      <nav>
-        <ul class="list-reset">
-          <li class="p-2"><%= link "Workspace settings", to: workspace_path(@conn, :show, @current_organization) %></li>
-          <li class="p-2"><%= link "Billing", to: customer_path(@conn, :show, @current_organization) %></li>
-        </ul>
-      </nav>
-    </div>
+<div class="content left-sidebar-layout">
+  <div class="page-sidebar">
+    <%= render PalapaWeb.Settings.SettingsView, "settings_navigation.html", assigns %>
   </div>
+
   <div class="main-content">
-    Workspace Settings
+    <div class="card p-4">
+      <h2 class="text-grey-darkest">Workspace settings</h2>
+      <div class="card-header-separator"></div>
+    </div>
   </div>
 </div>

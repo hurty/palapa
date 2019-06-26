@@ -5,41 +5,35 @@
     </button>
   </div>
 
-  <%= link(@current_organization.name, to: dashboard_path(@conn, :index, @current_organization), class: "organization-name") %>
+  <%= link(@current_organization.name, to: dashboard_path(@conn, :index, @current_organization), class: "organization-name block") %>
   
   <ul class="header-links">
     <li class="header-link <%= if @navigation == "dashboard" do %>header-link--active<% end %>"> 
-      <%= link(to: dashboard_path(@conn, :index, @current_organization)) do %>
+      <%= link(to: dashboard_path(@conn, :index, @current_organization), class: "block") do %>
         <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
       <% end %>
     </li>
 
     <li class="header-link <%= if @navigation == "message" do %>header-link--active<% end %>"> 
-      <%= link(to: message_path(@conn, :index, @current_organization)) do %>
+      <%= link(to: message_path(@conn, :index, @current_organization), class: "block") do %>
         <i class="fas fa-comment mr-2"></i>Messages
       <% end %>
     </li>
 
     <li class="header-link  <%= if @navigation == "documents" do %>header-link--active<% end %>">
-      <%= link(to: document_path(@conn, :index, @current_organization)) do %>
+      <%= link(to: document_path(@conn, :index, @current_organization), class: "block") do %>
         <i class="fas fa-file-alt mr-2"></i>Documents
       <% end %>
     </li>
 
-    <li class="header-link  <%= if @navigation == "contacts" do %>header-link--active<% end %>">
-      <%= link(to: "#") do %>
-        <i class="fas fa-address-book mr-2"></i>Contacts
-      <% end %>
-    </li>
-
     <li class="header-link  <%= if @navigation == "members" do %>header-link--active<% end %>">
-      <%= link(to: member_path(@conn, :index, @current_organization)) do %>
+      <%= link(to: member_path(@conn, :index, @current_organization), class: "block") do %>
         <i class="fas fa-users mr-2"></i>Teams
       <% end %>
     </li>
 
     <li class="header-link  <%= if @navigation == "settings" do %>header-link--active<% end %>">
-      <%= link(to: workspace_path(@conn, :show, @current_organization)) do %>
+      <%= link(to: workspace_path(@conn, :show, @current_organization), class: "block") do %>
         <i class="fas fa-cog mr-2"></i>Settings
       <% end %>
     </li>
