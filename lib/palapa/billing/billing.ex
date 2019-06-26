@@ -206,6 +206,11 @@ defmodule Palapa.Billing do
     Timex.after?(Timex.now(), trial_end)
   end
 
+  def trial_remaining_days(organization) do
+    trial_end = Timex.shift(organization.inserted_at, days: @trial_duration_days)
+    Timex.diff(trial_end, Timex.now(), :days)
+  end
+
   def workspace_frozen?(organization) do
     Billing.get_workspace_status(organization) not in [:trialing, :active]
   end
