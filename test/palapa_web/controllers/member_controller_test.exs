@@ -5,15 +5,11 @@ defmodule PalapaWeb.MemberControllerTest do
 
   describe "as regular member" do
     setup do
-      member = insert!(:member)
+      workspace = insert_pied_piper!()
+      member = workspace.gilfoyle
+      conn = login(member)
 
-      conn =
-        build_conn()
-        |> assign(:current_member, member)
-        |> assign(:current_account, member.account)
-        |> assign(:current_organization, member.organization)
-
-      {:ok, conn: conn, member: member, org: member.organization}
+      {:ok, conn: conn, member: member, org: member.organization, workspace: workspace}
     end
 
     test "list all members in the organization", %{conn: conn, org: org} do
@@ -21,26 +17,8 @@ defmodule PalapaWeb.MemberControllerTest do
       assert html_response(conn, 200) =~ "Bertram Gilfoyle"
     end
 
-    test "list members in a specific team", %{conn: conn, org: org} do
-      insert!(
-        :team,
-        name: "Management",
-        organization: conn.assigns.current_organization,
-        members: [insert!(:admin)]
-      )
-
-      tech_team =
-        insert!(
-          :team,
-          name: "Tech",
-          organization: conn.assigns.current_organization,
-          members: [
-            insert!(:owner),
-            conn.assigns.current_member
-          ]
-        )
-
-      conn = get(conn, member_path(conn, :index, org, team_id: tech_team.id))
+    test "list members in a specific team", %{conn: conn, org: org, workspace: workspace} do
+      conn = get(conn, member_path(conn, :index, org, team_id: workspace.tech_team.id))
       assert html_response(conn, 200) =~ "Richard"
       assert html_response(conn, 200) =~ "Gilfoyle"
       refute html_response(conn, 200) =~ "Jared"
@@ -88,22 +66,21 @@ defmodule PalapaWeb.MemberControllerTest do
     test "the member can see all public informations on another profile", %{
       conn: conn,
       org: org,
-      member: member
+      member: member,
+      workspace: workspace
     } do
-      other_member = insert!(:admin, organization: member.organization)
-
-      Palapa.Organizations.create_member_information(other_member, %{
+      Palapa.Organizations.create_member_information(workspace.jared, %{
         type: :email,
         value: "jared.dunn@piedpiper.com"
       })
 
-      Palapa.Organizations.create_member_information(other_member, %{
+      Palapa.Organizations.create_member_information(workspace.jared, %{
         type: :address,
         value: "The basement",
         private: true
       })
 
-      conn = get(conn, member_path(conn, :show, org, other_member))
+      conn = get(conn, member_path(conn, :show, org, workspace.jared))
       assert html_response(conn, 200) =~ "jared.dunn@piedpiper.com"
       refute html_response(conn, 200) =~ "The basement"
     end
@@ -111,47 +88,39 @@ defmodule PalapaWeb.MemberControllerTest do
     test "the member can see private informations that are shared with him", %{
       conn: conn,
       org: org,
-      member: member
+      member: member,
+      workspace: workspace
     } do
-      jared = insert!(:admin, organization: member.organization)
-
       {:ok, _} =
-        Palapa.Organizations.create_member_information(jared, %{
+        Palapa.Organizations.create_member_information(workspace.jared, %{
           "type" => :skype,
           "value" => "mister.jared"
         })
 
       {:ok, _} =
-        Palapa.Organizations.create_member_information(jared, %{
+        Palapa.Organizations.create_member_information(workspace.jared, %{
           "type" => :email,
           "value" => "jared.dunn@piedpiper.com",
           "private" => true,
           "visibilities" => [to_string(GlobalId.create("palapa", member))]
         })
 
-      tech_team =
-        insert!(:team,
-          organization: jared.organization,
-          name: "Management",
-          members: [member]
-        )
-
       {:ok, _} =
-        Palapa.Organizations.create_member_information(jared, %{
+        Palapa.Organizations.create_member_information(workspace.jared, %{
           "type" => :github,
           "value" => "jared-knows-code",
           "private" => true,
-          "visibilities" => [to_string(GlobalId.create("palapa", tech_team))]
+          "visibilities" => [to_string(GlobalId.create("palapa", workspace.tech_team))]
         })
 
       {:ok, _} =
-        Palapa.Organizations.create_member_information(jared, %{
+        Palapa.Organizations.create_member_information(workspace.jared, %{
           "type" => :address,
           "value" => "The basement",
           "private" => true
         })
 
-      conn = get(conn, member_path(conn, :show, org, jared))
+      conn = get(conn, member_path(conn, :show, org, workspace.jared))
 
       assert html_response(conn, 200) =~ "mister.jared"
       assert html_response(conn, 200) =~ "jared.dunn@piedpiper.com"
@@ -162,15 +131,12 @@ defmodule PalapaWeb.MemberControllerTest do
 
   describe "as admin" do
     setup do
-      member = insert!(:admin)
+      workspace = insert_pied_piper!()
+      admin = workspace.jared
 
-      conn =
-        build_conn()
-        |> assign(:current_member, member)
-        |> assign(:current_account, member.account)
-        |> assign(:current_organization, member.organization)
+      conn = login(admin)
 
-      {:ok, conn: conn, member: member, org: member.organization}
+      {:ok, conn: conn, org: workspace.organization}
     end
 
     test "admins see the 'add people' link", %{conn: conn, org: org} do
@@ -186,15 +152,12 @@ defmodule PalapaWeb.MemberControllerTest do
 
   describe "as owner" do
     setup do
-      member = insert!(:admin)
+      workspace = insert_pied_piper!()
+      owner = workspace.richard
 
-      conn =
-        build_conn()
-        |> assign(:current_member, member)
-        |> assign(:current_account, member.account)
-        |> assign(:current_organization, member.organization)
+      conn = login(owner)
 
-      {:ok, conn: conn, member: member, org: member.organization}
+      {:ok, conn: conn, org: workspace.organization}
     end
 
     test "owners see the 'add people' link", %{conn: conn, org: org} do

@@ -19,12 +19,11 @@ defmodule Palapa.BillingTest do
   end
 
   test "creates an invoice", %{workspace: workspace} do
-    assert {:ok, _invoice} =
-             Billing.create_invoice(workspace.organization.customer, @invoice_attrs)
+    assert {:ok, _invoice} = Billing.create_invoice(workspace.customer, @invoice_attrs)
   end
 
   test "updates an invoice", %{workspace: workspace} do
-    {:ok, invoice} = Billing.create_invoice(workspace.organization.customer, @invoice_attrs)
+    {:ok, invoice} = Billing.create_invoice(workspace.customer, @invoice_attrs)
     assert {:ok, invoice} = Billing.update_invoice(invoice, %{status: "paid"})
     assert invoice.status == "paid"
   end

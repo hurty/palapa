@@ -7,17 +7,12 @@ defmodule PalapaWeb.Document.PageControllerTest do
 
   describe "as regular member" do
     setup do
-      member = insert!(:member)
+      workspace = insert_pied_piper!()
+      conn = login(workspace.gilfoyle)
+      {:ok, document} = Documents.create_document(workspace.gilfoyle, nil, %{title: @doc_title})
 
-      conn =
-        build_conn()
-        |> assign(:current_member, member)
-        |> assign(:current_account, member.account)
-        |> assign(:current_organization, member.organization)
-
-      {:ok, document} = Documents.create_document(member, nil, %{title: @doc_title})
-
-      {:ok, conn: conn, member: member, org: member.organization, document: document}
+      {:ok,
+       conn: conn, member: workspace.gilfoyle, org: workspace.organization, document: document}
     end
 
     test "new page", %{conn: conn, org: org, document: document} do
@@ -67,12 +62,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
   describe "page visibility" do
     setup do
       workspace = insert_pied_piper!(:full)
-
-      conn =
-        build_conn()
-        |> assign(:current_member, workspace.gilfoyle)
-        |> assign(:current_account, workspace.gilfoyle.account)
-        |> assign(:current_organization, workspace.organization)
+      conn = login(workspace.gilfoyle)
 
       {:ok, conn: conn, workspace: workspace}
     end

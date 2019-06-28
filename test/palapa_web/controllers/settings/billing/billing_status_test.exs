@@ -36,7 +36,7 @@ defmodule PalapaWeb.Settings.Billing.BillingStatusTest do
 
   test "lets the user pass when the workspace is 'active'", %{conn: conn, workspace: workspace} do
     active_subscription =
-      workspace.organization.subscription
+      workspace.subscription
       |> Ecto.Changeset.change(%{status: :active})
       |> Repo.update!()
 
@@ -57,7 +57,7 @@ defmodule PalapaWeb.Settings.Billing.BillingStatusTest do
 
   test "blocks the user when the payment is past due", %{conn: conn, workspace: workspace} do
     past_due_subscription =
-      workspace.organization.subscription
+      workspace.subscription
       |> Ecto.Changeset.change(%{status: :past_due})
       |> Repo.update!()
 

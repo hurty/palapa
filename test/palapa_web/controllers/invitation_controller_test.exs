@@ -7,9 +7,9 @@ defmodule PalapaWeb.InvitationControllerTest do
 
   describe "as regular member" do
     setup do
-      member = insert!(:member)
-      conn = login(member)
-      {:ok, conn: conn, member: member, org: member.organization}
+      workspace = insert_pied_piper!()
+      conn = login(workspace.gilfoyle)
+      {:ok, conn: conn, member: workspace.gilfoyle, org: workspace.organization}
     end
 
     test "regular members can't access the invitation page", %{conn: conn, org: org} do
@@ -36,9 +36,9 @@ defmodule PalapaWeb.InvitationControllerTest do
 
   describe "as admin" do
     setup do
-      member = insert!(:admin)
-      conn = login(member)
-      {:ok, conn: conn, member: member, org: member.organization}
+      workspace = insert_pied_piper!()
+      conn = login(workspace.jared)
+      {:ok, conn: conn, member: workspace.jared, org: workspace.organization}
     end
 
     test "admin can access the invitation page", %{conn: conn, org: org} do
@@ -114,9 +114,9 @@ defmodule PalapaWeb.InvitationControllerTest do
 
   describe "as owner" do
     setup do
-      member = insert!(:owner)
-      conn = login(member)
-      {:ok, conn: conn, member: member, org: member.organization}
+      workspace = insert_pied_piper!()
+      conn = login(workspace.richard)
+      {:ok, conn: conn, member: workspace.richard, org: workspace.organization}
     end
 
     test "the owner can access the invitation page", %{conn: conn, org: org} do

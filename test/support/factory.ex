@@ -31,8 +31,10 @@ defmodule Palapa.Factory do
 
   def insert_pied_piper!() do
     # -- Organization
-    pied_piper =
-      insert!(:organization, customer: insert!(:customer), subscription: insert!(:subscription))
+    pied_piper = insert!(:organization)
+
+    customer = insert!(:customer, organization: pied_piper)
+    subscription = insert!(:subscription, organization: pied_piper, customer: customer)
 
     # -- Members
     richard = insert!(:owner, organization: pied_piper)
@@ -48,6 +50,8 @@ defmodule Palapa.Factory do
 
     %{
       organization: pied_piper,
+      customer: customer,
+      subscription: subscription,
       richard: richard,
       jared: jared,
       gilfoyle: gilfoyle,
@@ -58,7 +62,10 @@ defmodule Palapa.Factory do
 
   def insert_pied_piper!(:full) do
     # -- Organization
-    pied_piper = insert!(:organization, customer: insert!(:customer))
+    pied_piper = insert!(:organization)
+
+    customer = insert!(:customer, organization: pied_piper)
+    _subscription = insert!(:subscription, organization: pied_piper, customer: customer)
 
     # -- Members
     richard =

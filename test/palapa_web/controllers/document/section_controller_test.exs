@@ -8,17 +8,13 @@ defmodule PalapaWeb.Document.SectionControllerTest do
 
   describe "as regular member" do
     setup do
-      member = insert!(:member)
+      workspace = insert_pied_piper!()
+      conn = login(workspace.gilfoyle)
 
-      conn =
-        build_conn()
-        |> assign(:current_member, member)
-        |> assign(:current_account, member.account)
-        |> assign(:current_organization, member.organization)
+      {:ok, document} = Documents.create_document(workspace.gilfoyle, nil, %{title: @doc_title})
 
-      {:ok, document} = Documents.create_document(member, nil, %{title: @doc_title})
-
-      {:ok, conn: conn, member: member, org: member.organization, document: document}
+      {:ok,
+       conn: conn, member: workspace.gilfoyle, org: workspace.organization, document: document}
     end
 
     test "create section", %{conn: conn, org: org, document: document} do
