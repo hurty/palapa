@@ -1,9 +1,6 @@
 defmodule PalapaWeb.Settings.Billing.CustomerControllerTest do
   use PalapaWeb.ConnCase
 
-  alias Palapa.Repo
-  alias Palapa.Billing
-
   describe "as owner" do
     setup do
       workspace = insert_pied_piper!()

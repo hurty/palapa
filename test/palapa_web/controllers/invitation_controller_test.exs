@@ -51,14 +51,14 @@ defmodule PalapaWeb.InvitationControllerTest do
 
       conn =
         post(conn, invitation_path(conn, :create, org), %{
-          "invitation" => %{"email_addresses" => "bertram.gilfoyle@piedpiper.com"}
+          "invitation" => %{"email_addresses" => "laurie@piedpiper.com"}
         })
 
       count_invitations_after = Repo.count("invitations")
 
+      assert_in_delta(count_invitations_before, count_invitations_after, 1)
       assert html_response(conn, 302)
       assert get_flash(conn, :success) == "Invitations have been sent"
-      assert_in_delta(count_invitations_before, count_invitations_after, 1)
     end
 
     test "malformed email addresses are ignored", %{conn: conn, org: org} do
@@ -129,7 +129,7 @@ defmodule PalapaWeb.InvitationControllerTest do
 
       conn =
         post(conn, invitation_path(conn, :create, org), %{
-          "invitation" => %{"email_addresses" => "bertram.gilfoyle@piedpiper.com"}
+          "invitation" => %{"email_addresses" => "laurie@piedpiper.com"}
         })
 
       count_invitations_after = Repo.count("invitations")

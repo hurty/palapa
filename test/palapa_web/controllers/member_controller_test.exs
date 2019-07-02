@@ -66,7 +66,6 @@ defmodule PalapaWeb.MemberControllerTest do
     test "the member can see all public informations on another profile", %{
       conn: conn,
       org: org,
-      member: member,
       workspace: workspace
     } do
       Palapa.Organizations.create_member_information(workspace.jared, %{
