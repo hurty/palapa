@@ -3,10 +3,10 @@ defmodule Palapa.Billing.Invoice do
 
   schema("invoices") do
     field(:stripe_invoice_id, :string)
+    field(:created_at, :utc_datetime)
     field(:number, :string)
     field(:hosted_invoice_url, :string)
     field(:pdf_url, :string)
-    field(:period_start, :utc_datetime)
     field(:status, :string)
     field(:total, :integer)
     timestamps()
@@ -18,10 +18,10 @@ defmodule Palapa.Billing.Invoice do
     invoice
     |> cast(attrs, [
       :stripe_invoice_id,
+      :created_at,
       :number,
       :hosted_invoice_url,
       :pdf_url,
-      :period_start,
       :status,
       :total
     ])
@@ -30,7 +30,14 @@ defmodule Palapa.Billing.Invoice do
 
   def validate(%Ecto.Changeset{} = changeset) do
     changeset
-    |> validate_required([:stripe_invoice_id, :number, :pdf_url, :period_start, :status, :total])
+    |> validate_required([
+      :stripe_invoice_id,
+      :created_at,
+      :number,
+      :pdf_url,
+      :status,
+      :total
+    ])
     |> unique_constraint(:stripe_invoice_id, name: "invoices_stripe_invoice_id_index")
   end
 end

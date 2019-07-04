@@ -1,9 +1,12 @@
 defmodule Palapa.Billing.Customer do
   use Palapa.Schema
+
   alias Palapa.Organizations.Organization
+  alias Palapa.Billing.Invoice
 
   schema "customers" do
     has_one(:organization, Organization)
+    has_many(:invoices, Invoice)
     timestamps()
 
     field(:stripe_customer_id, :string)

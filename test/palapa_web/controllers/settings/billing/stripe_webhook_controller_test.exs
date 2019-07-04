@@ -23,8 +23,8 @@ defmodule PalapaWeb.Settings.Billing.StripeWebhookControllerTest do
     data: %{
       object: %{
         id: "in_000",
+        created_at: 1_560_763_806,
         customer: "cus_123",
-        period_start: 1_560_763_806,
         number: "ABC123",
         status: "open",
         total: 2900,
@@ -50,8 +50,8 @@ defmodule PalapaWeb.Settings.Billing.StripeWebhookControllerTest do
     data: %{
       object: %{
         id: "in_000",
+        created_at: 1_560_763_806,
         customer: "cus_123",
-        period_start: 1_560_763_806,
         number: "ABC123",
         status: "paid",
         total: 2900,

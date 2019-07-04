@@ -268,7 +268,7 @@ defmodule Palapa.Factory do
       number: "ABC123",
       hosted_invoice_url: "https://pay.stripe.com/invoice/invst_GkUH2ES1UzkOOc9L4Iip6xIQH2",
       pdf_url: "https://pay.stripe.com/invoice/invst_GkUH2ES1UzkOOc9L4Iip6xIQH2/pdf",
-      period_start: DateTime.utc_now() |> DateTime.truncate(:second)
+      created_at: DateTime.utc_now() |> DateTime.truncate(:second)
     }
   end
 

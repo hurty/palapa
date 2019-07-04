@@ -5,7 +5,6 @@ defmodule Palapa.Repo.Migrations.CreateCustomers do
     create(table(:customers)) do
       timestamps()
       add(:stripe_customer_id, :string)
-      add(:stripe_subscription_id, :string)
       add(:billing_name, :string)
       add(:billing_email, :string)
       add(:billing_address, :string)
@@ -21,7 +20,6 @@ defmodule Palapa.Repo.Migrations.CreateCustomers do
     end
 
     create(unique_index(:customers, :stripe_customer_id))
-    create(unique_index(:customers, :stripe_subscription_id))
 
     Palapa.Billing.SubscriptionStatusEnum.create_type()
 
@@ -34,6 +32,7 @@ defmodule Palapa.Repo.Migrations.CreateCustomers do
 
     create(index(:subscriptions, :customer_id))
     create(index(:subscriptions, :organization_id))
+    create(unique_index(:subscriptions, :stripe_subscription_id))
 
     alter(table(:organizations)) do
       add(:customer_id, references(:customers, on_delete: :nilify_all))

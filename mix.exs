@@ -75,9 +75,10 @@ defmodule Palapa.Mixfile do
       {:scrivener_html, "~> 1.8"},
       {:appsignal, "~> 1.0"},
       {:floki, "~> 0.20.0"},
-      {:stripity_stripe, "~> 2.3.0"},
+      {:stripity_stripe, "~> 2.4.0"},
       {:mox, "~> 0.5", only: :test},
-      {:ecto_job, github: "mbuhot/ecto_job"}
+      {:ecto_job, github: "mbuhot/ecto_job"},
+      {:money, "~> 1.4"}
     ]
   end
 

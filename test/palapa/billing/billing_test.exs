@@ -6,10 +6,10 @@ defmodule Palapa.BillingTest do
 
   @invoice_attrs %{
     stripe_invoice_id: "in_000",
+    created_at: DateTime.utc_now(),
     number: "813B9B8B-0001",
     hosted_invoice_url: "https://pay.stripe.com/invoice/invst_sOOfO7gC1QJnlAanPH6P1g4deC",
     pdf_url: "https://pay.stripe.com/invoice/invst_sOOfO7gC1QJnlAanPH6P1g4deC/pdf",
-    period_start: DateTime.utc_now(),
     status: "open",
     total: 29
   }

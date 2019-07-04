@@ -111,6 +111,13 @@ defmodule Palapa.Billing do
     Repo.get_by!(Invoice, stripe_invoice_id: stripe_invoice_id)
   end
 
+  def list_invoices(organization) do
+    organization
+    |> Ecto.assoc(:invoices)
+    |> order_by([i], desc: i.inserted_at)
+    |> Repo.all()
+  end
+
   def create_invoice(customer, attrs) do
     %Invoice{}
     |> Invoice.changeset(attrs)
@@ -163,7 +170,7 @@ defmodule Palapa.Billing do
                                                   customer: customer
                                                 } ->
       organization.subscription
-      |> change(%{customer_id: customer.id, stripe_subscription: stripe_subscription["id"]})
+      |> change(%{customer_id: customer.id, stripe_subscription_id: stripe_subscription["id"]})
       |> Repo.update()
     end)
     |> Repo.transaction()

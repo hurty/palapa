@@ -32,7 +32,7 @@ defmodule PalapaWeb.Settings.Billing.StripeWebhookController do
 
     invoice_attrs = %{
       stripe_invoice_id: stripe_invoice.id,
-      period_start: DateTime.from_unix!(stripe_invoice.period_start),
+      created_at: DateTime.from_unix!(stripe_invoice.created),
       number: stripe_invoice.number,
       status: stripe_invoice.status,
       total: stripe_invoice.total,

@@ -15,6 +15,7 @@ defmodule Palapa.Organizations.Organization do
 
     belongs_to(:customer, Customer)
     has_one(:subscription, Subscription)
+    has_many(:invoices, through: [:customer, :invoices])
     has_many(:members, Member)
     has_many(:invitations, Invitations.Invitation)
     has_many(:teams, Teams.Team)
