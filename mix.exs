@@ -78,7 +78,8 @@ defmodule Palapa.Mixfile do
       {:stripity_stripe, "~> 2.4.0"},
       {:mox, "~> 0.5", only: :test},
       {:ecto_job, github: "mbuhot/ecto_job"},
-      {:money, "~> 1.4"}
+      {:money, "~> 1.4"},
+      {:countries, "~> 1.5"}
     ]
   end
 
