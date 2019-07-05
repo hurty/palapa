@@ -53,7 +53,7 @@
           
           <div class="flex-1 field ml-2">
             <%= label form, :billing_country, gettext("Country"), class: "label" %>
-            <%= select form, :billing_country, countries_list(), class: "input" %>
+            <%= select form, :billing_country, countries_list(), "data-controller": "choice", class: "input" %>
             <%= error_tag form, :billing_country %>
           </div>
         </div>
