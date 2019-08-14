@@ -8,9 +8,12 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
 
   def put_common_breadcrumbs(conn, _params) do
     conn
-    |> put_breadcrumb("Settings", workspace_path(conn, :show, current_organization()))
-    |> put_breadcrumb("Billing", customer_path(conn, :show, current_organization()))
-    |> put_breadcrumb("Payment method", payment_method_path(conn, :edit, current_organization()))
+    |> put_breadcrumb("Settings", settings_workspace_path(conn, :show, current_organization()))
+    |> put_breadcrumb("Billing", settings_customer_path(conn, :show, current_organization()))
+    |> put_breadcrumb(
+      "Payment method",
+      settings_payment_method_path(conn, :edit, current_organization())
+    )
   end
 
   def edit(conn, _) do
@@ -27,7 +30,7 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
 
       case Billing.update_customer_payment_method(customer, customer_attrs) do
         {:ok, _result} ->
-          redirect(conn, to: customer_path(conn, :show, current_organization()))
+          redirect(conn, to: settings_customer_path(conn, :show, current_organization()))
 
         {:error, customer_changeset} ->
           render(conn, "edit.html", customer_changeset: customer_changeset)

@@ -31,7 +31,7 @@ defmodule PalapaWeb.Settings.Billing.BillingStatusTest do
       |> assign(:current_organization, organization)
       |> get(dashboard_path(conn, :index, organization))
 
-    assert redirected_to(conn, 302) =~ billing_error_path(conn, :show, organization)
+    assert redirected_to(conn, 302) =~ settings_billing_error_path(conn, :show, organization)
   end
 
   test "lets the user pass when the workspace is 'active'", %{conn: conn, workspace: workspace} do
@@ -73,6 +73,6 @@ defmodule PalapaWeb.Settings.Billing.BillingStatusTest do
       |> assign(:current_organization, organization)
       |> get(dashboard_path(conn, :index, organization))
 
-    assert redirected_to(conn, 302) =~ billing_error_path(conn, :show, organization)
+    assert redirected_to(conn, 302) =~ settings_billing_error_path(conn, :show, organization)
   end
 end

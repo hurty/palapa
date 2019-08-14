@@ -8,7 +8,7 @@
       <h2 class="text-grey-darkest">Workspace settings</h2>
       <div class="card-header-separator"></div>
 
-      <%= form_for @organization_changeset, workspace_path(@conn, :update, @current_organization), fn form -> %>
+      <%= form_for @organization_changeset, settings_workspace_path(@conn, :update, @current_organization), fn form -> %>
         <div class="field">
           <%= label form, :name, gettext("Workspace name"), class: "label" %>
           <%= text_input form, :name, class: "input" %>

@@ -9,7 +9,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerControllerTest do
     end
 
     test "an owner can access the billing settings", %{conn: conn, workspace: workspace} do
-      conn = get(conn, customer_path(conn, :show, workspace.organization))
+      conn = get(conn, settings_customer_path(conn, :show, workspace.organization))
       assert html_response(conn, 200)
     end
   end
@@ -22,7 +22,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerControllerTest do
     end
 
     test "a member cannot access the billing settings", %{conn: conn, workspace: workspace} do
-      conn = get(conn, customer_path(conn, :show, workspace.organization))
+      conn = get(conn, settings_customer_path(conn, :show, workspace.organization))
       assert html_response(conn, 403)
     end
   end

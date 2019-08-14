@@ -33,7 +33,7 @@
     </li>
 
     <li class="header-link  <%= if @navigation == "settings" do %>header-link--active<% end %>">
-      <%= link(to: workspace_path(@conn, :show, @current_organization), class: "block") do %>
+      <%= link(to: settings_workspace_path(@conn, :show, @current_organization), class: "block") do %>
         <i class="fas fa-cog mr-2"></i>Settings
       <% end %>
     </li>

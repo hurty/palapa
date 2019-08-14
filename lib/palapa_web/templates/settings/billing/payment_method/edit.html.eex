@@ -2,7 +2,7 @@
   <div class="main-content card p-4">
     <h2 class="card-header">Update the payment method</h2>
     <div class="card-header-separator"></div>
-    <%= form_for @customer_changeset, payment_method_path(@conn, :update, @current_organization), [id: "payment-form"], fn _form -> %>
+    <%= form_for @customer_changeset, settings_payment_method_path(@conn, :update, @current_organization), [id: "payment-form"], fn _form -> %>
       <%= if @customer_changeset.action do %>
         <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
       <% end %>
