@@ -16,7 +16,10 @@ config :palapa, PalapaWeb.Endpoint,
   secret_key_base: "tQLdy7coYkn7is0vc8/NkVWR8dx8F40oC7QWhY2k74ZjKJ22i7nTsOnqp4NUUeDN",
   render_errors: [view: PalapaWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Palapa.PubSub, adapter: Phoenix.PubSub.PG2],
-  instrumenters: [Appsignal.Phoenix.Instrumenter]
+  instrumenters: [Appsignal.Phoenix.Instrumenter],
+  live_view: [
+    signing_salt: "nuvKwHRzugfh2M0cv2XIaZpuzoNhkZ2q"
+  ]
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason

@@ -7,6 +7,7 @@ defmodule PalapaWeb.Endpoint do
   end
 
   socket "/socket", PalapaWeb.UserSocket, websocket: true
+  socket "/live", Phoenix.LiveView.Socket
 
   plug(
     Plug.Parsers,

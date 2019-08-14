@@ -25,6 +25,7 @@ defmodule PalapaWeb do
       import PalapaWeb.Gettext
       import PalapaWeb.Current
       import Palapa.Access
+      import Phoenix.LiveView.Controller, only: [live_render: 3]
 
       # Handle authorization failures
       action_fallback(PalapaWeb.FallbackController)
@@ -40,6 +41,13 @@ defmodule PalapaWeb do
         conn
         |> Plug.Conn.assign(:breadcrumbs, breadcrumbs)
       end
+    end
+  end
+
+  def live_view do
+    quote do
+      use Phoenix.LiveView
+      import Palapa.Access
     end
   end
 
@@ -62,6 +70,7 @@ defmodule PalapaWeb do
       import Scrivener.HTML
       import Palapa.Access, only: [permit?: 4]
       import Palapa.RichText.Helpers
+      import Phoenix.LiveView, only: [live_render: 2, live_render: 3, live_link: 1, live_link: 2]
     end
   end
 
@@ -72,6 +81,7 @@ defmodule PalapaWeb do
       import Phoenix.Controller
       import PalapaWeb.Authentication, only: [enforce_authentication: 2]
       import PalapaWeb.BillingPlug, only: [enforce_billing: 2]
+      import Phoenix.LiveView.Router
     end
   end
 

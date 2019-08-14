@@ -16,4 +16,8 @@ defmodule PalapaWeb.Current do
       var!(conn).assigns.current_member
     end
   end
+
+  def current_member(conn) do
+    conn.assigns.current_member
+  end
 end

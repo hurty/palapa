@@ -10,17 +10,18 @@
   @apply py-2 my-4;
 
   a {
-    @apply text-grey px-2 py-1;
+    @apply rounded-lg text-grey px-2 py-1;
 
     &:hover {
       @apply text-white;
+      background-color: rgb(84, 142, 227, 0.5);
     }
   }
 }
 
 .header-link--active {
   a {
-    @apply text-white rounded-lg;
+    @apply text-white;
     background-color: rgb(84, 142, 227);
 
     &:hover {
@@ -141,7 +142,7 @@
 }
 
 .page-menu-item--active {
-  @apply bg-green-lightest !important;
+  @apply bg-green-lightest font-bold !important;
 }
 
 .page-menu-link {

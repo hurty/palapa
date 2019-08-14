@@ -1,0 +1,17 @@
+<div class="content left-sidebar-layout">
+  <div class="page-sidebar">
+    <%= render PalapaWeb.Settings.SettingsView, "settings_navigation.html", assigns %>
+  </div>
+
+  <div class="main-content">
+    <div class="card p-4">
+      <h2 class="text-grey-darkest">Workspace members</h2>
+      <div class="card-header-separator"></div>
+
+      <%= Phoenix.LiveView.live_render(@conn, PalapaWeb.Settings.MemberLive, session: %{
+        current_organization_id: @current_organization.id,
+        current_member_id: @current_member.id
+      }) %>
+    </div>
+  </div>
+</div>

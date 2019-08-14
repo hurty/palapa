@@ -49,7 +49,8 @@ config :palapa, PalapaWeb.Endpoint,
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
       ~r{lib/palapa_web/views/.*(ex)$},
-      ~r{lib/palapa_web/templates/.*(eex)$}
+      ~r{lib/palapa_web/templates/.*(eex)$},
+      ~r{lib/my_app_web/live/.*(ex)$}
     ]
   ]
 

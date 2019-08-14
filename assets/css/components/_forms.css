@@ -28,7 +28,7 @@ button:focus {
   @apply text-grey-darkest text-sm;
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
@@ -36,7 +36,7 @@ input[type=checkbox] {
   border-radius: 4px;
   height: 16px;
   width: 16px;
-  background: #FFF;
+  background: #fff;
   cursor: pointer;
   @apply border mr-2 align-middle;
 }
@@ -49,7 +49,12 @@ input[type="checkbox"]:checked {
   background-position: center;
 }
 
-input[type=radio] {
+input[type="checkbox"]:disabled {
+  @apply bg-green-lighter;
+  cursor: not-allowed;
+}
+
+input[type="radio"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
@@ -57,7 +62,7 @@ input[type=radio] {
   border-radius: 10px;
   height: 18px;
   width: 18px;
-  background: #FFF;
+  background: #fff;
   border: 1px solid #ccc;
   cursor: pointer;
 }
@@ -97,7 +102,7 @@ select {
     pointer-events: none;
     content: " ";
     border: solid transparent;
-    border-bottom-color: config('colors.red-light');
+    border-bottom-color: config("colors.red-light");
     border-width: 5px;
   }
 
@@ -111,7 +116,7 @@ select {
     pointer-events: none;
     content: " ";
     border: solid transparent;
-    border-bottom-color: config('colors.red-light');
+    border-bottom-color: config("colors.red-light");
     border-width: 5px;
   }
 }

@@ -11,6 +11,7 @@ defmodule Palapa.Organizations.Member do
     belongs_to(:account, Account)
     field(:role, RoleEnum, default: :member)
     field(:title, :string)
+    field(:deleted_at, :utc_datetime)
     timestamps()
 
     has_many(:invitations, Invitations.Invitation, foreign_key: :creator_id)

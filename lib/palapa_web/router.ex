@@ -5,6 +5,7 @@ defmodule PalapaWeb.Router do
     plug(:accepts, ["html", "json"])
     plug(:fetch_session)
     plug(:fetch_flash)
+    plug(Phoenix.LiveView.Flash)
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
     # sets current_account, current_member and current_organization
@@ -54,6 +55,7 @@ defmodule PalapaWeb.Router do
     resources("/org", OrganizationController, as: nil, only: []) do
       scope "/", Settings do
         resources("/workspace", WorkspaceController, singleton: true)
+        resources("/members", MemberController, only: [:index])
         resources("/customer", Billing.CustomerController, singleton: true)
 
         resources("/payment_method", Billing.PaymentMethodController,

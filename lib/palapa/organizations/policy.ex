@@ -2,6 +2,10 @@ defmodule Palapa.Organizations.Policy do
   use Palapa.Policy
   alias Palapa.Organizations.MemberInformation
 
+  def authorize(:update_organization, %Member{} = member, _) do
+    member.role == :owner
+  end
+
   # Anybody can see the list of members within an organization
   def authorize(:list_members, %Member{}, _), do: true
 
@@ -9,6 +13,10 @@ defmodule Palapa.Organizations.Policy do
   def authorize(:show_member, %Member{}, _), do: true
 
   def authorize(:edit_member, %Member{}, _), do: true
+
+  def authorize(:delete_member, %Member{} = member, %Member{} = target_member) do
+    member.role in [:admin, :owner] && member.id != target_member.id
+  end
 
   def authorize(
         :create_member_information,

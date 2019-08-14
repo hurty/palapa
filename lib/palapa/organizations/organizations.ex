@@ -56,6 +56,10 @@ defmodule Palapa.Organizations do
     end
   end
 
+  def with_member_active(queryable \\ Member) do
+    from(m in queryable, where: is_nil(m.deleted_at))
+  end
+
   ### Actions
 
   def list(queryable \\ Organization) do
@@ -83,7 +87,7 @@ defmodule Palapa.Organizations do
     Repo.delete(organization)
   end
 
-  def change(%Organization{} = organization) do
+  def change(organization) do
     Organization.changeset(organization, %{})
   end
 
@@ -92,11 +96,23 @@ defmodule Palapa.Organizations do
     |> Repo.update()
   end
 
+  def list_admins(organization) do
+    organization
+    |> Ecto.assoc(:members)
+    |> where([m], m.role == "admin")
+    |> join(:inner, [m], a in assoc(m, :account))
+    |> order_by([_, a], a.name)
+    |> Repo.all()
+  end
+
   def list_members(queryable \\ Organization, name_pattern \\ nil) do
     queryable
     |> Ecto.assoc(:members)
     |> with_member_name(name_pattern)
+    |> with_member_active()
+    |> join(:inner, [m], a in assoc(m, :account))
     |> preload(:account)
+    |> order_by([_, a], a.name)
     |> Repo.all()
   end
 
@@ -138,6 +154,29 @@ defmodule Palapa.Organizations do
     %Member{}
     |> Member.create_changeset(attrs)
     |> Repo.insert()
+  end
+
+  def delete_member(member) do
+    member
+    |> cast(%{deleted_at: DateTime.utc_now()}, [:deleted_at])
+    |> Repo.update()
+  end
+
+  def update_administrators(organization, administrators_ids) do
+    admins_scope =
+      from(m in Organizations.Member,
+        where: m.organization_id == ^organization.id and m.id in ^administrators_ids
+      )
+
+    members_scope =
+      from(m in Organizations.Member,
+        where: m.organization_id == ^organization.id and m.id not in ^administrators_ids
+      )
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.update_all(:set_admins, admins_scope, set: [role: "owner"])
+    |> Ecto.Multi.update_all(:set_members, members_scope, set: [role: "member"])
+    |> Repo.transaction()
   end
 
   def update_member_profile(%Member{} = member, attrs) do
