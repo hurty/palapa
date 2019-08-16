@@ -43,7 +43,15 @@ defmodule PalapaWeb.TeamController do
 
     with :ok <- permit(Teams, :edit, current_member(), team) do
       team_changeset = Teams.change(team)
-      render(conn, "edit.html", team: team, team_changeset: team_changeset)
+
+      conn
+      |> put_breadcrumb("Your organization", member_path(conn, :index, current_organization()))
+      |> put_breadcrumb(
+        team.name,
+        member_path(conn, :index, current_organization(), team_id: team.id)
+      )
+      |> put_breadcrumb("Edit", team_path(conn, :edit, current_organization(), team))
+      |> render("edit.html", team: team, team_changeset: team_changeset)
     end
   end
 
