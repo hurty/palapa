@@ -8,6 +8,12 @@
       <h2 class="text-grey-darkest">Workspace members</h2>
       <div class="card-header-separator"></div>
 
+      <%= if Palapa.Access.permit? Palapa.Invitations, :create, @current_member do %>
+        <%= link(to: invitation_path(@conn, :new, @current_organization), class: "btn") do %>
+          <i class="fas fa-user-plus text-green mr-2"></i>Invite people
+        <% end %>
+      <% end %>
+
       <%= Phoenix.LiveView.live_render(@conn, PalapaWeb.Settings.MemberLive, session: %{
         current_organization_id: @current_organization.id,
         current_member_id: @current_member.id
