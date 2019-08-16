@@ -91,7 +91,7 @@ defmodule Palapa.SearchesTest do
 
   describe "search in messages" do
     setup %{workspace: workspace} do
-      message =
+      {:ok, message} =
         Palapa.Messages.create(workspace.richard, %{
           title: "Welcome everyone",
           content: "It is really a pleasure"
@@ -144,6 +144,13 @@ defmodule Palapa.SearchesTest do
       assert Enum.find_value(results.entries, fn entry ->
                entry.message.title == "Welcome everyone" && entry.resource_type == :message
              end)
+    end
+
+    test "a deleted message doesn't appear in search", %{workspace: workspace, message: message} do
+      Palapa.Messages.delete!(message)
+      results = Searches.search(workspace.richard, "every")
+
+      assert [] == results.entries
     end
   end
 
@@ -206,6 +213,16 @@ defmodule Palapa.SearchesTest do
       assert Enum.find_value(results.entries, fn entry ->
                entry.page.title == "Styleguide" && entry.resource_type == :page
              end)
+    end
+
+    test "a deleted document and its pages doesn't appear in search", %{
+      workspace: workspace,
+      document: document
+    } do
+      Palapa.Documents.delete_document!(document, workspace.richard)
+      results = Searches.search(workspace.richard, "Styleguide")
+
+      assert [] == results.entries
     end
   end
 end

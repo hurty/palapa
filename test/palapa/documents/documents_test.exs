@@ -75,10 +75,10 @@ defmodule Palapa.DocumentsTest do
       assert document.title == Documents.get_document!(document.id).title
     end
 
-    test "delete_document/2 marks the document as deleted" do
+    test "delete_document/2 marks the document and its pages as deleted" do
       document = document_fixture() |> Repo.preload(:last_author)
-      assert Documents.delete_document!(document, document.last_author)
 
+      assert Documents.delete_document!(document, document.last_author)
       document = Repo.reload(document)
       assert Documents.deleted?(document)
     end

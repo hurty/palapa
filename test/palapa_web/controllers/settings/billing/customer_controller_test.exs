@@ -10,7 +10,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerControllerTest do
 
     test "an owner can access the billing settings", %{conn: conn, workspace: workspace} do
       conn = get(conn, settings_customer_path(conn, :show, workspace.organization))
-      assert html_response(conn, 200)
+      assert html_response(conn, 200) =~ "Billing overview"
     end
   end
 

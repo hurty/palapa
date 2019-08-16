@@ -153,8 +153,10 @@ defmodule Palapa.Searches do
   defp pages_query(member, search_string) do
     from(searches in matching_searches_query(search_string),
       join: pages in ^subquery(Documents.pages_visible_to(member)),
+      join: documents in ^subquery(Documents.documents_visible_to(member)),
       on: searches.page_id == pages.id,
       where: is_nil(pages.deleted_at),
+      where: is_nil(documents.deleted_at),
       select_merge: %{
         rank:
           fragment(
