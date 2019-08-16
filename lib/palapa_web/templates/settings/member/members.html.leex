@@ -22,9 +22,19 @@
         
         <td>
           <%= if @current_member.id != member.id do %>
-            <button phx-click="delete_member" value="<%= member.id %>" class="btn text-red">
-              Delete
-            </button>
+            <%= if @confirm_delete_member_id == member.id do %>
+              <div class="py-2 bg-red-lightest">
+                <p class="py-2 text-red-dark">Are you sure?</p>
+                <button phx-click="confirm_delete_member" value="<%= member.id %>" class="btn btn-red">Yes, delete this member</button>
+                <button phx-click="cancel_delete_member" class="btn">Cancel</button>
+              </div>
+            <% else %>
+              <button phx-click="delete_member" value="<%= member.id %>" class="btn text-red">
+                Delete
+              </button>
+            <% end %>
+          <% else %>
+            <p class="text-grey italic">Cannot delete yourself</p>
           <% end %>
         </td>
       </tr>

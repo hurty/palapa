@@ -15,6 +15,7 @@ defmodule PalapaWeb.Settings.MemberLive do
       socket
       |> assign_new(:current_organization, fn -> Organizations.get!(current_organization_id) end)
       |> assign_new(:current_member, fn -> Organizations.get_member!(current_member_id) end)
+      |> assign_new(:confirm_delete_member_id, fn -> nil end)
 
     members = Organizations.list_members(socket.assigns.current_organization)
 
@@ -31,6 +32,10 @@ defmodule PalapaWeb.Settings.MemberLive do
   end
 
   def handle_event("delete_member", value, socket) do
+    {:noreply, assign(socket, %{confirm_delete_member_id: value})}
+  end
+
+  def handle_event("confirm_delete_member", value, socket) do
     member = Organizations.get_member!(value)
 
     with :ok <-
@@ -39,5 +44,9 @@ defmodule PalapaWeb.Settings.MemberLive do
       updated_members_list = Organizations.list_members(socket.assigns.current_organization)
       {:noreply, assign(socket, :members, updated_members_list)}
     end
+  end
+
+  def handle_event("cancel_delete_member", _, socket) do
+    {:noreply, assign(socket, %{confirm_delete_member_id: nil})}
   end
 end
