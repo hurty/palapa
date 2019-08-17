@@ -1,6 +1,6 @@
 <li data-controller="document-section" class="document-section">
   
-  <ul class="document-section-list <%= if assigns[:page] && @page.section_id == @section.id do %>document-section--open<% else %>document-section--closed<% end %>"
+  <ul data-target="document-section.pagesList" class="document-section-list <%= if assigns[:page] && @page.section_id == @section.id do %>document-section--open<% else %>document-section--closed<% end %>"
   data-document-section-id="<%= @section.id %>">
       <li class="flex justify-between">
         <div data-action="click->document-section#toggleSection" class="flex-1 py-2 px-4">
