@@ -4,6 +4,11 @@ defmodule PalapaWeb.SearchController do
   alias Palapa.Searches
 
   plug(:put_navigation, "search")
+  plug(:put_common_breadcrumbs)
+
+  def put_common_breadcrumbs(conn, params) do
+    put_breadcrumb(conn, "Search", "#")
+  end
 
   def index(conn, params) do
     if "XMLHttpRequest" in get_req_header(conn, "x-requested-with") do
