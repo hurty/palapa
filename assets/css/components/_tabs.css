@@ -1,19 +1,21 @@
 .tabs {
-  @apply list-reset flex py-4 mb-4 border-b;
+  @apply list-reset flex py-4 mb-4;
 }
 
 .tab {
-  @apply flex-1 text-grey-darker rounded-lg;
+  @apply flex-1 text-grey-darker rounded-lg mx-1 bg-white;
 
-  a,a:visited {
-    @apply text-grey-darker;
+  a,
+  a:visited {
+    @apply text-grey-darker font-bold;
   }
 
   &--selected {
-    @apply bg-grey-light;
+    @apply bg-blue-lighter;
 
-    a,a:visited {
-      @apply text-blue
+    a,
+    a:visited {
+      @apply text-blue-darker;
     }
   }
 }
