@@ -37,7 +37,7 @@
         <div data-action="click@window->search#escapeSearchDialog">
           <%= form_for @conn, search_path(@conn, :index, @current_organization), [method: :get, "data-target": "search.form"], fn _form -> %>
             <div class="search-bar">
-              <span class="fa fa-search"></span>
+              <span class="fa fa-search mr-2"></span>
               <input type="text" name="query" data-target="search.queryInput" data-action="input->search#triggerSearch keydown->search#triggerKeyNavigation" autocomplete="off" placeholder="Search anything" />
             </div>
 
