@@ -6,7 +6,7 @@ defmodule PalapaWeb.SearchController do
   plug(:put_navigation, "search")
   plug(:put_common_breadcrumbs)
 
-  def put_common_breadcrumbs(conn, params) do
+  def put_common_breadcrumbs(conn, _params) do
     put_breadcrumb(conn, "Search", "#")
   end
 
