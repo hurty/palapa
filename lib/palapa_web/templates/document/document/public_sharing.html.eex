@@ -3,7 +3,7 @@
     <h5 class="text-green font-small mb-2"><i class="fas fa-link mr-1"></i>Public sharing is enabled</h5>
     <div data-target="clipboard.popperContent" class="js-clipboard-popper-content hidden mx-1 p-1 bg-green text-xs text-white rounded">Copied to clipboard!</div>
     <a data-action="clipboard#copyInputValue" data-target="clipboard.copyButton" href="#" class="text-blue hover:underline btn p-1">Copy secret link</a>
-    <input type="text" readonly="readonly" data-target="clipboard.textToCopy" class="p-1 border rounded text-grey-dark" value="<%= public_document_url(@conn, :show, @document.public_token) %>"/>
-    <p class="text-xs my-1">People using the secret link will be able to see this document even if they do not have a Palapa account. <%= link "Disable", to: document_public_link_path(@conn, :delete, @current_organization, @document), data: [controller: "link", action: "link#delete"], class: "underline text-red-light" %></p>
+    <input type="text" readonly="readonly" data-target="clipboard.textToCopy" class="p-1 text-sm border rounded text-grey-dark" value="<%= public_document_url(@conn, :show, @document.public_token) %>"/>
+    <p class="text-xs text-grey-darker my-2">People using the secret link will be able to see this document even if they do not have a Palapa account. <%= link "Disable", to: document_public_link_path(@conn, :delete, @current_organization, @document), data: [controller: "link", action: "link#delete"], class: "underline text-red-light" %></p>
   </div>
 <% end %>

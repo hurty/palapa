@@ -8,31 +8,31 @@
   class: if(@conn.params["id"] == @toc_page.id, do: "text-green font-bold", else: "text-grey-darker") %>
   </div>
 
-  <div class="document-actions hidden" data-target="document-toc-page.actionsIcons">
-    <div data-controller="popover" data-action="mousedown@window->popover#hide">
-      <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
-        <button data-target="popover.button" data-action="popover#toggle" 
-          class="h-6 w-6 text-grey-dark font-bold hover:text-green hover:cursor-pointer"
-          title="Actions on this page">
-          <i class="fas fa-plus-circle"></i>
-        </button>
-        
-        <div data-target="popover.content" class="popover hidden">
-          <nav class="flex flex-col">
-            <%= link to: document_page_path(@conn, :edit, @current_organization, @toc_page), class: "popover__link" do %>
-              <i class="fas fa-pen"></i>&nbsp;Edit this page
-            <% end %>
+  <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
+    <div class="document-actions hidden" data-target="document-toc-page.actionsIcons">
+      <div data-controller="popover" data-action="mousedown@window->popover#hide">
+          <button data-target="popover.button" data-action="popover#toggle" 
+            class="h-6 w-6 text-grey-dark font-bold hover:text-green hover:cursor-pointer"
+            title="Actions on this page">
+            <i class="fas fa-plus-circle"></i>
+          </button>
+          
+          <div data-target="popover.content" class="popover hidden">
+            <nav class="flex flex-col">
+              <%= link to: document_page_path(@conn, :edit, @current_organization, @toc_page), class: "popover__link" do %>
+                <i class="fas fa-pen"></i>&nbsp;Edit this page
+              <% end %>
 
-            <%= link to: document_page_path(@conn, :delete, @current_organization, @toc_page, current_page_id: if(@conn.assigns[:page], do: @page.id)), data: [controller: "link", action: "link#delete"], class: "popover__link", "data-confirm": "Are you sure you want to delete this page?" do %>
-              <i class="fas fa-trash"></i>&nbsp;Delete this page
-            <% end %>
-          </nav>
-        </div>
-      <% end %>
+              <%= link to: document_page_path(@conn, :delete, @current_organization, @toc_page, current_page_id: if(@conn.assigns[:page], do: @page.id)), data: [controller: "link", action: "link#delete"], class: "popover__link", "data-confirm": "Are you sure you want to delete this page?" do %>
+                <i class="fas fa-trash"></i>&nbsp;Delete this page
+              <% end %>
+            </nav>
+          </div>
+      </div>
+      
+      <div class="draggable-handle px-2 text-grey-dark hover:text-green" title="Drag to reorder">
+        <i class="fas fa-bars"></i>
+      </div>
     </div>
-    
-    <div class="draggable-handle px-2 text-grey-dark hover:text-green" title="Drag to reorder">
-      <i class="fas fa-bars"></i>
-    </div>
-  </div>
+  <% end %>
 </li>

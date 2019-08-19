@@ -12,15 +12,16 @@ defmodule Palapa.Documents.Policy do
   end
 
   def authorize(:update_document, member, document) do
-    Documents.document_visible_to?(document, member)
+    Documents.document_visible_to?(document, member) && !Documents.deleted?(document)
   end
 
   def authorize(:update_suggestion, member, suggestion) do
-    suggestion.author_id == member.id
+    suggestion.author_id == member.id && !Documents.deleted?(suggestion.document)
   end
 
   def authorize(:delete_suggestion, member, suggestion) do
-    suggestion.author_id == member.id || member.role in [:admin, :owner]
+    !Documents.deleted?(suggestion.document) &&
+      (suggestion.author_id == member.id || member.role in [:admin, :owner])
   end
 
   def authorize(:update_suggestion_comment, member, suggestion_comment) do

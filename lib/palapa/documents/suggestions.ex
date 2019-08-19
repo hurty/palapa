@@ -30,6 +30,7 @@ defmodule Palapa.Documents.Suggestions do
     queryable
     |> where([s], s.page_id == ^page.id and is_nil(s.parent_suggestion_id))
     |> order_by(:inserted_at)
+    |> preload(:document)
     |> preload(author: :account)
     |> preload(suggestion_comments: [author: :account])
     |> preload(closure_author: :account)

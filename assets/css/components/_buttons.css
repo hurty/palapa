@@ -92,3 +92,11 @@ button::-moz-focus-inner,
     box-shadow: 0 0 0 0.2em config("colors.red-lightest");
   }
 }
+
+.btn-round {
+  @apply py-1 px-2 font-bold bg-indigo text-white rounded-full;
+
+  &:hover {
+    @apply bg-indigo-dark;
+  }
+}

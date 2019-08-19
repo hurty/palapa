@@ -30,39 +30,41 @@ class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-8">
     </div>
 
     <%= if @suggestion.closed_at do %>
-      <div class="text-sm text-green-dark text-center bg-green-lightest rounded-full p-1">
+      <div class="text-sm font-bold text-green-dark text-center bg-green-lightest rounded-full p-1">
         Closed by <%= @suggestion.closure_author.account.name %> (<%= auto_format_datetime(@suggestion.closed_at, @current_account ) %>)
       </div>
     <% end %>
   <div>
 
-  <div data-target="document-suggestion.actions" class="p-1 pt-4 rounded mt-4 border-t border-grey-lighter">
+  <%= if permit?(Palapa.Documents, :update_suggestion, @current_member, @suggestion) do %>
+    <div data-target="document-suggestion.actions" class="p-1 pt-4 rounded mt-4 border-t border-grey-lighter">
 
-    <%= form_for @conn, suggestion_comment_url(@conn, :create, @current_organization, @suggestion), 
-      [as: :suggestion_comment, "data-target": "document-suggestion.commentForm", "data-action": "document-suggestion#postComment"], fn form -> %> 
+      <%= form_for @conn, suggestion_comment_url(@conn, :create, @current_organization, @suggestion), 
+        [as: :suggestion_comment, "data-target": "document-suggestion.commentForm", "data-action": "document-suggestion#postComment"], fn form -> %> 
 
-        <div data-target="document-suggestion.passiveFormItems">
-          <div class="flex justify-end">
-            <button data-action="document-suggestion#showCommentForm" class="btn mr-1"><i class="fas fa-reply"></i> Reply</button>
-            <%= if @suggestion.closed_at do %>
-              <button data-action="document-suggestion#reopen" class="btn">Reopen suggestion</button>
-            <% else %>
-              <button data-action="document-suggestion#close" class="btn">Close suggestion</button>
-            <% end %>
+          <div data-target="document-suggestion.passiveFormItems">
+            <div class="flex justify-end">
+              <button data-action="document-suggestion#showCommentForm" class="btn mr-1"><i class="fas fa-reply"></i> Reply</button>
+              <%= if @suggestion.closed_at do %>
+                <button data-action="document-suggestion#reopen" class="btn">Reopen suggestion</button>
+              <% else %>
+                <button data-action="document-suggestion#close" class="btn">Close suggestion</button>
+              <% end %>
+            </div>
           </div>
-        </div>
-        
-        <div data-target="document-suggestion.activeFormItems" class="hidden">
-          <div class="mb-1">
-            <%= PalapaWeb.RichTextView.text_editor(form, :content, @conn, placeholder: "Your comment here...", 
-            editor_data_target: "document-suggestion.commentEditor", content_data_target: "document-suggestion.commentContentInput") %>
-          </div>
+          
+          <div data-target="document-suggestion.activeFormItems" class="hidden">
+            <div class="mb-1">
+              <%= PalapaWeb.RichTextView.text_editor(form, :content, @conn, placeholder: "Your comment here...", 
+              editor_data_target: "document-suggestion.commentEditor", content_data_target: "document-suggestion.commentContentInput") %>
+            </div>
 
-          <div class="flex justify-end">
-            <button type="submit" class="btn btn-green mr-1">Send</button>
-            <button data-action="document-suggestion#hideCommentForm" class="btn">Cancel</button>
-          </div>
-        </div>  
-      <% end %>
-  </div>
+            <div class="flex justify-end">
+              <button type="submit" class="btn btn-green mr-1">Send</button>
+              <button data-action="document-suggestion#hideCommentForm" class="btn">Cancel</button>
+            </div>
+          </div>  
+        <% end %>
+    </div>
+  <% end %>
 </li>

@@ -1,6 +1,7 @@
 <%= render_many @suggestions, PalapaWeb.Document.SuggestionView, "suggestion.html", as: :suggestion, 
   conn: @conn, 
   current_organization: @current_organization,
-  current_account: @current_account, 
+  current_account: @current_account,
+  current_member: @current_member,
   page: @page 
 %>

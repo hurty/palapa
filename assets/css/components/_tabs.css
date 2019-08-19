@@ -3,7 +3,7 @@
 }
 
 .tab {
-  @apply flex-1 text-grey-darker rounded-lg mx-1 bg-white;
+  @apply text-grey-darker rounded-full mx-1;
 
   a,
   a:visited {
@@ -11,11 +11,11 @@
   }
 
   &--selected {
-    @apply bg-blue-lighter;
+    @apply bg-indigo;
 
     a,
     a:visited {
-      @apply text-blue-darker;
+      @apply text-white;
     }
   }
 }
