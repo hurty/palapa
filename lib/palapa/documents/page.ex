@@ -34,6 +34,7 @@ defmodule Palapa.Documents.Page do
   def with_document(query), do: preload(query, :document)
   def with_section(query), do: preload(query, :section)
   def with_last_author(query), do: preload(query, last_author: :account)
+  def with_attachments(query), do: preload(query, :attachments)
   def without_content(query), do: select(query, ^(Page.__schema__(:fields) -- [:content]))
 
   def changeset(page, attrs) do

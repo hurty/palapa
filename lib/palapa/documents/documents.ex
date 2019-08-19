@@ -279,6 +279,7 @@ defmodule Palapa.Documents do
       |> Page.with_document()
       |> Page.with_section()
       |> Page.with_last_author()
+      |> Page.with_attachments()
       |> Repo.get!(id)
 
     if accessing_member do
