@@ -1,5 +1,5 @@
 <%= if @document.public_token do %>
-  <div data-controller="clipboard" class="mt-2 p-2 card">
+  <div data-controller="clipboard" class="mt-2 p-4 card">
     <h5 class="text-green font-small mb-2"><i class="fas fa-link mr-1"></i>Public sharing is enabled</h5>
     <div data-target="clipboard.popperContent" class="js-clipboard-popper-content hidden mx-1 p-1 bg-green text-xs text-white rounded">Copied to clipboard!</div>
     <a data-action="clipboard#copyInputValue" data-target="clipboard.copyButton" href="#" class="text-blue hover:underline btn p-1">Copy secret link</a>

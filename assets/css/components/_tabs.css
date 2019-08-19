@@ -1,5 +1,5 @@
 .tabs {
-  @apply list-reset flex py-4 mb-4;
+  @apply flex list-reset py-4 mb-4;
 }
 
 .tab {

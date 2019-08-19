@@ -10,15 +10,15 @@
   }
 }
 
-.card-toolbar{
+.card-toolbar {
   @apply p-2 border-b border-grey-lighter rounded-t;
 }
 
 @screen sm {
-  .card-toolbar{
+  .card-toolbar {
     @apply p-4;
   }
-}  
+}
 
 .card-header {
   @apply font-extrabold;
@@ -52,14 +52,13 @@
 }
 
 .card-actions-button {
-  @apply bg-grey rounded-full h-8 w-8 bg-grey-light text-green font-bold border border-transparent;
+  @apply rounded-full h-8 w-8 bg-grey-light text-green font-bold border border-transparent;
 
   &:hover {
     @apply border-grey;
   }
-
 }
 
-  .card-actions-button--sm {
-    @apply h-6 w-6 bg-grey-lighter;
-  }
+.card-actions-button--sm {
+  @apply h-6 w-6 bg-grey-lighter;
+}

@@ -1,7 +1,9 @@
-<div data-controller="document-suggestions" data-document-suggestions-selected-list="open" 
-  data-document-suggestions-list-url="<%= document_page_suggestion_url(@conn, :index, @conn.assigns.current_organization, @conn.assigns.page) %>" class="mx-auto my-8">
+<div data-controller="document-suggestions" 
+  data-document-suggestions-selected-list="open" 
+  data-document-suggestions-list-url="<%= document_page_suggestion_url(@conn, :index, @conn.assigns.current_organization, @conn.assigns.page) %>" 
+  class="my-8">
 
-  <ul class="tabs">
+  <ul class="tabs justify-center">
     <li data-target="document-suggestions.listTab" class="tab tab--selected">
       <a data-action="document-suggestions#toggleList" class="text-center block py-2 px-4 hover:cursor-pointer" href="#">Open suggestions</a>
     </li>

@@ -1,7 +1,7 @@
-<div id="document" class="content article-layout" 
+<div id="document" class="content left-sidebar-layout" 
   data-controller="document" data-document-url="<%= document_url(@conn, :show, @current_organization, @document) %>">
   
-  <div class="page-sidebar pl-8">
+  <div class="page-sidebar">
     <%= render PalapaWeb.Document.DocumentView, "table_of_contents.html", assigns %>
   </div>
 

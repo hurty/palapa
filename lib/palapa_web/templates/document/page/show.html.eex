@@ -1,6 +1,6 @@
-<div id="document" class="article-layout" 
+<div id="document" class="left-sidebar-layout" 
   data-controller="document rich-text" data-document-url="<%= document_url(@conn, :show, @current_organization, @document) %>" data-document-current-page-id="<%= @page.id %>" data-document-current-section-id="<%= @page.section_id %>">
-  <div class="page-sidebar p-1 sm:p-0 sm:ml-8">
+  <div class="page-sidebar">
     <%= render PalapaWeb.Document.DocumentView, "table_of_contents.html", assigns %>
   </div>
 
