@@ -39,6 +39,7 @@ defmodule Palapa.Documents.Suggestions do
 
   def get_suggestion!(queryable \\ Suggestion, id) do
     queryable
+    |> preload(:document)
     |> Repo.get!(id)
   end
 
@@ -47,6 +48,7 @@ defmodule Palapa.Documents.Suggestions do
     |> Ecto.assoc(:suggestions)
     |> where([s], s.id == ^suggestion_id)
     |> where([s], is_nil(s.parent_suggestion_id))
+    |> preload(:document)
     |> Repo.one!()
   end
 
@@ -76,6 +78,7 @@ defmodule Palapa.Documents.Suggestions do
     |> Repo.transaction()
     |> case do
       {:ok, %{suggestion: suggestion}} ->
+        suggestion = Repo.preload(suggestion, :document)
         {:ok, suggestion}
 
       {:error, _action, changeset, _changes} ->

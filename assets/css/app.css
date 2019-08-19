@@ -29,6 +29,7 @@
   * @import "components/buttons";
   * @import "components/forms";
   */
+@import "components/_animations";
 @import "components/_autocomplete";
 @import "components/_draggable";
 @import "components/_avatars";
