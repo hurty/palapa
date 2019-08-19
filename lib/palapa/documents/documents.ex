@@ -434,6 +434,7 @@ defmodule Palapa.Documents do
       preload: [sections: ^sections_query],
       where: document.public_token == ^token
     )
+    |> non_deleted()
     |> Repo.one!()
   end
 
