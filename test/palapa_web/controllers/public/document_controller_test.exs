@@ -14,7 +14,7 @@ defmodule PalapaWeb.Public.DocumentControllerTest do
     {:ok, conn: conn, member: workspace.gilfoyle, org: workspace.organization, document: document}
   end
 
-  test "redirected to first page of the document", %{conn: conn, org: org, document: document} do
+  test "redirected to first page of the document", %{conn: conn, document: document} do
     conn =
       get(
         conn,
@@ -32,5 +32,14 @@ defmodule PalapaWeb.Public.DocumentControllerTest do
                document.public_token,
                Documents.get_first_page(document)
              )
+  end
+
+  test "document with no pages", %{conn: conn, document: document} do
+    first_page = Documents.get_first_page(document)
+    Documents.delete_page!(first_page)
+
+    conn = get(conn, public_document_path(conn, :show, document.public_token))
+
+    assert html_response(conn, 200) =~ "This document is empty"
   end
 end

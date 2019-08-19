@@ -14,7 +14,7 @@ defmodule PalapaWeb.Public.PageControllerTest do
     {:ok, conn: conn, member: workspace.gilfoyle, org: workspace.organization, document: document}
   end
 
-  test "show page", %{conn: conn, org: org, document: document} do
+  test "show page", %{conn: conn, document: document} do
     conn =
       get(
         conn,

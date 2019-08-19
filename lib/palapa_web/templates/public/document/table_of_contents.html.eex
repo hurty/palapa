@@ -1,7 +1,8 @@
 <div class="card text-grey-darker bg-grey-lightest sm:bg-white rounded text-sm">
   <div class="flex justify-between p-1 sm:p-4 border-b border-grey-lighter">
     <div>
-      <h2 class="font-bold text-grey-darkest text-base">Table of contents</h2>
+      <h2 class="font-bold text-grey-darkest text-base"><%= @document.title %></h2>
+      <h5 class="font-bold text-grey-dark text-xs">Table of contents</h5>
       <div class="sm:hidden py-2">
         <a class="text-blue" data-action="document#toggleToc">Toggle table of contents</a>
       </div>

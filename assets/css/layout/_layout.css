@@ -146,6 +146,7 @@
   grid-template-areas:
     "page-sidebar"
     "main-content";
+  margin-bottom: 3em;
 }
 
 @screen sm {

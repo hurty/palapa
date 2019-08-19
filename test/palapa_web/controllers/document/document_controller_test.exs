@@ -108,6 +108,20 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
       assert Repo.count(Document) == 0
       assert html_response(conn, 200) =~ "Check the errors below"
     end
+
+    test "document with no pages", %{conn: conn, workspace: workspace} do
+      {:ok, document} =
+        Palapa.Documents.create_document(workspace.richard, nil, %{
+          title: "This is a styleguide for everyone"
+        })
+
+      first_page = Documents.get_first_page(document)
+      Documents.delete_page!(first_page)
+
+      conn = get(conn, document_path(conn, :show, workspace.organization, document))
+
+      assert html_response(conn, 200) =~ "This document is empty"
+    end
   end
 
   describe "document visibility" do
