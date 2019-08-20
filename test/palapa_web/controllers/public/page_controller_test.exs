@@ -28,4 +28,24 @@ defmodule PalapaWeb.Public.PageControllerTest do
 
     assert html_response(conn, 200) =~ @doc_title
   end
+
+  test "cannot show a page of a deleted document", %{
+    conn: conn,
+    member: member,
+    document: document
+  } do
+    Documents.delete_document!(document, member)
+
+    assert_raise Ecto.NoResultsError, fn ->
+      get(
+        conn,
+        public_document_page_path(
+          conn,
+          :show,
+          document.public_token,
+          Documents.get_first_page(document)
+        )
+      )
+    end
+  end
 end

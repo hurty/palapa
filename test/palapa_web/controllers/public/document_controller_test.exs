@@ -42,4 +42,12 @@ defmodule PalapaWeb.Public.DocumentControllerTest do
 
     assert html_response(conn, 200) =~ "This document is empty"
   end
+
+  test "cannot access a deleted document", %{conn: conn, member: member, document: document} do
+    Documents.delete_document!(document, member)
+
+    assert_raise Ecto.NoResultsError, fn ->
+      get(conn, public_document_path(conn, :show, document.public_token))
+    end
+  end
 end
