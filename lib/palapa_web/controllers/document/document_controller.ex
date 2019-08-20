@@ -85,7 +85,9 @@ defmodule PalapaWeb.Document.DocumentController do
         to: document_page_path(conn, :show, current_organization(), first_page)
       )
     else
-      render(conn, "show.html",
+      conn
+      |> put_document_breadcrumbs(document)
+      |> render("show.html",
         document: document,
         section_changeset: Documents.change_section(),
         page_changeset: Documents.change_page(),
@@ -101,8 +103,9 @@ defmodule PalapaWeb.Document.DocumentController do
     teams = Teams.list_for_member(current_member())
 
     conn
+    |> put_document_breadcrumbs(document)
     |> put_breadcrumb(
-      "Edit document",
+      "Edit",
       document_path(conn, :edit, current_organization(), document)
     )
     |> render("edit.html", document: document, changeset: changeset, teams: teams)
@@ -122,6 +125,11 @@ defmodule PalapaWeb.Document.DocumentController do
         teams = Teams.list_for_member(current_member())
 
         conn
+        |> put_document_breadcrumbs(document)
+        |> put_breadcrumb(
+          "Edit",
+          document_path(conn, :edit, current_organization(), document)
+        )
         |> render("edit.html", document: document, changeset: changeset, teams: teams)
     end
   end

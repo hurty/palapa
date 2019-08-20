@@ -22,6 +22,11 @@ defmodule PalapaWeb.Document.PageController do
       section_changeset = Documents.change_section()
 
       conn
+      |> put_document_breadcrumbs(document)
+      |> put_breadcrumb(
+        "New page",
+        document_page_path(conn, :new, current_organization(), document)
+      )
       |> render("new.html",
         document: document,
         section_changeset: section_changeset,
@@ -42,6 +47,11 @@ defmodule PalapaWeb.Document.PageController do
           document = Documents.get_document!(section.document_id)
 
           conn
+          |> put_document_breadcrumbs(document)
+          |> put_breadcrumb(
+            "New page",
+            document_page_path(conn, :new, current_organization(), document)
+          )
           |> assign(:section_changeset, Documents.change_section())
           |> render("new.html", changeset: changeset, document: document)
       end
@@ -59,10 +69,7 @@ defmodule PalapaWeb.Document.PageController do
     suggestion_changeset = Documents.Suggestions.change_suggestion()
 
     conn
-    |> put_breadcrumb(
-      document.title,
-      document_path(conn, :show, current_organization(), document)
-    )
+    |> put_page_breadcrumbs(page)
     |> render("show.html",
       page: page,
       previous_page: previous_page,
@@ -80,6 +87,11 @@ defmodule PalapaWeb.Document.PageController do
 
     with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       conn
+      |> put_page_breadcrumbs(page)
+      |> put_breadcrumb(
+        "Edit",
+        document_page_path(conn, :edit, current_organization(), page)
+      )
       |> render("edit.html",
         document: document,
         page: page,
@@ -100,6 +112,11 @@ defmodule PalapaWeb.Document.PageController do
 
         {:error, changeset} ->
           conn
+          |> put_page_breadcrumbs(page)
+          |> put_breadcrumb(
+            "Edit",
+            document_page_path(conn, :edit, current_organization(), page)
+          )
           |> assign(:section_changeset, Documents.change_section())
           |> assign(:page_changeset, Documents.change_page())
           |> assign(:changeset, changeset)

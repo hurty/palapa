@@ -24,23 +24,12 @@ defmodule PalapaWeb do
       import PalapaWeb.Router.Helpers
       import PalapaWeb.Gettext
       import PalapaWeb.Current
+      import PalapaWeb.Breadcrumbs
       import Palapa.Access
       import Phoenix.LiveView.Controller, only: [live_render: 3]
 
       # Handle authorization failures
       action_fallback(PalapaWeb.FallbackController)
-
-      def put_navigation(conn, value) do
-        Plug.Conn.assign(conn, :navigation, value)
-      end
-
-      def put_breadcrumb(conn, title, href) do
-        breadcrumbs = conn.assigns[:breadcrumbs] || []
-        breadcrumbs = breadcrumbs ++ [List.wrap(title: title, href: href)]
-
-        conn
-        |> Plug.Conn.assign(:breadcrumbs, breadcrumbs)
-      end
     end
   end
 
