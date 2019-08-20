@@ -26,7 +26,7 @@
       </ul>
     </div>
 
-    <%= if permit?(Palapa.Documents, :update, @current_member, @document) do %>
+    <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
       <div class="flex justify-left p-4 border-t border-grey-lighter">
         <div>
           <%= link to: document_page_path(@conn, :new, @current_organization, @document), class: "text-xs btn" do %>
