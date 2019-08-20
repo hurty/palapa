@@ -20,6 +20,19 @@ defmodule PalapaWeb.Document.PageControllerTest do
       assert html_response(conn, 200) =~ "New page"
     end
 
+    test "ensure there is at least one section before creating new page", %{
+      conn: conn,
+      org: org,
+      document: document
+    } do
+      Documents.get_first_section!(document)
+      |> Documents.delete_section()
+
+      conn = get(conn, document_page_path(conn, :new, org, document))
+      assert html_response(conn, 200) =~ "New page"
+      assert html_response(conn, 200) =~ "Document pages"
+    end
+
     test "show page", %{conn: conn, org: org, document: document} do
       conn = get(conn, document_page_path(conn, :show, org, Documents.get_first_page(document)))
       assert html_response(conn, 200) =~ @doc_title

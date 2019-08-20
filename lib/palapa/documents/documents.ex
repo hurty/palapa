@@ -264,7 +264,6 @@ defmodule Palapa.Documents do
     |> put_assoc(:pages, [])
     |> Position.insert_at_bottom(:document_id, document.id, :position)
     |> Repo.insert()
-    |> IO.inspect(label: "section retirn")
   end
 
   def get_section!(queryable \\ Section, id) do
