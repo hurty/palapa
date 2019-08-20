@@ -1,9 +1,9 @@
 <div class="content left-sidebar-layout" data-controller="document">
-  <div class="page-sidebar pl-8">
+  <div class="page-sidebar">
     <%= render PalapaWeb.Document.DocumentView, "table_of_contents.html", assigns %>
   </div>
 
-  <div class="main-content ml-4">
+  <div class="main-content">
     
     <%# ----- DOCS ----- %>
     
