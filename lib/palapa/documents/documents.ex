@@ -187,7 +187,7 @@ defmodule Palapa.Documents do
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:document, document_changeset)
     |> Ecto.Multi.run(:first_section, fn _repo, changes ->
-      create_section(changes.document, author, %{title: "Document pages"})
+      create_first_section(changes.document, author)
     end)
     |> Ecto.Multi.run(:first_page, fn _repo, changes ->
       create_page(changes.first_section, author, attrs, true)
@@ -208,6 +208,16 @@ defmodule Palapa.Documents do
       {:error, _step, changeset, _changes} ->
         {:error, changeset}
     end
+  end
+
+  def document_has_at_least_one_section?(document) do
+    Ecto.assoc(document, :sections)
+    |> non_deleted()
+    |> Repo.exists?()
+  end
+
+  def create_first_section(document, author) do
+    create_section(document, author, %{title: "Document pages"})
   end
 
   def update_document(document, author, team, attrs) do
@@ -254,6 +264,7 @@ defmodule Palapa.Documents do
     |> put_assoc(:pages, [])
     |> Position.insert_at_bottom(:document_id, document.id, :position)
     |> Repo.insert()
+    |> IO.inspect(label: "section retirn")
   end
 
   def get_section!(queryable \\ Section, id) do

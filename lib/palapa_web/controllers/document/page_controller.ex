@@ -16,6 +16,14 @@ defmodule PalapaWeb.Document.PageController do
   def new(conn, params) do
     document = Documents.get_document!(params["document_id"])
 
+    document =
+      if(Documents.document_has_at_least_one_section?(document)) do
+        document
+      else
+        Documents.create_first_section(document, current_member())
+        Documents.get_document!(params["document_id"])
+      end
+
     with :ok <- permit(Documents, :update_document, current_member(), document) do
       section_id = params["section_id"]
       page_changeset = Documents.change_page(%Page{}, %{section_id: section_id})
