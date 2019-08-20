@@ -109,7 +109,37 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
       assert html_response(conn, 200) =~ "Check the errors below"
     end
 
-    test "document with no pages", %{conn: conn, workspace: workspace} do
+    test "edit a document", %{conn: conn, workspace: workspace} do
+      {:ok, document} =
+        Palapa.Documents.create_document(workspace.richard, nil, %{
+          title: "This is a styleguide for everyone"
+        })
+
+      conn = get(conn, document_path(conn, :edit, workspace.organization, document))
+      assert html_response(conn, 200) =~ "Edit"
+    end
+
+    test "update a document", %{conn: conn, workspace: workspace} do
+      {:ok, document} =
+        Palapa.Documents.create_document(workspace.richard, nil, %{
+          title: "This is a styleguide for everyone"
+        })
+
+      update_payload = %{
+        "document" => %{"title" => "New doc title", "team_id" => workspace.tech_team.id}
+      }
+
+      conn =
+        patch(
+          conn,
+          document_path(conn, :update, workspace.organization, document, update_payload)
+        )
+
+      assert redirected_to(conn, 302) =~
+               document_path(conn, :show, workspace.organization, document)
+    end
+
+    test "display a document with no pages", %{conn: conn, workspace: workspace} do
       {:ok, document} =
         Palapa.Documents.create_document(workspace.richard, nil, %{
           title: "This is a styleguide for everyone"
