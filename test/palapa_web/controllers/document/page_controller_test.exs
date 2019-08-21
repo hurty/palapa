@@ -43,6 +43,15 @@ defmodule PalapaWeb.Document.PageControllerTest do
       assert html_response(conn, 200)
     end
 
+    test "cannot edit a deleted page", %{conn: conn, org: org, document: document} do
+      page = Documents.get_first_page(document)
+      Documents.delete_page!(page)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        get(conn, document_page_path(conn, :edit, org, page))
+      end
+    end
+
     test "update page", %{conn: conn, org: org, document: document} do
       payload = %{"page" => %{"title" => "My awesome page", "content" => "updated page content"}}
       first_page = Documents.get_first_page(document)
@@ -57,6 +66,19 @@ defmodule PalapaWeb.Document.PageControllerTest do
 
       reloaded_page = Documents.get_page!(first_page.id)
       assert "updated page content" == to_string(reloaded_page.content)
+    end
+
+    test "cannot update a deleted page", %{conn: conn, org: org, document: document} do
+      page = Documents.get_first_page(document)
+      Documents.delete_page!(page)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        payload = %{
+          "page" => %{"title" => "My awesome page", "content" => "updated page content"}
+        }
+
+        patch(conn, document_page_path(conn, :update, org, page, payload))
+      end
     end
 
     test "delete page", %{conn: conn, org: org, member: member, document: document} do
