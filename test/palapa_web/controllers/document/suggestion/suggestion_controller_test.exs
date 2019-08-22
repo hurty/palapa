@@ -14,6 +14,7 @@ defmodule PalapaWeb.Document.SuggestionControllerTest do
     {:ok,
      conn: conn,
      member: workspace.gilfoyle,
+     admin: workspace.richard,
      org: workspace.organization,
      document: document,
      page: page}
@@ -72,11 +73,47 @@ defmodule PalapaWeb.Document.SuggestionControllerTest do
     assert html_response(conn, 200) =~ "Another idea"
   end
 
+  test "a user cannot update a suggestion if he's not the author", %{
+    conn: conn,
+    org: org,
+    member: member,
+    admin: admin,
+    page: page
+  } do
+    {:ok, suggestion} =
+      Documents.Suggestions.create_suggestion(page, member, %{content: "Some great suggestion"})
+
+    suggestion_payload = %{"suggestion" => %{"content" => "Another idea"}}
+
+    conn =
+      login(admin)
+      |> patch(suggestion_path(conn, :update, org, suggestion, suggestion_payload))
+
+    assert html_response(conn, 403)
+  end
+
   test "delete a suggestion", %{conn: conn, org: org, member: member, page: page} do
     {:ok, suggestion} =
       Documents.Suggestions.create_suggestion(page, member, %{content: "Some great suggestion"})
 
     conn = delete(conn, suggestion_path(conn, :delete, org, suggestion))
+    assert conn.status == 204
+  end
+
+  test "an admin can delete any suggestion", %{
+    conn: conn,
+    org: org,
+    member: member,
+    admin: admin,
+    page: page
+  } do
+    {:ok, suggestion} =
+      Documents.Suggestions.create_suggestion(page, member, %{content: "Some great suggestion"})
+
+    conn =
+      login(admin)
+      |> delete(suggestion_path(conn, :delete, org, suggestion))
+
     assert conn.status == 204
   end
 end
