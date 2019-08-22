@@ -6,7 +6,7 @@
 
 @screen sm {
   .card {
-    @apply bg-white rounded shadow;
+    @apply bg-white rounded border border-grey-lighter;
   }
 }
 
