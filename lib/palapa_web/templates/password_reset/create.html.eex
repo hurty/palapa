@@ -1,0 +1,11 @@
+<div class="flex justify-center">
+  <div class="w-full max-w-sm">
+    <div class="card p-8">
+      <h2 class="card-header">Password reset</h2>
+      
+      <div class="card-header-separator"></div>
+
+      <p>An email has been sent to <strong><%= @email %></strong>.<br>Check your inbox and click the given link to reset your password.</p>
+    </div>
+  </div>
+</div>

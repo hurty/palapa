@@ -1,0 +1,22 @@
+<div class="flex justify-center">
+  <div class="w-full max-w-sm">
+    <div class="card p-8">
+      <h2 class="card-header">Password reset</h2>
+      
+      <div class="card-header-separator"></div>
+
+      <%= form_for @conn, password_reset_path(@conn, :create), [as: :password_reset], fn f -> %>
+        <p class="text-sm">Enter the email address associated with your Palapa account. We will send you an email with reset instructions.</p>
+
+        <div class="field">
+          <%= label f, :email, "Your email address", class: "label" %>
+          <%= email_input f, :email, class: "input" %>
+        </div>
+
+        <div class="card-actions">
+          <%= submit "Reset password", class: "btn btn-green" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

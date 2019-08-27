@@ -12,6 +12,8 @@ defmodule Palapa.Accounts.Account do
     field(:current_password, :string, virtual: true)
     field(:timezone, :string)
     field(:avatar, Palapa.Avatar.Type)
+    field(:password_reset_hash, :string)
+    field(:password_reset_at, :utc_datetime)
     timestamps()
 
     has_many(:members, Organizations.Member)
@@ -34,6 +36,15 @@ defmodule Palapa.Accounts.Account do
     account
     |> cast(attrs, [:current_password, :password])
     |> validate_current_password()
+    |> validate_length(:password, min: 8, max: 100)
+    |> validate_confirmation(:password, message: "Password confirmation does not match")
+    |> put_password_hash()
+    |> validate_required([:password_hash])
+  end
+
+  def password_reset_changeset(account, attrs) do
+    account
+    |> cast(attrs, [:password])
     |> validate_length(:password, min: 8, max: 100)
     |> validate_confirmation(:password, message: "Password confirmation does not match")
     |> put_password_hash()

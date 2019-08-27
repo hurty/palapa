@@ -1,5 +1,5 @@
-<div class="flex justify-center mt-8">
-  <div class="w-full max-w-sm card-shadow">
+<div class="flex justify-center">
+  <div class="w-full max-w-sm">
     <div class="card p-8">
       <h2 class="card-header">Login</h2>
       
@@ -20,6 +20,10 @@
           <%= submit "Log in", class: "btn btn-green", tabindex: 3 %>
         </div>
       <% end %>
+
+      <div class="text-center mt-4">
+      <%= link "I have forgotten my password", to: password_reset_path(@conn, :new), class: "text-grey-dark hover:underline" %>
+      </div>
     </div>
   </div>
 </div>

@@ -38,6 +38,40 @@ defmodule Palapa.Accounts do
     |> Repo.update()
   end
 
+  def reset_password(account, attrs) do
+    Account.password_reset_changeset(account, attrs)
+    |> Repo.update()
+  end
+
+  def generate_password_reset_token(account) do
+    token = Palapa.Access.generate_token()
+
+    params = %{
+      password_reset_hash: Palapa.Access.hash_string(token),
+      password_reset_at: DateTime.utc_now()
+    }
+
+    account
+    |> cast(params, [:password_reset_hash, :password_reset_at])
+    |> Repo.update()
+    |> case do
+      {:ok, _} -> {:ok, token}
+      other -> other
+    end
+  end
+
+  def find_account_by_password_reset_token(token) do
+    freshness_datetime = Timex.shift(DateTime.utc_now(), hours: -1)
+    token_hash = Palapa.Access.hash_string(token)
+
+    from(a in Account,
+      where:
+        a.password_reset_at > ^freshness_datetime and
+          a.password_reset_hash == ^token_hash
+    )
+    |> Repo.one()
+  end
+
   def delete(user) do
     Repo.delete(user)
   end

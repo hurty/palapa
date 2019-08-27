@@ -37,6 +37,12 @@ defmodule PalapaWeb.Router do
 
     resources("/registrations", RegistrationController, only: [:new, :create])
     resources("/sessions", SessionController, only: [:new, :create, :delete], singleton: true)
+
+    resources("/password_reset", PasswordResetController,
+      only: [:new, :create, :edit, :update],
+      singleton: true
+    )
+
     resources("/account", AccountController, only: [:edit, :update, :delete], singleton: true)
 
     get("/join/:invitation_id/:token", JoinController, :new)
@@ -76,6 +82,8 @@ defmodule PalapaWeb.Router do
   # Private pages for logged in members only
   scope "/", PalapaWeb do
     pipe_through([:browser, :authentication, :billing])
+
+    resources("/workspaces", WorkspaceController, only: [:index])
 
     resources("/org", OrganizationController, as: nil, only: []) do
       get("/sketch", SketchController, :index)

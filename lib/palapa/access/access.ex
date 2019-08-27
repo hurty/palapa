@@ -18,11 +18,14 @@ defmodule Palapa.Access do
     |> where([q], q.id in ^ids)
   end
 
-  def generate_token(length \\ 32) do
+  def generate_token(length \\ 48) do
     :crypto.strong_rand_bytes(length)
-    |> Base.url_encode64(case: :lower, padding: false)
-    |> String.replace(~r/\+/, "-")
-    |> String.replace(~r/\//, "_")
+    |> Base.url_encode64()
+    |> binary_part(0, length)
+  end
+
+  def hash_string(string) do
+    :crypto.hash(:sha256, string) |> Base.encode16() |> String.downcase()
   end
 
   def generate_signed_id(id) do

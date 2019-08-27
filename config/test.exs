@@ -27,4 +27,10 @@ config :palapa, Palapa.Mailer,
   adapter: Bamboo.TestAdapter,
   deliver_later_strategy: Bamboo.ImmediateDeliveryStrategy
 
+# When using shared mode with Bamboo.Test, you must set a timeout. This
+# is because an email can be delivered after the assertion is called
+# The value you set is up to you. Lower values will result in faster tests,
+# but may incorrectly pass if an email is delivered *after* the timeout.
+config :bamboo, :refute_timeout, 10
+
 config :appsignal, :config, active: false

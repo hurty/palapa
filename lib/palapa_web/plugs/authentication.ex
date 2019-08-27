@@ -41,8 +41,7 @@ defmodule PalapaWeb.Authentication do
   end
 
   def enforce_authentication(conn, _options) do
-    if conn.assigns[:current_account] && conn.assigns[:current_organization] &&
-         conn.assigns[:current_member] do
+    if conn.assigns[:current_account] do
       conn
     else
       conn
