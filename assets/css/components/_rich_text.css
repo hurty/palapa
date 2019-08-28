@@ -5,7 +5,7 @@
   div {
     @apply mt-4;
   }
-  
+
   h1 {
     @apply text-xl;
     @apply mt-2;
@@ -29,11 +29,16 @@
     }
   }
 
-  blockquote {
+  blockquote  {
     @apply text-purple-dark italic;
     @apply border-l-2 border-purple-light;
     @apply bg-purple-lightest;
     @apply my-4 py-4 px-4;
+  }
+
+  pre {
+    @apply text-sm;
+    @apply p-2 my-2 bg-grey-lightest rounded;
   }
 
   .attachment {
