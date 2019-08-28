@@ -64,8 +64,8 @@ defmodule Palapa.Mixfile do
       {:bcrypt_elixir, "~> 1.0"},
       {:bodyguard, "~> 2.2"},
       {:ecto_enum, "~> 1.0"},
-      {:bamboo, "~> 1.2.0", override: true},
-      {:bamboo_mailjet, "~> 0.0.1"},
+      {:bamboo, "~> 1.3.0"},
+      {:bamboo_mailjet, "~> 0.1.0"},
       {:timex, "~> 3.4"},
       {:arc, "~> 0.11.0"},
       {:ex_aws, "~> 2.1"},
@@ -78,7 +78,7 @@ defmodule Palapa.Mixfile do
       {:floki, "~> 0.20.0"},
       {:stripity_stripe, "~> 2.4.0"},
       {:mox, "~> 0.5", only: :test},
-      {:ecto_job, github: "mbuhot/ecto_job"},
+      {:ecto_job, "~> 2.1.0"},
       {:money, "~> 1.4"},
       {:countries, "~> 1.5"}
     ]
