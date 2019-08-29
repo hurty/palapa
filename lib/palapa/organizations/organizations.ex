@@ -9,42 +9,6 @@ defmodule Palapa.Organizations do
   import EctoEnum
   defenum(RoleEnum, :role, [:owner, :admin, :member])
 
-  @member_information_types [
-    :custom,
-    :phone,
-    :email,
-    :address,
-    :birthday,
-    :person_to_contact,
-    :office_hours,
-    :skype,
-    :twitter,
-    :facebook,
-    :linkedin,
-    :github
-  ]
-
-  def list_member_information_types do
-    @member_information_types
-  end
-
-  # It seems that we can't use the module attribute @member_information_types in this EctoEnum macro,
-  # so we're repeating types here.
-  defenum(MemberInformationTypeEnum, :member_information_type, [
-    :custom,
-    :phone,
-    :email,
-    :skype,
-    :address,
-    :birthday,
-    :person_to_contact,
-    :office_hours,
-    :twitter,
-    :facebook,
-    :linkedin,
-    :github
-  ])
-
   ### Scopes
 
   def with_member_name(queryable \\ Member, name_pattern) do

@@ -1,20 +1,15 @@
 <%= form_for @member_information_changeset, @action, 
   [multipart: true, autocomplete: "off",
   "data-controller": "member-information-form",
-  "data-member-information-form-types":  PalapaWeb.MemberInformationView.types,
   "data-member-information-form-attachment-url": attachment_url(@conn, :create, @current_organization), 
   ], fn form -> %> 
 
-  <div class="<%= if @action_type not in [:edit, :update, :create_with_error] do %>hidden<% end %> border border-gray-200 rounded p-2 text-sm bg-gray-100"
-  data-target="member-information-form.formContent">
-    <%= select form, :type, PalapaWeb.MemberInformationView.information_types_for_select, class: "field w-full", 
-      "data-target": "member-information-form.type", "data-action": "member-information-form#displayFields" %>
-    <%= error_tag form, :type %>
-    
-    <%= text_input form, :custom_label, placeholder: "Custom label", class: "hidden field input", "data-target": "member-information-form.customLabel" %>
-    <%= error_tag form, :custom_label %>
+  <div class="hidden border border-gray-200 rounded p-2 text-sm bg-gray-100"
+  data-target="member-information-form.formContent">    
+    <%= text_input form, :label, placeholder: "Label", class: "field input w-full" %>
+    <%= error_tag form, :label %>
 
-    <%= text_input form, :value, placeholder: "Value", class: "field input", "data-target": "member-information-form.value" %>
+    <%= text_input form, :value, placeholder: "Value", class: "field input w-full" %>
     <%= error_tag form, :value %>
     
     <div class="hidden field input dropzone" data-target="member-information-form.attachment">
@@ -49,12 +44,12 @@
     
     <%= if PalapaWeb.MemberInformationView.show_visibility_whitelist?(@current_organization) do %>
       <div>
-        <%= checkbox form, :private, class: "field", id: "member_information_private_#{Ecto.Changeset.get_field(@member_information_changeset, :id)}",
+        <%= checkbox form, :private, id: "member_information_private_#{Ecto.Changeset.get_field(@member_information_changeset, :id)}",
         "data-action": "member-information-form#toggleVisibilities", "data-target": "member-information-form.privateCheckbox" %>
-        <%= label form, "private_#{Ecto.Changeset.get_field(@member_information_changeset, :id)}", "Visible only to me and..." %>
+        <%= label form, "private_#{Ecto.Changeset.get_field(@member_information_changeset, :id)}", "Visible only to me and...", class: "inline" %>
       </div>
 
-      <div data-target="member-information-form.visibilities" class="hidden">
+      <div data-target="member-information-form.visibilities" class="hidden my-2">
         <%= multiple_select form, :visibilities, 
           [
             "People": Enum.map(Palapa.Organizations.list_members(@current_organization), fn m -> [key: m.account.name, value: to_string(Palapa.Access.GlobalId.create("palapa", m))] end),
@@ -65,8 +60,8 @@
       </div>
     <% else %>
       <div>
-        <%= checkbox form, :private, class: "field", "data-target": "member-information-form.privateCheckbox" %>
-        <%= label form, :private, "Visible only to me"%>
+        <%= checkbox form, :private, "data-target": "member-information-form.privateCheckbox" %>
+        <%= label form, :private, "Visible only to me", class: "inline" %>
       </div>
     <% end %>
 

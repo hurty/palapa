@@ -1,14 +1,13 @@
 defmodule Palapa.Organizations.MemberInformation do
   use Palapa.Schema
 
-  alias Palapa.Organizations.{Member, MemberInformationTypeEnum}
+  alias Palapa.Organizations.Member
   alias Palapa.Teams.Team
   alias Palapa.Attachments
 
   schema "member_informations" do
     belongs_to(:member, Member)
-    field(:type, MemberInformationTypeEnum)
-    field(:custom_label, :string)
+    field(:label, :string)
     field(:value, :string)
     field(:private, :boolean, default: false)
     timestamps()
@@ -31,21 +30,19 @@ defmodule Palapa.Organizations.MemberInformation do
 
   def changeset(%__MODULE__{} = member_information, %Member{} = member, attrs) do
     member_information
-    |> cast(attrs, [:type, :custom_label, :value, :private, :visibilities])
+    |> cast(attrs, [:label, :value, :private, :visibilities])
     |> put_assoc(:member, member)
     |> put_attachments(attrs)
     |> put_visibilities(attrs)
-    |> validate_required([:member, :type, :value])
-    |> validate_custom_information
+    |> validate_required([:member, :label, :value])
   end
 
   def update_changeset(%__MODULE__{} = member_information, attrs) do
     member_information
-    |> cast(attrs, [:type, :custom_label, :value, :private, :visibilities])
+    |> cast(attrs, [:label, :value, :private, :visibilities])
     |> put_attachments(attrs)
     |> put_visibilities(attrs)
-    |> validate_required([:type, :value])
-    |> validate_custom_information
+    |> validate_required([:label, :value])
   end
 
   def put_visibilities(changeset, attrs) do
@@ -86,13 +83,6 @@ defmodule Palapa.Organizations.MemberInformation do
       put_assoc(changeset, :attachments, attachments)
     else
       changeset
-    end
-  end
-
-  defp validate_custom_information(changeset) do
-    case get_field(changeset, :type) do
-      :custom -> validate_required(changeset, [:custom_label])
-      _ -> changeset
     end
   end
 end

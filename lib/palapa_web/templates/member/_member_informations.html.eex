@@ -1,5 +1,5 @@
 <div data-controller="member-informations" class="flex-1 p-2 sm:p-4">
-  <div class="sm:w-2/3 mx-auto">
+  <div class="mx-auto">
     <%= render "_member_informations_list.html", assigns %>
 
     <%= if Palapa.Access.permit?(Palapa.Organizations, :create_member_information, @current_member, @member) do %>

@@ -73,13 +73,12 @@ defmodule Palapa.Factory do
         organization: pied_piper,
         member_informations: [
           %MemberInformation{
-            type: :email,
+            label: "email",
             value: "richard.hendricks@piedpiper.com"
           },
           %MemberInformation{
-            type: :custom,
-            custom_label: "My best quote",
-            value: "Piss. Kiss my piss. Kiss my piss. (starts dancing)"
+            label: "My best quote",
+            value: "Wahoo"
           }
         ]
       )
@@ -90,16 +89,15 @@ defmodule Palapa.Factory do
         title: "Head of Business Development",
         member_informations: [
           %MemberInformation{
-            type: :email,
+            label: "email",
             value: "jared.dunn@piedpiper.com"
           },
           %MemberInformation{
-            type: :office_hours,
+            label: "Office hours",
             value: "Mon-Fri 9-5"
           },
           %MemberInformation{
-            type: :custom,
-            custom_label: "My best quote",
+            label: "My best quote",
             value: "How would you like to die today, motherfucker? "
           }
         ]
@@ -111,12 +109,11 @@ defmodule Palapa.Factory do
         title: "Nerd",
         member_informations: [
           %MemberInformation{
-            type: :email,
+            label: "email",
             value: "bertram.gilfoyle@piedpiper.com"
           },
           %MemberInformation{
-            type: :custom,
-            custom_label: "My best quote",
+            label: "My best quote",
             value:
               "Our process sucks. Your inability to stop us from sucking is a failure of leadership."
           }
@@ -130,15 +127,15 @@ defmodule Palapa.Factory do
         title: "Developer",
         member_informations: [
           %MemberInformation{
-            type: :email,
+            label: "email",
             value: "dinesh.chugtai@piedpiper.com"
           },
           %MemberInformation{
-            type: :person_to_contact,
+            label: "person to contact",
             value: "My girlfriend 06729824042"
           },
           %MemberInformation{
-            type: :twitter,
+            label: "twitter",
             value: "https://twitter.com/dineshisreal"
           }
         ]
@@ -151,11 +148,11 @@ defmodule Palapa.Factory do
         title: "VC",
         member_informations: [
           %MemberInformation{
-            type: :email,
+            label: "email",
             value: "monica.hall@piedpiper.com"
           },
           %MemberInformation{
-            type: :office_hours,
+            label: "office hours",
             value: "Mon-Fri 9-5"
           }
         ]
@@ -174,15 +171,15 @@ defmodule Palapa.Factory do
         title: "Roommate",
         member_informations: [
           %MemberInformation{
-            type: :email,
+            label: "email",
             value: "erlich.bachman@piedpiper.com"
           },
           %MemberInformation{
-            type: :person_to_contact,
+            label: "person to contact",
             value: "My mum 06729824042"
           },
           %MemberInformation{
-            type: :twitter,
+            label: "twitter",
             value: "https://twitter.com/erlichbachman"
           }
         ]

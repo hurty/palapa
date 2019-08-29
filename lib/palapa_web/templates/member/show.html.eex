@@ -1,4 +1,4 @@
-<div class="content page-layout">
+<div class="content large-page-layout">
   <div class="main-content">
     <div class="card">
 
@@ -10,35 +10,18 @@
         <%= link("Manage my account", to: account_path(@conn, :edit), class: "btn") %>
       </div>
 
-      <div id="member-profile-main">
-        <div class="sm:w-full sm:p-2 mx-auto my-4">
-          <div class="text-center">
-            <%= avatar(@member.account) %>
-          </div>
-          <div class="text-green-500 text-center text-2xl font-bold capitalize mb-2"><%= @member.account.name %></div>
-          <div class="text-gray-700 text-center text-lg font-light capitalize"><%= @member.title %></div>
-          
-          <%= if @member.account.timezone do %>
-            <div class="mt-4 text-center text-gray-700 text-xs">
-              <i class="fas fa-clock"></i> <%= account_time(@member.account) %> (<%= @member.account.timezone %>)
-            </div>
-          <% end %>
+      <div class="flex flex-wrap">
+        <div class="w-full sm:w-1/2">
+          <%= render "_member_profile.html", assigns %>
+          <%= render "_member_informations.html", assigns %>
+        </div>
 
-          <%= if @member.role in [:owner, :admin] do %>
-            <div class="text-center my-6">
-              <span class="border-2 text-sm text-gray-700 border-green-500 rounded-full px-4 py-2">This member is <%= @member.role %></span>
-            </div>
-          <% end %>
-
-          <div class="mt-4 text-center">
-            <%= for team <- @member_teams do %>
-              <%= PalapaWeb.TeamView.team_tag(@conn, team) %>
-            <% end %>
-          </div>
+        <div class="w-full sm:w-1/2 sm:border-l">
+          <h2 class="text-blue-500 text-sm py-2 text-left font-bold">
+          What's up?
+          </h2>
         </div>
       </div>
-      
-      <%= render "_member_informations.html", assigns %>
 
     </div>
   </div>

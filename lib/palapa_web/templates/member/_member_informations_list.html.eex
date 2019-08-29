@@ -1,5 +1,5 @@
 <div id="member-informations-list">
-  <h2 class="text-gray-700 text-sm py-2 text-center">
+  <h2 class="text-blue-800 text-center text-sm py-2 font-bold">
     <%= if Enum.any?(@member_informations) do %>
       Personal information shared within <%= @current_organization.name %>
     <% else %>

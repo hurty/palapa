@@ -1,11 +1,11 @@
-<div class="js-member-information flex flex-col text-sm border border-gray-400 rounded my-3 <%= if assigns[:new_info] && @info.id == @new_info.id do %> shadow <% end %>">
+<div class="js-member-information flex flex-col text-sm my-3 py-1 bg-gray-100 rounded-lg <%= if assigns[:new_info] && @info.id == @new_info.id do %> shadow <% end %>">
   
   <div data-target="member-information.formContainer"></div>
       
   <div data-target="member-information.content">
-    <div class="flex justify-between items-center bg-gray-100 rounded-t px-2 py-1 text-gray-700 text-sm">
-      <div class="font-bold">
-        <%= PalapaWeb.MemberInformationView.information_type_label(@info) %>
+    <div class="flex justify-between items-center rounded-t px-2 text-gray-700 text-sm">
+      <div class="font-bold text-blue-800">
+        <%= @info.label %>
       </div>
 
       <div class="flex justify-between items-center">
@@ -43,7 +43,7 @@
     </div>
     
     <div data-controller="clipboard">
-      <div class="flex justify-between p-2 text-sm bg-white">
+      <div class="flex justify-between p-2 text-sm">
         <div>
           <div data-target="clipboard.textToCopy">
           <%= PalapaWeb.MemberInformationView.autolink @info.value %>
