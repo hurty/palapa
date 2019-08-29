@@ -11,13 +11,12 @@ button:focus {
 }
 
 .field {
-  @apply mt-3 flex flex-col;
+  @apply my-3 flex flex-col;
 }
 
 .label {
-  @apply inline-block;
-  @apply mb-2 align-middle;
-  @apply text-gray-800 text-sm font-bold;
+  @apply inline-block mb-2;
+  @apply text-blue-900 text-xs tracking-wider leading-none font-bold uppercase;
 }
 
 .input {
