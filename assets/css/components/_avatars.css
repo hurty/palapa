@@ -1,5 +1,5 @@
 .avatar {
-  @apply rounded-full;
+  @apply m-2 rounded-full;
 }
 
 .avatar--md {

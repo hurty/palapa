@@ -3,7 +3,7 @@
     <div class="rounded shadow bg-white">
       <div class="p-4 flex flex-wrap border-b border-gray-200 bg-white rounded-t">
         <div class="flex-1">
-          <h2 class="text-green"><%= @current_organization.name %></h2>
+          <h2 class="text-green-500"><%= @current_organization.name %></h2>
           <div class="text-sm uppercase text-gray-600"><span class="font-bold"><%= @organization_members_count %></span> people</div>
           <div class="text-sm uppercase text-gray-600"><span class="font-bold"><%= length(@teams) %></span> teams</div>
         </div>

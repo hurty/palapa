@@ -11,7 +11,7 @@
       <p class="text-sm text-blue">* Required fields</p>
 
       <div class="bg-gray-100 rounded-lg p-2 my-4">
-        <h3 class="text-green"><%= gettext("Payment") %></h3>
+        <h3 class="text-green-500"><%= gettext("Payment") %></h3>
         <div class="field">
           <label for="card-element" class="label">
             <%= gettext("Credit card*") %>
@@ -26,7 +26,7 @@
       </div>
 
       <div class="bg-gray-100 rounded-lg p-2 my-2">
-        <h3 class="text-green"><%= gettext("Billing information") %></h3>
+        <h3 class="text-green-500"><%= gettext("Billing information") %></h3>
         
         <p class="text-sm text-blue">These informations will appear on your invoices</p>
 

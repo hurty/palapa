@@ -39,5 +39,5 @@
     <%= submit "Create a new account", class: "btn btn-green", tabindex: 1 %>
   </div>
 
-  <div class="card-footer">You already have an account? &nbsp; <%= link("Log in!", to: session_path(@conn, :new), class: "text-green", tabindex: 1) %></div>
+  <div class="card-footer">You already have an account? &nbsp; <%= link("Log in!", to: session_path(@conn, :new), class: "text-green-500", tabindex: 1) %></div>
 <% end %>

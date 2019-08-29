@@ -9,7 +9,7 @@
       <h3 class="my-2 text-gray-900">Life at the office</h3>
         <ul class=" pl-4 border-l">
           <li class="my-2">Entering and leaving the building</li>
-          <li class="my-2 underlisne text-green">Working remotely</li>
+          <li class="my-2 underlisne text-green-500">Working remotely</li>
           <li class="my-2">What about lunch?</li>
           <li class="my-2">Taking holidays</li>
           <li class="my-2">Sick leave</li>
@@ -26,7 +26,7 @@
     <%# ----- DOCS ----- %>
     
     <div class="rounded shadow bg-white p-8 ">
-      <h1 class="text-green">Working remotely</h1>
+      <h1 class="text-green-500">Working remotely</h1>
       <p class="my-2 text-gray-700 text-sm">Last modified 12 days ago by Richard Dunn</p>
       <div class="separator"></div>
       

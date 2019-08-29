@@ -51,7 +51,7 @@ class="document-section">
                 </div>
             </div>
             
-            <div class="document-section-handle px-2 text-gray-600 hover:text-green" title="Drag to reorder">
+            <div class="document-section-handle px-2 text-gray-600 hover:text-green-500" title="Drag to reorder">
               <i class="fas fa-bars"></i>
             </div>
           </div>
