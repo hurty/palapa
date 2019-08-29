@@ -18,7 +18,7 @@
         <%= for team <- @teams do %>
           <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
           <%= link(to: member_path(@conn, :index, @current_organization, team_id: team.id), class: item_class, title: team.name) do %>
-            <%= truncate_string(team.name, 28) %><%= if team.private do %>&nbsp;<i class="text-xs text-grey fas fa-lock"></i><% end %>
+            <%= truncate_string(team.name, 28) %><%= if team.private do %>&nbsp;<i class="text-xs text-gray-500 fas fa-lock"></i><% end %>
           <% end %>
         <% end %>
       </div>

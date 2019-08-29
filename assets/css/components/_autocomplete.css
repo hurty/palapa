@@ -1,6 +1,6 @@
 .autocomplete {
   position: absolute;
-  @apply list-reset border shadow rounded bg-white;
+  @apply border shadow rounded bg-white;
 }
 
 .autocomplete__choice {
@@ -8,10 +8,10 @@
   cursor: pointer;
 
   &--selected {
-    @apply bg-indigo-light text-white;
+    @apply bg-indigo-400 text-white;
   }
 }
 
 .autocomplete__inserted {
-  @apply text-indigo;
+  @apply text-indigo-500;
 }

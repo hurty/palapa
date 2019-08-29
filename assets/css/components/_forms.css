@@ -17,7 +17,7 @@ button:focus {
 .label {
   @apply inline-block;
   @apply mb-2 align-middle;
-  @apply text-grey-darkest text-sm font-bold;
+  @apply text-gray-800 text-sm font-bold;
 }
 
 .input {
@@ -25,7 +25,7 @@ button:focus {
   -moz-appearance: none;
   @apply py-2 px-1;
   @apply appearance-none border rounded leading-normal;
-  @apply text-grey-darkest text-sm;
+  @apply text-gray-800 text-sm;
 }
 
 input[type="checkbox"] {
@@ -42,7 +42,7 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked {
-  @apply bg-green border-transparent;
+  @apply bg-green-500 border-transparent;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="white" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>');
   background-repeat: no-repeat;
   background-size: 80%;
@@ -50,7 +50,7 @@ input[type="checkbox"]:checked {
 }
 
 input[type="checkbox"]:disabled {
-  @apply bg-green-lighter;
+  @apply bg-green-200;
   cursor: not-allowed;
 }
 
@@ -70,7 +70,7 @@ input[type="radio"] {
 input[type="radio"]:checked {
   margin: 0px;
   position: relative;
-  @apply bg-green border-4 border-green-lighter;
+  @apply bg-green-500 border-4 border-green-200;
 }
 
 select {
@@ -78,7 +78,7 @@ select {
   -moz-appearance: none;
   @apply w-full py-2 px-1;
   @apply appearance-none border rounded leading-normal;
-  @apply bg-white text-grey-darkest text-sm;
+  @apply bg-white text-gray-800 text-sm;
 }
 
 .error {
@@ -90,7 +90,7 @@ select {
   font-weight: 400;
   border-radius: 3px;
   @apply text-white;
-  @apply bg-red-light;
+  @apply bg-red-400;
 
   &::before {
     position: absolute;
@@ -102,7 +102,7 @@ select {
     pointer-events: none;
     content: " ";
     border: solid transparent;
-    border-bottom-color: config("colors.red-light");
+    border-bottom-color: theme("colors.red-400");
     border-width: 5px;
   }
 
@@ -116,7 +116,7 @@ select {
     pointer-events: none;
     content: " ";
     border: solid transparent;
-    border-bottom-color: config("colors.red-light");
+    border-bottom-color: theme("colors.red-400");
     border-width: 5px;
   }
 }

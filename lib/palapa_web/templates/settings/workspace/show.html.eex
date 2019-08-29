@@ -5,7 +5,7 @@
 
   <div class="main-content">
     <div class="card p-4">
-      <h2 class="text-grey-darkest">Workspace settings</h2>
+      <h2 class="text-gray-800">Workspace settings</h2>
       <div class="card-header-separator"></div>
 
       <%= form_for @organization_changeset, settings_workspace_path(@conn, :update, @current_organization), fn form -> %>

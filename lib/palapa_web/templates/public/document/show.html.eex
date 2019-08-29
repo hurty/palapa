@@ -5,7 +5,7 @@
     <%= render "table_of_contents.html", assigns %>
 
     <div class="text-center mt-8">
-      <%= link "Created with Palapa", to: home_url(@conn, :index), target: "_blank", class: "text-grey hover:underline text-sm" %>
+      <%= link "Created with Palapa", to: home_url(@conn, :index), target: "_blank", class: "text-gray-500 hover:underline text-sm" %>
     </div>
   </div>
 

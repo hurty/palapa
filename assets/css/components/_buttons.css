@@ -19,17 +19,17 @@ button::-moz-focus-inner,
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  @apply text-sm text-grey-darkest;
-  background-color: config("colors.white");
+  @apply text-sm text-gray-800;
+  background-color: theme("colors.white");
 
   &:hover {
-    background-color: config("colors.grey-white");
+    background-color: theme("colors.grey-white");
     background-position: -0.5em;
     border-color: rgba(27, 31, 35, 0.2);
   }
 
   &:focus {
-    box-shadow: 0 0 0 0.2em config("colors.blue-lightest");
+    box-shadow: 0 0 0 0.2em theme("colors.blue-100");
   }
 
   &:active {
@@ -43,60 +43,60 @@ button::-moz-focus-inner,
   }
 }
 
-.btn-green {
+.btn-green-500 {
   color: #fff;
-  background-color: config("colors.green");
+  background-color: theme("colors.green-500");
   background-image: linear-gradient(
     -180deg,
     #34d058 0%,
-    config("colors.green") 90%
+    theme("colors.green-500") 90%
   );
 
   &:hover {
-    background-color: config("colors.green-dark");
+    background-color: theme("colors.green-600");
     background-image: linear-gradient(
       -180deg,
-      config("colors.green-light") 0%,
-      config("colors.green") 90%
+      theme("colors.green-400") 0%,
+      theme("colors.green-500") 90%
     );
     background-position: -0.5em;
     border-color: rgba(27, 31, 35, 0.1);
   }
 
   &:focus {
-    box-shadow: 0 0 0 0.2em config("colors.blue-light");
+    box-shadow: 0 0 0 0.2em theme("colors.blue-400");
   }
 }
 
-.btn-red {
+.btnred-500 {
   color: #fff;
-  background-color: config("colors.red");
+  background-color: theme("colors.red");
   background-image: linear-gradient(
     -180deg,
-    config("colors.red-light") 0%,
-    config("colors.red") 90%
+    theme("colors.red-400") 0%,
+    theme("colors.red") 90%
   );
 
   &:hover {
-    background-color: config("colors.red-dark");
+    background-color: theme("colors.red-600");
     background-image: linear-gradient(
       -180deg,
-      config("colors.red-lighter") 0%,
-      config("colors.red-light") 90%
+      theme("colors.red-200") 0%,
+      theme("colors.red-400") 90%
     );
     background-position: -0.5em;
     border-color: rgba(27, 31, 35, 0.1);
   }
 
   &:focus {
-    box-shadow: 0 0 0 0.2em config("colors.red-lightest");
+    box-shadow: 0 0 0 0.2em theme("colors.red-100");
   }
 }
 
 .btn-round {
-  @apply py-1 px-2 font-bold bg-indigo text-white rounded-full;
+  @apply py-1 px-2 font-bold bg-indigo-500 text-white rounded-full;
 
   &:hover {
-    @apply bg-indigo-dark;
+    @apply bg-indigo-600;
   }
 }

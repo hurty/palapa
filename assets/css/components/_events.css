@@ -2,24 +2,23 @@
   @apply flex items-start p-2 my-4 border-t;
 
   a {
-    @apply text-grey-darkest;
+    @apply text-gray-800;
   }
 }
 
 .event-summary {
-  @apply text-base font-bold text-grey-darker;
+  @apply text-base font-bold text-gray-700;
 }
 
 .event-target-title {
   a {
-    @apply text-green;
+    @apply text-green-500;
 
     &:hover {
       @apply underline;
     }
   }
 }
-
 
 .event-details {
   @apply p-2 my-2 w-full text-sm rounded-lg bg-white rounded-lg;

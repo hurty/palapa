@@ -21,9 +21,9 @@
       </div>
   </div>
 <% else %>
-  <h2 class="text-grey-darkest">All messages</h2>
+  <h2 class="text-gray-800">All messages</h2>
 <% end %>
 
 <%= link(to: message_path(@conn, :new, @current_organization), class: "messages__new-message-button btn text-sm") do %>
-  <i class="fas fa-plus-circle text-green mr-2"></i>New message
+  <i class="fas fa-plus-circle text-green-500 mr-2"></i>New message
 <% end %>

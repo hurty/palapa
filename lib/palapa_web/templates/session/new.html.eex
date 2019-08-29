@@ -22,7 +22,7 @@
       <% end %>
 
       <div class="text-center mt-4">
-      <%= link "I have forgotten my password", to: password_reset_path(@conn, :new), class: "text-grey-dark hover:underline" %>
+      <%= link "I have forgotten my password", to: password_reset_path(@conn, :new), class: "text-gray-600 hover:underline" %>
       </div>
     </div>
   </div>

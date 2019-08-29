@@ -11,5 +11,5 @@
 }
 
 .draggable-source--is-dragging {
-  @apply bg-grey-lightest opacity-25;
+  @apply bg-gray-100 opacity-25;
 }

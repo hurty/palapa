@@ -1,5 +1,5 @@
 <%= if Palapa.Documents.deleted?(@document) do %>
-  <div class="bg-red-lightest text-red font-bold mb-4 p-4 rounded-lg border-2 border-red-lighter">
+  <div class="bg-red-100 textred-500font-bold mb-4 p-4 rounded-lg border-2 border-red-200">
     <i class="fas fa-trash mr-2"></i> This document has been put in the trash. 
     <%= link "Restore?", to: document_trash_path(@conn, :delete, @current_organization, @document), data: [controller: "link", action: "link#delete"], class: "btn-round" %>
   </div>

@@ -1,5 +1,5 @@
 <%= if @changeset.action do %>
-  <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+  <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
 <% end %>
 
 <div class="field">
@@ -12,7 +12,7 @@
     <%= label @form, :team_id, "Who can see this document?", class: "label" %>
     <%= select @form, :team_id, 
       List.insert_at(Enum.map(@teams, fn team -> {team.name, team.id} end), 0, {"Everyone in #{@current_organization.name}", nil}), 
-      class: "bg-grey-lightest",
+      class: "bg-gray-100",
       "data-controller": "choice"
     %>
   </div>            

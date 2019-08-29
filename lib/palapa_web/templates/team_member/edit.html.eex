@@ -1,8 +1,8 @@
 <div class="flex w-5/6 mx-auto">
   <div class="flex-auto">
-    <div class="text-green text-sm font-bold border-b pb-2 mb-6">Teams</div>
+    <div class="text-green-500 text-sm font-bold border-b pb-2 mb-6">Teams</div>
     <%= form_for @conn, member_team_member_path(@conn, :update, @current_organization, @member), [method: :put, as: "member_teams"], fn _ -> %>
-      <ul class="list-reset">
+      <ul class="">
         <%= for team <- @all_teams_in_organization do %>
           <li class="mb-2">
             <input type="checkbox" class="h-4 w-4" name="teams_ids[]" id="team_<%= team.id %>" value="<%= team.id %>" <%= if team in @member_teams, do: "checked", else: "" %>>

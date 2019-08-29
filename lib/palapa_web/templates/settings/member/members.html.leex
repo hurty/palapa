@@ -1,6 +1,6 @@
 <form phx-change="update_administrators">
   <table class="mx-auto my-4 w-full">
-    <tr class="border-b font-bold bg-grey-lightest rounded text-sm">
+    <tr class="border-b font-bold bg-gray-100 rounded text-sm">
       <th class="py-2 text-left">Name</th>
       <th class="py-2">Administrator?</th>
       <th class="py-2">Delete member</th>
@@ -23,8 +23,8 @@
         <td>
           <%= if @current_member.id != member.id do %>
             <%= if @confirm_delete_member_id == member.id do %>
-              <div class="py-2 bg-red-lightest">
-                <p class="py-2 text-red-dark">Are you sure?</p>
+              <div class="py-2 bg-red-100">
+                <p class="py-2 text-red-600">Are you sure?</p>
                 <button phx-click="confirm_delete_member" value="<%= member.id %>" class="btn btn-red">Yes, delete this member</button>
                 <button phx-click="cancel_delete_member" class="btn">Cancel</button>
               </div>
@@ -34,7 +34,7 @@
               </button>
             <% end %>
           <% else %>
-            <p class="text-grey italic">Cannot delete yourself</p>
+            <p class="text-gray-500 italic">Cannot delete yourself</p>
           <% end %>
         </td>
       </tr>

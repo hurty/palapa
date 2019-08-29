@@ -1,6 +1,6 @@
-<li data-controller="document-toc-page" class="document-page flex justify-between items-center cursor-pointer <%= if @toc_page.section_id do %>hover:bg-grey-lightest<% else %>hover:bg-grey-lighter<% end %>">
+<li data-controller="document-toc-page" class="document-page flex justify-between items-center cursor-pointer <%= if @toc_page.section_id do %>hover:bg-gray-100<% else %>hover:bg-gray-200<% end %>">
   <div data-action="click->document#clickPage" class="flex-1 py-2 pl-8">
     <%= link @toc_page.title, to: public_document_page_path(@conn, :show, @document.public_token, @toc_page), 
-  class: if(@conn.params["id"] == @toc_page.id, do: "text-green font-bold", else: "text-grey-darker") %>
+  class: if(@conn.params["id"] == @toc_page.id, do: "text-green-500 font-bold", else: "text-gray-700") %>
   </div>
 </li>

@@ -8,8 +8,8 @@
         <div class="card-header-separator"></div> 
 
         <%= if Enum.any? @emails do %>
-          <p class="text-green font-bold my-2"><i class="fas fa-check-circle"></i> <%= Enum.count @emails %> invitation(s) have been sent successfully!</p>
-          <ul class="list-reset bg-green-lightest rounded h-24 p-2 my-2 overflow-scroll">
+          <p class="text-green-500 font-bold my-2"><i class="fas fa-check-circle"></i> <%= Enum.count @emails %> invitation(s) have been sent successfully!</p>
+          <ul class=" bg-green-100 rounded h-24 p-2 my-2 overflow-scroll">
             <%= for email <- @emails do %>
               <li><%= email%></li>
             <% end %>
@@ -17,8 +17,8 @@
         <% end %>
 
         <%= if Enum.any? @already_member do %>
-          <p class="text-green font-bold my-2"><i class="fas fa-check-circle"></i> <%= Enum.count @already_member %> already member(s) of your organization!</p>
-          <ul class="list-reset bg-green-lightest rounded h-24 p-2 my-2 overflow-scroll">
+          <p class="text-green-500 font-bold my-2"><i class="fas fa-check-circle"></i> <%= Enum.count @already_member %> already member(s) of your organization!</p>
+          <ul class=" bg-green-100 rounded h-24 p-2 my-2 overflow-scroll">
             <%= for email <- @already_member do %>
               <li><%= email%></li>
             <% end %>
@@ -26,7 +26,7 @@
         <% end %>
 
         <%= if Enum.any? @malformed do %>
-          <p class="text-red font-bold"><i class="fas fa-times-circle"></i> <%= Enum.count @malformed %> invitation(s) couldn't be sent</p> 
+          <p class="textred-500font-bold"><i class="fas fa-times-circle"></i> <%= Enum.count @malformed %> invitation(s) couldn't be sent</p> 
           <p>Make sure addresses are <b>correct</b> and <b>well formatted</b> and try again.</p>
 
           <%= render PalapaWeb.InvitationView, "_form.html", conn: @conn, prefill: Enum.join(@malformed, "\n") %>

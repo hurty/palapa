@@ -7,7 +7,7 @@
 
 
       <article class="p-4 sm:p-12">
-        <h1 class="text-green text-base sm:text-2xl"><%= @message.title %></h1>
+        <h1 class="text-green-500 text-base sm:text-2xl"><%= @message.title %></h1>
         
         <%= unless message_blank?(@message) do %>
           <div class="separator"></div>
@@ -24,7 +24,7 @@
         <%= render PalapaWeb.MessageCommentView, "_comments_count.html", comments_count: @message.comments_count %>
       </div>
 
-      <ul class="list-reset flex flex-col" data-target="message.commentsList">
+      <ul class=" flex flex-col" data-target="message.commentsList">
         <%= render_many @comments, PalapaWeb.MessageCommentView, "_comment.html", as: :comment, conn: @conn, current_account: @current_account %>
       </ul>
 

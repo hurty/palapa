@@ -8,10 +8,10 @@
 
 .document-section-handle {
   cursor: grab;
-}   
+}
 
 .document-section-list {
-  @apply list-reset;
+  @apply;
 }
 
 .document-section--closed {
@@ -31,5 +31,5 @@
 }
 
 .document-section-title {
-  @apply text-sm font-bold text-grey-dark;
+  @apply text-sm font-bold text-gray-600;
 }

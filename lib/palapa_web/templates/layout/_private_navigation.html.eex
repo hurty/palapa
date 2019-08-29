@@ -1,9 +1,9 @@
 <header class="header">
   <nav data-controller="navigation" data-navigation-switcher-url="<%= session_path(@conn, :switcher, @current_organization) %>" 
-  class="flex items-center justify-between flex-wrap p-1 bg-grey-lighter sm:bg-white">
+  class="flex items-center justify-between flex-wrap p-1 bg-gray-200 sm:bg-white">
 
     <div class="flex-1">
-      <button data-action="navigation#toggleMobileMenu" class="sm:hidden w-full mx-auto flex items-center justify-center px-2 py-1 hover:text-green-dark my-1 font-bold rounded bg-blue-darker text-white">
+      <button data-action="navigation#toggleMobileMenu" class="sm:hidden w-full mx-auto flex items-center justify-center px-2 py-1 hover:text-green-600 my-1 font-bold rounded bg-blue-800 text-white">
           <i class="fas fa-angle-down mr-2"></i>Menu
       </button>
 
@@ -44,7 +44,7 @@
           <% end %>
 
           <div data-target="search.searchDialog" class="search__results-container hidden">
-            <div data-target="search.searchingIndicator" class="text-grey text-sm text-center">Searching...</div>
+            <div data-target="search.searchingIndicator" class="text-gray-500 text-sm text-center">Searching...</div>
             <div data-target="search.resultsContainer"></div>
           </div>
         </div>
@@ -52,7 +52,7 @@
 
       <div class="sm:mx-4">
         <a href="#" data-action="navigation#showSwitcher" title="Signed id as <%= @current_account.name %>"><%= PalapaWeb.MemberView.avatar(@current_account, :small) %></a>
-        <div data-target="navigation.switcher" class="absolute pin-r border z-50 p-4 bg-white shadow rounded opacity-0">
+        <div data-target="navigation.switcher" class="absolute right-0 border z-50 p-4 bg-white shadow rounded opacity-0">
       </div>
 
     </div>

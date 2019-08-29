@@ -15,7 +15,7 @@
               </div>
             <% end %>
 
-            <ul class="list-reset">
+            <ul class="">
               <%= render_many @messages, PalapaWeb.MessageView, "_message.html", as: :message, conn: @conn, current_organization: @current_organization, current_account: @current_account %>
             </ul>
 

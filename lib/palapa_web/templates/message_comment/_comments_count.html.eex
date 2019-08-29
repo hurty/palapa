@@ -1,4 +1,4 @@
-<h3 class="mt-8 mb-4 text-grey-darker text-center"><i class="fas fa-comments"></i>
+<h3 class="mt-8 mb-4 text-gray-700 text-center"><i class="fas fa-comments"></i>
 <%= if @comments_count > 0 do %>
    <%= @comments_count %> comments</h3>
 <% else %>

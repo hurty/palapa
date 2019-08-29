@@ -1,153 +1,179 @@
-import BaseController from "./base_controller"
-import Popper from 'popper.js'
+import BaseController from "./base_controller";
+import Popper from "popper.js";
 import { Application } from "stimulus";
 
 export default class extends BaseController {
-  static targets = ["actionsIcons", "menuButton", "menuContent", "title", "iconOpened", "iconClosed",
-    "pagesList", "form", "titleInput", "errorMessage"]
+  static targets = [
+    "actionsIcons",
+    "menuButton",
+    "menuContent",
+    "title",
+    "iconOpened",
+    "iconClosed",
+    "pagesList",
+    "form",
+    "titleInput",
+    "errorMessage"
+  ];
 
   connect() {
-    this.handleDragPageOverSection()
+    this.handleDragPageOverSection();
   }
 
   showActionsIcons() {
-    this.show(this.actionsIconsTarget)
+    this.show(this.actionsIconsTarget);
   }
 
   hideActionsIcons() {
-    this.hide(this.actionsIconsTarget)
+    this.hide(this.actionsIconsTarget);
   }
 
   handleDragPageOverSection() {
-    document.addEventListener("dragOverSection", (event) => {
+    document.addEventListener("dragOverSection", event => {
       if (event.detail.overContainer === this.pagesListTarget) {
-        this.pagesListTarget.classList.add("bg-grey-lighter")
+        this.pagesListTarget.classList.add("bg-gray-200");
         // this.openSection()
       }
-    })
+    });
 
-    document.addEventListener("dragOutOfSection", (event) => {
+    document.addEventListener("dragOutOfSection", event => {
       if (event.detail.overContainer === this.pagesListTarget) {
-        this.pagesListTarget.classList.remove("bg-grey-lighter")
+        this.pagesListTarget.classList.remove("bg-gray-200");
       }
-    })
+    });
 
-    document.addEventListener("dragStopEvent", (event) => {
-      this.pagesListTarget.classList.remove("bg-grey-lighter")
-    })
+    document.addEventListener("dragStopEvent", event => {
+      this.pagesListTarget.classList.remove("bg-gray-200");
+    });
   }
 
   toggleSection(event) {
     if (this.isSectionOpen()) {
-      this.closeSection()
+      this.closeSection();
     } else {
-      this.openSection()
+      this.openSection();
     }
   }
 
   isSectionOpen() {
-    return this.pagesListTarget.classList.contains("document-section--open")
+    return this.pagesListTarget.classList.contains("document-section--open");
   }
 
   openSection() {
-    this.pagesListTarget.classList.replace("document-section--closed", "document-section--open")
+    this.pagesListTarget.classList.replace(
+      "document-section--closed",
+      "document-section--open"
+    );
   }
 
   closeSection() {
-    this.pagesListTarget.classList.replace("document-section--open", "document-section--closed")
+    this.pagesListTarget.classList.replace(
+      "document-section--open",
+      "document-section--closed"
+    );
   }
 
   toggleMenu(event) {
-    this.menuPopover = new Popper(this.menuButtonTarget, this.menuContentTarget, {
-      placement: "bottom"
-    })
-    this.menuContentTarget.classList.toggle("hidden")
-
+    this.menuPopover = new Popper(
+      this.menuButtonTarget,
+      this.menuContentTarget,
+      {
+        placement: "bottom"
+      }
+    );
+    this.menuContentTarget.classList.toggle("hidden");
   }
 
   hideMenu(event) {
-    if (event == null || (event.target != this.menuButtonTarget && !this.menuContentTarget.contains(event.target))) {
-      this.menuContentTarget.classList.add("hidden")
-      this.menuPopover = null
+    if (
+      event == null ||
+      (event.target != this.menuButtonTarget &&
+        !this.menuContentTarget.contains(event.target))
+    ) {
+      this.menuContentTarget.classList.add("hidden");
+      this.menuPopover = null;
     }
   }
 
-
   showRenameForm(event) {
-    if (event)
-      event.preventDefault()
+    if (event) event.preventDefault();
 
-    this.hideMenu()
+    this.hideMenu();
     let popper = new Popper(this.menuButtonTarget, this.formTarget, {
       placement: "bottom"
-    })
+    });
 
-    this.hide(this.errorMessageTarget)
-    this.show(this.formTarget)
-    this.focusWithCursorAtTheEnd(this.titleInputTarget)
+    this.hide(this.errorMessageTarget);
+    this.show(this.formTarget);
+    this.focusWithCursorAtTheEnd(this.titleInputTarget);
   }
 
   rename(event) {
-    event.preventDefault()
-    let newTitle = this.titleInputTarget.value
+    event.preventDefault();
+    let newTitle = this.titleInputTarget.value;
 
     if (newTitle === "") {
-      this.show(this.errorMessageTarget)
-      return
+      this.show(this.errorMessageTarget);
+      return;
     }
 
-    let formData = new FormData()
-    formData.append("section[title]", newTitle)
+    let formData = new FormData();
+    formData.append("section[title]", newTitle);
 
-    PA.fetchHTML(this.data.get("url"), { method: "put", body: formData }).then(() => {
-      this.title = newTitle
-      this.hide(this.formTarget)
-    })
+    PA.fetchHTML(this.data.get("url"), { method: "put", body: formData }).then(
+      () => {
+        this.title = newTitle;
+        this.hide(this.formTarget);
+      }
+    );
   }
 
   cancelRename(event) {
-    event.preventDefault()
-    this.hide(this.formTarget)
+    event.preventDefault();
+    this.hide(this.formTarget);
   }
 
   delete(event) {
-    event.preventDefault()
-    let url = event.target.getAttribute("href")
-    
+    event.preventDefault();
+    let url = event.target.getAttribute("href");
+
     if (!PA.confirm(event.target)) {
       return;
     }
 
     PA.fetchHTML(url, {
-      method: "delete",
+      method: "delete"
     }).then(() => {
       if (this.currentSectionId == this.id) {
-        window.location = this.documentUrl
+        window.location = this.documentUrl;
       } else {
-        this.element.remove()
+        this.element.remove();
       }
-    })
+    });
   }
 
   get id() {
-    return this.data.get("id")
+    return this.data.get("id");
   }
 
   get documentController() {
-    let documentElement = document.getElementById("document")
-    return this.application.getControllerForElementAndIdentifier(documentElement, "document")
+    let documentElement = document.getElementById("document");
+    return this.application.getControllerForElementAndIdentifier(
+      documentElement,
+      "document"
+    );
   }
 
   get currentSectionId() {
-    return this.documentController.currentSectionId
+    return this.documentController.currentSectionId;
   }
 
   get documentUrl() {
-    return this.documentController.documentUrl
+    return this.documentController.documentUrl;
   }
 
   set title(value) {
-    this.data.set("title", value)
-    this.titleTarget.innerHTML = value
+    this.data.set("title", value);
+    this.titleTarget.innerHTML = value;
   }
 }

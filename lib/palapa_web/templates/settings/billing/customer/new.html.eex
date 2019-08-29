@@ -5,12 +5,12 @@
 
     <%= form_for @customer_changeset, settings_customer_path(@conn, :create, @current_organization), [id: "payment-form"], fn form -> %>
       <%= if @customer_changeset.action do %>
-        <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+        <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
       <% end %>
 
       <p class="text-sm text-blue">* Required fields</p>
 
-      <div class="bg-grey-lightest rounded-lg p-2 my-4">
+      <div class="bg-gray-100 rounded-lg p-2 my-4">
         <h3 class="text-green"><%= gettext("Payment") %></h3>
         <div class="field">
           <label for="card-element" class="label">
@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      <div class="bg-grey-lightest rounded-lg p-2 my-2">
+      <div class="bg-gray-100 rounded-lg p-2 my-2">
         <h3 class="text-green"><%= gettext("Billing information") %></h3>
         
         <p class="text-sm text-blue">These informations will appear on your invoices</p>

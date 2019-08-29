@@ -1,5 +1,5 @@
-<div class="card text-grey-darker bg-grey-lightest sm:bg-white rounded text-sm">
-  <div class="flex justify-between p-1 sm:p-4 border-b border-grey-lighter">
+<div class="card text-gray-700 bg-gray-100 sm:bg-white rounded text-sm">
+  <div class="flex justify-between p-1 sm:p-4 border-b border-gray-200">
     <div>
       <%= if @document.team do %>
         <div class="text-xs font-bold mb-2">
@@ -7,7 +7,7 @@
         </div>
       <% end %>
 
-      <h2 class="font-bold text-grey-darkest text-base"><%= @document.title %></h2>
+      <h2 class="font-bold text-gray-800 text-base"><%= @document.title %></h2>
       
       <div class="sm:hidden py-2">
         <a class="text-blue" data-action="document#toggleToc">Toggle table of contents</a>
@@ -19,7 +19,7 @@
 
   <div class="hidden sm:block" data-target="document.toc">
     <div>
-      <ul data-target="document.sectionsContainer" class="list-reset">
+      <ul data-target="document.sectionsContainer" class="">
         <%= for section <- @document.sections do %>
           <%= render PalapaWeb.Document.SectionView, "toc_section.html", Map.put(assigns, :section, section) %>
         <% end %>
@@ -27,7 +27,7 @@
     </div>
 
     <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
-      <div class="flex justify-left p-4 border-t border-grey-lighter">
+      <div class="flex justify-left p-4 border-t border-gray-200">
         <div>
           <%= link to: document_page_path(@conn, :new, @current_organization, @document), class: "text-xs btn" do %>
             <i class="fas fa-file-alt"></i> New page

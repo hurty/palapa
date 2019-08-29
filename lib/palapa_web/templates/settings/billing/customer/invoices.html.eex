@@ -1,6 +1,6 @@
 <%= if Enum.any?(@invoices) do %>
   <div class="card p-4 mt-8">
-    <h2 class="text-grey-darkest">Invoices</h2>
+    <h2 class="text-gray-800">Invoices</h2>
     <div class="card-header-separator"></div>
 
     <table class="w-full text-left">

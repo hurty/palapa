@@ -1,6 +1,6 @@
 .message-content {
   @apply leading-normal;
-  @apply text-grey-darkest;
+  @apply text-gray-800;
 
   div {
     @apply mt-4;
@@ -21,24 +21,24 @@
   }
 
   a {
-    @apply text-blue-darkest;
+    @apply text-blue-900;
     text-decoration: underline !important;
 
     &:visited {
-      @apply text-blue-darkest;
+      @apply text-blue-900;
     }
   }
 
   blockquote  {
-    @apply text-purple-dark italic;
-    @apply border-l-2 border-purple-light;
-    @apply bg-purple-lightest;
+    @apply text-purple-600 italic;
+    @apply border-l-2 border-purple-400;
+    @apply bg-purple-100;
     @apply my-4 py-4 px-4;
   }
 
   pre {
     @apply text-sm;
-    @apply p-2 my-2 bg-grey-lightest rounded;
+    @apply p-2 my-2 bg-gray-100 rounded;
   }
 
   .attachment {

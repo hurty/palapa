@@ -9,12 +9,12 @@
 
     <%# ----- DOCS ----- %>
     <div class="card">
-      <div class="flex justify-between border-b border-grey-lighter p-1 sm:p-4">
+      <div class="flex justify-between border-b border-gray-200 p-1 sm:p-4">
         <div>
-          <h1 class="text-green text-lg sm:text-2xl"><%= @page.title %></h1>
-          <div class="py-2 text-grey-darker text-xs">
+          <h1 class="text-green-500 text-lg sm:text-2xl"><%= @page.title %></h1>
+          <div class="py-2 text-gray-700 text-xs">
             <span class="align-middle">Edited <%= auto_format_datetime(@page.updated_at, @current_account) %> by 
-            <%= link to: member_path(@conn, :show, @current_organization, @page.last_author), class: "align-middle text-grey-darkest hover:underline" do %>
+            <%= link to: member_path(@conn, :show, @current_organization, @page.last_author), class: "align-middle text-gray-800 hover:underline" do %>
               <%= PalapaWeb.MemberView.avatar(@page.last_author.account, :xs) %> <%= @page.last_author.account.name %>
             <% end %>
           </div>
@@ -34,10 +34,10 @@
           </section>
         <% end %>
 
-        <div class="border-t border-grey-lighter flex justify-between sm:p-4 mt-8">
+        <div class="border-t border-gray-200 flex justify-between sm:p-4 mt-8">
           <div class="w-1/2">
             <%= if @previous_page do %>
-              <%= link to: document_page_path(@conn, :show, @current_organization, @previous_page), class: "text-green hover:underline" do %>
+              <%= link to: document_page_path(@conn, :show, @current_organization, @previous_page), class: "text-green-500 hover:underline" do %>
                 <i class="fas fa-arrow-left mx-2"></i><%= @previous_page.title %>
               <% end %>
             <% end %>
@@ -45,7 +45,7 @@
 
           <div class="w-1/2 text-right">
             <%= if @next_page do %>
-              <%= link to: document_page_path(@conn, :show, @current_organization, @next_page), class: "text-green hover:underline" do %>
+              <%= link to: document_page_path(@conn, :show, @current_organization, @next_page), class: "text-green-500 hover:underline" do %>
                 <%= @next_page.title %><i class="fas fa-arrow-right mx-2"></i>
               <% end %>
             <% end %>

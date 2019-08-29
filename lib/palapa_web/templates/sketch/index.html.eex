@@ -4,10 +4,10 @@
 
     <div class="separator"></div>
     
-    <div class="text-grey-darker">
+    <div class="text-gray-700">
       <h3 class="my-2">Welcome</h3>
-      <h3 class="my-2 text-black">Life at the office</h3>
-        <ul class="list-reset pl-4 border-l">
+      <h3 class="my-2 text-gray-900">Life at the office</h3>
+        <ul class=" pl-4 border-l">
           <li class="my-2">Entering and leaving the building</li>
           <li class="my-2 underlisne text-green">Working remotely</li>
           <li class="my-2">What about lunch?</li>
@@ -27,7 +27,7 @@
     
     <div class="rounded shadow bg-white p-8 ">
       <h1 class="text-green">Working remotely</h1>
-      <p class="my-2 text-grey-darker text-sm">Last modified 12 days ago by Richard Dunn</p>
+      <p class="my-2 text-gray-700 text-sm">Last modified 12 days ago by Richard Dunn</p>
       <div class="separator"></div>
       
       <div class="message-content">

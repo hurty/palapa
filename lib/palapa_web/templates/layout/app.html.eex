@@ -20,7 +20,7 @@
       <%= render PalapaWeb.LayoutView, "_flash_notice.html", assigns %>
       <%= render @view_module, @view_template, assigns %>
 
-      <footer class="footer py-8 mt-8 text-center text-xs text-grey-dark">
+      <footer class="footer py-8 mt-8 text-center text-xs text-gray-600">
       </footer>
     </div>
   </body>

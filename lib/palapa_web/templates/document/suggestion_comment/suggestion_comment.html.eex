@@ -1,5 +1,5 @@
 <div data-controller="document-suggestion-comment" 
-  class="bg-grey-lightest rounded py-2 my-2">
+  class="bg-gray-100 rounded py-2 my-2">
   <div data-target="document-suggestion-comment.content">
     <div class="flex justify-between mb-4 mx-2">
       <div class="flex">
@@ -8,8 +8,8 @@
         </div>
 
         <div class="text-xs my-auto ml-2">
-          <%= link @suggestion_comment.author.account.name, to: member_path(@conn, :show, @conn.assigns.current_organization, @suggestion_comment.author.id), class: "text-grey-darkest font-bold hover:underline" %>
-          <div class="text-grey-darker font-light">Posted <%= auto_format_datetime(@suggestion_comment.inserted_at, @conn.assigns.current_account) %></div>
+          <%= link @suggestion_comment.author.account.name, to: member_path(@conn, :show, @conn.assigns.current_organization, @suggestion_comment.author.id), class: "text-gray-800 font-bold hover:underline" %>
+          <div class="text-gray-700 font-light">Posted <%= auto_format_datetime(@suggestion_comment.inserted_at, @conn.assigns.current_account) %></div>
         </div>
       </div>
 
@@ -45,7 +45,7 @@
     </div>
 
   
-    <div class="text-grey-darkest mt-2 pl-2 pr-8">
+    <div class="text-gray-800 mt-2 pl-2 pr-8">
       <%= rich_text @suggestion_comment.content %>
     </div>
   </div>

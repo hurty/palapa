@@ -11,8 +11,8 @@ class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-8">
         </div>
 
         <div class="text-xs my-auto">
-          <%= link @suggestion.author.account.name, to: member_path(@conn, :show, @current_organization, @suggestion.author.id), class: "text-grey-darkest font-bold hover:underline" %>
-          <div class="text-grey-darker font-light">Posted <%= auto_format_datetime(@suggestion.inserted_at, @current_account) %></div>
+          <%= link @suggestion.author.account.name, to: member_path(@conn, :show, @current_organization, @suggestion.author.id), class: "text-gray-800 font-bold hover:underline" %>
+          <div class="text-gray-700 font-light">Posted <%= auto_format_datetime(@suggestion.inserted_at, @current_account) %></div>
         </div>   
       </div>
       <%= render "actions.html", assigns %>  
@@ -21,7 +21,7 @@ class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-8">
     <div data-target="document-suggestion.editFormContainer">
     </div>
 
-    <div data-target="document-suggestion.content" class="text-grey-darkest mt-2 mb-4 pl-2 pb-2 pr-8">
+    <div data-target="document-suggestion.content" class="text-gray-800 mt-2 mb-4 pl-2 pb-2 pr-8">
       <%= render "suggestion_content.html", suggestion: @suggestion%>
     </div>
 
@@ -30,14 +30,14 @@ class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-8">
     </div>
 
     <%= if @suggestion.closed_at do %>
-      <div class="text-sm font-bold text-green-dark text-center bg-green-lightest rounded-full p-1">
+      <div class="text-sm font-bold text-green-600 text-center bg-green-100 rounded-full p-1">
         Closed by <%= @suggestion.closure_author.account.name %> (<%= auto_format_datetime(@suggestion.closed_at, @current_account ) %>)
       </div>
     <% end %>
   <div>
 
   <%= if permit?(Palapa.Documents, :update_suggestion, @current_member, @suggestion) do %>
-    <div data-target="document-suggestion.actions" class="p-1 pt-2 rounded mt-4 border-grey-lighter">
+    <div data-target="document-suggestion.actions" class="p-1 pt-2 rounded mt-4 border-gray-200">
 
       <%= form_for @conn, suggestion_comment_url(@conn, :create, @current_organization, @suggestion), 
         [as: :suggestion_comment, "data-target": "document-suggestion.commentForm", "data-action": "document-suggestion#postComment"], fn form -> %> 
@@ -60,7 +60,7 @@ class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-8">
             </div>
 
             <div class="flex justify-end">
-              <button type="submit" class="btn btn-green mr-1">Send</button>
+              <button type="submit" class="btn btn-green-500 mr-1">Send</button>
               <button data-action="document-suggestion#hideCommentForm" class="btn">Cancel</button>
             </div>
           </div>  

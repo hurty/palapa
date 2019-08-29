@@ -6,9 +6,9 @@
         <span class="font-normal">(<%= @search_results.total_entries %> results)</span>
       </div>
 
-      <ul class="list-reset px-4">
+      <ul class=" px-4">
         <%= for search_result <- @search_results do %>            
-          <li class="py-4 border-b border-grey-lightest">
+          <li class="py-4 border-b border-gray-100">
             <%= render search_result_template_path(search_result), Map.put(assigns, :search_result, search_result) %>
           </li>
 

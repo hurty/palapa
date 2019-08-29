@@ -1,6 +1,6 @@
 .popover {
   @apply shadow-lg rounded bg-white;
-  @apply border border-grey bg-white shadow-inner shadow overflow-y-auto;
+  @apply border border-gray-500 bg-white shadow-inner shadow overflow-y-auto;
   max-height: 16em;
   z-index: 1001;
 
@@ -10,26 +10,26 @@
     border-style: solid;
     position: absolute;
     margin: 3px;
-    @apply border-grey-darker;
+    @apply border-gray-700;
   }
 }
 
 .popover__link {
   @apply px-4 py-1 mb-1;
-  @apply text-grey-darkest font-semibold text-sm;
-  
+  @apply text-gray-800 font-semibold text-sm;
+
   &:hover {
-    @apply bg-green text-white;
+    @apply bg-green-500 text-white;
   }
 }
 
 .popover[x-placement^="bottom"] .popover__arrow {
-    border-width: 0 7px 7px 7px;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    border-top-color: transparent;
-    top: -7px;
-    left: calc(50% - 7px);
-    margin-top: 0;
-    margin-bottom: 0;
+  border-width: 0 7px 7px 7px;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  top: -7px;
+  left: calc(50% - 7px);
+  margin-top: 0;
+  margin-bottom: 0;
 }

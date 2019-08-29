@@ -1,17 +1,17 @@
 .tabs {
-  @apply flex list-reset py-4 mb-4;
+  @apply flex  py-4 mb-4;
 }
 
 .tab {
-  @apply text-grey-darker rounded-full mx-1;
+  @apply text-gray-700 rounded-full mx-1;
 
   a,
   a:visited {
-    @apply text-grey-darker font-bold;
+    @apply text-gray-700 font-bold;
   }
 
   &--selected {
-    @apply bg-indigo;
+    @apply bg-indigo-500;
 
     a,
     a:visited {

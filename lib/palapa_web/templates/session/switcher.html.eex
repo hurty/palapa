@@ -1,9 +1,9 @@
 <div class="p-1">
-  <div class="text-sm text-grey-darkest font-bold mb-4 border-b py-1"><%= @current_account.name %></div>
+  <div class="text-sm text-gray-800 font-bold mb-4 border-b py-1"><%= @current_account.name %></div>
 
-  <ul class="list-reset mb-2">
-    <li><%= link("My profile", to: member_path(@conn, :show, @current_organization, @current_member), class: "text-grey-darkest hover:underline") %></li>
-    <li><%= link("Account settings", to: account_path(@conn, :edit), target: "_blank", class: "text-grey-darkest hover:underline") %></li>
-    <li><%= link("Log out", to: session_path(@conn, :delete), class: "text-blue hover:underline", data: [controller: "link", action: "link#delete"]) %></li>
+  <ul class=" mb-2">
+    <li><%= link("My profile", to: member_path(@conn, :show, @current_organization, @current_member), class: "text-gray-800 hover:underline") %></li>
+    <li><%= link("Account settings", to: account_path(@conn, :edit), target: "_blank", class: "text-gray-800 hover:underline") %></li>
+    <li><%= link("Log out", to: session_path(@conn, :delete), class: "text-blue-500 hover:underline", data: [controller: "link", action: "link#delete"]) %></li>
   </ul>
 </div>

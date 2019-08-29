@@ -12,7 +12,7 @@ defmodule PalapaWeb.Document.DocumentView do
         link("Undo",
           to: document_trash_path(conn, :delete, conn.assigns.current_organization, document),
           data: [controller: "link", action: "link#delete"],
-          class: "text-green-darker hover:underline"
+          class: "text-green-800 hover:underline"
         )
       ]
     end

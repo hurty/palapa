@@ -6,12 +6,12 @@
 
 @screen sm {
   .card {
-    @apply bg-white rounded border border-grey-lighter;
+    @apply bg-white rounded border border-gray-200;
   }
 }
 
 .card-toolbar {
-  @apply p-2 border-b border-grey-lighter rounded-t;
+  @apply p-2 border-b border-gray-200 rounded-t;
 }
 
 @screen sm {
@@ -25,7 +25,7 @@
 }
 
 .card-header-separator {
-  @apply border-2 rounded-full border-grey-light w-1/6 my-4;
+  @apply border-2 rounded-full border-gray-400 w-1/6 my-4;
 }
 
 .card-actions {
@@ -38,27 +38,27 @@
 
 .card-footer {
   @apply flex justify-center mt-6;
-  @apply text-sm text-grey-darker;
+  @apply text-sm text-gray-700;
 }
 
 .card-member {
   a {
-    @apply text-red;
+    @apply text-red-500;
   }
 
   a:visited {
-    @apply text-red-dark;
+    @apply text-red-600;
   }
 }
 
 .card-actions-button {
-  @apply rounded-full h-8 w-8 bg-grey-light text-green font-bold border border-transparent;
+  @apply rounded-full h-8 w-8 bg-gray-400 text-green-500 font-bold border border-transparent;
 
   &:hover {
-    @apply border-grey;
+    @apply border-gray-500;
   }
 }
 
 .card-actions-button--sm {
-  @apply h-6 w-6 bg-grey-lighter;
+  @apply h-6 w-6 bg-gray-200;
 }

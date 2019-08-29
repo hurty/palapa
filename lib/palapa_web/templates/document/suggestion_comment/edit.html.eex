@@ -5,7 +5,7 @@
   </div>
 
   <div class="flex justify-end">
-    <button type="submit" class="btn btn-green mr-1">Save</button>
+    <button type="submit" class="btn btn-green-500 mr-1">Save</button>
     <button data-action="document-suggestion-comment#cancelEdit" class="btn">Cancel</button>
   </div>
 <% end %>

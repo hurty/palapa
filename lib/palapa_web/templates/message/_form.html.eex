@@ -22,7 +22,7 @@
     <div class="ml-4 hidden" data-target="team-sharing.teamsList">
       <div class="flex flex-wrap">
         <%= for team <- @teams do %>
-          <div class="p-2 bg-grey-lighter rounded m-1">
+          <div class="p-2 bg-gray-200 rounded m-1">
             <label class="cursor-pointer text-sm" for="team_<%= team.id %>">
             <input type="checkbox" class="align-middle" name="message[publish_teams_ids][]" id="team_<%= team.id %>" 
               value="<%= team.id %>" <%= if PalapaWeb.TeamView.team_checked?(@message_changeset, team) do %>checked<% end %>>

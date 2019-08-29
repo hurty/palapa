@@ -5,7 +5,7 @@
   "data-member-information-form-attachment-url": attachment_url(@conn, :create, @current_organization), 
   ], fn form -> %> 
 
-  <div class="<%= if @action_type not in [:edit, :update, :create_with_error] do %>hidden<% end %> border border-grey-lighter rounded p-2 text-sm bg-grey-lightest"
+  <div class="<%= if @action_type not in [:edit, :update, :create_with_error] do %>hidden<% end %> border border-gray-200 rounded p-2 text-sm bg-gray-100"
   data-target="member-information-form.formContent">
     <%= select form, :type, PalapaWeb.MemberInformationView.information_types_for_select, class: "field w-full", 
       "data-target": "member-information-form.type", "data-action": "member-information-form#displayFields" %>
@@ -19,7 +19,7 @@
     
     <div class="hidden field input dropzone" data-target="member-information-form.attachment">
       <div class="dz-message" data-dz-message>
-        <i class="fas fa-paperclip text-grey text-xl"></i>
+        <i class="fas fa-paperclip text-gray-500 text-xl"></i>
         <div>Attachments</div>
         <div>Click here or drag and drop some files</div>
       </div>

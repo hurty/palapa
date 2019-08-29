@@ -1,4 +1,4 @@
 <div class="blankslate">
-  <i class="text-5xl text-green-light fas fa-comments mb-4"></i>
+  <i class="text-5xl text-green-400 fas fa-comments mb-4"></i>
   <div>There's nothing's there yet.</div>
 </div>

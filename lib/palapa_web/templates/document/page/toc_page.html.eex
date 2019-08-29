@@ -1,18 +1,18 @@
 <li data-controller="document-toc-page"
   data-action="mouseover->document-toc-page#showActionsIcons mouseout->document-toc-page#hideActionsIcons"
   data-document-page-url="<%= document_page_url(@conn, :update, @current_organization, @toc_page) %>"
-  class="document-page draggable-source flex justify-between items-center cursor-pointer <%= if @toc_page.section_id do %>hover:bg-grey-lightest<% else %>hover:bg-grey-lighter<% end %>">
+  class="document-page draggable-source flex justify-between items-center cursor-pointer <%= if @toc_page.section_id do %>hover:bg-gray-100<% else %>hover:bg-gray-200<% end %>">
   
   <div data-action="click->document#clickPage" class="flex-1 py-2 pl-8">
     <%= link @toc_page.title, to: document_page_path(@conn, :show, @current_organization, @toc_page), 
-  class: if(@conn.params["id"] == @toc_page.id, do: "text-green font-bold", else: "text-grey-darker") %>
+  class: if(@conn.params["id"] == @toc_page.id, do: "text-green-500 font-bold", else: "text-gray-700") %>
   </div>
 
   <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
     <div class="document-actions hidden" data-target="document-toc-page.actionsIcons">
       <div data-controller="popover" data-action="mousedown@window->popover#hide">
           <button data-target="popover.button" data-action="popover#toggle" 
-            class="h-6 w-6 text-grey-dark font-bold hover:text-green hover:cursor-pointer"
+            class="h-6 w-6 text-gray-600 font-bold hover:text-green-500 hover:cursor-pointer"
             title="Actions on this page">
             <i class="fas fa-plus-circle"></i>
           </button>
@@ -30,7 +30,7 @@
           </div>
       </div>
       
-      <div class="draggable-handle px-2 text-grey-dark hover:text-green" title="Drag to reorder">
+      <div class="draggable-handle px-2 text-gray-600 hover:text-green" title="Drag to reorder">
         <i class="fas fa-bars"></i>
       </div>
     </div>

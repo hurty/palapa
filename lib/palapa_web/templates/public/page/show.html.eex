@@ -3,7 +3,7 @@
     <%= render PalapaWeb.Public.DocumentView, "table_of_contents.html", assigns %>
 
     <div class="text-center mt-8">
-      <%= link "Created with Palapa", to: home_url(@conn, :index), target: "_blank", class: "text-grey hover:underline text-sm" %>
+      <%= link "Created with Palapa", to: home_url(@conn, :index), target: "_blank", class: "text-gray-500 hover:underline text-sm" %>
     </div>
   </div>
 
@@ -11,10 +11,10 @@
 
     <%# ----- DOCS ----- %>
     <div class="card">
-      <div class="flex justify-between border-b border-grey-lighter p-1 sm:p-4">
+      <div class="flex justify-between border-b border-gray-200 p-1 sm:p-4">
         <div>
-          <h1 class="text-grey-darkest text-2xl sm:text-2xl"><%= @document.title %></h1>
-          <h2 class="text-green text-lg sm:text-2xl"><%= @page.title %></h2>
+          <h1 class="text-gray-800 text-2xl sm:text-2xl"><%= @document.title %></h1>
+          <h2 class="text-green-500 text-lg sm:text-2xl"><%= @page.title %></h2>
         </div>
       </div>
       <div>
@@ -28,10 +28,10 @@
           </section>
         <% end %>
 
-        <div class="border-t border-grey-lighter flex justify-between sm:p-4 mt-8">
+        <div class="border-t border-gray-200 flex justify-between sm:p-4 mt-8">
           <div class="w-1/2">
             <%= if @previous_page do %>
-              <%= link to: public_document_page_path(@conn, :show, @document.public_token, @previous_page), class: "text-green hover:underline" do %>
+              <%= link to: public_document_page_path(@conn, :show, @document.public_token, @previous_page), class: "text-green-500 hover:underline" do %>
                 <i class="fas fa-arrow-left mx-2"></i><%= @previous_page.title %>
               <% end %>
             <% end %>
@@ -39,7 +39,7 @@
 
           <div class="w-1/2 text-right">
             <%= if @next_page do %>
-              <%= link to: public_document_page_path(@conn, :show, @document.public_token, @next_page), class: "text-green hover:underline" do %>
+              <%= link to: public_document_page_path(@conn, :show, @document.public_token, @next_page), class: "text-green-500 hover:underline" do %>
                 <%= @next_page.title %><i class="fas fa-arrow-right mx-2"></i>
               <% end %>
             <% end %>

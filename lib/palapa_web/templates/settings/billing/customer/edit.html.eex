@@ -5,13 +5,13 @@
 
     <%= form_for @customer_changeset, settings_customer_path(@conn, :update, @current_organization), fn form -> %>
       <%= if @customer_changeset.action do %>
-        <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+        <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
       <% end %>
       
-      <p class="text-sm font-bold text-grey-dark">These informations will appear on your invoices</p>
+      <p class="text-sm font-bold text-gray-600">These informations will appear on your invoices</p>
       <p class="text-sm text-blue">* Required fields</p>
       
-      <div class="bg-grey-lightest rounded-lg p-2 my-2">
+      <div class="bg-gray-100 rounded-lg p-2 my-2">
         <div class="field">
           <%= label form, :billing_email, gettext("Billing email address*"), class: "label" %>
           <%= email_input form, :billing_email, class: "input", placeholder: "accounting@your-company.com" %>

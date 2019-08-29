@@ -13,7 +13,7 @@
     </li>
   </ul>
 
-  <ul class="list-reset flex flex-col" data-target="document-suggestions.suggestionsList">
+  <ul class=" flex flex-col" data-target="document-suggestions.suggestionsList">
     <%# Loaded asynchronously with ajax %>
   </ul>
 

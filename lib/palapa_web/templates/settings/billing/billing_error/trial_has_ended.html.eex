@@ -13,22 +13,22 @@
           </p>
 
           <div class="flex flex-wrap my-2 p-4 items-center justify-center text-xl">
-            <div class="p-2 bg-green-lightest rounded-lg ">
-              <ul class="list-reset">
-                <li><i class="fas fa-user-plus text-blue mr-2"></i><%= gettext("Unlimited members") %></li>
-                <li><i class="fas fa-users text-blue mr-2"></i><%= gettext("Unlimited teams") %></li>
-                <li><i class="fas fa-database text-blue mr-2"></i><%= gettext("100 GB storage included") %></li>
-                <li><i class="fas fa-life-ring text-blue mr-2"></i><%= gettext("Premium email support") %></li>
+            <div class="p-2 bg-green-100 rounded-lg ">
+              <ul class="">
+                <li><i class="fas fa-user-plus text-blue-500 mr-2"></i><%= gettext("Unlimited members") %></li>
+                <li><i class="fas fa-users text-blue-500 mr-2"></i><%= gettext("Unlimited teams") %></li>
+                <li><i class="fas fa-database text-blue-500 mr-2"></i><%= gettext("100 GB storage included") %></li>
+                <li><i class="fas fa-life-ring text-blue-500 mr-2"></i><%= gettext("Premium email support") %></li>
               </ul>
             </div>
             
-            <div class="border-green border-2 rounded-lg p-2 mx-4 text-green font-bold text-xl">
+            <div class="border-green-500 border-2 rounded-lg p-2 mx-4 text-green-500 font-bold text-xl">
               <%= gettext("Only %{price_per_member_per_month}€/member/month", price_per_member_per_month: Palapa.Billing.price_per_member_per_month) %>
             </div>
           </div>
 
           <p class="my-8 text-center">
-            <%= link("Upgrade your account", to: settings_customer_path(@conn, :show, @organization), class: "btn btn-green text-xl my-4") %>
+            <%= link("Upgrade your account", to: settings_customer_path(@conn, :show, @organization), class: "btn btn-green-500 text-xl my-4") %>
           </p>
         </section>
       </div>

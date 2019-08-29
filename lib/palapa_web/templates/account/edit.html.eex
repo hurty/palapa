@@ -6,7 +6,7 @@
 
       <%= form_for @account_changeset, account_path(@conn, :update), [as: :account, multipart: true], fn form -> %>
         <%= if @account_changeset.action do %>
-          <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+          <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
         <% end %>
 
         <div class="field">
@@ -46,7 +46,7 @@
 
       <%= form_for @password_changeset, account_path(@conn, :update), [as: :password], fn form -> %>
         <%= if @password_changeset.action do %>
-          <p class="db fw6 lh-copy f6 dark-pink text-red-light font-bold">Check the errors below :</p>
+          <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
         <% end %>
 
         <div class="field">

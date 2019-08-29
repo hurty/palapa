@@ -1,8 +1,8 @@
 <div class="content article-layout">
   <div class="main-content"> 
-    <h2 class="text-grey-darkest"><%= gettext "Last activity" %></h2>
+    <h2 class="text-gray-800"><%= gettext "Last activity" %></h2>
 
-    <ul class="list-reset">
+    <ul class="">
       <%= render_many @events, PalapaWeb.EventView, "event.html", conn: @conn %>
     </ul>
   </div>

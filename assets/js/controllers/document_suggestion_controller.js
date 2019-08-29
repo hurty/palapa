@@ -18,7 +18,7 @@ export default class extends BaseController {
     if (event) event.preventDefault();
 
     this.show(this.commentFormTarget);
-    this.actionsTarget.classList.add("bg-grey-lightest");
+    this.actionsTarget.classList.add("bg-gray-100");
     this.hide(this.passiveFormItemsTarget);
     this.show(this.activeFormItemsTarget);
     this.activeFormItemsTarget.querySelector("trix-editor").focus();
@@ -27,7 +27,7 @@ export default class extends BaseController {
   hideCommentForm(event) {
     if (event) event.preventDefault();
 
-    this.actionsTarget.classList.remove("bg-grey-lightest");
+    this.actionsTarget.classList.remove("bg-gray-100");
     this.show(this.passiveFormItemsTarget);
     this.hide(this.activeFormItemsTarget);
   }

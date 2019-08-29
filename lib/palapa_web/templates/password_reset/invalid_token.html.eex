@@ -6,7 +6,7 @@
       <div class="card-header-separator"></div>
 
       <p>This reset token is invalid or expired. If you've asked for a password reset more than an hour ago, please ask for a 
-      <%= link "new reset link", to: password_reset_path(@conn, :new), class: "text-blue hover:underline" %></p>
+      <%= link "new reset link", to: password_reset_path(@conn, :new), class: "text-blue-500 hover:underline" %></p>
     </div>
   </div>
 </div>

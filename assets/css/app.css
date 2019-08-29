@@ -12,7 +12,7 @@
  * See: https://github.com/tailwindcss/tailwindcss/issues/53#issuecomment-341413622
  */
 
-@import "./_tailwind-preflight";
+@import "tailwindcss/base";
 
 /**
   * Here you would add any of your custom component classes; stuff that you'd
@@ -29,6 +29,9 @@
   * @import "components/buttons";
   * @import "components/forms";
   */
+
+@import "tailwindcss/components";
+
 @import "components/_animations";
 @import "components/_autocomplete";
 @import "components/_draggable";
@@ -70,7 +73,7 @@
   * See: https://github.com/tailwindcss/tailwindcss/issues/53#issuecomment-341413622
   */
 
-@import "./_tailwind-utilities";
+@import "tailwindcss/utilities";
 
 /**
   * Here you would add any custom utilities you need that don't come out of the
