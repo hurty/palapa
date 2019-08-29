@@ -17,11 +17,11 @@
       </a>
     </div>
     <div>
-      <%= link("Create workspace", to: registration_path(@conn, :new), class: "btn btn-grey") %>
+      <%= link("Create workspace", to: registration_path(@conn, :new), class: "btn ") %>
       <%= if @current_member do %>
-        <%= link("Log out", to: session_path(@conn, :delete), data: [controller: "link", action: "link#delete"], class: "btn btn-grey") %>
+        <%= link("Log out", to: session_path(@conn, :delete), data: [controller: "link", action: "link#delete"], class: "btn ") %>
       <% else %>
-        <%= link("Login", to: session_path(@conn, :new), class: "btn btn-grey") %>
+        <%= link("Login", to: session_path(@conn, :new), class: "btn ") %>
       <% end%>
     </div>
   </div>
