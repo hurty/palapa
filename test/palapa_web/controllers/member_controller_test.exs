@@ -47,12 +47,12 @@ defmodule PalapaWeb.MemberControllerTest do
       org: org,
       member: member
     } do
-      Palapa.Organizations.create_member_information(member, %{
+      Palapa.Organizations.create_personal_information(member, %{
         type: :email,
         value: "bertram.gilfoyle@piedpiper.com"
       })
 
-      Palapa.Organizations.create_member_information(member, %{
+      Palapa.Organizations.create_personal_information(member, %{
         type: :address,
         value: "28 rue saint antoine 44000 Nantes",
         private: true
@@ -68,12 +68,12 @@ defmodule PalapaWeb.MemberControllerTest do
       org: org,
       workspace: workspace
     } do
-      Palapa.Organizations.create_member_information(workspace.jared, %{
+      Palapa.Organizations.create_personal_information(workspace.jared, %{
         type: :email,
         value: "jared.dunn@piedpiper.com"
       })
 
-      Palapa.Organizations.create_member_information(workspace.jared, %{
+      Palapa.Organizations.create_personal_information(workspace.jared, %{
         type: :address,
         value: "The basement",
         private: true
@@ -91,13 +91,13 @@ defmodule PalapaWeb.MemberControllerTest do
       workspace: workspace
     } do
       {:ok, _} =
-        Palapa.Organizations.create_member_information(workspace.jared, %{
+        Palapa.Organizations.create_personal_information(workspace.jared, %{
           "type" => :skype,
           "value" => "mister.jared"
         })
 
       {:ok, _} =
-        Palapa.Organizations.create_member_information(workspace.jared, %{
+        Palapa.Organizations.create_personal_information(workspace.jared, %{
           "type" => :email,
           "value" => "jared.dunn@piedpiper.com",
           "private" => true,
@@ -105,7 +105,7 @@ defmodule PalapaWeb.MemberControllerTest do
         })
 
       {:ok, _} =
-        Palapa.Organizations.create_member_information(workspace.jared, %{
+        Palapa.Organizations.create_personal_information(workspace.jared, %{
           "type" => :github,
           "value" => "jared-knows-code",
           "private" => true,
@@ -113,7 +113,7 @@ defmodule PalapaWeb.MemberControllerTest do
         })
 
       {:ok, _} =
-        Palapa.Organizations.create_member_information(workspace.jared, %{
+        Palapa.Organizations.create_personal_information(workspace.jared, %{
           "type" => :address,
           "value" => "The basement",
           "private" => true

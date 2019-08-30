@@ -12,8 +12,6 @@ defmodule Palapa.Attachments.Attachment do
     timestamps()
     field(:deleted_at, :utc_datetime)
     belongs_to(:creator, Palapa.Organizations.Member)
-
-    belongs_to(:member_information, Palapa.Organizations.MemberInformation)
   end
 
   def changeset(%Attachment{} = attachment, attrs) do

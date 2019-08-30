@@ -1,7 +1,7 @@
-defmodule PalapaWeb.MemberInformationView do
+defmodule PalapaWeb.PersonalInformationView do
   use PalapaWeb, :view
 
-  alias Palapa.Organizations.MemberInformation
+  alias Palapa.Organizations.PersonalInformation
 
   # # Map for FontAwesome icons names
   # @information_types %{
@@ -64,7 +64,7 @@ defmodule PalapaWeb.MemberInformationView do
       Palapa.Organizations.members_count(organization) > 1
   end
 
-  def visibility_text(%MemberInformation{} = information) do
+  def visibility_text(%PersonalInformation{} = information) do
     nb_teams = length(information.teams)
     nb_members = length(information.members)
 

@@ -1,7 +1,7 @@
 defmodule Palapa.Factory do
   alias Palapa.Repo
 
-  alias Palapa.Organizations.{Organization, Member, MemberInformation}
+  alias Palapa.Organizations.{Organization, Member, PersonalInformation}
   alias Palapa.Billing.{Customer, Invoice, Subscription}
   alias Palapa.Accounts.Account
   alias Palapa.Teams.Team
@@ -71,12 +71,12 @@ defmodule Palapa.Factory do
     richard =
       insert!(:owner,
         organization: pied_piper,
-        member_informations: [
-          %MemberInformation{
+        personal_informations: [
+          %PersonalInformation{
             label: "email",
             value: "richard.hendricks@piedpiper.com"
           },
-          %MemberInformation{
+          %PersonalInformation{
             label: "My best quote",
             value: "Wahoo"
           }
@@ -87,16 +87,16 @@ defmodule Palapa.Factory do
       insert!(:admin,
         organization: pied_piper,
         title: "Head of Business Development",
-        member_informations: [
-          %MemberInformation{
+        personal_informations: [
+          %PersonalInformation{
             label: "email",
             value: "jared.dunn@piedpiper.com"
           },
-          %MemberInformation{
+          %PersonalInformation{
             label: "Office hours",
             value: "Mon-Fri 9-5"
           },
-          %MemberInformation{
+          %PersonalInformation{
             label: "My best quote",
             value: "How would you like to die today, motherfucker? "
           }
@@ -107,12 +107,12 @@ defmodule Palapa.Factory do
       insert!(:member,
         organization: pied_piper,
         title: "Nerd",
-        member_informations: [
-          %MemberInformation{
+        personal_informations: [
+          %PersonalInformation{
             label: "email",
             value: "bertram.gilfoyle@piedpiper.com"
           },
-          %MemberInformation{
+          %PersonalInformation{
             label: "My best quote",
             value:
               "Our process sucks. Your inability to stop us from sucking is a failure of leadership."
@@ -125,16 +125,16 @@ defmodule Palapa.Factory do
         organization: pied_piper,
         account: build(:dinesh),
         title: "Developer",
-        member_informations: [
-          %MemberInformation{
+        personal_informations: [
+          %PersonalInformation{
             label: "email",
             value: "dinesh.chugtai@piedpiper.com"
           },
-          %MemberInformation{
+          %PersonalInformation{
             label: "person to contact",
             value: "My girlfriend 06729824042"
           },
-          %MemberInformation{
+          %PersonalInformation{
             label: "twitter",
             value: "https://twitter.com/dineshisreal"
           }
@@ -146,12 +146,12 @@ defmodule Palapa.Factory do
         organization: pied_piper,
         account: build(:monica),
         title: "VC",
-        member_informations: [
-          %MemberInformation{
+        personal_informations: [
+          %PersonalInformation{
             label: "email",
             value: "monica.hall@piedpiper.com"
           },
-          %MemberInformation{
+          %PersonalInformation{
             label: "office hours",
             value: "Mon-Fri 9-5"
           }
@@ -169,16 +169,16 @@ defmodule Palapa.Factory do
         organization: pied_piper,
         account: build(:erlich),
         title: "Roommate",
-        member_informations: [
-          %MemberInformation{
+        personal_informations: [
+          %PersonalInformation{
             label: "email",
             value: "erlich.bachman@piedpiper.com"
           },
-          %MemberInformation{
+          %PersonalInformation{
             label: "person to contact",
             value: "My mum 06729824042"
           },
-          %MemberInformation{
+          %PersonalInformation{
             label: "twitter",
             value: "https://twitter.com/erlichbachman"
           }

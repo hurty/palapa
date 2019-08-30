@@ -1,0 +1,20 @@
+<div id="personal-informations-list">
+  <h2 class="text-blue-800 text-center text-sm py-2 font-bold">
+    <%= if Enum.any?(@personal_informations) do %>
+      Personal information shared within <%= @current_organization.name %>
+    <% else %>
+      <%= if @current_member.id == @member.id do %>
+        You have not shared any information yet.
+      <% else %>
+        This member hasn't shared any personal information with you.
+      <% end %>
+    <% end %>
+  </h2>
+
+  <%= for info <- @personal_informations do %>
+  <div data-controller="personal-information"
+      data-action="mouseover->personal-information#showCopyButton focus->personal-information#showCopyButton mouseout->personal-information#hideCopyButton blur->personal-information#hideCopyButton">
+    <%= render "_personal_information.html", Map.put(assigns, :info, info) %>
+  </div>
+  <% end %>
+</div>

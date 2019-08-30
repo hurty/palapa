@@ -13,7 +13,7 @@
       <div class="flex flex-wrap">
         <div class="w-full sm:w-1/2">
           <%= render "_member_profile.html", assigns %>
-          <%= render "_member_informations.html", assigns %>
+          <%= render "_personal_informations.html", assigns %>
         </div>
 
         <div class="w-full sm:w-1/2 sm:border-l">

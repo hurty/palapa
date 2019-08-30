@@ -2,6 +2,14 @@ defmodule Palapa.Repo.Migrations.CreateAttachmentsRelations do
   use Ecto.Migration
 
   def change do
+    create table(:personal_information_attachments, primary_key: false) do
+      add(:personal_information_id, references(:personal_informations, on_delete: :delete_all))
+      add(:attachment_id, references(:attachments, on_delete: :delete_all))
+    end
+
+    create(index(:personal_information_attachments, [:personal_information_id]))
+    create(index(:personal_information_attachments, [:attachment_id]))
+
     create table(:messages_attachments, primary_key: false) do
       add(:message_id, references(:messages, on_delete: :delete_all))
       add(:attachment_id, references(:attachments, on_delete: :delete_all))

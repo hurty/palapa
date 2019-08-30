@@ -85,7 +85,7 @@ export default class extends BaseController {
     attachmentIdElement.setAttribute("type", "hidden");
     attachmentIdElement.setAttribute(
       "name",
-      "member_information[attachments][]"
+      "personal_information[attachments][]"
     );
     attachmentIdElement.setAttribute("id", attachment.attachment_id);
     attachmentIdElement.setAttribute("value", attachment.attachment_sid);
@@ -117,7 +117,7 @@ export default class extends BaseController {
     event.target.disabled = true;
 
     let url = this.element.getAttribute("action");
-    let list = document.getElementById("member-informations-list");
+    let list = document.getElementById("personal-informations-list");
 
     PA.fetchHTML(url, {
       method: "post",

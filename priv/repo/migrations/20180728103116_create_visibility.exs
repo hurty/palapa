@@ -2,10 +2,10 @@ defmodule Palapa.Repo.Migrations.CreateVisibilities do
   use Ecto.Migration
 
   def change do
-    create table(:member_information_visibilities, primary_key: false) do
+    create table(:personal_information_visibilities, primary_key: false) do
       add(
-        :member_information_id,
-        references(:member_informations, on_delete: :delete_all, type: :uuid),
+        :personal_information_id,
+        references(:personal_informations, on_delete: :delete_all, type: :uuid),
         null: false
       )
 
@@ -13,10 +13,10 @@ defmodule Palapa.Repo.Migrations.CreateVisibilities do
       add(:team_id, references(:teams, on_delete: :delete_all, type: :uuid))
     end
 
-    create(index(:member_information_visibilities, [:team_id]))
-    create(index(:member_information_visibilities, [:member_id]))
-    create(index(:member_information_visibilities, [:member_information_id]))
-    create(unique_index(:member_information_visibilities, [:team_id, :member_information_id]))
-    create(unique_index(:member_information_visibilities, [:member_id, :member_information_id]))
+    create(index(:personal_information_visibilities, [:team_id]))
+    create(index(:personal_information_visibilities, [:member_id]))
+    create(index(:personal_information_visibilities, [:personal_information_id]))
+    create(unique_index(:personal_information_visibilities, [:team_id, :personal_information_id]))
+    create(unique_index(:personal_information_visibilities, [:member_id, :personal_information_id]))
   end
 end

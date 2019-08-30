@@ -1,26 +1,31 @@
-defmodule Palapa.Organizations.MemberInformation do
+defmodule Palapa.Organizations.PersonalInformation do
   use Palapa.Schema
 
   alias Palapa.Organizations.Member
   alias Palapa.Teams.Team
   alias Palapa.Attachments
+  alias Palapa.Attachments.Attachment
 
-  schema "member_informations" do
+  schema "personal_informations" do
     belongs_to(:member, Member)
     field(:label, :string)
     field(:value, :string)
     field(:private, :boolean, default: false)
     timestamps()
-    has_many(:attachments, Attachments.Attachment, on_replace: :nilify)
+
+    many_to_many(:attachments, Attachment,
+      join_through: "personal_information_attachments",
+      on_replace: :delete
+    )
 
     many_to_many(:teams, Team,
-      join_through: "member_information_visibilities",
+      join_through: "personal_information_visibilities",
       on_delete: :delete_all,
       on_replace: :delete
     )
 
     many_to_many(:members, Member,
-      join_through: "member_information_visibilities",
+      join_through: "personal_information_visibilities",
       on_delete: :delete_all,
       on_replace: :delete
     )
@@ -28,8 +33,8 @@ defmodule Palapa.Organizations.MemberInformation do
     field(:visibilities, {:array, :string}, virtual: true)
   end
 
-  def changeset(%__MODULE__{} = member_information, %Member{} = member, attrs) do
-    member_information
+  def changeset(%__MODULE__{} = personal_information, %Member{} = member, attrs) do
+    personal_information
     |> cast(attrs, [:label, :value, :private, :visibilities])
     |> put_assoc(:member, member)
     |> put_attachments(attrs)
@@ -37,8 +42,8 @@ defmodule Palapa.Organizations.MemberInformation do
     |> validate_required([:member, :label, :value])
   end
 
-  def update_changeset(%__MODULE__{} = member_information, attrs) do
-    member_information
+  def update_changeset(%__MODULE__{} = personal_information, attrs) do
+    personal_information
     |> cast(attrs, [:label, :value, :private, :visibilities])
     |> put_attachments(attrs)
     |> put_visibilities(attrs)

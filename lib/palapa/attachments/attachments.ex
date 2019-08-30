@@ -33,7 +33,7 @@ defmodule Palapa.Attachments do
     queryable
     |> where([a], is_nil(a.message_id))
     |> where([a], is_nil(a.message_comment_id))
-    |> where([a], is_nil(a.member_information_id))
+    |> where([a], is_nil(a.personal_information_id))
   end
 
   # --- Actions
@@ -104,8 +104,8 @@ defmodule Palapa.Attachments do
       attachment.message_comment_id ->
         Repo.preload(attachment, :message_comment).message_comment
 
-      attachment.member_information_id ->
-        Repo.preload(attachment, :member_information).member_information
+      attachment.personal_information_id ->
+        Repo.preload(attachment, :personal_information).personal_information
 
       true ->
         nil

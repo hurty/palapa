@@ -1,0 +1,18 @@
+<div data-controller="personal-informations" class="flex-1 p-2 sm:p-4">
+  <div class="mx-auto">
+    <%= render "_personal_informations_list.html", assigns %>
+
+    <%= if Palapa.Access.permit?(Palapa.Organizations, :create_personal_information, @current_member, @member) do %>
+      <div data-target="personal-informations.form">
+        <%= render "_personal_information_form.html", 
+          conn: @conn, 
+          current_organization: @current_organization, 
+          personal_information_changeset: @personal_information_changeset,
+          personal_information: nil,
+          action: member_personal_information_path(@conn, :create, @current_organization, @member),
+          action_type: :create
+        %>
+      </div>
+    <% end %>
+  </div>
+</div>

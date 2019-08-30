@@ -2,7 +2,7 @@ defmodule Palapa.Attachments.Policy do
   use Palapa.Policy
 
   alias Palapa.Attachments
-  alias Palapa.Organizations.MemberInformation
+  alias Palapa.Organizations.PersonalInformation
   alias Palapa.Messages.Message
   alias Palapa.Messages.MessageComment
 
@@ -13,8 +13,8 @@ defmodule Palapa.Attachments.Policy do
   def authorize(:show, %Member{} = member, attachment) do
     if attachable = Attachments.get_attachable(attachment) do
       case attachable do
-        %MemberInformation{} ->
-          Palapa.Organizations.Policy.authorize(:delete_member_information, member, attachable)
+        %PersonalInformation{} ->
+          Palapa.Organizations.Policy.authorize(:delete_personal_information, member, attachable)
 
         %Message{} ->
           Palapa.Messages.Policy.authorize(:show, member, attachable)
@@ -34,8 +34,8 @@ defmodule Palapa.Attachments.Policy do
   def authorize(:delete, %Member{} = member, attachment) do
     if attachable = Attachments.get_attachable(attachment) do
       case attachable do
-        %MemberInformation{} ->
-          Palapa.Organizations.Policy.authorize(:delete_member_information, member, attachable)
+        %PersonalInformation{} ->
+          Palapa.Organizations.Policy.authorize(:delete_personal_information, member, attachable)
 
         %Message{} ->
           Palapa.Messages.Policy.authorize(:delete_message, member, attachable)

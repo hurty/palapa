@@ -1,6 +1,6 @@
 defmodule Palapa.Organizations.Policy do
   use Palapa.Policy
-  alias Palapa.Organizations.MemberInformation
+  alias Palapa.Organizations.PersonalInformation
 
   def authorize(:update_organization, %Member{} = member, _) do
     member.role == :owner
@@ -19,7 +19,7 @@ defmodule Palapa.Organizations.Policy do
   end
 
   def authorize(
-        :create_member_information,
+        :create_personal_information,
         %Member{} = member,
         %Member{} = target_member
       ) do
@@ -27,19 +27,19 @@ defmodule Palapa.Organizations.Policy do
   end
 
   def authorize(
-        :update_member_information,
+        :update_personal_information,
         %Member{} = member,
-        %MemberInformation{} = member_information
+        %PersonalInformation{} = personal_information
       ) do
-    member.id == member_information.member_id
+    member.id == personal_information.member_id
   end
 
   def authorize(
-        :delete_member_information,
+        :delete_personal_information,
         %Member{} = member,
-        %MemberInformation{} = member_information
+        %PersonalInformation{} = personal_information
       ) do
-    member.id == member_information.member_id || member.role in [:owner, :admin]
+    member.id == personal_information.member_id || member.role in [:owner, :admin]
   end
 
   # Catch-all: deny everything else

@@ -159,10 +159,10 @@ defmodule PalapaWeb.Router do
 
       resources "/members", MemberController, only: [:index, :show] do
         resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)
-        resources("/member_informations", MemberInformationController, only: [:create])
+        resources("/personal_informations", PersonalInformationController, only: [:create])
       end
 
-      resources("/member_informations", MemberInformationController,
+      resources("/personal_informations", PersonalInformationController,
         only: [:edit, :update, :delete]
       )
 

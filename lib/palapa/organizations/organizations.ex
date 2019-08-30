@@ -1,7 +1,7 @@
 defmodule Palapa.Organizations do
   use Palapa.Context
 
-  alias Organizations.{Organization, Member, MemberInformation}
+  alias Organizations.{Organization, Member, PersonalInformation}
   alias Palapa.Accounts.Account
 
   defdelegate(authorize(action, user, params), to: Palapa.Organizations.Policy)
@@ -148,16 +148,16 @@ defmodule Palapa.Organizations do
     |> Repo.update()
   end
 
-  def change_member_information(
-        %MemberInformation{} = member_information \\ %MemberInformation{},
+  def change_personal_information(
+        %PersonalInformation{} = personal_information \\ %PersonalInformation{},
         %Member{} = member,
         attrs \\ %{}
       ) do
-    MemberInformation.changeset(member_information, member, attrs)
+    PersonalInformation.changeset(personal_information, member, attrs)
   end
 
-  def create_member_information(%Member{} = member, attrs) do
-    MemberInformation.changeset(%MemberInformation{}, member, attrs)
+  def create_personal_information(%Member{} = member, attrs) do
+    PersonalInformation.changeset(%PersonalInformation{}, member, attrs)
     |> Repo.insert()
   end
 
@@ -171,17 +171,17 @@ defmodule Palapa.Organizations do
   - Private informations where viewer is in the members allow-list
   - Private informations where viewer is in the teams allow-list
   """
-  def list_member_informations(%Member{} = member, %Member{} = viewer) do
+  def list_personal_informations(%Member{} = member, %Member{} = viewer) do
     query = """
     SELECT mi.*
-    FROM member_informations AS mi
+    FROM personal_informations AS mi
     WHERE mi.private = 'false'
     AND mi.member_id = $1
 
     UNION
 
     SELECT mi.*
-    FROM member_informations AS mi
+    FROM personal_informations AS mi
     WHERE mi.private = 'true'
     AND mi.member_id = $2
     AND mi.member_id = $3
@@ -189,8 +189,8 @@ defmodule Palapa.Organizations do
     UNION
 
     SELECT mi.*
-    FROM member_informations AS mi
-    JOIN member_information_visibilities miv ON mi.id = miv.member_information_id
+    FROM personal_informations AS mi
+    JOIN personal_information_visibilities miv ON mi.id = miv.personal_information_id
     WHERE mi.member_id = $4
     AND mi.private = 'true'
     AND (miv.member_id = $5
@@ -212,22 +212,22 @@ defmodule Palapa.Organizations do
       viewer_id,
       viewer_id
     ])
-    |> Repo.load_raw(MemberInformation)
+    |> Repo.load_raw(PersonalInformation)
     |> Repo.preload([:attachments, :teams, :members])
   end
 
-  def get_member_information!(id) do
-    MemberInformation
+  def get_personal_information!(id) do
+    PersonalInformation
     |> preload([:attachments, :teams, :members])
     |> Repo.get!(id)
   end
 
-  def update_member_information(member_information, attrs) do
-    MemberInformation.update_changeset(member_information, attrs)
+  def update_personal_information(personal_information, attrs) do
+    PersonalInformation.update_changeset(personal_information, attrs)
     |> Repo.update()
   end
 
-  def delete_member_information(%MemberInformation{} = member_information) do
-    Repo.delete(member_information)
+  def delete_personal_information(%PersonalInformation{} = personal_information) do
+    Repo.delete(personal_information)
   end
 end
