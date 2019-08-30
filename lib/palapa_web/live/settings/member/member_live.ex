@@ -31,12 +31,12 @@ defmodule PalapaWeb.Settings.MemberLive do
     {:noreply, socket}
   end
 
-  def handle_event("delete_member", value, socket) do
-    {:noreply, assign(socket, %{confirm_delete_member_id: value})}
+  def handle_event("delete_member", %{"member_id" => member_id}, socket) do
+    {:noreply, assign(socket, %{confirm_delete_member_id: member_id})}
   end
 
-  def handle_event("confirm_delete_member", value, socket) do
-    member = Organizations.get_member!(value)
+  def handle_event("confirm_delete_member", %{"member_id" => member_id}, socket) do
+    member = Organizations.get_member!(member_id)
 
     with :ok <-
            permit(Organizations, :delete_member, socket.assigns.current_member, member),
