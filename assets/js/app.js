@@ -3,8 +3,12 @@ import "./vendor/fontawesome";
 import "./vendor/fontawesome-solid";
 import "./vendor/fontawesome-brands";
 
+import AutoFocus from "./live_hooks/auto_focus";
+let Hooks = {};
+Hooks.AutoFocus = AutoFocus;
+
 import LiveSocket from "phoenix_live_view";
-let liveSocket = new LiveSocket("/live");
+let liveSocket = new LiveSocket("/live", { hooks: Hooks });
 liveSocket.connect();
 
 import "./palapa";

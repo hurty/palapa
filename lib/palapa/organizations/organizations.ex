@@ -96,20 +96,20 @@ defmodule Palapa.Organizations do
   def get_member!(%Organization{} = organization, member_id) do
     organization
     |> Ecto.assoc(:members)
-    |> preload(:account)
+    |> preload([:account, :teams])
     |> Repo.get!(member_id)
   end
 
   def get_member!(member_id) do
     Member
-    |> preload(:account)
+    |> preload([:account, :teams])
     |> Repo.get!(member_id)
   end
 
   def get_member_from_account(%Organization{} = organization, %Account{} = account) do
     account
     |> Ecto.assoc(:members)
-    |> preload(:account)
+    |> preload([:account, :teams])
     |> where(organization_id: ^organization.id)
     |> Repo.one()
   end

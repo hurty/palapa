@@ -33,13 +33,13 @@ defmodule PalapaWeb.MessageView do
     |> String.replace("&nbsp;", "")
   end
 
-  def message_teams_tags(conn, message) do
+  def message_teams_tags(message) do
     teams = message.teams
 
     if Enum.any?(teams) do
       content_tag :div, class: "flex flex-wrap" do
         Enum.map(teams, fn team ->
-          PalapaWeb.TeamView.team_tag(conn, team)
+          PalapaWeb.TeamView.team_tag(team)
         end)
       end
     end

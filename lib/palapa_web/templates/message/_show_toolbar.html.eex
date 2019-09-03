@@ -38,5 +38,5 @@
 <% end %>
 
 <div class="message__tags">
-  <%= message_teams_tags(@conn, @message) %>
+  <%= message_teams_tags(@message) %>
 </div>

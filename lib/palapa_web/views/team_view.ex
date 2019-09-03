@@ -2,13 +2,13 @@ defmodule PalapaWeb.TeamView do
   use PalapaWeb, :view
   use Phoenix.HTML
   alias PalapaWeb.Router
+  alias PalapaWeb.Endpoint
 
-  def team_tag(conn, team) do
+  def team_tag(team) do
     content_tag(
       :a,
       team.name,
-      href:
-        Router.Helpers.member_path(conn, :index, conn.assigns.current_organization, team_id: team),
+      href: Router.Helpers.member_path(Endpoint, :index, team.organization_id, team_id: team),
       class: "tag tag-team"
     )
   end
