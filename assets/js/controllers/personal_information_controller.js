@@ -11,7 +11,9 @@ export default class extends BaseController {
     }
 
     PA.remoteLink(event.target, { method: "delete" }).then(html => {
-      this.element.remove()
+      this.animate(this.element, "fadeOut", () => {
+        this.element.remove();
+      });
     })
   }
 

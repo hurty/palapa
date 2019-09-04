@@ -1,6 +1,6 @@
-import { Controller } from "stimulus"
+import BaseController from "./base_controller"
 
-export default class extends Controller {
+export default class extends BaseController {
   static targets = ["formContainer", "commentForm", "content", "hiddenInput"]
 
   editComment(event) {
@@ -43,7 +43,9 @@ export default class extends Controller {
 
     PA.remoteLink(link, { method: "delete" })
       .then(html => {
-        this.element.remove()
+        this.animate(this.element, "fadeOut", () => {
+          this.element.remove();
+        });
         document.getElementById("message-comments-count").innerHTML = html
       })
   }
