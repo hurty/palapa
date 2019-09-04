@@ -1,5 +1,5 @@
-<%= link to: member_path(@conn, :show, @conn.assigns.current_organization, @member), class: "h-full" do %>
-  <div class="text-center"><%= PalapaWeb.MemberView.avatar(@member.account, :medium) %></div>
-  <div class="text-center capitalize text-green-500"><%= @member.account.name %></div>
-  <div class="text-gray-600 text-center text-xs uppercase"><%= @member.title %></div>
+<%= link to: member_path(@conn, :show, @conn.assigns.current_organization, @member), class: "h-full flex flex-col items-center text-center justify-between my-1" do %>
+  <%= PalapaWeb.MemberView.avatar(@member.account, :md) %>
+  <div class="capitalize text-green-500"><%= @member.account.name %></div>
+  <div class="text-gray-600 text-xs uppercase"><%= @member.title %></div>
 <% end %>

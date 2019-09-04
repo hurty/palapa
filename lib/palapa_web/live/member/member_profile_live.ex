@@ -12,11 +12,7 @@ defmodule PalapaWeb.MemberProfileLive do
   end
 
   def handle_event("edit_member_title", _, socket) do
-    IO.inspect(socket.assigns.member)
-
     profile_changeset = Organizations.Member.update_profile_changeset(socket.assigns.member)
-
-    IO.inspect(profile_changeset)
 
     {:noreply,
      assign(socket,

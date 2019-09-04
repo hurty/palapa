@@ -1,9 +1,8 @@
 <div id="member-profile-main">
-  <div class="sm:w-full sm:p-2 mx-auto my-4">
-    <div class="text-center">
-      <%= avatar(@member.account) %>
-    </div>
-    <div class="text-green-500 text-center text-2xl font-bold capitalize mb-2"><%= @member.account.name %></div>
+  <div class="flex flex-col items-center justify-center sm:w-full sm:p-2 my-4">
+    <%= avatar(@member.account, :md) %>
+
+    <h2 class="text-green-500 text-center text-2xl font-bold capitalize mb-2"><%= @member.account.name %></h2>
     
     <div class="text-center text-gray-700">
       <%= if @edit_mode do %>
