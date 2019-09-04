@@ -25,11 +25,15 @@
         </div>
       <% end %>
     </div>
-    
-    <div class=""> 
+
+    <div class="mt-4 text-center text-gray-700 text-xs"> 
+      <div>
+        <i class="fas fa-envelope-square mr-1"></i><%= link @member.account.email, to: "mailto:#{@member.account.email}" %>
+      </div>
+
       <%= if @member.account.timezone do %>
-        <div class="mt-4 text-center text-gray-700 text-xs">
-          <i class="fas fa-clock"></i> <%= account_time(@member.account) %> (<%= @member.account.timezone %>)
+        <div>
+          <i class="fas fa-clock mr-1"></i><%= account_time(@member.account) %> (<%= @member.account.timezone %>)
         </div>
       <% end %>
 
