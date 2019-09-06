@@ -48,12 +48,12 @@ defmodule PalapaWeb.MemberControllerTest do
       member: member
     } do
       Palapa.Organizations.create_personal_information(member, %{
-        type: :email,
+        label: "email",
         value: "bertram.gilfoyle@piedpiper.com"
       })
 
       Palapa.Organizations.create_personal_information(member, %{
-        type: :address,
+        label: "address",
         value: "28 rue saint antoine 44000 Nantes",
         private: true
       })
@@ -92,13 +92,13 @@ defmodule PalapaWeb.MemberControllerTest do
     } do
       {:ok, _} =
         Palapa.Organizations.create_personal_information(workspace.jared, %{
-          "type" => :skype,
+          "label" => "skype",
           "value" => "mister.jared"
         })
 
       {:ok, _} =
         Palapa.Organizations.create_personal_information(workspace.jared, %{
-          "type" => :email,
+          "label" => "email",
           "value" => "jared.dunn@piedpiper.com",
           "private" => true,
           "visibilities" => [to_string(GlobalId.create("palapa", member))]
@@ -106,7 +106,7 @@ defmodule PalapaWeb.MemberControllerTest do
 
       {:ok, _} =
         Palapa.Organizations.create_personal_information(workspace.jared, %{
-          "type" => :github,
+          "label" => "github",
           "value" => "jared-knows-code",
           "private" => true,
           "visibilities" => [to_string(GlobalId.create("palapa", workspace.tech_team))]
@@ -114,7 +114,7 @@ defmodule PalapaWeb.MemberControllerTest do
 
       {:ok, _} =
         Palapa.Organizations.create_personal_information(workspace.jared, %{
-          "type" => :address,
+          "label" => "address",
           "value" => "The basement",
           "private" => true
         })
