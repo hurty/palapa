@@ -5,16 +5,6 @@ defmodule Palapa.OrganizationsTest do
   alias Palapa.Organizations
   alias Palapa.Organizations.Organization
 
-  test "list/1" do
-    insert!(:organization, name: "one")
-    insert!(:organization, name: "two")
-
-    organizations = Organizations.list()
-    assert Enum.count(organizations) == 2
-    assert Enum.at(organizations, 0).name == "one"
-    assert Enum.at(organizations, 1).name == "two"
-  end
-
   test "get!/1 returns the organization with given id" do
     organization = insert!(:organization)
     assert Organizations.get!(organization.id) == organization

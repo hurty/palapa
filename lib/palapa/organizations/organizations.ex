@@ -26,8 +26,9 @@ defmodule Palapa.Organizations do
 
   ### Actions
 
-  def list(queryable \\ Organization) do
-    queryable
+  def list_organizations(%Account{} = account) do
+    Ecto.assoc(account, :organizations)
+    |> order_by([o], o.name)
     |> Repo.all()
   end
 

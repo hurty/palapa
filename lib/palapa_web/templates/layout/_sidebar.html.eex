@@ -5,7 +5,12 @@
     </button>
   </div>
 
-  <%= link(@current_organization.name, to: dashboard_path(@conn, :index, @current_organization), class: "organization-name block") %>
+  <%= link to: organization_path(@conn, :index), 
+    class: "-m-4 mb-4 bg-gray-500 rounded-r-lg p-2 text-center font-bold text-gray-800 text-xs border-t border-b border-r border-gray-800 hover:bg-gray-100" do %>
+    <i class="fas fa-exchange-alt mr-2"></i> Switch workspace
+  <% end %>
+
+  <%= link(@current_organization.name, to: dashboard_path(@conn, :index, @current_organization), class: "text-lg font-bold px-2 mt-8 block text-white tracking-wider") %>
   
   <ul class="header-links">
     <li class="header-link <%= if @navigation == "dashboard" do %>header-link--active<% end %>"> 
