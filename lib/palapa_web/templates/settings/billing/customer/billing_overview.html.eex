@@ -1,4 +1,4 @@
-<h2 class="text-gray-800">Billing overview</h2>
+<h2 class="text-gray-800 text-2xl font-bold">Billing overview</h2>
 <div class="card-header-separator"></div>
 
 <%= if Palapa.Billing.get_workspace_status(@current_organization) == :trialing do %>

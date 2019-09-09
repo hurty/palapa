@@ -5,7 +5,7 @@
 
   <div class="main-content">
     <div class="card p-4">
-      <h2 class="text-gray-800">Workspace members</h2>
+      <h2 class="text-gray-800 text-2xl font-bold">Workspace members</h2>
       <div class="card-header-separator"></div>
 
       <%= if Palapa.Access.permit? Palapa.Invitations, :create, @current_member do %>
