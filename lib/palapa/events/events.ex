@@ -20,8 +20,8 @@ defmodule Palapa.Events do
     new_contact
   )s)
 
-  def list_events(organization, member) do
-    from(events in subquery(all_events_query(organization, member)),
+  def list_events(member) do
+    from(events in subquery(all_events_query(member)),
       limit: 30,
       order_by: [desc: :inserted_at],
       distinct: true,
@@ -39,10 +39,12 @@ defmodule Palapa.Events do
     |> Repo.all()
   end
 
-  def all_events_query(organization, member) do
-    from(messages_events_query(organization, member),
-      union: ^documents_events_query(organization, member),
-      union: ^organization_events_query(organization)
+  def all_events_query(member) do
+    member = Repo.preload(member, :organization)
+
+    from(messages_events_query(member.organization, member),
+      union: ^documents_events_query(member.organization, member),
+      union: ^organization_events_query(member.organization)
     )
   end
 
