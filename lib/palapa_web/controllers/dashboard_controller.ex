@@ -14,7 +14,7 @@ defmodule PalapaWeb.DashboardController do
   end
 
   def index(conn, _params) do
-    with :ok <- permit(Dashboard, :index_dashboard, current_member(conn)) do
+    with :ok <- permit(Dashboard.Policy, :index_dashboard, current_member(conn)) do
       events = Palapa.Events.list_events(current_organization(conn), current_member(conn))
       render(conn, "index.html", events: events)
     end

@@ -15,7 +15,7 @@
           </div>
         <% end %>
 
-        <%= if Palapa.Access.permit?(Palapa.Organizations, :delete_personal_information, @current_member, @info) do %>
+        <%= if permit?(Palapa.Organizations.Policy, :delete_personal_information, @current_member, @info) do %>
           <div data-controller="popover" data-action="mousedown@window->popover#hide">
             <button data-target="popover.button" data-action="popover#toggle" class="m-1 bg-gray-500 rounded-full h-6 w-6 flex items-center justify-center bg-gray-500 text-blue-800 font-bold border-2 border-transparent hover:border-gray-600">
               <i class="fas fa-ellipsis-h"></i>
@@ -24,7 +24,7 @@
             <div data-target="popover.content" class="popover hidden">
               <div data-target="popover.arrow" class="popover__arrow"></div>
               <nav class="flex flex-col">
-                <%= if Palapa.Access.permit?(Palapa.Organizations, :update_personal_information, @current_member, @info) do %>
+                <%= if permit?(Palapa.Organizations.Policy, :update_personal_information, @current_member, @info) do %>
                   <%= link to: Routes.personal_information_path(@conn, :edit, @current_organization, @info), 
                   data: [action: "personal-information#edit"], class: "popover__link" do %>
                     <i class="fas fa-pen"></i>&nbsp;Edit

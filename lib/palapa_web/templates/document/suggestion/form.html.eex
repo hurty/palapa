@@ -10,7 +10,7 @@
   <% end %>
 
   <div class="text-center">
-     <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
+     <%= if permit?(Palapa.Documents.Policy, :update_document, @current_member, @document) do %>
       <a class="btn" data-target="document-suggestions.leaveSuggestionButton" data-action="document-suggestions#showForm">
         Suggest an improvement
       </a>

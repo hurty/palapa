@@ -2,7 +2,7 @@
   <div class="mx-auto">
     <%= render "_personal_informations_list.html", assigns %>
 
-    <%= if Palapa.Access.permit?(Palapa.Organizations, :create_personal_information, @current_member, @member) do %>
+    <%= if permit?(Palapa.Organizations.Policy, :create_personal_information, @current_member, @member) do %>
       <div data-target="personal-informations.form">
         <%= render "_personal_information_form.html", 
           conn: @conn, 

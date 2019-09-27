@@ -23,7 +23,7 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
   end
 
   def edit(conn, _) do
-    with :ok <- permit(Billing, :update_billing, current_member(conn)) do
+    with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
       customer = Billing.get_customer(current_organization(conn))
       customer_changeset = Billing.change_customer_payment_method(customer)
       render(conn, "edit.html", customer_changeset: customer_changeset)
@@ -31,7 +31,7 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
   end
 
   def update(conn, %{"customer" => customer_attrs}) do
-    with :ok <- permit(Billing, :update_billing, current_member(conn)) do
+    with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
       customer = Billing.get_customer(current_organization(conn))
 
       case Billing.update_customer_payment_method(customer, customer_attrs) do

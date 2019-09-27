@@ -7,7 +7,7 @@ defmodule PalapaWeb.TeamMemberController do
   plug(:put_navigation, "member")
 
   def edit(conn, %{"member_id" => member_id}) do
-    with :ok <- permit(Teams, :edit_member_teams, current_member(conn)) do
+    with :ok <- permit(Teams.Policy, :edit_member_teams, current_member(conn)) do
       member = Organizations.get_member!(current_organization(conn), member_id)
       member_teams = Teams.list_for_member(member)
 
@@ -38,7 +38,7 @@ defmodule PalapaWeb.TeamMemberController do
 
     with :ok <-
            permit(
-             Teams,
+             Teams.Policy,
              :update_member_teams,
              current_member(conn),
              organization: current_organization(conn),

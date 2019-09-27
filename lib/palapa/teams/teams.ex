@@ -4,10 +4,6 @@ defmodule Palapa.Teams do
   alias Palapa.Teams.{Team, TeamMember}
   alias Palapa.Organizations.{Organization, Member}
 
-  # --- Authorization ---
-
-  defdelegate(authorize(action, member, params), to: Palapa.Teams.Policy)
-
   # --- Scopes ---
 
   def visible_to(member) do

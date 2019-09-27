@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <%= if Palapa.Access.permit? Palapa.Messages, :delete_comment, @conn.assigns.current_member, @comment do %>
+    <%= if permit? Palapa.Messages, :delete_comment, @conn.assigns.current_member, @comment do %>
       <div data-controller="popover" data-action="mousedown@window->popover#hide">
         <button data-target="popover.button" data-action="popover#toggle" class="card-actions-button card-actions-button--sm">
           <i class="fas fa-ellipsis-h"></i>
@@ -19,7 +19,7 @@
         <div data-target="popover.content" class="popover hidden">
           <div data-target="popover.arrow" class="popover__arrow"></div>
           <nav class="flex flex-col">
-            <%= if Palapa.Access.permit? Palapa.Messages, :edit_comment, @conn.assigns.current_member, @comment do %>
+            <%= if permit? Palapa.Messages, :edit_comment, @conn.assigns.current_member, @comment do %>
               <%= link to: Routes.message_comment_path(@conn, :edit, @conn.assigns.current_organization, @comment), 
               data: [action: "message-comment#editComment"], class: "popover__link" do %>
                 <i class="fas fa-pen"></i>&nbsp;Edit comment

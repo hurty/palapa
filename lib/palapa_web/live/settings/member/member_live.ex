@@ -39,7 +39,7 @@ defmodule PalapaWeb.Settings.MemberLive do
     member = Organizations.get_member!(member_id)
 
     with :ok <-
-           permit(Organizations, :delete_member, socket.assigns.current_member, member),
+           permit(Organizations.Policy, :delete_member, socket.assigns.current_member, member),
          Organizations.delete_member(member) do
       updated_members_list = Organizations.list_members(socket.assigns.current_organization)
       {:noreply, assign(socket, :members, updated_members_list)}

@@ -15,7 +15,7 @@ defmodule PalapaWeb.MemberController do
   end
 
   def index(conn, %{"team_id" => team_id}) do
-    with :ok <- permit(Organizations, :list_members, current_member(conn)) do
+    with :ok <- permit(Organizations.Policy, :list_members, current_member(conn)) do
       selected_team = Teams.get!(team_id)
       members = Teams.list_members(selected_team)
       teams = Teams.where_organization(current_organization(conn)) |> Teams.list()
@@ -37,7 +37,7 @@ defmodule PalapaWeb.MemberController do
   end
 
   def index(conn, _params) do
-    with :ok <- permit(Organizations, :list_members, current_member(conn)) do
+    with :ok <- permit(Organizations.Policy, :list_members, current_member(conn)) do
       members =
         current_organization(conn)
         |> Organizations.list_members()
@@ -58,7 +58,7 @@ defmodule PalapaWeb.MemberController do
   def show(conn, %{"id" => id}) do
     member = Organizations.get_member!(current_organization(conn), id)
 
-    with :ok <- permit(Organizations, :show_member, current_member(conn)) do
+    with :ok <- permit(Organizations.Policy, :show_member, current_member(conn)) do
       all_teams = Teams.where_organization(current_organization(conn)) |> Teams.list()
 
       personal_informations =

@@ -24,7 +24,7 @@ defmodule PalapaWeb.Document.PageController do
         Documents.get_document!(params["document_id"])
       end
 
-    with :ok <- permit(Documents, :update_document, current_member(conn), document) do
+    with :ok <- permit(Documents.Policy, :update_document, current_member(conn), document) do
       section_id = params["section_id"]
       page_changeset = Documents.change_page(%Page{}, %{section_id: section_id})
       section_changeset = Documents.change_section()
@@ -46,7 +46,7 @@ defmodule PalapaWeb.Document.PageController do
   def create(conn, %{"page" => page_params}) do
     section = Documents.get_section!(page_params["section_id"])
 
-    with :ok <- permit(Documents, :update_document, current_member(conn), section.document) do
+    with :ok <- permit(Documents.Policy, :update_document, current_member(conn), section.document) do
       case Documents.create_page(section, current_member(conn), page_params) do
         {:ok, page} ->
           redirect(conn,
@@ -95,7 +95,7 @@ defmodule PalapaWeb.Document.PageController do
     page = get_page!(conn, id)
     document = Documents.get_document!(page.document_id)
 
-    with :ok <- permit(Documents, :update_document, current_member(conn), page.document) do
+    with :ok <- permit(Documents.Policy, :update_document, current_member(conn), page.document) do
       conn
       |> put_page_breadcrumbs(page)
       |> put_breadcrumb(
@@ -115,7 +115,7 @@ defmodule PalapaWeb.Document.PageController do
   def update(conn, %{"id" => id, "page" => page_params}) do
     page = get_page!(conn, id)
 
-    with :ok <- permit(Documents, :update_document, current_member(conn), page.document) do
+    with :ok <- permit(Documents.Policy, :update_document, current_member(conn), page.document) do
       case Documents.update_page(page, current_member(conn), page_params) do
         {:ok, page} ->
           redirect(conn,
@@ -148,7 +148,7 @@ defmodule PalapaWeb.Document.PageController do
       Documents.sections_visible_to(current_member(conn))
       |> Documents.get_section!(new_section_id)
 
-    with :ok <- permit(Documents, :update_document, current_member(conn), page.document) do
+    with :ok <- permit(Documents.Policy, :update_document, current_member(conn), page.document) do
       Documents.move_page!(page, new_section, new_position)
       send_resp(conn, 200, "")
     end
@@ -157,7 +157,7 @@ defmodule PalapaWeb.Document.PageController do
   def delete(conn, %{"id" => id, "current_page_id" => current_page_id}) do
     page = get_page!(conn, id)
 
-    with :ok <- permit(Documents, :update_document, current_member(conn), page.document) do
+    with :ok <- permit(Documents.Policy, :update_document, current_member(conn), page.document) do
       Documents.delete_page!(page)
 
       redirect_page =

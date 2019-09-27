@@ -3,10 +3,6 @@ defmodule Palapa.Accounts do
 
   alias Palapa.Accounts.Account
 
-  # --- Authorizations ---
-
-  defdelegate(authorize(action, user, params), to: Palapa.Users.Policy)
-
   # --- Actions ---
 
   def get!(account_id), do: Repo.get!(Account, account_id)

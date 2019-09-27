@@ -30,7 +30,7 @@ defmodule PalapaWeb.AttachmentController do
   def delete(conn, %{"id" => id}) do
     attachment = find_attachment(conn, id)
 
-    with :ok <- permit(Attachments, :delete, current_member(conn), attachment) do
+    with :ok <- permit(Attachments.Policy, :delete, current_member(conn), attachment) do
       Attachments.delete!(attachment)
 
       conn

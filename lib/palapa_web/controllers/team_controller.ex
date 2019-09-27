@@ -7,7 +7,7 @@ defmodule PalapaWeb.TeamController do
   plug(:put_navigation, "member")
 
   def new(conn, _params) do
-    with :ok <- permit(Teams, :create, current_member(conn)) do
+    with :ok <- permit(Teams.Policy, :create, current_member(conn)) do
       team_changeset = Teams.change(%Team{})
 
       conn
@@ -24,7 +24,7 @@ defmodule PalapaWeb.TeamController do
   end
 
   def create(conn, %{"team" => team_params}) do
-    with :ok <- permit(Teams, :create, current_member(conn)) do
+    with :ok <- permit(Teams.Policy, :create, current_member(conn)) do
       case Teams.create(current_organization(conn), team_params) do
         {:ok, team} ->
           conn
@@ -46,7 +46,7 @@ defmodule PalapaWeb.TeamController do
       Teams.where_organization(current_organization(conn))
       |> Teams.get!(id)
 
-    with :ok <- permit(Teams, :edit, current_member(conn), team) do
+    with :ok <- permit(Teams.Policy, :edit, current_member(conn), team) do
       team_changeset = Teams.change(team)
 
       conn
@@ -68,7 +68,7 @@ defmodule PalapaWeb.TeamController do
       Teams.where_organization(current_organization(conn))
       |> Teams.get!(id)
 
-    with :ok <- permit(Teams, :update, current_member(conn), team) do
+    with :ok <- permit(Teams.Policy, :update, current_member(conn), team) do
       case Teams.update(team, team_params) do
         {:ok, team} ->
           conn

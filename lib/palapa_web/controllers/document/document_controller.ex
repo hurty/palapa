@@ -61,7 +61,7 @@ defmodule PalapaWeb.Document.DocumentController do
   def create(conn, %{"document" => document_attrs}) do
     team = find_team(conn, document_attrs["team_id"])
 
-    with :ok <- permit(Documents, :create_document, current_member(conn)) do
+    with :ok <- permit(Documents.Policy, :create_document, current_member(conn)) do
       case Documents.create_document(current_member(conn), team, document_attrs) do
         {:ok, document} ->
           redirect(conn,

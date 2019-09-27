@@ -8,10 +8,6 @@ defmodule Palapa.Attachments do
     AttachmentParser
   }
 
-  # --- Authorizations
-
-  defdelegate(authorize(action, user, params), to: Palapa.Attachments.Policy)
-
   # --- Scopes
 
   def visible_to(queryable \\ Attachment, %Member{} = member) do

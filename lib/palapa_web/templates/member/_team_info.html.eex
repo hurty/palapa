@@ -22,7 +22,7 @@
             <i class="text-gray-900 fas fa-sign-out-alt"></i>&nbsp;Leave
           <% end %>
         <% else %>
-          <%= if Palapa.Access.permit? Palapa.Teams, :join, @current_member, @selected_team do %>
+          <%= if permit? Palapa.Teams, :join, @current_member, @selected_team do %>
             You are not member of this team
             <%= link to: Routes.team_team_membership_path(@conn, :create, @current_organization, @selected_team), class: "tag text-xs whitespace-no-wrap", 
             data: [controller: "link", action: "link#post"] do %>
@@ -34,7 +34,7 @@
         <% end %>
       </div>
 
-      <%= if Palapa.Access.permit? Palapa.Teams, :edit, @current_member, @selected_team do %>
+      <%= if permit? Palapa.Teams, :edit, @current_member, @selected_team do %>
         <div class="m-2 self-center">
           <%= link "Edit team", to: Routes.team_path(@conn, :edit, @current_organization, @selected_team), class: "btn" %>
         </div>

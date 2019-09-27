@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <%= if permit?(Palapa.Documents, :delete_suggestion_comment, @conn.assigns.current_member, @suggestion_comment) do %>
+      <%= if permit?(Palapa.Documents.Policy, :delete_suggestion_comment, @conn.assigns.current_member, @suggestion_comment) do %>
         <div data-controller="popover" data-action="mousedown@window->popover#hide">
           <button data-target="popover.button" data-action="popover#toggle" 
             class="card-actions-button card-actions-button--sm"
@@ -23,7 +23,7 @@
           
           <div data-target="popover.content" class="popover hidden">
             <nav class="flex flex-col">
-            <%= if permit?(Palapa.Documents, :update_suggestion_comment, @conn.assigns.current_member, @suggestion_comment) do %>
+            <%= if permit?(Palapa.Documents.Policy, :update_suggestion_comment, @conn.assigns.current_member, @suggestion_comment) do %>
               <%= link to: Routes.suggestion_comment_path(@conn, :edit, @conn.assigns.current_organization, @suggestion_comment), class: "popover__link", 
               data: [action: "document-suggestion-comment#edit"] do %>
                 <i class="fas fa-pen"></i>&nbsp;Edit comment

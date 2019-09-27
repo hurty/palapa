@@ -1,5 +1,5 @@
 <div data-controller="popover" data-action="mousedown@window->popover#hide">
-  <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
+  <%= if permit?(Palapa.Documents.Policy, :update_document, @current_member, @document) do %>
     <button data-target="popover.button" data-action="popover#toggle" class="card-actions-button">
       <i class="fas fa-ellipsis-h"></i>
     </button>

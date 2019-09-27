@@ -8,7 +8,7 @@
   class: if(@conn.params["id"] == @toc_page.id, do: "text-green-500 font-bold", else: "text-gray-700") %>
   </div>
 
-  <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
+  <%= if permit?(Palapa.Documents.Policy, :update_document, @current_member, @document) do %>
     <div class="document-actions hidden" data-target="document-toc-page.actionsIcons">
       <div data-controller="popover" data-action="mousedown@window->popover#hide">
           <button data-target="popover.button" data-action="popover#toggle" 

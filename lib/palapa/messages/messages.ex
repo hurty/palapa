@@ -5,10 +5,6 @@ defmodule Palapa.Messages do
   alias Palapa.Teams.Team
   alias Palapa.Events.Event
 
-  # --- Authorizations
-
-  defdelegate(authorize(action, member, params), to: Palapa.Messages.Policy)
-
   # --- Scopes
 
   def visible_to(queryable \\ Message, %Member{} = member) do

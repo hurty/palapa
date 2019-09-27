@@ -24,7 +24,7 @@ defmodule PalapaWeb do
       import PalapaWeb.Gettext
       import PalapaWeb.Current
       import PalapaWeb.Breadcrumbs
-      import Palapa.Access
+      import Bodyguard
       import Phoenix.LiveView.Controller, only: [live_render: 3]
       alias PalapaWeb.Router.Helpers, as: Routes
 
@@ -36,7 +36,7 @@ defmodule PalapaWeb do
   def live_view do
     quote do
       use Phoenix.LiveView
-      import Palapa.Access
+      import Bodyguard
     end
   end
 
@@ -56,7 +56,7 @@ defmodule PalapaWeb do
       import PalapaWeb.Gettext
       import PalapaWeb.Helpers
       import Scrivener.HTML
-      import Palapa.Access, only: [permit?: 4]
+      import Bodyguard
       import Phoenix.LiveView, only: [live_render: 2, live_render: 3, live_link: 1, live_link: 2]
       alias PalapaWeb.Router.Helpers, as: Routes
     end

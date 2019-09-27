@@ -33,7 +33,12 @@ defmodule PalapaWeb.Document.SuggestionCommentController do
     suggestion_comment = Suggestions.get_suggestion_comment!(current_organization(conn), id)
 
     with :ok <-
-           permit(Documents, :delete_suggestion_comment, current_member(conn), suggestion_comment) do
+           permit(
+             Documents.Policy,
+             :delete_suggestion_comment,
+             current_member(conn),
+             suggestion_comment
+           ) do
       changeset = Suggestions.change_suggestion_comment(suggestion_comment)
 
       render(conn, "edit.html",
@@ -48,7 +53,12 @@ defmodule PalapaWeb.Document.SuggestionCommentController do
     suggestion_comment = Suggestions.get_suggestion_comment!(current_organization(conn), id)
 
     with :ok <-
-           permit(Documents, :update_suggestion_comment, current_member(conn), suggestion_comment) do
+           permit(
+             Documents.Policy,
+             :update_suggestion_comment,
+             current_member(conn),
+             suggestion_comment
+           ) do
       case Suggestions.update_suggestion_comment(suggestion_comment, suggestion_comment_attrs) do
         {:ok, updated_suggestion_comment} ->
           render(conn, "suggestion_comment.html",
@@ -70,7 +80,12 @@ defmodule PalapaWeb.Document.SuggestionCommentController do
     suggestion_comment = Suggestions.get_suggestion_comment!(current_organization(conn), id)
 
     with :ok <-
-           permit(Documents, :delete_suggestion_comment, current_member(conn), suggestion_comment) do
+           permit(
+             Documents.Policy,
+             :delete_suggestion_comment,
+             current_member(conn),
+             suggestion_comment
+           ) do
       case Suggestions.delete_suggestion_comment(suggestion_comment) do
         {:ok, _suggestion_comment} ->
           send_resp(conn, 204, "")

@@ -7,7 +7,13 @@ defmodule PalapaWeb.PersonalInformationController do
   def create(conn, params) do
     member = Organizations.get_member!(current_organization(conn), params["member_id"])
 
-    with :ok <- permit(Organizations, :create_personal_information, current_member(conn), member),
+    with :ok <-
+           permit(
+             Organizations.Policy,
+             :create_personal_information,
+             current_member(conn),
+             member
+           ),
          {:ok, new_info} <-
            Organizations.create_personal_information(member, params["personal_information"]) do
       personal_informations =
@@ -52,7 +58,7 @@ defmodule PalapaWeb.PersonalInformationController do
 
     with :ok <-
            permit(
-             Organizations,
+             Organizations.Policy,
              :update_personal_information,
              current_member(conn),
              personal_information
@@ -84,7 +90,7 @@ defmodule PalapaWeb.PersonalInformationController do
 
     with :ok <-
            permit(
-             Organizations,
+             Organizations.Policy,
              :update_personal_information,
              current_member(conn),
              personal_information
@@ -129,7 +135,7 @@ defmodule PalapaWeb.PersonalInformationController do
 
     with :ok <-
            permit(
-             Organizations,
+             Organizations.Policy,
              :delete_personal_information,
              current_member(conn),
              personal_information

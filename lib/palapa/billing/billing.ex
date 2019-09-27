@@ -10,8 +10,6 @@ defmodule Palapa.Billing do
   @price_per_member_per_month 7
   @monthly_plan_id "plan_EuPumUi7Lb5R7w"
 
-  defdelegate(authorize(action, user, params), to: Palapa.Billing.Policy)
-
   # Some of these statuses will be set via Stripe webhooks
   # https://stripe.com/docs/billing/lifecycle#subscription-states
   defenum(SubscriptionStatusEnum, :subscription_status, [

@@ -8,7 +8,7 @@ defmodule PalapaWeb.Document.SectionController do
       Documents.documents_visible_to(current_member(conn))
       |> Documents.get_document!(document_id)
 
-    with :ok <- permit(Documents, :update_document, current_member(conn), document) do
+    with :ok <- permit(Documents.Policy, :update_document, current_member(conn), document) do
       case Documents.create_section(document, current_member(conn), section_params) do
         {:ok, section} ->
           render(conn, "toc_section.html", layout: false, section: section, document: document)
@@ -24,7 +24,7 @@ defmodule PalapaWeb.Document.SectionController do
       Documents.sections_visible_to(current_member(conn))
       |> Documents.get_section!(id)
 
-    with :ok <- permit(Documents, :update_document, current_member(conn), section.document) do
+    with :ok <- permit(Documents.Policy, :update_document, current_member(conn), section.document) do
       case Documents.update_section(section, section_params) do
         {:ok, _updated_section} -> send_resp(conn, :ok, "")
         {:error, _changeset} -> send_resp(conn, :bad_request, "")
@@ -37,7 +37,7 @@ defmodule PalapaWeb.Document.SectionController do
       Documents.sections_visible_to(current_member(conn))
       |> Documents.get_section!(id)
 
-    with :ok <- permit(Documents, :update_document, current_member(conn), section.document) do
+    with :ok <- permit(Documents.Policy, :update_document, current_member(conn), section.document) do
       case Documents.delete_section(section) do
         {:ok, _} ->
           send_resp(conn, :ok, "")

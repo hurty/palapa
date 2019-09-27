@@ -25,7 +25,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
   end
 
   def show(conn, _params) do
-    with :ok <- permit(Billing, :update_billing, current_member(conn)) do
+    with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
       customer = Billing.get_customer(current_organization(conn))
       invoices = Billing.list_invoices(current_organization(conn))
       render(conn, "show.html", customer: customer, invoices: invoices)
@@ -33,7 +33,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
   end
 
   def new(conn, _) do
-    with :ok <- permit(Billing, :update_billing, current_member(conn)) do
+    with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
       customer_changeset = Billing.change_customer_infos(%Customer{})
 
       conn
@@ -46,7 +46,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
   end
 
   def create(conn, %{"customer" => customer_attrs}) do
-    with :ok <- permit(Billing, :update_billing, current_member(conn)) do
+    with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
       case Billing.create_customer_and_synchronize_subscription(
              current_organization(conn),
              customer_attrs
@@ -90,7 +90,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
   end
 
   def edit(conn, _) do
-    with :ok <- permit(Billing, :update_billing, current_member(conn)) do
+    with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
       conn =
         conn
         |> put_breadcrumb(
@@ -115,7 +115,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
   end
 
   def update(conn, %{"customer" => customer_attrs}) do
-    with :ok <- permit(Billing, :update_billing, current_member(conn)) do
+    with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
       customer = Billing.get_customer(current_organization(conn))
 
       case Billing.update_customer_infos(customer, customer_attrs) do

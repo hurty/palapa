@@ -16,10 +16,6 @@ defmodule Palapa.Documents do
     defexception message: "This position is forbidden"
   end
 
-  # --- Authorizations
-
-  defdelegate(authorize(action, member, params), to: Palapa.Documents.Policy)
-
   # --- Scopes
 
   def non_deleted(queryable) do

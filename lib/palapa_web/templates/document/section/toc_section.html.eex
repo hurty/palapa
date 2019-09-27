@@ -21,7 +21,7 @@ class="document-section">
           <span data-target="document-section.title" class="document-section-title"><%= @section.title %></span>
         </div>
 
-        <%= if permit?(Palapa.Documents, :update_document, @current_member, @document) do %>
+        <%= if permit?(Palapa.Documents.Policy, :update_document, @current_member, @document) do %>
           <div class="document-actions hidden" data-target="document-section.actionsIcons">
             <div data-action="mousedown@window->document-section#hideMenu">
                 <button data-target="document-section.menuButton" data-action="document-section#toggleMenu" 

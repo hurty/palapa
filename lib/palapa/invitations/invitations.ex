@@ -10,8 +10,6 @@ defmodule Palapa.Invitations do
 
   @expiration_days 30
 
-  defdelegate(authorize(action, user, params), to: Palapa.Invitations.Policy)
-
   # --- Scopes
   def visible_to(queryable \\ Invitation, %Member{} = member) do
     queryable

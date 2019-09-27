@@ -6,8 +6,6 @@ defmodule Palapa.Organizations do
   alias Palapa.Events.Event
   alias Palapa.Billing
 
-  defdelegate(authorize(action, user, params), to: Palapa.Organizations.Policy)
-
   import EctoEnum
   defenum(RoleEnum, :role, [:owner, :admin, :member])
 

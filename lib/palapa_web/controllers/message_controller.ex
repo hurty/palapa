@@ -47,7 +47,7 @@ defmodule PalapaWeb.MessageController do
   end
 
   def create(conn, %{"message" => message_params}) do
-    with :ok <- permit(Messages, :create, current_member(conn)) do
+    with :ok <- permit(Messages.Policy, :create, current_member(conn)) do
       teams = Teams.list_for_member(current_member(conn))
       message_teams = find_teams(message_params, current_member(conn))
 
@@ -77,7 +77,7 @@ defmodule PalapaWeb.MessageController do
 
     new_message_comment = Messages.change_comment(%MessageComment{})
 
-    with :ok <- permit(Messages, :show, current_member(conn), message) do
+    with :ok <- permit(Messages.Policy, :show, current_member(conn), message) do
       conn
       |> put_breadcrumb(
         message.title,
@@ -98,7 +98,7 @@ defmodule PalapaWeb.MessageController do
     message_changeset = Messages.change(message)
     teams = Teams.list_for_member(current_member(conn))
 
-    with :ok <- permit(Messages, :edit_message, current_member(conn), message) do
+    with :ok <- permit(Messages.Policy, :edit_message, current_member(conn), message) do
       conn
       |> put_breadcrumb(
         message.title,
@@ -121,7 +121,7 @@ defmodule PalapaWeb.MessageController do
     message = find_message!(conn, id)
     message_teams = find_teams(message_params, current_member(conn))
 
-    with :ok <- permit(Messages, :delete_message, current_member(conn), message) do
+    with :ok <- permit(Messages.Policy, :delete_message, current_member(conn), message) do
       case Messages.update(message, message_params, message_teams) do
         {:ok, _struct} ->
           conn
@@ -148,7 +148,7 @@ defmodule PalapaWeb.MessageController do
       Messages.where_organization(current_organization(conn))
       |> Messages.get!(id)
 
-    with :ok <- permit(Messages, :delete_message, current_member(conn), message) do
+    with :ok <- permit(Messages.Policy, :delete_message, current_member(conn), message) do
       Messages.delete!(message)
 
       conn
