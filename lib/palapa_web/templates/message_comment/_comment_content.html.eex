@@ -36,4 +36,4 @@
   </div>
 
 
-  <div class="text-gray-800 mt-2 pl-2 pr-8"><%= rich_text @comment.content %></div>
+  <div class="text-gray-800 mt-2 pl-2 pr-8"><%= Palapa.RichText.Helpers.rich_text @comment.content %></div>

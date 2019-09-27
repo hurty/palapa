@@ -57,7 +57,6 @@ defmodule PalapaWeb do
       import PalapaWeb.Helpers
       import Scrivener.HTML
       import Palapa.Access, only: [permit?: 4]
-      import Palapa.RichText.Helpers
       import Phoenix.LiveView, only: [live_render: 2, live_render: 3, live_link: 1, live_link: 2]
       alias PalapaWeb.Router.Helpers, as: Routes
     end

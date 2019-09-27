@@ -14,7 +14,7 @@
         <% end %>
         
         <section class="message-content" data-controller="rich-text">      
-          <%= rich_text(@message.content) %>
+          <%= Palapa.RichText.Helpers.rich_text(@message.content) %>
         </section>
       </article>
     </div>
