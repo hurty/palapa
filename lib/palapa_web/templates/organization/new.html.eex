@@ -1,0 +1,28 @@
+<h1 class="text-3xl text-center text-green-500 font-bold">Palapa</h1>
+
+<div class="sm:max-w-md mx-auto my-8"> 
+  <div class="card p-8">
+    <h2 class="card-header">
+      Create a new workspace
+    </h2>
+
+    <div class="card-header-separator"></div>
+
+    <%= if @changeset.action do %>
+      <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
+    <% end %>
+
+    <%= form_for @changeset, Routes.organization_path(@conn, :create), fn f -> %>
+      <div class="field">
+        <%= label f, :name, "Workspace name", class: "label" %>
+        <%= text_input f, :name, class: "input", tabindex: 1 %>
+        <%= error_tag f, :name %>
+      </div>
+
+      <div class="flex justify-between">
+      <%= submit "Create workspace", class: "btn btn-green" %>
+      <%= link "Cancel", to: Routes.organization_path(@conn, :index), class: "btn self-center" %>
+      </div>
+    <% end %>
+  </div>  
+</div>

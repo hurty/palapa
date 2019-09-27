@@ -3,6 +3,8 @@ defmodule Palapa.Organizations do
 
   alias Organizations.{Organization, Member, PersonalInformation}
   alias Palapa.Accounts.Account
+  alias Palapa.Events.Event
+  alias Palapa.Billing
 
   defdelegate(authorize(action, user, params), to: Palapa.Organizations.Policy)
 
@@ -36,10 +38,32 @@ defmodule Palapa.Organizations do
     Repo.get!(Organization, id)
   end
 
-  def create(attrs \\ %{}) do
-    %Organization{}
-    |> Organization.changeset(attrs)
-    |> Repo.insert()
+  def create(organization_attrs, creator_account) do
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:organization, fn repo, _changes ->
+      %Organization{}
+      |> Organization.changeset(organization_attrs)
+      |> put_assoc(:creator_account, creator_account)
+      |> repo.insert()
+    end)
+    |> Ecto.Multi.run(:subscription, fn _repo, %{organization: organization} ->
+      Billing.create_subscription(organization)
+    end)
+    |> Ecto.Multi.run(:member, fn _repo, changes ->
+      Organizations.create_member(%{
+        organization_id: changes.organization.id,
+        account_id: creator_account.id,
+        role: :owner
+      })
+    end)
+    |> Ecto.Multi.insert(:event, fn %{organization: organization, member: member} ->
+      %Event{
+        action: :new_organization,
+        organization: organization,
+        author: member
+      }
+    end)
+    |> Repo.transaction()
   end
 
   def update(%Organization{} = organization, attrs) do

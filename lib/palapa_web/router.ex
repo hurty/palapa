@@ -58,7 +58,7 @@ defmodule PalapaWeb.Router do
   scope("/", PalapaWeb) do
     pipe_through([:browser, :authentication])
 
-    resources("/org", OrganizationController, only: [:index])
+    resources("/org", OrganizationController, only: [:index, :new, :create])
 
     resources("/org", OrganizationController, as: nil, only: []) do
       scope "/settings", Settings, as: :settings do

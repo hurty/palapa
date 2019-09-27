@@ -21,11 +21,11 @@
 }
 
 .card-header {
-  @apply font-extrabold;
+  @apply font-bold text-gray-800;
 }
 
 .card-header-separator {
-  @apply border-2 rounded-full border-gray-400 w-1/6 my-4;
+  @apply border-2 rounded-full border-gray-400 w-16 my-4;
 }
 
 .card-actions {

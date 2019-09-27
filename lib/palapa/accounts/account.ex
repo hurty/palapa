@@ -3,6 +3,7 @@ defmodule Palapa.Accounts.Account do
   use Arc.Ecto.Schema
 
   alias Palapa.Organizations
+  alias Palapa.Organizations.Organization
 
   schema "accounts" do
     field(:email, :string)
@@ -18,6 +19,7 @@ defmodule Palapa.Accounts.Account do
 
     has_many(:members, Organizations.Member)
     has_many(:organizations, through: [:members, :organization])
+    has_many(:created_organizations, Organization, foreign_key: :creator_account_id)
   end
 
   @doc false

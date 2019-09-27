@@ -1,12 +1,6 @@
 body {
-  @apply font-sans text-black leading-normal;
-  background-color: #ffffff;
-}
-
-@screen sm {
-  body {
-    background-color: rgb(243, 248, 251);
-  }
+  @apply font-sans text-gray-900;
+  background-color: rgb(243, 248, 251);
 }
 
 a:link {

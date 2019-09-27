@@ -2,6 +2,7 @@ defmodule Palapa.Organizations.Organization do
   use Palapa.Schema
 
   import Ecto.Query, warn: false
+  alias Palapa.Accounts.Account
   alias Palapa.Organizations.{Member}
   alias Palapa.Invitations
   alias Palapa.Teams
@@ -11,8 +12,10 @@ defmodule Palapa.Organizations.Organization do
   schema "organizations" do
     field(:name, :string)
     field(:default_timezone, :string)
+    field(:deleted_at, :utc_datetime)
     timestamps()
 
+    belongs_to(:creator_account, Account)
     belongs_to(:customer, Customer)
     has_one(:subscription, Subscription)
     has_many(:invoices, through: [:customer, :invoices])

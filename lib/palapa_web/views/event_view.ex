@@ -6,7 +6,7 @@ defmodule PalapaWeb.EventView do
 
     case event.action do
       :new_organization ->
-        gettext("%{author} created the %{organization} workspace",
+        gettext("%{author} created the workspace %{organization}",
           author: author,
           organization: event.organization.name
         )
