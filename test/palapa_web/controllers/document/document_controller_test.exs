@@ -32,7 +32,7 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
         title: "This is a secret doc for management"
       })
 
-      conn = get(conn, document_path(conn, :index, workspace.organization))
+      conn = get(conn, Routes.document_path(conn, :index, workspace.organization))
       assert html_response(conn, 200) =~ "This is a styleguide for everyone"
       assert html_response(conn, 200) =~ "This is a technical doc"
       refute html_response(conn, 200) =~ "This is a secret doc for management"
@@ -51,7 +51,7 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
         title: "This is a secret doc for management"
       })
 
-      conn = get(conn, document_path(conn, :index, workspace.organization, search: "tech"))
+      conn = get(conn, Routes.document_path(conn, :index, workspace.organization, search: "tech"))
       refute html_response(conn, 200) =~ "This is a styleguide for everyone"
       assert html_response(conn, 200) =~ "This is a technical doc"
       refute html_response(conn, 200) =~ "This is a secret doc for management"
@@ -73,7 +73,9 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
       conn =
         get(
           conn,
-          document_path(conn, :index, workspace.organization, team_id: workspace.tech_team.id)
+          Routes.document_path(conn, :index, workspace.organization,
+            team_id: workspace.tech_team.id
+          )
         )
 
       refute html_response(conn, 200) =~ "This is a styleguide for everyone"
@@ -82,18 +84,18 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
     end
 
     test "new document form", %{conn: conn, workspace: workspace} do
-      conn = get(conn, document_path(conn, :new, workspace.organization))
+      conn = get(conn, Routes.document_path(conn, :new, workspace.organization))
       assert html_response(conn, 200)
     end
 
     test "create a document", %{conn: conn, workspace: workspace} do
       payload = %{"document" => %{"title" => "My awesome book"}}
-      conn = post(conn, document_path(conn, :create, workspace.organization, payload))
+      conn = post(conn, Routes.document_path(conn, :create, workspace.organization, payload))
 
       last_document = Query.first(Document) |> Repo.one!()
 
       assert redirected_to(conn, 302) =~
-               document_path(
+               Routes.document_path(
                  conn,
                  :show,
                  workspace.organization,
@@ -103,7 +105,7 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
 
     test "create a document with missing title", %{conn: conn, workspace: workspace} do
       payload = %{"document" => %{"title" => ""}}
-      conn = post(conn, document_path(conn, :create, workspace.organization, payload))
+      conn = post(conn, Routes.document_path(conn, :create, workspace.organization, payload))
 
       assert Repo.count(Document) == 0
       assert html_response(conn, 200) =~ "Check the errors below"
@@ -115,7 +117,7 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
           title: "This is a styleguide for everyone"
         })
 
-      conn = get(conn, document_path(conn, :edit, workspace.organization, document))
+      conn = get(conn, Routes.document_path(conn, :edit, workspace.organization, document))
       assert html_response(conn, 200) =~ "Edit"
     end
 
@@ -132,11 +134,11 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
       conn =
         patch(
           conn,
-          document_path(conn, :update, workspace.organization, document, update_payload)
+          Routes.document_path(conn, :update, workspace.organization, document, update_payload)
         )
 
       assert redirected_to(conn, 302) =~
-               document_path(conn, :show, workspace.organization, document)
+               Routes.document_path(conn, :show, workspace.organization, document)
     end
 
     test "display a document with no pages", %{conn: conn, workspace: workspace} do
@@ -148,7 +150,7 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
       first_page = Documents.get_first_page(document)
       Documents.delete_page!(first_page)
 
-      conn = get(conn, document_path(conn, :show, workspace.organization, document))
+      conn = get(conn, Routes.document_path(conn, :show, workspace.organization, document))
 
       assert html_response(conn, 200) =~ "This document is empty"
     end
@@ -172,7 +174,7 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
       workspace: workspace
     } do
       Documents.create_document(workspace.richard, nil, %{title: "Open doc"})
-      conn = get(conn, document_path(conn, :index, workspace.organization))
+      conn = get(conn, Routes.document_path(conn, :index, workspace.organization))
       assert html_response(conn, 200) =~ "Open doc"
     end
 
@@ -184,7 +186,7 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
         title: "tech doc"
       })
 
-      conn = get(conn, document_path(conn, :index, workspace.organization))
+      conn = get(conn, Routes.document_path(conn, :index, workspace.organization))
       assert html_response(conn, 200) =~ "tech doc"
     end
 
@@ -194,7 +196,7 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
         title: "management doc"
       })
 
-      conn = get(conn, document_path(conn, :index, workspace.organization))
+      conn = get(conn, Routes.document_path(conn, :index, workspace.organization))
       refute html_response(conn, 200) =~ "management doc"
     end
 
@@ -208,7 +210,7 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
         title: "other workspace doc"
       })
 
-      conn = get(conn, document_path(conn, :index, workspace.organization))
+      conn = get(conn, Routes.document_path(conn, :index, workspace.organization))
       refute html_response(conn, 200) =~ "other workspace doc"
     end
   end

@@ -13,13 +13,13 @@ defmodule PalapaWeb.InvitationControllerTest do
     end
 
     test "regular members can't access the invitation page", %{conn: conn, org: org} do
-      conn = get(conn, invitation_path(conn, :new, org))
+      conn = get(conn, Routes.invitation_path(conn, :new, org))
       assert html_response(conn, :forbidden)
     end
 
     test "regular members can't invite people", %{conn: conn, org: org} do
       conn =
-        post(conn, invitation_path(conn, :create, org), %{
+        post(conn, Routes.invitation_path(conn, :create, org), %{
           "invitation" => %{"email_addresses" => ""}
         })
 
@@ -28,7 +28,7 @@ defmodule PalapaWeb.InvitationControllerTest do
 
     test "regular members can't cancel an invitation", %{conn: conn, member: member, org: org} do
       {:ok, invitation} = Invitations.create_or_renew("dinesh@piedpiper.com", member)
-      conn = delete(conn, invitation_path(conn, :delete, org, invitation))
+      conn = delete(conn, Routes.invitation_path(conn, :delete, org, invitation))
 
       assert html_response(conn, :forbidden)
     end
@@ -42,7 +42,7 @@ defmodule PalapaWeb.InvitationControllerTest do
     end
 
     test "admin can access the invitation page", %{conn: conn, org: org} do
-      conn = get(conn, invitation_path(conn, :new, org))
+      conn = get(conn, Routes.invitation_path(conn, :new, org))
       assert html_response(conn, 200) =~ "Invite people"
     end
 
@@ -50,7 +50,7 @@ defmodule PalapaWeb.InvitationControllerTest do
       count_invitations_before = Repo.count("invitations")
 
       conn =
-        post(conn, invitation_path(conn, :create, org), %{
+        post(conn, Routes.invitation_path(conn, :create, org), %{
           "invitation" => %{"email_addresses" => "laurie@piedpiper.com"}
         })
 
@@ -65,7 +65,7 @@ defmodule PalapaWeb.InvitationControllerTest do
       count_invitations_before = Repo.count("invitations")
 
       conn =
-        post(conn, invitation_path(conn, :create, org), %{
+        post(conn, Routes.invitation_path(conn, :create, org), %{
           "invitation" => %{"email_addresses" => "bertram.gilfoyle@piedpiper.com bad_address"}
         })
 
@@ -79,7 +79,7 @@ defmodule PalapaWeb.InvitationControllerTest do
       count_invitations_before = Repo.count("invitations")
 
       conn =
-        post(conn, invitation_path(conn, :create, org), %{
+        post(conn, Routes.invitation_path(conn, :create, org), %{
           "invitation" => %{"email_addresses" => ""}
         })
 
@@ -93,7 +93,7 @@ defmodule PalapaWeb.InvitationControllerTest do
     test "an admin can cancel an invitation", %{conn: conn, member: member, org: org} do
       {:ok, invitation} = Palapa.Invitations.create_or_renew("dinesh@piedpiper.com", member)
       count_invitations_before = Repo.count(Invitation)
-      conn = delete(conn, invitation_path(conn, :delete, org, invitation))
+      conn = delete(conn, Routes.invitation_path(conn, :delete, org, invitation))
       count_invitations_after = Repo.count(Invitation)
 
       assert conn.status == 204
@@ -103,10 +103,10 @@ defmodule PalapaWeb.InvitationControllerTest do
     test "an admin can renew an invitation", %{conn: conn, member: member, org: org} do
       {:ok, invitation} = Palapa.Invitations.create_or_renew("dinesh@piedpiper.com", member)
       count_invitations_before = Repo.count(Invitation)
-      conn = post(conn, invitation_renew_path(conn, :renew, org, invitation))
+      conn = post(conn, Routes.invitation_renew_path(conn, :renew, org, invitation))
       count_invitations_after = Repo.count(Invitation)
 
-      assert redirected_to(conn, 302) =~ invitation_path(conn, :new, org)
+      assert redirected_to(conn, 302) =~ Routes.invitation_path(conn, :new, org)
       assert get_flash(conn, :success) =~ "dinesh@piedpiper.com has been sent a new invitation"
       assert count_invitations_after == count_invitations_before
     end
@@ -120,7 +120,7 @@ defmodule PalapaWeb.InvitationControllerTest do
     end
 
     test "the owner can access the invitation page", %{conn: conn, org: org} do
-      conn = get(conn, invitation_path(conn, :new, org))
+      conn = get(conn, Routes.invitation_path(conn, :new, org))
       assert html_response(conn, 200) =~ "Invite people"
     end
 
@@ -128,7 +128,7 @@ defmodule PalapaWeb.InvitationControllerTest do
       count_invitations_before = Repo.count("invitations")
 
       conn =
-        post(conn, invitation_path(conn, :create, org), %{
+        post(conn, Routes.invitation_path(conn, :create, org), %{
           "invitation" => %{"email_addresses" => "laurie@piedpiper.com"}
         })
 
@@ -142,7 +142,7 @@ defmodule PalapaWeb.InvitationControllerTest do
     test "the owner can cancel an invitation", %{conn: conn, member: member, org: org} do
       {:ok, invitation} = Palapa.Invitations.create_or_renew("dinesh@piedpiper.com", member)
       count_invitations_before = Repo.count(Invitation)
-      conn = delete(conn, invitation_path(conn, :delete, org, invitation))
+      conn = delete(conn, Routes.invitation_path(conn, :delete, org, invitation))
       count_invitations_after = Repo.count(Invitation)
 
       assert conn.status == 204
@@ -152,10 +152,10 @@ defmodule PalapaWeb.InvitationControllerTest do
     test "the owner can renew an invitation", %{conn: conn, member: member, org: org} do
       {:ok, invitation} = Palapa.Invitations.create_or_renew("dinesh@piedpiper.com", member)
       count_invitations_before = Repo.count(Invitation)
-      conn = post(conn, invitation_renew_path(conn, :renew, org, invitation))
+      conn = post(conn, Routes.invitation_renew_path(conn, :renew, org, invitation))
       count_invitations_after = Repo.count(Invitation)
 
-      assert redirected_to(conn, 302) =~ invitation_path(conn, :new, org)
+      assert redirected_to(conn, 302) =~ Routes.invitation_path(conn, :new, org)
       assert get_flash(conn, :success) =~ "dinesh@piedpiper.com has been sent a new invitation"
       assert count_invitations_after == count_invitations_before
     end

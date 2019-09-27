@@ -11,7 +11,7 @@ defmodule PalapaWeb.Settings.Billing.BillingStatusTest do
   end
 
   test "lets the user pass when the workspace is 'trialing'", %{conn: conn, workspace: workspace} do
-    conn = get(conn, dashboard_path(conn, :index, workspace.organization))
+    conn = get(conn, Routes.dashboard_path(conn, :index, workspace.organization))
     assert Billing.get_workspace_status(workspace.organization) == :trialing
     assert html_response(conn, 200) =~ "Dashboard"
   end
@@ -29,9 +29,10 @@ defmodule PalapaWeb.Settings.Billing.BillingStatusTest do
     conn =
       conn
       |> assign(:current_organization, organization)
-      |> get(dashboard_path(conn, :index, organization))
+      |> get(Routes.dashboard_path(conn, :index, organization))
 
-    assert redirected_to(conn, 302) =~ settings_billing_error_path(conn, :show, organization)
+    assert redirected_to(conn, 302) =~
+             Routes.settings_billing_error_path(conn, :show, organization)
   end
 
   test "lets the user pass when the workspace is 'active'", %{conn: conn, workspace: workspace} do
@@ -50,7 +51,7 @@ defmodule PalapaWeb.Settings.Billing.BillingStatusTest do
     conn =
       conn
       |> assign(:current_organization, organization)
-      |> get(dashboard_path(conn, :index, organization))
+      |> get(Routes.dashboard_path(conn, :index, organization))
 
     assert html_response(conn, 200) =~ "Dashboard"
   end
@@ -71,8 +72,9 @@ defmodule PalapaWeb.Settings.Billing.BillingStatusTest do
     conn =
       conn
       |> assign(:current_organization, organization)
-      |> get(dashboard_path(conn, :index, organization))
+      |> get(Routes.dashboard_path(conn, :index, organization))
 
-    assert redirected_to(conn, 302) =~ settings_billing_error_path(conn, :show, organization)
+    assert redirected_to(conn, 302) =~
+             Routes.settings_billing_error_path(conn, :show, organization)
   end
 end

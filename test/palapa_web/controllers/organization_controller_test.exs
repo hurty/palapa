@@ -9,7 +9,7 @@ defmodule PalapaWeb.OrganizationControllerTest do
   end
 
   test "display the list of workspaces", %{conn: conn} do
-    conn = get(conn, organization_path(conn, :index))
+    conn = get(conn, Routes.organization_path(conn, :index))
     assert html_response(conn, 200) =~ "workspaces"
   end
 end

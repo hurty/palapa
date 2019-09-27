@@ -16,13 +16,13 @@ defmodule PalapaWeb.TeamControllerTest do
       conn: conn,
       workspace: workspace
     } do
-      conn = get(conn, team_path(conn, :new, workspace.organization))
+      conn = get(conn, Routes.team_path(conn, :new, workspace.organization))
       assert html_response(conn, :forbidden)
     end
 
     test "regular members cannot create new team", %{conn: conn, workspace: workspace} do
       conn =
-        post(conn, team_path(conn, :create, workspace.organization), %{
+        post(conn, Routes.team_path(conn, :create, workspace.organization), %{
           "team" => %{
             "name" => "Sales"
           }
@@ -36,7 +36,7 @@ defmodule PalapaWeb.TeamControllerTest do
       workspace: workspace
     } do
       {:ok, team} = Teams.create(workspace.organization, %{name: "Sales"})
-      conn = get(conn, team_path(conn, :edit, workspace.organization, team))
+      conn = get(conn, Routes.team_path(conn, :edit, workspace.organization, team))
       assert html_response(conn, :forbidden)
     end
 
@@ -49,7 +49,7 @@ defmodule PalapaWeb.TeamControllerTest do
       conn =
         put(
           conn,
-          team_path(conn, :update, workspace.organization, team, %{
+          Routes.team_path(conn, :update, workspace.organization, team, %{
             "team" => %{"name" => "Sales Dpt"}
           })
         )
@@ -67,7 +67,7 @@ defmodule PalapaWeb.TeamControllerTest do
     end
 
     test "display the 'create a team' form", %{conn: conn, workspace: workspace} do
-      conn = get(conn, team_path(conn, :new, workspace.organization))
+      conn = get(conn, Routes.team_path(conn, :new, workspace.organization))
       assert html_response(conn, 200) =~ ~r/New team/
     end
 
@@ -75,7 +75,7 @@ defmodule PalapaWeb.TeamControllerTest do
       count_teams_before = Repo.count("teams")
 
       conn =
-        post(conn, team_path(conn, :create, workspace.organization), %{
+        post(conn, Routes.team_path(conn, :create, workspace.organization), %{
           "team" => %{
             "name" => "Sales"
           }
@@ -83,13 +83,13 @@ defmodule PalapaWeb.TeamControllerTest do
 
       count_teams_after = Repo.count("teams")
 
-      assert redirected_to(conn, 302) =~ member_path(conn, :index, workspace.organization)
+      assert redirected_to(conn, 302) =~ Routes.member_path(conn, :index, workspace.organization)
       assert count_teams_after == count_teams_before + 1
     end
 
     test "admin can access the team edition form", %{conn: conn, workspace: workspace} do
       {:ok, team} = Teams.create(workspace.organization, %{name: "Sales"})
-      conn = get(conn, team_path(conn, :edit, workspace.organization, team))
+      conn = get(conn, Routes.team_path(conn, :edit, workspace.organization, team))
       assert html_response(conn, :ok)
     end
 
@@ -100,7 +100,7 @@ defmodule PalapaWeb.TeamControllerTest do
       conn =
         put(
           conn,
-          team_path(conn, :update, workspace.organization, team, %{
+          Routes.team_path(conn, :update, workspace.organization, team, %{
             "team" => %{
               "name" => "Sales Dpt",
               "private" => true,
@@ -110,7 +110,7 @@ defmodule PalapaWeb.TeamControllerTest do
         )
 
       assert redirected_to(conn, 302) =~
-               member_path(conn, :index, workspace.organization, team_id: team.id)
+               Routes.member_path(conn, :index, workspace.organization, team_id: team.id)
 
       team = Repo.reload(team) |> Repo.preload(:members)
       assert "Sales Dpt" == team.name
@@ -128,7 +128,7 @@ defmodule PalapaWeb.TeamControllerTest do
     end
 
     test "display the 'new team' form", %{conn: conn, workspace: workspace} do
-      conn = get(conn, team_path(conn, :new, workspace.organization))
+      conn = get(conn, Routes.team_path(conn, :new, workspace.organization))
       assert html_response(conn, 200) =~ ~r/New team/
     end
 
@@ -140,7 +140,7 @@ defmodule PalapaWeb.TeamControllerTest do
       count_before = Repo.count("teams")
 
       conn =
-        post(conn, team_path(conn, :create, workspace.organization), %{
+        post(conn, Routes.team_path(conn, :create, workspace.organization), %{
           "team" => %{"name" => "Sales"}
         })
 
@@ -154,7 +154,9 @@ defmodule PalapaWeb.TeamControllerTest do
       count_before = Repo.count("teams")
 
       conn =
-        post(conn, team_path(conn, :create, workspace.organization), %{"team" => %{"name" => ""}})
+        post(conn, Routes.team_path(conn, :create, workspace.organization), %{
+          "team" => %{"name" => ""}
+        })
 
       count_after = Repo.count("teams")
 
@@ -180,7 +182,7 @@ defmodule PalapaWeb.TeamControllerTest do
       count_teams_members_before = count_team_members_records()
 
       conn =
-        post(conn, team_path(conn, :create, workspace.organization), %{
+        post(conn, Routes.team_path(conn, :create, workspace.organization), %{
           "team" => %{
             "name" => "Sales",
             "members" => [team_member1.id, team_member2.id]
@@ -190,14 +192,14 @@ defmodule PalapaWeb.TeamControllerTest do
       count_teams_after = Repo.count("teams")
       count_teams_members_after = count_team_members_records()
 
-      assert redirected_to(conn, 302) =~ member_path(conn, :index, workspace.organization)
+      assert redirected_to(conn, 302) =~ Routes.member_path(conn, :index, workspace.organization)
       assert count_teams_after == count_teams_before + 1
       assert count_teams_members_after == count_teams_members_before + 2
     end
 
     test "owner can access the team edition form", %{conn: conn, workspace: workspace} do
       {:ok, team} = Teams.create(workspace.organization, %{name: "Sales"})
-      conn = get(conn, team_path(conn, :edit, workspace.organization, team))
+      conn = get(conn, Routes.team_path(conn, :edit, workspace.organization, team))
       assert html_response(conn, :ok)
     end
 
@@ -208,7 +210,7 @@ defmodule PalapaWeb.TeamControllerTest do
       conn =
         put(
           conn,
-          team_path(conn, :update, workspace.organization, team, %{
+          Routes.team_path(conn, :update, workspace.organization, team, %{
             "team" => %{
               "name" => "Sales Dpt",
               "private" => true,
@@ -218,7 +220,7 @@ defmodule PalapaWeb.TeamControllerTest do
         )
 
       assert redirected_to(conn, 302) =~
-               member_path(conn, :index, workspace.organization, team_id: team.id)
+               Routes.member_path(conn, :index, workspace.organization, team_id: team.id)
 
       team = Repo.reload(team) |> Repo.preload(:members)
       assert "Sales Dpt" == team.name

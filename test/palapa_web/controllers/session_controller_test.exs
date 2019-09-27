@@ -8,7 +8,7 @@ defmodule PalapaWeb.SessionControllerTest do
     end
 
     test "visitors can see the login form", %{conn: conn} do
-      conn = get(conn, session_path(conn, :new))
+      conn = get(conn, Routes.session_path(conn, :new))
       assert html_response(conn, 200) =~ "Log in"
     end
 
@@ -16,7 +16,7 @@ defmodule PalapaWeb.SessionControllerTest do
       insert!(:owner)
 
       conn =
-        post(conn, session_path(conn, :create), %{
+        post(conn, Routes.session_path(conn, :create), %{
           "session" => %{
             "email" => "richard.hendricks@piedpiper.com",
             "password" => "password"
@@ -24,7 +24,7 @@ defmodule PalapaWeb.SessionControllerTest do
         })
 
       assert redirected_to(conn, 302) =~
-               dashboard_path(conn, :index, conn.assigns.current_organization)
+               Routes.dashboard_path(conn, :index, conn.assigns.current_organization)
 
       assert conn.assigns.current_account
       assert conn.assigns.current_organization
@@ -35,7 +35,7 @@ defmodule PalapaWeb.SessionControllerTest do
       insert!(:owner)
 
       conn =
-        post(conn, session_path(conn, :create), %{
+        post(conn, Routes.session_path(conn, :create), %{
           "session" => %{
             "email" => "richard.hendricks@piedpiper.com",
             "password" => "wrong"
@@ -51,7 +51,7 @@ defmodule PalapaWeb.SessionControllerTest do
       insert!(:owner)
 
       conn =
-        post(conn, session_path(conn, :create), %{
+        post(conn, Routes.session_path(conn, :create), %{
           "session" => %{
             "email" => "unknown@isp.com",
             "password" => "password"
@@ -78,9 +78,9 @@ defmodule PalapaWeb.SessionControllerTest do
     end
 
     test "a member logout destroys his session", %{conn: conn} do
-      conn = delete(conn, session_path(conn, :delete))
+      conn = delete(conn, Routes.session_path(conn, :delete))
 
-      assert redirected_to(conn, 302) == home_path(conn, :index)
+      assert redirected_to(conn, 302) == Routes.home_path(conn, :index)
       refute conn.assigns.current_account
       refute conn.assigns.current_organization
       refute conn.assigns.current_member

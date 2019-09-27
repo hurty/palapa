@@ -29,7 +29,7 @@ defmodule PalapaWeb.Document.SuggestionControllerTest do
 
     Documents.Suggestions.close_suggestion(suggestion2, member)
 
-    conn = get(conn, document_page_suggestion_path(conn, :index, org, page))
+    conn = get(conn, Routes.document_page_suggestion_path(conn, :index, org, page))
     assert html_response(conn, 200) =~ "Some great suggestion"
     refute html_response(conn, 200) =~ "Another suggestion"
   end
@@ -44,7 +44,10 @@ defmodule PalapaWeb.Document.SuggestionControllerTest do
     Documents.Suggestions.close_suggestion(suggestion2, member)
 
     conn =
-      get(conn, document_page_suggestion_path(conn, :index, org, page, %{"status" => "closed"}))
+      get(
+        conn,
+        Routes.document_page_suggestion_path(conn, :index, org, page, %{"status" => "closed"})
+      )
 
     assert html_response(conn, 200) =~ "Another suggestion"
     refute html_response(conn, 200) =~ "Some great suggestion"
@@ -52,7 +55,13 @@ defmodule PalapaWeb.Document.SuggestionControllerTest do
 
   test "create a new suggestion", %{conn: conn, org: org, page: page} do
     suggestion_payload = %{"suggestion" => %{"content" => "Some great suggestion"}}
-    conn = post(conn, document_page_suggestion_path(conn, :create, org, page, suggestion_payload))
+
+    conn =
+      post(
+        conn,
+        Routes.document_page_suggestion_path(conn, :create, org, page, suggestion_payload)
+      )
+
     assert html_response(conn, 200) =~ "Some great suggestion"
   end
 
@@ -60,7 +69,7 @@ defmodule PalapaWeb.Document.SuggestionControllerTest do
     {:ok, suggestion} =
       Documents.Suggestions.create_suggestion(page, member, %{content: "Some great suggestion"})
 
-    conn = get(conn, suggestion_path(conn, :edit, org, suggestion))
+    conn = get(conn, Routes.suggestion_path(conn, :edit, org, suggestion))
     assert html_response(conn, 200) =~ "Some great suggestion"
   end
 
@@ -69,7 +78,7 @@ defmodule PalapaWeb.Document.SuggestionControllerTest do
       Documents.Suggestions.create_suggestion(page, member, %{content: "Some great suggestion"})
 
     suggestion_payload = %{"suggestion" => %{"content" => "Another idea"}}
-    conn = patch(conn, suggestion_path(conn, :update, org, suggestion, suggestion_payload))
+    conn = patch(conn, Routes.suggestion_path(conn, :update, org, suggestion, suggestion_payload))
     assert html_response(conn, 200) =~ "Another idea"
   end
 
@@ -87,7 +96,7 @@ defmodule PalapaWeb.Document.SuggestionControllerTest do
 
     conn =
       login(admin)
-      |> patch(suggestion_path(conn, :update, org, suggestion, suggestion_payload))
+      |> patch(Routes.suggestion_path(conn, :update, org, suggestion, suggestion_payload))
 
     assert html_response(conn, 403)
   end
@@ -96,7 +105,7 @@ defmodule PalapaWeb.Document.SuggestionControllerTest do
     {:ok, suggestion} =
       Documents.Suggestions.create_suggestion(page, member, %{content: "Some great suggestion"})
 
-    conn = delete(conn, suggestion_path(conn, :delete, org, suggestion))
+    conn = delete(conn, Routes.suggestion_path(conn, :delete, org, suggestion))
     assert conn.status == 204
   end
 
@@ -112,7 +121,7 @@ defmodule PalapaWeb.Document.SuggestionControllerTest do
 
     conn =
       login(admin)
-      |> delete(suggestion_path(conn, :delete, org, suggestion))
+      |> delete(Routes.suggestion_path(conn, :delete, org, suggestion))
 
     assert conn.status == 204
   end

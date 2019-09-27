@@ -23,7 +23,7 @@ defmodule PalapaWeb.Document.SectionControllerTest do
       conn =
         post(
           conn,
-          document_section_path(conn, :create, org, document, %{
+          Routes.document_section_path(conn, :create, org, document, %{
             "section" => %{"title" => "first section"}
           })
         )
@@ -38,7 +38,7 @@ defmodule PalapaWeb.Document.SectionControllerTest do
       conn =
         patch(
           conn,
-          document_section_path(conn, :update, org, section, %{
+          Routes.document_section_path(conn, :update, org, section, %{
             "section" => %{"title" => "1st section"}
           })
         )
@@ -55,7 +55,7 @@ defmodule PalapaWeb.Document.SectionControllerTest do
       conn =
         delete(
           conn,
-          document_section_path(conn, :delete, org, section,
+          Routes.document_section_path(conn, :delete, org, section,
             current_page_id: Documents.get_first_page(document)
           )
         )

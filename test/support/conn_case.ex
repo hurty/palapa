@@ -19,7 +19,7 @@ defmodule PalapaWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      import PalapaWeb.Router.Helpers
+      alias PalapaWeb.Router.Helpers, as: Routes
       import Palapa.Factory
 
       # The default endpoint for testing

@@ -12,7 +12,7 @@ defmodule PalapaWeb.Settings.Workspace.WorkspaceControllerTest do
     end
 
     test "a member cannot access workspace settings", %{conn: conn, workspace: workspace} do
-      conn = get(conn, settings_workspace_path(conn, :show, workspace.organization))
+      conn = get(conn, Routes.settings_workspace_path(conn, :show, workspace.organization))
       assert html_response(conn, :forbidden)
     end
   end

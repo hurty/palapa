@@ -9,7 +9,7 @@ defmodule PalapaWeb.Settings.MemberLiveTest do
   end
 
   test "initial rendering, disconnected state", %{conn: conn, workspace: workspace} do
-    conn = get(conn, settings_member_path(conn, :index, workspace.organization))
+    conn = get(conn, Routes.settings_member_path(conn, :index, workspace.organization))
     assert html_response(conn, 200) =~ "Workspace members"
   end
 end

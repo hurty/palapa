@@ -33,18 +33,24 @@ defmodule PalapaWeb.Document.SuggestionCommentControllerTest do
 
   test "create a comment to a suggestion", %{conn: conn, org: org, suggestion: suggestion} do
     comment_payload = %{"suggestion_comment" => %{"content" => @suggestion_comment_content}}
-    conn = post(conn, suggestion_comment_path(conn, :create, org, suggestion, comment_payload))
+
+    conn =
+      post(conn, Routes.suggestion_comment_path(conn, :create, org, suggestion, comment_payload))
+
     assert html_response(conn, 200) =~ @suggestion_comment_content
   end
 
   test "edit a reply to a suggestion", %{conn: conn, org: org, comment: comment} do
-    conn = get(conn, suggestion_comment_path(conn, :edit, org, comment))
+    conn = get(conn, Routes.suggestion_comment_path(conn, :edit, org, comment))
     assert html_response(conn, 200) =~ "It is a great idea"
   end
 
   test "update a reply to a suggestion", %{conn: conn, org: org, comment: comment} do
     comment_payload = %{"suggestion_comment" => %{"content" => "It is a terrific idea"}}
-    conn = patch(conn, suggestion_comment_path(conn, :update, org, comment, comment_payload))
+
+    conn =
+      patch(conn, Routes.suggestion_comment_path(conn, :update, org, comment, comment_payload))
+
     assert html_response(conn, 200) =~ "It is a terrific idea"
   end
 
@@ -58,7 +64,7 @@ defmodule PalapaWeb.Document.SuggestionCommentControllerTest do
 
     conn =
       login(admin)
-      |> patch(suggestion_comment_path(conn, :update, org, comment, comment_payload))
+      |> patch(Routes.suggestion_comment_path(conn, :update, org, comment, comment_payload))
 
     assert html_response(conn, 403)
   end
@@ -66,13 +72,13 @@ defmodule PalapaWeb.Document.SuggestionCommentControllerTest do
   test "an admin can delete any comment", %{conn: conn, org: org, admin: admin, comment: comment} do
     conn =
       login(admin)
-      |> delete(suggestion_comment_path(conn, :delete, org, comment))
+      |> delete(Routes.suggestion_comment_path(conn, :delete, org, comment))
 
     assert conn.status == 204
   end
 
   test "delete a comment to a suggestion", %{conn: conn, org: org, comment: comment} do
-    conn = delete(conn, suggestion_comment_path(conn, :delete, org, comment))
+    conn = delete(conn, Routes.suggestion_comment_path(conn, :delete, org, comment))
     assert conn.status == 204
   end
 
@@ -87,7 +93,7 @@ defmodule PalapaWeb.Document.SuggestionCommentControllerTest do
         content: @suggestion_comment_content
       })
 
-    conn = delete(conn, suggestion_comment_path(conn, :delete, org, comment))
+    conn = delete(conn, Routes.suggestion_comment_path(conn, :delete, org, comment))
     assert conn.status == 403
   end
 end

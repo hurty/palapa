@@ -13,7 +13,7 @@ defmodule PalapaWeb.Settings.Billing.StripeWebhookControllerTest do
     conn =
       conn
       |> Plug.Conn.put_req_header("stripe-signature", "something bad")
-      |> post(stripe_webhook_path(conn, :create))
+      |> post(Routes.stripe_webhook_path(conn, :create))
 
     assert response(conn, :forbidden)
   end
@@ -38,7 +38,7 @@ defmodule PalapaWeb.Settings.Billing.StripeWebhookControllerTest do
       conn
       |> assign(:ignore_stripe_signature, true)
       |> assign(:event, @invoice_created_event)
-      |> post(stripe_webhook_path(conn, :create))
+      |> post(Routes.stripe_webhook_path(conn, :create))
 
     assert response(conn, :ok)
     invoice = Billing.get_invoice_by_stripe_id!("in_000")
@@ -71,7 +71,7 @@ defmodule PalapaWeb.Settings.Billing.StripeWebhookControllerTest do
       conn
       |> assign(:ignore_stripe_signature, true)
       |> assign(:event, @invoice_payment_succeeded_event)
-      |> post(stripe_webhook_path(conn, :create))
+      |> post(Routes.stripe_webhook_path(conn, :create))
 
     assert response(conn, :ok)
     invoice = Billing.get_invoice_by_stripe_id!("in_000")
@@ -93,7 +93,7 @@ defmodule PalapaWeb.Settings.Billing.StripeWebhookControllerTest do
       conn
       |> assign(:ignore_stripe_signature, true)
       |> assign(:event, @subscription_updated_event)
-      |> post(stripe_webhook_path(conn, :create))
+      |> post(Routes.stripe_webhook_path(conn, :create))
 
     subscription = Palapa.Repo.preload(workspace.organization, :subscription).subscription
     assert response(conn, :ok)

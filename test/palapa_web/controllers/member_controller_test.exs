@@ -13,19 +13,19 @@ defmodule PalapaWeb.MemberControllerTest do
     end
 
     test "list all members in the organization", %{conn: conn, org: org} do
-      conn = get(conn, member_path(conn, :index, org))
+      conn = get(conn, Routes.member_path(conn, :index, org))
       assert html_response(conn, 200) =~ "Bertram Gilfoyle"
     end
 
     test "list members in a specific team", %{conn: conn, org: org, workspace: workspace} do
-      conn = get(conn, member_path(conn, :index, org, team_id: workspace.tech_team.id))
+      conn = get(conn, Routes.member_path(conn, :index, org, team_id: workspace.tech_team.id))
       assert html_response(conn, 200) =~ "Richard"
       assert html_response(conn, 200) =~ "Gilfoyle"
       refute html_response(conn, 200) =~ "Jared"
     end
 
     test "regular member cannot see the 'add people' link", %{conn: conn, org: org} do
-      conn = get(conn, member_path(conn, :index, org))
+      conn = get(conn, Routes.member_path(conn, :index, org))
       refute html_response(conn, 200) =~ "Invite people"
     end
 
@@ -33,12 +33,12 @@ defmodule PalapaWeb.MemberControllerTest do
       conn: conn,
       org: org
     } do
-      conn = get(conn, member_path(conn, :index, org))
+      conn = get(conn, Routes.member_path(conn, :index, org))
       refute html_response(conn, 200) =~ "Create a team"
     end
 
     test "show member profile", %{conn: conn, org: org, member: member} do
-      conn = get(conn, member_path(conn, :show, org, member))
+      conn = get(conn, Routes.member_path(conn, :show, org, member))
       assert html_response(conn, 200) =~ "Bertram Gilfoyle"
     end
 
@@ -58,7 +58,7 @@ defmodule PalapaWeb.MemberControllerTest do
         private: true
       })
 
-      conn = get(conn, member_path(conn, :show, org, member))
+      conn = get(conn, Routes.member_path(conn, :show, org, member))
       assert html_response(conn, 200) =~ "bertram.gilfoyle@piedpiper.com"
       assert html_response(conn, 200) =~ "28 rue saint antoine 44000 Nantes"
     end
@@ -79,7 +79,7 @@ defmodule PalapaWeb.MemberControllerTest do
         private: true
       })
 
-      conn = get(conn, member_path(conn, :show, org, workspace.jared))
+      conn = get(conn, Routes.member_path(conn, :show, org, workspace.jared))
       assert html_response(conn, 200) =~ "jared.dunn@piedpiper.com"
       refute html_response(conn, 200) =~ "The basement"
     end
@@ -119,7 +119,7 @@ defmodule PalapaWeb.MemberControllerTest do
           "private" => true
         })
 
-      conn = get(conn, member_path(conn, :show, org, workspace.jared))
+      conn = get(conn, Routes.member_path(conn, :show, org, workspace.jared))
 
       assert html_response(conn, 200) =~ "mister.jared"
       assert html_response(conn, 200) =~ "jared.dunn@piedpiper.com"
@@ -139,12 +139,12 @@ defmodule PalapaWeb.MemberControllerTest do
     end
 
     test "admins see the 'add people' link", %{conn: conn, org: org} do
-      conn = get(conn, member_path(conn, :index, org))
+      conn = get(conn, Routes.member_path(conn, :index, org))
       assert html_response(conn, 200) =~ "Invite people"
     end
 
     test "admins see 'the create a team' link", %{conn: conn, org: org} do
-      conn = get(conn, member_path(conn, :index, org))
+      conn = get(conn, Routes.member_path(conn, :index, org))
       assert html_response(conn, 200) =~ "Create a team"
     end
   end
@@ -160,12 +160,12 @@ defmodule PalapaWeb.MemberControllerTest do
     end
 
     test "owners see the 'add people' link", %{conn: conn, org: org} do
-      conn = get(conn, member_path(conn, :index, org))
+      conn = get(conn, Routes.member_path(conn, :index, org))
       assert html_response(conn, 200) =~ "Invite people"
     end
 
     test "owners see 'the create a team' link", %{conn: conn, org: org} do
-      conn = get(conn, member_path(conn, :index, org))
+      conn = get(conn, Routes.member_path(conn, :index, org))
       assert html_response(conn, 200) =~ "Create a team"
     end
   end

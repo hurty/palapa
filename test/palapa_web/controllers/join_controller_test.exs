@@ -18,24 +18,24 @@ defmodule PalapaWeb.JoinControllerTest do
       |> Ecto.Changeset.change(%{expire_at: DateTime.utc_now() |> DateTime.truncate(:second)})
       |> Repo.update!()
 
-      conn = get(conn, join_path(conn, :new, invitation.id, invitation.token))
+      conn = get(conn, Routes.join_path(conn, :new, invitation.id, invitation.token))
       assert html_response(conn, :forbidden) =~ "expired"
     end
 
     test "bad token for invitation", %{conn: conn, workspace: workspace} do
       {:ok, invitation} = Invitations.create_or_renew("dinesh@piedpiper.com", workspace.richard)
-      conn = get(conn, join_path(conn, :new, invitation.id, "bad-token"))
+      conn = get(conn, Routes.join_path(conn, :new, invitation.id, "bad-token"))
       assert html_response(conn, :forbidden) =~ "invalid"
     end
 
     test "unexisting invitation", %{conn: conn, workspace: _workspace} do
-      conn = get(conn, join_path(conn, :new, Ecto.UUID.generate(), "a-token"))
+      conn = get(conn, Routes.join_path(conn, :new, Ecto.UUID.generate(), "a-token"))
       assert html_response(conn, :forbidden) =~ "invalid"
     end
 
     test "valid invitation shows the join form", %{conn: conn, workspace: workspace} do
       {:ok, invitation} = Invitations.create_or_renew("dinesh@piedpiper.com", workspace.richard)
-      conn = get(conn, join_path(conn, :new, invitation.id, invitation.token))
+      conn = get(conn, Routes.join_path(conn, :new, invitation.id, invitation.token))
       assert html_response(conn, :ok) =~ "Your title"
     end
   end
@@ -50,7 +50,7 @@ defmodule PalapaWeb.JoinControllerTest do
       conn =
         post(
           conn,
-          join_path(conn, :create, invitation.id, invitation.token, %{
+          Routes.join_path(conn, :create, invitation.id, invitation.token, %{
             "join_form" => %{
               "name" => "Dinesh",
               "password" => "password",
@@ -69,7 +69,8 @@ defmodule PalapaWeb.JoinControllerTest do
       assert count_members_after == count_members_before + 1
 
       # the user is redirected to dashboard
-      assert redirected_to(conn, 302) =~ dashboard_path(conn, :index, invitation.organization_id)
+      assert redirected_to(conn, 302) =~
+               Routes.dashboard_path(conn, :index, invitation.organization_id)
 
       # the user gets logged in correctly
       assert conn.assigns.current_account.email == "dinesh@piedpiper.com"
@@ -95,7 +96,7 @@ defmodule PalapaWeb.JoinControllerTest do
       conn =
         post(
           conn,
-          join_path(conn, :create, invitation.id, invitation.token, %{
+          Routes.join_path(conn, :create, invitation.id, invitation.token, %{
             "join_form" => %{
               "name" => "Dinesh",
               "password" => "password",
@@ -114,7 +115,8 @@ defmodule PalapaWeb.JoinControllerTest do
       assert count_members_after == count_members_before + 1
 
       # the user is redirected to dashboard
-      assert redirected_to(conn, 302) =~ dashboard_path(conn, :index, invitation.organization_id)
+      assert redirected_to(conn, 302) =~
+               Routes.dashboard_path(conn, :index, invitation.organization_id)
 
       # the user gets logged in correctly
       assert conn.assigns.current_account.email == "dinesh@piedpiper.com"
@@ -134,7 +136,7 @@ defmodule PalapaWeb.JoinControllerTest do
       conn =
         post(
           conn,
-          join_path(conn, :create, invitation.id, invitation.token, %{
+          Routes.join_path(conn, :create, invitation.id, invitation.token, %{
             "join_form" => %{
               "name" => "Bertram Gilfoyle",
               "password" => "password",
@@ -153,7 +155,8 @@ defmodule PalapaWeb.JoinControllerTest do
       assert count_members_after == count_members_before
 
       # the user is redirected to dashboard
-      assert redirected_to(conn, 302) =~ dashboard_path(conn, :index, invitation.organization_id)
+      assert redirected_to(conn, 302) =~
+               Routes.dashboard_path(conn, :index, invitation.organization_id)
 
       # the user gets logged in correctly
       assert conn.assigns.current_account.email == "bertram.gilfoyle@piedpiper.com"
@@ -172,7 +175,7 @@ defmodule PalapaWeb.JoinControllerTest do
       conn =
         post(
           conn,
-          join_path(conn, :create, invitation.id, invitation.token, %{
+          Routes.join_path(conn, :create, invitation.id, invitation.token, %{
             "join_form" => %{"title" => "Engineer"}
           })
         )

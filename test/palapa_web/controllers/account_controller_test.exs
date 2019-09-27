@@ -10,13 +10,13 @@ defmodule PalapaWeb.AccountControllerTest do
     end
 
     test "get account settings form", %{conn: conn} do
-      conn = get(conn, account_path(conn, :edit))
+      conn = get(conn, Routes.account_path(conn, :edit))
       assert html_response(conn, 200) =~ "Your account"
     end
 
     test "change accounts settings successfully", %{conn: conn} do
       conn =
-        patch(conn, account_path(conn, :update), %{
+        patch(conn, Routes.account_path(conn, :update), %{
           "account" => %{
             "name" => "John",
             "email" => "john@isp.com",
@@ -29,7 +29,7 @@ defmodule PalapaWeb.AccountControllerTest do
 
     test "cannot change account settings without an email", %{conn: conn} do
       conn =
-        patch(conn, account_path(conn, :update), %{
+        patch(conn, Routes.account_path(conn, :update), %{
           "account" => %{
             "name" => "John",
             "email" => "",
@@ -51,7 +51,7 @@ defmodule PalapaWeb.AccountControllerTest do
 
     test "wrong current password", %{conn: conn} do
       conn =
-        patch(conn, account_path(conn, :update), %{
+        patch(conn, Routes.account_path(conn, :update), %{
           "password" => %{
             "current_password" => "wrong_one",
             "password" => "newPassword",
@@ -64,7 +64,7 @@ defmodule PalapaWeb.AccountControllerTest do
 
     test "wrong password confirmation", %{conn: conn} do
       conn =
-        patch(conn, account_path(conn, :update), %{
+        patch(conn, Routes.account_path(conn, :update), %{
           "password" => %{
             "current_password" => "password",
             "password" => "newPassword",
@@ -77,7 +77,7 @@ defmodule PalapaWeb.AccountControllerTest do
 
     test "successful password change", %{conn: conn} do
       conn =
-        patch(conn, account_path(conn, :update), %{
+        patch(conn, Routes.account_path(conn, :update), %{
           "password" => %{
             "current_password" => "password",
             "password" => "newPassword",

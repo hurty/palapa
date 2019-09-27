@@ -21,7 +21,7 @@ defmodule PalapaWeb.SearchControllerTest do
       content: "It is really a pleasure"
     })
 
-    conn = get(conn, search_path(conn, :index, workspace.organization, query: "every"))
+    conn = get(conn, Routes.search_path(conn, :index, workspace.organization, query: "every"))
     assert html_response(conn, 200) =~ "Styleguide for everyone"
     assert html_response(conn, 200) =~ "Welcome everyone"
   end
@@ -40,7 +40,7 @@ defmodule PalapaWeb.SearchControllerTest do
       conn
       |> put_req_header("x-requested-with", "XMLHttpRequest")
       |> put_req_header("content-type", "text/html")
-      |> get(search_path(conn, :index, workspace.organization, query: "every"))
+      |> get(Routes.search_path(conn, :index, workspace.organization, query: "every"))
 
     assert html_response(conn, 200) =~ "Styleguide for everyone"
     assert html_response(conn, 200) =~ "Welcome everyone"

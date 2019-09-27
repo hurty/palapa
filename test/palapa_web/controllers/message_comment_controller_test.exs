@@ -31,7 +31,7 @@ defmodule PalapaWeb.MessageCommentControllerTest do
       conn =
         get(
           conn,
-          message_comment_path(
+          Routes.message_comment_path(
             conn,
             :edit,
             message_comment.organization,
@@ -49,7 +49,7 @@ defmodule PalapaWeb.MessageCommentControllerTest do
       conn =
         patch(
           conn,
-          message_comment_path(
+          Routes.message_comment_path(
             conn,
             :update,
             message_comment.organization,
@@ -68,7 +68,7 @@ defmodule PalapaWeb.MessageCommentControllerTest do
       conn =
         patch(
           conn,
-          message_comment_path(
+          Routes.message_comment_path(
             conn,
             :update,
             message_comment.organization,
@@ -87,7 +87,7 @@ defmodule PalapaWeb.MessageCommentControllerTest do
       conn =
         delete(
           conn,
-          message_comment_path(
+          Routes.message_comment_path(
             conn,
             :delete,
             message_comment.organization,
@@ -125,7 +125,7 @@ defmodule PalapaWeb.MessageCommentControllerTest do
       conn =
         get(
           conn,
-          message_comment_path(
+          Routes.message_comment_path(
             conn,
             :edit,
             message_comment.organization,
@@ -143,7 +143,7 @@ defmodule PalapaWeb.MessageCommentControllerTest do
       conn =
         patch(
           conn,
-          message_comment_path(
+          Routes.message_comment_path(
             conn,
             :update,
             message_comment.organization,
@@ -162,7 +162,7 @@ defmodule PalapaWeb.MessageCommentControllerTest do
       conn =
         delete(
           conn,
-          message_comment_path(
+          Routes.message_comment_path(
             conn,
             :delete,
             message_comment.organization,
@@ -207,7 +207,7 @@ defmodule PalapaWeb.MessageCommentControllerTest do
       conn =
         get(
           conn,
-          message_comment_path(
+          Routes.message_comment_path(
             conn,
             :edit,
             message_comment.organization,
@@ -225,7 +225,7 @@ defmodule PalapaWeb.MessageCommentControllerTest do
       conn =
         patch(
           conn,
-          message_comment_path(
+          Routes.message_comment_path(
             conn,
             :update,
             message_comment.organization,
@@ -244,7 +244,7 @@ defmodule PalapaWeb.MessageCommentControllerTest do
       conn =
         delete(
           conn,
-          message_comment_path(
+          Routes.message_comment_path(
             conn,
             :delete,
             message_comment.organization,

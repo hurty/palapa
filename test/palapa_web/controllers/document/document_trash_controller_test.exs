@@ -22,8 +22,12 @@ defmodule PalapaWeb.Document.DocumentTrashControllerTest do
           title: "This is a styleguide for everyone"
         })
 
-      conn = post(conn, document_trash_path(conn, :create, workspace.organization, document))
-      assert redirected_to(conn, 302) =~ document_path(conn, :index, workspace.organization)
+      conn =
+        post(conn, Routes.document_trash_path(conn, :create, workspace.organization, document))
+
+      assert redirected_to(conn, 302) =~
+               Routes.document_path(conn, :index, workspace.organization)
+
       assert Phoenix.HTML.safe_to_string(get_flash(conn, :success)) =~ "has been deleted"
     end
 
@@ -35,8 +39,12 @@ defmodule PalapaWeb.Document.DocumentTrashControllerTest do
 
       document = Documents.delete_document!(document, workspace.gilfoyle)
 
-      conn = delete(conn, document_trash_path(conn, :delete, workspace.organization, document))
-      assert redirected_to(conn, 302) =~ document_path(conn, :index, workspace.organization)
+      conn =
+        delete(conn, Routes.document_trash_path(conn, :delete, workspace.organization, document))
+
+      assert redirected_to(conn, 302) =~
+               Routes.document_path(conn, :index, workspace.organization)
+
       assert get_flash(conn, :success) =~ "has been restored"
     end
   end

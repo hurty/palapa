@@ -18,7 +18,7 @@ defmodule PalapaWeb.Public.PageControllerTest do
     conn =
       get(
         conn,
-        public_document_page_path(
+        Routes.public_document_page_path(
           conn,
           :show,
           document.public_token,
@@ -39,7 +39,7 @@ defmodule PalapaWeb.Public.PageControllerTest do
     assert_raise Ecto.NoResultsError, fn ->
       get(
         conn,
-        public_document_page_path(
+        Routes.public_document_page_path(
           conn,
           :show,
           document.public_token,

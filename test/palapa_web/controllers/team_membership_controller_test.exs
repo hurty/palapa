@@ -14,10 +14,15 @@ defmodule PalapaWeb.TeamMembershipControllerTest do
         insert!(:team, name: "General", private: false, organization: workspace.organization)
 
       conn =
-        post(conn, team_team_membership_path(conn, :create, workspace.organization, public_team))
+        post(
+          conn,
+          Routes.team_team_membership_path(conn, :create, workspace.organization, public_team)
+        )
 
       assert redirected_to(conn, 302) =~
-               member_path(conn, :index, workspace.organization, %{"team_id" => public_team.id})
+               Routes.member_path(conn, :index, workspace.organization, %{
+                 "team_id" => public_team.id
+               })
 
       assert "You have joined the team \"General\"" == get_flash(conn, :success)
     end
@@ -27,7 +32,10 @@ defmodule PalapaWeb.TeamMembershipControllerTest do
         insert!(:team, name: "Private", private: true, organization: workspace.organization)
 
       conn =
-        post(conn, team_team_membership_path(conn, :create, workspace.organization, private_team))
+        post(
+          conn,
+          Routes.team_team_membership_path(conn, :create, workspace.organization, private_team)
+        )
 
       assert html_response(conn, :forbidden)
     end
@@ -36,11 +44,16 @@ defmodule PalapaWeb.TeamMembershipControllerTest do
       conn =
         delete(
           conn,
-          team_team_membership_path(conn, :delete, workspace.organization, workspace.tech_team)
+          Routes.team_team_membership_path(
+            conn,
+            :delete,
+            workspace.organization,
+            workspace.tech_team
+          )
         )
 
       assert redirected_to(conn, 302) =~
-               member_path(conn, :index, workspace.organization, %{
+               Routes.member_path(conn, :index, workspace.organization, %{
                  "team_id" => workspace.tech_team.id
                })
 
@@ -61,10 +74,15 @@ defmodule PalapaWeb.TeamMembershipControllerTest do
         insert!(:team, name: "Private", private: true, organization: workspace.organization)
 
       conn =
-        post(conn, team_team_membership_path(conn, :create, workspace.organization, private_team))
+        post(
+          conn,
+          Routes.team_team_membership_path(conn, :create, workspace.organization, private_team)
+        )
 
       assert redirected_to(conn, 302) =~
-               member_path(conn, :index, workspace.organization, %{"team_id" => private_team.id})
+               Routes.member_path(conn, :index, workspace.organization, %{
+                 "team_id" => private_team.id
+               })
 
       assert "You have joined the team \"Private\"" == get_flash(conn, :success)
     end
@@ -83,10 +101,15 @@ defmodule PalapaWeb.TeamMembershipControllerTest do
         insert!(:team, name: "Private", private: true, organization: workspace.organization)
 
       conn =
-        post(conn, team_team_membership_path(conn, :create, workspace.organization, private_team))
+        post(
+          conn,
+          Routes.team_team_membership_path(conn, :create, workspace.organization, private_team)
+        )
 
       assert redirected_to(conn, 302) =~
-               member_path(conn, :index, workspace.organization, %{"team_id" => private_team.id})
+               Routes.member_path(conn, :index, workspace.organization, %{
+                 "team_id" => private_team.id
+               })
 
       assert "You have joined the team \"Private\"" == get_flash(conn, :success)
     end

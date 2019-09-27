@@ -16,7 +16,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
     end
 
     test "new page", %{conn: conn, org: org, document: document} do
-      conn = get(conn, document_page_path(conn, :new, org, document))
+      conn = get(conn, Routes.document_page_path(conn, :new, org, document))
       assert html_response(conn, 200) =~ "New page"
     end
 
@@ -28,18 +28,22 @@ defmodule PalapaWeb.Document.PageControllerTest do
       Documents.get_first_section!(document)
       |> Documents.delete_section()
 
-      conn = get(conn, document_page_path(conn, :new, org, document))
+      conn = get(conn, Routes.document_page_path(conn, :new, org, document))
       assert html_response(conn, 200) =~ "New page"
       assert html_response(conn, 200) =~ "Document pages"
     end
 
     test "show page", %{conn: conn, org: org, document: document} do
-      conn = get(conn, document_page_path(conn, :show, org, Documents.get_first_page(document)))
+      conn =
+        get(conn, Routes.document_page_path(conn, :show, org, Documents.get_first_page(document)))
+
       assert html_response(conn, 200) =~ @doc_title
     end
 
     test "edit page", %{conn: conn, org: org, document: document} do
-      conn = get(conn, document_page_path(conn, :edit, org, Documents.get_first_page(document)))
+      conn =
+        get(conn, Routes.document_page_path(conn, :edit, org, Documents.get_first_page(document)))
+
       assert html_response(conn, 200)
     end
 
@@ -48,7 +52,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
       Documents.delete_page!(page)
 
       assert_raise Ecto.NoResultsError, fn ->
-        get(conn, document_page_path(conn, :edit, org, page))
+        get(conn, Routes.document_page_path(conn, :edit, org, page))
       end
     end
 
@@ -59,10 +63,10 @@ defmodule PalapaWeb.Document.PageControllerTest do
       conn =
         patch(
           conn,
-          document_page_path(conn, :update, org, first_page, payload)
+          Routes.document_page_path(conn, :update, org, first_page, payload)
         )
 
-      assert redirected_to(conn, 302) =~ document_page_path(conn, :show, org, first_page)
+      assert redirected_to(conn, 302) =~ Routes.document_page_path(conn, :show, org, first_page)
 
       reloaded_page = Documents.get_page!(first_page.id)
       assert "updated page content" == to_string(reloaded_page.content)
@@ -77,7 +81,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
           "page" => %{"title" => "My awesome page", "content" => "updated page content"}
         }
 
-        patch(conn, document_page_path(conn, :update, org, page, payload))
+        patch(conn, Routes.document_page_path(conn, :update, org, page, payload))
       end
     end
 
@@ -87,7 +91,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
       conn =
         delete(
           conn,
-          document_page_path(conn, :delete, org, page, current_page_id: page.id)
+          Routes.document_page_path(conn, :delete, org, page, current_page_id: page.id)
         )
 
       assert redirected_to(conn, 302)
@@ -112,7 +116,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
       conn =
         get(
           conn,
-          document_page_path(
+          Routes.document_page_path(
             conn,
             :show,
             workspace.organization,
@@ -136,7 +140,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
       conn =
         get(
           conn,
-          document_page_path(
+          Routes.document_page_path(
             conn,
             :show,
             workspace.organization,
@@ -159,7 +163,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
       assert_raise Ecto.NoResultsError, fn ->
         get(
           conn,
-          document_page_path(
+          Routes.document_page_path(
             conn,
             :show,
             workspace.organization,
@@ -183,7 +187,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
       assert_raise Ecto.NoResultsError, fn ->
         get(
           conn,
-          document_page_path(
+          Routes.document_page_path(
             conn,
             :show,
             workspace.organization,

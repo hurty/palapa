@@ -9,20 +9,20 @@ defmodule PalapaWeb.PasswordResetControllerTest do
   end
 
   test "get the password reset form", %{conn: conn} do
-    conn = get(conn, password_reset_path(conn, :new))
+    conn = get(conn, Routes.password_reset_path(conn, :new))
     assert html_response(conn, 200) =~ "Password reset"
   end
 
   test "ask for a reset link with an existing email", %{conn: conn} do
     payload = %{"password_reset" => %{"email" => "richard.hendricks@piedpiper.com"}}
-    conn = post(conn, password_reset_path(conn, :create, payload))
+    conn = post(conn, Routes.password_reset_path(conn, :create, payload))
     assert html_response(conn, 200) =~ "An email has been sent"
     assert_email_delivered_with(to: [nil: "richard.hendricks@piedpiper.com"])
   end
 
   test "ask for a reset link with non-existing email", %{conn: conn} do
     payload = %{"password_reset" => %{"email" => "bad@mail.org"}}
-    conn = post(conn, password_reset_path(conn, :create, payload))
+    conn = post(conn, Routes.password_reset_path(conn, :create, payload))
 
     # We pretend everyting went well in order not to disclose existing accounts
     assert html_response(conn, 200) =~ "An email has been sent"
@@ -31,7 +31,7 @@ defmodule PalapaWeb.PasswordResetControllerTest do
 
   test "ask for a reset link with invalid email address", %{conn: conn} do
     payload = %{"password_reset" => %{"email" => "invalidmail.org"}}
-    conn = post(conn, password_reset_path(conn, :create, payload))
+    conn = post(conn, Routes.password_reset_path(conn, :create, payload))
     assert html_response(conn, 200) =~ "Please enter a valid email address"
     assert_no_emails_delivered()
   end
@@ -41,7 +41,7 @@ defmodule PalapaWeb.PasswordResetControllerTest do
     workspace: workspace
   } do
     {:ok, token} = Palapa.Accounts.generate_password_reset_token(workspace.richard.account)
-    conn = get(conn, password_reset_path(conn, :edit, %{"password_reset_token" => token}))
+    conn = get(conn, Routes.password_reset_path(conn, :edit, %{"password_reset_token" => token}))
     assert html_response(conn, 200)
   end
 
@@ -56,7 +56,7 @@ defmodule PalapaWeb.PasswordResetControllerTest do
       }
     }
 
-    conn = patch(conn, password_reset_path(conn, :update, payload))
+    conn = patch(conn, Routes.password_reset_path(conn, :update, payload))
     assert redirected_to(conn, 302)
   end
 
@@ -71,7 +71,7 @@ defmodule PalapaWeb.PasswordResetControllerTest do
       }
     }
 
-    conn = patch(conn, password_reset_path(conn, :update, payload))
+    conn = patch(conn, Routes.password_reset_path(conn, :update, payload))
     assert html_response(conn, 200) =~ "should be at least 8 character(s)"
   end
 
@@ -86,7 +86,7 @@ defmodule PalapaWeb.PasswordResetControllerTest do
       }
     }
 
-    conn = patch(conn, password_reset_path(conn, :update, payload))
+    conn = patch(conn, Routes.password_reset_path(conn, :update, payload))
     assert html_response(conn, 200) =~ "Password confirmation does not match"
   end
 
@@ -101,7 +101,7 @@ defmodule PalapaWeb.PasswordResetControllerTest do
       }
     }
 
-    conn = patch(conn, password_reset_path(conn, :update, payload))
+    conn = patch(conn, Routes.password_reset_path(conn, :update, payload))
     assert html_response(conn, 200) =~ "This reset token is invalid"
   end
 
@@ -121,7 +121,7 @@ defmodule PalapaWeb.PasswordResetControllerTest do
       }
     }
 
-    conn = patch(conn, password_reset_path(conn, :update, payload))
+    conn = patch(conn, Routes.password_reset_path(conn, :update, payload))
     assert html_response(conn, 200) =~ "This reset token is invalid"
   end
 end
