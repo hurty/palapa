@@ -7,30 +7,30 @@ defmodule PalapaWeb.TeamController do
   plug(:put_navigation, "member")
 
   def new(conn, _params) do
-    with :ok <- permit(Teams, :create, current_member()) do
+    with :ok <- permit(Teams, :create, current_member(conn)) do
       team_changeset = Teams.change(%Team{})
 
       conn
       |> put_breadcrumb(
         "Your organization",
-        Routes.member_path(conn, :index, current_organization())
+        Routes.member_path(conn, :index, current_organization(conn))
       )
       |> put_breadcrumb(
         "New team",
-        Routes.team_path(conn, :new, current_organization())
+        Routes.team_path(conn, :new, current_organization(conn))
       )
       |> render("new.html", team_changeset: team_changeset)
     end
   end
 
   def create(conn, %{"team" => team_params}) do
-    with :ok <- permit(Teams, :create, current_member()) do
-      case Teams.create(current_organization(), team_params) do
+    with :ok <- permit(Teams, :create, current_member(conn)) do
+      case Teams.create(current_organization(conn), team_params) do
         {:ok, team} ->
           conn
           |> put_flash(:success, "The team #{team.name} has been created!")
           |> redirect(
-            to: Routes.member_path(conn, :index, current_organization(), team_id: team.id)
+            to: Routes.member_path(conn, :index, current_organization(conn), team_id: team.id)
           )
 
         {:error, team_changeset} ->
@@ -43,38 +43,38 @@ defmodule PalapaWeb.TeamController do
 
   def edit(conn, %{"id" => id}) do
     team =
-      Teams.where_organization(current_organization())
+      Teams.where_organization(current_organization(conn))
       |> Teams.get!(id)
 
-    with :ok <- permit(Teams, :edit, current_member(), team) do
+    with :ok <- permit(Teams, :edit, current_member(conn), team) do
       team_changeset = Teams.change(team)
 
       conn
       |> put_breadcrumb(
         "Your organization",
-        Routes.member_path(conn, :index, current_organization())
+        Routes.member_path(conn, :index, current_organization(conn))
       )
       |> put_breadcrumb(
         team.name,
-        Routes.member_path(conn, :index, current_organization(), team_id: team.id)
+        Routes.member_path(conn, :index, current_organization(conn), team_id: team.id)
       )
-      |> put_breadcrumb("Edit", Routes.team_path(conn, :edit, current_organization(), team))
+      |> put_breadcrumb("Edit", Routes.team_path(conn, :edit, current_organization(conn), team))
       |> render("edit.html", team: team, team_changeset: team_changeset)
     end
   end
 
   def update(conn, %{"id" => id, "team" => team_params}) do
     team =
-      Teams.where_organization(current_organization())
+      Teams.where_organization(current_organization(conn))
       |> Teams.get!(id)
 
-    with :ok <- permit(Teams, :update, current_member(), team) do
+    with :ok <- permit(Teams, :update, current_member(conn), team) do
       case Teams.update(team, team_params) do
         {:ok, team} ->
           conn
           |> put_flash(:success, "The team #{team.name} has been updated!")
           |> redirect(
-            to: Routes.member_path(conn, :index, current_organization(), team_id: team.id)
+            to: Routes.member_path(conn, :index, current_organization(conn), team_id: team.id)
           )
 
         {:error, team_changeset} ->

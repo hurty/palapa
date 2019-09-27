@@ -27,7 +27,7 @@ defmodule PalapaWeb.Document.SuggestionController do
 
     case Suggestions.create_suggestion(
            page,
-           current_member(),
+           current_member(conn),
            suggestion_attrs
          ) do
       {:ok, suggestion} ->
@@ -40,10 +40,10 @@ defmodule PalapaWeb.Document.SuggestionController do
 
   def edit(conn, %{"id" => id}) do
     suggestion =
-      Suggestions.suggestions_visible_to(current_member())
+      Suggestions.suggestions_visible_to(current_member(conn))
       |> Suggestions.get_suggestion!(id)
 
-    with :ok <- permit(Documents, :update_suggestion, current_member(), suggestion) do
+    with :ok <- permit(Documents, :update_suggestion, current_member(conn), suggestion) do
       changeset = Suggestions.change_suggestion(suggestion)
 
       render(conn, "edit.html",
@@ -56,10 +56,10 @@ defmodule PalapaWeb.Document.SuggestionController do
 
   def update(conn, %{"id" => id, "suggestion" => suggestion_attrs}) do
     suggestion =
-      Suggestions.suggestions_visible_to(current_member())
+      Suggestions.suggestions_visible_to(current_member(conn))
       |> Suggestions.get_suggestion!(id)
 
-    with :ok <- permit(Documents, :update_suggestion, current_member(), suggestion) do
+    with :ok <- permit(Documents, :update_suggestion, current_member(conn), suggestion) do
       case Suggestions.update_suggestion(suggestion, suggestion_attrs) do
         {:ok, updated_suggestion} ->
           render(conn, "suggestion_content.html",
@@ -79,10 +79,10 @@ defmodule PalapaWeb.Document.SuggestionController do
 
   def delete(conn, %{"id" => id}) do
     suggestion =
-      Suggestions.suggestions_visible_to(current_member())
+      Suggestions.suggestions_visible_to(current_member(conn))
       |> Suggestions.get_suggestion!(id)
 
-    with :ok <- permit(Documents, :delete_suggestion, current_member(), suggestion) do
+    with :ok <- permit(Documents, :delete_suggestion, current_member(conn), suggestion) do
       case Suggestions.delete_suggestion(suggestion) do
         {:ok, _suggestion} ->
           send_resp(conn, 204, "")

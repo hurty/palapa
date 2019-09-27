@@ -7,10 +7,12 @@ defmodule PalapaWeb.TeamMemberController do
   plug(:put_navigation, "member")
 
   def edit(conn, %{"member_id" => member_id}) do
-    with :ok <- permit(Teams, :edit_member_teams, current_member()) do
-      member = Organizations.get_member!(current_organization(), member_id)
+    with :ok <- permit(Teams, :edit_member_teams, current_member(conn)) do
+      member = Organizations.get_member!(current_organization(conn), member_id)
       member_teams = Teams.list_for_member(member)
-      all_teams_in_organization = Teams.where_organization(current_organization()) |> Teams.list()
+
+      all_teams_in_organization =
+        Teams.where_organization(current_organization(conn)) |> Teams.list()
 
       render(
         conn,
@@ -23,11 +25,11 @@ defmodule PalapaWeb.TeamMemberController do
   end
 
   def update(conn, params) do
-    member = Organizations.get_member!(current_organization(), params["member_id"])
+    member = Organizations.get_member!(current_organization(conn), params["member_id"])
 
     new_teams =
       if is_list(params["teams_ids"]) do
-        Teams.where_organization(current_organization())
+        Teams.where_organization(current_organization(conn))
         |> Teams.where_ids(params["teams_ids"])
         |> Teams.list()
       else
@@ -38,13 +40,13 @@ defmodule PalapaWeb.TeamMemberController do
            permit(
              Teams,
              :update_member_teams,
-             current_member(),
-             organization: current_organization(),
+             current_member(conn),
+             organization: current_organization(conn),
              member: member,
              teams: new_teams
            ) do
       Teams.update_all_teams_for_member(member, new_teams)
-      redirect(conn, to: Routes.member_path(conn, :show, current_organization(), member))
+      redirect(conn, to: Routes.member_path(conn, :show, current_organization(conn), member))
     end
   end
 end

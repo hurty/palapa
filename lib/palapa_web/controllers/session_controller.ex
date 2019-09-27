@@ -14,7 +14,7 @@ defmodule PalapaWeb.SessionController do
     case Authentication.login_with_email_and_password(conn, email, password) do
       {:ok, conn} ->
         conn
-        |> redirect(to: Routes.dashboard_path(conn, :index, current_organization()))
+        |> redirect(to: Routes.dashboard_path(conn, :index, current_organization(conn)))
 
       {:error, _reason, conn} ->
         conn
@@ -30,7 +30,7 @@ defmodule PalapaWeb.SessionController do
   end
 
   def switcher(conn, _params) do
-    organizations = Accounts.list_organizations(current_account())
+    organizations = Accounts.list_organizations(current_account(conn))
     render(conn, "switcher.html", layout: false, organizations: organizations)
   end
 end

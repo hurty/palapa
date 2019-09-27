@@ -10,7 +10,7 @@ defmodule PalapaWeb.Document.PageController do
 
   def put_common_breadcrumbs(conn, _params) do
     conn
-    |> put_breadcrumb("Documents", Routes.document_path(conn, :index, current_organization()))
+    |> put_breadcrumb("Documents", Routes.document_path(conn, :index, current_organization(conn)))
   end
 
   def new(conn, params) do
@@ -20,11 +20,11 @@ defmodule PalapaWeb.Document.PageController do
       if(Documents.document_has_at_least_one_section?(document)) do
         document
       else
-        Documents.create_first_section(document, current_member())
+        Documents.create_first_section(document, current_member(conn))
         Documents.get_document!(params["document_id"])
       end
 
-    with :ok <- permit(Documents, :update_document, current_member(), document) do
+    with :ok <- permit(Documents, :update_document, current_member(conn), document) do
       section_id = params["section_id"]
       page_changeset = Documents.change_page(%Page{}, %{section_id: section_id})
       section_changeset = Documents.change_section()
@@ -33,7 +33,7 @@ defmodule PalapaWeb.Document.PageController do
       |> put_document_breadcrumbs(document)
       |> put_breadcrumb(
         "New page",
-        Routes.document_page_path(conn, :new, current_organization(), document)
+        Routes.document_page_path(conn, :new, current_organization(conn), document)
       )
       |> render("new.html",
         document: document,
@@ -46,10 +46,12 @@ defmodule PalapaWeb.Document.PageController do
   def create(conn, %{"page" => page_params}) do
     section = Documents.get_section!(page_params["section_id"])
 
-    with :ok <- permit(Documents, :update_document, current_member(), section.document) do
-      case Documents.create_page(section, current_member(), page_params) do
+    with :ok <- permit(Documents, :update_document, current_member(conn), section.document) do
+      case Documents.create_page(section, current_member(conn), page_params) do
         {:ok, page} ->
-          redirect(conn, to: Routes.document_page_path(conn, :show, current_organization(), page))
+          redirect(conn,
+            to: Routes.document_page_path(conn, :show, current_organization(conn), page)
+          )
 
         {:error, changeset} ->
           document = Documents.get_document!(section.document_id)
@@ -58,7 +60,7 @@ defmodule PalapaWeb.Document.PageController do
           |> put_document_breadcrumbs(document)
           |> put_breadcrumb(
             "New page",
-            Routes.document_page_path(conn, :new, current_organization(), document)
+            Routes.document_page_path(conn, :new, current_organization(conn), document)
           )
           |> assign(:section_changeset, Documents.change_section())
           |> render("new.html", changeset: changeset, document: document)
@@ -93,12 +95,12 @@ defmodule PalapaWeb.Document.PageController do
     page = get_page!(conn, id)
     document = Documents.get_document!(page.document_id)
 
-    with :ok <- permit(Documents, :update_document, current_member(), page.document) do
+    with :ok <- permit(Documents, :update_document, current_member(conn), page.document) do
       conn
       |> put_page_breadcrumbs(page)
       |> put_breadcrumb(
         "Edit",
-        Routes.document_page_path(conn, :edit, current_organization(), page)
+        Routes.document_page_path(conn, :edit, current_organization(conn), page)
       )
       |> render("edit.html",
         document: document,
@@ -113,17 +115,19 @@ defmodule PalapaWeb.Document.PageController do
   def update(conn, %{"id" => id, "page" => page_params}) do
     page = get_page!(conn, id)
 
-    with :ok <- permit(Documents, :update_document, current_member(), page.document) do
-      case Documents.update_page(page, current_member(), page_params) do
+    with :ok <- permit(Documents, :update_document, current_member(conn), page.document) do
+      case Documents.update_page(page, current_member(conn), page_params) do
         {:ok, page} ->
-          redirect(conn, to: Routes.document_page_path(conn, :show, current_organization(), page))
+          redirect(conn,
+            to: Routes.document_page_path(conn, :show, current_organization(conn), page)
+          )
 
         {:error, changeset} ->
           conn
           |> put_page_breadcrumbs(page)
           |> put_breadcrumb(
             "Edit",
-            Routes.document_page_path(conn, :edit, current_organization(), page)
+            Routes.document_page_path(conn, :edit, current_organization(conn), page)
           )
           |> assign(:section_changeset, Documents.change_section())
           |> assign(:page_changeset, Documents.change_page())
@@ -141,10 +145,10 @@ defmodule PalapaWeb.Document.PageController do
     page = get_page!(conn, id)
 
     new_section =
-      Documents.sections_visible_to(current_member())
+      Documents.sections_visible_to(current_member(conn))
       |> Documents.get_section!(new_section_id)
 
-    with :ok <- permit(Documents, :update_document, current_member(), page.document) do
+    with :ok <- permit(Documents, :update_document, current_member(conn), page.document) do
       Documents.move_page!(page, new_section, new_position)
       send_resp(conn, 200, "")
     end
@@ -153,7 +157,7 @@ defmodule PalapaWeb.Document.PageController do
   def delete(conn, %{"id" => id, "current_page_id" => current_page_id}) do
     page = get_page!(conn, id)
 
-    with :ok <- permit(Documents, :update_document, current_member(), page.document) do
+    with :ok <- permit(Documents, :update_document, current_member(conn), page.document) do
       Documents.delete_page!(page)
 
       redirect_page =
@@ -167,12 +171,12 @@ defmodule PalapaWeb.Document.PageController do
 
       if redirect_page do
         redirect(conn,
-          to: Routes.document_page_path(conn, :show, current_organization(), redirect_page)
+          to: Routes.document_page_path(conn, :show, current_organization(conn), redirect_page)
         )
       else
         # meaning the last page of the document has been deleted
         redirect(conn,
-          to: Routes.document_path(conn, :show, current_organization(), page.document)
+          to: Routes.document_path(conn, :show, current_organization(conn), page.document)
         )
       end
     end

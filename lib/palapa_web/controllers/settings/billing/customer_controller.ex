@@ -16,39 +16,39 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
     conn
     |> put_breadcrumb(
       "Settings",
-      Routes.settings_workspace_path(conn, :show, current_organization())
+      Routes.settings_workspace_path(conn, :show, current_organization(conn))
     )
     |> put_breadcrumb(
       "Billing",
-      Routes.settings_customer_path(conn, :show, current_organization())
+      Routes.settings_customer_path(conn, :show, current_organization(conn))
     )
   end
 
   def show(conn, _params) do
-    with :ok <- permit(Billing, :update_billing, current_member()) do
-      customer = Billing.get_customer(current_organization())
-      invoices = Billing.list_invoices(current_organization())
+    with :ok <- permit(Billing, :update_billing, current_member(conn)) do
+      customer = Billing.get_customer(current_organization(conn))
+      invoices = Billing.list_invoices(current_organization(conn))
       render(conn, "show.html", customer: customer, invoices: invoices)
     end
   end
 
   def new(conn, _) do
-    with :ok <- permit(Billing, :update_billing, current_member()) do
+    with :ok <- permit(Billing, :update_billing, current_member(conn)) do
       customer_changeset = Billing.change_customer_infos(%Customer{})
 
       conn
       |> put_breadcrumb(
         "Upgrade your account",
-        Routes.settings_customer_path(conn, :new, current_organization())
+        Routes.settings_customer_path(conn, :new, current_organization(conn))
       )
       |> render("new.html", customer_changeset: customer_changeset)
     end
   end
 
   def create(conn, %{"customer" => customer_attrs}) do
-    with :ok <- permit(Billing, :update_billing, current_member()) do
+    with :ok <- permit(Billing, :update_billing, current_member(conn)) do
       case Billing.create_customer_and_synchronize_subscription(
-             current_organization(),
+             current_organization(conn),
              customer_attrs
            ) do
         {:ok, result} ->
@@ -59,7 +59,10 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
 
               redirect(conn,
                 to:
-                  Routes.settings_payment_authentication_path(conn, :new, current_organization(),
+                  Routes.settings_payment_authentication_path(
+                    conn,
+                    :new,
+                    current_organization(conn),
                     client_secret: client_secret
                   )
               )
@@ -71,7 +74,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
 
             :ok ->
               redirect(conn,
-                to: Routes.settings_customer_path(conn, :show, current_organization())
+                to: Routes.settings_customer_path(conn, :show, current_organization(conn))
               )
           end
 
@@ -81,21 +84,21 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
         {:error, :stripe_customer, error, _changes} ->
           conn
           |> put_flash(:error, error.message)
-          |> redirect(to: Routes.settings_customer_path(conn, :new, current_organization()))
+          |> redirect(to: Routes.settings_customer_path(conn, :new, current_organization(conn)))
       end
     end
   end
 
   def edit(conn, _) do
-    with :ok <- permit(Billing, :update_billing, current_member()) do
+    with :ok <- permit(Billing, :update_billing, current_member(conn)) do
       conn =
         conn
         |> put_breadcrumb(
           "Update billing information",
-          Routes.settings_customer_path(conn, :edit, current_organization())
+          Routes.settings_customer_path(conn, :edit, current_organization(conn))
         )
 
-      customer = Billing.get_customer(current_organization())
+      customer = Billing.get_customer(current_organization(conn))
 
       if customer do
         customer_changeset = Billing.change_customer_infos(customer)
@@ -106,20 +109,20 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
           :error,
           "This workspace does not have a paid subscription / billing information"
         )
-        |> redirect(to: Routes.settings_customer_path(conn, :show, current_organization()))
+        |> redirect(to: Routes.settings_customer_path(conn, :show, current_organization(conn)))
       end
     end
   end
 
   def update(conn, %{"customer" => customer_attrs}) do
-    with :ok <- permit(Billing, :update_billing, current_member()) do
-      customer = Billing.get_customer(current_organization())
+    with :ok <- permit(Billing, :update_billing, current_member(conn)) do
+      customer = Billing.get_customer(current_organization(conn))
 
       case Billing.update_customer_infos(customer, customer_attrs) do
         {:ok, _customer} ->
           conn
           |> put_flash(:success, "Billing information has been updated successfully")
-          |> redirect(to: Routes.settings_customer_path(conn, :show, current_organization()))
+          |> redirect(to: Routes.settings_customer_path(conn, :show, current_organization(conn)))
 
         {:error, customer_changeset} ->
           conn

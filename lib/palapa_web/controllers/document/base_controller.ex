@@ -19,7 +19,7 @@ defmodule PalapaWeb.Document.BaseController do
     conn
     |> put_breadcrumb(
       document.title,
-      Routes.document_path(conn, :show, current_organization(), document)
+      Routes.document_path(conn, :show, current_organization(conn), document)
     )
   end
 
@@ -31,13 +31,13 @@ defmodule PalapaWeb.Document.BaseController do
       Routes.document_page_path(
         conn,
         :show,
-        current_organization(),
+        current_organization(conn),
         Documents.get_first_page(page.section)
       )
     )
     |> put_breadcrumb(
       page.title,
-      Routes.document_page_path(conn, :show, current_organization(), page)
+      Routes.document_page_path(conn, :show, current_organization(conn), page)
     )
   end
 end

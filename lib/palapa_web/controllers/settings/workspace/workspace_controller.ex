@@ -21,23 +21,23 @@ defmodule PalapaWeb.Settings.WorkspaceController do
     conn
     |> put_breadcrumb(
       "Settings",
-      Routes.settings_workspace_path(conn, :show, current_organization())
+      Routes.settings_workspace_path(conn, :show, current_organization(conn))
     )
   end
 
   def show(conn, _) do
-    organization_changeset = Organizations.change(current_organization())
-    admins = Organizations.list_admins(current_organization())
+    organization_changeset = Organizations.change(current_organization(conn))
+    admins = Organizations.list_admins(current_organization(conn))
 
     render(conn, "show.html", organization_changeset: organization_changeset, admins: admins)
   end
 
   def update(conn, %{"organization" => organization_attrs}) do
-    case(Organizations.update(current_organization(), organization_attrs)) do
+    case(Organizations.update(current_organization(conn), organization_attrs)) do
       {:ok, _organization} ->
         conn
         |> put_flash(:success, gettext("Workspace settings have been saved"))
-        |> redirect(to: Routes.settings_workspace_path(conn, :show, current_organization()))
+        |> redirect(to: Routes.settings_workspace_path(conn, :show, current_organization(conn)))
 
       {:error, changeset} ->
         conn

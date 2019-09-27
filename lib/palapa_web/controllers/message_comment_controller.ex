@@ -6,10 +6,11 @@ defmodule PalapaWeb.MessageCommentController do
 
   def create(conn, %{"message_id" => message_id, "message_comment" => message_comment_params}) do
     message =
-      Messages.visible_to(current_member())
+      Messages.visible_to(current_member(conn))
       |> Messages.get!(message_id)
 
-    {:ok, comment} = Messages.create_comment(message, current_member(), message_comment_params)
+    {:ok, comment} =
+      Messages.create_comment(message, current_member(conn), message_comment_params)
 
     comments_count = Messages.comments_count(message)
 
@@ -26,7 +27,7 @@ defmodule PalapaWeb.MessageCommentController do
     comment = Messages.get_comment!(id)
     changeset = comment |> Messages.change_comment()
 
-    with :ok <- permit(Messages, :edit_comment, current_member(), comment) do
+    with :ok <- permit(Messages, :edit_comment, current_member(conn), comment) do
       render(
         conn,
         "_form.html",
@@ -40,7 +41,7 @@ defmodule PalapaWeb.MessageCommentController do
   def update(conn, %{"id" => id, "message_comment" => message_comment_attrs}) do
     comment = Messages.get_comment!(id)
 
-    with :ok <- permit(Messages, :edit_comment, current_member(), comment) do
+    with :ok <- permit(Messages, :edit_comment, current_member(conn), comment) do
       case Messages.update_comment(comment, message_comment_attrs) do
         {:ok, updated_comment} ->
           conn
@@ -58,7 +59,7 @@ defmodule PalapaWeb.MessageCommentController do
   def delete(conn, %{"id" => id}) do
     comment = Messages.get_comment!(id)
 
-    with :ok <- permit(Messages, :delete_comment, current_member(), comment) do
+    with :ok <- permit(Messages, :delete_comment, current_member(conn), comment) do
       Messages.delete_comment!(comment)
       message = Messages.get!(comment.message_id)
       comments_count = Messages.comments_count(message)

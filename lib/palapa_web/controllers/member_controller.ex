@@ -10,21 +10,21 @@ defmodule PalapaWeb.MemberController do
     conn
     |> put_breadcrumb(
       "Your organization",
-      Routes.member_path(conn, :index, current_organization())
+      Routes.member_path(conn, :index, current_organization(conn))
     )
   end
 
   def index(conn, %{"team_id" => team_id}) do
-    with :ok <- permit(Organizations, :list_members, current_member()) do
+    with :ok <- permit(Organizations, :list_members, current_member(conn)) do
       selected_team = Teams.get!(team_id)
       members = Teams.list_members(selected_team)
-      teams = Teams.where_organization(current_organization()) |> Teams.list()
-      organization_members_count = current_organization() |> Organizations.members_count()
+      teams = Teams.where_organization(current_organization(conn)) |> Teams.list()
+      organization_members_count = current_organization(conn) |> Organizations.members_count()
 
       conn
       |> put_breadcrumb(
         selected_team.name,
-        Routes.member_path(conn, :index, current_organization(), team_id: team_id)
+        Routes.member_path(conn, :index, current_organization(conn), team_id: team_id)
       )
       |> render(
         "index.html",
@@ -37,12 +37,12 @@ defmodule PalapaWeb.MemberController do
   end
 
   def index(conn, _params) do
-    with :ok <- permit(Organizations, :list_members, current_member()) do
+    with :ok <- permit(Organizations, :list_members, current_member(conn)) do
       members =
-        current_organization()
+        current_organization(conn)
         |> Organizations.list_members()
 
-      teams = Teams.where_organization(current_organization()) |> Teams.list()
+      teams = Teams.where_organization(current_organization(conn)) |> Teams.list()
 
       conn
       |> render(
@@ -56,17 +56,20 @@ defmodule PalapaWeb.MemberController do
   end
 
   def show(conn, %{"id" => id}) do
-    member = Organizations.get_member!(current_organization(), id)
+    member = Organizations.get_member!(current_organization(conn), id)
 
-    with :ok <- permit(Organizations, :show_member, current_member()) do
-      all_teams = Teams.where_organization(current_organization()) |> Teams.list()
-      personal_informations = Organizations.list_personal_informations(member, current_member())
+    with :ok <- permit(Organizations, :show_member, current_member(conn)) do
+      all_teams = Teams.where_organization(current_organization(conn)) |> Teams.list()
+
+      personal_informations =
+        Organizations.list_personal_informations(member, current_member(conn))
+
       personal_information_changeset = Organizations.change_personal_information(member)
 
       conn
       |> put_breadcrumb(
         member.account.name,
-        Routes.member_path(conn, :show, current_organization(), member)
+        Routes.member_path(conn, :show, current_organization(conn), member)
       )
       |> render(
         "show.html",

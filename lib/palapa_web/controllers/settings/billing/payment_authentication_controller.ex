@@ -8,11 +8,11 @@ defmodule PalapaWeb.Settings.Billing.PaymentAuthenticationController do
     conn
     |> put_breadcrumb(
       "Settings",
-      Routes.settings_workspace_path(conn, :show, current_organization())
+      Routes.settings_workspace_path(conn, :show, current_organization(conn))
     )
     |> put_breadcrumb(
       "Billing",
-      Routes.settings_customer_path(conn, :show, current_organization())
+      Routes.settings_customer_path(conn, :show, current_organization(conn))
     )
   end
 

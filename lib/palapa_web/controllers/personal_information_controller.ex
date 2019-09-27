@@ -5,12 +5,13 @@ defmodule PalapaWeb.PersonalInformationController do
   alias Palapa.Organizations.PersonalInformation
 
   def create(conn, params) do
-    member = Organizations.get_member!(current_organization(), params["member_id"])
+    member = Organizations.get_member!(current_organization(conn), params["member_id"])
 
-    with :ok <- permit(Organizations, :create_personal_information, current_member(), member),
+    with :ok <- permit(Organizations, :create_personal_information, current_member(conn), member),
          {:ok, new_info} <-
            Organizations.create_personal_information(member, params["personal_information"]) do
-      personal_informations = Organizations.list_personal_informations(member, current_member())
+      personal_informations =
+        Organizations.list_personal_informations(member, current_member(conn))
 
       new_info = Palapa.Repo.preload(new_info, [:attachments])
 
@@ -35,7 +36,12 @@ defmodule PalapaWeb.PersonalInformationController do
           member: member,
           personal_information_changeset: changeset,
           action:
-            Routes.member_personal_information_path(conn, :create, current_organization(), member),
+            Routes.member_personal_information_path(
+              conn,
+              :create,
+              current_organization(conn),
+              member
+            ),
           action_type: :create_with_error
         )
     end
@@ -48,7 +54,7 @@ defmodule PalapaWeb.PersonalInformationController do
            permit(
              Organizations,
              :update_personal_information,
-             current_member(),
+             current_member(conn),
              personal_information
            ) do
       changeset = PersonalInformation.update_changeset(personal_information, %{})
@@ -63,7 +69,7 @@ defmodule PalapaWeb.PersonalInformationController do
           Routes.personal_information_path(
             conn,
             :update,
-            current_organization(),
+            current_organization(conn),
             personal_information
           ),
         action_type: :update
@@ -80,7 +86,7 @@ defmodule PalapaWeb.PersonalInformationController do
            permit(
              Organizations,
              :update_personal_information,
-             current_member(),
+             current_member(conn),
              personal_information
            ) do
       case Organizations.update_personal_information(
@@ -107,7 +113,7 @@ defmodule PalapaWeb.PersonalInformationController do
               Routes.personal_information_path(
                 conn,
                 :update,
-                current_organization(),
+                current_organization(conn),
                 personal_information
               ),
             action_type: :update
@@ -125,7 +131,7 @@ defmodule PalapaWeb.PersonalInformationController do
            permit(
              Organizations,
              :delete_personal_information,
-             current_member(),
+             current_member(conn),
              personal_information
            ),
          {:ok, _deleted_info} <- Organizations.delete_personal_information(personal_information) do

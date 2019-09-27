@@ -4,7 +4,7 @@ defmodule PalapaWeb.AttachmentController do
   alias Palapa.Attachments
 
   def create(conn, %{"file" => file}) do
-    case Palapa.Attachments.create(current_organization(), file, current_member()) do
+    case Palapa.Attachments.create(current_organization(conn), file, current_member(conn)) do
       {:ok, attachment} ->
         conn
         |> put_status(201)
@@ -30,7 +30,7 @@ defmodule PalapaWeb.AttachmentController do
   def delete(conn, %{"id" => id}) do
     attachment = find_attachment(conn, id)
 
-    with :ok <- permit(Attachments, :delete, current_member(), attachment) do
+    with :ok <- permit(Attachments, :delete, current_member(conn), attachment) do
       Attachments.delete!(attachment)
 
       conn
@@ -39,7 +39,7 @@ defmodule PalapaWeb.AttachmentController do
   end
 
   defp find_attachment(conn, id) do
-    Attachments.visible_to(current_member())
+    Attachments.visible_to(current_member(conn))
     |> Attachments.get!(id)
   end
 end

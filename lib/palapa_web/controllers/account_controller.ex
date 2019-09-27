@@ -7,12 +7,12 @@ defmodule PalapaWeb.AccountController do
 
   def edit(conn, _params) do
     conn
-    |> assign_changesets(current_account())
+    |> assign_changesets(current_account(conn))
     |> render("edit.html")
   end
 
   def update(conn, %{"account" => account_attrs}) do
-    case Accounts.update_account(current_account(), account_attrs) do
+    case Accounts.update_account(current_account(conn), account_attrs) do
       {:ok, account} ->
         conn
         |> assign_changesets(account)
@@ -22,14 +22,14 @@ defmodule PalapaWeb.AccountController do
       {:error, account_changeset} ->
         conn
         |> assign(:account_changeset, account_changeset)
-        |> assign(:password_changeset, Accounts.change_password(current_account()))
+        |> assign(:password_changeset, Accounts.change_password(current_account(conn)))
         |> put_flash(:error, "Your account could not be updated")
         |> render("edit.html")
     end
   end
 
   def update(conn, %{"password" => account_attrs}) do
-    case Accounts.update_password(current_account(), account_attrs) do
+    case Accounts.update_password(current_account(conn), account_attrs) do
       {:ok, account} ->
         conn
         |> assign_changesets(account)
@@ -38,7 +38,7 @@ defmodule PalapaWeb.AccountController do
 
       {:error, password_changeset} ->
         conn
-        |> assign(:account_changeset, Accounts.change_account(current_account()))
+        |> assign(:account_changeset, Accounts.change_account(current_account(conn)))
         |> assign(:password_changeset, password_changeset)
         |> put_flash(:error, "Your password could not be updated. Please check errors below.")
         |> render("edit.html")

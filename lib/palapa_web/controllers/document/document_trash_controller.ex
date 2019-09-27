@@ -10,17 +10,17 @@ defmodule PalapaWeb.Document.DocumentTrashController do
 
   def put_common_breadcrumbs(conn, _params) do
     conn
-    |> put_breadcrumb("Documents", Routes.document_path(conn, :index, current_organization()))
+    |> put_breadcrumb("Documents", Routes.document_path(conn, :index, current_organization(conn)))
   end
 
   def create(conn, %{"document_id" => id}) do
     document = find_document(conn, id)
 
-    Documents.delete_document!(document, current_member())
+    Documents.delete_document!(document, current_member(conn))
 
     conn
     |> put_flash(:success, DocumentView.flash_for_deleted_document(conn, document))
-    |> redirect(to: Routes.document_path(conn, :index, current_organization()))
+    |> redirect(to: Routes.document_path(conn, :index, current_organization(conn)))
   end
 
   def delete(conn, %{"document_id" => id}) do
@@ -30,11 +30,11 @@ defmodule PalapaWeb.Document.DocumentTrashController do
 
     conn
     |> put_flash(:success, "The document #{document.title} has been restored.")
-    |> redirect(to: Routes.document_path(conn, :show, current_organization(), document))
+    |> redirect(to: Routes.document_path(conn, :show, current_organization(conn), document))
   end
 
   defp find_document(conn, id) do
-    Documents.documents_visible_to(current_member())
+    Documents.documents_visible_to(current_member(conn))
     |> Documents.get_document!(id)
   end
 end

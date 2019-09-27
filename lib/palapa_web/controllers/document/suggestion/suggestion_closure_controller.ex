@@ -5,10 +5,10 @@ defmodule PalapaWeb.Document.SuggestionClosureController do
 
   def create(conn, %{"suggestion_id" => suggestion_id}) do
     suggestion =
-      Suggestions.suggestions_visible_to(current_member())
+      Suggestions.suggestions_visible_to(current_member(conn))
       |> Suggestions.get_suggestion!(suggestion_id)
 
-    case Suggestions.close_suggestion(suggestion, current_member()) do
+    case Suggestions.close_suggestion(suggestion, current_member(conn)) do
       {:ok, _suggestion} ->
         send_resp(conn, 204, "")
 
@@ -19,7 +19,7 @@ defmodule PalapaWeb.Document.SuggestionClosureController do
 
   def delete(conn, %{"suggestion_id" => suggestion_id}) do
     suggestion =
-      Suggestions.suggestions_visible_to(current_member())
+      Suggestions.suggestions_visible_to(current_member(conn))
       |> Suggestions.get_suggestion!(suggestion_id)
 
     case Suggestions.reopen_suggestion(suggestion) do
