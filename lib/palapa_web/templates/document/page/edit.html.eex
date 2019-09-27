@@ -13,7 +13,7 @@
       </h2>
       
       <div class="card-header-separator"></div>
-      <%= render "form.html", Map.put(assigns, :action, document_page_path(@conn, :update, @current_organization, @page)) %>
+      <%= render "form.html", Map.put(assigns, :action, Routes.document_page_path(@conn, :update, @current_organization, @page)) %>
     </div>    
   </div>
 </div>

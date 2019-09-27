@@ -4,7 +4,7 @@
   </div>
 
   <div class="flex-1">
-    <%= link truncate_string(@search_result.page.title), to: document_page_path(@conn, :show, @current_organization, @search_result.page), class: "text-green-500 hover:underline font-bold text-sm" %>
+    <%= link truncate_string(@search_result.page.title), to: Routes.document_page_path(@conn, :show, @current_organization, @search_result.page), class: "text-green-500 hover:underline font-bold text-sm" %>
 
     <%= if @search_result.page.document.title != @search_result.page.title do %>
       <div class="text-gray-700 font-bold text-sm">

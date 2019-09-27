@@ -1,6 +1,6 @@
 defmodule PalapaWeb.Document.BaseController do
   import PalapaWeb.Breadcrumbs
-  import PalapaWeb.Router.Helpers
+  alias PalapaWeb.Router.Helpers, as: Routes
   import PalapaWeb.Current
   alias Palapa.Documents
 
@@ -19,7 +19,7 @@ defmodule PalapaWeb.Document.BaseController do
     conn
     |> put_breadcrumb(
       document.title,
-      document_path(conn, :show, current_organization(), document)
+      Routes.document_path(conn, :show, current_organization(), document)
     )
   end
 
@@ -28,7 +28,7 @@ defmodule PalapaWeb.Document.BaseController do
     |> put_document_breadcrumbs(page.document)
     |> put_breadcrumb(
       page.section.title,
-      document_page_path(
+      Routes.document_page_path(
         conn,
         :show,
         current_organization(),
@@ -37,7 +37,7 @@ defmodule PalapaWeb.Document.BaseController do
     )
     |> put_breadcrumb(
       page.title,
-      document_page_path(conn, :show, current_organization(), page)
+      Routes.document_page_path(conn, :show, current_organization(), page)
     )
   end
 end

@@ -4,12 +4,12 @@
     <h2 class="card-header">New team</h2>
     <div class="card-header-separator"></div>
 
-    <%= form_for @team_changeset, team_path(@conn, :create, @current_organization), [], fn form -> %>
+    <%= form_for @team_changeset, Routes.team_path(@conn, :create, @current_organization), [], fn form -> %>
       <%= render "_form.html", form: form, team_changeset: @team_changeset, current_organization: @current_organization, selected_members: [] %>
 
       <div class="card-actions">
         <%= submit "Create this team", class: "btn btn-green" %>
-        <%= link "Cancel", to: member_path(@conn, :index, @current_organization), class: "btn" %>
+        <%= link "Cancel", to: Routes.member_path(@conn, :index, @current_organization), class: "btn" %>
       </div>
     <% end %>
   </div>

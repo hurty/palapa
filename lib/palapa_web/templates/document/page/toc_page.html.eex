@@ -1,10 +1,10 @@
 <li data-controller="document-toc-page"
   data-action="mouseover->document-toc-page#showActionsIcons mouseout->document-toc-page#hideActionsIcons"
-  data-document-page-url="<%= document_page_url(@conn, :update, @current_organization, @toc_page) %>"
+  data-document-page-url="<%= Routes.document_page_url(@conn, :update, @current_organization, @toc_page) %>"
   class="document-page draggable-source flex justify-between items-center cursor-pointer <%= if @toc_page.section_id do %>hover:bg-gray-100<% else %>hover:bg-gray-200<% end %>">
   
   <div data-action="click->document#clickPage" class="flex-1 py-2 pl-8">
-    <%= link @toc_page.title, to: document_page_path(@conn, :show, @current_organization, @toc_page), 
+    <%= link @toc_page.title, to: Routes.document_page_path(@conn, :show, @current_organization, @toc_page), 
   class: if(@conn.params["id"] == @toc_page.id, do: "text-green-500 font-bold", else: "text-gray-700") %>
   </div>
 
@@ -19,11 +19,11 @@
           
           <div data-target="popover.content" class="popover hidden">
             <nav class="flex flex-col">
-              <%= link to: document_page_path(@conn, :edit, @current_organization, @toc_page), class: "popover__link" do %>
+              <%= link to: Routes.document_page_path(@conn, :edit, @current_organization, @toc_page), class: "popover__link" do %>
                 <i class="fas fa-pen"></i>&nbsp;Edit this page
               <% end %>
 
-              <%= link to: document_page_path(@conn, :delete, @current_organization, @toc_page, current_page_id: if(@conn.assigns[:page], do: @page.id)), data: [controller: "link", action: "link#delete"], class: "popover__link", "data-confirm": "Are you sure you want to delete this page?" do %>
+              <%= link to: Routes.document_page_path(@conn, :delete, @current_organization, @toc_page, current_page_id: if(@conn.assigns[:page], do: @page.id)), data: [controller: "link", action: "link#delete"], class: "popover__link", "data-confirm": "Are you sure you want to delete this page?" do %>
                 <i class="fas fa-trash"></i>&nbsp;Delete this page
               <% end %>
             </nav>

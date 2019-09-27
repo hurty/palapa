@@ -5,7 +5,7 @@
       </div>
 
       <div class="text-xs my-auto">
-        <%= link @comment.creator.account.name, to: member_path(@conn, :show, @conn.assigns.current_organization, @comment.creator.id), class: "text-gray-800 font-bold hover:underline" %>
+        <%= link @comment.creator.account.name, to: Routes.member_path(@conn, :show, @conn.assigns.current_organization, @comment.creator.id), class: "text-gray-800 font-bold hover:underline" %>
         <div class="text-gray-700 font-light"><%= auto_format_datetime(@comment.inserted_at, @current_account) %></div>
       </div>
     </div>
@@ -20,12 +20,12 @@
           <div data-target="popover.arrow" class="popover__arrow"></div>
           <nav class="flex flex-col">
             <%= if Palapa.Access.permit? Palapa.Messages, :edit_comment, @conn.assigns.current_member, @comment do %>
-              <%= link to: message_comment_path(@conn, :edit, @conn.assigns.current_organization, @comment), 
+              <%= link to: Routes.message_comment_path(@conn, :edit, @conn.assigns.current_organization, @comment), 
               data: [action: "message-comment#editComment"], class: "popover__link" do %>
                 <i class="fas fa-pen"></i>&nbsp;Edit comment
               <% end %>
             <% end %>
-            <%= link to: message_comment_path(@conn, :delete, @conn.assigns.current_organization, @comment),
+            <%= link to: Routes.message_comment_path(@conn, :delete, @conn.assigns.current_organization, @comment),
             data: [confirm: "Are you sure you want to delete this comment?", action: "message-comment#deleteComment"], class: "popover__link" do %>
               <i class="fas fa-trash text-red-400"></i>&nbsp;Delete comment
             <% end %>

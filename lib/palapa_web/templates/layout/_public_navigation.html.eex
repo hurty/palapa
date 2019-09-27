@@ -1,6 +1,6 @@
 <nav class="flex items-center justify-between flex-wrap p-6">
   <div class="flex items-center flex-shrink-0 text-white mr-6">
-    <span class="font-semibold text-xl tracking-tighter"><%= link("Palapa", to: home_path(@conn, :index), class: "text-gray-800") %></span>
+    <span class="font-semibold text-xl tracking-tighter"><%= link("Palapa", to: Routes.home_path(@conn, :index), class: "text-gray-800") %></span>
   </div>
   <div class="block sm:hidden">
     <button class="flex items-center px-3 py-2 border rounded text-indigo-200 border-indigo-400 hover:text-white hover:border-white">
@@ -17,11 +17,11 @@
       </a>
     </div>
     <div>
-      <%= link("Create workspace", to: registration_path(@conn, :new), class: "btn ") %>
+      <%= link("Create workspace", to: Routes.registration_path(@conn, :new), class: "btn ") %>
       <%= if @current_member do %>
-        <%= link("Log out", to: session_path(@conn, :delete), data: [controller: "link", action: "link#delete"], class: "btn ") %>
+        <%= link("Log out", to: Routes.session_path(@conn, :delete), data: [controller: "link", action: "link#delete"], class: "btn ") %>
       <% else %>
-        <%= link("Login", to: session_path(@conn, :new), class: "btn ") %>
+        <%= link("Login", to: Routes.session_path(@conn, :new), class: "btn ") %>
       <% end%>
     </div>
   </div>

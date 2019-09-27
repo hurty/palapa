@@ -1,4 +1,4 @@
-<%= form_for @changeset, suggestion_url(@conn, :update, @current_organization, @suggestion), 
+<%= form_for @changeset, Routes.suggestion_url(@conn, :update, @current_organization, @suggestion), 
   [data: [target: "document-suggestion.editForm", action: "document-suggestion#update"]], fn form -> %>
   <div class="mb-1">
     <%= PalapaWeb.RichTextView.text_editor(form, :content, @conn, placeholder: "Your suggestion here...", content_data_target: "document-suggestion.editContentInput") %>

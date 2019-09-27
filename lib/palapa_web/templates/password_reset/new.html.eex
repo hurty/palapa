@@ -5,7 +5,7 @@
       
       <div class="card-header-separator"></div>
 
-      <%= form_for @conn, password_reset_path(@conn, :create), [as: :password_reset], fn f -> %>
+      <%= form_for @conn, Routes.password_reset_path(@conn, :create), [as: :password_reset], fn f -> %>
         <p class="text-sm">Enter the email address associated with your Palapa account. We will send you an email with reset instructions.</p>
 
         <div class="field">

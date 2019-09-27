@@ -7,21 +7,21 @@
     <div data-target="popover.content" class="popover hidden">
       <div data-target="popover.arrow" class="popover__arrow"></div>
       <nav class="flex flex-col">
-        <%= link to: document_path(@conn, :edit, @current_organization, @document), class: "popover__link" do %>
+        <%= link to: Routes.document_path(@conn, :edit, @current_organization, @document), class: "popover__link" do %>
           <i class="fas fa-pen"></i>&nbsp;Edit this document
         <% end %>
 
         <%= if @document.public_token do %>
-          <%= link to: document_public_link_path(@conn, :delete, @current_organization, @document), class: "popover__link", data: [controller: "link", action: "link#delete"] do %>
+          <%= link to: Routes.document_public_link_path(@conn, :delete, @current_organization, @document), class: "popover__link", data: [controller: "link", action: "link#delete"] do %>
             <i class="fas fa-link"></i>&nbsp;Disable public sharing
           <% end %>
         <% else %>
-          <%= link to: document_public_link_path(@conn, :create, @current_organization, @document), class: "popover__link", data: [controller: "link", action: "link#post"] do %>
+          <%= link to: Routes.document_public_link_path(@conn, :create, @current_organization, @document), class: "popover__link", data: [controller: "link", action: "link#post"] do %>
             <i class="fas fa-link"></i>&nbsp;Share with a secret link
           <% end %>
         <% end %>
 
-        <%= link to: document_trash_path(@conn, :create, @current_organization, @document), data: [controller: "link", action: "link#post"], class: "popover__link", "data-confirm": "Are your sure you want to delete this document and all its pages?" do %>
+        <%= link to: Routes.document_trash_path(@conn, :create, @current_organization, @document), data: [controller: "link", action: "link#post"], class: "popover__link", "data-confirm": "Are your sure you want to delete this document and all its pages?" do %>
           <i class="fas fa-trash text-red"></i>&nbsp;Delete this document
         <% end %>
       </nav>

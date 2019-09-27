@@ -10,7 +10,7 @@ defmodule PalapaWeb.Document.PageController do
 
   def put_common_breadcrumbs(conn, _params) do
     conn
-    |> put_breadcrumb("Documents", document_path(conn, :index, current_organization()))
+    |> put_breadcrumb("Documents", Routes.document_path(conn, :index, current_organization()))
   end
 
   def new(conn, params) do
@@ -33,7 +33,7 @@ defmodule PalapaWeb.Document.PageController do
       |> put_document_breadcrumbs(document)
       |> put_breadcrumb(
         "New page",
-        document_page_path(conn, :new, current_organization(), document)
+        Routes.document_page_path(conn, :new, current_organization(), document)
       )
       |> render("new.html",
         document: document,
@@ -49,7 +49,7 @@ defmodule PalapaWeb.Document.PageController do
     with :ok <- permit(Documents, :update_document, current_member(), section.document) do
       case Documents.create_page(section, current_member(), page_params) do
         {:ok, page} ->
-          redirect(conn, to: document_page_path(conn, :show, current_organization(), page))
+          redirect(conn, to: Routes.document_page_path(conn, :show, current_organization(), page))
 
         {:error, changeset} ->
           document = Documents.get_document!(section.document_id)
@@ -58,7 +58,7 @@ defmodule PalapaWeb.Document.PageController do
           |> put_document_breadcrumbs(document)
           |> put_breadcrumb(
             "New page",
-            document_page_path(conn, :new, current_organization(), document)
+            Routes.document_page_path(conn, :new, current_organization(), document)
           )
           |> assign(:section_changeset, Documents.change_section())
           |> render("new.html", changeset: changeset, document: document)
@@ -98,7 +98,7 @@ defmodule PalapaWeb.Document.PageController do
       |> put_page_breadcrumbs(page)
       |> put_breadcrumb(
         "Edit",
-        document_page_path(conn, :edit, current_organization(), page)
+        Routes.document_page_path(conn, :edit, current_organization(), page)
       )
       |> render("edit.html",
         document: document,
@@ -116,14 +116,14 @@ defmodule PalapaWeb.Document.PageController do
     with :ok <- permit(Documents, :update_document, current_member(), page.document) do
       case Documents.update_page(page, current_member(), page_params) do
         {:ok, page} ->
-          redirect(conn, to: document_page_path(conn, :show, current_organization(), page))
+          redirect(conn, to: Routes.document_page_path(conn, :show, current_organization(), page))
 
         {:error, changeset} ->
           conn
           |> put_page_breadcrumbs(page)
           |> put_breadcrumb(
             "Edit",
-            document_page_path(conn, :edit, current_organization(), page)
+            Routes.document_page_path(conn, :edit, current_organization(), page)
           )
           |> assign(:section_changeset, Documents.change_section())
           |> assign(:page_changeset, Documents.change_page())
@@ -166,10 +166,14 @@ defmodule PalapaWeb.Document.PageController do
       conn = put_flash(conn, :success, "The page \"#{page.title}\" has been deleted.")
 
       if redirect_page do
-        redirect(conn, to: document_page_path(conn, :show, current_organization(), redirect_page))
+        redirect(conn,
+          to: Routes.document_page_path(conn, :show, current_organization(), redirect_page)
+        )
       else
         # meaning the last page of the document has been deleted
-        redirect(conn, to: document_path(conn, :show, current_organization(), page.document))
+        redirect(conn,
+          to: Routes.document_path(conn, :show, current_organization(), page.document)
+        )
       end
     end
   end

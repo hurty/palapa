@@ -9,7 +9,7 @@
           current_organization: @current_organization, 
           personal_information_changeset: @personal_information_changeset,
           personal_information: nil,
-          action: member_personal_information_path(@conn, :create, @current_organization, @member),
+          action: Routes.member_personal_information_path(@conn, :create, @current_organization, @member),
           action_type: :create
         %>
       </div>

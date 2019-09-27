@@ -7,7 +7,11 @@ defmodule PalapaWeb.InvitationController do
   plug(:put_common_breadcrumbs)
 
   def put_common_breadcrumbs(conn, _params) do
-    put_breadcrumb(conn, "Your organization", member_path(conn, :index, current_organization()))
+    put_breadcrumb(
+      conn,
+      "Your organization",
+      Routes.member_path(conn, :index, current_organization())
+    )
   end
 
   def new(conn, _params) do
@@ -15,7 +19,10 @@ defmodule PalapaWeb.InvitationController do
       invitations = Palapa.Invitations.list(current_organization())
 
       conn
-      |> put_breadcrumb("Invite people", invitation_path(conn, :new, current_organization()))
+      |> put_breadcrumb(
+        "Invite people",
+        Routes.invitation_path(conn, :new, current_organization())
+      )
       |> render("new.html", invitations: invitations)
     end
   end
@@ -31,7 +38,10 @@ defmodule PalapaWeb.InvitationController do
 
       if Enum.any?(malformed) || Enum.any?(already_member) do
         conn
-        |> put_breadcrumb("Invite people", invitation_path(conn, :new, current_organization()))
+        |> put_breadcrumb(
+          "Invite people",
+          Routes.invitation_path(conn, :new, current_organization())
+        )
         |> render(
           "create.html",
           emails: emails,
@@ -47,7 +57,7 @@ defmodule PalapaWeb.InvitationController do
           end
 
         conn
-        |> redirect(to: invitation_path(conn, :new, current_organization()))
+        |> redirect(to: Routes.invitation_path(conn, :new, current_organization()))
       end
     end
   end
@@ -69,7 +79,10 @@ defmodule PalapaWeb.InvitationController do
       conn
       |> put_flash(:success, "#{new_invitation.email} has been sent a new invitation")
       |> redirect(
-        to: invitation_path(conn, :new, current_organization(), %{"renewed" => new_invitation.id})
+        to:
+          Routes.invitation_path(conn, :new, current_organization(), %{
+            "renewed" => new_invitation.id
+          })
       )
     end
   end

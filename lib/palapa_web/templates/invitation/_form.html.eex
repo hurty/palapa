@@ -1,4 +1,4 @@
-<%= form_for @conn, invitation_path(@conn, :create, @conn.assigns.current_organization), [as: :invitation], fn form -> %>
+<%= form_for @conn, Routes.invitation_path(@conn, :create, @conn.assigns.current_organization), [as: :invitation], fn form -> %>
   <p>Enter one email address per line:</p>
   
   <div class="field">

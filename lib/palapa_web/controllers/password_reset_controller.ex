@@ -53,7 +53,7 @@ defmodule PalapaWeb.PasswordResetController do
         {:ok, account} ->
           conn
           |> PalapaWeb.Authentication.start_session(account)
-          |> redirect(to: organization_path(conn, :index))
+          |> redirect(to: Routes.organization_path(conn, :index))
 
         {:error, changeset} ->
           conn

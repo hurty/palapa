@@ -1,4 +1,4 @@
-<%= form_for @changeset, message_comment_path(@conn, :update, @current_organization, @comment), 
+<%= form_for @changeset, Routes.message_comment_path(@conn, :update, @current_organization, @comment), 
   ["data-target": "message-comment.commentForm", "data-action": "message-comment#updateComment"], fn form -> %> 
 
   <%= PalapaWeb.RichTextView.text_editor(form, :content, @conn, placeholder: "Your message here...", editor_data_target: "message-comment.editor", content_data_target: "message-comment.hiddenInput") %>

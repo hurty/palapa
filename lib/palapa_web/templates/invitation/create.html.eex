@@ -31,7 +31,7 @@
 
           <%= render PalapaWeb.InvitationView, "_form.html", conn: @conn, prefill: Enum.join(@malformed, "\n") %>
         <% end %>
-        <%= link "Go back to invitations", to: invitation_path(@conn, :new, @conn.assigns.current_organization), class: "btn" %>
+        <%= link "Go back to invitations", to: Routes.invitation_path(@conn, :new, @conn.assigns.current_organization), class: "btn" %>
     </div>
   </div>
 </div>

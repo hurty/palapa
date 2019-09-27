@@ -4,7 +4,7 @@
       <h2 class="card-header">Your account</h2>
       <div class="card-header-separator"></div>
 
-      <%= form_for @account_changeset, account_path(@conn, :update), [as: :account, multipart: true], fn form -> %>
+      <%= form_for @account_changeset, Routes.account_path(@conn, :update), [as: :account, multipart: true], fn form -> %>
         <%= if @account_changeset.action do %>
           <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
         <% end %>
@@ -44,7 +44,7 @@
       <h2 class="card-header">Change your password</h2>
       <div class="card-header-separator"></div>
 
-      <%= form_for @password_changeset, account_path(@conn, :update), [as: :password], fn form -> %>
+      <%= form_for @password_changeset, Routes.account_path(@conn, :update), [as: :password], fn form -> %>
         <%= if @password_changeset.action do %>
           <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
         <% end %>

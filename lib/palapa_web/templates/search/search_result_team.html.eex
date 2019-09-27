@@ -4,7 +4,7 @@
   </div>
 
   <div class="flex-1">
-    <%= link truncate_string(@search_result.team.name), to: member_path(@conn, :index, @current_organization, team_id: @search_result.team.id), class: "text-green-500 hover:underline font-bold text-sm" %>
+    <%= link truncate_string(@search_result.team.name), to: Routes.member_path(@conn, :index, @current_organization, team_id: @search_result.team.id), class: "text-green-500 hover:underline font-bold text-sm" %>
     <div>
       <span class="text-xs text-gray-600 font-bold">Team</span>
     </div>

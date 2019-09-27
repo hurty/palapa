@@ -34,7 +34,8 @@ defmodule PalapaWeb.PersonalInformationController do
           layout: false,
           member: member,
           personal_information_changeset: changeset,
-          action: member_personal_information_path(conn, :create, current_organization(), member),
+          action:
+            Routes.member_personal_information_path(conn, :create, current_organization(), member),
           action_type: :create_with_error
         )
     end
@@ -59,7 +60,12 @@ defmodule PalapaWeb.PersonalInformationController do
         layout: false,
         personal_information_changeset: changeset,
         action:
-          personal_information_path(conn, :update, current_organization(), personal_information),
+          Routes.personal_information_path(
+            conn,
+            :update,
+            current_organization(),
+            personal_information
+          ),
         action_type: :update
       )
     else
@@ -98,7 +104,7 @@ defmodule PalapaWeb.PersonalInformationController do
             layout: false,
             personal_information_changeset: changeset,
             action:
-              personal_information_path(
+              Routes.personal_information_path(
                 conn,
                 :update,
                 current_organization(),

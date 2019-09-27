@@ -1,5 +1,5 @@
 <header class="header">
-  <nav data-controller="navigation" data-navigation-switcher-url="<%= session_path(@conn, :switcher, @current_organization) %>" 
+  <nav data-controller="navigation" data-navigation-switcher-url="<%= Routes.session_path(@conn, :switcher, @current_organization) %>" 
   class="flex items-center justify-between flex-wrap p-1">
 
     <div class="flex-1">
@@ -22,11 +22,11 @@
         <div data-target="popover.content" class="popover hidden">
           <div data-target="popover.arrow" class="popover__arrow"></div>
           <nav class="flex flex-col">
-            <%= link to: message_path(@conn, :new, @current_organization), class: "popover__link" do %>
+            <%= link to: Routes.message_path(@conn, :new, @current_organization), class: "popover__link" do %>
               <i class="fas fa-comment mr-2"></i>New message
             <% end %>
 
-            <%= link to: document_path(@conn, :new, @current_organization), class: "popover__link" do %>
+            <%= link to: Routes.document_path(@conn, :new, @current_organization), class: "popover__link" do %>
               <i class="fas fa-file-alt mr-2"></i>New document
             <% end %>
           </nav>
@@ -35,7 +35,7 @@
 
       <div id="global-search" class="flex-shrink mx-1 sm:mx-4" data-controller="search" data-search-index="0" data-search-active="false">
         <div data-action="click@window->search#escapeSearchDialog">
-          <%= form_for @conn, search_path(@conn, :index, @current_organization), [method: :get, "data-target": "search.form"], fn _form -> %>
+          <%= form_for @conn, Routes.search_path(@conn, :index, @current_organization), [method: :get, "data-target": "search.form"], fn _form -> %>
             <div class="search-bar">
               <span class="fa fa-search mr-2"></span>
               <input type="text" name="query" data-target="search.queryInput" data-action="input->search#triggerSearch keydown->search#triggerKeyNavigation" autocomplete="off" placeholder="Search anything" />

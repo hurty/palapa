@@ -4,12 +4,12 @@
       <h2 class="card-header">Edit team</h2>
       <div class="card-header-separator"></div>
 
-      <%= form_for @team_changeset, team_path(@conn, :update, @current_organization, @team), [], fn form -> %>
+      <%= form_for @team_changeset, Routes.team_path(@conn, :update, @current_organization, @team), [], fn form -> %>
         <%= render "_form.html", team_changeset: @team_changeset, form: form, team: @team, current_organization: @current_organization, selected_members: @team.members %>
 
         <div class="card-actions">
           <%= submit "Save", class: "btn btn-green" %>
-          <%= link "Cancel", to: member_path(@conn, :index, @current_organization, team_id: @team.id), class: "btn" %>
+          <%= link "Cancel", to: Routes.member_path(@conn, :index, @current_organization, team_id: @team.id), class: "btn" %>
         </div>
       <% end %>
     </div>

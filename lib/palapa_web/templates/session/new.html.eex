@@ -5,7 +5,7 @@
       
       <div class="card-header-separator"></div>
 
-      <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
+      <%= form_for @conn, Routes.session_path(@conn, :create), [as: :session], fn f -> %>
         <div class="field">
           <%= label f, :email, "Email address", class: "label" %>
           <%= email_input f, :email, class: "input", tabindex: 1 %>
@@ -22,7 +22,7 @@
       <% end %>
 
       <div class="text-center mt-4">
-      <%= link "I have forgotten my password", to: password_reset_path(@conn, :new), class: "text-gray-600 hover:underline" %>
+      <%= link "I have forgotten my password", to: Routes.password_reset_path(@conn, :new), class: "text-gray-600 hover:underline" %>
       </div>
     </div>
   </div>

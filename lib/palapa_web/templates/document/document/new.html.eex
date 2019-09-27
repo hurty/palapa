@@ -4,7 +4,7 @@
       <h2 class="card-header">New document</h2>
       <div class="card-header-separator"></div>
       
-      <%= form_for @changeset, document_path(@conn, :create, @current_organization), fn form -> %>
+      <%= form_for @changeset, Routes.document_path(@conn, :create, @current_organization), fn form -> %>
         <%= if @changeset.action do %>
           <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
         <% end %>
@@ -31,7 +31,7 @@
 
         <div class="card-actions">
           <%= submit "Create this document", class: "btn btn-green" %>
-          <%= link "Cancel", to: document_path(@conn, :index, @current_organization), class: "btn" %>
+          <%= link "Cancel", to: Routes.document_path(@conn, :index, @current_organization), class: "btn" %>
       </div>
       <% end %>
     </div>

@@ -1,7 +1,7 @@
 <%= form_for @personal_information_changeset, @action, 
   [multipart: true, autocomplete: "off",
   "data-controller": "personal-information-form",
-  "data-personal-information-form-attachment-url": attachment_url(@conn, :create, @current_organization), 
+  "data-personal-information-form-attachment-url": Routes.attachment_url(@conn, :create, @current_organization), 
   ], fn form -> %> 
 
   <div class="hidden border border-gray-200 rounded p-2 text-sm bg-gray-100"
@@ -35,8 +35,8 @@
           data-filename="<%= attachment.filename %>"
           data-size="<%= attachment.byte_size %>"
           data-is-image="<%= Palapa.Attachments.image?(attachment) %>"
-          data-thumb-url="<%= attachment_url(@conn, :thumb, attachment.id, attachment.filename ) %>" 
-          data-delete-url="<%= attachment_url(@conn, :delete, attachment.id) %>"  
+          data-thumb-url="<%= Routes.attachment_url(@conn, :thumb, attachment.id, attachment.filename ) %>" 
+          data-delete-url="<%= Routes.attachment_url(@conn, :delete, attachment.id) %>"  
         /> 
       <% end %>
     </div>

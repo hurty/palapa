@@ -6,7 +6,7 @@
           <h2 class="text-gray-800">All documents</h2>
 
           <div class="my-2 sm:m-0">
-            <%= link(to: document_path(@conn, :new, @current_organization), class: "btn text-sm") do %>
+            <%= link(to: Routes.document_path(@conn, :new, @current_organization), class: "btn text-sm") do %>
               <i class="fas fa-plus-circle text-green-500 mr-2"></i>New document
             <% end %>
           </div>
@@ -27,10 +27,10 @@
               <div data-target="popover.content" class="popover hidden">
                 <div data-target="popover.arrow" class="popover__arrow"></div>
                 <div class="flex flex-col">
-                  <%= link("All teams", to: document_path(@conn, :index, @current_organization, Map.delete(@conn.params, "team_id")), class: "selector-item truncate selector-item-default") %>
+                  <%= link("All teams", to: Routes.document_path(@conn, :index, @current_organization, Map.delete(@conn.params, "team_id")), class: "selector-item truncate selector-item-default") %>
                   <%= for team <- @teams do %>
                     <% item_class = "selector-item" <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
-                    <%= link(truncate_string(team.name, 40), to: document_path(@conn, :index, @current_organization.id, Map.put(@conn.params, "team_id", team.id)), class: item_class, title: team.name) %>
+                    <%= link(truncate_string(team.name, 40), to: Routes.document_path(@conn, :index, @current_organization.id, Map.put(@conn.params, "team_id", team.id)), class: item_class, title: team.name) %>
                   <% end %>
                 </div>
               </div>
@@ -38,7 +38,7 @@
           </div>
 
           <div class="flex">
-            <%= form_for @conn, document_path(@conn, :index, @current_organization), [method: "get"], fn form -> %>
+            <%= form_for @conn, Routes.document_path(@conn, :index, @current_organization), [method: "get"], fn form -> %>
               <%= if @conn.params["team_id"] do %>
                 <%= hidden_input form, :team_id, value: @conn.params["team_id"] %>
               <% end %>
@@ -54,7 +54,7 @@
         </div>
         
         <%= if search_filters_applied?(@conn) do %>
-          <%= link to: document_path(@conn, :index, @current_organization) do %>
+          <%= link to: Routes.document_path(@conn, :index, @current_organization) do %>
             <div class="py-1 bg-blue-100 text-center text-sm text-blue-600 font-bold hover:underline">Reset filters</div>
           <% end %>
         <% end %>
@@ -70,13 +70,13 @@
 
               <div class="sm:flex-1">
                 <%= if @conn.params["sort_by"] == "title" do %><span class="text-blue">•</span><% end %>
-                <%= link "Title", to: document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "title")), 
+                <%= link "Title", to: Routes.document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "title")), 
                   class: "uppercase text-xs text-blue-500 font-bold hover:underline", title: "Sort by title" %>
               </div>
               
               <div class="sm:flex-none">
                 <%= if @conn.params["sort_by"] == "updated_at" || is_nil(@conn.params["sort_by"]) do %><span class="text-blue">•</span><% end %>
-                <%= link "Last modified", to: document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "updated_at")), 
+                <%= link "Last modified", to: Routes.document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "updated_at")), 
                   class: "uppercase text-xs text-blue-500 font-bold hover:underline", title: "Sort by date" %>
               </div>
             </div>         
@@ -89,12 +89,12 @@
 
               <div class="w-full sm:flex-1">
                 <i class="sm:hidden fas fa-file-alt text-gray-600 text-base" title="Document"></i> 
-                <%= link truncate_string(document.title, 150), to: document_path(@conn, :show, @current_organization, document), class: "text-base text-green-500 font-bold hover:underline text-sm" %>
+                <%= link truncate_string(document.title, 150), to: Routes.document_path(@conn, :show, @current_organization, document), class: "text-base text-green-500 font-bold hover:underline text-sm" %>
                 <div class="font-bold mr-2 rounded my-1">
                 <%= if document.team do %>
-                  <%= link(document.team.name, to: document_path(@conn, :index, @current_organization, team_id: document.team_id), title: "Show all team documents", class: "tag tag-team text-xs") %></span>
+                  <%= link(document.team.name, to: Routes.document_path(@conn, :index, @current_organization, team_id: document.team_id), title: "Show all team documents", class: "tag tag-team text-xs") %></span>
                 <% else %>
-                  <%= link("Shared with everyone", to: document_path(@conn, :index, @current_organization), title: "Show all team documents", class: "text-gray-700 text-xs hover:underline") %>
+                  <%= link("Shared with everyone", to: Routes.document_path(@conn, :index, @current_organization), title: "Show all team documents", class: "text-gray-700 text-xs hover:underline") %>
                 <% end %>
                 </div>
               </div>
@@ -104,7 +104,7 @@
                   <div class="flex mt-2">
                     <%= PalapaWeb.MemberView.avatar(document.last_author.account, :xs) %>
                     <span class="text-xs mx-2 text-gray-800">
-                      <%= link document.last_author.account.name, to: member_path(@conn, :show, @current_organization, document.last_author), class: "text-gray-800 font-bold hover:underline" %>
+                      <%= link document.last_author.account.name, to: Routes.member_path(@conn, :show, @current_organization, document.last_author), class: "text-gray-800 font-bold hover:underline" %>
                     </span>
                   </div>
                 </div>
@@ -127,7 +127,7 @@
 
     </div>
         <div class="my-8 text-center">
-          <%= link to: trash_path(@conn, :index, @current_organization), 
+          <%= link to: Routes.trash_path(@conn, :index, @current_organization), 
             class: "border py-2 px-4 rounded-full text-center bg-white hover:bg-gray-400 text-blue" do %>
             <i class="fas fa-trash text-gray-700"></i> View documents in the trash
           <% end %>
@@ -143,7 +143,7 @@
           <%= for document <- @recent_documents do %>
             <div class="w-full my-1">
               <i class="fas fa-file-alt text-gray-600 text-sm mr-2"></i> 
-              <%= link truncate_string(document.title), to: document_path(@conn, :show, @current_organization, document), class: "text-sm font-bold text-green-500 hover:underline" %>
+              <%= link truncate_string(document.title), to: Routes.document_path(@conn, :show, @current_organization, document), class: "text-sm font-bold text-green-500 hover:underline" %>
             </div>
           <% end %>
         </div>

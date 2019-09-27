@@ -11,7 +11,9 @@ defmodule PalapaWeb.TeamMembershipController do
          {:ok, _team} = Teams.add_member(team, current_member()) do
       conn
       |> put_flash(:success, "You have joined the team \"#{team.name}\"")
-      |> redirect(to: member_path(conn, :index, current_organization(), %{"team_id" => team.id}))
+      |> redirect(
+        to: Routes.member_path(conn, :index, current_organization(), %{"team_id" => team.id})
+      )
     end
   end
 
@@ -22,7 +24,9 @@ defmodule PalapaWeb.TeamMembershipController do
          {:ok, _team} = Teams.remove_member(team, current_member()) do
       conn
       |> put_flash(:success, "You have left the team \"#{team.name}\"")
-      |> redirect(to: member_path(conn, :index, current_organization(), %{"team_id" => team.id}))
+      |> redirect(
+        to: Routes.member_path(conn, :index, current_organization(), %{"team_id" => team.id})
+      )
     end
   end
 end

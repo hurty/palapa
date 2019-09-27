@@ -3,7 +3,7 @@
     <h2 class="card-header">Upgrade your account</h2>
     <div class="card-header-separator"></div>
 
-    <%= form_for @customer_changeset, settings_customer_path(@conn, :create, @current_organization), [id: "payment-form"], fn form -> %>
+    <%= form_for @customer_changeset, Routes.settings_customer_path(@conn, :create, @current_organization), [id: "payment-form"], fn form -> %>
       <%= if @customer_changeset.action do %>
         <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
       <% end %>

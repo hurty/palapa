@@ -11,7 +11,7 @@ defmodule PalapaWeb.Document.DocumentPublicLinkController do
 
     conn
     |> put_flash(:success, "A secret link has been created for this document")
-    |> redirect(to: document_path(conn, :show, current_organization(), document))
+    |> redirect(to: Routes.document_path(conn, :show, current_organization(), document))
   end
 
   def delete(conn, %{"document_id" => document_id}) do
@@ -20,6 +20,6 @@ defmodule PalapaWeb.Document.DocumentPublicLinkController do
 
     conn
     |> put_flash(:success, "The secret link for this document has been deleted")
-    |> redirect(to: document_path(conn, :show, current_organization(), document))
+    |> redirect(to: Routes.document_path(conn, :show, current_organization(), document))
   end
 end

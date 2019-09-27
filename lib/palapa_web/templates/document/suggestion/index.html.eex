@@ -1,6 +1,6 @@
 <div data-controller="document-suggestions" 
   data-document-suggestions-selected-list="open" 
-  data-document-suggestions-list-url="<%= document_page_suggestion_url(@conn, :index, @conn.assigns.current_organization, @conn.assigns.page) %>" 
+  data-document-suggestions-list-url="<%= Routes.document_page_suggestion_url(@conn, :index, @conn.assigns.current_organization, @conn.assigns.page) %>" 
   class="my-8">
 
   <ul class="tabs justify-center">

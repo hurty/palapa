@@ -16,7 +16,7 @@ defmodule PalapaWeb.Settings.Billing.BillingErrorController do
         render(conn, "waiting_for_payment.html", organization: organization)
 
       _ ->
-        redirect(conn, to: dashboard_path(conn, :index, organization))
+        redirect(conn, to: Routes.dashboard_path(conn, :index, organization))
     end
   end
 end

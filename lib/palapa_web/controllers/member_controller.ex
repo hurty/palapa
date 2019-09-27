@@ -8,7 +8,10 @@ defmodule PalapaWeb.MemberController do
 
   def put_common_breadcrumbs(conn, _params) do
     conn
-    |> put_breadcrumb("Your organization", member_path(conn, :index, current_organization()))
+    |> put_breadcrumb(
+      "Your organization",
+      Routes.member_path(conn, :index, current_organization())
+    )
   end
 
   def index(conn, %{"team_id" => team_id}) do
@@ -21,7 +24,7 @@ defmodule PalapaWeb.MemberController do
       conn
       |> put_breadcrumb(
         selected_team.name,
-        member_path(conn, :index, current_organization(), team_id: team_id)
+        Routes.member_path(conn, :index, current_organization(), team_id: team_id)
       )
       |> render(
         "index.html",
@@ -63,7 +66,7 @@ defmodule PalapaWeb.MemberController do
       conn
       |> put_breadcrumb(
         member.account.name,
-        member_path(conn, :show, current_organization(), member)
+        Routes.member_path(conn, :show, current_organization(), member)
       )
       |> render(
         "show.html",

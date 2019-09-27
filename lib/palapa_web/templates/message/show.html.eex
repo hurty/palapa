@@ -32,7 +32,7 @@
         <%= submit "Leave a comment", class: "btn", "data-action": "message#showCommentForm" %>
       </div>
 
-      <%= form_for @new_message_comment, message_message_comment_path(@conn, :create, @current_organization, @message), 
+      <%= form_for @new_message_comment, Routes.message_message_comment_path(@conn, :create, @current_organization, @message), 
         ["data-target": "message.commentForm", "data-action": "message#submitComment", class: "hidden"], fn form -> %> 
 
         <%= PalapaWeb.RichTextView.text_editor(form, :content, @conn, placeholder: "Your message here...", content_data_target: "message.commentContent", editor_data_target: "message.editor") %>

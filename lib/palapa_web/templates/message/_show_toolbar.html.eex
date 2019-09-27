@@ -4,7 +4,7 @@
   </div>
 
   <div class="text-sm text-gray-700 my-auto">
-    <%= link @message.creator.account.name, to: member_path(@conn, :show, @current_organization, @message.creator.id), class: "text-gray-700 font-bold hover:underline" %>
+    <%= link @message.creator.account.name, to: Routes.member_path(@conn, :show, @current_organization, @message.creator.id), class: "text-gray-700 font-bold hover:underline" %>
     <div class="text-xs text-gray-700 font-light"> Posted <%= auto_format_datetime(@message.inserted_at, @current_account) %></div>
   </div>
 </div>
@@ -20,13 +20,13 @@
         <div data-target="popover.arrow" class="popover__arrow"></div>
         <nav class="flex flex-col">
           <%= if Palapa.Access.permit? Palapa.Messages, :edit_message, @current_member, @message do %>
-            <%= link to: message_path(@conn, :edit, @current_organization, @message), class: "popover__link" do %>
+            <%= link to: Routes.message_path(@conn, :edit, @current_organization, @message), class: "popover__link" do %>
               <i class="fas fa-pen"></i>&nbsp;Edit message
             <% end %>
           <% end %>
 
           <%= if Palapa.Access.permit? Palapa.Messages, :delete_message, @current_member, @message do %>
-            <%= link to: message_path(@conn, :delete, @current_organization, @message), 
+            <%= link to: Routes.message_path(@conn, :delete, @current_organization, @message), 
               data: [controller: "link", action: "link#delete", confirm: "Are you sure you want to delete this message?"], class: "popover__link" do %>
               <i class="fas fa-trash text-red-400"></i>&nbsp;Delete message
             <% end %>

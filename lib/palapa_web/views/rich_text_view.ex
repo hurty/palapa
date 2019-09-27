@@ -27,7 +27,7 @@ defmodule PalapaWeb.RichTextView do
 
     render("editor.html", %{
       form: form,
-      attachments_url: attachment_url(conn, :create, organization),
+      attachments_url: Routes.attachment_url(conn, :create, organization),
       organization: organization,
       content_input_value: trix_formatted_value,
       content_input_id: "editor_content_#{Ecto.UUID.generate()}",

@@ -11,10 +11,13 @@ defmodule PalapaWeb.TeamController do
       team_changeset = Teams.change(%Team{})
 
       conn
-      |> put_breadcrumb("Your organization", member_path(conn, :index, current_organization()))
+      |> put_breadcrumb(
+        "Your organization",
+        Routes.member_path(conn, :index, current_organization())
+      )
       |> put_breadcrumb(
         "New team",
-        team_path(conn, :new, current_organization())
+        Routes.team_path(conn, :new, current_organization())
       )
       |> render("new.html", team_changeset: team_changeset)
     end
@@ -26,7 +29,9 @@ defmodule PalapaWeb.TeamController do
         {:ok, team} ->
           conn
           |> put_flash(:success, "The team #{team.name} has been created!")
-          |> redirect(to: member_path(conn, :index, current_organization(), team_id: team.id))
+          |> redirect(
+            to: Routes.member_path(conn, :index, current_organization(), team_id: team.id)
+          )
 
         {:error, team_changeset} ->
           conn
@@ -45,12 +50,15 @@ defmodule PalapaWeb.TeamController do
       team_changeset = Teams.change(team)
 
       conn
-      |> put_breadcrumb("Your organization", member_path(conn, :index, current_organization()))
+      |> put_breadcrumb(
+        "Your organization",
+        Routes.member_path(conn, :index, current_organization())
+      )
       |> put_breadcrumb(
         team.name,
-        member_path(conn, :index, current_organization(), team_id: team.id)
+        Routes.member_path(conn, :index, current_organization(), team_id: team.id)
       )
-      |> put_breadcrumb("Edit", team_path(conn, :edit, current_organization(), team))
+      |> put_breadcrumb("Edit", Routes.team_path(conn, :edit, current_organization(), team))
       |> render("edit.html", team: team, team_changeset: team_changeset)
     end
   end
@@ -65,7 +73,9 @@ defmodule PalapaWeb.TeamController do
         {:ok, team} ->
           conn
           |> put_flash(:success, "The team #{team.name} has been updated!")
-          |> redirect(to: member_path(conn, :index, current_organization(), team_id: team.id))
+          |> redirect(
+            to: Routes.member_path(conn, :index, current_organization(), team_id: team.id)
+          )
 
         {:error, team_changeset} ->
           conn

@@ -25,7 +25,7 @@ defmodule PalapaWeb.EventView do
           message_link:
             safe_to_string(
               quoted_link(message.title,
-                to: message_path(conn, :show, message.organization_id, message.id)
+                to: Routes.message_path(conn, :show, message.organization_id, message.id)
               )
             )
         )
@@ -42,7 +42,7 @@ defmodule PalapaWeb.EventView do
           document_link:
             safe_to_string(
               quoted_link(document.title,
-                to: document_path(conn, :show, document.organization_id, document)
+                to: Routes.document_path(conn, :show, document.organization_id, document)
               )
             )
         )
@@ -56,7 +56,7 @@ defmodule PalapaWeb.EventView do
           page_link:
             safe_to_string(
               quoted_link("#{event.document.title} / #{event.page.title}",
-                to: document_page_path(conn, :show, event.organization_id, page)
+                to: Routes.document_page_path(conn, :show, event.organization_id, page)
               )
             )
         )
@@ -70,7 +70,7 @@ defmodule PalapaWeb.EventView do
           page_link:
             safe_to_string(
               quoted_link("#{event.document.title} / #{event.page.title}",
-                to: document_page_path(conn, :show, event.organization_id, event.page)
+                to: Routes.document_page_path(conn, :show, event.organization_id, event.page)
               )
             )
         )
@@ -85,15 +85,21 @@ defmodule PalapaWeb.EventView do
     case event.action do
       :new_message ->
         message = event.message
-        link(message.title, to: message_path(conn, :show, message.organization_id, message.id))
+
+        link(message.title,
+          to: Routes.message_path(conn, :show, message.organization_id, message.id)
+        )
 
       :new_document ->
         document = event.document
-        link(document.title, to: document_path(conn, :show, document.organization_id, document))
+
+        link(document.title,
+          to: Routes.document_path(conn, :show, document.organization_id, document)
+        )
 
       :new_document_page ->
         page = event.page
-        link(page.title, to: document_page_path(conn, :show, event.organization_id, page))
+        link(page.title, to: Routes.document_page_path(conn, :show, event.organization_id, page))
 
       _ ->
         nil
@@ -106,7 +112,7 @@ defmodule PalapaWeb.EventView do
         message = event.message
 
         link(PalapaWeb.MessageView.excerpt(message.content),
-          to: message_path(conn, :show, message.organization_id, message.id)
+          to: Routes.message_path(conn, :show, message.organization_id, message.id)
         )
 
       :new_message_comment ->
@@ -115,7 +121,7 @@ defmodule PalapaWeb.EventView do
 
         link(PalapaWeb.MessageView.excerpt(message_comment.content),
           to:
-            message_path(conn, :show, message_comment.organization_id, message) <>
+            Routes.message_path(conn, :show, message_comment.organization_id, message) <>
               "##{dom_id(message_comment)}"
         )
 
@@ -123,14 +129,14 @@ defmodule PalapaWeb.EventView do
         page = event.page
 
         link(PalapaWeb.MessageView.excerpt(page.content),
-          to: document_page_path(conn, :show, event.organization_id, page)
+          to: Routes.document_page_path(conn, :show, event.organization_id, page)
         )
 
       :new_document_suggestion ->
         suggestion = event.document_suggestion
 
         link(PalapaWeb.MessageView.excerpt(suggestion.content),
-          to: document_page_path(conn, :show, event.organization_id, suggestion.page_id)
+          to: Routes.document_page_path(conn, :show, event.organization_id, suggestion.page_id)
         )
 
       :new_document_suggestion_comment ->
@@ -138,7 +144,7 @@ defmodule PalapaWeb.EventView do
         suggestion_comment = event.document_suggestion_comment
 
         link(PalapaWeb.MessageView.excerpt(suggestion_comment.content),
-          to: document_page_path(conn, :show, event.organization_id, page.id)
+          to: Routes.document_page_path(conn, :show, event.organization_id, page.id)
         )
 
       _ ->

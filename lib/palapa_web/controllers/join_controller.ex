@@ -16,7 +16,7 @@ defmodule PalapaWeb.JoinController do
       if status == :already_member do
         conn
         |> PalapaWeb.Authentication.start_session(account)
-        |> redirect(to: dashboard_path(conn, :index, account.organization_id))
+        |> redirect(to: Routes.dashboard_path(conn, :index, account.organization_id))
       else
         changeset = Invitations.JoinForm.changeset(%Invitations.JoinForm{}, %{})
 
@@ -43,7 +43,7 @@ defmodule PalapaWeb.JoinController do
         {:ok, result} ->
           conn
           |> PalapaWeb.Authentication.start_session(result.account)
-          |> redirect(to: dashboard_path(conn, :index, result.member.organization_id))
+          |> redirect(to: Routes.dashboard_path(conn, :index, result.member.organization_id))
 
         {:error, _failed_operation, changeset, _changes_so_far} ->
           existing_account = Accounts.get_by(email: invitation.email)

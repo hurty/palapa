@@ -4,7 +4,7 @@
       <h2 class="card-header">New message</h2>
       <div class="card-header-separator"></div>
 
-      <%= form_for @message_changeset, message_path(@conn, :create, @current_organization), fn form -> %>
+      <%= form_for @message_changeset, Routes.message_path(@conn, :create, @current_organization), fn form -> %>
         <%= render "_form.html",
             conn: @conn,
             message_changeset: @message_changeset, 
@@ -15,7 +15,7 @@
           
         <div class="card-actions">
           <%= submit "Post this message", class: "btn btn-green" %>
-          <%= link "Cancel", to: message_path(@conn, :index, @current_organization), class: "btn" %>
+          <%= link "Cancel", to: Routes.message_path(@conn, :index, @current_organization), class: "btn" %>
         </div>
       <% end %>
     </div>

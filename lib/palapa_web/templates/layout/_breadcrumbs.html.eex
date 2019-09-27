@@ -2,7 +2,7 @@
   <nav class="navigation">
     <ol class="breadcrumbs">
       <li class="breadcrumb-item">
-        <%= link to: dashboard_path(@conn, :index, @current_organization) do %> 
+        <%= link to: Routes.dashboard_path(@conn, :index, @current_organization) do %> 
           <i class="fas fa-home"></i>
         <% end %>
       </li>

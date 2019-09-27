@@ -7,7 +7,7 @@ defmodule PalapaWeb.DashboardController do
 
   def put_common_breadcrumbs(conn, _params) do
     conn
-    |> put_breadcrumb("Dashboard", dashboard_path(conn, :index, current_organization()))
+    |> put_breadcrumb("Dashboard", Routes.dashboard_path(conn, :index, current_organization()))
   end
 
   def index(conn, _params) do

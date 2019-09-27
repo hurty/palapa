@@ -1,11 +1,11 @@
 <div id="document" class="content left-sidebar-layout" 
-  data-controller="document" data-document-url="<%= document_url(@conn, :show, @document.organization_id  , @document) %>">
+  data-controller="document" data-document-url="<%= Routes.document_url(@conn, :show, @document.organization_id  , @document) %>">
   
   <div class="page-sidebar">
     <%= render "table_of_contents.html", assigns %>
 
     <div class="text-center mt-8">
-      <%= link "Created with Palapa", to: home_url(@conn, :index), target: "_blank", class: "text-gray-500 hover:underline text-sm" %>
+      <%= link "Created with Palapa", to: Routes.home_url(@conn, :index), target: "_blank", class: "text-gray-500 hover:underline text-sm" %>
     </div>
   </div>
 

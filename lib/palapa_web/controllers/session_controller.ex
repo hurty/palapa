@@ -14,7 +14,7 @@ defmodule PalapaWeb.SessionController do
     case Authentication.login_with_email_and_password(conn, email, password) do
       {:ok, conn} ->
         conn
-        |> redirect(to: dashboard_path(conn, :index, current_organization()))
+        |> redirect(to: Routes.dashboard_path(conn, :index, current_organization()))
 
       {:error, _reason, conn} ->
         conn
@@ -26,7 +26,7 @@ defmodule PalapaWeb.SessionController do
   def delete(conn, _params) do
     conn
     |> Authentication.logout()
-    |> redirect(to: home_path(conn, :index))
+    |> redirect(to: Routes.home_path(conn, :index))
   end
 
   def switcher(conn, _params) do

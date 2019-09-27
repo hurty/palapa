@@ -12,10 +12,10 @@
       <div data-target="popover.content" class="popover hidden">
         <div data-target="popover.arrow" class="popover__arrow"></div>
         <div class="flex flex-col">
-          <%= link("All messages", to: message_path(@conn, :index, @current_organization), class: "selector-item truncate selector-item-default") %>
+          <%= link("All messages", to: Routes.message_path(@conn, :index, @current_organization), class: "selector-item truncate selector-item-default") %>
           <%= for team <- @teams do %>
             <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
-            <%= link(truncate_string(team.name, 40), to: message_path(@conn, :index, @current_organization.id, team_id: team.id), class: item_class, title: team.name) %>
+            <%= link(truncate_string(team.name, 40), to: Routes.message_path(@conn, :index, @current_organization.id, team_id: team.id), class: item_class, title: team.name) %>
           <% end %>
         </div>
       </div>
@@ -24,6 +24,6 @@
   <h2 class="text-gray-800">All messages</h2>
 <% end %>
 
-<%= link(to: message_path(@conn, :new, @current_organization), class: "messages__new-message-button btn text-sm") do %>
+<%= link(to: Routes.message_path(@conn, :new, @current_organization), class: "messages__new-message-button btn text-sm") do %>
   <i class="fas fa-plus-circle text-green-500 mr-2"></i>New message
 <% end %>

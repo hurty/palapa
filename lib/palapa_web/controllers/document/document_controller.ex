@@ -14,7 +14,7 @@ defmodule PalapaWeb.Document.DocumentController do
 
   def put_common_breadcrumbs(conn, _params) do
     conn
-    |> put_breadcrumb("Documents", document_path(conn, :index, current_organization()))
+    |> put_breadcrumb("Documents", Routes.document_path(conn, :index, current_organization()))
   end
 
   def index(conn, params) do
@@ -51,7 +51,7 @@ defmodule PalapaWeb.Document.DocumentController do
     teams = Teams.list_for_member(current_member())
 
     conn
-    |> put_breadcrumb("New document", document_path(conn, :new, current_organization()))
+    |> put_breadcrumb("New document", Routes.document_path(conn, :new, current_organization()))
     |> render("new.html", changeset: changeset, teams: teams)
   end
 
@@ -62,14 +62,17 @@ defmodule PalapaWeb.Document.DocumentController do
       case Documents.create_document(current_member(), team, document_attrs) do
         {:ok, document} ->
           redirect(conn,
-            to: document_path(conn, :show, current_organization(), document)
+            to: Routes.document_path(conn, :show, current_organization(), document)
           )
 
         {:error, changeset} ->
           teams = Teams.list_for_member(current_member())
 
           conn
-          |> put_breadcrumb("New document", document_path(conn, :new, current_organization()))
+          |> put_breadcrumb(
+            "New document",
+            Routes.document_path(conn, :new, current_organization())
+          )
           |> render("new.html", changeset: changeset, teams: teams)
       end
     end
@@ -82,7 +85,7 @@ defmodule PalapaWeb.Document.DocumentController do
 
     if first_page do
       redirect(conn,
-        to: document_page_path(conn, :show, current_organization(), first_page)
+        to: Routes.document_page_path(conn, :show, current_organization(), first_page)
       )
     else
       conn
@@ -106,7 +109,7 @@ defmodule PalapaWeb.Document.DocumentController do
     |> put_document_breadcrumbs(document)
     |> put_breadcrumb(
       "Edit",
-      document_path(conn, :edit, current_organization(), document)
+      Routes.document_path(conn, :edit, current_organization(), document)
     )
     |> render("edit.html", document: document, changeset: changeset, teams: teams)
   end
@@ -118,7 +121,7 @@ defmodule PalapaWeb.Document.DocumentController do
     case Documents.update_document(document, current_member(), team, document_attrs) do
       {:ok, document} ->
         redirect(conn,
-          to: document_path(conn, :show, current_organization(), document)
+          to: Routes.document_path(conn, :show, current_organization(), document)
         )
 
       {:error, changeset} ->
@@ -128,7 +131,7 @@ defmodule PalapaWeb.Document.DocumentController do
         |> put_document_breadcrumbs(document)
         |> put_breadcrumb(
           "Edit",
-          document_path(conn, :edit, current_organization(), document)
+          Routes.document_path(conn, :edit, current_organization(), document)
         )
         |> render("edit.html", document: document, changeset: changeset, teams: teams)
     end

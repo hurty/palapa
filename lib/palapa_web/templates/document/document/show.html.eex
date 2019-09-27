@@ -1,5 +1,5 @@
 <div id="document" class="content left-sidebar-layout" 
-  data-controller="document" data-document-url="<%= document_url(@conn, :show, @current_organization, @document) %>">
+  data-controller="document" data-document-url="<%= Routes.document_url(@conn, :show, @current_organization, @document) %>">
   
   <div class="page-sidebar">
     <%= render PalapaWeb.Document.DocumentView, "table_of_contents.html", assigns %>
@@ -10,7 +10,7 @@
 
     <section class="blankslate border-4 border-dotted p-8">
       <p class="py-2">This document is empty</p>
-      <p class="py-2"><%= link "Add a new page", to: document_page_path(@conn, :new, @current_organization, @document), class: "btn" %></p>
+      <p class="py-2"><%= link "Add a new page", to: Routes.document_page_path(@conn, :new, @current_organization, @document), class: "btn" %></p>
     </section>
   </div>
 </div>

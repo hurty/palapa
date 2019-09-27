@@ -1,7 +1,7 @@
 <li data-controller="document-section" 
 data-action="mouseover->document-section#showActionsIcons mouseout->document-section#hideActionsIcons"
 data-document-section-id="<%= @section.id %>"
-data-document-section-url="<%= document_section_url(@conn, :update, @current_organization, @section) %>"
+data-document-section-url="<%= Routes.document_section_url(@conn, :update, @current_organization, @section) %>"
 data-document-section-title="<%= @section.title %>" 
 class="document-section">
   
@@ -32,15 +32,15 @@ class="document-section">
                 <div data-target="document-section.menuContent" class="popover hidden">
                   <div data-target="popover.arrow" class="popover__arrow"></div>
                   <nav class="flex flex-col">
-                    <%= link to: document_page_path(@conn, :new, @current_organization, @document, section_id: @section.id), class: "popover__link" do %>
+                    <%= link to: Routes.document_page_path(@conn, :new, @current_organization, @document, section_id: @section.id), class: "popover__link" do %>
                       <i class="fas fa-file-alt"></i>&nbsp;Create a page in this section
                     <% end %>
 
-                    <%= link to: document_section_path(@conn, :update, @current_organization, @section), class: "popover__link", "data-action": "document-section#showRenameForm" do %>
+                    <%= link to: Routes.document_section_path(@conn, :update, @current_organization, @section), class: "popover__link", "data-action": "document-section#showRenameForm" do %>
                       <i class="fas fa-pen"></i>&nbsp;Rename this section
                     <% end %>
 
-                    <%= link to: document_section_path(@conn, :delete, @current_organization, @section), class: "popover__link",
+                    <%= link to: Routes.document_section_path(@conn, :delete, @current_organization, @section), class: "popover__link",
                       data: [
                         action: "document-section#delete", 
                         confirm: "Are you sure you want to delete this section and all its pages?"
@@ -56,7 +56,7 @@ class="document-section">
             </div>
           </div>
           
-          <%= form_for @conn, document_section_path(@conn, :update, @current_organization, @section), 
+          <%= form_for @conn, Routes.document_section_path(@conn, :update, @current_organization, @section), 
             ["data-target": "document-section.form", "data-action": "document-section#rename", 
             class: "hidden bg-white border shadow-lg p-2 rounded"], fn form -> %>
             <div class="field">

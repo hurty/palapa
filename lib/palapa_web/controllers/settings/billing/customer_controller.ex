@@ -14,8 +14,14 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
 
   def put_common_breadcrumbs(conn, _params) do
     conn
-    |> put_breadcrumb("Settings", settings_workspace_path(conn, :show, current_organization()))
-    |> put_breadcrumb("Billing", settings_customer_path(conn, :show, current_organization()))
+    |> put_breadcrumb(
+      "Settings",
+      Routes.settings_workspace_path(conn, :show, current_organization())
+    )
+    |> put_breadcrumb(
+      "Billing",
+      Routes.settings_customer_path(conn, :show, current_organization())
+    )
   end
 
   def show(conn, _params) do
@@ -33,7 +39,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
       conn
       |> put_breadcrumb(
         "Upgrade your account",
-        settings_customer_path(conn, :new, current_organization())
+        Routes.settings_customer_path(conn, :new, current_organization())
       )
       |> render("new.html", customer_changeset: customer_changeset)
     end
@@ -53,7 +59,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
 
               redirect(conn,
                 to:
-                  settings_payment_authentication_path(conn, :new, current_organization(),
+                  Routes.settings_payment_authentication_path(conn, :new, current_organization(),
                     client_secret: client_secret
                   )
               )
@@ -64,7 +70,9 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
             # Ask just for the card details
 
             :ok ->
-              redirect(conn, to: settings_customer_path(conn, :show, current_organization()))
+              redirect(conn,
+                to: Routes.settings_customer_path(conn, :show, current_organization())
+              )
           end
 
         {:error, :customer, customer_changeset, _changes_so_far} ->
@@ -73,7 +81,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
         {:error, :stripe_customer, error, _changes} ->
           conn
           |> put_flash(:error, error.message)
-          |> redirect(to: settings_customer_path(conn, :new, current_organization()))
+          |> redirect(to: Routes.settings_customer_path(conn, :new, current_organization()))
       end
     end
   end
@@ -84,7 +92,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
         conn
         |> put_breadcrumb(
           "Update billing information",
-          settings_customer_path(conn, :edit, current_organization())
+          Routes.settings_customer_path(conn, :edit, current_organization())
         )
 
       customer = Billing.get_customer(current_organization())
@@ -98,7 +106,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
           :error,
           "This workspace does not have a paid subscription / billing information"
         )
-        |> redirect(to: settings_customer_path(conn, :show, current_organization()))
+        |> redirect(to: Routes.settings_customer_path(conn, :show, current_organization()))
       end
     end
   end
@@ -111,7 +119,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
         {:ok, _customer} ->
           conn
           |> put_flash(:success, "Billing information has been updated successfully")
-          |> redirect(to: settings_customer_path(conn, :show, current_organization()))
+          |> redirect(to: Routes.settings_customer_path(conn, :show, current_organization()))
 
         {:error, customer_changeset} ->
           conn

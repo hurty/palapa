@@ -11,7 +11,9 @@ defmodule PalapaWeb.Public.DocumentController do
     first_page = Documents.get_first_page(document)
 
     if first_page do
-      redirect(conn, to: public_document_page_path(conn, :show, document.public_token, first_page))
+      redirect(conn,
+        to: Routes.public_document_page_path(conn, :show, document.public_token, first_page)
+      )
     else
       render(conn, "show.html", document: document)
     end

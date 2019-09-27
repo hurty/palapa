@@ -12,11 +12,11 @@ defmodule PalapaWeb.ProfileController do
       case Organizations.update_member_profile(member, member_attrs) do
         {:ok, member} ->
           put_flash(conn, :success, "Your profile has been updated.")
-          |> redirect(to: profile_path(conn, :edit, current_organization(), member))
+          |> redirect(to: Routes.profile_path(conn, :edit, current_organization(), member))
 
         {:error, _changeset} ->
           put_flash(conn, :error, "An error occured while updating your profile.")
-          |> redirect(to: profile_path(conn, :edit, current_organization(), member))
+          |> redirect(to: Routes.profile_path(conn, :edit, current_organization(), member))
       end
     end
   end

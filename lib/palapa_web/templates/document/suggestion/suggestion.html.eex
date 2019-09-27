@@ -1,6 +1,6 @@
 <li id="<%= @suggestion.id %>" data-controller="document-suggestion rich-text" 
-data-document-suggestion-close-url="<%= suggestion_closure_url(@conn, :create, @current_organization, @suggestion) %>" 
-data-document-suggestion-comment-url="<%= suggestion_comment_url(@conn, :create, @current_organization, @suggestion) %>" 
+data-document-suggestion-close-url="<%= Routes.suggestion_closure_url(@conn, :create, @current_organization, @suggestion) %>" 
+data-document-suggestion-comment-url="<%= Routes.suggestion_comment_url(@conn, :create, @current_organization, @suggestion) %>" 
 class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-8">
   
   <div>
@@ -11,7 +11,7 @@ class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-8">
         </div>
 
         <div class="text-xs my-auto">
-          <%= link @suggestion.author.account.name, to: member_path(@conn, :show, @current_organization, @suggestion.author.id), class: "text-gray-800 font-bold hover:underline" %>
+          <%= link @suggestion.author.account.name, to: Routes.member_path(@conn, :show, @current_organization, @suggestion.author.id), class: "text-gray-800 font-bold hover:underline" %>
           <div class="text-gray-700 font-light">Posted <%= auto_format_datetime(@suggestion.inserted_at, @current_account) %></div>
         </div>   
       </div>
@@ -39,7 +39,7 @@ class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-8">
   <%= if permit?(Palapa.Documents, :update_suggestion, @current_member, @suggestion) do %>
     <div data-target="document-suggestion.actions" class="p-1 pt-2 rounded mt-4 border-gray-200">
 
-      <%= form_for @conn, suggestion_comment_url(@conn, :create, @current_organization, @suggestion), 
+      <%= form_for @conn, Routes.suggestion_comment_url(@conn, :create, @current_organization, @suggestion), 
         [as: :suggestion_comment, "data-target": "document-suggestion.commentForm", "data-action": "document-suggestion#postComment"], fn form -> %> 
 
           <div data-target="document-suggestion.passiveFormItems">

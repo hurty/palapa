@@ -21,12 +21,12 @@ defmodule PalapaWeb do
     quote do
       use Phoenix.Controller, namespace: PalapaWeb
       import Plug.Conn
-      import PalapaWeb.Router.Helpers
       import PalapaWeb.Gettext
       import PalapaWeb.Current
       import PalapaWeb.Breadcrumbs
       import Palapa.Access
       import Phoenix.LiveView.Controller, only: [live_render: 3]
+      alias PalapaWeb.Router.Helpers, as: Routes
 
       # Handle authorization failures
       action_fallback(PalapaWeb.FallbackController)
@@ -52,7 +52,6 @@ defmodule PalapaWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import PalapaWeb.Router.Helpers
       import PalapaWeb.ErrorHelpers
       import PalapaWeb.Gettext
       import PalapaWeb.Helpers
@@ -60,6 +59,7 @@ defmodule PalapaWeb do
       import Palapa.Access, only: [permit?: 4]
       import Palapa.RichText.Helpers
       import Phoenix.LiveView, only: [live_render: 2, live_render: 3, live_link: 1, live_link: 2]
+      alias PalapaWeb.Router.Helpers, as: Routes
     end
   end
 

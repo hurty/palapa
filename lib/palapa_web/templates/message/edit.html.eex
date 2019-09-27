@@ -4,7 +4,7 @@
         <h2 class="card-header">Edit message</h2>
         <div class="card-header-separator"></div>
 
-        <%= form_for @message_changeset, message_path(@conn, :update, @current_organization, @message), fn form -> %>
+        <%= form_for @message_changeset, Routes.message_path(@conn, :update, @current_organization, @message), fn form -> %>
           <%= render "_form.html", 
             conn: @conn,
             message_changeset: @message_changeset, 

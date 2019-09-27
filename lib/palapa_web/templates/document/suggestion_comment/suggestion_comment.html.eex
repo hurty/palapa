@@ -8,7 +8,7 @@
         </div>
 
         <div class="text-xs my-auto ml-2">
-          <%= link @suggestion_comment.author.account.name, to: member_path(@conn, :show, @conn.assigns.current_organization, @suggestion_comment.author.id), class: "text-gray-800 font-bold hover:underline" %>
+          <%= link @suggestion_comment.author.account.name, to: Routes.member_path(@conn, :show, @conn.assigns.current_organization, @suggestion_comment.author.id), class: "text-gray-800 font-bold hover:underline" %>
           <div class="text-gray-700 font-light">Posted <%= auto_format_datetime(@suggestion_comment.inserted_at, @conn.assigns.current_account) %></div>
         </div>
       </div>
@@ -24,13 +24,13 @@
           <div data-target="popover.content" class="popover hidden">
             <nav class="flex flex-col">
             <%= if permit?(Palapa.Documents, :update_suggestion_comment, @conn.assigns.current_member, @suggestion_comment) do %>
-              <%= link to: suggestion_comment_path(@conn, :edit, @conn.assigns.current_organization, @suggestion_comment), class: "popover__link", 
+              <%= link to: Routes.suggestion_comment_path(@conn, :edit, @conn.assigns.current_organization, @suggestion_comment), class: "popover__link", 
               data: [action: "document-suggestion-comment#edit"] do %>
                 <i class="fas fa-pen"></i>&nbsp;Edit comment
               <% end %>
             <% end %>
             
-              <%= link to: suggestion_comment_path(@conn, :delete, @conn.assigns.current_organization, @suggestion_comment), class: "popover__link", 
+              <%= link to: Routes.suggestion_comment_path(@conn, :delete, @conn.assigns.current_organization, @suggestion_comment), class: "popover__link", 
               data: [
                 action: "document-suggestion-comment#delete",
                 confirm: "Are your sure you want to delete this comment?"

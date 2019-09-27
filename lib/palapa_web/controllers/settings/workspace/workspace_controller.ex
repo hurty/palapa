@@ -21,7 +21,7 @@ defmodule PalapaWeb.Settings.WorkspaceController do
     conn
     |> put_breadcrumb(
       "Settings",
-      settings_workspace_path(conn, :show, current_organization())
+      Routes.settings_workspace_path(conn, :show, current_organization())
     )
   end
 
@@ -37,7 +37,7 @@ defmodule PalapaWeb.Settings.WorkspaceController do
       {:ok, _organization} ->
         conn
         |> put_flash(:success, gettext("Workspace settings have been saved"))
-        |> redirect(to: settings_workspace_path(conn, :show, current_organization()))
+        |> redirect(to: Routes.settings_workspace_path(conn, :show, current_organization()))
 
       {:error, changeset} ->
         conn

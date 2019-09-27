@@ -1,5 +1,5 @@
 <div id="document" class="left-sidebar-layout" 
-  data-controller="document rich-text" data-document-url="<%= document_url(@conn, :show, @current_organization, @document) %>" data-document-current-page-id="<%= @page.id %>" data-document-current-section-id="<%= @page.section_id %>">
+  data-controller="document rich-text" data-document-url="<%= Routes.document_url(@conn, :show, @current_organization, @document) %>" data-document-current-page-id="<%= @page.id %>" data-document-current-section-id="<%= @page.section_id %>">
   <div class="page-sidebar">
     <%= render PalapaWeb.Document.DocumentView, "table_of_contents.html", assigns %>
   </div>
@@ -14,7 +14,7 @@
           <h1 class="text-green-500 text-lg sm:text-2xl"><%= @page.title %></h1>
           <div class="py-2 text-gray-700 text-xs">
             <span class="align-middle">Edited <%= auto_format_datetime(@page.updated_at, @current_account) %> by 
-            <%= link to: member_path(@conn, :show, @current_organization, @page.last_author), class: "align-middle text-gray-800 hover:underline" do %>
+            <%= link to: Routes.member_path(@conn, :show, @current_organization, @page.last_author), class: "align-middle text-gray-800 hover:underline" do %>
               <%= PalapaWeb.MemberView.avatar(@page.last_author.account, :xs) %> <%= @page.last_author.account.name %>
             <% end %>
           </div>
@@ -30,14 +30,14 @@
         <% else %>
           <section class="blankslate p-4">
             <p class="py-2">This page is empty</p>
-            <p class="py-2"><%= link "Edit page", to: document_page_path(@conn, :edit, @current_organization, @page), class: "btn" %></p>
+            <p class="py-2"><%= link "Edit page", to: Routes.document_page_path(@conn, :edit, @current_organization, @page), class: "btn" %></p>
           </section>
         <% end %>
 
         <div class="border-t border-gray-200 flex justify-between sm:p-4 mt-8">
           <div class="w-1/2">
             <%= if @previous_page do %>
-              <%= link to: document_page_path(@conn, :show, @current_organization, @previous_page), class: "text-green-500 hover:underline" do %>
+              <%= link to: Routes.document_page_path(@conn, :show, @current_organization, @previous_page), class: "text-green-500 hover:underline" do %>
                 <i class="fas fa-arrow-left mx-2"></i><%= @previous_page.title %>
               <% end %>
             <% end %>
@@ -45,7 +45,7 @@
 
           <div class="w-1/2 text-right">
             <%= if @next_page do %>
-              <%= link to: document_page_path(@conn, :show, @current_organization, @next_page), class: "text-green-500 hover:underline" do %>
+              <%= link to: Routes.document_page_path(@conn, :show, @current_organization, @next_page), class: "text-green-500 hover:underline" do %>
                 <%= @next_page.title %><i class="fas fa-arrow-right mx-2"></i>
               <% end %>
             <% end %>

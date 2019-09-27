@@ -5,40 +5,40 @@
     </button>
   </div>
 
-  <%= link to: organization_path(@conn, :index), 
+  <%= link to: Routes.organization_path(@conn, :index), 
     class: "-m-4 mb-4 bg-gray-500 rounded-r-lg p-2 text-center font-bold text-gray-800 text-xs border-t border-b border-r border-gray-800 hover:bg-gray-100" do %>
     <i class="fas fa-exchange-alt mr-2"></i> Switch workspace
   <% end %>
 
-  <%= link(@current_organization.name, to: dashboard_path(@conn, :index, @current_organization), class: "text-lg font-bold px-2 mt-8 block text-white tracking-wider") %>
+  <%= link(@current_organization.name, to: Routes.dashboard_path(@conn, :index, @current_organization), class: "text-lg font-bold px-2 mt-8 block text-white tracking-wider") %>
   
   <ul class="header-links">
     <li class="header-link <%= if @navigation == "dashboard" do %>header-link--active<% end %>"> 
-      <%= link(to: dashboard_path(@conn, :index, @current_organization), class: "block") do %>
+      <%= link(to: Routes.dashboard_path(@conn, :index, @current_organization), class: "block") do %>
         <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
       <% end %>
     </li>
 
     <li class="header-link <%= if @navigation == "message" do %>header-link--active<% end %>"> 
-      <%= link(to: message_path(@conn, :index, @current_organization), class: "block") do %>
+      <%= link(to: Routes.message_path(@conn, :index, @current_organization), class: "block") do %>
         <i class="fas fa-comment mr-2"></i>Messages
       <% end %>
     </li>
 
     <li class="header-link  <%= if @navigation == "documents" do %>header-link--active<% end %>">
-      <%= link(to: document_path(@conn, :index, @current_organization), class: "block") do %>
+      <%= link(to: Routes.document_path(@conn, :index, @current_organization), class: "block") do %>
         <i class="fas fa-file-alt mr-2"></i>Documents
       <% end %>
     </li>
 
     <li class="header-link  <%= if @navigation == "members" do %>header-link--active<% end %>">
-      <%= link(to: member_path(@conn, :index, @current_organization), class: "block") do %>
+      <%= link(to: Routes.member_path(@conn, :index, @current_organization), class: "block") do %>
         <i class="fas fa-users mr-2"></i>Teams
       <% end %>
     </li>
 
     <li class="header-link  <%= if @navigation == "settings" do %>header-link--active<% end %>">
-      <%= link(to: settings_workspace_path(@conn, :show, @current_organization), class: "block") do %>
+      <%= link(to: Routes.settings_workspace_path(@conn, :show, @current_organization), class: "block") do %>
         <i class="fas fa-cog mr-2"></i>Settings
       <% end %>
     </li>

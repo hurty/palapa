@@ -2,15 +2,15 @@
   <h3 class="page-menu-title">Settings</h3>
   <ul class="page-menu-items">
     <li class="page-menu-item <%= if @settings_navigation == "workspace" do %>page-menu-item--active<% end %>">
-      <%= link "Workspace", to: settings_workspace_path(@conn, :show, @current_organization), class: "page-menu-link" %>
+      <%= link "Workspace", to: Routes.settings_workspace_path(@conn, :show, @current_organization), class: "page-menu-link" %>
     </li>
 
     <li class="page-menu-item <%= if @settings_navigation == "members" do %>page-menu-item--active<% end %>">
-      <%= link "Members", to: settings_member_path(@conn, :index, @current_organization), class: "page-menu-link" %>
+      <%= link "Members", to: Routes.settings_member_path(@conn, :index, @current_organization), class: "page-menu-link" %>
     </li>
     
     <li class="page-menu-item <%= if @settings_navigation == "billing" do %>page-menu-item--active<% end %>">
-      <%= link "Billing", to: settings_customer_path(@conn, :show, @current_organization) %>
+      <%= link "Billing", to: Routes.settings_customer_path(@conn, :show, @current_organization) %>
     </li>
   </ul>
 </nav>
