@@ -8,7 +8,7 @@
       <h2 class="text-gray-800 text-2xl font-bold">Workspace members</h2>
       <div class="card-header-separator"></div>
 
-      <%= if permit? Palapa.Invitations, :create, @current_member do %>
+      <%= if permit? Palapa.Invitations.Policy, :create, @current_member do %>
         <%= link(to: Routes.invitation_path(@conn, :new, @current_organization), class: "btn") do %>
           <i class="fas fa-user-plus text-green-500 mr-2"></i>Invite people
         <% end %>

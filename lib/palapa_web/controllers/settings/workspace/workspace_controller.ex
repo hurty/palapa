@@ -4,7 +4,7 @@ defmodule PalapaWeb.Settings.WorkspaceController do
   alias Palapa.Organizations
 
   plug Bodyguard.Plug.Authorize,
-    policy: Palapa.Organizations,
+    policy: Palapa.Organizations.Policy,
     action: :update_organization,
     user: {PalapaWeb.Current, :current_member},
     fallback: PalapaWeb.FallbackController

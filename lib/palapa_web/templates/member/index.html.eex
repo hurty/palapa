@@ -15,7 +15,7 @@
             <% end %>
           <% end %>
 
-          <%= if permit? Palapa.Teams, :create, @current_member do %>
+          <%= if permit? Palapa.Teams.Policy, :create, @current_member do %>
             <%= link(to: Routes.team_path(@conn, :new, @current_organization), class: "btn m-1") do %>
               <i class="fas fa-users text-gray-600 mr-2"></i>Create a team
             <% end %>

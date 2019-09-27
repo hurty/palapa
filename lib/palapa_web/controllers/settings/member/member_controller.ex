@@ -2,7 +2,7 @@ defmodule PalapaWeb.Settings.MemberController do
   use PalapaWeb, :controller
 
   plug Bodyguard.Plug.Authorize,
-    policy: Palapa.Organizations,
+    policy: Palapa.Organizations.Policy,
     action: :update_organization,
     user: {PalapaWeb.Current, :current_member},
     fallback: PalapaWeb.FallbackController
