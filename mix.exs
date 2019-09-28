@@ -44,7 +44,6 @@ defmodule Palapa.Mixfile do
   defp deps do
     [
       {:phoenix, "~> 1.4.0", override: true},
-      {:plug, "~> 1.7"},
       {:plug_cowboy, "~> 2.0"},
       {:phoenix_pubsub, "~> 1.0"},
       {:ecto, "~> 3.0", override: true},
