@@ -1,6 +1,6 @@
 <div class="flex px-2">
   <div class="w-8">
-    <%= PalapaWeb.MemberView.avatar(@search_result.member.account, :xs) %>
+    <%= avatar(@search_result.member.account, :xs) %>
   </div>
 
   <div class="flex-1">

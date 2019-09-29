@@ -51,7 +51,7 @@
       </div>
 
       <div class="sm:mx-4">
-        <a href="#" data-action="navigation#showSwitcher" title="Signed id as <%= @current_account.name %>"><%= PalapaWeb.MemberView.avatar(@current_account, :sm) %></a>
+        <a href="#" data-action="navigation#showSwitcher" title="Signed id as <%= @current_account.name %>"><%= avatar(@current_account, :sm) %></a>
         <div data-target="navigation.switcher" class="absolute right-0 border z-50 p-4 bg-white shadow rounded opacity-0">
       </div>
 

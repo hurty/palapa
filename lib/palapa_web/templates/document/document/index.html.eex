@@ -102,7 +102,7 @@
               <div class="sm:flex-none">
                 <div class="text-xs sm:text-sm text-gray-700"><span class="sm:hidden">Modified </span><%= format_date(document.updated_at, @current_account) %>
                   <div class="flex mt-2">
-                    <%= PalapaWeb.MemberView.avatar(document.last_author.account, :xs) %>
+                    <%= avatar(document.last_author.account, :xs) %>
                     <span class="text-xs mx-2 text-gray-800">
                       <%= link document.last_author.account.name, to: Routes.member_path(@conn, :show, @current_organization, document.last_author), class: "text-gray-800 font-bold hover:underline" %>
                     </span>

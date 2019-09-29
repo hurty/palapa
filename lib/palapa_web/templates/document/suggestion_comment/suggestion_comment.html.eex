@@ -4,7 +4,7 @@
     <div class="flex justify-between mb-4 mx-2">
       <div class="flex">
         <div>
-          <%= PalapaWeb.MemberView.avatar(@suggestion_comment.author.account, :small) %>
+          <%= avatar(@suggestion_comment.author.account, :small) %>
         </div>
 
         <div class="text-xs my-auto ml-2">

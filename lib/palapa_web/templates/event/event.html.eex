@@ -1,5 +1,5 @@
 <li class="event">
-  <div class="mr-3"><%= PalapaWeb.MemberView.avatar(@event.author.account, :small) %></div>
+  <div class="mr-3"><%= avatar(@event.author.account, :small) %></div>
 
   <div class="mt-2 w-full">
     <div>
