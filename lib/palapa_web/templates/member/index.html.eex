@@ -9,7 +9,7 @@
         </div>
 
         <div class="flex-1 flex flex-wrap justify-end">
-          <%= if permit? Palapa.Invitations, :create, @current_member do %>
+          <%= if permit? Palapa.Invitations.Policy, :create, @current_member do %>
             <%= link(to: Routes.invitation_path(@conn, :new, @current_organization), class: "btn m-1") do %>
               <i class="fas fa-user-plus text-gray-600 mr-2"></i>Invite people
             <% end %>
