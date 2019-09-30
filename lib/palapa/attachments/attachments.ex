@@ -145,7 +145,7 @@ defmodule Palapa.Attachments do
 
   def list_attachments_by_ids(ids) do
     Attachment
-    |> Palapa.Access.scope_by_ids(ids)
+    |> where([q], q.id in ^ids)
     |> Repo.all()
   end
 

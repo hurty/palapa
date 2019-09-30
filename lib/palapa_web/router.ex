@@ -47,11 +47,13 @@ defmodule PalapaWeb.Router do
 
     get("/join/:invitation_id/:token", JoinController, :new)
     post("/join/:invitation_id/:token", JoinController, :create)
+  end
 
-    scope(path: "/public", as: :public, alias: Public) do
-      resources("/documents", DocumentController, only: [:show]) do
-        resources("/pages", PageController, only: [:show])
-      end
+  scope(path: "/public", as: :public, alias: PalapaWeb.Public) do
+    pipe_through(:browser)
+
+    resources("/documents", DocumentController, only: [:show]) do
+      resources("/pages", PageController, only: [:show])
     end
   end
 

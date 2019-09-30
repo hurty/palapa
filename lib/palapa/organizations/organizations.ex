@@ -106,7 +106,7 @@ defmodule Palapa.Organizations do
   def list_members_by_ids(%Organization{} = organization, ids) when is_list(ids) do
     organization
     |> Ecto.assoc(:members)
-    |> Access.scope_by_ids(ids)
+    |> where([q], q.id in ^ids)
     |> Repo.all()
   end
 

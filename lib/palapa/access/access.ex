@@ -1,16 +1,4 @@
 defmodule Palapa.Access do
-  import Ecto.Query
-
-  def scope(query, organization) do
-    query
-    |> where(organization_id: ^organization.id)
-  end
-
-  def scope_by_ids(query, ids) when is_list(ids) do
-    query
-    |> where([q], q.id in ^ids)
-  end
-
   def generate_token(length \\ 48) do
     :crypto.strong_rand_bytes(length)
     |> Base.url_encode64()
@@ -22,11 +10,15 @@ defmodule Palapa.Access do
   end
 
   def generate_signed_id(id) do
-    Phoenix.Token.sign(PalapaWeb.Endpoint, "signed-id-salt", id)
+    # We do this to avoid compile time dependencies.
+    endpoint = Module.concat([PalapaWeb, "Endpoint"])
+    Phoenix.Token.sign(endpoint, "signed-id-salt", id)
   end
 
   def verify_signed_id(signed_id) do
-    Phoenix.Token.verify(PalapaWeb.Endpoint, "signed-id-salt", signed_id, max_age: 2_592_000)
+    # We do this to avoid compile time dependencies.
+    endpoint = Module.concat([PalapaWeb, "Endpoint"])
+    Phoenix.Token.verify(endpoint, "signed-id-salt", signed_id, max_age: 2_592_000)
   end
 
   def verified_signed_id?(signed_id) do
