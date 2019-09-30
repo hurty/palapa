@@ -1,6 +1,6 @@
 defmodule Palapa.RichText.ConversionToHTML do
   alias Palapa.RichText.{Content, EmbeddedAttachment, Tree}
-  alias PalapaWeb.RichTextView
+  alias Palapa.RichText.RichTextView
 
   @embedded_attachment_tag "embedded-attachment"
 

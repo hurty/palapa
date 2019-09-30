@@ -1,7 +1,6 @@
 <div class="bg-white border rounded" 
   data-controller="editor" 
   data-editor-autocomplete-index="0" 
-  data-editor-members="<%= Helpers.members_for_autocomplete(@organization) %>" 
   data-editor-attachments-url="<%= @attachments_url %>">
   
   <trix-toolbar id="<%= @toolbar_id %>">

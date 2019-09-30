@@ -1,9 +1,8 @@
 <%= form_for @changeset, Routes.suggestion_url(@conn, :update, @current_organization, @suggestion), 
   [data: [target: "document-suggestion.editForm", action: "document-suggestion#update"]], fn form -> %>
   <div class="mb-1">
-    <%= PalapaWeb.RichTextView.text_editor(form, :content, @conn, placeholder: "Your suggestion here...", content_data_target: "document-suggestion.editContentInput") %>
+    <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: "Your suggestion here...", content_data_target: "document-suggestion.editContentInput") %>
   </div>
-
 
   <div class="flex justify-end">
     <button type="submit" class="btn btn-green-500 mr-1">Save</button>

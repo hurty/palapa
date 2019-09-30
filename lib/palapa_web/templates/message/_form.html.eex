@@ -5,7 +5,7 @@
   <%= error_tag @form, :title %>
 </div>
 
-<%= PalapaWeb.RichTextView.text_editor(@form, :content, @conn, placeholder: "Your message here...") %>
+<%= Helpers.rich_text_editor(@form, :content, @current_organization, placeholder: "Your message here...") %>
 
 <%= if Enum.any?(@teams) do %>
   <div data-controller="team-sharing" class="rounded-lg my-4">

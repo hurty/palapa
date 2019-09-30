@@ -55,7 +55,7 @@ class="bg-white border-b sm:border-none sm:rounded-lg p-4 mb-8">
           
           <div data-target="document-suggestion.activeFormItems" class="hidden">
             <div class="mb-1">
-              <%= PalapaWeb.RichTextView.text_editor(form, :content, @conn, placeholder: "Your comment here...", 
+              <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: "Your comment here...", 
               editor_data_target: "document-suggestion.commentEditor", content_data_target: "document-suggestion.commentContentInput") %>
             </div>
 

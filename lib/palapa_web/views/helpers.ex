@@ -1,6 +1,7 @@
 defmodule PalapaWeb.Helpers do
   import Phoenix.HTML.Tag
   alias PalapaWeb.Router.Helpers, as: Routes
+  alias PalapaWeb.Endpoint
 
   def auto_format_datetime(datetime, _account) when is_nil(datetime), do: nil
 
@@ -147,5 +148,10 @@ defmodule PalapaWeb.Helpers do
   def team_checked?(changeset, team) do
     teams = Ecto.Changeset.get_field(changeset, :teams)
     teams && team.id in Enum.map(teams, & &1.id)
+  end
+
+  def rich_text_editor(form, field, organization, options \\ []) do
+    attachments_url = Routes.attachment_url(Endpoint, :create, organization)
+    Palapa.RichText.Helpers.rich_text_editor(form, field, attachments_url, options)
   end
 end

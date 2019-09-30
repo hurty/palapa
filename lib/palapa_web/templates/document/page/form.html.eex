@@ -18,7 +18,7 @@
     </div>
   
     <div class="field">
-      <%= PalapaWeb.RichTextView.text_editor(form, :content, @conn, placeholder: "Page content here...") %>
+      <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: "Page content here...") %>
     </div>
   </div>
 
