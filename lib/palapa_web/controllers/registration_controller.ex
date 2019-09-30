@@ -13,7 +13,7 @@ defmodule PalapaWeb.RegistrationController do
       {:ok, result} ->
         conn
         |> PalapaWeb.Authentication.start_session(result.account)
-        |> redirect(to: Routes.dashboard_path(conn, :index, result.organization()))
+        |> redirect(to: Routes.dashboard_path(conn, :index, result.organization.organization))
 
       {:error, _failed_operation, changeset, _changes_so_far} ->
         render(conn, "new.html", changeset: %{changeset | action: :insert})
