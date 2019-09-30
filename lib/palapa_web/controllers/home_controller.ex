@@ -3,7 +3,7 @@ defmodule PalapaWeb.HomeController do
 
   alias Palapa.Accounts
 
-  plug(:put_layout, "public.htl")
+  plug(:put_layout, "public.html")
 
   def index(conn, _params) do
     if current_account(conn) do
