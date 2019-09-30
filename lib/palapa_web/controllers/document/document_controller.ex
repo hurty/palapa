@@ -1,8 +1,7 @@
 defmodule PalapaWeb.Document.DocumentController do
   use PalapaWeb, :controller
 
-  import PalapaWeb.Document.BaseController
-
+  alias PalapaWeb.Document.BaseController
   alias Palapa.Documents
   alias Palapa.Documents.{Document}
   alias Palapa.Teams
@@ -82,7 +81,7 @@ defmodule PalapaWeb.Document.DocumentController do
   end
 
   def show(conn, %{"id" => id}) do
-    document = find_document!(conn, id)
+    document = BaseController.find_document!(conn, id)
 
     first_page = Documents.get_first_page(document)
 
@@ -92,7 +91,7 @@ defmodule PalapaWeb.Document.DocumentController do
       )
     else
       conn
-      |> put_document_breadcrumbs(document)
+      |> BaseController.put_document_breadcrumbs(document)
       |> render("show.html",
         document: document,
         section_changeset: Documents.change_section(),
@@ -103,13 +102,13 @@ defmodule PalapaWeb.Document.DocumentController do
   end
 
   def edit(conn, %{"id" => id}) do
-    document = find_document!(conn, id)
+    document = BaseController.find_document!(conn, id)
 
     changeset = Documents.change_document(document)
     teams = Teams.list_for_member(current_member(conn))
 
     conn
-    |> put_document_breadcrumbs(document)
+    |> BaseController.put_document_breadcrumbs(document)
     |> put_breadcrumb(
       "Edit",
       Routes.document_path(conn, :edit, current_organization(conn), document)
@@ -118,7 +117,7 @@ defmodule PalapaWeb.Document.DocumentController do
   end
 
   def update(conn, %{"id" => id, "document" => document_attrs}) do
-    document = find_document!(conn, id)
+    document = BaseController.find_document!(conn, id)
     team = find_team(conn, document_attrs["team_id"])
 
     case Documents.update_document(document, current_member(conn), team, document_attrs) do
@@ -131,7 +130,7 @@ defmodule PalapaWeb.Document.DocumentController do
         teams = Teams.list_for_member(current_member(conn))
 
         conn
-        |> put_document_breadcrumbs(document)
+        |> BaseController.put_document_breadcrumbs(document)
         |> put_breadcrumb(
           "Edit",
           Routes.document_path(conn, :edit, current_organization(conn), document)

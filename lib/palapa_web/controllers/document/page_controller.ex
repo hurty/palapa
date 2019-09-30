@@ -1,7 +1,7 @@
 defmodule PalapaWeb.Document.PageController do
   use PalapaWeb, :controller
-  import PalapaWeb.Document.BaseController
 
+  alias PalapaWeb.Document.BaseController
   alias Palapa.Documents
   alias Palapa.Documents.Page
 
@@ -30,7 +30,7 @@ defmodule PalapaWeb.Document.PageController do
       section_changeset = Documents.change_section()
 
       conn
-      |> put_document_breadcrumbs(document)
+      |> BaseController.put_document_breadcrumbs(document)
       |> put_breadcrumb(
         "New page",
         Routes.document_page_path(conn, :new, current_organization(conn), document)
@@ -57,7 +57,7 @@ defmodule PalapaWeb.Document.PageController do
           document = Documents.get_document!(section.document_id)
 
           conn
-          |> put_document_breadcrumbs(document)
+          |> BaseController.put_document_breadcrumbs(document)
           |> put_breadcrumb(
             "New page",
             Routes.document_page_path(conn, :new, current_organization(conn), document)
@@ -69,7 +69,7 @@ defmodule PalapaWeb.Document.PageController do
   end
 
   def show(conn, %{"id" => id}) do
-    page = get_page!(conn, id)
+    page = BaseController.get_page!(conn, id)
     previous_page = Documents.get_previous_page(page)
     next_page = Documents.get_next_page(page)
     document = Documents.get_document!(page.document_id)
@@ -79,7 +79,7 @@ defmodule PalapaWeb.Document.PageController do
     suggestion_changeset = Documents.Suggestions.change_suggestion()
 
     conn
-    |> put_page_breadcrumbs(page)
+    |> BaseController.put_page_breadcrumbs(page)
     |> render("show.html",
       page: page,
       previous_page: previous_page,
@@ -92,12 +92,12 @@ defmodule PalapaWeb.Document.PageController do
   end
 
   def edit(conn, %{"id" => id}) do
-    page = get_page!(conn, id)
+    page = BaseController.get_page!(conn, id)
     document = Documents.get_document!(page.document_id)
 
     with :ok <- permit(Documents.Policy, :update_document, current_member(conn), page.document) do
       conn
-      |> put_page_breadcrumbs(page)
+      |> BaseController.put_page_breadcrumbs(page)
       |> put_breadcrumb(
         "Edit",
         Routes.document_page_path(conn, :edit, current_organization(conn), page)
@@ -113,7 +113,7 @@ defmodule PalapaWeb.Document.PageController do
   end
 
   def update(conn, %{"id" => id, "page" => page_params}) do
-    page = get_page!(conn, id)
+    page = BaseController.get_page!(conn, id)
 
     with :ok <- permit(Documents.Policy, :update_document, current_member(conn), page.document) do
       case Documents.update_page(page, current_member(conn), page_params) do
@@ -124,7 +124,7 @@ defmodule PalapaWeb.Document.PageController do
 
         {:error, changeset} ->
           conn
-          |> put_page_breadcrumbs(page)
+          |> BaseController.put_page_breadcrumbs(page)
           |> put_breadcrumb(
             "Edit",
             Routes.document_page_path(conn, :edit, current_organization(conn), page)
@@ -142,7 +142,7 @@ defmodule PalapaWeb.Document.PageController do
         "new_section_id" => new_section_id,
         "new_position" => new_position
       }) do
-    page = get_page!(conn, id)
+    page = BaseController.get_page!(conn, id)
 
     new_section =
       Documents.sections_visible_to(current_member(conn))
@@ -155,7 +155,7 @@ defmodule PalapaWeb.Document.PageController do
   end
 
   def delete(conn, %{"id" => id, "current_page_id" => current_page_id}) do
-    page = get_page!(conn, id)
+    page = BaseController.get_page!(conn, id)
 
     with :ok <- permit(Documents.Policy, :update_document, current_member(conn), page.document) do
       Documents.delete_page!(page)

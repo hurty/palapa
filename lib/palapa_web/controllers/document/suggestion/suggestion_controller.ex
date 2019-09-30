@@ -1,12 +1,12 @@
 defmodule PalapaWeb.Document.SuggestionController do
   use PalapaWeb, :controller
-  import PalapaWeb.Document.BaseController
 
+  alias PalapaWeb.Document.BaseController
   alias Palapa.Documents
   alias Palapa.Documents.Suggestions
 
   def index(conn, params) do
-    page = get_page!(conn, params["page_id"])
+    page = BaseController.get_page!(conn, params["page_id"])
 
     suggestions =
       if(params["status"] == "closed") do
@@ -23,7 +23,7 @@ defmodule PalapaWeb.Document.SuggestionController do
   end
 
   def create(conn, %{"page_id" => page_id, "suggestion" => suggestion_attrs}) do
-    page = get_page!(conn, page_id)
+    page = BaseController.get_page!(conn, page_id)
 
     case Suggestions.create_suggestion(
            page,

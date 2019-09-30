@@ -1,12 +1,11 @@
 defmodule PalapaWeb.Document.DocumentPublicLinkController do
   use PalapaWeb, :controller
 
-  import PalapaWeb.Document.BaseController
-
+  alias PalapaWeb.Document.BaseController
   alias Palapa.Documents
 
   def create(conn, %{"document_id" => document_id}) do
-    document = find_document!(conn, document_id)
+    document = BaseController.find_document!(conn, document_id)
     Documents.generate_public_token(document)
 
     conn
@@ -15,7 +14,7 @@ defmodule PalapaWeb.Document.DocumentPublicLinkController do
   end
 
   def delete(conn, %{"document_id" => document_id}) do
-    document = find_document!(conn, document_id)
+    document = BaseController.find_document!(conn, document_id)
     Documents.destroy_public_token(document)
 
     conn
