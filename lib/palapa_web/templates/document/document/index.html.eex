@@ -17,7 +17,7 @@
             <%= if Enum.any?(@teams) do %>
               <button data-target="popover.button" data-action="popover#toggle" class="btn text-sm truncate my-2 sm:my-0" title="<%= if @selected_team, do: @selected_team.name %>">
                 <%= if @selected_team do %> 
-                  <span class="text-blue-500 font-bold"><%= truncate_string(@selected_team.name, 40) %></span>
+                  <span class="text-blue-500 font-bold"><%= Helpers.truncate_string(@selected_team.name, 40) %></span>
                 <% else %>
                   <span class="font-bold">All teams</span>
                 <% end %>
@@ -30,7 +30,7 @@
                   <%= link("All teams", to: Routes.document_path(@conn, :index, @current_organization, Map.delete(@conn.params, "team_id")), class: "selector-item truncate selector-item-default") %>
                   <%= for team <- @teams do %>
                     <% item_class = "selector-item" <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
-                    <%= link(truncate_string(team.name, 40), to: Routes.document_path(@conn, :index, @current_organization.id, Map.put(@conn.params, "team_id", team.id)), class: item_class, title: team.name) %>
+                    <%= link(Helpers.truncate_string(team.name, 40), to: Routes.document_path(@conn, :index, @current_organization.id, Map.put(@conn.params, "team_id", team.id)), class: item_class, title: team.name) %>
                   <% end %>
                 </div>
               </div>
@@ -89,7 +89,7 @@
 
               <div class="w-full sm:flex-1">
                 <i class="sm:hidden fas fa-file-alt text-gray-600 text-base" title="Document"></i> 
-                <%= link truncate_string(document.title, 150), to: Routes.document_path(@conn, :show, @current_organization, document), class: "text-base text-green-500 font-bold hover:underline text-sm" %>
+                <%= link Helpers.truncate_string(document.title, 150), to: Routes.document_path(@conn, :show, @current_organization, document), class: "text-base text-green-500 font-bold hover:underline text-sm" %>
                 <div class="font-bold mr-2 rounded my-1">
                 <%= if document.team do %>
                   <%= link(document.team.name, to: Routes.document_path(@conn, :index, @current_organization, team_id: document.team_id), title: "Show all team documents", class: "tag tag-team text-xs") %></span>
@@ -100,9 +100,9 @@
               </div>
               
               <div class="sm:flex-none">
-                <div class="text-xs sm:text-sm text-gray-700"><span class="sm:hidden">Modified </span><%= format_date(document.updated_at, @current_account) %>
+                <div class="text-xs sm:text-sm text-gray-700"><span class="sm:hidden">Modified </span><%= Helpers.format_date(document.updated_at, @current_account) %>
                   <div class="flex mt-2">
-                    <%= avatar(document.last_author.account, :xs) %>
+                    <%= Helpers.avatar(document.last_author.account, :xs) %>
                     <span class="text-xs mx-2 text-gray-800">
                       <%= link document.last_author.account.name, to: Routes.member_path(@conn, :show, @current_organization, document.last_author), class: "text-gray-800 font-bold hover:underline" %>
                     </span>
@@ -143,7 +143,7 @@
           <%= for document <- @recent_documents do %>
             <div class="w-full my-1">
               <i class="fas fa-file-alt text-gray-600 text-sm mr-2"></i> 
-              <%= link truncate_string(document.title), to: Routes.document_path(@conn, :show, @current_organization, document), class: "text-sm font-bold text-green-500 hover:underline" %>
+              <%= link Helpers.truncate_string(document.title), to: Routes.document_path(@conn, :show, @current_organization, document), class: "text-sm font-bold text-green-500 hover:underline" %>
             </div>
           <% end %>
         </div>

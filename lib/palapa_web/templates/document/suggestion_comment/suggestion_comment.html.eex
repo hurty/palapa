@@ -4,12 +4,12 @@
     <div class="flex justify-between mb-4 mx-2">
       <div class="flex">
         <div>
-          <%= avatar(@suggestion_comment.author.account, :small) %>
+          <%= Helpers.avatar(@suggestion_comment.author.account, :small) %>
         </div>
 
         <div class="text-xs my-auto ml-2">
           <%= link @suggestion_comment.author.account.name, to: Routes.member_path(@conn, :show, @conn.assigns.current_organization, @suggestion_comment.author.id), class: "text-gray-800 font-bold hover:underline" %>
-          <div class="text-gray-700 font-light">Posted <%= auto_format_datetime(@suggestion_comment.inserted_at, @conn.assigns.current_account) %></div>
+          <div class="text-gray-700 font-light">Posted <%= Helpers.auto_format_datetime(@suggestion_comment.inserted_at, @conn.assigns.current_account) %></div>
         </div>
       </div>
 

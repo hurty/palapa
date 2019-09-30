@@ -1,5 +1,6 @@
 defmodule PalapaWeb.Helpers do
   import Phoenix.HTML.Tag
+  alias PalapaWeb.Router.Helpers, as: Routes
 
   def auto_format_datetime(datetime, _account) when is_nil(datetime), do: nil
 
@@ -132,5 +133,19 @@ defmodule PalapaWeb.Helpers do
       |> Timex.lformat!(format, locale)
 
     content_tag(:time, datetime)
+  end
+
+  def team_tag(team) do
+    content_tag(
+      :a,
+      team.name,
+      href: Routes.member_path(Endpoint, :index, team.organization_id, team_id: team),
+      class: "tag tag-team"
+    )
+  end
+
+  def team_checked?(changeset, team) do
+    teams = Ecto.Changeset.get_field(changeset, :teams)
+    teams && team.id in Enum.map(teams, & &1.id)
   end
 end

@@ -1,11 +1,11 @@
 <div class="message__author flex">
   <div class="w-12 mx-2">
-    <%= avatar(@message.creator.account, :small) %>
+    <%= Helpers.avatar(@message.creator.account, :small) %>
   </div>
 
   <div class="text-sm text-gray-700 my-auto">
     <%= link @message.creator.account.name, to: Routes.member_path(@conn, :show, @current_organization, @message.creator.id), class: "text-gray-700 font-bold hover:underline" %>
-    <div class="text-xs text-gray-700 font-light"> Posted <%= auto_format_datetime(@message.inserted_at, @current_account) %></div>
+    <div class="text-xs text-gray-700 font-light"> Posted <%= Helpers.auto_format_datetime(@message.inserted_at, @current_account) %></div>
   </div>
 </div>
 

@@ -1,5 +1,5 @@
 <%= link to: Routes.member_path(@conn, :show, @conn.assigns.current_organization, @member), class: "h-full flex flex-col items-center text-center justify-between my-1" do %>
-  <%= avatar(@member.account, :md) %>
+  <%= Helpers.avatar(@member.account, :md) %>
   <div class="capitalize text-green-500"><%= @member.account.name %></div>
   <div class="text-gray-600 text-xs uppercase"><%= @member.title %></div>
 <% end %>

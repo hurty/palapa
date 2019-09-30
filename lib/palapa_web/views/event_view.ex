@@ -122,7 +122,7 @@ defmodule PalapaWeb.EventView do
         link(PalapaWeb.MessageView.excerpt(message_comment.content),
           to:
             Routes.message_path(conn, :show, message_comment.organization_id, message) <>
-              "##{dom_id(message_comment)}"
+              "##{Helpers.dom_id(message_comment)}"
         )
 
       :new_document_page ->

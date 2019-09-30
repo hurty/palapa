@@ -1,5 +1,5 @@
 <div class="sm:max-w-xl mx-auto mb-4">
-  <div class="flex justify-center border-b py-4"><%= avatar(@current_account, :sm) %> <span class="ml-2 self-center text-gray-800 font-bold"><%= @current_account.name %></span></div>
+  <div class="flex justify-center border-b py-4"><%= Helpers.avatar(@current_account, :sm) %> <span class="ml-2 self-center text-gray-800 font-bold"><%= @current_account.name %></span></div>
   <p class="text-center font-bold text-2xl my-8 text-gray-600">Your workspaces</p>
 
   <div class="flex flex-wrap justify-center items-center">

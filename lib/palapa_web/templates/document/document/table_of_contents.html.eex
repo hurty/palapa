@@ -3,7 +3,7 @@
     <div>
       <%= if @document.team do %>
         <div class="text-xs font-bold mb-2">
-          <%= truncate_string(@document.team.name) %>
+          <%= Helpers.truncate_string(@document.team.name) %>
         </div>
       <% end %>
 

@@ -39,7 +39,7 @@ defmodule PalapaWeb.MessageView do
     if Enum.any?(teams) do
       content_tag :div, class: "flex flex-wrap" do
         Enum.map(teams, fn team ->
-          PalapaWeb.TeamView.team_tag(team)
+          Helpers.team_tag(team)
         end)
       end
     end

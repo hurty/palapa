@@ -1,6 +1,6 @@
 <div id="member-profile-main">
   <div class="flex flex-col items-center justify-center sm:w-full sm:p-2 my-4">
-    <%= avatar(@member.account, :md) %>
+    <%= Helpers.avatar(@member.account, :md) %>
 
     <h2 class="text-green-500 text-center text-2xl font-bold capitalize mb-2"><%= @member.account.name %></h2>
     
@@ -33,7 +33,7 @@
 
       <%= if @member.account.timezone do %>
         <div>
-          <i class="fas fa-clock mr-1"></i><%= account_time(@member.account) %> (<%= @member.account.timezone %>)
+          <i class="fas fa-clock mr-1"></i><%= Helpers.account_time(@member.account) %> (<%= @member.account.timezone %>)
         </div>
       <% end %>
 
@@ -45,7 +45,7 @@
 
       <div class="mt-4 text-center">
         <%= for team <- @member.teams do %>
-          <%= PalapaWeb.TeamView.team_tag(team) %>
+          <%= Helpers.team_tag(team) %>
         <% end %>
       </div>
     </div>

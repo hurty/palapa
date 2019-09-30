@@ -2,7 +2,7 @@
   <div data-controller="popover" data-action="mousedown@window->popover#hide" class="messages__team-filter">
       <button data-target="popover.button" data-action="popover#toggle" class="btn text-sm truncate" title="<%= if @selected_team, do: @selected_team.name %>">
         <%= if @selected_team do %> 
-          <span><%= truncate_string(@selected_team.name, 40) %></span>
+          <span><%= Helpers.truncate_string(@selected_team.name, 40) %></span>
         <% else %>
           <span>All messages</span>
         <% end %>
@@ -15,7 +15,7 @@
           <%= link("All messages", to: Routes.message_path(@conn, :index, @current_organization), class: "selector-item truncate selector-item-default") %>
           <%= for team <- @teams do %>
             <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
-            <%= link(truncate_string(team.name, 40), to: Routes.message_path(@conn, :index, @current_organization.id, team_id: team.id), class: item_class, title: team.name) %>
+            <%= link(Helpers.truncate_string(team.name, 40), to: Routes.message_path(@conn, :index, @current_organization.id, team_id: team.id), class: item_class, title: team.name) %>
           <% end %>
         </div>
       </div>

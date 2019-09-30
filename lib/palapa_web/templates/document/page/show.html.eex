@@ -13,9 +13,9 @@
         <div>
           <h1 class="text-green-500 text-lg sm:text-2xl"><%= @page.title %></h1>
           <div class="py-2 text-gray-700 text-xs">
-            <span class="align-middle">Edited <%= auto_format_datetime(@page.updated_at, @current_account) %> by 
+            <span class="align-middle">Edited <%= Helpers.auto_format_datetime(@page.updated_at, @current_account) %> by 
             <%= link to: Routes.member_path(@conn, :show, @current_organization, @page.last_author), class: "align-middle text-gray-800 hover:underline" do %>
-              <%= avatar(@page.last_author.account, :xs) %> <%= @page.last_author.account.name %>
+              <%= Helpers.avatar(@page.last_author.account, :xs) %> <%= @page.last_author.account.name %>
             <% end %>
           </div>
         </div>
