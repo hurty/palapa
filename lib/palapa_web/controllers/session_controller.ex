@@ -14,7 +14,7 @@ defmodule PalapaWeb.SessionController do
     case Authentication.login_with_email_and_password(conn, email, password) do
       {:ok, conn} ->
         conn
-        |> redirect(to: Routes.dashboard_path(conn, :index, current_organization(conn)))
+        |> redirect(to: Routes.organization_path(conn, :index))
 
       {:error, _reason, conn} ->
         conn

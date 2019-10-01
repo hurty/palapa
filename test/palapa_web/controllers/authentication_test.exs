@@ -57,19 +57,19 @@ defmodule PalapaWeb.AuthenticationTest do
     refute get_session(next_conn, :account_id)
   end
 
-  test "call places the current account, organization, and member into assigns", %{conn: conn} do
-    {:ok, %{account: account, organization: organization, member: member}} =
+  test "call/2 places the current account, organization, and member into assigns", %{conn: conn} do
+    {:ok, %{account: account, organization_membership: membership}} =
       Palapa.Accounts.Registrations.create(@registration)
 
     conn =
       conn
       |> put_session(:account_id, account.id)
-      |> Map.put(:params, %{"organization_id" => organization.id})
+      |> Map.put(:params, %{"organization_id" => membership.organization.id})
       |> Authentication.call([])
 
     assert conn.assigns.current_account.id == account.id
-    assert conn.assigns.current_organization.id == organization.id
-    assert conn.assigns.current_member.id == member.id
+    assert conn.assigns.current_organization.id == membership.organization.id
+    assert conn.assigns.current_member.id == membership.member.id
   end
 
   test "call with no session set current_account assign to nil", %{conn: conn} do
@@ -87,7 +87,7 @@ defmodule PalapaWeb.AuthenticationTest do
         "password"
       )
 
-    assert conn.assigns.current_account.id == account.id
+    assert get_session(conn, :account_id) == account.id
   end
 
   test "login with an unknown user", %{conn: conn} do

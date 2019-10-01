@@ -254,7 +254,7 @@ defmodule Palapa.Factory do
   end
 
   def build(:subscription) do
-    %Subscription{status: :trialing, stripe_subscription_id: "sub_000"}
+    %Subscription{status: :active, stripe_subscription_id: "sub_000"}
   end
 
   def build(:invoice) do

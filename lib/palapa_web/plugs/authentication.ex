@@ -10,33 +10,25 @@ defmodule PalapaWeb.Authentication do
   end
 
   def call(conn, _options) do
-    account_id = get_session(conn, :account_id)
-    organization_id = conn.params["organization_id"]
+    try do
+      account_id = get_session(conn, :account_id)
+      account = account_id && Accounts.get!(account_id)
+      conn = assign(conn, :current_account, account)
 
-    cond do
-      conn.assigns[:current_account] ->
+      organization_id = conn.params["organization_id"]
+
+      organization =
+        organization_id && Accounts.organization_for_account(account, organization_id)
+
+      conn = assign(conn, :current_organization, organization)
+
+      member = account && organization && Accounts.member_for_organization(account, organization)
+      assign(conn, :current_member, member)
+    rescue
+      _ ->
         conn
-
-      account_id && organization_id ->
-        try do
-          account = Accounts.get!(account_id)
-          organization = Accounts.organization_for_account(account, organization_id)
-          member = Accounts.member_for_organization(account, organization)
-          set_assigns(conn, account, organization, member)
-        rescue
-          _ -> clear_assigns(conn)
-        end
-
-      account_id ->
-        try do
-          account = Accounts.get!(account_id)
-          assign(conn, :current_account, account)
-        rescue
-          _ -> clear_assigns(conn)
-        end
-
-      true ->
-        clear_assigns(conn)
+        |> put_flash(:error, "You have been logged out")
+        |> logout
     end
   end
 
@@ -64,38 +56,13 @@ defmodule PalapaWeb.Authentication do
   end
 
   def start_session(conn, account) do
-    {organization, member} = retrieve_context(account)
-
     conn
     |> put_session(:account_id, account.id)
-    |> set_assigns(account, organization, member)
     |> configure_session(renew: true)
   end
 
   def logout(conn) do
     conn
-    |> clear_assigns
     |> configure_session(drop: true)
-  end
-
-  defp retrieve_context(account) do
-    organization = Accounts.main_organization(account)
-    member = Accounts.member_for_organization(account, organization)
-
-    {organization, member}
-  end
-
-  defp set_assigns(conn, account, organization, member) do
-    conn
-    |> assign(:current_account, account)
-    |> assign(:current_organization, organization)
-    |> assign(:current_member, member)
-  end
-
-  defp clear_assigns(conn) do
-    conn
-    |> assign(:current_account, nil)
-    |> assign(:current_organization, nil)
-    |> assign(:current_member, nil)
   end
 end
