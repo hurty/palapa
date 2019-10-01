@@ -8,10 +8,7 @@ defmodule Palapa.RegistrationsTest do
     assert {:ok,
             %{
               account: account,
-              organization: organization,
-              subscription: subscription,
-              member: member,
-              event: event
+              organization_membership: %{organization: organization, member: member, event: event}
             }} =
              Registrations.create(%{
                email: "richard.hendricks@piedpiper.com",
@@ -24,7 +21,6 @@ defmodule Palapa.RegistrationsTest do
     assert account.name == "Richard Hendricks"
     assert account.password_hash
     assert organization.name == "Pied Piper"
-    assert subscription.status == :trialing
     assert member.role == :owner
     assert event.action == :new_organization
   end

@@ -10,10 +10,10 @@ defmodule Palapa.Billing do
   @price_per_member_per_month 7
   @monthly_plan_id "plan_EuPumUi7Lb5R7w"
 
-  # Some of these statuses will be set via Stripe webhooks
+  # These statuses will be set via Stripe webhooks
   # https://stripe.com/docs/billing/lifecycle#subscription-states
+  # The trial period is not handled by Stripe so there is no "trialing" status for subscriptions on palapa's side.
   defenum(SubscriptionStatusEnum, :subscription_status, [
-    :trialing,
     :incomplete,
     :incomplete_expired,
     :active,
@@ -83,9 +83,10 @@ defmodule Palapa.Billing do
 
   # SUBSCRIPTIONS
 
-  def create_subscription(organization) do
+  def create_subscription(organization, customer, attrs) do
     %Subscription{}
-    |> change(%{organization_id: organization.id, status: :trialing})
+    |> cast(attrs, [:stripe_customer_id, :status])
+    |> change(%{organization_id: organization.id, customer_id: customer.id})
     |> Repo.insert()
   end
 
@@ -139,12 +140,10 @@ defmodule Palapa.Billing do
     @trial_duration_days
   end
 
-  def create_customer_and_synchronize_subscription(organization, customer_attrs) do
+  def create_customer_and_subscription(organization, customer_attrs) do
     customer_changeset =
       Customer.billing_infos_changeset(%Customer{}, customer_attrs)
       |> put_assoc(:organization, organization)
-
-    organization = Repo.preload(organization, :subscription)
 
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:customer, customer_changeset)
@@ -162,14 +161,15 @@ defmodule Palapa.Billing do
         stripe_customer_id: stripe_subscription["customer"]
       })
     end)
-    |> Ecto.Multi.run(:updated_subscription, fn _repo,
-                                                %{
-                                                  stripe_subscription: stripe_subscription,
-                                                  customer: customer
-                                                } ->
-      organization.subscription
-      |> change(%{customer_id: customer.id, stripe_subscription_id: stripe_subscription["id"]})
-      |> Repo.update()
+    |> Ecto.Multi.run(:subscription, fn _repo,
+                                        %{
+                                          stripe_subscription: stripe_subscription,
+                                          customer: customer
+                                        } ->
+      Billing.create_subscription(organization, customer, %{
+        stripe_subscription_id: stripe_subscription["id"],
+        status: stripe_subscription["status"]
+      })
     end)
     |> Repo.transaction()
   end
@@ -188,21 +188,18 @@ defmodule Palapa.Billing do
     !!organization.customer_id
   end
 
-  def get_workspace_status(organization) do
+  def get_billing_status(organization) do
     subscription = Repo.preload(organization, :subscription).subscription
 
     cond do
-      subscription.status == :active ->
-        :active
-
-      subscription.status == :trialing && !trial_expired?(organization) ->
+      is_nil(subscription) && !trial_expired?(organization) ->
         :trialing
 
-      subscription.status == :trialing && trial_expired?(organization) ->
+      is_nil(subscription) && trial_expired?(organization) ->
         :trial_has_ended
 
-      true ->
-        :waiting_for_payment
+      subscription ->
+        subscription.status
     end
   end
 
@@ -217,6 +214,6 @@ defmodule Palapa.Billing do
   end
 
   def workspace_frozen?(organization) do
-    Billing.get_workspace_status(organization) not in [:trialing, :active]
+    Billing.get_billing_status(organization) not in [:trialing, :active]
   end
 end

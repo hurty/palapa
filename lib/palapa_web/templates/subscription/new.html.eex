@@ -1,0 +1,13 @@
+<h1 class="text-3xl text-center text-green-500 font-bold">Palapa</h1>
+
+<div class="sm:max-w-md mx-auto my-8"> 
+  <div class="card p-8">
+    <h2 class="card-header">
+      Billing information <%= @organization.name %>
+    </h2>
+
+    <div class="card-header-separator"></div>
+
+    HERE PAY
+  </div>  
+</div>

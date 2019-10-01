@@ -79,13 +79,6 @@ defmodule Palapa.Accounts do
     |> Repo.all()
   end
 
-  def main_organization(account) do
-    account
-    |> Ecto.assoc(:organizations)
-    |> first()
-    |> Repo.one()
-  end
-
   def organization_for_account(account, organization_id) do
     account
     |> Ecto.assoc(:organizations)

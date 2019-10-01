@@ -18,7 +18,7 @@
     </div>
     <div>
       <%= link("Create workspace", to: Routes.registration_path(@conn, :new), class: "btn ") %>
-      <%= if @current_member do %>
+      <%= if @conn.assigns[:current_account] do %>
         <%= link("Log out", to: Routes.session_path(@conn, :delete), data: [controller: "link", action: "link#delete"], class: "btn ") %>
       <% else %>
         <%= link("Login", to: Routes.session_path(@conn, :new), class: "btn ") %>

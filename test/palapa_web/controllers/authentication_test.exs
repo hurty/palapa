@@ -56,8 +56,7 @@ defmodule PalapaWeb.AuthenticationTest do
   end
 
   test "call/2 places the current account into assigns", %{conn: conn} do
-    {:ok, %{account: account, organization_membership: membership}} =
-      Palapa.Accounts.Registrations.create(@registration)
+    {:ok, %{account: account}} = Palapa.Accounts.Registrations.create(@registration)
 
     conn =
       conn

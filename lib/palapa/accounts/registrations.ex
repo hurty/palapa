@@ -29,7 +29,7 @@ defmodule Palapa.Accounts.Registrations do
     |> Ecto.Multi.run(:account, fn _repo, _changes ->
       Accounts.create(account_attrs)
     end)
-    |> Ecto.Multi.run(:organization, fn _repo, %{account: account} ->
+    |> Ecto.Multi.run(:organization_membership, fn _repo, %{account: account} ->
       Organizations.create(organization_attrs, account)
     end)
     |> Repo.transaction()

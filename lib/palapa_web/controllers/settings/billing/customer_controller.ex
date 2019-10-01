@@ -47,7 +47,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
 
   def create(conn, %{"customer" => customer_attrs}) do
     with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
-      case Billing.create_customer_and_synchronize_subscription(
+      case Billing.create_customer_and_subscription(
              current_organization(conn),
              customer_attrs
            ) do

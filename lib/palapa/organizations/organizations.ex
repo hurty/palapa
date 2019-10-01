@@ -4,7 +4,6 @@ defmodule Palapa.Organizations do
   alias Organizations.{Organization, Member, PersonalInformation}
   alias Palapa.Accounts.Account
   alias Palapa.Events.Event
-  alias Palapa.Billing
 
   import EctoEnum
   defenum(RoleEnum, :role, [:owner, :admin, :member])
@@ -43,9 +42,6 @@ defmodule Palapa.Organizations do
       |> Organization.changeset(organization_attrs)
       |> put_assoc(:creator_account, creator_account)
       |> repo.insert()
-    end)
-    |> Ecto.Multi.run(:subscription, fn _repo, %{organization: organization} ->
-      Billing.create_subscription(organization)
     end)
     |> Ecto.Multi.run(:member, fn _repo, changes ->
       Organizations.create_member(%{

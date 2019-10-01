@@ -1,7 +1,7 @@
 <h2 class="text-gray-800 text-2xl font-bold">Billing overview</h2>
 <div class="card-header-separator"></div>
 
-<%= if Palapa.Billing.get_workspace_status(@current_organization) == :trialing do %>
+<%= if Palapa.Billing.get_billing_status(@current_organization) == :trialing do %>
   <div class="text-green-500 text-xl my-4"><%= gettext("%{number_of_days} days left on your trial period.", %{number_of_days: Palapa.Billing.trial_remaining_days(@current_organization)}) %></div>
   <%= link "Upgrade to a paid account now", to: Routes.settings_customer_path(@conn, :new, @current_organization), class: "btn" %>
 <% else %>

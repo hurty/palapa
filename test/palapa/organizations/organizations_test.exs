@@ -11,13 +11,17 @@ defmodule Palapa.OrganizationsTest do
   end
 
   test "create/1 with valid data creates a organization" do
-    assert {:ok, %Organization{} = organization} = Organizations.create(%{name: "Hooli"})
+    owner = insert!(:jared)
+    assert {:ok, %{organization: organization}} = Organizations.create(%{name: "Hooli"}, owner)
 
     assert organization.name == "Hooli"
   end
 
   test "create/1 with invalid data returns error changeset" do
-    assert {:error, %Ecto.Changeset{}} = Organizations.create(%{name: ""})
+    owner = insert!(:jared)
+
+    assert {:error, :organization, %Ecto.Changeset{}, _} =
+             Organizations.create(%{name: ""}, owner)
   end
 
   test "update/2 with valid data updates the organization" do

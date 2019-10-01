@@ -26,7 +26,7 @@ defmodule Palapa.Repo.Migrations.CreateCustomers do
     create(table(:subscriptions)) do
       add(:customer_id, references(:customers, on_delete: :delete_all))
       add(:organization_id, references(:organizations, on_delete: :delete_all))
-      add(:status, :subscription_status, default: "trialing")
+      add(:status, :subscription_status, default: "incomplete")
       add(:stripe_subscription_id, :string)
     end
 
