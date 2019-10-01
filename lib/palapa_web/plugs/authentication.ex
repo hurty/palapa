@@ -65,11 +65,13 @@ defmodule PalapaWeb.Authentication do
   def start_session(conn, account) do
     conn
     |> put_session(:account_id, account.id)
+    |> assign(:current_account, account)
     |> configure_session(renew: true)
   end
 
   def logout(conn) do
     conn
+    |> assign(:current_account, nil)
     |> configure_session(drop: true)
   end
 end
