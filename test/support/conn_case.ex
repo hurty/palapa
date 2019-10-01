@@ -20,16 +20,23 @@ defmodule PalapaWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       alias PalapaWeb.Router.Helpers, as: Routes
+      alias Palapa.Accounts.Account
+      alias Palapa.Organizations.Member
       import Palapa.Factory
 
       # The default endpoint for testing
       @endpoint PalapaWeb.Endpoint
 
-      def login(member) do
+      def login(%Member{} = member) do
         build_conn()
-        |> assign(:current_member, member)
         |> assign(:current_account, member.account)
         |> assign(:current_organization, member.organization)
+        |> assign(:current_member, member)
+      end
+
+      def login(%Account{} = account) do
+        build_conn()
+        |> assign(:current_account, account)
       end
     end
   end

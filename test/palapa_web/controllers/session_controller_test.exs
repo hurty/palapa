@@ -23,12 +23,9 @@ defmodule PalapaWeb.SessionControllerTest do
           }
         })
 
-      assert redirected_to(conn, 302) =~
-               Routes.dashboard_path(conn, :index, conn.assigns.current_organization)
+      assert redirected_to(conn, 302) =~ Routes.organization_path(conn, :index)
 
       assert conn.assigns.current_account
-      assert conn.assigns.current_organization
-      assert conn.assigns.current_member
     end
 
     test "cannot login with a bad password", %{conn: conn} do
@@ -82,8 +79,6 @@ defmodule PalapaWeb.SessionControllerTest do
 
       assert redirected_to(conn, 302) == Routes.home_path(conn, :index)
       refute conn.assigns.current_account
-      refute conn.assigns.current_organization
-      refute conn.assigns.current_member
     end
   end
 end

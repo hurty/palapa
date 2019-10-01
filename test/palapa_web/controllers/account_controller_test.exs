@@ -3,7 +3,7 @@ defmodule PalapaWeb.AccountControllerTest do
 
   describe "change account settings" do
     setup do
-      account = insert!(:owner)
+      account = insert!(:jared)
       conn = login(account)
 
       {:ok, conn: conn, account: account}
@@ -43,7 +43,7 @@ defmodule PalapaWeb.AccountControllerTest do
 
   describe "change account password" do
     setup do
-      account = insert!(:owner)
+      account = insert!(:jared)
       conn = login(account)
 
       {:ok, conn: conn, account: account}

@@ -74,7 +74,6 @@ defmodule PalapaWeb.JoinControllerTest do
 
       # the user gets logged in correctly
       assert conn.assigns.current_account.email == "dinesh@piedpiper.com"
-      refute is_nil(conn.assigns.current_member)
 
       # invitation has been deleted
       assert is_nil(Repo.reload(invitation))
@@ -120,7 +119,6 @@ defmodule PalapaWeb.JoinControllerTest do
 
       # the user gets logged in correctly
       assert conn.assigns.current_account.email == "dinesh@piedpiper.com"
-      refute is_nil(conn.assigns.current_member)
 
       # invitation has been deleted
       assert is_nil(Repo.reload(invitation))
@@ -160,7 +158,6 @@ defmodule PalapaWeb.JoinControllerTest do
 
       # the user gets logged in correctly
       assert conn.assigns.current_account.email == "bertram.gilfoyle@piedpiper.com"
-      refute is_nil(conn.assigns.current_member)
 
       # invitation has been deleted
       assert is_nil(Repo.reload(invitation))

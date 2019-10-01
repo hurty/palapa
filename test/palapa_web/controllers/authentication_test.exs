@@ -23,13 +23,11 @@ defmodule PalapaWeb.AuthenticationTest do
     assert conn.halted
   end
 
-  test "enforce_authentication continues when the current account, organization and members are set",
+  test "enforce_authentication continues when the current account is set",
        %{conn: conn} do
     conn =
       conn
       |> assign(:current_account, %Palapa.Accounts.Account{})
-      |> assign(:current_organization, %Palapa.Organizations.Organization{})
-      |> assign(:current_member, %Palapa.Organizations.Member{})
       |> Authentication.enforce_authentication([])
 
     refute conn.halted
@@ -57,22 +55,19 @@ defmodule PalapaWeb.AuthenticationTest do
     refute get_session(next_conn, :account_id)
   end
 
-  test "call/2 places the current account, organization, and member into assigns", %{conn: conn} do
+  test "call/2 places the current account into assigns", %{conn: conn} do
     {:ok, %{account: account, organization_membership: membership}} =
       Palapa.Accounts.Registrations.create(@registration)
 
     conn =
       conn
       |> put_session(:account_id, account.id)
-      |> Map.put(:params, %{"organization_id" => membership.organization.id})
       |> Authentication.call([])
 
     assert conn.assigns.current_account.id == account.id
-    assert conn.assigns.current_organization.id == membership.organization.id
-    assert conn.assigns.current_member.id == membership.member.id
   end
 
-  test "call with no session set current_account assign to nil", %{conn: conn} do
+  test "call/2 with no session set current_account assign to nil", %{conn: conn} do
     conn = Authentication.call(conn, [])
     assert conn.assigns.current_account == nil
   end
