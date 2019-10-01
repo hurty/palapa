@@ -10,26 +10,33 @@ defmodule PalapaWeb.Authentication do
   end
 
   def call(conn, _options) do
-    try do
-      account_id = get_session(conn, :account_id)
-      account = account_id && Accounts.get!(account_id)
-      conn = assign(conn, :current_account, account)
-
-      organization_id = conn.params["organization_id"]
-
-      organization =
-        organization_id && Accounts.organization_for_account(account, organization_id)
-
-      conn = assign(conn, :current_organization, organization)
-
-      member = account && organization && Accounts.member_for_organization(account, organization)
-      assign(conn, :current_member, member)
-    rescue
-      _ ->
-        conn
-        |> put_flash(:error, "You have been logged out")
-        |> logout
+    if conn.assigns[:current_account] do
+      conn
+    else
+      try do
+        account_id = get_session(conn, :account_id)
+        account = account_id && Accounts.get!(account_id)
+        assign(conn, :current_account, account)
+      rescue
+        _ ->
+          conn
+          |> put_flash(:error, "You have been logged out")
+          |> logout
+      end
     end
+  end
+
+  def put_organization_context(conn, _options) do
+    account = conn.assigns[:current_account]
+    organization_id = conn.params["organization_id"]
+
+    organization =
+      account && organization_id && Accounts.organization_for_account(account, organization_id)
+
+    conn = assign(conn, :current_organization, organization)
+
+    member = organization && Accounts.member_for_organization(account, organization)
+    assign(conn, :current_member, member)
   end
 
   def enforce_authentication(conn, _options) do

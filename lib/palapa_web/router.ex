@@ -8,7 +8,8 @@ defmodule PalapaWeb.Router do
     plug(Phoenix.LiveView.Flash)
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
-    # sets current_account, current_member and current_organization
+
+    # Sets current_account
     plug(PalapaWeb.Authentication)
   end
 
@@ -18,6 +19,10 @@ defmodule PalapaWeb.Router do
 
   pipeline :billing do
     plug(:enforce_billing)
+  end
+
+  pipeline :organization_context do
+    plug(:put_organization_context)
   end
 
   pipeline :api do
@@ -43,8 +48,6 @@ defmodule PalapaWeb.Router do
       singleton: true
     )
 
-    resources("/account", AccountController, only: [:edit, :update, :delete], singleton: true)
-
     get("/join/:invitation_id/:token", JoinController, :new)
     post("/join/:invitation_id/:token", JoinController, :create)
   end
@@ -60,7 +63,12 @@ defmodule PalapaWeb.Router do
   scope("/", PalapaWeb) do
     pipe_through([:browser, :authentication])
 
+    resources("/account", AccountController, only: [:edit, :update, :delete], singleton: true)
     resources("/org", OrganizationController, only: [:index, :new, :create])
+  end
+
+  scope("/", PalapaWeb) do
+    pipe_through([:browser, :authentication, :organization_context])
 
     resources("/org", OrganizationController, as: nil, only: []) do
       scope "/settings", Settings, as: :settings do
@@ -85,7 +93,7 @@ defmodule PalapaWeb.Router do
 
   # Private pages for logged in members only
   scope "/", PalapaWeb do
-    pipe_through([:browser, :authentication, :billing])
+    pipe_through([:browser, :authentication, :organization_context, :billing])
 
     resources("/workspaces", WorkspaceController, only: [:index])
 
