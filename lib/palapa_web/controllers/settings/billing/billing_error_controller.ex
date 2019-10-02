@@ -4,19 +4,16 @@ defmodule PalapaWeb.Settings.Billing.BillingErrorController do
 
   plug(:put_layout, "minimal.html")
 
-  def show(conn, %{"organization_id" => organization_id}) do
-    organization = Palapa.Organizations.get!(organization_id)
-    # Check visibility
-
-    case Billing.get_billing_status(organization) do
+  def show(conn, _params) do
+    case Billing.get_billing_status(current_organization(conn)) do
       :trial_has_ended ->
-        render(conn, "trial_has_ended.html", organization: organization)
+        render(conn, "trial_has_ended.html")
 
-      :waiting_for_payment ->
-        render(conn, "waiting_for_payment.html", organization: organization)
+      :incomplete_expired ->
+        render(conn, "waiting_for_payment.html")
 
       _ ->
-        redirect(conn, to: Routes.dashboard_path(conn, :index, organization))
+        redirect(conn, to: Routes.dashboard_path(conn, :index, current_organization(conn)))
     end
   end
 end

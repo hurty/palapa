@@ -81,9 +81,12 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
         {:error, :customer, customer_changeset, _changes_so_far} ->
           render(conn, "new.html", customer_changeset: customer_changeset)
 
-        {:error, :stripe_customer, error, _changes} ->
+        {:error, :stripe_customer, _error, _changes} ->
           conn
-          |> put_flash(:error, error.message)
+          |> put_flash(
+            :error,
+            "The billing service is unreachable. Please try again or ask support"
+          )
           |> redirect(to: Routes.settings_customer_path(conn, :new, current_organization(conn)))
       end
     end

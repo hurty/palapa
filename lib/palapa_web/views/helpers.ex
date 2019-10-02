@@ -154,4 +154,8 @@ defmodule PalapaWeb.Helpers do
     attachments_url = Routes.attachment_url(Endpoint, :create, organization)
     Palapa.RichText.Helpers.rich_text_editor(form, field, attachments_url, options)
   end
+
+  def auto_active_tab(navigation_value, tab_value) do
+    "tab" <> if navigation_value == tab_value, do: " tab--active", else: ""
+  end
 end

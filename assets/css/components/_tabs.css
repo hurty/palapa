@@ -1,21 +1,7 @@
-.tabs {
-  @apply flex  py-4 mb-4;
+.tab {
+  @apply no-underline text-green-500 border-b-2 border-gray-300 uppercase tracking-wide font-bold text-xs py-3 mr-8;
 }
 
-.tab {
-  @apply text-gray-700 rounded-full mx-1;
-
-  a,
-  a:visited {
-    @apply text-gray-700 font-bold;
-  }
-
-  &--selected {
-    @apply bg-indigo-500;
-
-    a,
-    a:visited {
-      @apply text-white;
-    }
-  }
+.tab--active {
+  @apply text-green-800 border-green-800;
 }

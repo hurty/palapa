@@ -85,7 +85,7 @@ defmodule Palapa.Billing do
 
   def create_subscription(organization, customer, attrs) do
     %Subscription{}
-    |> cast(attrs, [:stripe_customer_id, :status])
+    |> cast(attrs, [:stripe_subscription_id, :status])
     |> change(%{organization_id: organization.id, customer_id: customer.id})
     |> Repo.insert()
   end
@@ -214,6 +214,6 @@ defmodule Palapa.Billing do
   end
 
   def workspace_frozen?(organization) do
-    Billing.get_billing_status(organization) not in [:trialing, :active]
+    Billing.get_billing_status(organization) not in [:trialing, :active, :incomplete]
   end
 end

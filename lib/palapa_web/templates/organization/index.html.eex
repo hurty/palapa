@@ -1,18 +1,13 @@
-<div class="sm:max-w-xl mx-auto mb-4">
-  <div class="flex justify-center border-b py-4"><%= Helpers.avatar(@current_account, :sm) %> <span class="ml-2 self-center text-gray-800 font-bold"><%= @current_account.name %></span></div>
-  <p class="text-center font-bold text-2xl my-8 text-gray-600">Your workspaces</p>
+<div class="flex flex-wrap justify-center items-center">
+  <%= for organization <- @organizations do %>
+    <%= link organization.name, to: Routes.dashboard_path(@conn, :index, organization), 
+      class: "flex-auto m-2 p-4 font-bold text-green-500 text-center hover:bg-gray-200 bg-white rounded border" %>
+  <% end %>
 
-  <div class="flex flex-wrap justify-center items-center">
-    <%= for organization <- @organizations do %>
-      <%= link organization.name, to: Routes.dashboard_path(@conn, :index, organization), 
-        class: "flex-auto m-2 p-4 font-bold text-green-500 text-center hover:bg-gray-200 bg-white rounded border" %>
-    <% end %>
-
-    <%= link to: Routes.organization_path(@conn, :new), class: "flex-none m-2 p-4 font-bold text-gray-800 text-center bg-gray-200 hover:bg-gray-300 rounded" do %>
-      <div class="flex">
-        <i class="self-center fas fa-plus-circle text-2xl text-green-400 mr-2"></i>
-        <span>New Workspace</span>
-      </div>
-    <% end %>
-  </div>
+  <%= link to: Routes.organization_path(@conn, :new), class: "flex-none m-2 p-4 font-bold text-gray-800 text-center bg-gray-200 hover:bg-gray-300 rounded" do %>
+    <div class="flex">
+      <i class="self-center fas fa-plus-circle text-2xl text-green-400 mr-2"></i>
+      <span>New Workspace</span>
+    </div>
+  <% end %>
 </div>

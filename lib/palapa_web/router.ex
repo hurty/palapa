@@ -71,6 +71,8 @@ defmodule PalapaWeb.Router do
     pipe_through([:browser, :authentication, :organization_context])
 
     resources("/org", OrganizationController, as: nil, only: []) do
+      resources("/subscriptions", SubscriptionController, only: [:new, :create])
+
       scope "/settings", Settings, as: :settings do
         resources("/workspace", WorkspaceController, singleton: true)
         resources("/members", MemberController, only: [:index])

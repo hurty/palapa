@@ -3,7 +3,8 @@ defmodule PalapaWeb.AccountController do
 
   alias Palapa.Accounts
 
-  plug(:put_layout, "minimal.html")
+  plug(:put_layout, "account.html")
+  plug(:put_navigation, "account")
 
   def edit(conn, _params) do
     conn

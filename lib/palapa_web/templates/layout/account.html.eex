@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tag() %>
+    <title><%= @current_account.name %> — Palapa</title>
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>">
+  </head>
+
+  <body>
+    <%= render PalapaWeb.LayoutView, "_flash_notice.html", assigns %>
+    
+    <div class="sm:max-w-2xl mx-auto">
+      <div class="flex justify-center mb-8 pt-4">
+        <%= Helpers.avatar(@current_account, :sm) %> 
+        <span class="ml-2 self-center text-gray-800 font-bold"><%= @current_account.name %></span>
+      </div>
+
+      <nav class="my-4">
+        <div class="-mb-px flex justify-center">
+          <%= link "Your workspaces", to: Routes.organization_path(@conn, :index), class: Helpers.auto_active_tab(@navigation, "workspaces") %>
+          <%= link "Account settings", to: Routes.account_path(@conn, :edit), class: Helpers.auto_active_tab(@navigation, "account") %>
+        </div>
+      </nav>
+      
+      <main role="main">
+        <%= render @view_module, @view_template, assigns %>
+      </main>
+    </div>
+
+    <script src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>

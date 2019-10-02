@@ -4,7 +4,8 @@ defmodule PalapaWeb.OrganizationController do
   alias Palapa.Organizations
   alias Palapa.Organizations.Organization
 
-  plug :put_layout, "minimal.html"
+  plug :put_layout, "account.html"
+  plug :put_navigation, "workspaces"
 
   def index(conn, _) do
     organizations = current_account(conn) |> Palapa.Organizations.list_organizations()
@@ -19,7 +20,7 @@ defmodule PalapaWeb.OrganizationController do
   def create(conn, %{"organization" => attrs}) do
     case Organizations.create(attrs, current_account(conn)) do
       {:ok, %{organization: organization}} ->
-        redirect(conn, to: Routes.dashboard_path(conn, :index, organization))
+        redirect(conn, to: Routes.subscription_path(conn, :new, organization))
 
       {:error, :organization, changeset, _} ->
         render(conn, "new.html", changeset: changeset)

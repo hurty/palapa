@@ -4,6 +4,10 @@
   }
 }
 
+.card {
+  @apply bg-white;
+}
+
 @screen sm {
   .card {
     @apply bg-white rounded border border-gray-200;
