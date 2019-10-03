@@ -19,7 +19,8 @@ defmodule Palapa.Accounts.Registrations do
 
     organization_attrs = %{
       name: Map.get(changeset.changes, :organization_name),
-      default_timezone: Map.get(changeset.changes, :timezone)
+      default_timezone: Map.get(changeset.changes, :timezone),
+      allow_trial: true
     }
 
     Ecto.Multi.new()

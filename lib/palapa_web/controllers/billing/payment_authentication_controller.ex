@@ -1,4 +1,4 @@
-defmodule PalapaWeb.Settings.Billing.PaymentAuthenticationController do
+defmodule PalapaWeb.Billing.PaymentAuthenticationController do
   use PalapaWeb, :controller
   plug :put_navigation, "settings"
 

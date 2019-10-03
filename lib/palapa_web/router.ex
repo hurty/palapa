@@ -71,7 +71,15 @@ defmodule PalapaWeb.Router do
     pipe_through([:browser, :authentication, :organization_context])
 
     resources("/org", OrganizationController, as: nil, only: []) do
-      resources("/subscriptions", SubscriptionController, only: [:new, :create])
+      scope("/billing", Billing) do
+        resources("/subscriptions", SubscriptionController, only: [:new, :create])
+        resources("/payment_authentication", PaymentAuthenticationController)
+
+        resources("/billing_error", BillingErrorController,
+          only: [:show],
+          singleton: true
+        )
+      end
 
       scope "/settings", Settings, as: :settings do
         resources("/workspace", WorkspaceController, singleton: true)
@@ -81,13 +89,6 @@ defmodule PalapaWeb.Router do
         resources("/payment_method", Billing.PaymentMethodController,
           singleton: true,
           only: [:edit, :update]
-        )
-
-        resources("/payment_authentication", Billing.PaymentAuthenticationController)
-
-        resources("/billing_error", Billing.BillingErrorController,
-          only: [:show],
-          singleton: true
         )
       end
     end
@@ -200,7 +201,7 @@ defmodule PalapaWeb.Router do
   end
 
   scope "/", PalapaWeb do
-    post("/stripe_webhooks", Settings.Billing.StripeWebhookController, :create)
+    post("/stripe_webhooks", Billing.StripeWebhookController, :create)
   end
 
   # Other scopes may use custom stacks.

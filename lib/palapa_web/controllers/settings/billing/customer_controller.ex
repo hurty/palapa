@@ -59,7 +59,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
 
               redirect(conn,
                 to:
-                  Routes.settings_payment_authentication_path(
+                  Routes.payment_authentication_path(
                     conn,
                     :new,
                     current_organization(conn),

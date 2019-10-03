@@ -235,7 +235,8 @@ defmodule Palapa.Factory do
 
   def build(:organization) do
     %Organization{
-      name: "Pied Piper"
+      name: "Pied Piper",
+      allow_trial: true
     }
   end
 

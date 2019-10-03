@@ -192,14 +192,17 @@ defmodule Palapa.Billing do
     subscription = Repo.preload(organization, :subscription).subscription
 
     cond do
-      is_nil(subscription) && !trial_expired?(organization) ->
+      organization.allow_trial && is_nil(subscription) && !trial_expired?(organization) ->
         :trialing
 
-      is_nil(subscription) && trial_expired?(organization) ->
+      organization.allow_trial && is_nil(subscription) && trial_expired?(organization) ->
         :trial_has_ended
 
       subscription ->
         subscription.status
+
+      true ->
+        :needs_subscription
     end
   end
 

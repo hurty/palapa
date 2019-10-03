@@ -1,4 +1,4 @@
-defmodule PalapaWeb.Settings.Billing.BillingStatusTest do
+defmodule PalapaWeb.Billing.BillingStatusTest do
   use PalapaWeb.ConnCase
 
   alias Palapa.Repo
@@ -44,7 +44,7 @@ defmodule PalapaWeb.Settings.Billing.BillingStatusTest do
         |> get(Routes.dashboard_path(conn, :index, organization))
 
       assert redirected_to(conn, 302) =~
-               Routes.settings_billing_error_path(conn, :show, organization)
+               Routes.billing_error_path(conn, :show, organization)
     end
   end
 
@@ -94,7 +94,7 @@ defmodule PalapaWeb.Settings.Billing.BillingStatusTest do
         |> get(Routes.dashboard_path(conn, :index, organization))
 
       assert redirected_to(conn, 302) =~
-               Routes.settings_billing_error_path(conn, :show, organization)
+               Routes.billing_error_path(conn, :show, organization)
     end
   end
 end

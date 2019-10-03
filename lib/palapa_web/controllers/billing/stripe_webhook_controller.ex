@@ -1,4 +1,4 @@
-defmodule PalapaWeb.Settings.Billing.StripeWebhookController do
+defmodule PalapaWeb.Billing.StripeWebhookController do
   use PalapaWeb, :controller
 
   alias Palapa.Billing

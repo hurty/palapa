@@ -12,6 +12,7 @@ defmodule Palapa.Organizations.Organization do
   schema "organizations" do
     field(:name, :string)
     field(:default_timezone, :string)
+    field(:allow_trial, :boolean)
     field(:deleted_at, :utc_datetime)
     timestamps()
 
@@ -28,7 +29,7 @@ defmodule Palapa.Organizations.Organization do
   @doc false
   def changeset(organization, attrs) do
     organization
-    |> cast(attrs, [:name, :default_timezone])
+    |> cast(attrs, [:name, :default_timezone, :allow_trial])
     |> validate_required([:name])
   end
 
