@@ -55,6 +55,10 @@ defmodule Palapa.Billing.StripeAdapter do
     )
   end
 
+  def get_subscription(stripe_subscription_id) do
+    Stripe.Subscription.retrieve(stripe_subscription_id, expand: ["latest_invoice.payment_intent"])
+  end
+
   def update_customer(customer) do
     custom_fields =
       if customer.vat_number do
@@ -88,6 +92,13 @@ defmodule Palapa.Billing.StripeAdapter do
 
   def update_payment_method(customer) do
     body = %{source: customer.stripe_token_id}
-    Stripe.Customer.update(customer.stripe_customer_id, body)
+
+    Stripe.Customer.update(customer.stripe_customer_id, body,
+      expand: ["subscriptions.data.latest_invoice.payment_intent"]
+    )
+  end
+
+  def pay_invoice(stripe_invoice_id) do
+    Stripe.Invoice.pay(stripe_invoice_id, %{})
   end
 end

@@ -1,0 +1,28 @@
+<div class="mx-auto my-8" data-controller="payment" 
+data-payment-api-key="pk_test_q0YfdqC7bsahlMzdz5BHcXXJ00973FKvkj" 
+data-payment-client-secret="<%= @payment_intent.client_secret %>"
+data-payment-success-redirect-url="<%= @success_redirect_url %>"
+data-payment-error-redirect-url="<%= @error_redirect_url %>">
+  <div class="card p-8">
+    <h2 class="card-header">Processing payment</h2>
+    <div class="card-header-separator"></div>
+
+		<div data-target="payment.waitMessage">
+			<div class="spinner">
+				<div class="bounce1"></div>
+				<div class="bounce2"></div>
+				<div class="bounce3"></div>
+			</div>
+
+			<h2 class="text-center" >Please wait for the 3D-Secure identification</h2>
+		</div>
+
+		<div data-target="payment.successMessage" class="hidden text-center text-green-500">			
+			Authentication succeeded, redirecting...
+		</div>
+
+		<div data-target="payment.errorMessage" class="hidden text-center text-red-500">
+			Authentication failed, redirecting...
+		</div>
+	</div>
+</div>

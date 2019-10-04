@@ -1,0 +1,38 @@
+<div class="mx-auto my-8"> 
+  <div class="card p-8">
+    <h2 class="card-header">Update the payment method</h2>
+    <div class="card-header-separator"></div>
+
+    <p class="bg-red-200 p-1 rounded">
+      We encountered some problems while processing the payment of your invoice for the workspace <strong><%= @current_organization.name %></strong>.
+      Please update your payment method to continue.
+    </p>
+
+    <%= form_for @customer_changeset, Routes.payment_method_path(@conn, :update, @current_organization), [
+      "data-controller": "billing",
+      "data-action": "billing#submitSubscription",
+      "data-billing-api-key": "pk_test_q0YfdqC7bsahlMzdz5BHcXXJ00973FKvkj"
+    ], fn _form -> %>
+      <%= if @customer_changeset.action do %>
+        <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
+      <% end %>
+
+      <div class="field">
+        <label for="card-element" class="label">
+          <%= gettext("Credit card*") %>
+        </label>
+        
+        <div id="card-element" data-target="billing.cardElement" class="border rounded p-4 bg-white">
+          <!-- A Stripe Element will be inserted here. -->
+        </div>
+        
+        <div data-target="billing.cardErrors" role="alert" class="text-red-500"></div>
+      </div>
+
+      <div class="card-actions justify-between">
+        <button class="btn btn-green">Update card</button>
+        <%= link "Abort", to: Routes.organization_path(@conn, :index), class: "btn" %>
+      </div>
+    <% end %>
+  </div>
+</div>

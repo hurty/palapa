@@ -8,13 +8,14 @@ defmodule Palapa.Billing.Subscription do
     belongs_to(:organization, Organization)
     belongs_to(:customer, Customer)
 
-    field(:stripe_subscription_id, :string)
     field(:status, SubscriptionStatusEnum)
+    field(:stripe_subscription_id, :string)
+    field(:stripe_latest_invoice_id, :string)
   end
 
   def changeset(subscription \\ %__MODULE__{}, attrs) do
     subscription
-    |> cast(attrs, [:stripe_subscription_id, :status])
+    |> cast(attrs, [:status, :stripe_subscription_id, :stripe_latest_invoice_id])
     |> unique_constraint(:stripe_subscription_id)
   end
 end

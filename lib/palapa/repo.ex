@@ -37,6 +37,12 @@ defmodule Palapa.Repo do
     get(module, id)
   end
 
+  def get_assoc(queryable, assoc) when is_atom(assoc) do
+    queryable
+    |> __MODULE__.preload(assoc)
+    |> Map.get(assoc)
+  end
+
   def load_raw(result, struct_type) do
     Enum.map(result.rows, &load(struct_type, {result.columns, &1}))
   end

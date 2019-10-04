@@ -45,7 +45,12 @@ defmodule Palapa.Billing do
     Customer.billing_infos_changeset(customer, %{})
   end
 
-  def change_customer_payment_method(customer) do
+  def change_customer_payment_method(%Organization{} = organization) do
+    organization = Repo.preload(organization, :customer)
+    change_customer_payment_method(organization.customer)
+  end
+
+  def change_customer_payment_method(%Customer{} = customer) do
     Customer.payment_method_changeset(customer, %{})
   end
 
@@ -70,10 +75,18 @@ defmodule Palapa.Billing do
   def update_customer_payment_method(customer, attrs) do
     Ecto.Multi.new()
     |> Ecto.Multi.update(:customer, Customer.payment_method_changeset(customer, attrs))
-    |> Ecto.Multi.run(:update_stripe_customer_payment_method, fn _repo,
-                                                                 %{customer: customer_with_token} ->
-      Billing.update_stripe_customer_payment_method(customer_with_token)
-    end)
+    |> Ecto.Multi.run(
+      :update_stripe_customer_payment_method,
+      fn _repo, %{customer: customer_with_token} ->
+        Billing.update_stripe_customer_payment_method(customer_with_token)
+      end
+    )
+    |> Ecto.Multi.run(
+      :payment_intent,
+      fn _repo, %{update_stripe_customer_payment_method: stripe_customer} ->
+        {:ok, stripe_customer.subscriptions}
+      end
+    )
     |> Repo.transaction()
   end
 
@@ -85,7 +98,7 @@ defmodule Palapa.Billing do
 
   def create_subscription(organization, customer, attrs) do
     %Subscription{}
-    |> cast(attrs, [:stripe_subscription_id, :status])
+    |> cast(attrs, [:status, :stripe_subscription_id, :stripe_latest_invoice_id])
     |> change(%{organization_id: organization.id, customer_id: customer.id})
     |> Repo.insert()
   end
@@ -94,8 +107,13 @@ defmodule Palapa.Billing do
     adapter().create_subscription(stripe_customer_id, @monthly_plan_id)
   end
 
+  # Returns a local %Billing.Subscription{}
   def get_subscription_by_stripe_id!(stripe_id) do
     Repo.get_by!(Subscription, stripe_subscription_id: stripe_id)
+  end
+
+  def get_subscription(%Organization{} = organization) do
+    Repo.get_assoc(organization, :subscription)
   end
 
   def update_subscription(subscription, attrs) do
@@ -128,6 +146,10 @@ defmodule Palapa.Billing do
     invoice
     |> Invoice.changeset(attrs)
     |> Repo.update()
+  end
+
+  def pay_invoice(stripe_invoice_id) when is_binary(stripe_invoice_id) do
+    adapter().pay_invoice(stripe_invoice_id)
   end
 
   # --- BILLING LIFECYCLE
@@ -167,21 +189,17 @@ defmodule Palapa.Billing do
                                           customer: customer
                                         } ->
       Billing.create_subscription(organization, customer, %{
+        status: stripe_subscription["status"],
         stripe_subscription_id: stripe_subscription["id"],
-        status: stripe_subscription["status"]
+        stripe_latest_invoice_id: get_in(stripe_subscription, ["latest_invoice", "id"])
       })
     end)
     |> Repo.transaction()
   end
 
-  def payment_next_action(stripe_subscription) do
-    status = stripe_subscription["latest_invoice"]["payment_intent"]["status"]
-
-    cond do
-      status in ["requires_source_action", "requires_action"] -> :requires_action
-      status == "requires_payment_method" -> :requires_payment_method
-      true -> :ok
-    end
+  def get_payment_intent(stripe_subscription_id) do
+    {:ok, stripe_subscription} = adapter().get_subscription(stripe_subscription_id)
+    stripe_subscription.latest_invoice.payment_intent
   end
 
   def billing_information_exists?(organization) do
@@ -189,7 +207,7 @@ defmodule Palapa.Billing do
   end
 
   def get_billing_status(organization) do
-    subscription = Repo.preload(organization, :subscription).subscription
+    subscription = Repo.get_assoc(organization, :subscription)
 
     cond do
       organization.allow_trial && is_nil(subscription) && !trial_expired?(organization) ->
@@ -202,7 +220,7 @@ defmodule Palapa.Billing do
         subscription.status
 
       true ->
-        :needs_subscription
+        :none
     end
   end
 
@@ -217,6 +235,6 @@ defmodule Palapa.Billing do
   end
 
   def workspace_frozen?(organization) do
-    Billing.get_billing_status(organization) not in [:trialing, :active, :incomplete]
+    Billing.get_billing_status(organization) not in [:trialing, :active]
   end
 end

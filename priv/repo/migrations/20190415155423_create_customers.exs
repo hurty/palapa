@@ -28,6 +28,7 @@ defmodule Palapa.Repo.Migrations.CreateCustomers do
       add(:organization_id, references(:organizations, on_delete: :delete_all))
       add(:status, :subscription_status, default: "incomplete")
       add(:stripe_subscription_id, :string)
+      add(:stripe_latest_invoice_id, :string)
     end
 
     create(index(:subscriptions, :customer_id))

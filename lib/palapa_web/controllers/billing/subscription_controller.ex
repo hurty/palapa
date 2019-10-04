@@ -21,41 +21,17 @@ defmodule PalapaWeb.Billing.SubscriptionController do
              current_organization(conn),
              customer_attrs
            ) do
-        {:ok, result} ->
-          case Billing.payment_next_action(result.stripe_subscription) do
-            :requires_action ->
-              client_secret =
-                result.stripe_subscription["latest_invoice"]["payment_intent"]["client_secret"]
-
-              redirect(conn,
-                to:
-                  Routes.payment_authentication_path(
-                    conn,
-                    :new,
-                    current_organization(conn),
-                    client_secret: client_secret
-                  )
-              )
-
-            :requires_payment_method ->
-              nil
-
-            # Ask just for the card details
-
-            :ok ->
-              redirect(conn,
-                to: Routes.dashboard_path(conn, :index, current_organization(conn))
-              )
-          end
+        {:ok, _result} ->
+          redirect(conn, to: Routes.payment_path(conn, :new, current_organization(conn)))
 
         {:error, :customer, customer_changeset, _changes_so_far} ->
           render(conn, "new.html", customer_changeset: customer_changeset)
 
-        {:error, :stripe_customer, _error, _changes} ->
+        {:error, _step, _error, _changes} ->
           conn
           |> put_flash(
             :error,
-            "The billing service is unreachable. Please try again or ask support"
+            "The billing service could not process your request. Please try again or ask support"
           )
           |> redirect(to: Routes.organization_path(conn, :index))
       end

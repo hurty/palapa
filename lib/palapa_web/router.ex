@@ -73,7 +73,13 @@ defmodule PalapaWeb.Router do
     resources("/org", OrganizationController, as: nil, only: []) do
       scope("/billing", Billing) do
         resources("/subscriptions", SubscriptionController, only: [:new, :create])
-        resources("/payment_authentication", PaymentAuthenticationController)
+
+        resources("/payment_method", PaymentMethodController,
+          only: [:edit, :update],
+          singleton: true
+        )
+
+        resources("/payment", PaymentController, only: [:new], singleton: true)
 
         resources("/billing_error", BillingErrorController,
           only: [:show],
