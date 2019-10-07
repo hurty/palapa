@@ -24,6 +24,7 @@ defmodule Palapa.Repo.Migrations.CreateCustomers do
     Palapa.Billing.SubscriptionStatusEnum.create_type()
 
     create(table(:subscriptions)) do
+      timestamps()
       add(:customer_id, references(:customers, on_delete: :delete_all))
       add(:organization_id, references(:organizations, on_delete: :delete_all))
       add(:status, :subscription_status, default: "incomplete")

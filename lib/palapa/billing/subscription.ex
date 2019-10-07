@@ -5,6 +5,8 @@ defmodule Palapa.Billing.Subscription do
   alias Palapa.Organizations.Organization
 
   schema("subscriptions") do
+    timestamps()
+
     belongs_to(:organization, Organization)
     belongs_to(:customer, Customer)
 
