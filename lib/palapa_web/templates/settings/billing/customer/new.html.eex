@@ -3,6 +3,6 @@
     <h2 class="card-header">Upgrade your account</h2>
     <div class="card-header-separator"></div>
 
-    <%= render(PalapaWeb.SubscriptionView, "form.html", Map.merge(assigns, %{form_path: Routes.settings_customer_path(@conn, :create, @current_organization)})) %>
+    <%= render(PalapaWeb.Billing.SubscriptionView, "form.html", Map.merge(assigns, %{form_path: Routes.settings_customer_path(@conn, :create, @current_organization)})) %>
   </div>
 </div>

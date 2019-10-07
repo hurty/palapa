@@ -3,7 +3,7 @@ defmodule Palapa.Organizations.Policy do
   alias Palapa.Organizations.PersonalInformation
 
   def authorize(:update_organization, %Member{} = member, _) do
-    member.role == :owner
+    member.role in [:owner, :admin]
   end
 
   # Anybody can see the list of members within an organization

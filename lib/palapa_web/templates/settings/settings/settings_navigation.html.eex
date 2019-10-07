@@ -8,9 +8,11 @@
     <li class="page-menu-item <%= if @settings_navigation == "members" do %>page-menu-item--active<% end %>">
       <%= link "Members", to: Routes.settings_member_path(@conn, :index, @current_organization), class: "page-menu-link" %>
     </li>
-    
-    <li class="page-menu-item <%= if @settings_navigation == "billing" do %>page-menu-item--active<% end %>">
-      <%= link "Billing", to: Routes.settings_customer_path(@conn, :show, @current_organization) %>
-    </li>
+
+    <%= if permit?(Palapa.Billing.Policy, :update_billing, @current_member) do %>    
+      <li class="page-menu-item <%= if @settings_navigation == "billing" do %>page-menu-item--active<% end %>">
+        <%= link "Billing", to: Routes.settings_customer_path(@conn, :show, @current_organization) %>
+      </li>
+    <% end %>
   </ul>
 </nav>

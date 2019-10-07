@@ -37,10 +37,12 @@
       <% end %>
     </li>
 
-    <li class="header-link  <%= if @navigation == "settings" do %>header-link--active<% end %>">
-      <%= link(to: Routes.settings_workspace_path(@conn, :show, @current_organization), class: "block") do %>
-        <i class="fas fa-cog mr-2"></i>Settings
-      <% end %>
-    </li>
+    <%= if permit?(Palapa.Organizations.Policy, :update_organization, @current_member) do %>
+      <li class="header-link  <%= if @navigation == "settings" do %>header-link--active<% end %>">
+        <%= link(to: Routes.settings_workspace_path(@conn, :show, @current_organization), class: "block") do %>
+          <i class="fas fa-cog mr-2"></i>Settings
+        <% end %>
+      </li>
+    <% end %>
   </ul>
 </div>

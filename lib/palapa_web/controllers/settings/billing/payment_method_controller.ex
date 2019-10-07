@@ -3,6 +3,12 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
 
   alias Palapa.Billing
 
+  plug Bodyguard.Plug.Authorize,
+    policy: Palapa.Billing.Policy,
+    action: :update_billing,
+    user: {PalapaWeb.Current, :current_member},
+    fallback: PalapaWeb.FallbackController
+
   plug :put_navigation, "settings"
   plug(:put_common_breadcrumbs)
 

@@ -5,6 +5,12 @@ defmodule PalapaWeb.Billing.SubscriptionController do
   alias Palapa.Billing
   alias Palapa.Billing.Customer
 
+  plug Bodyguard.Plug.Authorize,
+    policy: Palapa.Billing.Policy,
+    action: :update_billing,
+    user: {PalapaWeb.Current, :current_member},
+    fallback: PalapaWeb.FallbackController
+
   plug(:put_layout, :account)
   plug(:put_navigation, "workspaces")
 
