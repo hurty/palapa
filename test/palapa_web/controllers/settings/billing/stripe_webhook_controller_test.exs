@@ -84,7 +84,8 @@ defmodule PalapaWeb.Settings.Billing.StripeWebhookControllerTest do
       object: %{
         id: "sub_000",
         customer: "cus_123",
-        status: "active"
+        status: "active",
+        latest_invoice: "in_001"
       }
     }
   }
@@ -98,5 +99,6 @@ defmodule PalapaWeb.Settings.Billing.StripeWebhookControllerTest do
     subscription = Palapa.Repo.preload(workspace.organization, :subscription).subscription
     assert response(conn, :ok)
     assert subscription.status == :active
+    assert subscription.stripe_latest_invoice_id == "in_001"
   end
 end
