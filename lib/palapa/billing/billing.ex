@@ -22,6 +22,10 @@ defmodule Palapa.Billing do
     :cancelled
   ])
 
+  defmodule StripeSyncError do
+    defexception [:message]
+  end
+
   def adapter do
     StripeAdapter
   end
@@ -120,6 +124,21 @@ defmodule Palapa.Billing do
     subscription
     |> Subscription.changeset(attrs)
     |> Repo.update()
+  end
+
+  def refresh_local_subscription_status(%Organization{} = organization) do
+    subscription = get_subscription(organization)
+
+    case adapter().get_subscription(subscription.stripe_subscription_id) do
+      {:ok, stripe_subscription} ->
+        update_subscription(subscription, %{
+          status: stripe_subscription.status,
+          stripe_latest_invoice_id: stripe_subscription.latest_invoice.id
+        })
+
+      error ->
+        error
+    end
   end
 
   # --- INVOICES

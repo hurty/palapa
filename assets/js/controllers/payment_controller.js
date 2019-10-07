@@ -17,8 +17,6 @@ export default class extends StripeController {
   }
 
   handlePayment() {
-    const errorRedirectURL = this.data.get("error-redirect-url");
-    const successRedirectURL = this.data.get("success-redirect-url");
     const controller = this;
 
     this.stripe
@@ -26,45 +24,34 @@ export default class extends StripeController {
         setup_future_usage: "off_session"
       })
       .then(function(result) {
-        controller.hide(controller.waitMessageTarget);
-
         if (result.error) {
-          controller.show(controller.errorMessageTarget);
-          window.location = errorRedirectURL;
+          controller.handlePaymentError();
         } else {
-          controller.show(controller.successMessageTarget);
-          window.location = successRedirectURL;
+          controller.handlePaymentSuccess();
         }
       });
   }
 
-  displayErrorMessage() {
-    this.messageTarget;
+  handlePaymentError() {
+    this.hide(this.waitMessageTarget);
+    this.show(this.errorMessageTarget);
+    window.location = this.data.get("error-redirect-url");
   }
 
-  loadStripeJS() {
-    return new Promise((resolve, reject) => {
-      const existingScript = document.getElementById("stripejs");
+  handlePaymentSuccess() {
+    this.hide(this.waitMessageTarget);
+    this.show(this.successMessageTarget);
+    this.refreshSubscriptionStatus().finally(
+      response => (window.location = this.data.get("success-redirect-url"))
+    );
+  }
 
-      if (!existingScript) {
-        const script = document.createElement("script");
-        script.async = false;
-        script.src = "https://js.stripe.com/v3/";
-        script.type = "text/javascript";
-        script.id = "stripejs";
-
-        script.addEventListener("load", resolve);
-        script.addEventListener("error", () =>
-          reject("Error loading StripeJS script.")
-        );
-        script.addEventListener("abort", () =>
-          reject("StripeJS loading aborted.")
-        );
-
-        document.body.appendChild(script);
-      } else {
-        resolve;
-      }
+  // The subscription status will be updated via a Stripe Webhook anyway
+  // but this webhook can be late and we want our customer to be able to
+  // use his workspace immediately after payment.
+  refreshSubscriptionStatus() {
+    return PA.fetch(this.data.get("refresh-subscription-url"), {
+      method: "post"
     });
   }
 }

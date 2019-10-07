@@ -1,4 +1,5 @@
 defmodule PalapaWeb.Billing.SubscriptionController do
+  require Logger
   use PalapaWeb, :controller
 
   alias Palapa.Billing
@@ -35,6 +36,19 @@ defmodule PalapaWeb.Billing.SubscriptionController do
           )
           |> redirect(to: Routes.organization_path(conn, :index))
       end
+    end
+  end
+
+  def refresh(conn, _params) do
+    conn
+    |> current_organization()
+    |> Billing.refresh_local_subscription_status()
+    |> case do
+      {:ok, _subscription} ->
+        resp(conn, 200, "subscription status has been refreshed ")
+
+      {:error, error} ->
+        Logger.error("subscription could not be refreshed: #{inspect(error)}")
     end
   end
 end

@@ -5,7 +5,7 @@ function getMetaValue(name) {
 
 function fetchWithDefaultOptions(url, options = {}) {
   let defaultOptions = {
-    method: "GET",
+    method: "get",
     credentials: "same-origin",
     headers: {
       "X-CSRF-Token": getMetaValue("csrf-token"),

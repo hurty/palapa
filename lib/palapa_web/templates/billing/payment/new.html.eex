@@ -1,8 +1,9 @@
 <div class="mx-auto my-8" data-controller="payment" 
 data-payment-api-key="pk_test_q0YfdqC7bsahlMzdz5BHcXXJ00973FKvkj" 
 data-payment-client-secret="<%= @payment_intent.client_secret %>"
-data-payment-success-redirect-url="<%= @success_redirect_url %>"
-data-payment-error-redirect-url="<%= @error_redirect_url %>">
+data-payment-success-redirect-url="<%= Routes.dashboard_url(@conn, :index, @current_organization) %>"
+data-payment-error-redirect-url="<%= Routes.payment_method_url(@conn, :edit, @current_organization) %>"
+data-payment-refresh-subscription-url="<%= Routes.subscription_url(@conn, :refresh, @current_organization) %>">
   <div class="card p-8">
     <h2 class="card-header">Processing payment</h2>
     <div class="card-header-separator"></div>
@@ -17,11 +18,11 @@ data-payment-error-redirect-url="<%= @error_redirect_url %>">
 			<h2 class="text-center" >Please wait for the 3D-Secure identification</h2>
 		</div>
 
-		<div data-target="payment.successMessage" class="hidden text-center text-green-500">			
+		<div data-target="payment.successMessage" class="hidden text-center text-green-600 rounded-full bg-green-200 py-2">
 			Authentication succeeded, redirecting...
 		</div>
 
-		<div data-target="payment.errorMessage" class="hidden text-center text-red-500">
+		<div data-target="payment.errorMessage" class="hidden text-center text-red-600 rounded-full bg-red-200 py-2">
 			Authentication failed, redirecting...
 		</div>
 	</div>
