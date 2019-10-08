@@ -3,6 +3,10 @@ defmodule PalapaWeb.Billing.StripeWebhookController do
 
   alias Palapa.Billing
 
+  @invoice_created_event %Stripe.Event{type: "invoice.created"}
+  @invoice_updated_event %Stripe.Event{type: "invoice.updated"}
+  @subscription_updated_event %Stripe.Event{type: "customer.subscription.updated"}
+
   plug :verify_stripe_signature
 
   def verify_stripe_signature(conn, _params) do
@@ -26,7 +30,7 @@ defmodule PalapaWeb.Billing.StripeWebhookController do
     end
   end
 
-  def create(conn = %{assigns: %{event: %Stripe.Event{type: "invoice.created"} = event}}, _params) do
+  def create(conn = %{assigns: %{event: @invoice_created_event = event}}, _params) do
     stripe_invoice = event.data.object
     customer = Billing.get_customer_by_stripe_id!(stripe_invoice.customer)
 
@@ -49,10 +53,7 @@ defmodule PalapaWeb.Billing.StripeWebhookController do
     end
   end
 
-  def create(
-        conn = %{assigns: %{event: %Stripe.Event{type: "invoice.payment_succeeded"} = event}},
-        _params
-      ) do
+  def create(conn = %{assigns: %{event: @invoice_updated_event = event}}, _params) do
     stripe_invoice = event.data.object
     invoice = Billing.get_invoice_by_stripe_id!(stripe_invoice.id)
 
@@ -65,10 +66,7 @@ defmodule PalapaWeb.Billing.StripeWebhookController do
     end
   end
 
-  def create(
-        conn = %{assigns: %{event: %Stripe.Event{type: "customer.subscription.updated"} = event}},
-        _params
-      ) do
+  def create(conn = %{assigns: %{event: @subscription_updated_event = event}}, _params) do
     stripe_subscription = event.data.object
     subscription = Billing.get_subscription_by_stripe_id!(stripe_subscription.id)
 
