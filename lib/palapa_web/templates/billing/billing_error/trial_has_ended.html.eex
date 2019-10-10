@@ -6,7 +6,7 @@
         <section>
           <p class="font-bold text-center my-4">
             <%= gettext("Your %{trial_duration_days} days trial period for the workspace \"%{organization_name}\" has ended.", 
-              organization_name: @organization.name, 
+              organization_name: @current_organization.name, 
               trial_duration_days: Palapa.Billing.trial_duration_days) %>
             <br>
             <%= gettext("Switch to a paid plan to continue and get:") %>
@@ -28,7 +28,7 @@
           </div>
 
           <p class="my-8 text-center">
-            <%= link("Upgrade your account", to: Routes.settings_customer_path(@conn, :show, @organization), class: "btn btn-green-500 text-xl my-4") %>
+            <%= link("Upgrade your account", to: Routes.settings_customer_path(@conn, :show, @current_organization), class: "btn btn-green-500 text-xl my-4") %>
           </p>
         </section>
       </div>

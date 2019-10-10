@@ -18,8 +18,7 @@ defmodule Palapa.Billing do
     :incomplete_expired,
     :active,
     :past_due,
-    :unpaid,
-    :cancelled
+    :canceled
   ])
 
   defmodule StripeSyncError do

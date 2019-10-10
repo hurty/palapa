@@ -1,4 +1,4 @@
-defmodule PalapaWeb.Billing.BillingStatusTest do
+defmodule PalapaWeb.BillingPlugTest do
   use PalapaWeb.ConnCase
 
   alias Palapa.Repo
@@ -56,45 +56,41 @@ defmodule PalapaWeb.Billing.BillingStatusTest do
     end
 
     test "lets the user pass when the workspace is 'active'", %{conn: conn, workspace: workspace} do
-      active_subscription =
-        workspace.subscription
-        |> Ecto.Changeset.change(%{status: :active})
-        |> Repo.update!()
+      workspace.subscription
+      |> Ecto.Changeset.change(%{status: :active})
+      |> Repo.update!()
 
-      organization =
-        workspace.organization
-        |> Map.put(:subscription, active_subscription)
-
-      assert Billing.get_billing_status(organization) == :active
-      refute Billing.workspace_frozen?(organization)
-
-      conn =
-        conn
-        |> assign(:current_organization, organization)
-        |> get(Routes.dashboard_path(conn, :index, organization))
+      conn = get(conn, Routes.dashboard_path(conn, :index, workspace.organization))
 
       assert html_response(conn, 200) =~ "Dashboard"
     end
 
     test "blocks the user when the payment is past due", %{conn: conn, workspace: workspace} do
-      past_due_subscription =
-        workspace.subscription
-        |> Ecto.Changeset.change(%{status: :past_due})
-        |> Repo.update!()
+      workspace.subscription
+      |> Ecto.Changeset.change(%{status: :past_due})
+      |> Repo.update!()
 
-      organization =
-        workspace.organization
-        |> Map.put(:subscription, past_due_subscription)
-
-      assert Billing.workspace_frozen?(organization)
-
-      conn =
-        conn
-        |> assign(:current_organization, organization)
-        |> get(Routes.dashboard_path(conn, :index, organization))
+      conn = get(conn, Routes.dashboard_path(conn, :index, workspace.organization))
 
       assert redirected_to(conn, 302) =~
-               Routes.billing_error_path(conn, :show, organization)
+               Routes.billing_error_path(conn, :show, workspace.organization)
+    end
+
+    test "blocks the user when the subscription is canceled", %{conn: conn, workspace: workspace} do
+      workspace.subscription
+      |> Ecto.Changeset.change(%{status: :canceled})
+      |> Repo.update!()
+
+      conn = get(conn, Routes.dashboard_path(conn, :index, workspace.organization))
+
+      error_path = Routes.billing_error_path(conn, :show, workspace.organization)
+      assert redirected_to(conn, 302) =~ error_path
+
+      conn =
+        login(workspace.richard)
+        |> get(error_path)
+
+      assert html_response(conn, 200) =~ "has been frozen"
     end
   end
 end

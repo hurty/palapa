@@ -46,7 +46,7 @@ defmodule PalapaWeb.Settings.Billing.StripeWebhookControllerTest do
   end
 
   @invoice_payment_succeeded_event %Stripe.Event{
-    type: "invoice.payment_succeeded",
+    type: "invoice.updated",
     data: %{
       object: %{
         id: "in_000",
