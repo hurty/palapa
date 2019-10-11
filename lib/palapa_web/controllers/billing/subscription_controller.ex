@@ -34,6 +34,16 @@ defmodule PalapaWeb.Billing.SubscriptionController do
         {:error, :customer, customer_changeset, _changes_so_far} ->
           render(conn, "new.html", customer_changeset: customer_changeset)
 
+        {:error, _, %Stripe.Error{} = stripe_error, changes} ->
+          customer_changeset =
+            changes.customer
+            |> Map.put(:id, nil)
+            |> Billing.change_customer_infos()
+
+          conn
+          |> put_flash(:error, stripe_error.message)
+          |> render("new.html", customer_changeset: customer_changeset)
+
         {:error, _step, _error, _changes} ->
           conn
           |> put_flash(

@@ -31,8 +31,7 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
   def edit(conn, _) do
     with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
       customer = Billing.get_customer(current_organization(conn))
-      customer_changeset = Billing.change_customer_payment_method(customer)
-      render(conn, "edit.html", customer_changeset: customer_changeset)
+      render(conn, "edit.html", customer_changeset: get_changeset(customer))
     end
   end
 
@@ -46,9 +45,20 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
             to: Routes.settings_customer_path(conn, :show, current_organization(conn))
           )
 
-        {:error, customer_changeset} ->
-          render(conn, "edit.html", customer_changeset: customer_changeset)
+        {:error, :update_stripe_customer_payment_method, %Stripe.Error{} = stripe_error, _} ->
+          conn
+          |> put_flash(:error, stripe_error.message)
+          |> render("edit.html", customer_changeset: get_changeset(customer))
+
+        {:error, :customer, changeset, _changes} ->
+          conn
+          |> put_flash(:error, "An error occurred while updating your payment method")
+          |> render("edit.html", customer_changeset: changeset)
       end
     end
+  end
+
+  defp get_changeset(customer) do
+    Billing.change_customer_payment_method(customer)
   end
 end
