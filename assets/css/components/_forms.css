@@ -119,3 +119,8 @@ select {
     border-width: 5px;
   }
 }
+
+.required::after {
+  content: "*";
+  @apply text-red-500;
+}

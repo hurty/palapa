@@ -23,10 +23,6 @@
         </div>
       </nav>
       
-      <%= if @conn.assigns[:current_organization] do %>
-      <p class="text-red-500">BILLING STATUS <%= Palapa.Billing.get_billing_status(@current_organization) %></p>
-      <% end %>
-
       <main role="main">
         <%= render PalapaWeb.LayoutView, "_flash_notice.html", assigns %>
         <%= render @view_module, @view_template, assigns %>

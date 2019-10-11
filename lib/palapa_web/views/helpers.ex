@@ -158,4 +158,18 @@ defmodule PalapaWeb.Helpers do
   def auto_active_tab(navigation_value, tab_value) do
     "tab" <> if navigation_value == tab_value, do: " tab--active", else: ""
   end
+
+  def countries_list() do
+    countries =
+      Countries.all()
+      |> Enum.map(fn country -> country.name end)
+      |> Enum.sort()
+
+    [[key: "", value: ""] | countries]
+  end
+
+  def format_money(amount) do
+    Money.new(amount, :EUR)
+    |> Money.to_string()
+  end
 end

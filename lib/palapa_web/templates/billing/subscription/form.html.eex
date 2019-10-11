@@ -7,13 +7,14 @@
     <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
   <% end %>
 
-  <p class="text-sm text-blue">* Required fields</p>
+  <p class="text-xs text-blue-500"><span class="text-sm text-red-500">*</span> Required fields</p>
 
   <div class="bg-gray-100 rounded-lg p-2 my-4">
     <h3 class="text-green-500"><%= gettext("Payment") %></h3>
+
     <div class="field">
-      <label for="card-element" class="label">
-        <%= gettext("Credit card*") %>
+      <label for="card-element" class="label required">
+        <%= gettext("Credit card") %>
       </label>
       
       <div id="card-element" data-target="billing.cardElement" class="border rounded p-4 bg-white">
@@ -24,61 +25,7 @@
     </div>
   </div>
 
-  <div class="bg-gray-100 rounded-lg p-2 my-2">
-    <h3 class="text-green-500"><%= gettext("Billing information") %></h3>
-    
-    <p class="text-sm text-blue">These informations will appear on your invoices</p>
-
-    <div class="field">
-      <%= label form, :billing_email, gettext("Billing email address*"), class: "label" %>
-      <%= email_input form, :billing_email, value: @current_account.email, class: "input", placeholder: "accounting@your-company.com" %>
-      <%= error_tag form, :billing_email %>
-    </div>
-
-    <div class="field">
-      <%= label form, :billing_name, gettext("Your name or company name*"), class: "label" %>
-      <%= text_input form, :billing_name, value: @current_account.name, class: "input" %>
-      <%= error_tag form, :billing_name %>
-    </div>
-
-    <div class="field">
-      <%= label form, :billing_address, gettext("Billing address"), class: "label" %>
-      <%= text_input form, :billing_address, class: "input" %>
-      <%= error_tag form, :billing_address %>
-    </div>
-
-    <div class="flex flex-wrap justify-between">
-      <div class="field">
-        <%= label form, :billing_postcode, gettext("Postcode"), class: "label" %>
-        <%= text_input form, :billing_postcode, class: "input" %>
-        <%= error_tag form, :billing_postcode %>
-      </div>
-
-      <div class="field">
-        <%= label form, :billing_city, gettext("City"), class: "label" %>
-        <%= text_input form, :billing_city, class: "input" %>
-        <%= error_tag form, :billing_city %>
-      </div>
-    
-      <div class="field">
-        <%= label form, :billing_state, gettext("State"), class: "label" %>
-        <%= text_input form, :billing_state, class: "input" %>
-        <%= error_tag form, :billing_state %>
-      </div>
-      
-      <div class="field">
-        <%= label form, :billing_country, gettext("Country"), class: "label" %>
-        <%= text_input form, :billing_country, class: "input" %>
-        <%= error_tag form, :billing_country %>
-      </div>
-    </div>
-
-    <div class="field">
-      <%= label form, :vat_number, gettext("VAT number (if your company is in the European Union)"), class: "label" %>
-      <%= text_input form, :vat_number, class: "input" %>
-      <%= error_tag form, :vat_number %>
-    </div>
-  </div>
+  <%= render PalapaWeb.Billing.SubscriptionView, "customer_fields.html", %{form: form} %>
 
   <div class="card-actions">
     <button class="btn btn-green">Submit</button>

@@ -1,0 +1,62 @@
+<div>
+  <div class="bg-gray-100 rounded-lg p-2 my-2">
+
+    <h3 class="text-green-500"><%= gettext("Billing information") %></h3>
+    
+    <div class="my-2">
+    <p class="text-sm font-bold text-gray-600">These informations will appear on your invoices</p>
+    </div>
+    
+    <div class="field">
+      <%= label @form, :billing_name, gettext("Your name or company name"), class: "label required" %>
+      <%= text_input @form, :billing_name, class: "input" %>
+      <%= error_tag @form, :billing_name %>
+    </div>
+
+    <div class="field">
+      <%= label @form, :billing_email, gettext("Billing email address"), class: "label required" %>
+      <%= email_input @form, :billing_email, class: "input", placeholder: "accounting@your-company.com" %>
+      <%= error_tag @form, :billing_email %>
+    </div>
+
+    <div class="field">
+      <%= label @form, :billing_address, gettext("Billing address"), class: "label" %>
+      <%= text_input @form, :billing_address, class: "input" %>
+      <%= error_tag @form, :billing_address %>
+    </div>
+
+    <div class="flex flex-wrap">
+      <div class="field">
+        <%= label @form, :billing_postcode, gettext("Postcode"), class: "label" %>
+        <%= text_input @form, :billing_postcode, class: "input" %>
+        <%= error_tag @form, :billing_postcode %>
+      </div>
+
+      <div class="flex-1 field ml-2">
+        <%= label @form, :billing_city, gettext("City"), class: "label" %>
+        <%= text_input @form, :billing_city, class: "input" %>
+        <%= error_tag @form, :billing_city %>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap">
+      <div class="field">
+        <%= label @form, :billing_state, gettext("State"), class: "label" %>
+        <%= text_input @form, :billing_state, class: "input" %>
+        <%= error_tag @form, :billing_state %>
+      </div>
+      
+      <div class="flex-1 field ml-2">
+        <%= label @form, :billing_country, gettext("Country"), class: "label required" %>
+        <%= select @form, :billing_country, Helpers.countries_list(), "data-controller": "choice", class: "input" %>
+        <%= error_tag @form, :billing_country %>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= label @form, :vat_number, gettext("VAT number (if your company is in the European Union)"), class: "label" %>
+      <%= text_input @form, :vat_number, class: "input" %>
+      <%= error_tag @form, :vat_number %>
+    </div>
+  </div>
+</div>
