@@ -4,6 +4,7 @@ import "./vendor/fontawesome-solid";
 import "./vendor/fontawesome-brands";
 
 import "./palapa";
+import "trix";
 
 import AutoFocus from "./live_hooks/auto_focus";
 let Hooks = {};
