@@ -14,7 +14,7 @@ defmodule Palapa.Billing.StripityStripeAdapter do
 
     Stripe.Customer.create(
       %{
-        payment_method: attrs["payment_method_id"],
+        source: attrs["stripe_token_id"],
         email: attrs["billing_email"],
         name: attrs["billing_name"],
         address: %{
@@ -25,8 +25,7 @@ defmodule Palapa.Billing.StripityStripeAdapter do
           country: attrs["billing_country"]
         },
         invoice_settings: %{
-          custom_fields: custom_fields,
-          default_payment_method: attrs["payment_method_id"]
+          custom_fields: custom_fields
         },
         metadata: %{
           customer_id: attrs["id"]
@@ -101,10 +100,19 @@ defmodule Palapa.Billing.StripityStripeAdapter do
   end
 
   def update_payment_method(stripe_customer, payment_method) do
-    Stripe.PaymentMethod.attach(%{
-      customer: stripe_customer,
-      payment_method: payment_method
-    })
+    with {:ok, payment_method} <-
+           Stripe.PaymentMethod.attach(%{
+             customer: stripe_customer,
+             payment_method: payment_method
+           }) do
+      Stripe.Customer.update(stripe_customer, %{
+        invoice_settings: %{default_payment_method: payment_method.id}
+      })
+
+      {:ok, payment_method}
+    else
+      error -> error
+    end
   end
 
   def pay_invoice(stripe_invoice_id) do

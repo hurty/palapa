@@ -18,10 +18,7 @@ defmodule PalapaWeb.Billing.SubscriptionController do
     with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
       customer_changeset = Billing.Customers.change_customer(%Customer{})
 
-      render(conn, "new.html",
-        customer_changeset: customer_changeset,
-        setup_intent: setup_intent()
-      )
+      render(conn, "new.html", customer_changeset: customer_changeset)
     end
   end
 
@@ -38,8 +35,7 @@ defmodule PalapaWeb.Billing.SubscriptionController do
           conn
           |> put_flash(:error, "Please check your subscription information")
           |> render("new.html",
-            customer_changeset: customer_changeset,
-            setup_intent: setup_intent()
+            customer_changeset: customer_changeset
           )
 
         {:error, _, %Stripe.Error{} = stripe_error, changes} ->
@@ -51,8 +47,7 @@ defmodule PalapaWeb.Billing.SubscriptionController do
           conn
           |> put_flash(:error, stripe_error.message)
           |> render("new.html",
-            customer_changeset: customer_changeset,
-            setup_intent: setup_intent()
+            customer_changeset: customer_changeset
           )
 
         {:error, _step, _error, _changes} ->
@@ -77,10 +72,5 @@ defmodule PalapaWeb.Billing.SubscriptionController do
       {:error, error} ->
         Logger.error("subscription could not be refreshed: #{inspect(error)}")
     end
-  end
-
-  defp setup_intent do
-    {:ok, setup_intent} = Billing.create_setup_intent()
-    setup_intent
   end
 end

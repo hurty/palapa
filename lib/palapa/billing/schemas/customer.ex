@@ -29,6 +29,7 @@ defmodule Palapa.Billing.Customer do
   def changeset(customer, attrs) do
     customer
     |> cast(attrs, [
+      :stripe_customer_id,
       :card_brand,
       :card_last_4,
       :card_expiration_month,

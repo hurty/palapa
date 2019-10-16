@@ -71,20 +71,18 @@ defmodule Palapa.Billing.Subscriptions do
   def create_local_resources(multi, organization, attrs) do
     multi
     |> Multi.insert(:customer, fn %{stripe_customer: stripe_customer} ->
-      with {:ok, payment_method} <- get_payment_method(attrs["payment_method_id"]) do
-        attrs =
-          Map.merge(attrs, %{
-            "stripe_customer_id" => stripe_customer.id,
-            "card_brand" => payment_method.card.brand,
-            "card_last_4" => payment_method.card.last4,
-            "card_expiration_month" => payment_method.card.exp_month,
-            "card_expiration_year" => payment_method.card.exp_year
-          })
+      attrs =
+        Map.merge(attrs, %{
+          "stripe_customer_id" => stripe_customer.id,
+          "card_brand" => stripe_customer.default_source.brand,
+          "card_last_4" => stripe_customer.default_source.last4,
+          "card_expiration_month" => stripe_customer.default_source.exp_month,
+          "card_expiration_year" => stripe_customer.default_source.exp_year
+        })
 
-        %Customer{}
-        |> Customer.changeset(attrs)
-        |> put_assoc(:organization, organization)
-      end
+      %Customer{}
+      |> Customer.changeset(attrs)
+      |> put_assoc(:organization, organization)
     end)
     |> Multi.run(:subscription, fn _repo,
                                    %{customer: customer, stripe_subscription: stripe_subscription} ->

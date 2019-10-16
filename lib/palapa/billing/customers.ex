@@ -11,8 +11,8 @@ defmodule Palapa.Billing.Customers do
     Repo.get_assoc(organization, :customer)
   end
 
-  def get_customer!(id) when is_binary(id) do
-    Repo.get!(Customer, id)
+  def get_customer(id) when is_binary(id) do
+    Repo.get(Customer, id)
   end
 
   def get_customer_by_stripe_id!(customer_id) do
@@ -71,6 +71,9 @@ defmodule Palapa.Billing.Customers do
   end
 
   def update_stripe_customer_payment_method(customer, stripe_payment_method_id) do
-    Billing.stripe_adapter().update_payment_method(customer, stripe_payment_method_id)
+    Billing.stripe_adapter().update_payment_method(
+      customer.stripe_customer_id,
+      stripe_payment_method_id
+    )
   end
 end

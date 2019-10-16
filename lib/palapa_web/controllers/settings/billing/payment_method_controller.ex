@@ -31,11 +31,10 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
   def edit(conn, _) do
     with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
       customer = Billing.Customers.get_customer(current_organization(conn))
-      {:ok, setup_intent} = Billing.create_setup_intent()
 
       render(conn, "edit.html",
         customer_changeset: get_changeset(customer),
-        setup_intent: setup_intent
+        setup_intent: setup_intent()
       )
     end
   end
@@ -53,17 +52,28 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
         {:error, :stripe_payment_method, %Stripe.Error{} = stripe_error, _} ->
           conn
           |> put_flash(:error, stripe_error.message)
-          |> render("edit.html", customer_changeset: get_changeset(customer))
+          |> render("edit.html",
+            customer_changeset: get_changeset(customer),
+            setup_intent: setup_intent()
+          )
 
         {:error, :customer, changeset, _changes} ->
           conn
           |> put_flash(:error, "An error occurred while updating your payment method")
-          |> render("edit.html", customer_changeset: changeset)
+          |> render("edit.html",
+            customer_changeset: changeset,
+            setup_intent: setup_intent()
+          )
       end
     end
   end
 
   defp get_changeset(customer) do
     Billing.Customers.change_customer_payment_method(customer)
+  end
+
+  defp setup_intent() do
+    {:ok, setup_intent} = Billing.create_setup_intent()
+    setup_intent
   end
 end
