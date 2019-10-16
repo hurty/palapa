@@ -8,31 +8,6 @@
       Please update your payment method to continue.
     </p>
 
-    <%= form_for @customer_changeset, Routes.payment_method_path(@conn, :update, @current_organization), [
-      "data-controller": "billing",
-      "data-action": "billing#submitSubscription",
-      "data-billing-api-key": "pk_test_q0YfdqC7bsahlMzdz5BHcXXJ00973FKvkj"
-    ], fn _form -> %>
-      <%= if @customer_changeset.action do %>
-        <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
-      <% end %>
-
-      <div class="field">
-        <label for="card-element" class="label">
-          <%= gettext("Credit card*") %>
-        </label>
-        
-        <div id="card-element" data-target="billing.cardElement" class="border rounded p-4 bg-white">
-          <!-- A Stripe Element will be inserted here. -->
-        </div>
-        
-        <div data-target="billing.cardErrors" role="alert" class="text-red-500"></div>
-      </div>
-
-      <div class="card-actions justify-between">
-        <button class="btn btn-green">Update card</button>
-        <%= link "Abort", to: Routes.organization_path(@conn, :index), class: "btn" %>
-      </div>
-    <% end %>
+    <%= render "form.html", Map.merge(assigns, %{form_path: Routes.payment_method_path(@conn, :update, @current_organization)}) %>
   </div>
 </div>

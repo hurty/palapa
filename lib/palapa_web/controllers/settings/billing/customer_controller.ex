@@ -32,15 +32,15 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
 
   def show(conn, _params) do
     with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
-      customer = Billing.get_customer(current_organization(conn))
-      invoices = Billing.list_invoices(current_organization(conn))
+      customer = Billing.Customers.get_customer(current_organization(conn))
+      invoices = Billing.Invoices.list_invoices(current_organization(conn))
       render(conn, "show.html", customer: customer, invoices: invoices)
     end
   end
 
   def new(conn, _) do
     with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
-      customer_changeset = Billing.change_customer_infos(%Customer{})
+      customer_changeset = Billing.Customers.change_customer(%Customer{})
 
       conn
       |> put_breadcrumb(
@@ -53,7 +53,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
 
   def create(conn, %{"customer" => customer_attrs}) do
     with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
-      case Billing.create_customer_and_subscription(
+      case Billing.Subscriptions.create_subscription(
              current_organization(conn),
              customer_attrs
            ) do
@@ -83,10 +83,10 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
           Routes.settings_customer_path(conn, :edit, current_organization(conn))
         )
 
-      customer = Billing.get_customer(current_organization(conn))
+      customer = Billing.Customers.get_customer(current_organization(conn))
 
       if customer do
-        customer_changeset = Billing.change_customer_infos(customer)
+        customer_changeset = Billing.Customers.change_customer(customer)
         render(conn, "edit.html", customer_changeset: customer_changeset)
       else
         conn
@@ -101,9 +101,9 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
 
   def update(conn, %{"customer" => customer_attrs}) do
     with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
-      customer = Billing.get_customer(current_organization(conn))
+      customer = Billing.Customers.get_customer(current_organization(conn))
 
-      case Billing.update_customer_infos(customer, customer_attrs) do
+      case Billing.Customers.update_customer(customer, customer_attrs) do
         {:ok, _customer} ->
           conn
           |> put_flash(:success, "Billing information has been updated successfully")

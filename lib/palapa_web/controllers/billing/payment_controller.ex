@@ -12,13 +12,13 @@ defmodule PalapaWeb.Billing.PaymentController do
   plug :put_navigation, "accounts"
 
   def new(conn, _params) do
-    current_subscription = Billing.get_subscription(current_organization(conn))
+    current_subscription = Billing.Subscriptions.get_subscription(current_organization(conn))
 
-    case Billing.pay_invoice(current_subscription.stripe_latest_invoice_id) do
+    case Billing.Invoices.pay_invoice(current_subscription.stripe_latest_invoice_id) do
       {:ok, _} ->
         redirect(conn, to: Routes.dashboard_url(conn, :index, current_organization(conn)))
 
-      # Display the 3DSecure challenge
+      # Needs to display the 3DSecure challenge
       {:error, %Stripe.Error{extra: %{card_code: :invoice_payment_intent_requires_action}}} ->
         payment_intent = Billing.get_payment_intent(current_subscription.stripe_subscription_id)
         render(conn, "new.html", payment_intent: payment_intent)

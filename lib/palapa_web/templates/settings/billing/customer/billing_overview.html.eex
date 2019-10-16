@@ -33,8 +33,9 @@
         <h3 class="text-green-500">Payment method</h3>
         
         <div class="my-2">
-          <i class="fas fa-credit-card"></i> <%= @customer.card_brand %>
-          **** **** **** <%= @customer.card_last_4 %>
+          <i class="fas fa-credit-card"></i> <%= String.capitalize @customer.card_brand %>
+          **** **** **** <%= @customer.card_last_4 %> <br>
+          Expires <%= @customer.card_expiration_month %> / <%= @customer.card_expiration_year %>
         </div>
         
         <div class="my-4">

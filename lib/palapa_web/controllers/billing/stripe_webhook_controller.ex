@@ -32,7 +32,7 @@ defmodule PalapaWeb.Billing.StripeWebhookController do
 
   defp handle_event(conn, %{type: "invoice.created"} = event, _params) do
     stripe_invoice = event.data.object
-    customer = Billing.get_customer_by_stripe_id!(stripe_invoice.customer)
+    customer = Billing.Customers.get_customer_by_stripe_id!(stripe_invoice.customer)
 
     invoice_attrs = %{
       stripe_invoice_id: stripe_invoice.id,
@@ -44,7 +44,7 @@ defmodule PalapaWeb.Billing.StripeWebhookController do
       pdf_url: stripe_invoice.invoice_pdf
     }
 
-    case Billing.create_invoice(customer, invoice_attrs) do
+    case Billing.Invoices.create_invoice(customer, invoice_attrs) do
       {:ok, invoice} ->
         send_resp(conn, :ok, "Created invoice #{invoice.id}")
 
@@ -55,9 +55,9 @@ defmodule PalapaWeb.Billing.StripeWebhookController do
 
   defp handle_event(conn, %{type: "invoice.updated"} = event, _params) do
     stripe_invoice = event.data.object
-    invoice = Billing.get_invoice_by_stripe_id!(stripe_invoice.id)
+    invoice = Billing.Invoices.get_invoice_by_stripe_id!(stripe_invoice.id)
 
-    case Billing.update_invoice(invoice, %{status: stripe_invoice.status}) do
+    case Billing.Invoices.update_invoice(invoice, %{status: stripe_invoice.status}) do
       {:ok, invoice} ->
         send_resp(conn, :ok, "Updated invoice status #{invoice.id} #{invoice.status}")
 
@@ -68,9 +68,9 @@ defmodule PalapaWeb.Billing.StripeWebhookController do
 
   defp handle_event(conn, %{type: "customer.subscription.updated"} = event, _params) do
     stripe_subscription = event.data.object
-    subscription = Billing.get_subscription_by_stripe_id!(stripe_subscription.id)
+    subscription = Billing.Subscriptions.get_subscription_by_stripe_id!(stripe_subscription.id)
 
-    case Billing.update_subscription(subscription, %{
+    case Billing.Subscriptions.update_subscription(subscription, %{
            status: stripe_subscription.status,
            stripe_latest_invoice_id: stripe_subscription.latest_invoice
          }) do

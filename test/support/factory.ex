@@ -250,7 +250,11 @@ defmodule Palapa.Factory do
       billing_postcode: "44000",
       billing_state: "Loire Atlantique",
       billing_country: "France",
-      vat_number: "vat_123"
+      vat_number: "vat_123",
+      card_brand: "visa",
+      card_expiration_month: 1,
+      card_expiration_year: 2032,
+      card_last_4: "3220"
     }
   end
 

@@ -24,6 +24,14 @@ export default class extends Controller {
     element.focus();
   }
 
+  addHiddenFieldToForm(form, fieldName, fieldValue) {
+    const hiddenField = document.createElement("input");
+    hiddenField.type = "hidden";
+    hiddenField.name = fieldName;
+    hiddenField.value = fieldValue;
+    form.appendChild(hiddenField);
+  }
+
   animate(node, animationName, callback) {
     node.classList.add("animated", animationName);
 

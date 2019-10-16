@@ -10,7 +10,6 @@ defmodule Palapa.Billing.Customer do
     timestamps()
 
     field(:stripe_customer_id, :string)
-    field(:stripe_token_id, :string, virtual: true)
 
     field(:billing_name, :string)
     field(:billing_email, :string)
@@ -29,14 +28,11 @@ defmodule Palapa.Billing.Customer do
 
   def changeset(customer, attrs) do
     customer
-    |> cast(attrs, [:stripe_customer_id])
-    |> unique_constraint(:stripe_customer_id)
-  end
-
-  def billing_infos_changeset(customer, attrs) do
-    customer
     |> cast(attrs, [
-      :stripe_token_id,
+      :card_brand,
+      :card_last_4,
+      :card_expiration_month,
+      :card_expiration_year,
       :billing_name,
       :billing_email,
       :billing_address,
@@ -44,24 +40,17 @@ defmodule Palapa.Billing.Customer do
       :billing_city,
       :billing_state,
       :billing_country,
-      :vat_number,
-      :card_brand,
-      :card_last_4,
-      :card_expiration_month,
-      :card_expiration_year
+      :vat_number
     ])
     |> validate_required([
-      :stripe_token_id,
       :billing_name,
       :billing_email,
-      :card_brand,
-      :card_last_4,
-      :card_expiration_month,
-      :card_expiration_year
+      :billing_country
     ])
+    |> unique_constraint(:stripe_customer_id)
   end
 
-  def edit_billing_infos_changeset(customer, attrs) do
+  def update_changeset(customer, attrs) do
     customer
     |> cast(attrs, [
       :billing_name,
@@ -75,21 +64,20 @@ defmodule Palapa.Billing.Customer do
     ])
     |> validate_required([
       :billing_name,
-      :billing_email
+      :billing_email,
+      :billing_country
     ])
   end
 
   def payment_method_changeset(customer, attrs) do
     customer
     |> cast(attrs, [
-      :stripe_token_id,
       :card_brand,
       :card_last_4,
       :card_expiration_month,
       :card_expiration_year
     ])
     |> validate_required([
-      :stripe_token_id,
       :card_brand,
       :card_last_4,
       :card_expiration_month,

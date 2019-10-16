@@ -30,22 +30,27 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
 
   def edit(conn, _) do
     with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
-      customer = Billing.get_customer(current_organization(conn))
-      render(conn, "edit.html", customer_changeset: get_changeset(customer))
+      customer = Billing.Customers.get_customer(current_organization(conn))
+      {:ok, setup_intent} = Billing.create_setup_intent()
+
+      render(conn, "edit.html",
+        customer_changeset: get_changeset(customer),
+        setup_intent: setup_intent
+      )
     end
   end
 
-  def update(conn, %{"customer" => customer_attrs}) do
+  def update(conn, %{"customer" => %{"payment_method_id" => payment_method_id}}) do
     with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
-      customer = Billing.get_customer(current_organization(conn))
+      customer = Billing.Customers.get_customer(current_organization(conn))
 
-      case Billing.update_customer_payment_method(customer, customer_attrs) do
+      case Billing.Customers.update_customer_payment_method(customer, payment_method_id) do
         {:ok, _result} ->
-          redirect(conn,
-            to: Routes.settings_customer_path(conn, :show, current_organization(conn))
-          )
+          conn
+          |> put_flash(:success, "Your payment method has been updated")
+          |> redirect(to: Routes.settings_customer_path(conn, :show, current_organization(conn)))
 
-        {:error, :update_stripe_customer_payment_method, %Stripe.Error{} = stripe_error, _} ->
+        {:error, :stripe_payment_method, %Stripe.Error{} = stripe_error, _} ->
           conn
           |> put_flash(:error, stripe_error.message)
           |> render("edit.html", customer_changeset: get_changeset(customer))
@@ -59,6 +64,6 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
   end
 
   defp get_changeset(customer) do
-    Billing.change_customer_payment_method(customer)
+    Billing.Customers.change_customer_payment_method(customer)
   end
 end

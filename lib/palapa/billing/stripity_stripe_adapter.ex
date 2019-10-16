@@ -1,37 +1,39 @@
-defmodule Palapa.Billing.StripeAdapter do
-  @behaviour Palapa.Billing.BillingPlatform
-
-  def create_customer(customer, stripe_token_id) do
+defmodule Palapa.Billing.StripityStripeAdapter do
+  def create_customer(attrs) do
     custom_fields =
-      if customer.vat_number do
+      if String.trim(attrs["vat_number"]) == "" do
+        []
+      else
         [
           %{
             name: "VAT number",
-            value: customer.vat_number
+            value: attrs["vat_number"]
           }
         ]
-      else
-        []
       end
 
-    Stripe.Customer.create(%{
-      source: stripe_token_id,
-      email: customer.billing_email,
-      name: customer.billing_name,
-      address: %{
-        line1: customer.billing_address,
-        postal_code: customer.billing_postcode,
-        city: customer.billing_city,
-        state: customer.billing_state,
-        country: customer.billing_country
+    Stripe.Customer.create(
+      %{
+        payment_method: attrs["payment_method_id"],
+        email: attrs["billing_email"],
+        name: attrs["billing_name"],
+        address: %{
+          line1: attrs["billing_address"],
+          postal_code: attrs["billing_postcode"],
+          city: attrs["billing_city"],
+          state: attrs["billing_state"],
+          country: attrs["billing_country"]
+        },
+        invoice_settings: %{
+          custom_fields: custom_fields,
+          default_payment_method: attrs["payment_method_id"]
+        },
+        metadata: %{
+          customer_id: attrs["id"]
+        }
       },
-      invoice_settings: %{
-        custom_fields: custom_fields
-      },
-      metadata: %{
-        customer_id: customer.id
-      }
-    })
+      expand: ["default_source"]
+    )
   end
 
   @doc """
@@ -59,7 +61,7 @@ defmodule Palapa.Billing.StripeAdapter do
     Stripe.Subscription.retrieve(stripe_subscription_id, expand: ["latest_invoice.payment_intent"])
   end
 
-  def update_customer(customer) do
+  def update_customer(%Palapa.Billing.Customer{} = customer) do
     custom_fields =
       if customer.vat_number do
         [
@@ -90,12 +92,19 @@ defmodule Palapa.Billing.StripeAdapter do
     Stripe.Customer.update(customer.stripe_customer_id, customer_attrs)
   end
 
-  def update_payment_method(customer) do
-    body = %{source: customer.stripe_token_id}
+  def create_setup_intent() do
+    Stripe.SetupIntent.create(%{usage: "off_session"})
+  end
 
-    Stripe.Customer.update(customer.stripe_customer_id, body,
-      expand: ["subscriptions.data.latest_invoice.payment_intent"]
-    )
+  def get_payment_method(id) do
+    Stripe.PaymentMethod.retrieve(id)
+  end
+
+  def update_payment_method(stripe_customer, payment_method) do
+    Stripe.PaymentMethod.attach(%{
+      customer: stripe_customer,
+      payment_method: payment_method
+    })
   end
 
   def pay_invoice(stripe_invoice_id) do

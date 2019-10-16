@@ -1,8 +1,9 @@
 <%= form_for @customer_changeset, @form_path, [
   method: "post",
-  "data-controller": "billing",
-  "data-action": "billing#submitSubscription",
-  "data-billing-api-key": "pk_test_q0YfdqC7bsahlMzdz5BHcXXJ00973FKvkj"
+  "data-controller": "payment-method",
+  "data-action": "payment-method#handleCardSetup",
+  "data-payment-method-api-key": "pk_test_q0YfdqC7bsahlMzdz5BHcXXJ00973FKvkj",
+  "data-payment-method-client-secret": @setup_intent.client_secret
 ], fn form -> %>
   <%= if @customer_changeset.action do %>
     <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
@@ -18,17 +19,17 @@
         <%= gettext("Credit card") %>
       </label>
       
-      <div id="card-element" data-target="billing.cardElement" class="border rounded p-4 bg-white">
+      <div id="card-element" data-target="payment-method.cardContainer" class="border rounded p-4 bg-white">
         <!-- A Stripe Element will be inserted here. -->
       </div>
       
-      <div data-target="billing.cardErrors" role="alert" class="text-red-500"></div>
+      <div data-target="payment-method.cardErrors" role="alert" class="text-red-500"></div>
     </div>
   </div>
 
   <%= render PalapaWeb.Billing.SubscriptionView, "customer_fields.html", %{form: form} %>
 
   <div class="card-actions">
-    <button class="btn btn-green">Submit</button>
+    <button data-target="payment-method.saveButton" class="btn btn-green">Submit</button>
   </div>
 <% end %>
