@@ -24,6 +24,15 @@ defmodule Palapa.Accounts.Registrations do
     }
 
     Ecto.Multi.new()
+    |> Ecto.Multi.run(:account_already_exists, fn _repo, _ ->
+      email = attrs["email"]
+
+      if Accounts.exists?(email) do
+        {:error, email}
+      else
+        {:ok, nil}
+      end
+    end)
     |> Ecto.Multi.run(:registration, fn _repo, _ ->
       Registration.validate(changeset)
     end)

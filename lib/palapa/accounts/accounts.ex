@@ -9,6 +9,12 @@ defmodule Palapa.Accounts do
 
   def get_by(conditions), do: Repo.get_by(Account, conditions)
 
+  def exists?(email) do
+    Account
+    |> where(email: ^email)
+    |> Repo.exists?()
+  end
+
   def create(attrs \\ %{}) do
     %Account{}
     |> Account.changeset(attrs)

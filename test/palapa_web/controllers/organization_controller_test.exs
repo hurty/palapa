@@ -1,6 +1,5 @@
 defmodule PalapaWeb.OrganizationControllerTest do
   use PalapaWeb.ConnCase
-  use Bamboo.Test, shared: true
 
   setup do
     workspace = insert_pied_piper!()

@@ -17,6 +17,14 @@ defmodule PalapaWeb.RegistrationController do
           to: Routes.dashboard_path(conn, :index, result.organization_membership.organization)
         )
 
+      {:error, :account_already_exists, _, _} ->
+        conn
+        |> put_flash(
+          :error,
+          "It seems you already have a Palapa account. Please sign in first to create a new workspace"
+        )
+        |> redirect(to: Routes.session_path(conn, :new))
+
       {:error, _failed_operation, changeset, _changes_so_far} ->
         render(conn, "new.html", changeset: %{changeset | action: :insert})
     end
