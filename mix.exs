@@ -46,7 +46,7 @@ defmodule Palapa.Mixfile do
       {:phoenix, "~> 1.4.0", override: true},
       {:plug_cowboy, "~> 2.0"},
       {:phoenix_pubsub, "~> 1.0"},
-      {:ecto, "~> 3.0", override: true},
+      {:ecto, "~> 3.1.0", override: true},
       {:ecto_sql, "~> 3.0"},
       {:phoenix_ecto, "~> 4.0"},
       {:postgrex, ">= 0.0.0"},
