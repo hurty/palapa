@@ -41,7 +41,7 @@ defmodule PalapaWeb.Settings.Billing.StripeWebhookControllerTest do
       |> post(Routes.stripe_webhook_path(conn, :create))
 
     assert response(conn, :ok)
-    invoice = Billing.get_invoice_by_stripe_id!("in_000")
+    invoice = Billing.Invoices.get_invoice_by_stripe_id!("in_000")
     assert invoice.status == "open"
   end
 
@@ -74,7 +74,7 @@ defmodule PalapaWeb.Settings.Billing.StripeWebhookControllerTest do
       |> post(Routes.stripe_webhook_path(conn, :create))
 
     assert response(conn, :ok)
-    invoice = Billing.get_invoice_by_stripe_id!("in_000")
+    invoice = Billing.Invoices.get_invoice_by_stripe_id!("in_000")
     assert invoice.status == "paid"
   end
 
