@@ -66,8 +66,10 @@ defmodule Palapa.Organizations do
     |> Repo.update()
   end
 
-  def delete(%Organization{} = organization) do
-    Repo.delete(organization)
+  def soft_delete(%Organization{} = organization, %Account{} = account) do
+    organization
+    |> change(%{deleted_at: DateTime.utc_now(), deleted_by: account.id})
+    |> Repo.update()
   end
 
   def change(organization) do

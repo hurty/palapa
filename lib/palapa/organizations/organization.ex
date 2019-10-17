@@ -10,11 +10,11 @@ defmodule Palapa.Organizations.Organization do
   alias Palapa.Billing.{Customer, Subscription}
 
   schema "organizations" do
+    timestamps()
+
     field(:name, :string)
     field(:default_timezone, :string)
     field(:allow_trial, :boolean)
-    field(:deleted_at, :utc_datetime)
-    timestamps()
 
     belongs_to(:creator_account, Account)
     belongs_to(:customer, Customer)
@@ -24,6 +24,9 @@ defmodule Palapa.Organizations.Organization do
     has_many(:invitations, Invitations.Invitation)
     has_many(:teams, Teams.Team)
     has_many(:events, Event)
+
+    field(:deleted_at, :utc_datetime_usec)
+    belongs_to(:deleted_by, Account, foreign_key: :deleted_by_account_id)
   end
 
   @doc false

@@ -46,6 +46,7 @@
 @import "components/_rich_text.css";
 @import "components/_events";
 @import "components/_document";
+@import "components/_modal";
 @import "components/_navigation";
 @import "components/_popover";
 @import "components/_profile";

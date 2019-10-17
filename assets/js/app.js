@@ -6,6 +6,9 @@ import "./vendor/fontawesome-brands";
 import "./palapa";
 import "trix";
 
+import MicroModal from "micromodal";
+MicroModal.init();
+
 import AutoFocus from "./live_hooks/auto_focus";
 let Hooks = {};
 Hooks.AutoFocus = AutoFocus;
