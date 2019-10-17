@@ -57,6 +57,8 @@ config :palapa, Palapa.Repo,
   log: :debug,
   migration_primary_key: [name: :id, type: :binary_id]
 
+config :stripity_stripe, json_library: Jason
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

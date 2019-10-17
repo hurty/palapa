@@ -2,7 +2,7 @@
   method: "post",
   "data-controller": "card-token",
   "data-action": "card-token#addCardToken",
-  "data-card-token-api-key": "pk_test_q0YfdqC7bsahlMzdz5BHcXXJ00973FKvkj"
+  "data-card-token-api-key": Application.get_env(:stripity_stripe, :publishable_api_key)
 ], fn form -> %>
   <%= if @customer_changeset.action do %>
     <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>

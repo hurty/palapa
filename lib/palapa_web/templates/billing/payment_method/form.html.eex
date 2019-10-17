@@ -1,7 +1,7 @@
 <%= form_for @customer_changeset, @form_path, [
   id: "payment-form",
   "data-controller": "payment-method",
-  "data-payment-method-api-key": "pk_test_q0YfdqC7bsahlMzdz5BHcXXJ00973FKvkj",
+  "data-payment-method-api-key": Application.get_env(:stripity_stripe, :publishable_api_key),
   "data-payment-method-client-secret": @setup_intent.client_secret,
   "data-action": "payment-method#handleCardSetup"
   ], fn _form -> %>

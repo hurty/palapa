@@ -57,6 +57,10 @@ config :appsignal, :config,
   push_api_key: System.get_env("APPSIGNAL_API_KEY"),
   env: Mix.env()
 
+config :stripity_stripe, api_key: System.get_env("STRIPE_API_KEY")
+config :stripity_stripe, publishable_api_key: System.get_env("STRIPE_PUBLISHABLE_API_KEY")
+config :stripity_stripe, webhook_secret: System.get_env("STRIPE_WEBHOOK_SECRET")
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

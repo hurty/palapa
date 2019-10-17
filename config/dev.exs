@@ -74,7 +74,7 @@ config :palapa, Palapa.Repo,
   pool_size: 10
 
 config :stripity_stripe, api_key: "sk_test_oU4pHn8mHni24tRxngf5eRHy00Yg3UvggS"
+config :stripity_stripe, publishable_api_key: "pk_test_q0YfdqC7bsahlMzdz5BHcXXJ00973FKvkj"
 config :stripity_stripe, webhook_secret: "whsec_LRI0vYyl1V9s0UcaCvJ6NbKQCjjpljhS"
-config :stripity_stripe, json_library: Jason
 
 config :appsignal, :config, active: false
