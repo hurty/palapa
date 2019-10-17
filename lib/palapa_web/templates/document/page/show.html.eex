@@ -12,11 +12,17 @@
       <div class="flex justify-between border-b border-gray-200 p-1 sm:p-4">
         <div>
           <h1 class="text-green-500 text-lg sm:text-2xl"><%= @page.title %></h1>
-          <div class="py-2 text-gray-700 text-xs">
-            <span class="align-middle">Edited <%= Helpers.auto_format_datetime(@page.updated_at, @current_account) %> by 
+          <div class="flex py-2 text-gray-700 text-xs">
             <%= link to: Routes.member_path(@conn, :show, @current_organization, @page.last_author), class: "align-middle text-gray-800 hover:underline" do %>
-              <%= Helpers.avatar(@page.last_author.account, :xs) %> <%= @page.last_author.account.name %>
+              <div class="flex">
+                <div class="self-center mr-1"><%= Helpers.avatar(@page.last_author.account, :xs) %></div>
+                <div class="self-center mr-1"><%= @page.last_author.account.name %></div>
+              </div>
             <% end %>
+
+            <div class="self-center">
+              edited <%= Helpers.auto_format_datetime(@page.updated_at, @current_account) %> by 
+            </div>
           </div>
         </div>
 

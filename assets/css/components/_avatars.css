@@ -11,5 +11,5 @@
 }
 
 .avatar--xs {
-  @apply h-8 w-8 text-sm;
+  @apply h-6 w-6 text-xs;
 }
