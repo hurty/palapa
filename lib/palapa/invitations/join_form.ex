@@ -10,13 +10,19 @@ defmodule Palapa.Invitations.JoinForm do
     field(:avatar, Palapa.Avatar.Type)
   end
 
-  def changeset(%__MODULE__{} = registration, attrs) do
-    registration
+  def changeset(%__MODULE__{} = form, attrs) do
+    form
     |> cast(attrs, [:name, :title, :password, :timezone])
     |> validate_required([:name, :password])
     |> validate_length(:password, min: 8, max: 100)
     |> validate_or_nilify_timezone
     |> update_change(:name, &String.trim(&1))
+    |> update_change(:title, &String.trim(&1))
+  end
+
+  def changeset_for_existing_account(%__MODULE__{} = form, attrs) do
+    form
+    |> cast(attrs, [:title])
     |> update_change(:title, &String.trim(&1))
   end
 

@@ -158,7 +158,7 @@ defmodule Palapa.Invitations do
         delete(invitation) && {:already_member, account, member}
 
       account && !member ->
-        {:already_account, account, member}
+        {:existing_account, account, member}
 
       true ->
         {:none, account, member}
@@ -172,7 +172,7 @@ defmodule Palapa.Invitations do
       :already_member ->
         {:ok, %{account: account, member: member}}
 
-      :already_account ->
+      :existing_account ->
         join_with_existing_account(invitation, account, attrs)
 
       _ ->
@@ -218,8 +218,7 @@ defmodule Palapa.Invitations do
   end
 
   defp join_with_existing_account(invitation, account, attrs) do
-    member_attrs = Map.take(attrs, ["title"])
-    changeset = JoinForm.changeset(%JoinForm{}, attrs)
+    changeset = JoinForm.changeset_for_existing_account(%JoinForm{}, attrs)
 
     Ecto.Multi.new()
     |> Ecto.Multi.run(:validation, fn _repo, _changes ->
@@ -230,7 +229,7 @@ defmodule Palapa.Invitations do
       Organizations.create_member(%{
         organization_id: invitation.organization_id,
         account_id: account.id,
-        title: member_attrs["title"],
+        title: attrs["title"],
         role: :member
       })
     end)

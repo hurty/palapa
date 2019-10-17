@@ -97,10 +97,7 @@ defmodule PalapaWeb.JoinControllerTest do
           conn,
           Routes.join_path(conn, :create, invitation.id, invitation.token, %{
             "join_form" => %{
-              "name" => "Dinesh",
-              "password" => "password",
-              "title" => "Engineer",
-              "timezone" => "Europe/Paris"
+              "title" => "Engineer"
             }
           })
         )
