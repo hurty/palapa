@@ -3,12 +3,9 @@ defmodule Palapa.SoftDelete do
     quote do
       import Ecto.Query
 
-      def soft_delete(resource, author) do
+      def soft_delete(resource) do
         resource
-        |> Ecto.Changeset.change(%{
-          deleted_at: DateTime.utc_now(),
-          deleted_by_account_id: author.id
-        })
+        |> Ecto.Changeset.change(%{deleted_at: DateTime.utc_now()})
         |> Palapa.Repo.update()
       end
 

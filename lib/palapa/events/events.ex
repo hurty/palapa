@@ -9,6 +9,7 @@ defmodule Palapa.Events do
 
   defenum(EventAction, :event_action, ~w(
     new_organization
+    delete_organization
     new_member
     new_message
     new_message_comment

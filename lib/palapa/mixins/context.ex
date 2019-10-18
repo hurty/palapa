@@ -10,6 +10,7 @@ defmodule Palapa.Context do
       alias Palapa.Repo
       alias Palapa.Access
 
+      alias Ecto.Multi
       import Ecto.Query
       import Ecto.Changeset
       import Palapa.Context

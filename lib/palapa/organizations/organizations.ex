@@ -33,6 +33,10 @@ defmodule Palapa.Organizations do
     |> Repo.all()
   end
 
+  def get(id) do
+    Repo.get(Organization, id)
+  end
+
   def get!(id) do
     Repo.get!(Organization, id)
   end
@@ -70,6 +74,23 @@ defmodule Palapa.Organizations do
 
   def change(organization) do
     Organization.changeset(organization, %{})
+  end
+
+  def delete(%Organization{} = organization, %Member{} = author) do
+    Multi.new()
+    |> Multi.run(:organization, fn _, _ -> soft_delete(organization) end)
+    |> Multi.insert(:event, fn %{organization: org} ->
+      %Event{
+        action: :delete_organization,
+        organization: org,
+        author: author
+      }
+    end)
+    |> Palapa.JobQueue.enqueue(:cancel_subscription_job, %{
+      type: "cancel_subscription",
+      organization_id: organization.id
+    })
+    |> Repo.transaction()
   end
 
   def update_billing(%Organization{} = organization, attrs) do

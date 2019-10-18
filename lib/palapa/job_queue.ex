@@ -2,6 +2,7 @@ defmodule Palapa.JobQueue do
   use EctoJob.JobQueue, table_name: "jobs"
 
   alias Palapa.Repo
+  alias Palapa.Organizations
   alias Palapa.Billing
 
   def perform(multi, %{"type" => "update_stripe_customer", "customer_id" => customer_id}) do
@@ -16,6 +17,16 @@ defmodule Palapa.JobQueue do
         Billing.Customers.update_stripe_customer(customer)
       end)
       |> Repo.transaction()
+    end
+  end
+
+  def perform(multi, %{"type" => "cancel_subscription", "organization_id" => organization_id}) do
+    organization = Organizations.get(organization_id)
+
+    if !organization do
+      Repo.transaction(multi)
+    else
+      Billing.Subscriptions.cancel_subscription(organization)
     end
   end
 end

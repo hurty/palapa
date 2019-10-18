@@ -31,7 +31,7 @@ defmodule PalapaWeb.OrganizationController do
     org = current_organization(conn)
 
     with :ok <- permit(Organizations.Policy, :delete_organization, current_member(conn), org) do
-      case(Organizations.soft_delete(org, current_account(conn))) do
+      case Organizations.delete(org, current_member(conn)) do
         {:ok, _organization} ->
           conn
           |> put_flash(:success, "The workspace #{org.name} has been deleted")

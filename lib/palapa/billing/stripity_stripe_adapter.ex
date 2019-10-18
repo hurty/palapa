@@ -60,6 +60,10 @@ defmodule Palapa.Billing.StripityStripeAdapter do
     Stripe.Subscription.retrieve(stripe_subscription_id, expand: ["latest_invoice.payment_intent"])
   end
 
+  def cancel_subscription(stripe_subscription_id) do
+    Stripe.Subscription.update(stripe_subscription_id, %{cancel_at_period_end: true})
+  end
+
   def update_customer(%Palapa.Billing.Customer{} = customer) do
     custom_fields =
       if customer.vat_number do

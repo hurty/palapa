@@ -38,17 +38,30 @@ defmodule Palapa.OrganizationsTest do
     assert {:error, %Ecto.Changeset{}} = Organizations.update(organization, %{name: ""})
   end
 
-  test "delete/1" do
-    organization = insert!(:organization)
-    assert {:ok, %Organization{}} = Organizations.delete(organization)
-
-    assert_raise Ecto.NoResultsError, fn ->
-      Organizations.get!(organization.id)
-    end
-  end
-
   test "change/1 returns a organization changeset" do
     organization = insert!(:organization)
     assert %Ecto.Changeset{} = Organizations.change(organization)
+  end
+
+  describe "organization deletion" do
+    test "delete/1 marks an organization with no subscription as deleted" do
+      owner = insert!(:owner)
+
+      assert {:ok, %{organization: deleted_organization}} =
+               Organizations.delete(owner.organization, owner)
+
+      assert deleted_organization.deleted_at
+    end
+  end
+
+  test "delete/1 marks an organization with subscription as deleted and plan Stripe subscription cancellation" do
+    owner = insert!(:owner)
+    insert!(:subscription, organization: owner.organization)
+
+    assert {:ok, result} = Organizations.delete(owner.organization, owner)
+    assert result.organization.deleted_at
+    assert result.cancel_subscription_job.state == "AVAILABLE"
+    assert result.cancel_subscription_job.params.type == "cancel_subscription"
+    assert result.cancel_subscription_job.params.organization_id == owner.organization_id
   end
 end

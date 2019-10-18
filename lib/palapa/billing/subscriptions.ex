@@ -102,7 +102,20 @@ defmodule Palapa.Billing.Subscriptions do
     |> Repo.insert()
   end
 
+  def cancel_subscription(organization) do
+    organization
+    |> get_subscription()
+    |> cancel_stripe_subscription()
+  end
+
   # Stripe resources
+
+  def cancel_stripe_subscription(%{stripe_subscription_id: stripe_id})
+      when is_binary(stripe_id) do
+    Billing.stripe_adapter().cancel_subscription(stripe_id)
+  end
+
+  def cancel_stripe_subscription(nil), do: {:ok, nil}
 
   def create_stripe_subscription(stripe_customer) do
     Billing.stripe_adapter().create_subscription(stripe_customer.id, @monthly_plan_id)
