@@ -4,6 +4,7 @@ defmodule PalapaWeb.Authentication do
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   alias PalapaWeb.Router
   alias Palapa.Accounts
+  alias Palapa.Organizations
 
   def init(options) do
     options
@@ -33,10 +34,18 @@ defmodule PalapaWeb.Authentication do
     organization =
       account && organization_id && Accounts.organization_for_account(account, organization_id)
 
-    conn = assign(conn, :current_organization, organization)
+    if Organizations.soft_deleted?(organization) do
+      conn
+      |> put_flash(:error, "The workspace #{organization.name} has been deleted")
+      |> redirect(to: Router.Helpers.organization_path(conn, :index))
+      |> halt()
+    else
+      member = organization && Accounts.member_for_organization(account, organization)
 
-    member = organization && Accounts.member_for_organization(account, organization)
-    assign(conn, :current_member, member)
+      conn
+      |> assign(:current_organization, organization)
+      |> assign(:current_member, member)
+    end
   end
 
   def enforce_authentication(conn, _options) do

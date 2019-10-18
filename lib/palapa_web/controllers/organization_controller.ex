@@ -26,4 +26,22 @@ defmodule PalapaWeb.OrganizationController do
         render(conn, "new.html", changeset: changeset)
     end
   end
+
+  def delete(conn, _) do
+    org = current_organization(conn)
+
+    with :ok <- permit(Organizations.Policy, :delete_organization, current_member(conn), org) do
+      case(Organizations.soft_delete(org, current_account(conn))) do
+        {:ok, _organization} ->
+          conn
+          |> put_flash(:success, "The workspace #{org.name} has been deleted")
+          |> redirect(to: Routes.organization_path(conn, :index))
+
+        {:error, _changeset} ->
+          conn
+          |> put_flash(:error, "An error occurred while deleting the workspace")
+          |> redirect(to: Routes.settings_workspace_path(conn, :edit, org))
+      end
+    end
+  end
 end

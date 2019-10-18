@@ -1,5 +1,6 @@
 defmodule Palapa.Organizations do
   use Palapa.Context
+  use Palapa.SoftDelete
 
   alias Organizations.{Organization, Member, PersonalInformation}
   alias Palapa.Accounts.Account
@@ -27,6 +28,7 @@ defmodule Palapa.Organizations do
 
   def list_organizations(%Account{} = account) do
     Ecto.assoc(account, :organizations)
+    |> active()
     |> order_by([o], o.name)
     |> Repo.all()
   end
@@ -63,12 +65,6 @@ defmodule Palapa.Organizations do
   def update(%Organization{} = organization, attrs) do
     organization
     |> Organization.changeset(attrs)
-    |> Repo.update()
-  end
-
-  def soft_delete(%Organization{} = organization, %Account{} = account) do
-    organization
-    |> change(%{deleted_at: DateTime.utc_now(), deleted_by: account.id})
     |> Repo.update()
   end
 

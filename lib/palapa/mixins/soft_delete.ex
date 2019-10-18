@@ -1,0 +1,28 @@
+defmodule Palapa.SoftDelete do
+  defmacro __using__(_opts) do
+    quote do
+      import Ecto.Query
+
+      def soft_delete(resource, author) do
+        resource
+        |> Ecto.Changeset.change(%{
+          deleted_at: DateTime.utc_now(),
+          deleted_by_account_id: author.id
+        })
+        |> Palapa.Repo.update()
+      end
+
+      def active?(resource) do
+        is_nil(resource.deleted_at)
+      end
+
+      def soft_deleted?(resource) do
+        !active?(resource)
+      end
+
+      def active(queryable) do
+        from(q in queryable, where: is_nil(q.deleted_at))
+      end
+    end
+  end
+end
