@@ -17,11 +17,11 @@
           <input name="search" phx-hook="AutoFocus" phx-debounce="200" type="text" autocomplete="off" placeholder="Search contacts">
         </div>
       </form>
-
+      
       <%= if Enum.any?(@contacts) do %>
         <ul class="flex flex-col">
           <%= for contact <- @contacts do %>
-            <li class="flex border-b w-full hover:bg-blue-100 text-sm">
+            <li class="flex border-b w-full hover:bg-green-100 text-sm <%= if @contact && @contact.id == contact.id do %>bg-green-100<% end %>">
               <%= live_link to: Routes.live_path(@socket, PalapaWeb.ContactLive, contact.organization_id, contact.id), class: "w-full py-2 px-4" do %>
                 <%= if contact.is_company do %>
                   <div class="flex text-blue-500">
@@ -58,12 +58,6 @@
       <% end %>
     </div>
   </div>
-
-  <%= if @changeset do %>
-      <div class="main-content card">
-      <%= render "form.html", assigns %>
-    </div>
-  <% end %>
 
   <%= if @contact do %>
     <div class="main-content card">

@@ -45,17 +45,16 @@ defmodule PalapaWeb.ContactLive do
     {:noreply, socket}
   end
 
-  # Display new contact form
   def handle_params(
         %{"organization_id" => organization_id},
-        uri,
+        _uri,
         socket
       ) do
-    IO.inspect(uri)
     socket = fetch_current_context(organization_id, socket)
     contacts = Contacts.list_contacts(socket.assigns.current_organization)
-    changeset = Contact.changeset(%Contact{})
-    {:noreply, assign(socket, contacts: contacts, changeset: changeset)}
+    contact = List.first(contacts)
+    # changeset = Contact.changeset(%Contact{})
+    {:noreply, assign(socket, contacts: contacts, contact: contact)}
   end
 
   def handle_event("list_contacts", _value, socket) do
