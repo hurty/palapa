@@ -37,10 +37,16 @@ defmodule PalapaWeb.ContactLive do
 
     socket =
       socket
-      |> assign(contact: Contacts.get_contact!(contact_id))
       |> assign_new(:contacts, fn ->
         Contacts.list_contacts(socket.assigns.current_organization)
       end)
+      |> assign(contact: Contacts.get_contact!(contact_id))
+
+    socket =
+      assign(socket,
+        contact_index:
+          Enum.find_index(socket.assigns.contacts, fn c -> c.id == socket.assigns.contact.id end)
+      )
 
     {:noreply, socket}
   end
@@ -52,9 +58,39 @@ defmodule PalapaWeb.ContactLive do
       ) do
     socket = fetch_current_context(organization_id, socket)
     contacts = Contacts.list_contacts(socket.assigns.current_organization)
-    contact = List.first(contacts)
+    contact_index = 0
+    contact = Enum.at(contacts, contact_index)
     # changeset = Contact.changeset(%Contact{})
-    {:noreply, assign(socket, contacts: contacts, contact: contact)}
+    {:noreply, assign(socket, contacts: contacts, contact_index: contact_index, contact: contact)}
+  end
+
+  # --- KEYBOARD NAVIGATION
+  def handle_event("navigate_contact", %{"code" => "ArrowDown"}, socket) do
+    if socket.assigns.contact_index < length(socket.assigns.contacts) - 1 do
+      {:noreply, show_contact_at(socket, socket.assigns.contact_index + 1)}
+    else
+      {:noreply, socket}
+    end
+  end
+
+  def handle_event("navigate_contact", %{"code" => "ArrowUp"}, socket) do
+    if socket.assigns.contact_index > 0 do
+      {:noreply, show_contact_at(socket, socket.assigns.contact_index - 1)}
+    else
+      {:noreply, socket}
+    end
+  end
+
+  def handle_event("navigate_contact", _key, socket) do
+    {:noreply, socket}
+  end
+
+  def show_contact_at(socket, index) do
+    contact = Enum.at(socket.assigns.contacts, index)
+
+    live_redirect(socket,
+      to: Routes.live_path(socket, __MODULE__, socket.assigns.current_organization, contact.id)
+    )
   end
 
   def handle_event("list_contacts", _value, socket) do

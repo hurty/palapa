@@ -1,5 +1,5 @@
 <div class="content left-sidebar-layout sm:mx-12">
-  <div class="page-sidebar card h-full">
+  <div class="page-sidebar card h-full" phx-keyup="navigate_contact" phx-target="window">
     <div class="flex flex-wrap items-center justify-between p-4 border-b">
       <h2 class="card-header">Contacts</h2>
 
@@ -17,7 +17,7 @@
           <input name="search" phx-hook="AutoFocus" phx-debounce="200" type="text" autocomplete="off" placeholder="Search contacts">
         </div>
       </form>
-      
+
       <%= if Enum.any?(@contacts) do %>
         <ul class="flex flex-col">
           <%= for contact <- @contacts do %>
