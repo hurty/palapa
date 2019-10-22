@@ -1,0 +1,73 @@
+<div class="content left-sidebar-layout sm:mx-12">
+  <div class="page-sidebar card h-full">
+    <div class="flex flex-wrap items-center justify-between p-4 border-b">
+      <h2 class="card-header">Contacts</h2>
+
+      <div class="my-2 sm:m-0">
+        <%= live_link to: Routes.live_path(@socket, PalapaWeb.ContactLive, @current_organization, "new"), class: "btn" do %>
+          <i class="text-green-500 fas fa-plus-circle mr-2"></i>New contact
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card-content">
+      <form phx-change="search_contacts" phx-submit="search_contacts" class="my-4 px-4">
+        <div class="search-bar max-w-sm" phx-update="ignore">
+          <i class="fa fa-search mr-2"></i>
+          <input name="search" phx-hook="AutoFocus" phx-debounce="200" type="text" autocomplete="off" placeholder="Search contacts">
+        </div>
+      </form>
+
+      <%= if Enum.any?(@contacts) do %>
+        <ul class="flex flex-col">
+          <%= for contact <- @contacts do %>
+            <li class="flex border-b w-full hover:bg-blue-100 text-sm">
+              <%= live_link to: Routes.live_path(@socket, PalapaWeb.ContactLive, contact.organization_id, contact.id), class: "w-full py-2 px-4" do %>
+                <%= if contact.is_company do %>
+                  <div class="flex text-blue-500">
+                    <div class="self-center w-8 mr-2"><i class="fas fa-building mr-2"></i></div>
+                    <div class="font-bold"><%= full_name(contact) %></div>
+                  </div>
+                <% else %>
+                  <div class="flex text-green-500">
+                    <div class="self-center w-8 mr-2"><i class="fas fa-user-alt"></i></div>
+                    <div class="font-bold"><%= full_name(contact) %></div>
+                  </div>
+
+                  <div class="flex text-xs">
+                    <div class="self-center w-8 mr-2"></div>
+                    <div class="font-light text-gray-500">
+                      <%= contact.title %>
+                    </div>
+                  </div>
+
+                  <%= if contact.company do %>
+                  <div class="flex text-xs">
+                    <div class="self-center w-8 mr-2"></div>
+                    <div class="font-light text-blue-500"><%= contact.company.first_name %></div>
+                  </div>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+
+      <% else %>
+        <p>No contacts match your criteria</p>
+      <% end %>
+    </div>
+  </div>
+
+  <%= if @changeset do %>
+      <div class="main-content card">
+      <%= render "form.html", assigns %>
+    </div>
+  <% end %>
+
+  <%= if @contact do %>
+    <div class="main-content card">
+      <%= render "show.html", assigns %>
+    </div>
+  <% end %>
+</div>

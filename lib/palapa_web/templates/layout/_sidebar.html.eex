@@ -31,6 +31,12 @@
       <% end %>
     </li>
 
+    <li class="header-link  <%= if @navigation == "contacts" do %>header-link--active<% end %>">
+      <%= link(to: Routes.live_path(@conn, PalapaWeb.ContactLive, @current_organization), class: "block") do %>
+        <i class="fas fa-address-book mr-2"></i>Contacts
+      <% end %>
+    </li>
+
     <li class="header-link  <%= if @navigation == "members" do %>header-link--active<% end %>">
       <%= link(to: Routes.member_path(@conn, :index, @current_organization), class: "block") do %>
         <i class="fas fa-users mr-2"></i>Teams

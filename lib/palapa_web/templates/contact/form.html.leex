@@ -1,0 +1,92 @@
+<div class="flex flex-wrap items-center justify-between p-4 border-b">
+  <h2 class="card-header">New contact</h2>
+</div>
+
+<%= form = form_for @changeset, "#", phx_submit: "create_contact" %>
+  <div class="p-2 rounded bg-gray-100">
+    <div class="">
+      <%= checkbox form, :is_company %>
+      <%= label form, :is_company, "This contact is a company", class: "label" %>
+    </div>
+    <div class="flex flex-wrap">
+      <div class="field flex-1 sm:mr-2">
+        <%= label form, :first_name, "First name", class: "label" %>
+        <%= text_input form, :first_name, autocomplete: "off", "phx-hook": "AutoFocus", class: "input" %>
+        <%= error_tag form, :first_name %>
+      </div>
+
+      <div class="field flex-1">
+        <%= label form, :last_name, "Last name", class: "label" %>
+        <%= text_input form, :last_name, autocomplete: "off", class: "input" %>
+        <%= error_tag form, :last_name %>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-2">
+    <div class="flex flex-wrap">
+      <div class="field flex-1 sm:mr-2">
+        <%= label form, :email, "Email", class: "label" %>
+        <%= email_input form, :email, autocomplete: "off", class: "input" %>
+        <%= error_tag form, :email %>
+      </div>
+
+      <div class="field flex-1">
+        <%= label form, :phone, "Phone", class: "label" %>
+        <%= telephone_input form, :phone, autocomplete: "off", class: "input" %>
+        <%= error_tag form, :phone %>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <h3 class="card-header text-sm text-blue-500">Address</h3>
+
+      <div class="flex flex-wrap">
+        <div class="field flex-1 sm:mr-2">
+          <%= label form, :address_line_1, "address_line_1", class: "label" %>
+          <%= text_input form, :address_line_1, autocomplete: "off", class: "input" %>
+          <%= error_tag form, :address_line_1 %>
+        </div>
+
+        <div class="field flex-1">
+          <%= label form, :address_line_2, "address_line_2", class: "label" %>
+          <%= text_input form, :address_line_2, autocomplete: "off", class: "input" %>
+          <%= error_tag form, :address_line_2 %>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap">
+        <div class="field flex-1 sm:mr-2">
+          <%= label form, :address_postal_code, "Postcode", class: "label" %>
+          <%= text_input form, :address_postal_code, autocomplete: "off", class: "input" %>
+          <%= error_tag form, :address_postal_code %>
+        </div>
+
+        <div class="field flex-1 sm:mr-2">
+          <%= label form, :address_city, "City", class: "label" %>
+          <%= text_input form, :address_city, autocomplete: "off", class: "input" %>
+          <%= error_tag form, :address_city %>
+        </div>
+
+        <div class="field flex-1">
+          <%= label form, :address_country, "State/Country", class: "label" %>
+          <%= text_input form, :address_country, autocomplete: "off", class: "input" %>
+          <%= error_tag form, :address_country %>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <div class="field flex-1">
+        <%= label form, :addition_info, "Additional information", class: "label" %>
+        <%= textarea form, :addition_info, autocomplete: "off", class: "input" %>
+        <%= error_tag form, :addition_info %>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-actions">
+    <%= submit "Save contact", class: "btn btn-green" %>
+    <%= live_link "Cancel", to: Routes.live_path(@socket, PalapaWeb.ContactLive, @current_organization), class: "btn" %>
+  </div>
+</form>

@@ -6,6 +6,7 @@ defmodule Palapa.Events do
 
   alias Palapa.Messages
   alias Palapa.Documents
+  alias Palapa.Contacts
 
   defenum(EventAction, :event_action, ~w(
     new_organization
@@ -33,7 +34,8 @@ defmodule Palapa.Events do
         :message_comment,
         :document,
         :page,
-        :document_suggestion_comment
+        :document_suggestion_comment,
+        :contact
       ],
       preload: [document_suggestion: [author: :account]]
     )
@@ -43,7 +45,8 @@ defmodule Palapa.Events do
   def all_events_query(organization, member) do
     from(messages_events_query(organization, member),
       union: ^documents_events_query(organization, member),
-      union: ^organization_events_query(organization)
+      union: ^organization_events_query(organization),
+      union: ^contact_events_query(organization, member)
     )
   end
 
@@ -65,6 +68,13 @@ defmodule Palapa.Events do
     from(events in Ecto.assoc(organization, :events),
       join: documents in subquery(Documents.documents_visible_to(member)),
       on: events.document_id == documents.id
+    )
+  end
+
+  def contact_events_query(organization, member) do
+    from(events in Ecto.assoc(organization, :events),
+      join: contacts in subquery(Contacts.contacts_visible_to(member)),
+      on: events.contact_id == contacts.id
     )
   end
 end

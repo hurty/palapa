@@ -7,6 +7,7 @@ defmodule Palapa.Events.Event do
   alias Palapa.Messages.{Message, MessageComment}
 
   alias Palapa.Documents.{Document, Page, Suggestion, SuggestionComment}
+  alias Palapa.Contacts.Contact
 
   schema "events" do
     field(:action, EventAction)
@@ -21,5 +22,6 @@ defmodule Palapa.Events.Event do
     belongs_to(:page, Page)
     belongs_to(:document_suggestion, Suggestion)
     belongs_to(:document_suggestion_comment, SuggestionComment)
+    belongs_to(:contact, Contact)
   end
 end

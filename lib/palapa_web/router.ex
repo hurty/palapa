@@ -25,6 +25,10 @@ defmodule PalapaWeb.Router do
     plug(:put_organization_context)
   end
 
+  pipeline :contact_navigation do
+    plug(PalapaWeb.ContactNavigation)
+  end
+
   pipeline :api do
     plug(:accepts, ["json"])
   end
@@ -175,6 +179,16 @@ defmodule PalapaWeb.Router do
     resources("/documents/suggestions/comments", Document.SuggestionCommentController,
       only: [:edit, :update, :delete]
     )
+
+    # --- CONTACTS
+
+    scope "/" do
+      pipe_through([:contact_navigation])
+      live "/contacts", ContactLive, session: [:account_id]
+      live "/contacts/new", ContactLive, session: [:account_id]
+      live "/contacts/:id", ContactLive, session: [:account_id]
+      resources "/contacts", ContactController, only: [:new, :create]
+    end
 
     # --- MEMBERS
 

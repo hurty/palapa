@@ -76,6 +76,12 @@ defmodule PalapaWeb.EventView do
         )
         |> raw()
 
+      :new_contact ->
+        gettext("%{author} added %{contact} as a new contact",
+          author: author,
+          contact: PalapaWeb.ContactView.full_name(event.contact)
+        )
+
       _ ->
         nil
     end

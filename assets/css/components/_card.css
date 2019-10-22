@@ -25,7 +25,7 @@
 }
 
 .card-header {
-  @apply font-bold text-gray-800;
+  @apply text-gray-700 text-2xl font-extrabold;
 }
 
 .card-header-separator {
@@ -56,10 +56,10 @@
 }
 
 .card-actions-button {
-  @apply rounded-full h-8 w-8 bg-gray-400 text-green-500 font-bold border border-transparent;
+  @apply rounded-full h-8 w-8 bg-gray-200 text-green-500 font-bold border border-transparent;
 
   &:hover {
-    @apply border-gray-500;
+    @apply bg-gray-300;
   }
 }
 

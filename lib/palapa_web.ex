@@ -56,7 +56,18 @@ defmodule PalapaWeb do
       import PalapaWeb.Gettext
       import Scrivener.HTML
       import Bodyguard
-      import Phoenix.LiveView, only: [live_render: 2, live_render: 3, live_link: 1, live_link: 2]
+
+      import Phoenix.LiveView,
+        only: [
+          live_render: 2,
+          live_render: 3,
+          live_link: 1,
+          live_link: 2,
+          live_component: 2,
+          live_component: 3,
+          live_component: 4
+        ]
+
       alias PalapaWeb.Helpers
       alias PalapaWeb.Router.Helpers, as: Routes
     end

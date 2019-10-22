@@ -15,8 +15,8 @@
     <div class="flex-initial flex items-center justify-between">
 
       <div data-controller="popover" data-action="mousedown@window->popover#hide">
-        <button data-target="popover.button" data-action="popover#toggle" class="card-actions-button">
-          <i class="fas fa-plus-circle"></i>
+        <button data-target="popover.button" data-action="popover#toggle" class="btn rounded-full">
+          <i class="fas fa-plus-circle text-green-500 mr-2"></i>Create<i class="fas fa-angle-down ml-2"></i>
         </button>
         
         <div data-target="popover.content" class="popover hidden">
@@ -28,6 +28,11 @@
 
             <%= link to: Routes.document_path(@conn, :new, @current_organization), class: "popover__link" do %>
               <i class="fas fa-file-alt mr-2"></i>New document
+            <% end %>
+
+
+            <%= link to: Routes.contact_path(@conn, :new, @current_organization), class: "popover__link" do %>
+              <i class="fas fa-address-book mr-2"></i>New Contact
             <% end %>
           </nav>
         </div>
