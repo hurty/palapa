@@ -1,0 +1,23 @@
+<div class="flex justify-between">
+  <div class="flex">
+    <div class="mx-2">
+      <%= Helpers.avatar(@comment.creator.account, :small) %>
+    </div>
+
+    <div class="text-xs my-auto">
+      <%= link @comment.creator.account.name, to: Routes.member_path(@socket, :show, @current_organization, @comment.creator.id), class: "text-gray-800 font-bold hover:underline" %>
+      <div class="text-gray-700 font-light"><%= Helpers.auto_format_datetime(@comment.inserted_at, @current_account) %></div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4">
+<%= form = form_for @update_contact_comment_changeset, "#", [phx_submit: :update_contact_comment] %>
+  <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: "Add a comment about #{full_name(@contact)}") %>
+  <input type="hidden" name="comment_id" value="<%= @comment.id %>">
+  
+  <div class="card-actions">
+    <%= submit "Update comment", class: "btn btn-green" %>
+  </div>
+</form>
+</div>

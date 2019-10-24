@@ -70,12 +70,10 @@ defmodule Palapa.Contacts do
     Contact.changeset(contact, %{})
   end
 
-  def change_contact_comment(%ContactComment{} = contact_comment) do
-    ContactComment.changeset(contact_comment, %{})
-  end
-
   def get_contact_comment!(id) do
-    Repo.get!(ContactComment, id)
+    ContactComment
+    |> preload([:creator, :attachments])
+    |> Repo.get!(id)
   end
 
   def list_contact_comments(%Contact{} = contact) do
@@ -91,6 +89,16 @@ defmodule Palapa.Contacts do
     |> put_assoc(:contact, contact)
     |> put_assoc(:creator, creator)
     |> Repo.insert()
+  end
+
+  def change_contact_comment(%ContactComment{} = contact_comment) do
+    ContactComment.changeset(contact_comment, %{})
+  end
+
+  def update_contact_comment!(%ContactComment{} = contact_comment, attrs) do
+    contact_comment
+    |> ContactComment.changeset(attrs)
+    |> Repo.update!()
   end
 
   def delete_contact_comment(%ContactComment{} = contact_comment) do

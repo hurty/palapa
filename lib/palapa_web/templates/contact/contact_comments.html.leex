@@ -9,7 +9,11 @@
 <div class="mt-4">
   <%= for comment <- @contact_comments do %>
     <div class="bg-gray-100 border-b sm:border-none sm:rounded-lg p-4 mb-4">
-      <%= render("comment_content.html", Map.put(assigns, :comment, comment)) %>
+      <%= if @edit_contact_comment_id == comment.id do %>
+        <%= render("comment_form.html", Map.put(assigns, :comment, comment)) %>
+      <% else %>
+        <%= render("comment_content.html", Map.put(assigns, :comment, comment)) %>
+      <% end %>
     </div>
   <% end %>
 </div>

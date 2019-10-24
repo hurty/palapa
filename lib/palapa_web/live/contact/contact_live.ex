@@ -12,7 +12,15 @@ defmodule PalapaWeb.ContactLive do
 
   def mount(%{account_id: account_id}, socket) do
     account = Accounts.get!(account_id)
-    {:ok, assign(socket, %{current_account: account, contact: nil, contacts: nil, search: nil})}
+
+    {:ok,
+     assign(socket, %{
+       current_account: account,
+       contact: nil,
+       contacts: nil,
+       search: nil,
+       edit_contact_comment_id: nil
+     })}
   end
 
   # Display contact details
@@ -90,7 +98,22 @@ defmodule PalapaWeb.ContactLive do
 
   def handle_event("delete_contact_comment", %{"comment_id" => id}, socket) do
     comment = Contacts.get_contact_comment!(id)
-    delete_contact_comment(socket, comment)
+    {:noreply, delete_contact_comment(socket, comment)}
+  end
+
+  def handle_event("edit_contact_comment", %{"comment_id" => id}, socket) do
+    comment = Contacts.get_contact_comment!(id)
+    {:noreply, edit_contact_comment(socket, comment)}
+  end
+
+  def handle_event(
+        "update_contact_comment",
+        %{"comment_id" => id, "contact_comment" => attrs},
+        socket
+      ) do
+    comment = Contacts.get_contact_comment!(id)
+
+    {:noreply, update_contact_comment(socket, comment, attrs)}
   end
 
   def fetch_current_context(socket, organization_id) do
@@ -138,6 +161,28 @@ defmodule PalapaWeb.ContactLive do
 
   def delete_contact_comment(socket, comment) do
     Contacts.delete_contact_comment(comment)
-    {:noreply, get_contact(socket, comment.contact_id)}
+    get_contact(socket, comment.contact_id)
+  end
+
+  def edit_contact_comment(socket, comment) do
+    socket
+    |> assign(:update_contact_comment_changeset, Contacts.change_contact_comment(comment))
+    |> assign(:edit_contact_comment_id, comment.id)
+  end
+
+  def update_contact_comment(socket, comment, attrs) do
+    with :ok <-
+           Bodyguard.permit!(
+             Contacts.Policy,
+             :edit_comment,
+             socket.assigns.current_member,
+             comment
+           ) do
+      Contacts.update_contact_comment!(comment, attrs)
+
+      socket
+      |> assign(:edit_contact_comment_id, nil)
+      |> get_contact(comment.contact_id)
+    end
   end
 end
