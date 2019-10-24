@@ -1,0 +1,15 @@
+<%= form = form_for @contact_comment_changeset, "#", [phx_submit: :create_contact_comment] %>
+  <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: "Add a comment about #{full_name(@contact)}") %>
+
+  <div class="card-actions">
+    <%= submit "Post this comment", class: "btn btn-green" %>
+  </div>
+</form>
+
+<div class="mt-4">
+  <%= for comment <- @contact_comments do %>
+    <div class="bg-gray-100 border-b sm:border-none sm:rounded-lg p-4 mb-4">
+      <%= render("comment_content.html", Map.put(assigns, :comment, comment)) %>
+    </div>
+  <% end %>
+</div>

@@ -2,11 +2,13 @@ defmodule Palapa.Contacts.Contact do
   use Palapa.Schema
 
   alias Palapa.Organizations.Organization
+  alias Palapa.Contacts.ContactComment
 
   schema "contacts" do
     timestamps()
     belongs_to(:organization, Organization)
     belongs_to(:company, __MODULE__)
+    has_many(:comments, ContactComment)
 
     field :is_company, :boolean
     field :first_name, :string

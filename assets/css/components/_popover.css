@@ -16,7 +16,7 @@
 
 .popover__link {
   @apply px-4 py-1 mb-1;
-  @apply text-gray-800 font-semibold text-sm;
+  @apply text-gray-800 font-semibold text-sm cursor-pointer;
 
   &:hover {
     @apply bg-green-500 text-white;

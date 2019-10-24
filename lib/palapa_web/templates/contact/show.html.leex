@@ -1,41 +1,41 @@
   <div class="mx-auto">
     <div class="member-profile-main py-8 font-light">
-<div class="bg-white border-b border-t py-4">
-      <div class="flex text-gray-500">
-        <div class="self-center sm:w-1/5 text-right mr-8">
-          <%= if @contact.is_company do %>
-            <i class="fas fa-building text-2xl text-blue-500"></i>
-          <% else %>
-            <i class="fas fa-user-alt text-2xl text-green-500"></i>
-          <% end %>
+      <div class="">
+        <div class="flex text-gray-500">
+          <div class="self-center w-1/5 text-right mr-8">
+            <%= if @contact.is_company do %>
+              <i class="fas fa-building text-2xl text-blue-500"></i>
+            <% else %>
+              <i class="fas fa-user-alt text-2xl text-green-500"></i>
+            <% end %>
+          </div>
+          <h2 class="<%= if @contact.is_company, do: "text-blue-500", else: "text-green-500" %> text-center text-2xl font-bold capitalize"><%= full_name(@contact) %></h2>
         </div>
-        <h2 class="<%= if @contact.is_company, do: "text-blue-500", else: "text-green-500" %> text-center text-2xl font-bold capitalize"><%= full_name(@contact) %></h2>
+
+        <div class="flex text-gray-500">
+          <div class="self-center w-1/5 text-right mr-8"></div>
+          <h3 class="text-gray-500 text-center text-sm font-light"><%= @contact.title %></h3>
+        </div>
+
+        <%= if @contact.company do %>
+        <div class="flex text-gray-500">
+          <div class="self-center w-1/5 text-right mr-8"></div>
+          <h3 class="text-blue-500 text-center text-sm font-light"><%= @contact.company.first_name %></h3>
+        </div>
+        <% end %>
       </div>
 
-      <div class="flex text-gray-500">
-        <div class="self-center sm:w-1/5 text-right mr-8"></div>
-        <h3 class="text-gray-500 text-center text-sm font-light"><%= @contact.title %></h3>
-      </div>
-
-      <%= if @contact.company do %>
-      <div class="flex text-gray-500">
-        <div class="self-center sm:w-1/5 text-right mr-8"></div>
-        <h3 class="text-blue-500 text-center text-sm font-light"><%= @contact.company.first_name %></h3>
-      </div>
-      <% end %>
-</div>
-
-      <div class="flex flex-col mt-8">
+      <div class="flex flex-col">
         <%= if @contact.email do %>
         <div class="flex text-gray-500 my-2">
-          <div class="sm:w-1/5 text-right mr-8">Email</div>
+          <div class="w-1/5 text-right mr-8">Email</div>
           <div class="text-gray-700"><%= link @contact.email, to: "mailto:#{@contact.email}" %></div>
         </div>
         <% end %>
 
         <%= if @contact.phone do %>
         <div class="flex text-gray-500 my-2">
-          <div class="sm:w-1/5 text-right mr-8">Phone</div>
+          <div class="w-1/5 text-right mr-8">Phone</div>
           <div class="text-gray-700"><%= link @contact.phone, to: "tel:#{@contact.phone}" %></div>
         </div>
         <% end %>
@@ -44,39 +44,43 @@
       <div class="mt-8">
         <%= if @contact.address_line1 do %>
         <div class="flex text-gray-500">
-          <div class="sm:w-1/5 text-right mr-8">Address</div>
+          <div class="w-1/5 text-right mr-8">Address</div>
           <div class="text-gray-700"><%= @contact.address_line1 %></div>
         </div>
         <% end %>
 
         <%= if @contact.address_line2 do %>
         <div class="flex text-gray-500">
-          <div class="sm:w-1/5 text-right mr-8"></div>
+          <div class="w-1/5 text-right mr-8"></div>
           <div class="text-gray-700"><%= @contact.address_line2 %></div>
         </div>
         <% end %>
 
         <%= if @contact.address_postal_code do %>
         <div class="flex text-gray-500">
-          <div class="sm:w-1/5 text-right mr-8">Postcode</div>
+          <div class="w-1/5 text-right mr-8">Postcode</div>
           <div class="text-gray-700"><%= @contact.address_postal_code %></div>
         </div>
         <% end %>
 
         <%= if @contact.address_city do %>
         <div class="flex text-gray-500">
-          <div class="sm:w-1/5 text-right mr-8">City</div>
+          <div class="w-1/5 text-right mr-8">City</div>
           <div class="text-gray-700"><%= @contact.address_city %></div>
         </div>
         <% end %>
 
         <%= if @contact.address_country do %>
         <div class="flex text-gray-500">
-          <div class="sm:w-1/5 text-right mr-8">Country</div>
+          <div class="w-1/5 text-right mr-8">Country</div>
           <div class="text-gray-700"><%= @contact.address_country %></div>
         </div>
         <% end %>
 
       </div>
+    </div>
+
+    <div class="p-4">
+      <%= render "contact_comments.html", assigns %>
     </div>
   </div>

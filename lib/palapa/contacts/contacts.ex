@@ -1,7 +1,7 @@
 defmodule Palapa.Contacts do
   use Palapa.Context
 
-  alias Palapa.Contacts.Contact
+  alias Palapa.Contacts.{Contact, ContactComment}
   alias Palapa.Events.Event
 
   def contacts_visible_to(member) do
@@ -34,6 +34,7 @@ defmodule Palapa.Contacts do
   def get_contact!(queryable \\ Contact, id) do
     queryable
     |> preload(:company)
+    |> preload(:comments)
     |> Repo.get!(id)
   end
 
@@ -67,5 +68,33 @@ defmodule Palapa.Contacts do
 
   def change_contact(%Contact{} = contact) do
     Contact.changeset(contact, %{})
+  end
+
+  def change_contact_comment(%ContactComment{} = contact_comment) do
+    ContactComment.changeset(contact_comment, %{})
+  end
+
+  def get_contact_comment!(id) do
+    Repo.get!(ContactComment, id)
+  end
+
+  def list_contact_comments(%Contact{} = contact) do
+    Ecto.assoc(contact, :comments)
+    |> order_by([c], desc: c.inserted_at)
+    |> preload(creator: [:account])
+    |> Repo.all()
+  end
+
+  def create_contact_comment(%Contact{} = contact, %Member{} = creator, attrs) do
+    ContactComment.changeset(%ContactComment{}, attrs)
+    |> put_change(:organization_id, contact.organization_id)
+    |> put_assoc(:contact, contact)
+    |> put_assoc(:creator, creator)
+    |> Repo.insert()
+  end
+
+  def delete_contact_comment(%ContactComment{} = contact_comment) do
+    contact_comment
+    |> Repo.delete()
   end
 end

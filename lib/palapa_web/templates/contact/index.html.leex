@@ -1,5 +1,5 @@
-<div class="content left-sidebar-layout sm:mx-12">
-  <div class="page-sidebar card h-full" phx-keyup="navigate_contact" phx-target="window">
+<div class="content left-sidebar-layout sm:max-w-5xl mx-auto">
+  <div class="page-sidebar card h-auto max-h-screen" phx-keyup="navigate_contact" phx-target="window">
     <div class="flex flex-wrap items-center justify-between p-4 border-b">
       <h2 class="card-header">Contacts</h2>
 
@@ -19,7 +19,7 @@
       </form>
 
       <%= if Enum.any?(@contacts) do %>
-        <ul class="flex flex-col">
+        <ul class="flex flex-col overflow-y-auto">
           <%= for contact <- @contacts do %>
             <li class="flex border-b w-full hover:bg-green-100 text-sm <%= if @contact && @contact.id == contact.id do %>bg-green-100<% end %>">
               <%= live_link to: Routes.live_path(@socket, PalapaWeb.ContactLive, contact.organization_id, contact.id), class: "w-full py-2 px-4" do %>

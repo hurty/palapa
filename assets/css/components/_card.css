@@ -10,7 +10,7 @@
 
 @screen sm {
   .card {
-    @apply bg-white rounded border border-gray-200;
+    @apply bg-white rounded-lg border-4 border-gray-200;
   }
 }
 
