@@ -2,7 +2,7 @@ defmodule Palapa.Contacts.Contact do
   use Palapa.Schema
 
   alias Palapa.Organizations.Organization
-  alias Palapa.Contacts.ContactComment
+  alias Palapa.Contacts.{ContactComment}
 
   schema "contacts" do
     timestamps()
@@ -16,6 +16,8 @@ defmodule Palapa.Contacts.Contact do
     field :title, :string
     field :email, :string
     field :phone, :string
+    field :work, :string
+    field :chat, :string
     field :address_line1, :string
     field :address_line2, :string
     field :address_postal_code, :string
@@ -33,6 +35,8 @@ defmodule Palapa.Contacts.Contact do
       :last_name,
       :email,
       :phone,
+      :work,
+      :chat,
       :address_line1,
       :address_line2,
       :address_postal_code,
@@ -46,10 +50,10 @@ defmodule Palapa.Contacts.Contact do
   end
 
   defp validate_name(changeset) do
-    first_name = get_field(changeset, :first_name) || "" |> String.trim()
-    last_name = get_field(changeset, :last_name) || "" |> String.trim()
+    first_name = get_field(changeset, :first_name)
+    last_name = get_field(changeset, :last_name)
 
-    if(first_name == "" && last_name == "") do
+    if((first_name == "" || is_nil(first_name)) && (last_name == "" || is_nil(last_name))) do
       add_error(changeset, :first_name, "Give at least a first or last name")
     else
       changeset

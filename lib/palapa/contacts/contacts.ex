@@ -31,6 +31,14 @@ defmodule Palapa.Contacts do
     |> Repo.all()
   end
 
+  def list_companies(organization) do
+    Contact
+    |> where(organization_id: ^organization.id)
+    |> where(is_company: true)
+    |> order_by(:last_name)
+    |> Repo.all()
+  end
+
   def get_contact!(queryable \\ Contact, id) do
     queryable
     |> preload(:company)
@@ -38,7 +46,7 @@ defmodule Palapa.Contacts do
     |> Repo.get!(id)
   end
 
-  def create_contact(organization, attrs \\ %{}, author) do
+  def create_contact(organization, attrs, author) do
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:contact, fn _ ->
       %Contact{}

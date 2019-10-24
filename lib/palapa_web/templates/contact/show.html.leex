@@ -20,7 +20,7 @@
         <%= if @contact.company do %>
         <div class="flex text-gray-500">
           <div class="self-center w-1/5 text-right mr-8"></div>
-          <h3 class="text-blue-500 text-center text-sm font-light"><%= @contact.company.first_name %></h3>
+          <h3 class="text-blue-500 text-center text-sm font-bold"><%= full_name(@contact.company) %></h3>
         </div>
         <% end %>
       </div>

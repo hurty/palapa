@@ -15,6 +15,8 @@ defmodule Palapa.Repo.Migrations.CreateContacts do
 
       add(:email, :string)
       add(:phone, :string)
+      add(:work, :string)
+      add(:chat, :string)
 
       add(:address_line1, :string)
       add(:address_line2, :string)
@@ -23,7 +25,6 @@ defmodule Palapa.Repo.Migrations.CreateContacts do
       add(:address_country, :string)
 
       add(:additional_info, :text)
-
       timestamps()
     end
 

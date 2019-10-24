@@ -4,7 +4,7 @@
       <h2 class="card-header">New contact</h2>
       <div class="card-header-separator"></div>
 
-      <%= render "form.html", assigns %>  
+      <%= live_render @conn, PalapaWeb.ContactLive.Form, session: %{account_id: @current_account.id, organization_id: @current_organization.id}  %>  
       
     </div>
   </div>

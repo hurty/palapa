@@ -31,7 +31,8 @@ defmodule PalapaWeb.ContactController do
   def new(conn, _params) do
     render(conn, "new.html",
       changeset: Contact.changeset(%Contact{}),
-      form_action: Routes.contact_path(conn, :create, current_organization(conn))
+      form_action: Routes.contact_path(conn, :create, current_organization(conn)),
+      companies: Contacts.list_companies(current_organization(conn))
     )
   end
 

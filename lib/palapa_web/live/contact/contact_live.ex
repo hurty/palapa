@@ -1,5 +1,6 @@
 defmodule PalapaWeb.ContactLive do
   use PalapaWeb, :live_view
+  use PalapaWeb.CurrentLive
 
   alias PalapaWeb.Router.Helpers, as: Routes
   alias Palapa.Accounts
@@ -114,17 +115,6 @@ defmodule PalapaWeb.ContactLive do
     comment = Contacts.get_contact_comment!(id)
 
     {:noreply, update_contact_comment(socket, comment, attrs)}
-  end
-
-  def fetch_current_context(socket, organization_id) do
-    organization =
-      Accounts.organization_for_account(socket.assigns.current_account, organization_id)
-
-    member = Accounts.member_for_organization(socket.assigns.current_account, organization)
-
-    socket
-    |> assign_new(:current_member, fn -> member end)
-    |> assign_new(:current_organization, fn -> organization end)
   end
 
   def list_contacts(socket) do
