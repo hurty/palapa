@@ -47,6 +47,16 @@ defmodule Palapa.Contacts do
   end
 
   def create_contact(organization, attrs, author) do
+    IO.inspect(attrs)
+
+    # if a new associated company is created at the same time, we force it to be part of the same organization.
+    attrs =
+      if attrs["company"] do
+        put_in(attrs, ["company", "organization_id"], organization.id)
+      else
+        attrs
+      end
+
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:contact, fn _ ->
       %Contact{}
@@ -74,8 +84,8 @@ defmodule Palapa.Contacts do
     Repo.delete(contact)
   end
 
-  def change_contact(%Contact{} = contact) do
-    Contact.changeset(contact, %{})
+  def change_contact(%Contact{} = contact, attrs \\ %{}) do
+    Contact.changeset(contact, attrs)
   end
 
   def get_contact_comment!(id) do

@@ -2,15 +2,17 @@ defmodule Palapa.Contacts.Contact do
   use Palapa.Schema
 
   alias Palapa.Organizations.Organization
-  alias Palapa.Contacts.{ContactComment}
+  alias Palapa.Contacts.{Contact, ContactComment}
 
   schema "contacts" do
     timestamps()
     belongs_to(:organization, Organization)
     belongs_to(:company, __MODULE__)
     has_many(:comments, ContactComment)
+    has_many(:employees, Contact)
 
-    field :is_company, :boolean
+    field :is_company, :boolean, default: false
+    field :create_new_company, :boolean, virtual: true, default: false
     field :first_name, :string
     field :last_name, :string
     field :title, :string
@@ -31,6 +33,7 @@ defmodule Palapa.Contacts.Contact do
     contact
     |> cast(attrs, [
       :is_company,
+      :create_new_company,
       :first_name,
       :last_name,
       :email,
@@ -46,7 +49,25 @@ defmodule Palapa.Contacts.Contact do
       :company_id,
       :title
     ])
+    |> assoc_new_company()
     |> validate_name
+  end
+
+  defp assoc_new_company(changeset) do
+    # if get_field(changeset, :company) do
+    cast_assoc(changeset, :company, with: &company_changeset/2)
+    # else
+    # changeset
+    # end
+  end
+
+  defp company_changeset(company, attrs) do
+    company
+    |> cast(attrs, [
+      :last_name,
+      :organization_id
+    ])
+    |> put_change(:is_company, true)
   end
 
   defp validate_name(changeset) do

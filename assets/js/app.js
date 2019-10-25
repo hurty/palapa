@@ -10,8 +10,9 @@ import MicroModal from "micromodal";
 MicroModal.init();
 
 import AutoFocus from "./live_hooks/auto_focus";
-let Hooks = {};
-Hooks.AutoFocus = AutoFocus;
+let Hooks = {
+  AutoFocus: AutoFocus
+};
 
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";

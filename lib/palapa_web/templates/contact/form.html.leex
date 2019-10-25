@@ -1,18 +1,24 @@
-<%= form = form_for @changeset, "#", [phx_change: :form_change, phx_submit: :create_contact] %>
+<%= form = form_for @changeset, "#", [phx_change: :update_form, phx_submit: :create_contact] %>
   <div class="p-2 rounded bg-gray-100">
-    <div class="">
-      <%= checkbox form, :is_company, value:  @is_company  %>
+    <div>
+      <%= checkbox form, :is_company %>
       <%= label form, :is_company, "This contact is a company/organization", class: "label" %>
     </div>
+    
+    <%# Keep == true in order to discard "false" strings %>
+    <%= if input_value(form, :is_company) == true do %>
 
-    <div class="flex flex-wrap">
-      <%= if @is_company do %>
+      <div class="flex flex-wrap">
         <div class="field flex-1">
-          <%= label form, :last_name, "Name", class: "label" %>
-          <%= text_input form, :last_name, autocomplete: "no", autocomplete: "off", class: "input" %>
+          <%= label form, :last_name, "Last name", class: "label" %>
+          <%= text_input form, :last_name, autocomplete: "off", class: "input" %>
           <%= error_tag form, :last_name %>
         </div>
-      <% else %>
+      </div>
+
+    <% else %>
+
+      <div class="flex flex-wrap">
         <div class="field flex-1 sm:mr-2">
           <%= label form, :first_name, "First name", class: "label" %>
           <%= text_input form, :first_name, autocomplete: "off", "phx-hook": "AutoFocus", class: "input" %>
@@ -20,22 +26,35 @@
         </div>
 
         <div class="field flex-1">
-          <%= label form, :last_name, "Last name", class: "label" %>
-          <%= text_input form, :last_name, autocomplete: "off", class: "input" %>
+          <%= label form, :last_name, "Name", class: "label" %>
+          <%= text_input form, :last_name, autocomplete: "off", autocomplete: "off", class: "input" %>
           <%= error_tag form, :last_name %>
         </div>
-      <% end %>
-    </div>
+      </div>
+    
+    <% end %>
 
-    <div phx-update="ignore">
+    <div>
       <%= label form, :company_id, "Company", class: "label" %>
-      <%= select form, :company_id, 
-              List.insert_at(Enum.map(@companies, fn c -> {c.last_name, c.id} end), 0, {"Select a existing company", nil}), 
-              class: "input",
-              "data-controller": "choice"
-              
-            %>
-      <%= error_tag form, :company_id %>
+      <%= hidden_input form, :create_new_company %>
+
+      <%= if input_value(form, :create_new_company) == true do %>
+        <%= inputs_for form, :company, fn company -> %>
+          <%= text_input company, :last_name, class: "input", placeholder: "Company name", phx_hook: "AutoFocus" %>
+          <%= error_tag company, :last_name %>
+        <% end %>
+        <a href="#" phx-click="toggle_create_new_company" class="text-blue-500 text-sm ml-2">... or choose an existing company</a>
+      <% else %>
+        <div phx-update="ignore">
+          <%= select form, :company_id, 
+                  List.insert_at(Enum.map(@companies, fn c -> {c.last_name, c.id} end), 0, {"Select a existing company", nil}), 
+                  class: "input",
+                  "data-controller": "choice"
+                %>
+        </div>
+        <%= error_tag form, :company_id %>
+        <a href="#" phx-click="toggle_create_new_company" class="text-blue-500 text-sm">... or add a new one</a>
+      <% end %>
     </div>
   </div>
 
@@ -50,7 +69,7 @@
       </div>
 
       <div class="field flex-1">
-        <%= label form, :phone, "Phone", class: "label" %>
+        <%= label form, :phone, "Mobile phone", class: "label" %>
         <%= telephone_input form, :phone, autocomplete: "off", class: "input" %>
         <%= error_tag form, :phone %>
       </div>
@@ -119,6 +138,5 @@
 
   <div class="card-actions">
     <%= submit "Save contact", class: "btn btn-green" %>
-    <%= live_link "Cancel", to: Routes.live_path(@socket, PalapaWeb.ContactLive, @current_organization), class: "btn" %>
   </div>
 </form>

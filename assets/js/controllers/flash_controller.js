@@ -2,6 +2,8 @@ import BaseController from "./base_controller";
 
 export default class extends BaseController {
   connect() {
-    this.focusWithCursorAtTheEnd(this.element);
+    setTimeout(() => {
+      this.element.remove();
+    }, 4000);
   }
 }

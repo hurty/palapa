@@ -23,7 +23,7 @@
     .sidebar {
       grid-area: sidebar;
       display: block;
-      @apply h-screen overflow-y-auto overflow-x-hidden p-4;
+      @apply h-screen overflow-y-auto overflow-x-hidden p-4 border-r;
       position: sticky;
       position: -webkit-sticky;
       left: 0;
@@ -72,8 +72,8 @@
 .header {
   grid-area: header;
   z-index: 999;
-  @apply bg-white border-b;
-  /* background-color: rgb(243, 248, 251); */
+  /* @apply border-b; */
+  background-color: rgb(243, 248, 251);
 }
 
 /* Don't make the header sticky on small screens */
@@ -179,4 +179,9 @@
 
 .page-sidebar {
   grid-area: page-sidebar;
+}
+
+.scrollable-sidebar {
+  max-height: 600px;
+  @apply overflow-y-auto;
 }

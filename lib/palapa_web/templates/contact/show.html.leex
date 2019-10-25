@@ -20,7 +20,7 @@
         <%= if @contact.company do %>
         <div class="flex text-gray-500">
           <div class="self-center w-1/5 text-right mr-8"></div>
-          <h3 class="text-blue-500 text-center text-sm font-bold"><%= full_name(@contact.company) %></h3>
+          <h3 class="text-blue-500 text-center text-sm font-bold"><%= live_link full_name(@contact.company), to: Routes.live_path(@socket, PalapaWeb.ContactLive, @current_organization, @contact.company_id) %></h3>
         </div>
         <% end %>
       </div>

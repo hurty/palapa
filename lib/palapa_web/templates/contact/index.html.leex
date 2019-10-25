@@ -20,7 +20,7 @@
         </form>
 
         <%= if Enum.any?(@contacts) do %>
-          <ul class="flex flex-col overflow-y-auto">
+          <ul class="flex flex-col scrollable-sidebar">
             <%= for contact <- @contacts do %>
               <li class="flex border-b w-full hover:bg-green-100 text-sm <%= if @contact && @contact.id == contact.id do %>bg-green-100<% end %>">
                 <%= live_link to: Routes.live_path(@socket, PalapaWeb.ContactLive, contact.organization_id, contact.id), class: "w-full py-2 px-4" do %>
