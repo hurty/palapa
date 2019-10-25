@@ -31,6 +31,13 @@ defmodule Palapa.Contacts do
     |> Repo.all()
   end
 
+  def count_all_contacts(organization) do
+    Contact
+    |> where(organization_id: ^organization.id)
+    |> select([c], count(c.id))
+    |> Repo.one()
+  end
+
   def list_companies(organization) do
     Contact
     |> where(organization_id: ^organization.id)

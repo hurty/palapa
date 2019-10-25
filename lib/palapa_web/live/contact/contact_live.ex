@@ -119,7 +119,11 @@ defmodule PalapaWeb.ContactLive do
 
   def list_contacts(socket) do
     search = socket.assigns.search
-    assign(socket, contacts: Contacts.list_contacts(socket.assigns.current_organization, search))
+    organization = socket.assigns.current_organization
+
+    socket
+    |> assign(contacts: Contacts.list_contacts(organization, search))
+    |> assign(all_contacts_count: Contacts.count_all_contacts(organization))
   end
 
   def get_contact(socket, contact_id) when is_binary(contact_id) do
@@ -144,9 +148,13 @@ defmodule PalapaWeb.ContactLive do
   def show_contact_at(socket, index) do
     contact = Enum.at(socket.assigns.contacts, index)
 
-    live_redirect(socket,
-      to: Routes.live_path(socket, __MODULE__, socket.assigns.current_organization, contact.id)
-    )
+    if contact do
+      live_redirect(socket,
+        to: Routes.live_path(socket, __MODULE__, socket.assigns.current_organization, contact.id)
+      )
+    else
+      socket
+    end
   end
 
   def delete_contact_comment(socket, comment) do

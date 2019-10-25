@@ -1,0 +1,17 @@
+<div class="content page-layout">
+  <div class="main-content">
+    <div class="card">
+      <div class="blankslate">
+        <i class="fas fa-address-book text-6xl text-green-200"></i>
+        <div class="my-8">You don't have any contact</div>
+      </div>
+      <div class="text-center mb-8">
+        <div class="my-2 sm:m-0">
+          <%= live_link to: Routes.live_path(@socket, PalapaWeb.ContactLive, @current_organization, "new"), class: "btn" do %>
+            <i class="text-green-500 fas fa-plus-circle mr-2"></i>Create your first contact
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
