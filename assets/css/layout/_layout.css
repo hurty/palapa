@@ -185,3 +185,8 @@
   max-height: 600px;
   @apply overflow-y-auto;
 }
+
+.scrollable-details {
+  max-height: 175px;
+  @apply overflow-y-auto;
+}

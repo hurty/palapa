@@ -48,8 +48,7 @@ defmodule Palapa.Contacts do
 
   def get_contact!(queryable \\ Contact, id) do
     queryable
-    |> preload(:company)
-    |> preload(:comments)
+    |> preload([:company, :comments, :employees])
     |> Repo.get!(id)
   end
 

@@ -9,7 +9,7 @@ defmodule Palapa.Contacts.Contact do
     belongs_to(:organization, Organization)
     belongs_to(:company, __MODULE__)
     has_many(:comments, ContactComment)
-    has_many(:employees, Contact)
+    has_many(:employees, Contact, foreign_key: :company_id)
 
     field :is_company, :boolean, default: false
     field :create_new_company, :boolean, virtual: true, default: false
