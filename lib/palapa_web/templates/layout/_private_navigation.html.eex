@@ -41,7 +41,7 @@
       <div id="global-search" class="flex-shrink mx-1 sm:mx-4" data-controller="search" data-search-index="0" data-search-active="false">
         <div data-action="click@window->search#escapeSearchDialog">
           <%= form_for @conn, Routes.search_path(@conn, :index, @current_organization), [method: :get, "data-target": "search.form"], fn _form -> %>
-            <div class="search-bar">
+            <div class="search-bar bg-white">
               <span class="fa fa-search mr-2"></span>
               <input type="text" name="query" data-target="search.queryInput" data-action="input->search#triggerSearch keydown->search#triggerKeyNavigation" autocomplete="off" placeholder="Search anything" />
             </div>
