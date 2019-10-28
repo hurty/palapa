@@ -36,6 +36,7 @@ defmodule Palapa.Contacts.Contact do
       :create_new_company,
       :first_name,
       :last_name,
+      :title,
       :email,
       :phone,
       :work,

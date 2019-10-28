@@ -26,12 +26,20 @@
         </div>
 
         <div class="field flex-1">
-          <%= label form, :last_name, "Name", class: "label" %>
+          <%= label form, :last_name, "Last name", class: "label" %>
           <%= text_input form, :last_name, autocomplete: "off", autocomplete: "off", class: "input" %>
           <%= error_tag form, :last_name %>
         </div>
       </div>
     
+
+      <div class="flex flex-wrap">
+        <div class="field flex-1 sm:mr-2">
+          <%= label form, :title, "Title / Position", class: "label" %>
+          <%= text_input form, :title, autocomplete: "off", "phx-hook": "AutoFocus", class: "input" %>
+          <%= error_tag form, :title %>
+        </div>
+      </div>
     <% end %>
 
     <div>

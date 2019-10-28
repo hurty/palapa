@@ -48,7 +48,7 @@
                       <%= if contact.company do %>
                       <div class="flex text-xs">
                         <div class="self-center w-8 mr-2"></div>
-                        <div class="font-light text-blue-500"><%= contact.company.first_name %></div>
+                        <div class="font-light text-blue-500"><%= full_name contact.company %></div>
                       </div>
                       <% end %>
                     <% end %>
