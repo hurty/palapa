@@ -1,10 +1,10 @@
 <div class="content page-layout">
   <div class="main-content" data-controller="message">
     <div class="card p-1 sm:p-8">
-      <h2 class="card-header">New contact</h2>
+      <h2 class="card-header">Edit contact</h2>
       <div class="card-header-separator"></div>
 
-      <%= live_render @conn, PalapaWeb.ContactLive.Form, session: %{account_id: @current_account.id, organization_id: @current_organization.id}  %>  
+      <%= render "form.html", assigns  %>
       
     </div>
   </div>

@@ -1,0 +1,19 @@
+<div data-controller="popover" data-action="mousedown@window->popover#hide">
+  <button data-target="popover.button" data-action="popover#toggle" class="card-actions-button">
+    <i class="fas fa-ellipsis-h"></i>
+  </button>
+  
+  <div data-target="popover.content" class="popover hidden">
+    <div data-target="popover.arrow" class="popover__arrow"></div>
+    <nav class="flex flex-col">
+      <%= link to: Routes.live_path(@socket, PalapaWeb.ContactLive.Edit, @current_organization, @contact), class: "popover__link" do %>
+        <i class="fas fa-pen"></i>&nbsp;Edit this contact
+      <% end %>
+
+      <%= link to: "#", phx_click: "delete_contact", class: "popover__link",
+      data: [controller: "link", action: "link#delete", confirm: "Are your sure you want to delete this contact?"] do %>
+        <i class="fas fa-trash text-red"></i>&nbsp;Delete this contact
+      <% end %>
+    </nav>
+  </div>
+</div>

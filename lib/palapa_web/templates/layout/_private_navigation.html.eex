@@ -31,7 +31,7 @@
             <% end %>
 
 
-            <%= link to: Routes.contact_path(@conn, :new, @current_organization), class: "popover__link" do %>
+            <%= link to: Routes.live_path(@conn, PalapaWeb.ContactLive.New, @current_organization), class: "popover__link" do %>
               <i class="fas fa-address-book mr-2"></i>New Contact
             <% end %>
           </nav>
