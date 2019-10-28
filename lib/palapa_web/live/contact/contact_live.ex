@@ -117,6 +117,10 @@ defmodule PalapaWeb.ContactLive do
     {:noreply, update_contact_comment(socket, comment, attrs)}
   end
 
+  def handle_event("delete_contact", _, socket) do
+    {:noreply, delete_contact(socket)}
+  end
+
   def list_contacts(socket) do
     search = socket.assigns.search
     organization = socket.assigns.current_organization
@@ -155,6 +159,16 @@ defmodule PalapaWeb.ContactLive do
     else
       socket
     end
+  end
+
+  def delete_contact(socket) do
+    Contacts.delete_contact(socket.assigns.contact)
+
+    socket
+    |> put_flash(:success, "The contact has been deleted")
+    |> live_redirect(
+      to: Routes.live_path(socket, __MODULE__, socket.assigns.current_organization)
+    )
   end
 
   def delete_contact_comment(socket, comment) do
