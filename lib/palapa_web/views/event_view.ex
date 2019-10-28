@@ -82,6 +82,24 @@ defmodule PalapaWeb.EventView do
           contact: PalapaWeb.ContactView.full_name(event.contact)
         )
 
+      :new_contact_comment ->
+        gettext("%{author} posted a new comment on %{contact_link}",
+          author: author,
+          contact_link:
+            safe_to_string(
+              link(PalapaWeb.ContactView.full_name(event.contact),
+                to:
+                  Routes.live_path(
+                    conn,
+                    PalapaWeb.ContactLive,
+                    event.organization_id,
+                    event.contact_id
+                  )
+              )
+            )
+        )
+        |> raw()
+
       _ ->
         nil
     end
@@ -151,6 +169,12 @@ defmodule PalapaWeb.EventView do
 
         link(PalapaWeb.MessageView.excerpt(suggestion_comment.content),
           to: Routes.document_page_path(conn, :show, event.organization_id, page.id)
+        )
+
+      :new_contact_comment ->
+        link(PalapaWeb.MessageView.excerpt(event.contact_comment.content),
+          to:
+            Routes.live_path(conn, PalapaWeb.ContactLive, event.organization_id, event.contact_id)
         )
 
       _ ->

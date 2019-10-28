@@ -20,6 +20,7 @@ defmodule Palapa.Events do
     new_document_suggestion_comment
     close_document_suggestion
     new_contact
+    new_contact_comment
   )s)
 
   def list_events(organization, member) do
@@ -35,7 +36,8 @@ defmodule Palapa.Events do
         :document,
         :page,
         :document_suggestion_comment,
-        :contact
+        :contact,
+        :contact_comment
       ],
       preload: [document_suggestion: [author: :account]]
     )

@@ -1,11 +1,11 @@
   <div class="flex justify-between">
     <div class="flex">
       <div class="mx-2">
-        <%= Helpers.avatar(@comment.creator.account, :small) %>
+        <%= Helpers.avatar(@comment.author.account, :small) %>
       </div>
 
       <div class="text-xs my-auto">
-        <%= link @comment.creator.account.name, to: Routes.member_path(@socket, :show, @current_organization, @comment.creator.id), class: "text-gray-800 font-bold hover:underline" %>
+        <%= link @comment.author.account.name, to: Routes.member_path(@socket, :show, @current_organization, @comment.author.id), class: "text-gray-800 font-bold hover:underline" %>
         <div class="text-gray-700 font-light"><%= Helpers.auto_format_datetime(@comment.inserted_at, @current_account) %></div>
       </div>
     </div>
@@ -19,7 +19,7 @@
         <div data-target="popover.content" class="popover hidden">
           <div data-target="popover.arrow" class="popover__arrow"></div>
           <nav class="flex flex-col">
-            <%= if permit? Palapa.Messages.Policy, :edit_comment, @current_member, @comment do %>
+            <%= if permit? Palapa.Contacts.Policy, :edit_comment, @current_member, @comment do %>
               <a phx-click="edit_contact_comment" phx-value-comment_id="<%= @comment.id %>" class="popover__link">
                 <i class="fas fa-pen"></i>&nbsp;Edit comment
               </a>

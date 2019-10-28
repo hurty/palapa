@@ -10,7 +10,7 @@ defmodule Palapa.Contacts.ContactComment do
     timestamps()
     belongs_to(:organization, Organization)
     belongs_to(:contact, Contact)
-    belongs_to(:creator, Member)
+    belongs_to(:author, Member)
     field(:content, RichText.Type)
 
     many_to_many(:attachments, Attachment,

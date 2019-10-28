@@ -95,23 +95,36 @@ defmodule Palapa.Contacts do
 
   def get_contact_comment!(id) do
     ContactComment
-    |> preload([:creator, :attachments])
+    |> preload([:author, :attachments])
     |> Repo.get!(id)
   end
 
   def list_contact_comments(%Contact{} = contact) do
     Ecto.assoc(contact, :comments)
     |> order_by([c], desc: c.inserted_at)
-    |> preload(creator: [:account])
+    |> preload(author: [:account])
     |> Repo.all()
   end
 
-  def create_contact_comment(%Contact{} = contact, %Member{} = creator, attrs) do
-    ContactComment.changeset(%ContactComment{}, attrs)
-    |> put_change(:organization_id, contact.organization_id)
-    |> put_assoc(:contact, contact)
-    |> put_assoc(:creator, creator)
-    |> Repo.insert()
+  def create_contact_comment(%Contact{} = contact, %Member{} = author, attrs) do
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:contact_comment, fn repo, _ ->
+      ContactComment.changeset(%ContactComment{}, attrs)
+      |> put_change(:organization_id, contact.organization_id)
+      |> put_assoc(:contact, contact)
+      |> put_assoc(:author, author)
+      |> repo.insert()
+    end)
+    |> Ecto.Multi.insert(:event, fn %{contact_comment: contact_comment} ->
+      %Event{
+        action: :new_contact_comment,
+        organization_id: author.organization_id,
+        author: author,
+        contact: contact,
+        contact_comment: contact_comment
+      }
+    end)
+    |> Repo.transaction()
   end
 
   def change_contact_comment(%ContactComment{} = contact_comment) do
