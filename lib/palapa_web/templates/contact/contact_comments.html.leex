@@ -4,7 +4,7 @@
   <%= Helpers.rich_text_editor(form, :content, @current_organization) %>
 
   <div class="card-actions">
-    <%= submit "Post this comment", class: "btn btn-green" %>
+    <%= submit "Post this comment", class: "btn btn-green", phx_disable_with: "Saving..." %>
   </div>
 </form>
 
