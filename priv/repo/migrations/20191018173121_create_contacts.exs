@@ -36,5 +36,55 @@ defmodule Palapa.Repo.Migrations.CreateContacts do
     end
 
     create(index(:events, :contact_id))
+
+    alter table(:searches) do
+      add(:contact_id, references(:contacts, type: :uuid, on_delete: :delete_all))
+    end
+
+    create(index(:searches, [:contact_id], unique: true))
+
+    execute("""
+    CREATE OR REPLACE FUNCTION refresh_contacts_search()
+    RETURNS TRIGGER LANGUAGE plpgsql
+    AS $$
+    DECLARE
+      index_value tsvector;
+    BEGIN
+      index_value := setweight(to_tsvector('simple', unaccent(NEW.last_name)), 'A') ||
+        setweight(to_tsvector('simple', coalesce(unaccent(NEW.first_name), '')), 'B');
+
+      INSERT INTO searches (
+        organization_id,
+        resource_type,
+        updated_at,
+        search_index,
+        contact_id
+      )
+      VALUES (
+        NEW.organization_id,
+        'contact',
+        NEW.updated_at,
+        index_value,
+        NEW.id
+      )
+
+      ON CONFLICT (contact_id) DO UPDATE SET
+        search_index = index_value,
+        updated_at = NEW.updated_at
+        WHERE searches.contact_id = NEW.id;
+
+      RETURN NEW;
+    END $$;
+    """)
+
+    execute("DROP TRIGGER IF EXISTS refresh_contacts_search_trigger ON contacts;")
+
+    execute("""
+    CREATE TRIGGER refresh_contacts_search_trigger
+    AFTER INSERT OR UPDATE
+    ON contacts
+    FOR EACH ROW
+    EXECUTE PROCEDURE refresh_contacts_search();
+    """)
   end
 end

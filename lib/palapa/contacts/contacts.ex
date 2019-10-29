@@ -4,7 +4,7 @@ defmodule Palapa.Contacts do
   alias Palapa.Contacts.{Contact, ContactComment}
   alias Palapa.Events.Event
 
-  def contacts_visible_to(member) do
+  def visible_to(member) do
     Contact
     |> where(organization_id: ^member.organization_id)
   end

@@ -75,7 +75,7 @@ defmodule Palapa.Events do
 
   def contact_events_query(organization, member) do
     from(events in Ecto.assoc(organization, :events),
-      join: contacts in subquery(Contacts.contacts_visible_to(member)),
+      join: contacts in subquery(Contacts.visible_to(member)),
       on: events.contact_id == contacts.id
     )
   end

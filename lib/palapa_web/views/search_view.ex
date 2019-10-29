@@ -17,6 +17,9 @@ defmodule PalapaWeb.SearchView do
 
       :page ->
         "search_result_page.html"
+
+      :contact ->
+        "search_result_contact.html"
     end
   end
 end

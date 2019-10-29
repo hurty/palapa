@@ -4,6 +4,7 @@ defmodule Palapa.Searches do
   alias Palapa.Searches.Search
   alias Palapa.Messages
   alias Palapa.Documents
+  alias Palapa.Contacts
   import EctoEnum
 
   defenum(SearchResourceTypeEnum, :search_resource_type, [
@@ -11,7 +12,8 @@ defmodule Palapa.Searches do
     :team,
     :message,
     :document,
-    :page
+    :page,
+    :contact
   ])
 
   @empty_page_result %Scrivener.Page{
@@ -33,6 +35,7 @@ defmodule Palapa.Searches do
     union_query =
       from(
         searches in members_query(member, search_string),
+        union: ^contacts_query(member, search_string),
         union: ^teams_query(member, search_string),
         union: ^messages_query(member, search_string),
         union: ^documents_query(member, search_string),
@@ -45,7 +48,7 @@ defmodule Palapa.Searches do
     search_query =
       from(q in subquery(union_query),
         order_by: [desc: q.rank, desc: q.updated_at],
-        preload: [[member: :account], :team, :message, :document, [page: :document]]
+        preload: [[member: :account], :contact, :team, :message, :document, [page: :document]]
       )
 
     search_query
@@ -74,6 +77,7 @@ defmodule Palapa.Searches do
     Repo.query!("TRUNCATE searches")
     Repo.query!("UPDATE members SET id=id")
     Repo.query!("UPDATE teams SET id=id")
+    Repo.query!("UPDATE contacts SET id=id")
     Repo.query!("UPDATE messages SET id=id")
     Repo.query!("UPDATE documents SET id=id")
     Repo.query!("UPDATE pages SET id=id")
@@ -110,6 +114,20 @@ defmodule Palapa.Searches do
     from(searches in matching_searches_query(search_string),
       join: teams in ^subquery(Teams.where_organization(member.organization_id)),
       on: searches.team_id == teams.id,
+      select_merge: %{
+        rank:
+          fragment(
+            "ts_rank(search_index, to_tsquery('simple', unaccent(?)))",
+            ^"#{search_string}:*"
+          )
+      }
+    )
+  end
+
+  defp contacts_query(member, search_string) do
+    from(searches in matching_searches_query(search_string),
+      join: contacts in ^subquery(Contacts.visible_to(member)),
+      on: searches.contact_id == contacts.id,
       select_merge: %{
         rank:
           fragment(

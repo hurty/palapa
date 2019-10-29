@@ -12,5 +12,6 @@ defmodule Palapa.Searches.Search do
     belongs_to(:member, Palapa.Organizations.Member)
     belongs_to(:document, Palapa.Documents.Document)
     belongs_to(:page, Palapa.Documents.Page)
+    belongs_to(:contact, Palapa.Contacts.Contact)
   end
 end

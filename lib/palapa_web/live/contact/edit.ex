@@ -56,7 +56,7 @@ defmodule PalapaWeb.ContactLive.Edit do
 
   def get_contact_changeset(socket, contact_id) do
     contact =
-      Contacts.contacts_visible_to(socket.assigns.current_member)
+      Contacts.visible_to(socket.assigns.current_member)
       |> Contacts.get_contact!(contact_id)
 
     changeset =

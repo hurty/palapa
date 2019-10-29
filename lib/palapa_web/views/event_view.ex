@@ -77,10 +77,22 @@ defmodule PalapaWeb.EventView do
         |> raw()
 
       :new_contact ->
-        gettext("%{author} added %{contact} as a new contact",
+        gettext("%{author} added %{contact_link} as a new contact",
           author: author,
-          contact: PalapaWeb.ContactView.full_name(event.contact)
+          contact_link:
+            safe_to_string(
+              link(PalapaWeb.ContactView.full_name(event.contact),
+                to:
+                  Routes.live_path(
+                    conn,
+                    PalapaWeb.ContactLive,
+                    event.organization_id,
+                    event.contact_id
+                  )
+              )
+            )
         )
+        |> raw()
 
       :new_contact_comment ->
         gettext("%{author} posted a new comment on %{contact_link}",
