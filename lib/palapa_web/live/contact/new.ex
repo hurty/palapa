@@ -49,11 +49,21 @@ defmodule PalapaWeb.ContactLive.New do
     {:noreply, create_contact(socket, attrs)}
   end
 
-  # New contact
   def get_contact_changeset(socket) do
+    changeset =
+      case get_connect_params(socket) do
+        %{"stashed_form" => encoded} ->
+          %Contact{}
+          |> Contacts.change_contact(Plug.Conn.Query.decode(encoded)["contact"])
+          |> Map.put(:action, :insert)
+
+        _ ->
+          Contacts.change_contact(%Contact{})
+      end
+
     socket
     |> assign(:companies, Contacts.list_companies(socket.assigns.current_organization))
-    |> assign(:changeset, Contacts.change_contact(%Contact{}))
+    |> assign(:changeset, changeset)
   end
 
   def create_contact(socket, attrs) do

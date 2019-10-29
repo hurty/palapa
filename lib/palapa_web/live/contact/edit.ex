@@ -59,9 +59,20 @@ defmodule PalapaWeb.ContactLive.Edit do
       Contacts.contacts_visible_to(socket.assigns.current_member)
       |> Contacts.get_contact!(contact_id)
 
+    changeset =
+      case get_connect_params(socket) do
+        %{"stashed_form" => encoded} ->
+          %Contact{}
+          |> Contacts.change_contact(Plug.Conn.Query.decode(encoded)["contact"])
+          |> Map.put(:action, :update)
+
+        _ ->
+          Contacts.change_contact(contact)
+      end
+
     socket
     |> assign(:contact, contact)
-    |> assign(:changeset, Contacts.change_contact(contact))
+    |> assign(:changeset, changeset)
     |> assign(:companies, Contacts.list_companies(socket.assigns.current_organization))
   end
 

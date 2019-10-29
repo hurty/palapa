@@ -1,4 +1,4 @@
-<%= form = form_for @changeset, "#", [phx_change: :update_form, phx_submit: :save] %>
+<%= form = form_for @changeset, "#", [phx_hook: "SavedForm", phx_change: :update_form, phx_submit: :save] %>
   <div class="p-2 rounded bg-gray-100">
     <div>
       <%= checkbox form, :is_company %>
