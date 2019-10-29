@@ -10,7 +10,7 @@
 
       <div class="flex flex-wrap">
         <div class="field flex-1">
-          <%= label form, :last_name, "Last name", class: "label" %>
+          <%= label form, :last_name, "Company name", class: "label" %>
           <%= text_input form, :last_name, autocomplete: "off", class: "input" %>
           <%= error_tag form, :last_name %>
         </div>
@@ -42,28 +42,30 @@
       </div>
     <% end %>
 
-    <div>
-      <%= label form, :company_id, "Company", class: "label" %>
-      <%= hidden_input form, :create_new_company %>
+    <%= unless input_value(form, :is_company) == true do %>
+      <div>
+        <%= label form, :company_id, "Company", class: "label" %>
+        <%= hidden_input form, :create_new_company %>
 
-      <%= if input_value(form, :create_new_company) == true do %>
-        <%= inputs_for form, :company, fn company -> %>
-          <%= text_input company, :last_name, class: "input", placeholder: "Company name", phx_hook: "AutoFocus" %>
-          <%= error_tag company, :last_name %>
+        <%= if input_value(form, :create_new_company) == true do %>
+          <%= inputs_for form, :company, fn company -> %>
+            <%= text_input company, :last_name, class: "input", placeholder: "Company name", phx_hook: "AutoFocus" %>
+            <%= error_tag company, :last_name %>
+          <% end %>
+          <a href="#" phx-click="toggle_create_new_company" class="text-blue-500 text-sm ml-2">... or choose an existing company</a>
+        <% else %>
+          <div phx-update="ignore">
+            <%= select form, :company_id, 
+                    List.insert_at(Enum.map(@companies, fn c -> {c.last_name, c.id} end), 0, {"Select a existing company", nil}), 
+                    class: "input",
+                    "data-controller": "choice"
+                  %>
+          </div>
+          <%= error_tag form, :company_id %>
+          <a href="#" phx-click="toggle_create_new_company" class="text-blue-500 text-sm">... or add a new one</a>
         <% end %>
-        <a href="#" phx-click="toggle_create_new_company" class="text-blue-500 text-sm ml-2">... or choose an existing company</a>
-      <% else %>
-        <div phx-update="ignore">
-          <%= select form, :company_id, 
-                  List.insert_at(Enum.map(@companies, fn c -> {c.last_name, c.id} end), 0, {"Select a existing company", nil}), 
-                  class: "input",
-                  "data-controller": "choice"
-                %>
-        </div>
-        <%= error_tag form, :company_id %>
-        <a href="#" phx-click="toggle_create_new_company" class="text-blue-500 text-sm">... or add a new one</a>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 
   <div class="p-2 rounded mt-4 bg-gray-100">
