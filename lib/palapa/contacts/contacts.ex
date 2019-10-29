@@ -126,8 +126,8 @@ defmodule Palapa.Contacts do
     |> Repo.transaction()
   end
 
-  def change_contact_comment(%ContactComment{} = contact_comment) do
-    ContactComment.changeset(contact_comment, %{})
+  def change_contact_comment(%ContactComment{} = contact_comment, attrs \\ %{}) do
+    ContactComment.changeset(contact_comment, attrs)
   end
 
   def update_contact_comment(%ContactComment{} = contact_comment, attrs) do

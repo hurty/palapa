@@ -18,7 +18,7 @@
           <form id="contacts_list" phx-change="search_contacts" phx-submit="search_contacts" class="my-4 px-4">
             <div class="search-bar max-w-sm" phx-update="ignore">
               <i class="fa fa-search mr-2"></i>
-              <input name="search" phx-hook="AutoFocus" phx-debounce="200" type="text" autocomplete="off" placeholder="Search contacts">
+              <input id="contact-search" name="search" phx-hook="AutoFocus" phx-debounce="200", type="text" autocomplete="off" placeholder="Search contacts">
             </div>
           </form>
 

@@ -1,6 +1,6 @@
 <h2 class="text-gray-700 font-bold my-2 text-center">Add a comment about <%= full_name(@contact) %></h2>
 
-<%= form = form_for @contact_comment_changeset, "#", [id: "comment_form", phx_change: :save_comment_form, phx_submit: :create_contact_comment] %>
+<%= form = form_for @contact_comment_changeset, "#", [id: "contact_comment_form", phx_submit: :create_contact_comment] %>
   <div phx-update="ignore">
     <%= Helpers.rich_text_editor(form, :content, @current_organization) %>
   </div>
