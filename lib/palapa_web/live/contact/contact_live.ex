@@ -88,7 +88,7 @@ defmodule PalapaWeb.ContactLive do
       {:ok, _} ->
         {:noreply, get_contact(socket, contact)}
 
-      {:error, _changeset} ->
+      {:error, :contact_comment, _changeset, _changes} ->
         {:noreply, socket}
     end
   end
@@ -190,11 +190,15 @@ defmodule PalapaWeb.ContactLive do
              socket.assigns.current_member,
              comment
            ) do
-      Contacts.update_contact_comment!(comment, attrs)
+      case Contacts.update_contact_comment(comment, attrs) do
+        {:ok, comment} ->
+          socket
+          |> assign(:edit_contact_comment_id, nil)
+          |> get_contact(comment.contact_id)
 
-      socket
-      |> assign(:edit_contact_comment_id, nil)
-      |> get_contact(comment.contact_id)
+        {:error, _changeset} ->
+          socket
+      end
     end
   end
 end

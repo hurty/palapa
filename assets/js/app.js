@@ -9,8 +9,6 @@ import "trix";
 import MicroModal from "micromodal";
 MicroModal.init();
 
-import AutoFocus from "./live_hooks/auto_focus";
-
 let serializeForm = form => {
   let formData = new FormData(form);
   let params = new URLSearchParams();
@@ -41,6 +39,8 @@ let SavedForm = {
     });
   }
 };
+
+import AutoFocus from "./live_hooks/auto_focus";
 
 let Hooks = {
   AutoFocus: AutoFocus,
