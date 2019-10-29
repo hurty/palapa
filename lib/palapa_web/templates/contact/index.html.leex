@@ -3,7 +3,7 @@
 <% else %>
   <div class="content left-sidebar-layout sm:max-w-5xl mx-auto">
     <div class="page-sidebar">
-      <div class="card" phx-keyup="navigate_contact" phx-target="window">
+      <div class="card">
         <div class="flex flex-wrap items-center justify-between p-4 border-b">
           <h2 class="card-header">Contacts</h2>
 
@@ -15,7 +15,7 @@
         </div>
 
         <div class="card-content">
-          <form phx-change="search_contacts" phx-submit="search_contacts" class="my-4 px-4">
+          <form id="contacts_list" phx-change="search_contacts" phx-submit="search_contacts" class="my-4 px-4">
             <div class="search-bar max-w-sm" phx-update="ignore">
               <i class="fa fa-search mr-2"></i>
               <input name="search" phx-hook="AutoFocus" phx-debounce="200" type="text" autocomplete="off" placeholder="Search contacts">
