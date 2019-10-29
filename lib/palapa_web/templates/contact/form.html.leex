@@ -36,7 +36,7 @@
       <div class="flex flex-wrap">
         <div class="field flex-1 sm:mr-2">
           <%= label form, :title, "Title / Position", class: "label" %>
-          <%= text_input form, :title, autocomplete: "off", "phx-hook": "AutoFocus", class: "input" %>
+          <%= text_input form, :title, autocomplete: "off", class: "input" %>
           <%= error_tag form, :title %>
         </div>
       </div>
@@ -146,5 +146,6 @@
 
   <div class="card-actions">
     <%= submit "Save contact", class: "btn btn-green", phx_disable_with: "Saving..." %>
+    <%= live_link "Cancel", class: "btn", to: Routes.live_path(@socket, PalapaWeb.ContactLive, @current_organization) %>
   </div>
 </form>

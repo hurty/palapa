@@ -1,6 +1,12 @@
 <div class="content page-layout">
   <div class="main-content" data-controller="message">
+      <div class="flex flex-wrap justify-center sm:justify-between p-2">
+        <%= live_link(to: Routes.live_path(@socket, PalapaWeb.ContactLive, @current_organization), class: "my-auto text-gray-600 font-bold uppercase text-sm py-2") do %>
+          <i class="fa fa-chevron-circle-left"></i> Back to contacts
+        <% end %>
+      </div>
     <div class="card p-1 sm:p-8">
+
       <h2 class="card-header">New contact</h2>
       <div class="card-header-separator"></div>
 
