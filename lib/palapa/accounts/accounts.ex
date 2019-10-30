@@ -26,9 +26,9 @@ defmodule Palapa.Accounts do
   end
 
   def update_account(account, attrs) do
-    account
-    |> Account.changeset(attrs)
-    |> Repo.update()
+    Ecto.Multi.new()
+    |> Ecto.Multi.update(:account, Account.changeset(account, attrs))
+    |> Repo.transaction()
   end
 
   def change_password(account) do
@@ -113,7 +113,6 @@ defmodule Palapa.Accounts do
         |> Timex.beginning_of_day()
         |> Timex.set(hour: 8)
       end
-      |> IO.inspect()
 
     schedule_at_utc = Timex.Timezone.convert(schedule_at, "UTC")
 

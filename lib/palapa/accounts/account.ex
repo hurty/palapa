@@ -15,6 +15,7 @@ defmodule Palapa.Accounts.Account do
     field(:avatar, Palapa.Avatar.Type)
     field(:password_reset_hash, :string)
     field(:password_reset_at, :utc_datetime)
+    field(:send_daily_recap, :boolean)
     timestamps()
 
     has_many(:members, Organizations.Member)
@@ -25,7 +26,7 @@ defmodule Palapa.Accounts.Account do
   @doc false
   def changeset(account, attrs) do
     account
-    |> cast(attrs, [:email, :name, :password, :timezone])
+    |> cast(attrs, [:email, :name, :password, :timezone, :send_daily_recap])
     |> put_uuid()
     |> put_password_hash
     |> cast_attachments(attrs, [:avatar])

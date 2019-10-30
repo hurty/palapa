@@ -11,20 +11,24 @@ defmodule Palapa.JobQueue do
   def perform(%Multi{} = multi, %{"type" => "daily_email", "account_id" => account_id}) do
     account = Palapa.Accounts.get(account_id)
 
-    if !account do
-      Repo.transaction(multi)
-    else
-      multi
-      |> Ecto.Multi.run(:send_daily_email, fn _repo, _changes ->
-        Palapa.Events.Emails.daily_emails(account)
-        |> Enum.each(fn email -> Palapa.Mailer.deliver_now(email) end)
+    cond do
+      !account ->
+        Repo.transaction(multi)
 
-        {:ok, :ok}
-      end)
-      |> Ecto.Multi.run(:schedule_next_daily_email, fn _repo, _changes ->
-        Accounts.schedule_daily_email(account)
-      end)
-      |> Repo.transaction()
+      true ->
+        multi
+        |> Ecto.Multi.run(:send_daily_email, fn _repo, _changes ->
+          if account.send_daily_recap do
+            Palapa.Events.Emails.daily_emails(account)
+            |> Enum.each(fn email -> Palapa.Mailer.deliver_now(email) end)
+          end
+
+          {:ok, nil}
+        end)
+        |> Ecto.Multi.run(:schedule_next_daily_email, fn _repo, _changes ->
+          Accounts.schedule_daily_email(account)
+        end)
+        |> Repo.transaction()
     end
   end
 

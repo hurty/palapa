@@ -33,6 +33,12 @@
           <%= error_tag form, :timezone %>
         </div>
 
+        <div class="field-inline">
+          <%= checkbox form, :send_daily_recap, class: "input", autocomplete: "off" %>
+          <i class="fas fa-bell text-green-500 mr-2"></i><%= label form, :send_daily_recap, "Send a daily recap by email with the latest activity on your workspaces", class: "" %>
+          <%= error_tag form, :send_daily_recap %>
+        </div>
+
         <div class="card-actions">
           <%= submit "Save my account settings", class: "btn btn-green"%>
         </div>

@@ -14,13 +14,13 @@ defmodule PalapaWeb.AccountController do
 
   def update(conn, %{"account" => account_attrs}) do
     case Accounts.update_account(current_account(conn), account_attrs) do
-      {:ok, account} ->
+      {:ok, %{account: account}} ->
         conn
         |> assign_changesets(account)
         |> put_flash(:success, "Your account has been updated.")
         |> render("edit.html")
 
-      {:error, account_changeset} ->
+      {:error, :account, account_changeset, _changes} ->
         conn
         |> assign(:account_changeset, account_changeset)
         |> assign(:password_changeset, Accounts.change_password(current_account(conn)))
