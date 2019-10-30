@@ -54,7 +54,7 @@ defmodule Palapa.Accounts.Account do
   end
 
   def validate_timezone(changeset) do
-    tz = get_change(changeset, :timezone)
+    tz = get_field(changeset, :timezone)
 
     cond do
       tz && !Tzdata.zone_exists?(tz) -> add_error(changeset, :timezone, "Timezone is invalid.")
