@@ -4,8 +4,34 @@ defmodule Palapa.JobQueue do
   alias Palapa.Repo
   alias Palapa.Organizations
   alias Palapa.Billing
+  alias Palapa.Accounts
 
-  def perform(multi, %{"type" => "update_stripe_customer", "customer_id" => customer_id}) do
+  alias Ecto.Multi
+
+  def perform(%Multi{} = multi, %{"type" => "daily_email", "account_id" => account_id}) do
+    account = Palapa.Accounts.get(account_id)
+
+    if !account do
+      Repo.transaction(multi)
+    else
+      multi
+      |> Ecto.Multi.run(:send_daily_email, fn _repo, _changes ->
+        Palapa.Events.Emails.daily_emails(account)
+        |> Enum.each(fn email -> Palapa.Mailer.deliver_now(email) end)
+
+        {:ok, :ok}
+      end)
+      |> Ecto.Multi.run(:schedule_next_daily_email, fn _repo, _changes ->
+        Accounts.schedule_daily_email(account)
+      end)
+      |> Repo.transaction()
+    end
+  end
+
+  def perform(%Multi{} = multi, %{
+        "type" => "update_stripe_customer",
+        "customer_id" => customer_id
+      }) do
     customer = Billing.Customers.get_customer(customer_id)
 
     if !customer do
@@ -20,7 +46,10 @@ defmodule Palapa.JobQueue do
     end
   end
 
-  def perform(multi, %{"type" => "cancel_subscription", "organization_id" => organization_id}) do
+  def perform(%Multi{} = multi, %{
+        "type" => "cancel_subscription",
+        "organization_id" => organization_id
+      }) do
     organization = Organizations.get(organization_id)
 
     if !organization do

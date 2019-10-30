@@ -42,6 +42,9 @@ defmodule Palapa.Accounts.Registrations do
     |> Ecto.Multi.run(:organization_membership, fn _repo, %{account: account} ->
       Organizations.create(organization_attrs, account)
     end)
+    |> Ecto.Multi.run(:daily_email, fn _, %{account: account} ->
+      Accounts.schedule_daily_email(account)
+    end)
     |> Repo.transaction()
   end
 

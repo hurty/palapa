@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <style type="text/css">
+      a {
+        color: #38A169;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div style="background-color:#F4F4F4;font-family:sans-serif;margin-bottom: 15px;margin-top:15px;padding:10px;">
+
+      <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;padding:10px;border-radius:5px;">
+        <div style="text-align:center;">
+          <h1>Palapa</h1>
+          <h2>Daily recap for <%= @organization.name %></h2>
+          <p style="color:#3182CE;">Here's the activity for the workspace since <%= Helpers.format_date(Timex.shift(Timex.now(), hours: -24), @account) %></p>
+        </div>
+        <ul style="list-decoration: none;">
+          <%= render_many @events, PalapaWeb.EventView, "daily_recap_event.html", conn: PalapaWeb.Endpoint, current_account: @account %>
+        </ul>
+        
+        <p style="text-align:center;"><%= link "See more activity", to: Routes.dashboard_path(PalapaWeb.Endpoint, :index, @organization) %></p>
+      </div>
+      
+      <div style="margin:0px auto;max-width:600px;padding:10px;">
+        <p>Change your Palapa <%= link "acount settings", to: Routes.account_path(PalapaWeb.Endpoint, :edit) %> if you don't want to receive this daily recap anymore.</p>
+      </div>
+    </div>
+  </body>
+</html>

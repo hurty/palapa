@@ -5,6 +5,7 @@ defmodule Palapa.Accounts do
 
   # --- Actions ---
 
+  def get(account_id), do: Repo.get(Account, account_id)
   def get!(account_id), do: Repo.get!(Account, account_id)
 
   def get_by(conditions), do: Repo.get_by(Account, conditions)
@@ -16,8 +17,7 @@ defmodule Palapa.Accounts do
   end
 
   def create(attrs \\ %{}) do
-    %Account{}
-    |> Account.changeset(attrs)
+    Account.changeset(%Account{}, attrs)
     |> Repo.insert()
   end
 
@@ -97,5 +97,28 @@ defmodule Palapa.Accounts do
     Palapa.Organizations.Member
     |> where(account_id: ^account.id, organization_id: ^organization.id)
     |> Repo.one()
+  end
+
+  def schedule_daily_email(account) do
+    now = Timex.now(account.timezone)
+
+    schedule_at =
+      if now.hour < 7 do
+        # Today at 8
+        now |> Timex.set(hour: 8)
+      else
+        # Tomorrow at 8
+        now
+        |> Timex.shift(days: 1)
+        |> Timex.beginning_of_day()
+        |> Timex.set(hour: 8)
+      end
+      |> IO.inspect()
+
+    schedule_at_utc = Timex.Timezone.convert(schedule_at, "UTC")
+
+    %{"type" => "daily_email", "account_id" => account.id}
+    |> Palapa.JobQueue.new(schedule: schedule_at_utc)
+    |> Palapa.Repo.insert()
   end
 end

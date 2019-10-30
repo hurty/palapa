@@ -8,11 +8,15 @@
 
 .event-summary {
   @apply text-base font-bold text-gray-700;
+
+  a {
+    @apply text-green-600 font-bold;
+  }
 }
 
 .event-target-title {
   a {
-    @apply text-green-500;
+    @apply text-green-600 font-bold;
 
     &:hover {
       @apply underline;

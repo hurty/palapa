@@ -23,10 +23,26 @@ defmodule Palapa.Events do
     new_contact_comment
   )s)
 
-  def list_events(organization, member) do
+  def last_24_hours_events(organization, member) do
+    time = Timex.now() |> Timex.shift(hours: -24)
+
+    from(e in base_list_events_query(organization, member),
+      where: e.inserted_at > ^time,
+      order_by: [asc: :inserted_at]
+    )
+    |> Repo.all()
+  end
+
+  def last_50_events(organization, member) do
+    from(e in base_list_events_query(organization, member),
+      order_by: [desc: :inserted_at]
+    )
+    |> Repo.all()
+  end
+
+  defp base_list_events_query(organization, member) do
     from(events in subquery(all_events_query(organization, member)),
-      limit: 30,
-      order_by: [desc: :inserted_at],
+      limit: 50,
       distinct: true,
       preload: [author: :account],
       preload: [
@@ -41,7 +57,6 @@ defmodule Palapa.Events do
       ],
       preload: [document_suggestion: [author: :account]]
     )
-    |> Repo.all()
   end
 
   def all_events_query(organization, member) do

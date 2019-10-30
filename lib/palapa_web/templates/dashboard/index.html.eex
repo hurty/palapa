@@ -1,9 +1,9 @@
 <div class="content article-layout">
   <div class="main-content"> 
-    <h2 class="text-base text-gray-600 text-center tracking-wide"><%= gettext "Last activity" %></h2>
+    <h2 class="text-base text-gray-600 text-center tracking-wide"><%= gettext "Lastest activity" %></h2>
 
     <ul class="">
-      <%= render_many @events, PalapaWeb.EventView, "event.html", conn: @conn %>
+      <%= render_many @events, PalapaWeb.EventView, "event.html", assigns %>
     </ul>
   </div>
 </div>

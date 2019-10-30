@@ -46,8 +46,8 @@ defmodule Palapa.Mixfile do
       {:phoenix, "~> 1.4.0", override: true},
       {:plug_cowboy, "~> 2.0"},
       {:phoenix_pubsub, "~> 1.0"},
-      {:ecto, "~> 3.1.0", override: true},
-      {:ecto_sql, "~> 3.1.0"},
+      {:ecto, "~> 3.0", override: true},
+      {:ecto_sql, "~> 3.0"},
       {:phoenix_ecto, "~> 4.0"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.10"},
@@ -76,7 +76,7 @@ defmodule Palapa.Mixfile do
       {:floki, "~> 0.20.0"},
       {:stripity_stripe, "~> 2.7.0"},
       {:mox, "~> 0.5", only: :test},
-      {:ecto_job, "~> 2.1.0"},
+      {:ecto_job, "~> 3.0"},
       {:money, "~> 1.4"},
       {:countries, "~> 1.5"}
     ]

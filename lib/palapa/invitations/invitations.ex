@@ -204,6 +204,9 @@ defmodule Palapa.Invitations do
         role: :member
       })
     end)
+    |> Ecto.Multi.run(:daily_email, fn _, %{account: account} ->
+      Accounts.schedule_daily_email(account)
+    end)
     |> Ecto.Multi.insert(:event, fn %{member: member} ->
       %Event{
         action: :new_member,
