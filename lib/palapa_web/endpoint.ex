@@ -9,14 +9,6 @@ defmodule PalapaWeb.Endpoint do
   socket "/socket", PalapaWeb.UserSocket, websocket: true
   socket "/live", Phoenix.LiveView.Socket
 
-  plug(
-    Plug.Parsers,
-    parsers: [:urlencoded, :multipart, :json],
-    pass: ["text/*"],
-    body_reader: {PalapaWeb.CacheRawBody, :read_body, []},
-    json_decoder: Jason
-  )
-
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
@@ -44,15 +36,21 @@ defmodule PalapaWeb.Endpoint do
     plug(Phoenix.CodeReloader)
   end
 
-  plug(Plug.RequestId)
-  plug(Plug.Logger)
+  plug Plug.RequestId
+  plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
+
+  plug Plug.Parsers,
+    parsers: [:urlencoded, :multipart, :json],
+    pass: ["*/*"],
+    json_decoder: Phoenix.json_library(),
+    length: 200_000_000
 
   plug(
     Plug.Parsers,
-    parsers: [:urlencoded, :multipart, :json],
-    pass: ["*/*"],
-    json_decoder: Jason,
-    length: 100_000_000
+    parsers: [:json],
+    pass: ["text/*"],
+    body_reader: {PalapaWeb.CacheRawBody, :read_body, []},
+    json_decoder: Phoenix.json_library()
   )
 
   plug(Plug.MethodOverride)

@@ -1,0 +1,16 @@
+{
+  "CORSRules": [
+    {
+      "AllowedOrigins": [
+        "http://palapa.io",
+        "https://palapa.io",
+        "http://www.palapa.io",
+        "https://www.palapa.io"
+      ],
+      "AllowedHeaders": ["*"],
+      "AllowedMethods": ["PUT", "POST"],
+      "MaxAgeSeconds": 3600,
+      "ExposeHeaders": ["Etag"]
+    }
+  ]
+}

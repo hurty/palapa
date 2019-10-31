@@ -11,7 +11,7 @@
         <button type="button" class="trix-button trix-button--icon trix-button--icon-italic" data-trix-attribute="italic" data-trix-key="i" title="Italic" tabindex="-1">Italic</button>
         <button type="button" class="trix-button trix-button--icon trix-button--icon-strike" data-trix-attribute="strike" title="Strike" tabindex="-1">Strike</button>
         <button type="button" class="trix-button trix-button--icon trix-button--icon-link" data-trix-attribute="href" data-trix-action="link" data-trix-key="k" title="Link" tabindex="-1">Link</button>
-        <button type="button" class="trix-button trix-button--icon trix-button--icon-attach" data-trix-attribute="attachment" data-trix-action="x-attachment" data-trix-key="a" title="Attach files" tabindex="-1">Attach files</button>
+        <button type="button" class="trix-button trix-button--icon trix-button--icon-attach" data-trix-action="attachFiles" title="Attach File" tabindex="-1">Attach File</button>
       </span>
       <span class="trix-button-group trix-button-group--block-tools" data-trix-button-group="block-tools">
         <button type="button" class="trix-button trix-button--icon trix-button--icon-quote" data-trix-attribute="quote" title="Quote" tabindex="-1">Quote</button>
@@ -21,6 +21,7 @@
         <button type="button" class="trix-button trix-button--icon trix-button--icon-decrease-nesting-level" data-trix-action="decreaseNestingLevel" title="Outdent" tabindex="-1">Outdent</button>
         <button type="button" class="trix-button trix-button--icon trix-button--icon-increase-nesting-level" data-trix-action="increaseNestingLevel" title="Indent" tabindex="-1">Indent</button>
       </span>
+
       <span class="trix-button-group-spacer"></span>
       <span class="trix-button-group trix-button-group--history-tools" data-trix-button-group="history-tools">
         <button type="button" class="trix-button trix-button--icon trix-button--icon-undo" data-trix-action="undo" data-trix-key="z" title="Undo" tabindex="-1">Undo</button>

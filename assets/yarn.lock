@@ -5908,9 +5908,10 @@ trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
 
-trix@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/trix/-/trix-1.0.0.tgz#e9cc98cf6030c908f8d54e317b5b072f927b0c6b"
+trix@^1.2.0:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/trix/-/trix-1.2.1.tgz#883abd5c996eeb35d50aefc3716c582b7870358f"
+  integrity sha512-4TjqDk+v4OcJmSCMjQNiSbtZ5X8VQHTvIUhIzj1z+Wx63jM+g2yE+MT9qJS6uQZy3j60jpCqoxaCTZT8uEI2Xg==
 
 tslib@^1.9.0:
   version "1.9.3"

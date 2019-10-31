@@ -49,13 +49,7 @@ defmodule Palapa.Attachments do
         %Plug.Upload{} = file,
         %Member{} = creator
       ) do
-    file_stats = File.stat!(file.path)
-
-    attrs = %{
-      filename: file.filename,
-      content_type: file.content_type,
-      byte_size: file_stats.size
-    }
+    attrs = build_attachment_attrs(file)
 
     {:ok, attachment} =
       %Attachment{}
@@ -84,6 +78,18 @@ defmodule Palapa.Attachments do
           {:error}
       end
     end
+  end
+
+  defp build_attachment_attrs(file) do
+    file_stats = File.stat!(file.path)
+    checksum = Palapa.Access.file_checksum(file.path)
+
+    %{
+      filename: file.filename,
+      content_type: file.content_type,
+      byte_size: file_stats.size,
+      checksum: checksum
+    }
   end
 
   def delete!(%Attachment{} = attachment) do

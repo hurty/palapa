@@ -1,18 +1,18 @@
-import {
-  Controller
-} from "stimulus"
+import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["autocompleteList", "autocompleteChoice"]
+  static targets = ["autocompleteList", "autocompleteChoice"];
 
   connect() {
     document.addEventListener("trix-initialize", e => {
-      this.editor = e.target.editor
-      this.addAttachmentButton()
+      this.editor = e.target.editor;
+
+      // this.addAttachmentButton();
+
       // this.members = JSON.parse(this.data.get("members"))
       // this.hideAutocomplete()
       // this.setUpKeyboardNavigation()
-    })
+    });
 
     // document.addEventListener("trix-change", e => {
     //   this.detectSearchTerm()
@@ -21,12 +21,12 @@ export default class extends Controller {
 
     // Handle files upload through the text editor
     document.addEventListener("trix-attachment-add", e => {
-      let attachment
-      attachment = e.attachment
+      let attachment;
+      attachment = e.attachment;
       if (attachment.file) {
-        this.uploadAttachment(attachment)
+        this.uploadAttachment(attachment);
       }
-    })
+    });
 
     // this.element.addEventListener("focusout", (e) => {
     //   this.hideAutocomplete()
@@ -224,34 +224,33 @@ export default class extends Controller {
 
   uploadAttachment(attachment) {
     let file, form, xhr, host;
-    host = this.data.get("attachments-url")
+    host = this.data.get("attachments-url");
     file = attachment.file;
 
-    const element = document.head.querySelector('meta[name="csrf-token"]')
-    const csrfToken = element.getAttribute("content")
+    const element = document.head.querySelector('meta[name="csrf-token"]');
+    const csrfToken = element.getAttribute("content");
 
-    form = new FormData;
+    form = new FormData();
     form.append("Content-Type", file.type);
     form.append("file", file);
 
-    xhr = new XMLHttpRequest;
+    xhr = new XMLHttpRequest();
     xhr.open("POST", host, true);
-    xhr.setRequestHeader("X-CSRF-Token", csrfToken)
+    xhr.setRequestHeader("X-CSRF-Token", csrfToken);
 
-    xhr.upload.onprogress = function (event) {
+    xhr.upload.onprogress = function(event) {
       var progress;
       if (event.total > 0) {
-        progress = event.loaded / event.total * 100;
+        progress = (event.loaded / event.total) * 100;
         return attachment.setUploadProgress(progress);
       } else {
         return attachment.setUploadProgress(100);
       }
     };
 
-    xhr.onload = function () {
-      var href, url;
+    xhr.onload = function() {
       if (xhr.status === 201) {
-        let response = JSON.parse(xhr.responseText)
+        let response = JSON.parse(xhr.responseText);
 
         return attachment.setAttributes({
           sgid: response.sgid,
@@ -262,40 +261,39 @@ export default class extends Controller {
     };
 
     return xhr.send(form);
-  };
-
-  addAttachmentButton() {
-    document.addEventListener("trix-action-invoke", function (event) {
-      let editor = event.target.editor
-
-      if (event.actionName === "x-attachment") {
-        let input = document.createElement('input')
-        input.type = 'file'
-        input.multiple = true
-        input.click()
-
-        input.onchange = e => {
-          editor.insertFiles(e.target.files)
-        }
-      }
-    })
-
   }
 
-  get cursorPosition() {
-    return this.editor.getPosition()
-  }
+  // addAttachmentButton() {
+  //   document.addEventListener("trix-action-invoke", function(event) {
+  //     let editor = event.target.editor;
 
-  get autocompleteIndex() {
-    return parseInt(this.data.get("autocompleteIndex"))
-  }
+  //     if (event.actionName === "x-attachment") {
+  //       let input = document.createElement("input");
+  //       input.type = "file";
+  //       input.multiple = true;
+  //       input.click();
 
-  set autocompleteIndex(value) {
-    this.data.set("autocompleteIndex", value)
-    this.highlightAutocompleteChoice()
-  }
+  //       input.onchange = e => {
+  //         editor.insertFiles(e.target.files);
+  //       };
+  //     }
+  //   });
+  // }
 
-  get editorContent() {
-    return this.editor.getDocument().toString()
-  }
+  // get cursorPosition() {
+  //   return this.editor.getPosition();
+  // }
+
+  // get autocompleteIndex() {
+  //   return parseInt(this.data.get("autocompleteIndex"));
+  // }
+
+  // set autocompleteIndex(value) {
+  //   this.data.set("autocompleteIndex", value);
+  //   this.highlightAutocompleteChoice();
+  // }
+
+  // get editorContent() {
+  //   return this.editor.getDocument().toString();
+  // }
 }

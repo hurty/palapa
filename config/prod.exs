@@ -39,7 +39,7 @@ config :palapa, Palapa.Mailer,
   api_private_key: System.get_env("MAILER_API_PRIVATE_KEY"),
   domain: System.get_env("MAILER_DOMAIN")
 
-config :arc,
+config :waffle,
   storage: Waffle.Storage.S3,
   bucket: System.get_env("S3_BUCKET")
 

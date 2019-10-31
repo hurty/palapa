@@ -19,7 +19,7 @@
     "phoenix_live_view": "file:../deps/phoenix_live_view",
     "popper.js": "^1.14",
     "stimulus": "^1.1.0",
-    "trix": "^1.0.0"
+    "trix": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
