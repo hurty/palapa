@@ -6,8 +6,8 @@ export default class extends Controller {
   connect() {
     document.addEventListener("trix-initialize", e => {
       this.editor = e.target.editor;
-
-      // this.addAttachmentButton();
+      this.setParentForm();
+      this.setUploadXhrPool();
 
       // this.members = JSON.parse(this.data.get("members"))
       // this.hideAutocomplete()
@@ -238,6 +238,11 @@ export default class extends Controller {
     xhr.open("POST", host, true);
     xhr.setRequestHeader("X-CSRF-Token", csrfToken);
 
+    xhr.onloadstart = () => {
+      this.uploadXhrPool.push(xhr);
+      this.disableFormSubmission();
+    };
+
     xhr.upload.onprogress = function(event) {
       var progress;
       if (event.total > 0) {
@@ -248,37 +253,49 @@ export default class extends Controller {
       }
     };
 
-    xhr.onload = function() {
-      if (xhr.status === 201) {
+    xhr.onabort = () => this.enableFormSubmission();
+    xhr.onerror = () => this.enableFormSubmission();
+
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
         let response = JSON.parse(xhr.responseText);
 
-        return attachment.setAttributes({
+        attachment.setAttributes({
           sgid: response.sgid,
           url: response.url,
           href: response.url
         });
       }
+
+      this.enableFormSubmission();
     };
 
     return xhr.send(form);
   }
 
-  // addAttachmentButton() {
-  //   document.addEventListener("trix-action-invoke", function(event) {
-  //     let editor = event.target.editor;
+  setParentForm() {
+    this.parentForm = this.element.closest("form");
+    this.submitButton = this.parentForm.querySelector('button[type="submit"]');
+  }
 
-  //     if (event.actionName === "x-attachment") {
-  //       let input = document.createElement("input");
-  //       input.type = "file";
-  //       input.multiple = true;
-  //       input.click();
+  disableFormSubmission() {
+    console.log(this.uploadXhrPool);
+    this.parentForm.disabled = true;
+    this.submitButton.disabled = true;
+  }
 
-  //       input.onchange = e => {
-  //         editor.insertFiles(e.target.files);
-  //       };
-  //     }
-  //   });
-  // }
+  enableFormSubmission(xhr) {
+    const xhrStatuses = this.uploadXhrPool.map(xhr => xhr.readyState);
+    // Status 4 is DONE
+    if (xhrStatuses.every(status => status === 4)) {
+      this.parentForm.disabled = false;
+      this.submitButton.disabled = false;
+    }
+  }
+
+  setUploadXhrPool() {
+    this.uploadXhrPool = [];
+  }
 
   // get cursorPosition() {
   //   return this.editor.getPosition();
