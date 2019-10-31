@@ -27,4 +27,12 @@ defmodule Palapa.Access do
       _ -> false
     end
   end
+
+  def file_checksum(file) do
+    File.stream!(file, [], 2048)
+    |> Enum.reduce(:crypto.hash_init(:md5), &:crypto.hash_update(&2, &1))
+    |> :crypto.hash_final()
+    |> Base.encode16()
+    |> String.downcase()
+  end
 end
