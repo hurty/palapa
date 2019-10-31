@@ -27,7 +27,7 @@ defmodule Palapa.Mixfile do
         :timex,
         :bamboo,
         :bamboo_mailjet,
-        :arc_ecto,
+        :waffle_ecto,
         :scrivener_ecto,
         :scrivener_html
       ]
@@ -65,11 +65,12 @@ defmodule Palapa.Mixfile do
       {:bamboo, "~> 1.3.0"},
       {:bamboo_mailjet, "~> 0.1.0"},
       {:timex, "~> 3.4"},
-      {:arc, "~> 0.11.0"},
+      {:waffle, "~> 0.0.1"},
+      {:poison, "~> 3.1"},
       {:ex_aws, "~> 2.1"},
       {:ex_aws_s3, "~> 2.0"},
       {:sweet_xml, "~> 0.6"},
-      {:arc_ecto, "~> 0.11.0"},
+      {:waffle_ecto, "~> 0.0.3"},
       {:scrivener_ecto, "~> 2.1.1"},
       {:scrivener_html, "~> 1.8"},
       {:appsignal, "~> 1.0"},

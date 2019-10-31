@@ -36,7 +36,7 @@ config :palapa, Palapa.Mailer,
   adapter: Bamboo.LocalAdapter,
   deliver_later_strategy: Bamboo.TaskSupervisorStrategy
 
-config :arc, storage: Arc.Storage.Local
+config :waffle, storage: Waffle.Storage.Local
 config :scrivener_html, routes_helper: PalapaWeb.Router.Helpers
 
 # config :verk,

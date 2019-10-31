@@ -64,7 +64,7 @@ defmodule Palapa.Attachments do
       |> put_assoc(:creator, creator)
       |> Repo.insert()
 
-    # We have 2 different uploaders because Arc doesn't support skipping versions
+    # We have 2 different uploaders because Waffle doesn't support skipping versions
     # if the file is not an image
 
     if image?(attachment) do

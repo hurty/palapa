@@ -40,7 +40,7 @@ config :palapa, Palapa.Mailer,
   domain: System.get_env("MAILER_DOMAIN")
 
 config :arc,
-  storage: Arc.Storage.S3,
+  storage: Waffle.Storage.S3,
   bucket: System.get_env("S3_BUCKET")
 
 config :ex_aws, :s3,

@@ -1,6 +1,6 @@
 defmodule Palapa.Accounts.Account do
   use Palapa.Schema
-  use Arc.Ecto.Schema
+  use Waffle.Ecto.Schema
 
   alias Palapa.Organizations
   alias Palapa.Organizations.Organization

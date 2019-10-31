@@ -1,6 +1,6 @@
 defmodule Palapa.Invitations.JoinForm do
   use Palapa.Schema
-  use Arc.Ecto.Schema
+  use Waffle.Ecto.Schema
 
   embedded_schema do
     field(:name, :string)

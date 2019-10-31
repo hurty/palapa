@@ -1,5 +1,5 @@
 defmodule Palapa.Attachments.AttachmentUploader do
-  use Arc.Definition
+  use Waffle.Definition
 
   def filename(version, {_file, scope}) do
     "#{scope.id}/#{scope.id}_#{version}"

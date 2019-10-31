@@ -1,5 +1,5 @@
 defmodule Palapa.Attachments.AttachmentImageUploader do
-  use Arc.Definition
+  use Waffle.Definition
 
   @versions [:original, :gallery, :thumb]
   @transform_extensions ~w(.jpg .jpeg .gif .png)
