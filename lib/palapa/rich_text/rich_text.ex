@@ -4,7 +4,6 @@ defmodule Palapa.RichText do
     ConversionFromTrix,
     ConversionToTrix,
     ConversionToHTML,
-    Tree,
     TrixScrubber
   }
 
@@ -42,7 +41,7 @@ defmodule Palapa.RichText do
   #####
 
   def load(html_string) do
-    tree = Tree.parse(html_string)
+    tree = Floki.parse(html_string)
     %Content{tree: tree}
   end
 

@@ -1,7 +1,7 @@
 require Logger
 
 defmodule Palapa.RichText.ConversionFromTrix do
-  alias Palapa.RichText.{Content, EmbeddedAttachment, Tree}
+  alias Palapa.RichText.{Content, EmbeddedAttachment}
 
   @embedded_attachment_tag "embedded-attachment"
   @trix_attachment_tag "figure"
@@ -16,7 +16,7 @@ defmodule Palapa.RichText.ConversionFromTrix do
   end
 
   def canonicalize_trix_attachments(content) do
-    tree = Tree.map(content.tree, &canonicalize_trix_attachment(&1))
+    tree = Floki.traverse_and_update(content.tree, &canonicalize_trix_attachment(&1))
     Map.put(content, :tree, tree)
   end
 

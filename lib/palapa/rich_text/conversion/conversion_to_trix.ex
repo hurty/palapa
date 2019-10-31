@@ -1,5 +1,5 @@
 defmodule Palapa.RichText.ConversionToTrix do
-  alias Palapa.RichText.{Content, Tree}
+  alias Palapa.RichText.{Content}
 
   @embedded_attachment_tag "embedded-attachment"
 
@@ -9,13 +9,20 @@ defmodule Palapa.RichText.ConversionToTrix do
   end
 
   defp render_attachments(content) do
-    tree = Tree.map(content.tree, &render_attachment(&1))
+    tree = Floki.traverse_and_update(content.tree, &render_attachment(&1))
     Map.put(content, :tree, tree)
   end
 
   defp render_attachment({tag, attrs, rest}) do
     if tag == @embedded_attachment_tag do
-      attrs = Enum.into(attrs, %{}, fn {k, v} -> {String.to_atom(k), v} end)
+      attrs =
+        Enum.into(attrs, %{}, fn {k, v} ->
+          if is_atom(k) do
+            {k, v}
+          else
+            {String.to_atom(k), v}
+          end
+        end)
 
       trix_formatted_attrs = [
         {"data-trix-attachment", data_trix_attachment(attrs)},

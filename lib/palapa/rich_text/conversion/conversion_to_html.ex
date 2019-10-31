@@ -1,5 +1,5 @@
 defmodule Palapa.RichText.ConversionToHTML do
-  alias Palapa.RichText.{Content, EmbeddedAttachment, Tree}
+  alias Palapa.RichText.{Content, EmbeddedAttachment}
   alias Palapa.RichText.RichTextView
 
   @embedded_attachment_tag "embedded-attachment"
@@ -10,7 +10,7 @@ defmodule Palapa.RichText.ConversionToHTML do
   end
 
   defp render_attachments(content) do
-    tree = Tree.map(content.tree, &render_attachment(content, &1))
+    tree = Floki.traverse_and_update(content.tree, &render_attachment(content, &1))
     Map.put(content, :tree, tree)
   end
 
@@ -26,7 +26,7 @@ defmodule Palapa.RichText.ConversionToHTML do
       embedded_attachment_nodes =
         struct(EmbeddedAttachment, attrs)
         |> to_attachment_template
-        |> Tree.parse()
+        |> Floki.parse()
 
       {tag, attrs, [embedded_attachment_nodes]}
     else
