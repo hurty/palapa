@@ -28,4 +28,8 @@ defmodule Palapa.RichText.Type do
   end
 
   def dump(_), do: :error
+
+  def embed_as(_), do: :self
+
+  def equal?(text1, text2), do: text1 == text2
 end
