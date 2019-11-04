@@ -79,7 +79,8 @@ defmodule Palapa.Mixfile do
       {:mox, "~> 0.5", only: :test},
       {:ecto_job, "~> 3.0"},
       {:money, "~> 1.4"},
-      {:countries, "~> 1.5"}
+      {:countries, "~> 1.5"},
+      {:benchee, "~> 1.0", only: :dev}
     ]
   end
 

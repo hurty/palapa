@@ -44,8 +44,16 @@ defmodule Palapa.Attachments.AttachmentImageUploader do
   #   [content_type: Plug.MIME.path(file.file_name)]
   # end
 
+  def s3_object_headers(_version, {file, _scope}) do
+    # for "image.png", would produce: "image/png"
+    [timeout: 3_000_000, content_type: MIME.from_path(file.file_name)]
+  end
+
   defp transformable_image?(file) do
-    file_extension = file.file_name |> Path.extname() |> String.downcase()
-    Enum.member?(@transform_extensions, file_extension)
+    Enum.member?(@transform_extensions, file_extension(file))
+  end
+
+  defp file_extension(file) do
+    file.file_name |> Path.extname() |> String.downcase()
   end
 end

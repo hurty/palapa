@@ -276,20 +276,22 @@ export default class extends Controller {
   setParentForm() {
     this.parentForm = this.element.closest("form");
     this.submitButton = this.parentForm.querySelector('button[type="submit"]');
+    this.submitButtonOriginalValue = this.submitButton.textContent;
   }
 
   disableFormSubmission() {
-    console.log(this.uploadXhrPool);
     this.parentForm.disabled = true;
     this.submitButton.disabled = true;
+    this.submitButton.textContent = "Transferring files...";
   }
 
   enableFormSubmission(xhr) {
     const xhrStatuses = this.uploadXhrPool.map(xhr => xhr.readyState);
     // Status 4 is DONE
-    if (xhrStatuses.every(status => status === 4)) {
+    if (xhrStatuses.length === 0 || xhrStatuses.every(status => status === 4)) {
       this.parentForm.disabled = false;
       this.submitButton.disabled = false;
+      this.submitButton.textContent = this.submitButtonOriginalValue;
     }
   }
 
