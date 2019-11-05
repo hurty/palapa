@@ -66,16 +66,16 @@ defmodule Palapa.Attachments do
         {:ok, _filename} ->
           {:ok, attachment}
 
-        _ ->
-          {:error}
+        error ->
+          error
       end
     else
       case AttachmentUploader.store({file, attachment}) do
         {:ok, _filename} ->
           {:ok, attachment}
 
-        _ ->
-          {:error}
+        error ->
+          error
       end
     end
   end
@@ -115,7 +115,6 @@ defmodule Palapa.Attachments do
     end
   end
 
-  # the 'version' can be :original or :thumb
   def url(%Attachment{} = attachment, version \\ :original) do
     if image?(attachment) do
       AttachmentImageUploader.url({attachment.filename, attachment}, version, signed: true)

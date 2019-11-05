@@ -13,7 +13,7 @@
           <div class="separator"></div>
         <% end %>
         
-        <section class="message-content" data-controller="rich-text">      
+        <section class="rich-text-content" data-controller="rich-text">      
           <%= Palapa.RichText.Helpers.rich_text(@message.content) %>
         </section>
       </article>

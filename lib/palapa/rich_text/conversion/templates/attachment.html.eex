@@ -1,7 +1,7 @@
-<figure class="attachment">
+<figure class="attachment text-center">
   <%= if image?(@embedded_attachment) do %>
     <a href="<%= secure_attachment_url(@embedded_attachment, :gallery) %>" class="attachment-gallery-item">
-      <img src="<%= secure_attachment_url(@embedded_attachment, :thumb) %>" width="<%= @embedded_attachment.width %>" height="<%= @embedded_attachment.height %>">
+      <img class="inline" src="<%= secure_attachment_url(@embedded_attachment, :gallery) %>">
     </a>
 
     <figcaption class="text-sm text-center">

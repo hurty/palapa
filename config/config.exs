@@ -58,9 +58,13 @@ config :palapa, Palapa.Repo,
   migration_primary_key: [name: :id, type: :binary_id]
 
 config :stripity_stripe, json_library: Jason
-
-config :ex_aws, :hackney_opts, recv_timeout: 300_000
 config :waffle, version_timeout: 30_000
+
+config :arc_gcs,
+  hackney_opts: [
+    timeout: 30_000,
+    recv_timeout: 30_000
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

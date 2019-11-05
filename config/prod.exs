@@ -40,15 +40,8 @@ config :palapa, Palapa.Mailer,
   domain: System.get_env("MAILER_DOMAIN")
 
 config :waffle,
-  storage: Waffle.Storage.S3,
+  storage: Arc.Storage.GCS,
   bucket: System.get_env("S3_BUCKET")
-
-config :ex_aws, :s3,
-  host: System.get_env("S3_HOST"),
-  access_key_id: System.get_env("S3_ACCESS_KEY"),
-  secret_access_key: System.get_env("S3_SECRET_KEY"),
-  region: System.get_env("S3_REGION"),
-  json_codec: Jason
 
 config :appsignal, :config, active: true
 

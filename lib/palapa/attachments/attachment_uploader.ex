@@ -20,7 +20,7 @@ defmodule Palapa.Attachments.AttachmentUploader do
   #    :content_encoding, :content_length, :content_type,
   #    :expect, :expires, :storage_class, :website_redirect_location]
   #
-  def s3_object_headers(_version, {file, _scope}) do
+  def gcs_object_headers(_version, {file, _scope}) do
     [timeout: 3_000_000, content_type: MIME.from_path(file.file_name)]
   end
 end

@@ -78,3 +78,10 @@ config :stripity_stripe, publishable_api_key: "pk_test_q0YfdqC7bsahlMzdz5BHcXXJ0
 config :stripity_stripe, webhook_secret: "whsec_LRI0vYyl1V9s0UcaCvJ6NbKQCjjpljhS"
 
 config :appsignal, :config, active: false
+
+config :waffle,
+  storage: Arc.Storage.GCS,
+  bucket: "palapa"
+
+config :goth,
+  json: "~/gcp_palapa.json" |> Path.expand |> File.read!

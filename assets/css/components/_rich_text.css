@@ -1,4 +1,4 @@
-.message-content {
+.rich-text-content {
   @apply leading-normal;
   @apply text-gray-800;
 
@@ -44,10 +44,13 @@
     overflow-x: auto;
   }
 
+  figcaption {
+    @apply my-2;
+  }
+
   .attachment {
-    text-align: center;
     width: auto;
     height: auto;
-    @apply my-4;
+    @apply my-4 text-center;
   }
 }
