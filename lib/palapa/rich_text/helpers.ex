@@ -3,9 +3,11 @@ defmodule Palapa.RichText.Helpers do
   alias Palapa.RichText.RichTextView
 
   def rich_text(content) do
-    content
-    |> RichText.to_formatted_html()
-    |> Phoenix.HTML.raw()
+    Phoenix.HTML.Tag.content_tag :div, class: "rich-text-content" do
+      content
+      |> RichText.to_formatted_html()
+      |> Phoenix.HTML.raw()
+    end
   end
 
   def rich_text_editor(form, field, attachments_url, options \\ []) do

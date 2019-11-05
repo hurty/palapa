@@ -19,7 +19,7 @@
       </div>
       <div>
         <%= if @page.content do %>
-          <section class="rich-text-content sm:p-4">
+          <section class="sm:p-4">
             <%= Palapa.RichText.Helpers.rich_text @page.content %>
           </section>
         <% else %>
