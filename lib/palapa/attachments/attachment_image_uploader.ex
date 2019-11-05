@@ -16,7 +16,7 @@ defmodule Palapa.Attachments.AttachmentImageUploader do
     scope.id
   end
 
-  def filename(:gallery, {file, scope}) do
+  def filename(:gallery, {_file, scope}) do
     "#{scope.id}_gallery"
   end
 
@@ -39,7 +39,7 @@ defmodule Palapa.Attachments.AttachmentImageUploader do
   #   Enum.member?(@transform_extensions, file_extension(file))
   # end
 
-  defp file_extension(file) do
-    file.file_name |> Path.extname() |> String.downcase()
-  end
+  # defp file_extension(file) do
+  #   file.file_name |> Path.extname() |> String.downcase()
+  # end
 end
