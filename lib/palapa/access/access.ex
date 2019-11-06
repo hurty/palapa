@@ -18,7 +18,7 @@ defmodule Palapa.Access do
   def verify_signed_id(signed_id) do
     # We do this to avoid compile time dependencies.
     endpoint = Module.concat([PalapaWeb, "Endpoint"])
-    Phoenix.Token.verify(endpoint, "signed-id-salt", signed_id, max_age: 2_592_000)
+    Phoenix.Token.verify(endpoint, "signed-id-salt", signed_id)
   end
 
   def verified_signed_id?(signed_id) do

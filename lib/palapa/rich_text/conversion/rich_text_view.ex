@@ -8,14 +8,14 @@ defmodule Palapa.RichText.RichTextView do
   defdelegate human_filesize(embedded_attachment), to: EmbeddedAttachment
   defdelegate image?(embedded_attachment), to: EmbeddedAttachment
 
-  def secure_attachment_url(embedded_attachment, version \\ :original) do
-    case Palapa.Access.verify_signed_id(embedded_attachment.sgid) do
-      {:ok, id} ->
-        Attachments.get!(id)
-        |> Attachments.url(version)
+  def secure_attachment_url(%EmbeddedAttachment{} = embedded_attachment, version) do
+    id = embedded_attachment.attachment_id
 
-      _ ->
-        nil
+    if id do
+      Attachments.get!(id)
+      |> Attachments.url(version)
+    else
+      ""
     end
   end
 end

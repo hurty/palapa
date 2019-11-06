@@ -4,16 +4,10 @@ defmodule Palapa.Attachments do
   alias Palapa.Attachments.{
     Attachment,
     AttachmentUploader,
-    AttachmentImageUploader,
     AttachmentParser
   }
 
   # --- Scopes
-
-  def visible_to(queryable \\ Attachment, %Member{} = member) do
-    queryable
-    |> where(organization_id: ^member.organization_id)
-  end
 
   def where_organization(queryable \\ Attachment, %Organization{} = organization) do
     queryable
@@ -58,25 +52,12 @@ defmodule Palapa.Attachments do
       |> put_assoc(:creator, creator)
       |> Repo.insert()
 
-    # We have 2 different uploaders because Waffle doesn't support skipping versions
-    # if the file is not an image
+    case AttachmentUploader.store({file, attachment}) do
+      {:ok, _filename} ->
+        {:ok, attachment}
 
-    if image?(attachment) do
-      case AttachmentImageUploader.store({file, attachment}) do
-        {:ok, _filename} ->
-          {:ok, attachment}
-
-        error ->
-          error
-      end
-    else
-      case AttachmentUploader.store({file, attachment}) do
-        {:ok, _filename} ->
-          {:ok, attachment}
-
-        error ->
-          error
-      end
+      error ->
+        error
     end
   end
 
@@ -116,15 +97,12 @@ defmodule Palapa.Attachments do
   end
 
   def url(%Attachment{} = attachment, version \\ :original) do
-    if image?(attachment) do
-      AttachmentImageUploader.url({attachment.filename, attachment}, version, signed: true)
-    else
-      if version == :original do
-        AttachmentUploader.url({attachment.filename, attachment}, :original, signed: true)
-      else
-        nil
+    version =
+      if is_binary(version) do
+        String.to_atom(version)
       end
-    end
+
+    AttachmentUploader.url({attachment.filename, attachment}, version, signed: true)
   end
 
   def put_attachments(%Ecto.Changeset{} = changeset) do
@@ -161,18 +139,7 @@ defmodule Palapa.Attachments do
   end
 
   def image?(attachment) do
-    image_types = [
-      "image/gif",
-      "image/jpeg",
-      "image/jpg",
-      "image/png",
-      "image/tiff",
-      "image/bmp",
-      "image/x-bmp",
-      "image/webp"
-    ]
-
-    Enum.member?(image_types, attachment.content_type)
+    String.starts_with?(attachment.content_type, "image")
   end
 
   defp find_attachments_in_content(content) do

@@ -33,6 +33,82 @@ export default class extends Controller {
     // })
   }
 
+  uploadAttachment(attachment) {
+    let file, form, xhr, host;
+    host = this.data.get("attachments-url");
+    file = attachment.file;
+
+    const element = document.head.querySelector('meta[name="csrf-token"]');
+    const csrfToken = element.getAttribute("content");
+
+    form = new FormData();
+    form.append("Content-Type", file.type);
+    form.append("file", file);
+
+    xhr = new XMLHttpRequest();
+    xhr.open("POST", host, true);
+    xhr.setRequestHeader("X-CSRF-Token", csrfToken);
+
+    xhr.onloadstart = () => {
+      this.uploadXhrPool.push(xhr);
+      this.disableFormSubmission();
+    };
+
+    xhr.upload.onprogress = function(event) {
+      var progress;
+      if (event.total > 0) {
+        progress = (event.loaded / event.total) * 100;
+        return attachment.setUploadProgress(progress);
+      } else {
+        return attachment.setUploadProgress(100);
+      }
+    };
+
+    xhr.onabort = () => this.enableFormSubmission();
+    xhr.onerror = () => this.enableFormSubmission();
+
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        let response = JSON.parse(xhr.responseText);
+
+        attachment.setAttributes({
+          sgid: response.sgid,
+          url: response.url
+        });
+      }
+
+      this.enableFormSubmission();
+    };
+
+    return xhr.send(form);
+  }
+
+  setParentForm() {
+    this.parentForm = this.element.closest("form");
+    this.submitButton = this.parentForm.querySelector('button[type="submit"]');
+    this.submitButtonOriginalValue = this.submitButton.textContent;
+  }
+
+  disableFormSubmission() {
+    this.parentForm.disabled = true;
+    this.submitButton.disabled = true;
+    this.submitButton.textContent = "Transferring files...";
+  }
+
+  enableFormSubmission(xhr) {
+    const xhrStatuses = this.uploadXhrPool.map(xhr => xhr.readyState);
+    // Status 4 is DONE
+    if (xhrStatuses.length === 0 || xhrStatuses.every(status => status === 4)) {
+      this.parentForm.disabled = false;
+      this.submitButton.disabled = false;
+      this.submitButton.textContent = this.submitButtonOriginalValue;
+    }
+  }
+
+  setUploadXhrPool() {
+    this.uploadXhrPool = [];
+  }
+
   // detectSearchTerm() {
   //   if (this.cursorPosition === 0) {
   //     this.searchTerm = null
@@ -221,83 +297,6 @@ export default class extends Controller {
   //     this.autocompleteListTarget.innerHTML = filteredList
   //   })
   // }
-
-  uploadAttachment(attachment) {
-    let file, form, xhr, host;
-    host = this.data.get("attachments-url");
-    file = attachment.file;
-
-    const element = document.head.querySelector('meta[name="csrf-token"]');
-    const csrfToken = element.getAttribute("content");
-
-    form = new FormData();
-    form.append("Content-Type", file.type);
-    form.append("file", file);
-
-    xhr = new XMLHttpRequest();
-    xhr.open("POST", host, true);
-    xhr.setRequestHeader("X-CSRF-Token", csrfToken);
-
-    xhr.onloadstart = () => {
-      this.uploadXhrPool.push(xhr);
-      this.disableFormSubmission();
-    };
-
-    xhr.upload.onprogress = function(event) {
-      var progress;
-      if (event.total > 0) {
-        progress = (event.loaded / event.total) * 100;
-        return attachment.setUploadProgress(progress);
-      } else {
-        return attachment.setUploadProgress(100);
-      }
-    };
-
-    xhr.onabort = () => this.enableFormSubmission();
-    xhr.onerror = () => this.enableFormSubmission();
-
-    xhr.onload = () => {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        let response = JSON.parse(xhr.responseText);
-
-        attachment.setAttributes({
-          sgid: response.sgid,
-          url: response.url,
-          href: response.url
-        });
-      }
-
-      this.enableFormSubmission();
-    };
-
-    return xhr.send(form);
-  }
-
-  setParentForm() {
-    this.parentForm = this.element.closest("form");
-    this.submitButton = this.parentForm.querySelector('button[type="submit"]');
-    this.submitButtonOriginalValue = this.submitButton.textContent;
-  }
-
-  disableFormSubmission() {
-    this.parentForm.disabled = true;
-    this.submitButton.disabled = true;
-    this.submitButton.textContent = "Transferring files...";
-  }
-
-  enableFormSubmission(xhr) {
-    const xhrStatuses = this.uploadXhrPool.map(xhr => xhr.readyState);
-    // Status 4 is DONE
-    if (xhrStatuses.length === 0 || xhrStatuses.every(status => status === 4)) {
-      this.parentForm.disabled = false;
-      this.submitButton.disabled = false;
-      this.submitButton.textContent = this.submitButtonOriginalValue;
-    }
-  }
-
-  setUploadXhrPool() {
-    this.uploadXhrPool = [];
-  }
 
   // get cursorPosition() {
   //   return this.editor.getPosition();

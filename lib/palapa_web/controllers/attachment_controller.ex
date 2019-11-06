@@ -6,40 +6,34 @@ defmodule PalapaWeb.AttachmentController do
   def create(conn, %{"file" => file}) do
     case Palapa.Attachments.create(current_organization(conn), file, current_member(conn)) do
       {:ok, attachment} ->
+        sgid = Palapa.Access.generate_signed_id(attachment.id)
+
         conn
         |> put_status(201)
         |> json(%{
-          id: attachment.id,
-          sgid: Palapa.Access.generate_signed_id(attachment.id),
-          url: Palapa.Attachments.url(attachment),
-          href: Palapa.Attachments.url(attachment)
+          sgid: sgid,
+          url:
+            Routes.attachment_url(conn, :show, current_organization(conn), attachment.id,
+              version: "gallery"
+            )
         })
 
-      {:error} ->
+      _ ->
         conn
         |> put_status(400)
         |> json(%{})
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    attachment = find_attachment(conn, id)
-    redirect(conn, external: Attachments.url(attachment, :original))
-  end
+  def show(conn, params) do
+    attachment = Attachments.get!(params["id"])
 
-  def delete(conn, %{"id" => id}) do
-    attachment = find_attachment(conn, id)
+    with :ok <- permit(Attachments.Policy, :show, current_member(conn), attachment) do
+      opts =
+        params
+        |> Map.take(["version", "content-disposition"])
 
-    with :ok <- permit(Attachments.Policy, :delete, current_member(conn), attachment) do
-      Attachments.delete!(attachment)
-
-      conn
-      |> send_resp(:no_content, "")
+      redirect(conn, external: Attachments.url(attachment, opts))
     end
-  end
-
-  defp find_attachment(conn, id) do
-    Attachments.visible_to(current_member(conn))
-    |> Attachments.get!(id)
   end
 end

@@ -119,7 +119,7 @@ defmodule PalapaWeb.Router do
 
     get("/search", SearchController, :index)
 
-    resources("/attachments", AttachmentController, only: [:create])
+    resources("/attachments", AttachmentController, only: [:create, :show])
     resources("/trash", TrashController, only: [:index])
 
     # --- MESSAGES

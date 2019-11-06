@@ -18,7 +18,7 @@ defmodule Palapa.RichText.EmbeddedAttachment do
   end
 
   def image?(attachment) do
-    attachment.content_type =~ ~r/^image(\/.+|$)/
+    String.starts_with?(attachment.content_type, "image")
   end
 
   def remote_image?(attachment) do
