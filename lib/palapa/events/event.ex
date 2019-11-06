@@ -1,7 +1,7 @@
 defmodule Palapa.Events.Event do
   use Palapa.Schema
 
-  alias Palapa.Events.EventAction
+  alias Palapa.Events.EventActionEnum
 
   alias Palapa.Organizations.{Organization, Member}
   alias Palapa.Messages.{Message, MessageComment}
@@ -10,7 +10,7 @@ defmodule Palapa.Events.Event do
   alias Palapa.Contacts.{Contact, ContactComment}
 
   schema "events" do
-    field(:action, EventAction)
+    field(:action, EventActionEnum)
     timestamps(updated_at: false)
     belongs_to(:organization, Organization)
     belongs_to(:author, Member)

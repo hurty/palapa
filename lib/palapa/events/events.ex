@@ -8,7 +8,7 @@ defmodule Palapa.Events do
   alias Palapa.Documents
   alias Palapa.Contacts
 
-  defenum(EventAction, :event_action, ~w(
+  defenum(EventActionEnum, :event_action, ~w(
     new_organization
     delete_organization
     new_member

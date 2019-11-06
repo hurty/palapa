@@ -1,13 +1,13 @@
 <figure class="attachment text-center">
   <%= if image?(@embedded_attachment) do %>
-    <a href="<%= secure_attachment_url(@embedded_attachment, :gallery) %>" class="attachment-gallery-item">
-      <img class="inline" src="<%= secure_attachment_url(@embedded_attachment, :gallery) %>">
-    </a>
+    <%= link to: attachment_url(@embedded_attachment, :gallery), class: "attachment-gallery-item" do %>
+      <img class="inline" src="<%= attachment_url(@embedded_attachment, :gallery) %>">
+    <% end %>
 
     <figcaption class="text-sm text-center">
       <span class="font-bold mr-2"><%= @embedded_attachment.caption %></span> 
-      <span class="mr-2"><%= link "See full size", to: secure_attachment_url(@embedded_attachment, :original), target: "_blank" %></span>
-      <span><%= link "Download", to: secure_attachment_url(@embedded_attachment, :original), download: @embedded_attachment.filename %></span>
+      <span class="mr-2"><%= link "See full size", to: attachment_url(@embedded_attachment, :original), target: "_blank" %></span>
+      <span><%= link "Download", to: attachment_url(@embedded_attachment, :original, "attachment") %></span>
     </figcaption>
   <% else %>
     <%= link to: @embedded_attachment.url, download: @embedded_attachment.filename, class: "p-2 border rounded" do %>

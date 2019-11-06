@@ -50,16 +50,16 @@ defmodule Palapa.RichText.ConversionFromTrix do
   end
 
   def extract_attachments(content) do
-    attachments =
+    embedded_attachments =
       content.tree
       |> find_attachments_nodes()
       |> build_embedded_attachments_structs()
 
-    content = Map.put(content, :embedded_attachments, attachments)
+    content = Map.put(content, :embedded_attachments, embedded_attachments)
 
     associated_attachments =
-      attachments
-      |> resolve_attachments_ids()
+      embedded_attachments
+      |> resolve_attachments()
       |> retrieve_associated_attachments()
 
     Map.put(content, :attachments, associated_attachments)
@@ -75,13 +75,17 @@ defmodule Palapa.RichText.ConversionFromTrix do
     end)
   end
 
-  def resolve_attachments_ids(embedded_attachments) do
+  def resolve_attachments(embedded_attachments) do
     Enum.reduce(embedded_attachments, [], fn embedded_attachment, acc ->
       embedded_attachment =
         if(EmbeddedAttachment.has_associated_attachment?(embedded_attachment)) do
           case Palapa.Access.verify_signed_id(embedded_attachment.sgid) do
             {:ok, id} ->
-              Map.put(embedded_attachment, :attachment_id, id)
+              attachment = Palapa.Attachments.get(id)
+
+              if attachment do
+                Map.put(embedded_attachment, :attachment, attachment)
+              end
 
             _ ->
               Logger.warn(
@@ -98,9 +102,8 @@ defmodule Palapa.RichText.ConversionFromTrix do
 
   def retrieve_associated_attachments(embedded_attachments) do
     embedded_attachments
-    |> Enum.map(& &1.attachment_id)
+    |> Enum.map(& &1.attachment)
     |> Enum.reject(&is_nil(&1))
-    |> Palapa.Attachments.list_attachments_by_ids()
   end
 
   def decode_attribute!(json_string) do

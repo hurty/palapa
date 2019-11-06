@@ -15,10 +15,9 @@ defmodule Palapa.Documents.SuggestionComment do
     belongs_to(:suggestion, Suggestion)
     belongs_to(:author, Member)
 
-    many_to_many(:attachments, Attachment,
-      join_through: "document_suggestion_comments_attachments",
-      join_keys: [document_suggestion_comment_id: :id, attachment_id: :id],
-      on_replace: :delete
+    has_many(:attachments, Attachment,
+      on_replace: :delete,
+      foreign_key: :document_suggestion_comment_id
     )
   end
 
@@ -26,7 +25,11 @@ defmodule Palapa.Documents.SuggestionComment do
     comment
     |> Repo.preload(:attachments)
     |> cast(attrs, [:content])
-    |> RichText.Changeset.put_rich_text_attachments(:content, :attachments)
+    |> RichText.Changeset.put_rich_text_attachments(
+      :content,
+      :attachments,
+      :document_suggestion_comment
+    )
     |> validate_required([:content])
   end
 end

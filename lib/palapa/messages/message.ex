@@ -12,10 +12,7 @@ defmodule Palapa.Messages.Message do
     many_to_many(:teams, Team, join_through: "messages_teams", on_replace: :delete)
     has_many(:comments, MessageComment)
 
-    many_to_many(:attachments, Attachment,
-      join_through: "messages_attachments",
-      on_replace: :delete
-    )
+    has_many(:attachments, Attachment, on_replace: :delete)
 
     timestamps()
     field(:title, :string)
@@ -29,7 +26,7 @@ defmodule Palapa.Messages.Message do
   def changeset(%Message{} = message, attrs) do
     message
     |> cast(attrs, [:title, :content, :published_to_everyone, :publish_teams_ids])
-    |> RichText.Changeset.put_rich_text_attachments(:content, :attachments)
+    |> RichText.Changeset.put_rich_text_attachments(:content, :attachments, :message)
     |> put_teams(attrs)
     |> validate_required(:title)
   end

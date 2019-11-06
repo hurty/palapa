@@ -13,16 +13,13 @@ defmodule Palapa.Contacts.ContactComment do
     belongs_to(:author, Member)
     field(:content, RichText.Type)
 
-    many_to_many(:attachments, Attachment,
-      join_through: "contact_comments_attachments",
-      on_replace: :delete
-    )
+    has_many(:attachments, Attachment, on_replace: :delete)
   end
 
   def changeset(contact_comment, attrs \\ %{}) do
     contact_comment
     |> cast(attrs, [:content])
-    |> RichText.Changeset.put_rich_text_attachments(:content, :attachments)
+    |> RichText.Changeset.put_rich_text_attachments(:content, :attachments, :contact_comment)
     |> validate_required(:content)
   end
 end

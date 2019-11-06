@@ -12,10 +12,7 @@ defmodule PalapaWeb.AttachmentController do
         |> put_status(201)
         |> json(%{
           sgid: sgid,
-          url:
-            Routes.attachment_url(conn, :show, current_organization(conn), attachment.id,
-              version: "gallery"
-            )
+          url: Routes.attachment_url(conn, :show, current_organization(conn), attachment.id)
         })
 
       _ ->
@@ -25,15 +22,20 @@ defmodule PalapaWeb.AttachmentController do
     end
   end
 
+  @versions_whitelist ["original", "gallery"]
   def show(conn, params) do
     attachment = Attachments.get!(params["id"])
 
-    with :ok <- permit(Attachments.Policy, :show, current_member(conn), attachment) do
-      opts =
-        params
-        |> Map.take(["version", "content-disposition"])
+    version =
+      if Enum.member?(@versions_whitelist, params["version"]) do
+        String.to_atom(params["version"])
+      else
+        nil
+      end
 
-      redirect(conn, external: Attachments.url(attachment, opts))
+    with :ok <- permit(Attachments.Policy, :show, current_member(conn), attachment) do
+      conn
+      |> redirect(external: Attachments.url(attachment, version, params["content-disposition"]))
     end
   end
 end

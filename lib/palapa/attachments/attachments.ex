@@ -7,6 +7,18 @@ defmodule Palapa.Attachments do
     AttachmentParser
   }
 
+  import EctoEnum
+
+  defenum(AttachableTypeEnum, :attachable_type, [
+    :personal_information,
+    :message,
+    :message_comment,
+    :page,
+    :document_suggestion,
+    :document_suggestion_comment,
+    :contact_comment
+  ])
+
   # --- Scopes
 
   def where_organization(queryable \\ Attachment, %Organization{} = organization) do
@@ -27,6 +39,11 @@ defmodule Palapa.Attachments do
   end
 
   # --- Actions
+
+  def get(queryable \\ Attachment, id) do
+    queryable
+    |> Repo.get(id)
+  end
 
   def get!(queryable \\ Attachment, id) do
     queryable
@@ -96,13 +113,11 @@ defmodule Palapa.Attachments do
     end
   end
 
-  def url(%Attachment{} = attachment, version \\ :original) do
-    version =
-      if is_binary(version) do
-        String.to_atom(version)
-      end
+  def url(%Attachment{} = attachment, version \\ :original, content_disposition \\ "inline") do
+    content_disposition = "&response-content-disposition=#{content_disposition};"
 
-    AttachmentUploader.url({attachment.filename, attachment}, version, signed: true)
+    AttachmentUploader.url({attachment.filename, attachment}, version, signed: true) <>
+      content_disposition
   end
 
   def put_attachments(%Ecto.Changeset{} = changeset) do

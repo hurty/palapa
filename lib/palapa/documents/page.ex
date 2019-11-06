@@ -25,10 +25,7 @@ defmodule Palapa.Documents.Page do
 
     has_many(:suggestions, Suggestion)
 
-    many_to_many(:attachments, Attachment,
-      join_through: "pages_attachments",
-      on_replace: :delete
-    )
+    has_many(:attachments, Attachment, on_replace: :delete)
   end
 
   def with_document(query), do: preload(query, document: [:team, [sections: :pages]])
@@ -40,7 +37,7 @@ defmodule Palapa.Documents.Page do
   def changeset(page, attrs) do
     page
     |> cast(attrs, [:title, :content, :position, :section_id])
-    |> RichText.Changeset.put_rich_text_attachments(:content, :attachments)
+    |> RichText.Changeset.put_rich_text_attachments(:content, :attachments, :page)
     |> validate_required([:title])
   end
 end

@@ -13,10 +13,7 @@ defmodule Palapa.Organizations.PersonalInformation do
     field(:private, :boolean, default: false)
     timestamps()
 
-    many_to_many(:attachments, Attachment,
-      join_through: "personal_information_attachments",
-      on_replace: :delete
-    )
+    has_many(:attachments, Attachment, on_replace: :delete)
 
     many_to_many(:teams, Team,
       join_through: "personal_information_visibilities",

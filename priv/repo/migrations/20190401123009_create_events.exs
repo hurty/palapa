@@ -2,7 +2,7 @@ defmodule Palapa.Repo.Migrations.CreateEvents do
   use Ecto.Migration
 
   def up do
-    Palapa.Events.EventAction.create_type()
+    Palapa.Events.EventActionEnum.create_type()
 
     create(table(:events)) do
       add(:organization_id, references(:organizations, on_delete: :delete_all), null: false)
@@ -34,6 +34,6 @@ defmodule Palapa.Repo.Migrations.CreateEvents do
 
   def down do
     drop(table(:events))
-    Palapa.Events.EventAction.drop_type()
+    Palapa.Events.EventActionEnum.drop_type()
   end
 end

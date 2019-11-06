@@ -2,7 +2,7 @@ defmodule Palapa.RichText.EmbeddedAttachment do
   @enforce_keys [:content_type]
 
   defstruct sgid: nil,
-            attachment_id: nil,
+            attachment: nil,
             content_type: "application/octet-stream",
             url: nil,
             filename: nil,

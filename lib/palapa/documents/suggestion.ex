@@ -18,19 +18,14 @@ defmodule Palapa.Documents.Suggestion do
     belongs_to(:author, Member)
     has_many(:suggestion_comments, SuggestionComment)
     belongs_to(:closure_author, Member)
-
-    many_to_many(:attachments, Attachment,
-      join_through: "document_suggestions_attachments",
-      join_keys: [document_suggestion_id: :id, attachment_id: :id],
-      on_replace: :delete
-    )
+    has_many(:attachments, Attachment, on_replace: :delete, foreign_key: :document_suggestion_id)
   end
 
   def changeset(suggestion, attrs) do
     suggestion
     |> Repo.preload(:attachments)
     |> cast(attrs, [:content])
-    |> RichText.Changeset.put_rich_text_attachments(:content, :attachments)
+    |> RichText.Changeset.put_rich_text_attachments(:content, :attachments, :document_suggestion)
     |> validate_required([:content])
   end
 end
