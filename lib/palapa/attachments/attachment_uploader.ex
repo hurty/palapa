@@ -1,16 +1,16 @@
 defmodule Palapa.Attachments.AttachmentUploader do
   use Waffle.Definition
+  alias Palapa.Attachments
 
   @versions [:original, :gallery]
-  # @transform_extensions ~w(.jpg .jpeg .gif .png)
 
-  # def transform(:gallery, {_file, _scope}) do
-  #   if transformable_image?(file) do
-  #     {:convert, "-strip -thumbnail 1000x>"}
-  #   else
-  #     :noaction
-  #   end
-  # end
+  def transform(:gallery, {_file, scope}) do
+    if Attachments.image?(scope) do
+      :noaction
+    else
+      :skip
+    end
+  end
 
   def filename(:original, {_file, scope}) do
     scope.id
