@@ -10,7 +10,7 @@
       <span><%= link "Download", to: attachment_url(@embedded_attachment, :original, "attachment") %></span>
     </figcaption>
   <% else %>
-    <%= link to: @embedded_attachment.url, download: @embedded_attachment.filename, class: "p-2 border rounded" do %>
+    <%= link to: attachment_url(@embedded_attachment, :original, "attachment"), class: "p-2 border rounded" do %>
       <i class="fas fa-paperclip mr-2"></i> <span class="font-bold"><%= @embedded_attachment.filename %></span> (<%= human_filesize(@embedded_attachment) %>)
     <% end %>
   <% end %>
