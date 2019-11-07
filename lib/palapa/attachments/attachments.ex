@@ -152,6 +152,22 @@ defmodule Palapa.Attachments do
     String.starts_with?(attachment.content_type, "image")
   end
 
+  def storage_used(organization) do
+    bytes =
+      Attachment
+      |> where_organization(organization)
+      |> where([a], is_nil(a.deleted_at))
+      |> select([a], sum(a.byte_size))
+      |> Repo.one()
+
+    bytes || 0
+  end
+
+  # in GB
+  def storage_capacity(_organization) do
+    100
+  end
+
   defp find_attachments_in_content(content) do
     signed_ids = AttachmentParser.extract_attachments_signed_ids(content)
     list_attachments_from_signed_ids(signed_ids)

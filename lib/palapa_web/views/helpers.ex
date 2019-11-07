@@ -172,4 +172,40 @@ defmodule PalapaWeb.Helpers do
     Money.new(amount, :EUR)
     |> Money.to_string()
   end
+
+  @sizes ["Bytes", "KB", "MB", "GB", "TB", "PB"]
+  def human_filesize(size_in_bytes) when is_binary(size_in_bytes) do
+    size_in_bytes
+    |> String.to_integer()
+    |> human_filesize()
+  end
+
+  def human_filesize(size_in_bytes) when is_integer(size_in_bytes) do
+    case size_in_bytes do
+      nil ->
+        nil
+
+      0 ->
+        "0 Byte"
+
+      1 ->
+        "1 Byte"
+
+      _ ->
+        try do
+          exp =
+            (:math.log(size_in_bytes) / :math.log(1000))
+            |> Float.floor()
+            |> round
+
+          humanSize =
+            (size_in_bytes / :math.pow(1000, exp))
+            |> Float.ceil(2)
+
+          "#{humanSize} #{Enum.at(@sizes, exp)}"
+        rescue
+          _ -> "Size unknown"
+        end
+    end
+  end
 end

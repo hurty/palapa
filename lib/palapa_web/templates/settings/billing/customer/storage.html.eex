@@ -1,0 +1,6 @@
+<h2 class="text-gray-800 text-2xl font-bold">File storage</h2>
+<div class="card-header-separator"></div>
+
+<p>Total storage used by attachments: <%= Helpers.human_filesize(@storage_used_in_bytes) %> / <%= @storage_capacity %> GB</p>
+
+<p class="italic text-gray-500">More storage options coming soon!</p>

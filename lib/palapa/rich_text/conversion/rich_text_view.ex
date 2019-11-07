@@ -4,8 +4,7 @@ defmodule Palapa.RichText.RichTextView do
 
   alias Palapa.RichText.EmbeddedAttachment
 
-  defdelegate human_filesize(embedded_attachment), to: EmbeddedAttachment
-  defdelegate image?(embedded_attachment), to: EmbeddedAttachment
+  defdelegate image?(embedded_attachment), to: Palapa.Attachments
 
   def attachment_url(
         %EmbeddedAttachment{} = embedded_attachment,

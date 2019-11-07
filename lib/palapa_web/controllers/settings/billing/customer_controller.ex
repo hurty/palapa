@@ -3,6 +3,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
 
   alias Palapa.Billing
   alias Palapa.Billing.Customer
+  alias Palapa.Attachments
 
   plug Bodyguard.Plug.Authorize,
     policy: Palapa.Billing.Policy,
@@ -32,9 +33,12 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
 
   def show(conn, _params) do
     with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
-      customer = Billing.Customers.get_customer(current_organization(conn))
-      invoices = Billing.Invoices.list_invoices(current_organization(conn))
-      render(conn, "show.html", customer: customer, invoices: invoices)
+      render(conn, "show.html",
+        customer: Billing.Customers.get_customer(current_organization(conn)),
+        invoices: Billing.Invoices.list_invoices(current_organization(conn)),
+        storage_used_in_bytes: Attachments.storage_used(current_organization(conn)),
+        storage_capacity: Attachments.storage_capacity(current_organization(conn))
+      )
     end
   end
 

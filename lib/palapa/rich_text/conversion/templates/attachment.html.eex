@@ -11,7 +11,7 @@
     </figcaption>
   <% else %>
     <%= link to: attachment_url(@embedded_attachment, :original, "attachment"), class: "p-2 border rounded" do %>
-      <i class="fas fa-paperclip mr-2"></i> <span class="font-bold"><%= @embedded_attachment.filename %></span> (<%= human_filesize(@embedded_attachment) %>)
+      <i class="fas fa-paperclip mr-2"></i> <span class="font-bold"><%= @embedded_attachment.filename %></span> (<%= PalapaWeb.Helpers.human_filesize(@embedded_attachment.filesize) %>)
     <% end %>
   <% end %>
 </figure>
