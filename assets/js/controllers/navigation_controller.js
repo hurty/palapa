@@ -1,32 +1,29 @@
-import { Controller } from "stimulus"
-import BaseController from "./base_controller"
+import { Controller } from "stimulus";
+import BaseController from "./base_controller";
 
 export default class extends BaseController {
-  static targets = ["switcher"]
+  static targets = ["switcher"];
 
   toggleMobileMenu(event) {
-    event.preventDefault()
-    document.body.classList.toggle("layout")
-    document.body.classList.toggle("menu-layout")
+    event.preventDefault();
+    document.body.classList.toggle("layout");
+    document.body.classList.toggle("menu-layout");
   }
 
   showSwitcher(event) {
-    event.preventDefault()
+    event.preventDefault();
 
-    this.switcherTarget.style.transition = 'opacity 0.3s';
-    const { opacity } = this.switcherTarget.ownerDocument.defaultView.getComputedStyle(this.switcherTarget, null);
-    if (opacity === '1') {
-      this.switcherTarget.style.opacity = '0';
+    this.switcherTarget.style.transition = "opacity 0.3s";
+    const {
+      opacity
+    } = this.switcherTarget.ownerDocument.defaultView.getComputedStyle(
+      this.switcherTarget,
+      null
+    );
+    if (opacity === "1") {
+      this.switcherTarget.style.opacity = "0";
     } else {
-      this.loadSwitcher()
-      this.switcherTarget.style.opacity = '1';
+      this.switcherTarget.style.opacity = "1";
     }
-  }
-
-  loadSwitcher() {
-    PA.fetchHTML(this.data.get("switcher-url"))
-      .then(html => {
-        this.switcherTarget.innerHTML = html
-      })
   }
 }

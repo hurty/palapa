@@ -28,9 +28,4 @@ defmodule PalapaWeb.SessionController do
     |> Authentication.logout()
     |> redirect(to: Routes.home_path(conn, :index))
   end
-
-  def switcher(conn, _params) do
-    organizations = Accounts.list_organizations(current_account(conn))
-    render(conn, "switcher.html", layout: false, organizations: organizations)
-  end
 end
