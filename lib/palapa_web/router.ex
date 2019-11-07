@@ -115,7 +115,6 @@ defmodule PalapaWeb.Router do
     get("/", DashboardController, :index)
 
     get("/sessions/switch_organization", SessionController, :switch_organization)
-    get("/sessions/switcher", SessionController, :switcher)
 
     get("/search", SearchController, :index)
 
