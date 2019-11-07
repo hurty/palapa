@@ -10,23 +10,14 @@
         <%= link("Manage my account", to: Routes.account_path(@conn, :edit), class: "btn") %>
       </div>
 
-      <div class="flex flex-wrap">
-        <div class="w-full sm:w-1/2">
-          <%= Phoenix.LiveView.live_render(@conn, PalapaWeb.MemberProfileLive, session: %{
-              member: @member,
-              current_member: @current_member
-            }) 
-          %>
-          <%= render "_personal_informations.html", assigns %>
-        </div>
-
-        <div class="w-full sm:w-1/2 sm:border-l">
-          <h2 class="text-blue-500 text-sm py-2 text-left font-bold">
-          What's up?
-          </h2>
-        </div>
+      <div>
+        <%= Phoenix.LiveView.live_render(@conn, PalapaWeb.MemberProfileLive, session: %{
+            member: @member,
+            current_member: @current_member
+          }) 
+        %>
+        <%= render "_personal_informations.html", assigns %>
       </div>
-
     </div>
   </div>
 </div>

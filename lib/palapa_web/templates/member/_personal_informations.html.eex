@@ -1,4 +1,4 @@
-<div data-controller="personal-informations" class="flex-1 p-2 sm:p-4">
+<div data-controller="personal-informations" class="sm:w-1/2 mx-auto flex-1 p-2 sm:p-4">
   <div class="mx-auto">
     <%= render "_personal_informations_list.html", assigns %>
 
