@@ -108,7 +108,8 @@ defmodule Palapa.Attachments do
   end
 
   def url(%Attachment{} = attachment, version \\ :original, content_disposition \\ "inline") do
-    content_disposition = "&response-content-disposition=#{content_disposition};"
+    content_disposition =
+      "&response-content-disposition=#{content_disposition};filename=#{attachment.filename}"
 
     AttachmentUploader.url({attachment.filename, attachment}, version, signed: true) <>
       content_disposition
