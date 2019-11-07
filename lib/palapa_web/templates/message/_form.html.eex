@@ -9,26 +9,25 @@
 
 <%= if Enum.any?(@teams) do %>
   <div data-controller="team-sharing" class="rounded-lg my-4">
-    <div class="my-2">
-      <%= radio_button @form, :published_to_everyone, true, "data-action": "team-sharing#publishToEveryone", "data-target": "team-sharing.publishToEveryone", checked: true %>
-      <%= label @form, :published_to_everyone_true, "Publish to everyone", class: "cursor-pointer" %>
+    <div class="flex my-2">
+      <%= radio_button @form, :published_to_everyone, true, class: "self-center", "data-action": "team-sharing#publishToEveryone", "data-target": "team-sharing.publishToEveryone", checked: true %>
+      <%= label @form, :published_to_everyone_true, "Publish to everyone", class: "ml-2 cursor-pointer" %>
     </div>
     
-    <div class="my-2">
-      <%= radio_button @form, :published_to_everyone, false, "data-action": "team-sharing#publishToSpecificTeams", "data-target": "team-sharing.publishToSpecificTeams" %>
-      <%= label @form, :published_to_everyone_false, "Publish to specific teams", class: "cursor-pointer" %>
+    <div class="flex my-2">
+      <%= radio_button @form, :published_to_everyone, false, class: "self-center", "data-action": "team-sharing#publishToSpecificTeams", "data-target": "team-sharing.publishToSpecificTeams" %>
+      <%= label @form, :published_to_everyone_false, "Publish to specific teams", class: "ml-2 cursor-pointer" %>
     </div>
     
     <div class="ml-4 hidden" data-target="team-sharing.teamsList">
       <div class="flex flex-wrap">
         <%= for team <- @teams do %>
-          <div class="p-2 bg-gray-200 rounded m-1">
-            <label class="cursor-pointer text-sm" for="team_<%= team.id %>">
+
+            <label class="cursor-pointer text-sm p-2 bg-gray-200 rounded m-1 text-gray-700"  for="team_<%= team.id %>">
             <input type="checkbox" class="align-middle" name="message[publish_teams_ids][]" id="team_<%= team.id %>" 
-              value="<%= team.id %>" <%= if Helpers.team_checked?(@message_changeset, team) do %>checked<% end %>>
-              <%= team.name %>
+                value="<%= team.id %>" <%= if Helpers.team_checked?(@message_changeset, team) do %>checked<% end %>><%= team.name %>
             </label>
-          </div>
+
         <% end %>
       </div>
     </div>
