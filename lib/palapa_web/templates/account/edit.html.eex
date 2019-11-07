@@ -22,7 +22,7 @@
         </div>
         
         <div class="field">
-          <%= label form, :avatar, "Photo", class: "label" %>
+          <%= label form, :avatar, "Change picture", class: "label" %>
           <%= file_input form, :avatar, class: "input", autocomplete: "off" %>
           <%= error_tag form, :avatar %>
         </div>

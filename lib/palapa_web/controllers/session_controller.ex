@@ -2,7 +2,6 @@ defmodule PalapaWeb.SessionController do
   use PalapaWeb, :controller
 
   alias PalapaWeb.Authentication
-  alias Palapa.Accounts
 
   plug(:put_layout, "public.html")
 

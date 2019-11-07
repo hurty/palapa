@@ -15,12 +15,12 @@ defmodule Palapa.Avatar do
     {:convert, "-strip -thumbnail 170x170^ -extent 170x170"}
   end
 
-  def filename(version, {_file, scope}) do
-    if version == :original do
-      scope.id
-    else
-      "#{scope.id}_thumb"
-    end
+  def filename(:original, {_file, scope}) do
+    scope.id
+  end
+
+  def filename(:thumb, {_file, scope}) do
+    "#{scope.id}_thumb"
   end
 
   # Override the storage directory:
@@ -38,7 +38,7 @@ defmodule Palapa.Avatar do
   #    :content_encoding, :content_length, :content_type,
   #    :expect, :expires, :storage_class, :website_redirect_location]
   #
-  def s3_object_headers(_version, {file, _scope}) do
-    [timeout: 3_000_000, content_type: MIME.from_path(file.file_name)]
-  end
+  # def s3_object_headers(_version, {file, _scope}) do
+  #   [timeout: 3_000_000, content_type: MIME.from_path(file.file_name)]
+  # end
 end
