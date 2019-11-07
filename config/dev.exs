@@ -81,7 +81,7 @@ config :appsignal, :config, active: false
 
 config :waffle,
   storage: Arc.Storage.GCS,
-  bucket: "palapa"
+  bucket: "palapa_dev"
 
 config :goth,
-  json: "~/gcp_palapa.json" |> Path.expand |> File.read!
+  json: "~/gcp_palapa.json" |> Path.expand() |> File.read!()

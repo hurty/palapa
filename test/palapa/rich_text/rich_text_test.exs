@@ -113,7 +113,7 @@ defmodule Palapa.RichTextTest do
     embedded_attachment = Enum.at(content.embedded_attachments, 0)
 
     refute embedded_attachment.sgid
-    refute embedded_attachment.attachment_id
+    refute embedded_attachment.attachment
     refute embedded_attachment.filename
     refute embedded_attachment.filesize
     refute embedded_attachment.presentation
@@ -166,7 +166,7 @@ defmodule Palapa.RichTextTest do
     assert "application/vnd.richtext.horizontal-rule.html" == embedded_attachment.content_type
 
     refute embedded_attachment.sgid
-    refute embedded_attachment.attachment_id
+    refute embedded_attachment.attachment
     refute embedded_attachment.filename
     refute embedded_attachment.filesize
     refute embedded_attachment.presentation

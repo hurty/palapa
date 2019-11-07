@@ -34,3 +34,9 @@ config :palapa, Palapa.Mailer,
 config :bamboo, :refute_timeout, 10
 
 config :appsignal, :config, active: false
+
+config :waffle,
+  storage: Arc.Storage.Local
+
+config :goth,
+  disabled: true

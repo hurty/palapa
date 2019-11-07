@@ -33,7 +33,7 @@ defmodule Palapa.AccountsTest do
   test "update/2 with valid data updates the account" do
     richard = insert!(:richard)
 
-    assert {:ok, %Account{} = account} =
+    assert {:ok, %{account: account}} =
              Accounts.update_account(richard, %{email: "big.head@hooli.com"})
 
     assert account.email == "big.head@hooli.com"
@@ -42,7 +42,8 @@ defmodule Palapa.AccountsTest do
   test "update/2 with invalid data returns error changeset" do
     richard = insert!(:richard)
 
-    assert {:error, %Ecto.Changeset{}} = Accounts.update_account(richard, %{email: ""})
+    assert {:error, :account, %Ecto.Changeset{}, _changes} =
+             Accounts.update_account(richard, %{email: ""})
   end
 
   test "delete/1 deletes the account" do

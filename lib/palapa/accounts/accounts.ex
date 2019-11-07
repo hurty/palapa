@@ -10,11 +10,13 @@ defmodule Palapa.Accounts do
 
   def get_by(conditions), do: Repo.get_by(Account, conditions)
 
-  def exists?(email) do
+  def exists?(email) when is_binary(email) do
     Account
     |> where(email: ^email)
     |> Repo.exists?()
   end
+
+  def exists?(email) when is_nil(email), do: false
 
   def create(attrs \\ %{}) do
     Account.changeset(%Account{}, attrs)
