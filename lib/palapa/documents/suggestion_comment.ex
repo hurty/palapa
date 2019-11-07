@@ -13,6 +13,7 @@ defmodule Palapa.Documents.SuggestionComment do
 
     belongs_to(:organization, Organization)
     belongs_to(:suggestion, Suggestion)
+    has_one(:document, through: [:suggestion, :document])
     belongs_to(:author, Member)
 
     has_many(:attachments, Attachment,

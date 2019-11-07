@@ -98,18 +98,12 @@ defmodule Palapa.Attachments do
   end
 
   def get_attachable(%Attachment{} = attachment) do
-    cond do
-      attachment.message_id ->
-        Repo.preload(attachment, :message).message
+    attachable_type = attachment.attachable_type
 
-      attachment.message_comment_id ->
-        Repo.preload(attachment, :message_comment).message_comment
-
-      attachment.personal_information_id ->
-        Repo.preload(attachment, :personal_information).personal_information
-
-      true ->
-        nil
+    if attachable_type do
+      Repo.get_assoc(attachment, attachable_type)
+    else
+      nil
     end
   end
 

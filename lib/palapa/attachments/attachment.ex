@@ -26,6 +26,6 @@ defmodule Palapa.Attachments.Attachment do
 
   def changeset(%Attachment{} = attachment, attrs) do
     attachment
-    |> cast(attrs, [:filename, :content_type, :byte_size, :checksum])
+    |> cast(attrs, [:filename, :content_type, :byte_size, :checksum, :attachable_type])
   end
 end

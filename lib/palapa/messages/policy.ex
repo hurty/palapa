@@ -19,11 +19,7 @@ defmodule Palapa.Messages.Policy do
   end
 
   def authorize(:show_comment, %Member{} = member, message_comment) do
-    message_comment =
-      unless message_comment.message do
-        Repo.preload(message_comment, :message)
-      end
-
+    message_comment = Repo.preload(message_comment, :message)
     authorize(:show, member, message_comment.message)
   end
 
