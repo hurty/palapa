@@ -1,6 +1,5 @@
 <header class="header">
-  <nav data-controller="navigation" data-navigation-switcher-url="<%= Routes.session_path(@conn, :switcher, @current_organization) %>" 
-  class="flex items-center justify-between flex-wrap p-1">
+  <nav data-controller="navigation" class="flex items-center justify-between flex-wrap p-1">
 
     <div class="flex-1">
       <button data-action="navigation#toggleMobileMenu" class="sm:hidden w-full mx-auto flex items-center justify-center px-2 py-1 hover:text-green-600 my-1 font-bold rounded bg-blue-800 text-white">
