@@ -6,7 +6,7 @@ export default class extends Controller {
     new Choices(this.element, {
       removeItemButton: true,
       placeholder: true,
-      position: "bottom"
+      duplicateItemsAllowed: false
     });
   }
 }

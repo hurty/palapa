@@ -51,12 +51,16 @@ defmodule PalapaWeb.PersonalInformationView do
   #   }
   # }
 
-  def autolink(text) do
+  def autolink(text) when is_binary(text) do
     if text =~ ~r/https?:\/\/(www\.)?/ do
       link(text, to: text, target: "_blank")
     else
       text
     end
+  end
+
+  def autolink(text) when is_nil(text) do
+    nil
   end
 
   def show_visibility_whitelist?(organization) do

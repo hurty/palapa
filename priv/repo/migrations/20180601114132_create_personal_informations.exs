@@ -6,7 +6,7 @@ defmodule Palapa.Repo.Migrations.CreatePersonalInformations do
       add(:id, :uuid, primary_key: true)
       add(:member_id, references(:members, on_delete: :delete_all, type: :uuid), null: false)
       add(:label, :string, null: false)
-      add(:value, :string, null: false)
+      add(:value, :string)
       add(:private, :boolean, default: false)
       timestamps()
     end

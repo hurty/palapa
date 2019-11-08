@@ -36,7 +36,8 @@ defmodule Palapa.Organizations.PersonalInformation do
     |> put_assoc(:member, member)
     |> put_attachments(attrs)
     |> put_visibilities(attrs)
-    |> validate_required([:member, :label, :value])
+    |> validate_required([:member, :label])
+    |> put_conditional_validations
   end
 
   def update_changeset(%__MODULE__{} = personal_information, attrs) do
@@ -44,7 +45,18 @@ defmodule Palapa.Organizations.PersonalInformation do
     |> cast(attrs, [:label, :value, :private, :visibilities])
     |> put_attachments(attrs)
     |> put_visibilities(attrs)
-    |> validate_required([:label, :value])
+    |> validate_required([:label])
+    |> put_conditional_validations
+  end
+
+  def put_conditional_validations(changeset) do
+    get_field(changeset, :attachments) |> IO.inspect()
+
+    if(Enum.any?(get_field(changeset, :attachments))) do
+      changeset
+    else
+      validate_required(changeset, [:value])
+    end
   end
 
   def put_visibilities(changeset, attrs) do

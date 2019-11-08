@@ -41,10 +41,12 @@ let SavedForm = {
 };
 
 import AutoFocus from "./live_hooks/auto_focus";
+import Choices from "./live_hooks/choices";
 
 let Hooks = {
   AutoFocus: AutoFocus,
-  SavedForm: SavedForm
+  SavedForm: SavedForm,
+  Choices: Choices
 };
 
 import { Socket } from "phoenix";

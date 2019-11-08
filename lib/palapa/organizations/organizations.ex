@@ -197,6 +197,7 @@ defmodule Palapa.Organizations do
   def create_personal_information(%Member{} = member, attrs) do
     PersonalInformation.changeset(%PersonalInformation{}, member, attrs)
     |> Repo.insert()
+    |> IO.inspect()
   end
 
   @doc """
@@ -252,6 +253,7 @@ defmodule Palapa.Organizations do
     ])
     |> Repo.load_raw(PersonalInformation)
     |> Repo.preload([:attachments, :teams, :members])
+    |> Enum.sort(fn info1, info2 -> Timex.before?(info1.inserted_at, info2.inserted_at) end)
   end
 
   def get_personal_information!(id) do

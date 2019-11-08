@@ -1,0 +1,51 @@
+<%= if @show_personal_information_form do %>
+  <%= form = form_for @personal_information_changeset, "#", [phx_change: "validate_personal_information", phx_submit: "save_personal_information", multipart: true, autocomplete: "off"] %> 
+
+    <div class="border border-gray-200 rounded p-2 text-sm bg-gray-100">    
+      <%= text_input form, :label, placeholder: "Information label", class: "field input w-full", phx_debounce: "blur" %>
+      <%= error_tag form, :label %>
+
+      <%= text_input form, :value, placeholder: "Information value", class: "field input w-full", phx_debounce: "blur" %>
+      <%= error_tag form, :value %>
+            
+      <%= if PalapaWeb.PersonalInformationView.show_visibility_whitelist?(@current_organization) do %>
+        <div class="flex items-center">
+          <%= checkbox form, :private %>
+          <%= label form, :private, "Visible only to me and..." %>
+        </div>
+
+        <div class="my-2" phx-update="ignore">
+          <%= multiple_select form, :visibilities, 
+            [
+              "People": @people_list,
+              "Teams": @teams_list
+            ],
+            placeholder: "Select people and/or teams", phx_debounce: "blur", phx_hook: "Choices"
+          %>
+        </div>
+      <% else %>
+        <div>
+          <%= checkbox form, :private %>
+          <%= label form, :private, "Visible only to me", class: "inline" %>
+        </div>
+      <% end %>
+
+      <div class="card-actions">
+        <%= if @action_type == :update do %>
+          <%= submit "Update information", class: "btn btn-green" %> 
+          <%= link "Cancel", to: "#", class: "btn" %>
+        <% else %>
+          <%= submit "Add information", class: "btn btn-green" %> 
+          <%= link "Cancel", to: "#", phx_click: "hide_personal_information_form", class: "btn" %>
+        <% end %>
+      </div>
+    </div>
+
+  </form>
+<% end %>
+
+<%= unless @show_personal_information_form do %>
+  <button phx-click="show_personal_information_form" class="w-full p-2 mt-2 btn">
+    <i class="fas fa-plus-circle"></i>&nbsp;Add information
+  </button>
+<% end %>

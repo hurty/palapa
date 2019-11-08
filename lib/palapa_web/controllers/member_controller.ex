@@ -61,11 +61,6 @@ defmodule PalapaWeb.MemberController do
     with :ok <- permit(Organizations.Policy, :show_member, current_member(conn)) do
       all_teams = Teams.where_organization(current_organization(conn)) |> Teams.list()
 
-      personal_informations =
-        Organizations.list_personal_informations(member, current_member(conn))
-
-      personal_information_changeset = Organizations.change_personal_information(member)
-
       conn
       |> put_breadcrumb(
         member.account.name,
@@ -74,9 +69,7 @@ defmodule PalapaWeb.MemberController do
       |> render(
         "show.html",
         member: member,
-        all_teams: all_teams,
-        personal_informations: personal_informations,
-        personal_information_changeset: personal_information_changeset
+        all_teams: all_teams
       )
     end
   end

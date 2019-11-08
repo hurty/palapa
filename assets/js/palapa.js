@@ -3,7 +3,7 @@ function getMetaValue(name) {
   return element.getAttribute("content");
 }
 
-function fetchWithDefaultOptions(url, options = {}) {
+function fetchRequest(url, options = {}) {
   let defaultOptions = {
     method: "get",
     credentials: "same-origin",
@@ -17,7 +17,7 @@ function fetchWithDefaultOptions(url, options = {}) {
 }
 
 async function fetchHTML(url, options = {}) {
-  const response = await fetchWithDefaultOptions(url, options);
+  const response = await fetchRequest(url, options);
   if (response.status >= 200 && response.status < 300) {
     return response.text();
   } else {
@@ -43,7 +43,7 @@ function confirm(element) {
 }
 
 window.PA = {
-  fetch: fetchWithDefaultOptions,
+  fetchRequest: fetchRequest,
   fetchHTML: fetchHTML,
   remoteLink: remoteLink,
   confirm: confirm,

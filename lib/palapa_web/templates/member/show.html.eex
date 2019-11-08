@@ -12,11 +12,11 @@
 
       <div>
         <%= Phoenix.LiveView.live_render(@conn, PalapaWeb.MemberProfileLive, session: %{
-            member: @member,
-            current_member: @current_member
+            member_id: @member.id,
+            current_member_id: @current_member.id,
+            current_organization_id: @current_organization.id
           }) 
         %>
-        <%= render "_personal_informations.html", assigns %>
       </div>
     </div>
   </div>
