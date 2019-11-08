@@ -14,15 +14,17 @@
           <%= label form, :private, "Visible only to me and..." %>
         </div>
 
-        <div class="my-2" phx-update="ignore">
-          <%= multiple_select form, :visibilities, 
-            [
-              "People": @people_list,
-              "Teams": @teams_list
-            ],
-            placeholder: "Select people and/or teams", phx_debounce: "blur", phx_hook: "Choices"
-          %>
-        </div>
+        <%= if input_value(form, :private) == true do %>
+          <div class="my-2">
+            <%= multiple_select form, :visibilities, 
+              [
+                "People": @people_list,
+                "Teams": @teams_list
+              ],
+              placeholder: "Select people and/or teams", phx_debounce: "blur", phx_hook: "Choices"
+            %>
+          </div>
+        <% end %>
       <% else %>
         <div>
           <%= checkbox form, :private %>
