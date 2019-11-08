@@ -121,6 +121,27 @@ defmodule PalapaWeb.MemberProfileLive do
     {:noreply, assign(socket, personal_information_changeset: changeset)}
   end
 
+  def handle_event("delete_personal_information", %{"id" => id}, socket) do
+    personal_information = Organizations.get_personal_information!(id)
+
+    with :ok <-
+           permit(
+             Organizations.Policy,
+             :delete_personal_information,
+             socket.assigns.current_member,
+             personal_information
+           ) do
+      case Organizations.delete_personal_information(personal_information) do
+        {:ok, _deleted_info} ->
+          {:noreply, fetch_member_personal_informations(socket)}
+
+        {:error, _} ->
+          # FIXME: add global notice with unexpected errors
+          nil
+      end
+    end
+  end
+
   def fetch_member_personal_informations(socket) do
     personal_informations =
       Organizations.list_personal_informations(
