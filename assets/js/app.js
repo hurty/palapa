@@ -4,7 +4,9 @@ import "./vendor/fontawesome-solid";
 import "./vendor/fontawesome-brands";
 
 import "./palapa";
-import "trix";
+
+import Trix from "trix";
+Trix.config.attachments.preview.presentation = null;
 
 import MicroModal from "micromodal";
 MicroModal.init();

@@ -197,7 +197,6 @@ defmodule Palapa.Organizations do
   def create_personal_information(%Member{} = member, attrs) do
     PersonalInformation.changeset(%PersonalInformation{}, member, attrs)
     |> Repo.insert()
-    |> IO.inspect()
   end
 
   @doc """

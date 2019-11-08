@@ -50,7 +50,7 @@ defmodule Palapa.Organizations.PersonalInformation do
   end
 
   def put_conditional_validations(changeset) do
-    get_field(changeset, :attachments) |> IO.inspect()
+    get_field(changeset, :attachments)
 
     if(Enum.any?(get_field(changeset, :attachments))) do
       changeset
