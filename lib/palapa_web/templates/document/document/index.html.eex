@@ -3,7 +3,7 @@
     <div class="card">
 
         <div class="flex flex-wrap items-center justify-between p-4">
-          <h2 class="text-gray-800">All documents</h2>
+          <h2 class="card-header">Documents</h2>
 
           <div class="my-2 sm:m-0">
             <%= link(to: Routes.document_path(@conn, :new, @current_organization), class: "btn text-sm") do %>
