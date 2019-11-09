@@ -121,7 +121,8 @@
 
         <% else %>
           <div class="blankslate">
-            No documents here.
+            <i class="fas fa-file-alt text-6xl text-green-400"></i>
+            <div class="my-4">No documents here.</div>
           </div>
         <% end %>
 
