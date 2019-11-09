@@ -6,7 +6,7 @@ defmodule Palapa.Contacts.Policy do
   end
 
   def authorize(:delete_comment, member, comment) do
-    comment.author.id == member.id
+    comment.author.id == member.id || member.role in [:admin, :owner]
   end
 
   def authorize(_, _, _), do: false
