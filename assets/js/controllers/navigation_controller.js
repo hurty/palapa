@@ -12,18 +12,6 @@ export default class extends BaseController {
 
   showSwitcher(event) {
     event.preventDefault();
-
-    this.switcherTarget.style.transition = "opacity 0.3s";
-    const {
-      opacity
-    } = this.switcherTarget.ownerDocument.defaultView.getComputedStyle(
-      this.switcherTarget,
-      null
-    );
-    if (opacity === "1") {
-      this.switcherTarget.style.opacity = "0";
-    } else {
-      this.switcherTarget.style.opacity = "1";
-    }
+    this.toggle(this.switcherTarget);
   }
 }

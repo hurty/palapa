@@ -56,19 +56,19 @@
 
       <div class="sm:mx-4">
         <a href="#" data-action="navigation#showSwitcher" title="Signed id as <%= @current_account.name %>"><%= Helpers.avatar(@current_account, :sm) %></a>
-        <div data-target="navigation.switcher" class="absolute right-0 border z-100 py-4 px-8 bg-white shadow rounded opacity-0">
+        <div data-target="navigation.switcher" class="hidden absolute right-0 border-2 z-100 py-4 px-8 bg-white shadow-lg rounded">
+          <div class="relative">
+            <div class="text-lg text-blue-500 font-bold mb-2 py-1"><%= @current_account.name %></div>
 
-            <div class="text-sm text-gray-800 font-bold mb-4 border-b py-1"><%= @current_account.name %></div>
-
-            <ul class=" mb-2">
+            <ul class="mb-2">
               <li><%= link("My profile on #{@current_organization.name}", to: Routes.member_path(@conn, :show, @current_organization, @current_member), class: "text-gray-800 hover:underline") %></li>
               <li><%= link("Account settings", to: Routes.account_path(@conn, :edit), target: "_blank", class: "text-gray-800 hover:underline") %></li>
             </ul>
-            <ul class=" mb-2">
-              <li><%= link("Switch workspace", to: Routes.organization_path(@conn, :index), class: "mt-4 text-blue-500 hover:underline") %></li>
-              <li><%= link("Log out", to: Routes.session_path(@conn, :delete), class: "mt-4 text-red-400 hover:underline", data: [controller: "link", action: "link#delete"]) %></li>
+            <ul class="mb-4">
+              <li><%= link("Switch workspace", to: Routes.organization_path(@conn, :index), class: "mt-4 font-bold text-green-500 hover:underline") %></li>
+              <li class="mt-4"><%= link("Log out", to: Routes.session_path(@conn, :delete), class: "btn font-bold text-red-400 hover:underline", data: [controller: "link", action: "link#delete"]) %></li>
             </ul>
-
+          </div>
         </div>
       </div>
 
