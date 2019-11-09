@@ -3,9 +3,9 @@
     <div class="rounded shadow bg-white">
       <div class="p-4 flex flex-wrap border-b border-gray-200 bg-white rounded-t">
         <div class="flex-1">
-          <h2 class="text-green-500"><%= @current_organization.name %></h2>
-          <div class="text-sm uppercase text-gray-600"><span class="font-bold"><%= @organization_members_count %></span> people</div>
-          <div class="text-sm uppercase text-gray-600"><span class="font-bold"><%= length(@teams) %></span> teams</div>
+          <h2 class="card-header text-green-500"><%= @current_organization.name %></h2>
+          <div class="text-sm uppercase text-gray-600"><%= ngettext("%{count} member", "%{count} members", @organization_members_count) %></div>
+          <div class="text-sm uppercase text-gray-600"><%= ngettext("%{count} team", "%{count} teams", length(@teams)) %></div>
         </div>
 
         <div class="flex-1 flex flex-wrap justify-end">

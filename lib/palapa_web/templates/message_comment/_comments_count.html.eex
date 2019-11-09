@@ -1,6 +1,6 @@
 <h3 class="mt-8 mb-4 text-gray-700 text-center"><i class="fas fa-comments"></i>
 <%= if @comments_count > 0 do %>
-   <%= @comments_count %> comments</h3>
+   <%= ngettext("%{count} comment", "%{count} comments", @comments_count) %>
 <% else %>
    No comment yet
 <% end %>

@@ -4,7 +4,7 @@
         <%= if @selected_team do %> 
           <span><%= Helpers.truncate_string(@selected_team.name, 40) %></span>
         <% else %>
-          <span>All messages</span>
+          <span class="card-header">All messages</span>
         <% end %>
         <i class="fas fa-angle-down"></i>
       </button>
@@ -21,7 +21,7 @@
       </div>
   </div>
 <% else %>
-  <h2 class="text-gray-800">All messages</h2>
+  <h2 class="card-header">Messages</h2>
 <% end %>
 
 <%= link(to: Routes.message_path(@conn, :new, @current_organization), class: "messages__new-message-button btn text-sm") do %>
