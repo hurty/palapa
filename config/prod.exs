@@ -15,7 +15,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :palapa, PalapaWeb.Endpoint,
   load_from_system_env: true,
-  url: [scheme: "https", host: System.get_env("APP_NAME") <> ".gigalixirapp.com", port: 443],
+  url: [port: 8080],
   force_ssl: [hsts: true, rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE")
@@ -25,7 +25,7 @@ config :logger, level: :info
 
 config :palapa, Palapa.Repo,
   adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("DATABASE_URL"),
+  url: System.get_env("POSTGRESQL_ADDON_URI"),
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "2")
 
 config :palapa, Palapa.Mailer,
