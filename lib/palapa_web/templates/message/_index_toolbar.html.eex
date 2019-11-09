@@ -4,7 +4,7 @@
         <%= if @selected_team do %> 
           <span><%= Helpers.truncate_string(@selected_team.name, 40) %></span>
         <% else %>
-          <span class="card-header">All messages</span>
+          <span>All messages</span>
         <% end %>
         <i class="fas fa-angle-down"></i>
       </button>
