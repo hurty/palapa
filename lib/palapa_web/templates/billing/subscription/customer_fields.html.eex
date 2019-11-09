@@ -1,7 +1,7 @@
 <div>
   <div class="bg-gray-100 rounded-lg p-2 my-2">
 
-    <h3 class="text-green-500"><%= gettext("Billing information") %></h3>
+    <h2 class="card-header text-green-500"><%= gettext("Billing information") %></h2>
     
     <div class="my-2">
     <p class="text-sm font-bold text-gray-600">These informations will appear on your invoices</p>

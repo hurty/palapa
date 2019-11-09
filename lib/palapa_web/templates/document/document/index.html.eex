@@ -1,4 +1,4 @@
-<div class="content article-layout">
+<div class="content <%= if Enum.any?(@recent_documents) do %>article-layout<% else %>page-layout<% end %>">
   <div class="main-content">
     <div class="card">
 

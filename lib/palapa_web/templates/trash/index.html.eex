@@ -1,11 +1,11 @@
 <div class="content page-layout">
   <div class="main-content"> 
     <div class="card">
-      <h1 class="border-b p-4">Trash</h1>
+      <h1 class="card-header border-b p-4">Trash</h1>
 
       <div class="p-4">
         <p class="bg-gray-200 rounded-full textred-500px-1 py-2 text-center my-4">Items in the trash will be definitely deleted after 30 days.</p>
-        <h2>Documents</h2>
+        <h2 class="text-xl font-bold">Documents</h2>
         <div class="card-header-separator"></div>
         
         <%= if Enum.any?(@documents) do %>
