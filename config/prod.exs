@@ -41,7 +41,9 @@ config :palapa, Palapa.Mailer,
 
 config :waffle,
   storage: Arc.Storage.GCS,
-  bucket: System.get_env("S3_BUCKET")
+  bucket: System.get_env("STORAGE_BUCKET")
+
+config :goth, json: {:system, "GCP_CREDENTIALS"}
 
 config :appsignal, :config, active: true
 
