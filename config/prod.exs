@@ -15,7 +15,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :palapa, PalapaWeb.Endpoint,
   load_from_system_env: true,
-  url: [scheme: "https", host: "palapabeta.cleverapps.io", port: 443],
+  url: [host: "palapabeta.cleverapps.io", port: 80],
   force_ssl: [hsts: true, rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE")
