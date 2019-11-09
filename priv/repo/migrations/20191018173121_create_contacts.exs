@@ -50,8 +50,8 @@ defmodule Palapa.Repo.Migrations.CreateContacts do
     DECLARE
       index_value tsvector;
     BEGIN
-      index_value := setweight(to_tsvector('simple', unaccent(NEW.last_name)), 'A') ||
-        setweight(to_tsvector('simple', coalesce(unaccent(NEW.first_name), '')), 'B');
+      index_value := setweight(to_tsvector('simple', coalesce(unaccent(NEW.first_name), '')), 'A') ||
+        setweight(to_tsvector('simple', coalesce(unaccent(NEW.last_name), '')), 'A');
 
       INSERT INTO searches (
         organization_id,
