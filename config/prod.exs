@@ -26,7 +26,7 @@ config :logger, level: :info
 
 config :palapa, Palapa.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username:System.get_env("POSTGRESQL_ADDON_USER"),
+  username: System.get_env("POSTGRESQL_ADDON_USER"),
   password: System.get_env("POSTGRESQL_ADDON_PASSWORD"),
   database: System.get_env("POSTGRESQL_ADDON_DB"),
   port: System.get_env("POSTGRESQL_ADDON_PORT"),
