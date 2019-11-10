@@ -26,7 +26,7 @@ config :logger, level: :info
 
 config :palapa, Palapa.Repo,
   adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("POSTGRESQL_ADDON_URI"),
+  url: "${DATABASE_URL}",
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "2"),
   database: "",
   ssl: true
