@@ -31,8 +31,7 @@ config :palapa, Palapa.Repo,
   password: System.get_env("POSTGRESQL_ADDON_PASSWORD"),
   database: System.get_env("POSTGRESQL_ADDON_DB"),
   port: System.get_env("POSTGRESQL_ADDON_PORT"),
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "2"),
-  ssl: true
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "2")
 
 config :palapa, Palapa.Mailer,
   adapter: Bamboo.MailjetAdapter,
