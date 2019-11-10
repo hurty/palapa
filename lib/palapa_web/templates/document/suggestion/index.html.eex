@@ -3,15 +3,15 @@
   data-document-suggestions-list-url="<%= Routes.document_page_suggestion_url(@conn, :index, @conn.assigns.current_organization, @conn.assigns.page) %>" 
   class="my-8">
 
-  <ul class="tabs justify-center">
-    <li data-target="document-suggestions.listTab" class="tab tab--selected">
-      <a data-action="document-suggestions#toggleList" class="text-center block py-2 px-4 hover:cursor-pointer" href="#">Open suggestions</a>
-    </li>
+  <nav class="flex justify-center mb-4">
+    <div data-target="document-suggestions.listTab" class="tab tab--active">
+      <a data-action="document-suggestions#toggleList" class="text-center block px-4 hover:cursor-pointer" href="#">Open suggestions</a>
+    </div>
 
-    <li data-target="document-suggestions.listTab" data-action="document-suggestions#toggleList" class="tab">
-      <a data-action="document-suggestions#toggleList" class="text-center block py-2 px-4 hover:cursor-pointer" href="#">Closed suggestions</a>
-    </li>
-  </ul>
+    <div data-target="document-suggestions.listTab" data-action="document-suggestions#toggleList" class="tab">
+      <a data-action="document-suggestions#toggleList" class="text-center block px-4 hover:cursor-pointer" href="#">Closed suggestions</a>
+    </div>
+  </nav>
 
   <ul class=" flex flex-col" data-target="document-suggestions.suggestionsList">
     <%# Loaded asynchronously with ajax %>

@@ -47,7 +47,7 @@ export default class extends BaseController {
     if (event) event.preventDefault();
 
     this.listTabTargets.forEach(tab => {
-      tab.classList.toggle("tab--selected");
+      tab.classList.toggle("tab--active");
     });
 
     if (this.selectedList == "open") {
