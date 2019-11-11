@@ -2,10 +2,6 @@
   @apply leading-normal;
   @apply text-gray-800;
 
-  div {
-    @apply mt-4;
-  }
-
   h1 {
     @apply text-xl font-bold;
     @apply mt-2;
