@@ -1,6 +1,6 @@
 <figure class="attachment text-center">
   <a href="<%= @embedded_attachment.url %>" class="attachment-gallery-item">
-    <img src="<%= @embedded_attachment.url %>">
+    <img class="inline text-center" src="<%= @embedded_attachment.url %>">
   </a>
 
   <figcaption class="text-sm">

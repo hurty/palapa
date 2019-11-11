@@ -7,12 +7,12 @@
   }
 
   h1 {
-    @apply text-xl;
+    @apply text-xl font-bold;
     @apply mt-2;
   }
 
   h2 {
-    @apply text-lg;
+    @apply text-lg font-bold;
     @apply mt-4;
   }
 
@@ -30,8 +30,8 @@
   }
 
   blockquote  {
-    @apply text-purple-600 italic;
-    @apply border-l-2 border-purple-400;
+    @apply text-blue-600 italic;
+    @apply border-l-2 border-blue-400;
     @apply bg-purple-100;
     @apply my-4 py-4 px-4;
   }
@@ -44,6 +44,10 @@
     overflow-x: auto;
   }
 
+  figure.attachment {
+    text-align: center;
+  }
+
   figcaption {
     @apply my-2;
   }
@@ -52,5 +56,9 @@
     width: auto;
     height: auto;
     @apply my-4 text-center;
+
+    img {
+      display: inline;
+    }
   }
 }
