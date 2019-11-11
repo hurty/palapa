@@ -1,10 +1,12 @@
-<div class="flex px-2">
-  <div class="w-8">
-    <%= Helpers.avatar(@search_result.member.account, :xs) %>
-  </div>
+<%= link to: Routes.member_path(@conn, :show, @current_organization, @search_result.member) do %>
+  <div class="flex px-2">
+    <div class="w-8">
+      <%= Helpers.avatar(@search_result.member.account, :xs) %>
+    </div>
 
-  <div class="flex-1">
-    <%= link Helpers.truncate_string(@search_result.member.account.name), to: Routes.member_path(@conn, :show, @current_organization, @search_result.member), class: "text-green-500 hover:underline font-bold text-sm" %>
-    <div class="text-xs text-gray-600 font-bold">Member</div>
+    <div class="flex-1">
+      <div class="text-green-500 font-bold text-sm"><%= Helpers.truncate_string(@search_result.member.account.name) %></div>
+      <div class="text-xs text-gray-600 font-bold">Member</div>
+    </div>
   </div>
-</div>
+<% end  %>

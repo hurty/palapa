@@ -1,12 +1,14 @@
+<%= link to: Routes.member_path(@conn, :index, @current_organization, team_id: @search_result.team.id) do %>
 <div class="flex px-2">
   <div class="w-8">
     <i class="fas fa-users text-gray-600"></i>
   </div>
 
   <div class="flex-1">
-    <%= link Helpers.truncate_string(@search_result.team.name), to: Routes.member_path(@conn, :index, @current_organization, team_id: @search_result.team.id), class: "text-green-500 hover:underline font-bold text-sm" %>
+    <div class="text-green-500 font-bold text-sm"><%= Helpers.truncate_string(@search_result.team.name) %></div>
     <div>
       <span class="text-xs text-gray-600 font-bold">Team</span>
     </div>
   </div>
 </div>
+<% end %>
