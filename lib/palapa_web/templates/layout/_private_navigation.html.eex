@@ -1,19 +1,16 @@
 <header class="header">
-  <nav data-controller="navigation" class="flex items-center justify-between flex-wrap p-1">
+  <nav data-controller="navigation" class="flex items-center justify-center lg:justify-between p-1">
+    <button data-action="navigation#toggleMobileMenu" class="sm:hidden px-2 py-1 hover:bg-green-600 my-1 font-bold rounded bg-green-500 text-white">
+    <i class="fas fa-bars"></i>
+    </button>
 
-    <div class="flex-1">
-      <button data-action="navigation#toggleMobileMenu" class="sm:hidden w-full mx-auto flex items-center justify-center px-2 py-1 hover:text-green-600 my-1 font-bold rounded bg-blue-800 text-white">
-          <i class="fas fa-angle-down mr-2"></i>Menu
-      </button>
-
-      <div class="hidden sm:block">
-        <%= render PalapaWeb.LayoutView, "_breadcrumbs.html", assigns %>
-      </div>
+    <div class="hidden lg:block">
+      <%= render PalapaWeb.LayoutView, "_breadcrumbs.html", assigns %>
     </div>
 
-    <div class="flex-initial flex items-center justify-between">
+    <div class="flex items-center">
 
-      <div data-controller="popover" data-action="mousedown@window->popover#hide">
+      <div class="hidden sm:inline-block" data-controller="popover" data-action="mousedown@window->popover#hide">
         <button data-target="popover.button" data-action="popover#toggle" class="btn rounded-full">
           <i class="fas fa-plus-circle text-green-500 mr-2"></i>Create<i class="fas fa-angle-down ml-2"></i>
         </button>

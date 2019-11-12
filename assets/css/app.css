@@ -53,6 +53,7 @@
 @import "components/_search";
 @import "components/_selector";
 @import "components/_spinner";
+@import "components/_sticky";
 @import "components/_tabs";
 @import "components/_tags";
 @import "components/_text_editor";

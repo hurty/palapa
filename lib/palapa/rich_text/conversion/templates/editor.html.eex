@@ -3,7 +3,7 @@
   data-editor-autocomplete-index="0" 
   data-editor-attachments-url="<%= @attachments_url %>">
   
-  <trix-toolbar id="<%= @toolbar_id %>">
+  <trix-toolbar id="<%= @toolbar_id %>" data-controller="sticky">
     <div class="trix-button-row">
       <span class="trix-button-group trix-button-group--text-tools" data-trix-button-group="text-tools">
         <button type="button" class="trix-button trix-button--icon trix-button--icon-heading-1" data-trix-attribute="heading1" title="Heading" tabindex="-1">Heading</button>

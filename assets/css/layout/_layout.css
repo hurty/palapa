@@ -74,6 +74,7 @@
   z-index: 999;
   /* @apply border-b; */
   background-color: rgb(243, 248, 251);
+  height: auto;
 }
 
 /* Don't make the header sticky on small screens */

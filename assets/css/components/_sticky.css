@@ -1,0 +1,8 @@
+.sticky-top {
+  position: sticky;
+  z-index: 100;
+  top: 0;
+  @media (min-width: 640px) {
+    top: 55px;
+  }
+}
