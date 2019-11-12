@@ -3,13 +3,19 @@
 }
 
 .avatar--md {
-  @apply h-24 w-24 text-3xl;
+  @apply text-3xl;
+  height: 100px;
+  width: 100px;
 }
 
 .avatar--sm {
-  @apply h-12 w-12 text-xl;
+  @apply text-xl;
+  height: 50px;
+  width: 50px;
 }
 
 .avatar--xs {
-  @apply h-6 w-6 text-xs;
+  @apply text-xs;
+  height: 25px;
+  width: 25px;
 }
