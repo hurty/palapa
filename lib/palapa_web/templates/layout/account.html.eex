@@ -10,6 +10,7 @@
   </head>
 
   <body>
+    <div class="float-right m-4"><%= link("Log out", to: Routes.session_path(@conn, :delete), class: "btn", data: [controller: "link", action: "link#delete"]) %></div>
     <div class="sm:max-w-2xl mx-auto">
       <div class="flex justify-center mb-8 pt-4">
         <%= Helpers.avatar(@current_account, :sm) %> 
