@@ -32,7 +32,7 @@
     <div class="trix-dialogs" data-trix-dialogs>
       <div class="trix-dialog trix-dialog--link" data-trix-dialog="href" data-trix-dialog-attribute="href">
         <div class="trix-dialog__link-fields">
-          <input type="url" name="href" class="trix-input trix-input--dialog" placeholder="URL" aria-label="URL" required data-trix-input>
+          <input type="url" name="href" class="trix-input trix-input--dialog" placeholder="URL" aria-label="URL" autocomplete="off" required data-trix-input>
           <div class="trix-button-group">
             <input type="button" class="trix-button trix-button--dialog" value="link" data-trix-method="setAttribute">
             <input type="button" class="trix-button trix-button--dialog" value="unlink" data-trix-method="removeAttribute">
