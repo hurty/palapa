@@ -12,13 +12,13 @@ defmodule Palapa.Documents.Document do
     timestamps()
 
     belongs_to(:organization, Organization)
-    belongs_to(:last_author, Member, on_replace: :nilify)
-    belongs_to(:team, Team, on_replace: :nilify)
+    belongs_to(:last_author, Member, on_replace: :update)
+    belongs_to(:team, Team, on_replace: :update)
     has_many(:sections, Section)
     has_many(:pages, Page)
     has_many(:document_accesses, DocumentAccess)
 
-    belongs_to(:deletion_author, Member, on_replace: :nilify)
+    belongs_to(:deletion_author, Member, on_replace: :update)
   end
 
   @doc false

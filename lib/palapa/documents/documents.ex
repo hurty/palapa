@@ -219,9 +219,17 @@ defmodule Palapa.Documents do
   def update_document(document, author, team, attrs) do
     document
     |> Document.changeset(attrs)
-    |> put_assoc(:team, team)
-    |> put_assoc(:last_author, author)
+    |> put_change(:last_author_id, author.id)
+    |> put_team(team)
     |> Repo.update()
+  end
+
+  defp put_team(changeset, team) when is_nil(team) do
+    put_change(changeset, :team_id, nil)
+  end
+
+  defp put_team(changeset, %Team{} = team) do
+    put_change(changeset, :team_id, team.id)
   end
 
   def delete_document!(document, author) do
@@ -246,6 +254,12 @@ defmodule Palapa.Documents do
     Document.changeset(document, %{})
   end
 
+  def touch_document(%Document{} = document, %Member{} = author) do
+    document
+    |> change(%{last_author_id: author.id})
+    |> Repo.update()
+  end
+
   def document_visible_to?(document, member) do
     documents_visible_to(member)
     |> where(id: ^document.id)
@@ -253,13 +267,24 @@ defmodule Palapa.Documents do
   end
 
   def create_section(document, author, attrs) do
-    document
-    |> Ecto.build_assoc(:sections)
-    |> Section.changeset(attrs)
-    |> put_assoc(:last_author, author)
-    |> put_assoc(:pages, [])
-    |> Position.insert_at_bottom(:document_id, document.id, :position)
-    |> Repo.insert()
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:section, fn repo, _changes ->
+      document
+      |> Ecto.build_assoc(:sections)
+      |> Section.changeset(attrs)
+      |> put_change(:last_author_id, author.id)
+      |> put_assoc(:pages, [])
+      |> Position.insert_at_bottom(:document_id, document.id, :position)
+      |> repo.insert()
+    end)
+    |> Ecto.Multi.run(:touch_document, fn _repo, _changes ->
+      touch_document(document, author)
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{section: section}} -> {:ok, section}
+      {:error, :section, changeset, _changes} -> {:error, changeset}
+    end
   end
 
   def get_section!(queryable \\ Section, id) do
@@ -272,19 +297,43 @@ defmodule Palapa.Documents do
     Section.changeset(section, %{})
   end
 
-  def update_section(section, attrs) do
-    Section.changeset(section, attrs)
-    |> Palapa.Position.recompute_positions(:document_id, :position)
-    |> Repo.update()
+  def update_section(section, author, attrs) do
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:section, fn repo, _changes ->
+      Section.changeset(section, attrs)
+      |> Palapa.Position.recompute_positions(:document_id, :position)
+      |> repo.update()
+    end)
+    |> Ecto.Multi.run(:touch_document, fn _repo, _changes ->
+      document = Repo.get_assoc(section, :document)
+      touch_document(document, author)
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{section: section}} -> {:ok, section}
+      {:error, :section, changeset, _changes} -> {:error, changeset}
+    end
   end
 
-  def delete_section(section) do
-    section
-    |> change
-    |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
-    |> put_change(:position, nil)
-    |> Palapa.Position.recompute_positions(:document_id, :position)
-    |> Repo.update()
+  def delete_section(section, author) do
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:section, fn repo, _changes ->
+      section
+      |> change
+      |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
+      |> put_change(:position, nil)
+      |> Palapa.Position.recompute_positions(:document_id, :position)
+      |> repo.update()
+    end)
+    |> Ecto.Multi.run(:touch_document, fn _repo, _changes ->
+      document = Repo.get_assoc(section, :document)
+      touch_document(document, author)
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{section: section}} -> {:ok, section}
+      {:error, :section, changeset, _changes} -> {:error, changeset}
+    end
   end
 
   def get_page!(queryable \\ Page, id, accessing_member \\ nil) do
@@ -333,6 +382,10 @@ defmodule Palapa.Documents do
         end
       end
     )
+    |> Ecto.Multi.run(:touch_document, fn _repo, _changes ->
+      document = Repo.get_assoc(section, :document)
+      touch_document(document, author)
+    end)
     |> Repo.transaction()
     |> case do
       {:ok, %{page: page}} ->
@@ -349,35 +402,71 @@ defmodule Palapa.Documents do
   end
 
   def update_page(page, author, attrs) do
-    page
-    |> Repo.preload([:attachments, :last_author])
-    |> Page.changeset(attrs)
-    |> put_assoc(:last_author, author)
-    |> Palapa.Position.recompute_positions(:section_id, :position)
-    |> Repo.update()
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:page, fn repo, _changes ->
+      page
+      |> Repo.preload([:attachments])
+      |> Page.changeset(attrs)
+      |> put_change(:last_author_id, author.id)
+      |> Palapa.Position.recompute_positions(:section_id, :position)
+      |> repo.update()
+    end)
+    |> Ecto.Multi.run(:touch_document, fn _repo, _changes ->
+      document = Repo.get_assoc(page, :document)
+      touch_document(document, author)
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{page: page}} -> {:ok, page}
+      {:error, :page, changeset, _changes} -> {:error, changeset}
+    end
   end
 
   def change_page(page \\ %Page{}, attrs \\ %{}) do
     Page.changeset(page, attrs)
   end
 
-  def move_page!(page, new_section, new_position) do
-    page
-    |> Page.changeset(%{
-      "section_id" => new_section.id,
-      "position" => new_position
-    })
-    |> Palapa.Position.recompute_positions(:section_id, :position)
-    |> Repo.update!()
+  def move_page(page, author, new_section, new_position) do
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:page, fn repo, _changes ->
+      page
+      |> Page.changeset(%{
+        "section_id" => new_section.id,
+        "position" => new_position
+      })
+      |> Palapa.Position.recompute_positions(:section_id, :position)
+      |> repo.update()
+    end)
+    |> Ecto.Multi.run(:touch_document, fn _repo, _changes ->
+      document = Repo.get_assoc(page, :document)
+      touch_document(document, author)
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{page: page}} -> {:ok, page}
+      {:error, :page, changeset, _changes} -> {:error, changeset}
+    end
   end
 
-  def delete_page!(page) do
-    page
-    |> change
-    |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
-    |> put_change(:position, nil)
-    |> Palapa.Position.recompute_positions(:section_id, :position)
-    |> Repo.update!()
+  def delete_page(page, author) do
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:page, fn _repo, _changes ->
+      page
+      |> change
+      |> put_change(:deleted_at, DateTime.utc_now() |> DateTime.truncate(:second))
+      |> put_change(:position, nil)
+      |> Palapa.Position.recompute_positions(:section_id, :position)
+      |> Repo.update()
+    end)
+    |> Ecto.Multi.run(:touch_document, fn _repo, _changes ->
+      document = Repo.get_assoc(page, :document)
+      touch_document(document, author)
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{page: page}} -> {:ok, page}
+      {:error, :page, changeset, _changes} -> {:error, changeset}
+    end
   end
 
   def get_previous_page(page) do

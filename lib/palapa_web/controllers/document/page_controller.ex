@@ -149,8 +149,10 @@ defmodule PalapaWeb.Document.PageController do
       |> Documents.get_section!(new_section_id)
 
     with :ok <- permit(Documents.Policy, :update_document, current_member(conn), page.document) do
-      Documents.move_page!(page, new_section, new_position)
-      send_resp(conn, 200, "")
+      case Documents.move_page(page, current_member(conn), new_section, new_position) do
+        {:ok, _page} -> send_resp(conn, 200, "")
+        _ -> send_resp(conn, 500, "")
+      end
     end
   end
 
@@ -158,7 +160,7 @@ defmodule PalapaWeb.Document.PageController do
     page = BaseController.get_page!(conn, id)
 
     with :ok <- permit(Documents.Policy, :update_document, current_member(conn), page.document) do
-      Documents.delete_page!(page)
+      Documents.delete_page(page, current_member(conn))
 
       redirect_page =
         if current_page_id == page.id do

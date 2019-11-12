@@ -132,21 +132,29 @@ defmodule Palapa.DocumentsTest do
 
     test "update section" do
       document = document_fixture()
+      organization = Repo.get_assoc(document, :organization)
+      second_author = insert!(:admin, organization: organization)
+
       {:ok, section} = Documents.create_section(document, document.last_author, @valid_attrs)
-      {:ok, updated_section} = Documents.update_section(section, @update_attrs)
+      {:ok, updated_section} = Documents.update_section(section, second_author, @update_attrs)
       assert updated_section.title == "some updated title"
     end
 
     test "update section with invalid data" do
       document = document_fixture()
       {:ok, section} = Documents.create_section(document, document.last_author, @valid_attrs)
-      assert {:error, %Ecto.Changeset{}} = Documents.update_section(section, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Documents.update_section(section, document.last_author, @invalid_attrs)
     end
 
     test "delete section" do
       document = document_fixture()
+      organization = Repo.get_assoc(document, :organization)
+      second_author = insert!(:admin, organization: organization)
+
       {:ok, section} = Documents.create_section(document, document.last_author, @valid_attrs)
-      assert {:ok, deleted_section} = Documents.delete_section(section)
+      assert {:ok, deleted_section} = Documents.delete_section(section, second_author)
       assert deleted_section.deleted_at
     end
   end
@@ -200,8 +208,10 @@ defmodule Palapa.DocumentsTest do
           @valid_page_attrs
         )
 
+      organization = Repo.get_assoc(document, :organization)
+      second_author = insert!(:admin, organization: organization)
       update_attrs = %{title: "New page title", content: "Updated content"}
-      assert {:ok, page} = Documents.update_page(page, page.last_author, update_attrs)
+      assert {:ok, page} = Documents.update_page(page, second_author, update_attrs)
       assert update_attrs.content == to_string(page.content)
     end
 
@@ -224,7 +234,7 @@ defmodule Palapa.DocumentsTest do
           @valid_page_attrs
         )
 
-      deleted_page = Documents.delete_page!(page)
+      {:ok, deleted_page} = Documents.delete_page(page, document.last_author)
       assert deleted_page.deleted_at
     end
   end
@@ -318,36 +328,37 @@ defmodule Palapa.DocumentsTest do
 
     test "can't move a page at wrong (negative) position", %{
       document: document,
-      blue_page: blue_page
+      blue_page: blue_page,
+      author: author
     } do
       first_section = Documents.get_first_section!(document)
 
-      assert_raise Ecto.InvalidChangesetError, fn ->
-        Documents.move_page!(blue_page, first_section, -1)
-      end
+      assert {:error, %Ecto.Changeset{}} =
+               Documents.move_page(blue_page, author, first_section, -1)
     end
 
     test "can't move a page higher than the maximum position", %{
       document: document,
-      blue_page: blue_page
+      blue_page: blue_page,
+      author: author
     } do
       first_section = Documents.get_first_section!(document)
 
-      assert_raise Ecto.InvalidChangesetError, fn ->
-        Documents.move_page!(blue_page, first_section, 100)
-      end
+      assert {:error, %Ecto.Changeset{}} =
+               Documents.move_page(blue_page, author, first_section, 100)
     end
 
     test "moving a page inside the same section at a lower position", %{
       document: document,
       blue_page: blue_page,
-      red_page: red_page
+      red_page: red_page,
+      author: author
     } do
       # Moving the red page before the red page
       red_page = Repo.preload(red_page, :section)
 
       new_position = red_page.position - 1
-      Documents.move_page!(red_page, red_page.section, new_position)
+      Documents.move_page(red_page, author, red_page.section, new_position)
 
       document = Repo.reload(document)
       first_page = Documents.get_first_page(document)
@@ -362,11 +373,12 @@ defmodule Palapa.DocumentsTest do
     test "moving a page inside the same section at a higher position", %{
       document: document,
       blue_page: blue_page,
-      red_page: red_page
+      red_page: red_page,
+      author: author
     } do
       # Moving the blue page above the red page
       blue_page = Repo.preload(blue_page, :section)
-      Documents.move_page!(blue_page, blue_page.section, blue_page.position + 1)
+      Documents.move_page(blue_page, author, blue_page.section, blue_page.position + 1)
 
       document = Repo.reload(document)
       first_page = Documents.get_first_page(document)
@@ -382,10 +394,11 @@ defmodule Palapa.DocumentsTest do
       document: document,
       blue_page: blue_page,
       red_page: red_page,
-      yellow_page: yellow_page
+      yellow_page: yellow_page,
+      author: author
     } do
       first_section = Documents.get_first_section!(document)
-      Documents.move_page!(yellow_page, first_section, 1)
+      Documents.move_page(yellow_page, author, first_section, 1)
 
       document = Repo.reload(document)
       first_page = Documents.get_first_page(document)

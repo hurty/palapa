@@ -148,7 +148,7 @@ defmodule PalapaWeb.Document.DocumentControllerTest do
         })
 
       first_page = Documents.get_first_page(document)
-      Documents.delete_page!(first_page)
+      Documents.delete_page(first_page, workspace.richard)
 
       conn = get(conn, Routes.document_path(conn, :show, workspace.organization, document))
 

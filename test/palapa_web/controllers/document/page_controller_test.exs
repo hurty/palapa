@@ -23,10 +23,11 @@ defmodule PalapaWeb.Document.PageControllerTest do
     test "ensure there is at least one section before creating new page", %{
       conn: conn,
       org: org,
-      document: document
+      document: document,
+      member: member
     } do
       Documents.get_first_section!(document)
-      |> Documents.delete_section()
+      |> Documents.delete_section(member)
 
       conn = get(conn, Routes.document_page_path(conn, :new, org, document))
       assert html_response(conn, 200) =~ "New page"
@@ -47,9 +48,14 @@ defmodule PalapaWeb.Document.PageControllerTest do
       assert html_response(conn, 200)
     end
 
-    test "cannot edit a deleted page", %{conn: conn, org: org, document: document} do
+    test "cannot edit a deleted page", %{
+      conn: conn,
+      org: org,
+      document: document,
+      member: member
+    } do
       page = Documents.get_first_page(document)
-      Documents.delete_page!(page)
+      Documents.delete_page(page, member)
 
       assert_raise Ecto.NoResultsError, fn ->
         get(conn, Routes.document_page_path(conn, :edit, org, page))
@@ -72,9 +78,14 @@ defmodule PalapaWeb.Document.PageControllerTest do
       assert "updated page content" == to_string(reloaded_page.content)
     end
 
-    test "cannot update a deleted page", %{conn: conn, org: org, document: document} do
+    test "cannot update a deleted page", %{
+      conn: conn,
+      org: org,
+      document: document,
+      member: member
+    } do
       page = Documents.get_first_page(document)
-      Documents.delete_page!(page)
+      Documents.delete_page(page, member)
 
       assert_raise Ecto.NoResultsError, fn ->
         payload = %{

@@ -34,9 +34,9 @@ defmodule PalapaWeb.Public.DocumentControllerTest do
              )
   end
 
-  test "document with no pages", %{conn: conn, document: document} do
+  test "document with no pages", %{conn: conn, document: document, member: member} do
     first_page = Documents.get_first_page(document)
-    Documents.delete_page!(first_page)
+    Documents.delete_page(first_page, member)
 
     conn = get(conn, Routes.public_document_path(conn, :show, document.public_token))
 

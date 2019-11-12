@@ -25,7 +25,7 @@ defmodule PalapaWeb.Document.SectionController do
       |> Documents.get_section!(id)
 
     with :ok <- permit(Documents.Policy, :update_document, current_member(conn), section.document) do
-      case Documents.update_section(section, section_params) do
+      case Documents.update_section(section, current_member(conn), section_params) do
         {:ok, _updated_section} -> send_resp(conn, :ok, "")
         {:error, _changeset} -> send_resp(conn, :bad_request, "")
       end
@@ -38,7 +38,7 @@ defmodule PalapaWeb.Document.SectionController do
       |> Documents.get_section!(id)
 
     with :ok <- permit(Documents.Policy, :update_document, current_member(conn), section.document) do
-      case Documents.delete_section(section) do
+      case Documents.delete_section(section, current_member(conn)) do
         {:ok, _} ->
           send_resp(conn, :ok, "")
 

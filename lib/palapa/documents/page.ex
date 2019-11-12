@@ -16,12 +16,14 @@ defmodule Palapa.Documents.Page do
 
     belongs_to(:document, Document)
     belongs_to(:section, Section)
-    belongs_to(:last_author, Member)
+
+    belongs_to(:last_author, Member, on_replace: :update)
+    belongs_to(:deletion_author, Member, on_replace: :update)
+
     has_one(:team, through: [:document, :team])
     has_many(:searches, Search)
 
     field(:deleted_at, :utc_datetime)
-    belongs_to(:deletion_author, Member, on_replace: :update)
 
     has_many(:suggestions, Suggestion)
 
