@@ -29,12 +29,12 @@
     @apply text-blue-600 italic;
     @apply border-l-2 border-blue-400;
     @apply bg-gray-100;
-    @apply my-4 py-4 px-4;
+    @apply my-2 p-4;
   }
 
   pre {
     @apply text-sm;
-    @apply p-2 my-2 bg-gray-100 rounded;
+    @apply p-4 my-2 bg-gray-100 rounded;
     font-family: monospace;
     white-space: pre;
     overflow-x: auto;
