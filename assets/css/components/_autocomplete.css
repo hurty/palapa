@@ -8,10 +8,10 @@
   cursor: pointer;
 
   &--selected {
-    @apply bg-indigo-400 text-white;
+    @apply bg-blue-400 text-white;
   }
 }
 
 .autocomplete__inserted {
-  @apply text-indigo-500;
+  @apply text-blue-500;
 }

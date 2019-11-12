@@ -93,9 +93,9 @@ button::-moz-focus-inner,
 }
 
 .btn-round {
-  @apply py-1 px-2 font-bold bg-indigo-500 text-white rounded-full;
+  @apply py-1 px-2 font-bold bg-blue-500 text-white rounded-full;
 
   &:hover {
-    @apply bg-indigo-600;
+    @apply bg-blue-600;
   }
 }

@@ -9,7 +9,7 @@
 
         <div class="card-header-separator"></div>
 
-        <p>You are about to join <span class="text-purple font-bold"><%= @invitation.organization.name %></span>!<br>
+        <p>You are about to join <span class="text-blue-500 font-bold"><%= @invitation.organization.name %></span>!<br>
           But first, let's create an account for you:
         </p>
 
