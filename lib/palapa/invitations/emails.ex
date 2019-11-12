@@ -23,7 +23,7 @@ defmodule Palapa.Invitations.Emails do
 
   def base_email() do
     new_email()
-    |> from("do-not-reply@palapa.io")
+    |> from(~s[Palapa <do-not-reply@palapa.io>])
   end
 
   def invitation(%Palapa.Invitations.Invitation{} = invitation) do
@@ -41,7 +41,9 @@ defmodule Palapa.Invitations.Emails do
     |> html_body("""
     <p>#{invitation.creator.account.name} invited you to join the workspace '#{
       invitation.organization.name
-    }'". Click the following link to get started: <a href="#{join_link}">#{join_link}</a></p>
+    }' on the Palapa application.<br><br>Click the following link to get started: <a href="#{
+      join_link
+    }">#{join_link}</a></p>
     """)
   end
 end

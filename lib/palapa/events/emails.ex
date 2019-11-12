@@ -36,7 +36,7 @@ defmodule Palapa.Events.Emails do
 
   def email_content(account, organization, events_view) do
     new_email()
-    |> from("do-not-reply@palapa.io")
+    |> from(~s[Palapa <do-not-reply@palapa.io>])
     |> to(account.email)
     |> subject("Daily recap for #{organization.name}")
     |> html_body(events_view)

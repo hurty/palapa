@@ -3,7 +3,7 @@ defmodule Palapa.Accounts.Emails do
 
   def base_email() do
     new_email()
-    |> from("do-not-reply@palapa.io")
+    |> from(~s[Palapa <do-not-reply@palapa.io>])
   end
 
   def password_reset(account, password_reset_token) do
