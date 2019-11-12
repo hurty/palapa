@@ -4,6 +4,6 @@ export default class extends BaseController {
   connect() {
     setTimeout(() => {
       this.element.remove();
-    }, 4000);
+    }, 6000);
   }
 }
