@@ -21,11 +21,11 @@
           <%= render_many @events, PalapaWeb.EventView, "daily_recap_event.html", conn: PalapaWeb.Endpoint, current_account: @account %>
         </div>
         
-        <p style="text-align:center;"><%= link "See more activity", to: Routes.dashboard_path(PalapaWeb.Endpoint, :index, @organization) %></p>
+        <p style="text-align:center;"><%= link "See more activity", to: Routes.dashboard_url(PalapaWeb.Endpoint, :index, @organization) %></p>
       </div>
       
       <div style="margin:0px auto;max-width:600px;padding:10px;">
-        <p>Change your Palapa <%= link "acount settings", to: Routes.account_path(PalapaWeb.Endpoint, :edit) %> if you don't want to receive this daily recap anymore.</p>
+        <p>Change your Palapa <%= link "acount settings", to: Routes.account_url(PalapaWeb.Endpoint, :edit) %> if you don't want to receive this daily recap anymore.</p>
       </div>
     </div>
   </body>
