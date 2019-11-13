@@ -8,17 +8,25 @@ defmodule Palapa.Events.Emails do
   def daily_emails(%Account{} = account) do
     organizations = Organizations.list_organizations(account)
 
-    Enum.map(organizations, fn org -> email_for_organization(account, org) end)
+    organizations
+    |> Enum.map(fn org -> email_for_organization(account, org) end)
+    |> Enum.reject(&is_nil/1)
   end
 
   def email_for_organization(account, organization) do
-    events_view =
-      organization_events(account, organization)
-      |> build_events_view(account, organization)
-      |> Phoenix.HTML.html_escape()
-      |> Phoenix.HTML.safe_to_string()
+    events = organization_events(account, organization)
 
-    email_content(account, organization, events_view)
+    if Enum.any?(events) do
+      events_view =
+        events
+        |> build_events_view(account, organization)
+        |> Phoenix.HTML.html_escape()
+        |> Phoenix.HTML.safe_to_string()
+
+      email_content(account, organization, events_view)
+    else
+      nil
+    end
   end
 
   def organization_events(account, organization) do
