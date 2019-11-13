@@ -72,8 +72,8 @@
 .header {
   grid-area: header;
   z-index: 999;
-  /* @apply border-b; */
-  background-color: rgb(243, 248, 251);
+  @apply border-b border-gray-100;
+  background-color: #fff;
   height: auto;
 }
 

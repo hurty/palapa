@@ -1,6 +1,7 @@
 body {
   @apply font-sans text-gray-900;
-  background-color: rgb(243, 248, 251);
+  background-color: #fcfdfd;
+  /* background-color: rgb(243, 248, 251); */
 }
 
 a:link {
