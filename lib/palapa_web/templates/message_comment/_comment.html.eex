@@ -1,4 +1,4 @@
-<li id="<%= Helpers.dom_id @comment %>" data-controller="message-comment rich-text" class="bg-white border-b sm:rounded-lg p-4 mb-4">
+<li id="<%= Helpers.dom_id @comment %>" data-controller="message-comment rich-text" class="card sm:rounded-lg p-4 mb-4">
   <div data-target="message-comment.formContainer"></div>
 
   <div data-target="message-comment.content">
