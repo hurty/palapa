@@ -51,7 +51,7 @@ defmodule Palapa.Events.Emails do
       |> Timex.lformat!("{Mfull} {D}", locale)
 
     new_email()
-    |> from({"Palapa", "do-not-reply@palapa.io"})
+    |> from(Application.fetch_env!(:palapa, :email_transactionnal))
     |> to(account.email)
     # References header with a unique id _tries_ to avoids clients like Gmail from grouping emails in a thread.
     |> put_header("References", ["#{Ecto.UUID.generate()}@palapa.io"])

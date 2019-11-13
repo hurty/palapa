@@ -23,7 +23,7 @@ defmodule Palapa.Invitations.Emails do
 
   def base_email() do
     new_email()
-    |> from(~s[Palapa <do-not-reply@palapa.io>])
+    |> from(Application.fetch_env!(:palapa, :email_transactionnal))
   end
 
   def invitation(%Palapa.Invitations.Invitation{} = invitation) do

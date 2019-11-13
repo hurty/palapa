@@ -25,7 +25,8 @@ config :palapa, PalapaWeb.Endpoint,
 config :phoenix, :json_library, Jason
 
 config :palapa,
-  email_support: "help@palapa.app"
+  email_support: "support@palapa.io",
+  email_transactionnal: {"Palapa", "do-not-reply@palapa.io"}
 
 # Configures Elixir's Logger
 config :logger, :console,
