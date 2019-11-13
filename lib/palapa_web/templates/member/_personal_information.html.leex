@@ -26,12 +26,12 @@
               <div data-target="popover.arrow" class="popover__arrow"></div>
               <nav class="flex flex-col">
                 <%= if permit?(Palapa.Organizations.Policy, :update_personal_information, @current_member, @info) do %>
-                  <%= link to: "#", phx_click: "edit_personal_information", class: "popover__link" do %>
+                  <%= link to: "#", phx_click: "edit", class: "popover__link" do %>
                     <i class="fas fa-pen"></i>&nbsp;Edit
                   <% end %>
                 <% end %>
 
-                <%= link to: "#", phx_click: "delete_personal_information", class: "popover__link" do %>
+                <%= link to: "#", phx_click: "delete", class: "popover__link" do %>
                   <i class="fas fa-trash text-red-400"></i>&nbsp;Delete
                 <% end %>
               </nav>
@@ -65,7 +65,7 @@
   <%= if @personal_information_changeset do %>
     <%= render "_personal_information_form.html", assigns %>
   <% else %>
-    <button phx-click="edit_personal_information" class="w-full p-2 mt-2 btn">
+    <button phx-click="edit" class="w-full p-2 mt-2 btn">
       <i class="fas fa-plus-circle"></i>&nbsp;Add information
     </button>
   <% end %>

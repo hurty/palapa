@@ -8,7 +8,7 @@ defmodule PalapaWeb.MemberProfileLive.PersonalInformation do
     Phoenix.View.render(PalapaWeb.MemberView, "_personal_information.html", assigns)
   end
 
-  def handle_event("hide_personal_information_form", _, socket) do
+  def handle_event("hide_form", _, socket) do
     socket =
       socket
       |> assign(:personal_information_changeset, nil)
@@ -16,67 +16,7 @@ defmodule PalapaWeb.MemberProfileLive.PersonalInformation do
     {:noreply, socket}
   end
 
-  def handle_event("save_personal_information", %{"personal_information" => attrs}, socket) do
-    with :ok <-
-           permit(
-             Organizations.Policy,
-             :create_personal_information,
-             socket.assigns.current_member,
-             socket.assigns.current_member
-           ) do
-      case Organizations.create_personal_information(
-             socket.assigns.current_member,
-             attrs
-           ) do
-        {:ok, _info} ->
-          socket =
-            socket
-            |> assign(:personal_information_changeset, nil)
-
-          send(self(), "fetch_member_personal_informations")
-          {:noreply, socket}
-
-        {:error, changeset} ->
-          {:noreply, assign(socket, :personal_information_changeset, changeset)}
-      end
-    end
-  end
-
-  def handle_event("validate_personal_information", %{"personal_information" => attrs}, socket) do
-    changeset =
-      Organizations.new_personal_information(
-        %PersonalInformation{},
-        socket.assigns.current_member,
-        attrs
-      )
-      |> Map.put(:action, :insert)
-
-    {:noreply, assign(socket, personal_information_changeset: changeset)}
-  end
-
-  def handle_event("delete_personal_information", %{"id" => id}, socket) do
-    personal_information = Organizations.get_personal_information!(id)
-
-    with :ok <-
-           permit(
-             Organizations.Policy,
-             :delete_personal_information,
-             socket.assigns.current_member,
-             personal_information
-           ) do
-      case Organizations.delete_personal_information(personal_information) do
-        {:ok, _deleted_info} ->
-          send(self(), "fetch_member_personal_informations")
-          {:noreply, socket}
-
-        {:error, _} ->
-          # FIXME: add global notice with unexpected errors
-          nil
-      end
-    end
-  end
-
-  def handle_event("edit_personal_information", _, socket) do
+  def handle_event("edit", _, socket) do
     changeset =
       if socket.assigns.action_type == :create do
         Organizations.new_personal_information(socket.assigns.current_member)
@@ -103,5 +43,90 @@ defmodule PalapaWeb.MemberProfileLive.PersonalInformation do
       |> assign(:people_list, people_list)
 
     {:noreply, socket}
+  end
+
+  def handle_event("save", %{"personal_information" => attrs}, socket) do
+    case socket.assigns.action_type do
+      :create -> create_personal_information(socket, attrs)
+      :update -> update_personal_information(socket, attrs)
+    end
+  end
+
+  def handle_event("validate", %{"personal_information" => attrs}, socket) do
+    changeset =
+      Organizations.new_personal_information(
+        %PersonalInformation{},
+        socket.assigns.current_member,
+        attrs
+      )
+      |> Map.put(:action, :insert)
+
+    {:noreply, assign(socket, personal_information_changeset: changeset)}
+  end
+
+  def handle_event("delete", _, socket) do
+    with :ok <-
+           permit(
+             Organizations.Policy,
+             :delete_personal_information,
+             socket.assigns.current_member,
+             socket.assigns.info
+           ) do
+      case Organizations.delete_personal_information(socket.assigns.info) do
+        {:ok, _deleted_info} ->
+          send(self(), "fetch_member_personal_informations")
+          {:noreply, socket}
+
+        {:error, _} ->
+          # FIXME: add global notice with unexpected errors
+          nil
+      end
+    end
+  end
+
+  defp create_personal_information(socket, attrs) do
+    with :ok <-
+           permit(
+             Organizations.Policy,
+             :create_personal_information,
+             socket.assigns.current_member,
+             socket.assigns.current_member
+           ) do
+      case Organizations.create_personal_information(socket.assigns.current_member, attrs) do
+        {:ok, _info} ->
+          socket =
+            socket
+            |> assign(:personal_information_changeset, nil)
+
+          send(self(), "fetch_member_personal_informations")
+          {:noreply, socket}
+
+        {:error, changeset} ->
+          {:noreply, assign(socket, :personal_information_changeset, changeset)}
+      end
+    end
+  end
+
+  defp update_personal_information(socket, attrs) do
+    with :ok <-
+           permit(
+             Organizations.Policy,
+             :update_personal_information,
+             socket.assigns.current_member,
+             socket.assigns.info
+           ) do
+      case Organizations.update_personal_information(socket.assigns.info, attrs) do
+        {:ok, info} ->
+          socket =
+            socket
+            |> assign(:personal_information_changeset, nil)
+            |> assign(:info, info)
+
+          {:noreply, socket}
+
+        {:error, changeset} ->
+          {:noreply, assign(socket, :personal_information_changeset, changeset)}
+      end
+    end
   end
 end
