@@ -5,7 +5,7 @@
     <h2 class="text-green-500 text-center text-2xl font-bold capitalize mb-2"><%= @member.account.name %></h2>
     
     <div class="text-center text-gray-700">
-      <%= if @edit_mode do %>
+      <%= if @profile_title_edit_mode do %>
         <%= form = form_for(@profile_changeset, "#", [phx_submit: "update_member_title"]) %>
           <%= text_input form, :title, placeholder: "Title, position, role...", autocomplete: "off", phx_hook: "AutoFocus", class: "input" %>
           <%= error_tag form, :title %>

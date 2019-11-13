@@ -3,7 +3,13 @@
     <%= render "_personal_informations_list.html", assigns %>
 
     <%= if permit?(Palapa.Organizations.Policy, :create_personal_information, @current_member, @member) do %>
-      <%= render "_personal_information_form.html", assigns %>
+      <%= live_component @socket, PalapaWeb.MemberProfileLive.PersonalInformation, 
+      id: :new,
+      info: nil,
+      current_member: @current_member, 
+      current_organization: @current_organization, 
+      personal_information_changeset: nil,
+      action_type: :create %>
     <% end %>
   </div>
 </div>

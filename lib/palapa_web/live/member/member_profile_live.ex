@@ -2,7 +2,6 @@ defmodule PalapaWeb.MemberProfileLive do
   use PalapaWeb, :live_view
 
   alias Palapa.Organizations
-  alias Palapa.Organizations.PersonalInformation
 
   def render(assigns) do
     Phoenix.View.render(PalapaWeb.MemberView, "_member_profile.html", assigns)
@@ -21,31 +20,14 @@ defmodule PalapaWeb.MemberProfileLive do
     current_organization = Organizations.get!(current_organization_id)
 
     personal_informations = Organizations.list_personal_informations(member, current_member)
-    personal_information_changeset = Organizations.change_personal_information(member)
-
-    people_list =
-      Enum.map(Palapa.Organizations.list_members(current_organization), fn m ->
-        [key: m.account.name, value: to_string(Palapa.Access.GlobalId.create("palapa", m))]
-      end)
-
-    teams_list =
-      Enum.map(
-        Palapa.Teams.where_organization(current_organization) |> Palapa.Teams.list(),
-        fn t -> [key: t.name, value: to_string(Palapa.Access.GlobalId.create("palapa", t))] end
-      )
 
     {:ok,
      assign(socket, %{
+       profile_title_edit_mode: false,
        current_organization: current_organization,
        member: member,
        current_member: current_member,
-       personal_informations: personal_informations,
-       personal_information_changeset: personal_information_changeset,
-       edit_mode: false,
-       action_type: :create,
-       show_personal_information_form: false,
-       people_list: people_list,
-       teams_list: teams_list
+       personal_informations: personal_informations
      })}
   end
 
@@ -72,74 +54,9 @@ defmodule PalapaWeb.MemberProfileLive do
     end
   end
 
-  def handle_event("show_personal_information_form", _, socket) do
-    {:noreply, assign(socket, :show_personal_information_form, true)}
-  end
-
-  def handle_event("hide_personal_information_form", _, socket) do
-    {:noreply, assign(socket, :show_personal_information_form, false)}
-  end
-
-  def handle_event("save_personal_information", %{"personal_information" => attrs}, socket) do
-    with :ok <-
-           permit(
-             Organizations.Policy,
-             :create_personal_information,
-             socket.assigns.current_member,
-             socket.assigns.member
-           ) do
-      case Organizations.create_personal_information(
-             socket.assigns.member,
-             attrs
-           ) do
-        {:ok, _new_info} ->
-          socket =
-            fetch_member_personal_informations(socket)
-            |> assign(:show_personal_information_form, false)
-            |> assign(
-              :personal_information_changeset,
-              Organizations.change_personal_information(socket.assigns.member)
-            )
-
-          {:noreply, socket}
-
-        {:error, changeset} ->
-          {:noreply, assign(socket, :personal_information_changeset, changeset)}
-      end
-    end
-  end
-
-  def handle_event("validate_personal_information", %{"personal_information" => attrs}, socket) do
-    changeset =
-      Organizations.change_personal_information(
-        %PersonalInformation{},
-        socket.assigns.member,
-        attrs
-      )
-      |> Map.put(:action, :insert)
-
-    {:noreply, assign(socket, personal_information_changeset: changeset)}
-  end
-
-  def handle_event("delete_personal_information", %{"id" => id}, socket) do
-    personal_information = Organizations.get_personal_information!(id)
-
-    with :ok <-
-           permit(
-             Organizations.Policy,
-             :delete_personal_information,
-             socket.assigns.current_member,
-             personal_information
-           ) do
-      case Organizations.delete_personal_information(personal_information) do
-        {:ok, _deleted_info} ->
-          {:noreply, fetch_member_personal_informations(socket)}
-
-        {:error, _} ->
-          # FIXME: add global notice with unexpected errors
-          nil
-      end
-    end
+  # update the list
+  def handle_info("fetch_member_personal_informations", socket) do
+    {:noreply, fetch_member_personal_informations(socket)}
   end
 
   def fetch_member_personal_informations(socket) do

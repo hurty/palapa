@@ -40,6 +40,13 @@ defmodule PalapaWeb do
     end
   end
 
+  def live_component do
+    quote do
+      use Phoenix.LiveComponent
+      import Bodyguard
+    end
+  end
+
   def view do
     quote do
       use Phoenix.View,

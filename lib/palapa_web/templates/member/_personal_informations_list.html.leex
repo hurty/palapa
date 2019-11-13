@@ -12,9 +12,12 @@
   </h2>
 
   <%= for info <- @personal_informations do %>
-  <div data-controller="personal-information"
-      data-action="mouseover->personal-information#showCopyButton focus->personal-information#showCopyButton mouseout->personal-information#hideCopyButton blur->personal-information#hideCopyButton">
-    <%= render "_personal_information.html", Map.put(assigns, :info, info) %>
-  </div>
+    <%= live_component @socket, PalapaWeb.MemberProfileLive.PersonalInformation, 
+    id: info.id, 
+    info: info,
+    current_member: @current_member, 
+    current_organization: @current_organization, 
+    personal_information_changeset: nil,
+    action_type: :update %>
   <% end %>
 </div>

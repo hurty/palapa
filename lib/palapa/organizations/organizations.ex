@@ -186,12 +186,16 @@ defmodule Palapa.Organizations do
     |> Repo.update()
   end
 
-  def change_personal_information(
+  def new_personal_information(
         %PersonalInformation{} = personal_information \\ %PersonalInformation{},
         %Member{} = member,
         attrs \\ %{}
       ) do
     PersonalInformation.changeset(personal_information, member, attrs)
+  end
+
+  def change_personal_information(personal_information, attrs \\ %{}) do
+    PersonalInformation.update_changeset(personal_information, attrs)
   end
 
   def create_personal_information(%Member{} = member, attrs) do
