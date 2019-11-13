@@ -35,10 +35,20 @@ defmodule Palapa.Events.Emails do
   end
 
   def email_content(account, organization, events_view) do
+    locale = Map.get(account, :locale) || "en"
+
+    date =
+      Timex.now()
+      |> Timex.shift(hours: -24)
+      |> Timex.lformat!("{Mfull} {D}", locale)
+
     new_email()
-    |> from(~s[Palapa <do-not-reply@palapa.io>])
+    |> from({"Palapa", "do-not-reply@palapa.io"})
     |> to(account.email)
-    |> subject("Daily recap for #{organization.name}")
+    # References header with a unique id _tries_ to avoids clients like Gmail from grouping emails in a thread.
+    |> put_header("References", ["#{Ecto.UUID.generate()}@palapa.io"])
+    # Having the date in the topic also prevent grouping in thread
+    |> subject("#{organization.name} daily recap for #{date}")
     |> html_body(events_view)
   end
 end

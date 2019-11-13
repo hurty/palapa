@@ -1,5 +1,5 @@
-<li style="margin-bottom:10px;">
-  <div style="color:#4A5568;"><%= event_summary(@conn, @event) %></div>
+<div style="margin-top: 15px;">
+  <div style="color:#4A5568;font-weight:bold;"><%= event_summary(@conn, @event) %></div>
 
   <%= if event_target_title(@conn, @event) || event_target_excerpt(@conn, @event) do %>
     <div style="background-color:#F7FAFC;color:#718096;border-radius:3px;padding:3px;">
@@ -7,4 +7,4 @@
       <p><%= event_target_excerpt(@conn, @event) %></p>
     </div>
   <% end %>
-</li>
+</div>

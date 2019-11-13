@@ -59,7 +59,6 @@ defmodule Palapa.Events do
       ],
       preload: [document_suggestion: [author: :account]]
     )
-    |> IO.inspect()
   end
 
   def all_events_query(member) do
