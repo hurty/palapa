@@ -9,8 +9,7 @@
   </head>
 
   <body>
-    <div style="background-color:#F4F4F4;font-family:sans-serif;margin-bottom: 15px;margin-top:15px;padding:2px;">
-
+    <div style="font-family:sans-serif;margin-bottom: 15px;margin-top:15px;padding:2px;">
       <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;padding:2px;border-radius:5px;">
         <div style="text-align:center;">
           <h1 style="color:#38A169;">Palapa</h1>
@@ -23,6 +22,10 @@
         
         <p style="text-align:center;"><%= link "See more activity", to: Routes.dashboard_url(PalapaWeb.Endpoint, :index, @organization) %></p>
       </div>
+
+      <td style="padding:38px 18px">
+        <div style="border-top:1px solid hsl(0,0%,88%)"></div>
+      </td>
       
       <div style="margin:0px auto;max-width:600px;padding:10px;">
         <p>Change your Palapa <%= link "acount settings", to: Routes.account_url(PalapaWeb.Endpoint, :edit) %> if you don't want to receive this daily recap anymore.</p>
