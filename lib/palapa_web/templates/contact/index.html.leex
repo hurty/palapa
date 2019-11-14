@@ -5,11 +5,11 @@
     <div class="page-sidebar">
       <div class="card">
         <div class="flex flex-wrap items-center justify-between p-4 border-b">
-          <h2 class="card-header">Contacts</h2>
+          <h2 class="card-header"><%= gettext("Contacts") %></h2>
 
           <div class="my-2 sm:m-0">
             <%= live_link to: Routes.live_path(@socket, PalapaWeb.ContactLive, @current_organization, "new"), class: "btn" do %>
-              <i class="text-green-500 fas fa-plus-circle mr-2"></i>New contact
+              <i class="text-green-500 fas fa-plus-circle mr-2"></i><%= gettext("New contact") %>
             <% end %>
           </div>
         </div>
@@ -18,7 +18,7 @@
           <form id="contacts_list" phx-change="search_contacts" phx-submit="search_contacts" class="my-4 px-4">
             <div class="search-bar max-w-sm" phx-update="ignore">
               <i class="fa fa-search mr-2"></i>
-              <input id="contact-search" name="search" phx-hook="AutoFocus" phx-debounce="200", type="text" autocomplete="off" placeholder="Search contacts">
+              <input id="contact-search" name="search" phx-hook="AutoFocus" phx-debounce="200", type="text" autocomplete="off" placeholder="<%= gettext("Search contacts") %>">
             </div>
           </form>
 
@@ -58,7 +58,7 @@
             </ul>
 
           <% else %>
-            <p class="p-4">No contacts match your criteria</p>
+            <p class="p-4"><%= gettext("No contacts found") %></p>
           <% end %>
         </div>
       </div>
@@ -71,12 +71,12 @@
         <% else %>
           <div class="blankslate">
             <i class="fas fa-address-book text-6xl text-green-200"></i>
-            <div class="my-8">You don't have any contact</div>
+            <div class="my-8"><%= gettext("You don't have any contact") %></div>
           </div>
           <div class="text-center mb-8">
             <div class="my-2 sm:m-0">
               <%= live_link to: Routes.live_path(@socket, PalapaWeb.ContactLive, @current_organization, "new"), class: "btn" do %>
-                <i class="text-green-500 fas fa-plus-circle mr-2"></i>Create your first contact
+                <i class="text-green-500 fas fa-plus-circle mr-2"></i><%= gettext("Create your first contact") %>
               <% end %>
             </div>
           </div>

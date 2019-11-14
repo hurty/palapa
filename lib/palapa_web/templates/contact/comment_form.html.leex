@@ -14,12 +14,12 @@
 <div class="mt-4">
 <%= form = form_for @update_contact_comment_changeset, "#", [phx_submit: :update_contact_comment] %>
   <div phx-update="ignore">
-    <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: "Add a comment about #{full_name(@contact)}") %>
+    <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: gettext("Add a comment about %{contact}", %{contact: full_name(@contact)}))%>
   </div>
   <input type="hidden" name="comment_id" value="<%= @comment.id %>">
   
   <div class="card-actions">
-    <%= submit "Update comment", class: "btn btn-green" %>
+    <%= submit gettext("Update comment"), class: "btn btn-green" %>
   </div>
 </form>
 </div>

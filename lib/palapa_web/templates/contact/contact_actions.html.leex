@@ -7,11 +7,11 @@
     <div data-target="popover.arrow" class="popover__arrow"></div>
     <nav class="flex flex-col">
       <%= link to: Routes.live_path(@socket, PalapaWeb.ContactLive.Edit, @current_organization, @contact), class: "popover__link" do %>
-        <i class="fas fa-pen"></i>&nbsp;Edit this contact
+        <i class="fas fa-pen"></i>&nbsp;<%= gettext("Edit this contact") %>
       <% end %>
 
       <%= link to: "#", "data-micromodal-trigger": "modal-delete-contact" , class: "popover__link" do %>
-        <i class="fas fa-trash text-red"></i>&nbsp;Delete this contact
+        <i class="fas fa-trash text-red"></i>&nbsp;<%= gettext("Delete this contact") %>
       <% end %>
     </nav>
   </div>

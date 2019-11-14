@@ -2,7 +2,7 @@
   <div class="p-2 rounded bg-gray-100">
     <div>
       <%= checkbox form, :is_company %>
-      <%= label form, :is_company, "This contact is a company/organization", class: "label" %>
+      <%= label form, :is_company, gettext("This contact is a company/organization"), class: "label" %>
     </div>
     
     <%# Keep == true in order to discard "false" strings %>
@@ -10,7 +10,7 @@
 
       <div class="flex flex-wrap">
         <div class="field flex-1">
-          <%= label form, :last_name, "Company name", class: "label" %>
+          <%= label form, :last_name, gettext("Company name"), class: "label" %>
           <%= text_input form, :last_name, autocomplete: "off", class: "input" %>
           <%= error_tag form, :last_name %>
         </div>
@@ -20,13 +20,13 @@
 
       <div class="flex flex-wrap">
         <div class="field flex-1 sm:mr-2">
-          <%= label form, :first_name, "First name", class: "label" %>
+          <%= label form, :first_name, gettext("First name"), class: "label" %>
           <%= text_input form, :first_name, autocomplete: "off", "phx-hook": "AutoFocus", class: "input" %>
           <%= error_tag form, :first_name %>
         </div>
 
         <div class="field flex-1">
-          <%= label form, :last_name, "Last name", class: "label" %>
+          <%= label form, :last_name, gettext("Last name"), class: "label" %>
           <%= text_input form, :last_name, autocomplete: "off", autocomplete: "off", class: "input" %>
           <%= error_tag form, :last_name %>
         </div>
@@ -35,7 +35,7 @@
 
       <div class="flex flex-wrap">
         <div class="field flex-1 sm:mr-2">
-          <%= label form, :title, "Title / Position", class: "label" %>
+          <%= label form, :title, gettext("Title / Position"), class: "label" %>
           <%= text_input form, :title, autocomplete: "off", class: "input" %>
           <%= error_tag form, :title %>
         </div>
@@ -44,12 +44,12 @@
 
     <%= unless input_value(form, :is_company) == true do %>
       <div>
-        <%= label form, :company_id, "Company", class: "label" %>
+        <%= label form, :company_id, gettext("Company"), class: "label" %>
         <%= hidden_input form, :create_new_company %>
 
         <%= if input_value(form, :create_new_company) == true do %>
           <%= inputs_for form, :company, fn company -> %>
-            <%= text_input company, :last_name, class: "input", placeholder: "Company name", phx_hook: "AutoFocus" %>
+            <%= text_input company, :last_name, class: "input", placeholder: gettext("Company name"), phx_hook: "AutoFocus" %>
             <%= error_tag company, :last_name %>
           <% end %>
           <a href="#" phx-click="toggle_create_new_company" class="text-blue-500 text-sm ml-2">... or choose an existing company</a>
@@ -62,24 +62,24 @@
                   %>
           </div>
           <%= error_tag form, :company_id %>
-          <a href="#" phx-click="toggle_create_new_company" class="text-blue-500 text-sm">... or add a new one</a>
+          <a href="#" phx-click="toggle_create_new_company" class="text-blue-500 text-sm">... <%= gettext("or add a new one") %></a>
         <% end %>
       </div>
     <% end %>
   </div>
 
   <div class="p-2 rounded mt-4 bg-gray-100">
-    <h3 class="card-header text-sm text-blue-500">Contact details</h3>
+    <h3 class="card-header text-sm text-blue-500"><%= gettext("Contact details") %></h3>
     
     <div class="flex flex-wrap">
       <div class="field flex-1 sm:mr-2">
-        <%= label form, :email, "Email", class: "label" %>
+        <%= label form, :email, gettext("Email"), class: "label" %>
         <%= email_input form, :email, autocomplete: "off", class: "input" %>
         <%= error_tag form, :email %>
       </div>
 
       <div class="field flex-1">
-        <%= label form, :phone, "Mobile phone", class: "label" %>
+        <%= label form, :phone, gettext("Mobile phone"), class: "label" %>
         <%= telephone_input form, :phone, autocomplete: "off", class: "input" %>
         <%= error_tag form, :phone %>
       </div>
@@ -87,13 +87,13 @@
 
     <div class="flex flex-wrap">
       <div class="field flex-1 sm:mr-2">
-        <%= label form, :work, "Work", class: "label" %>
+        <%= label form, :work, gettext("Work"), class: "label" %>
         <%= telephone_input form, :work, autocomplete: "off", class: "input" %>
         <%= error_tag form, :work %>
       </div>
 
       <div class="field flex-1">
-        <%= label form, :chat, "Social networks / Chat", class: "label" %>
+        <%= label form, :chat, gettext("Social networks / Chat"), class: "label" %>
         <%= text_input form, :chat, autocomplete: "off", class: "input" %>
         <%= error_tag form, :chat %>
       </div>
@@ -101,7 +101,7 @@
 
     <div>
       <div class="field flex-1">
-        <%= label form, :additional_info, "Additional information", class: "label" %>
+        <%= label form, :additional_info, gettext("Additional information"), class: "label" %>
         <%= textarea form, :additional_info, autocomplete: "off", class: "input" %>
         <%= error_tag form, :additional_info %>
       </div>
@@ -109,17 +109,17 @@
   </div>
 
   <div class="p-2 rounded mt-4 bg-gray-100">
-    <h3 class="card-header text-sm text-blue-500">Address</h3>
+    <h3 class="card-header text-sm text-blue-500"><%= gettext("Address") %></h3>
 
     <div class="flex flex-wrap">
       <div class="field flex-1 sm:mr-2">
-        <%= label form, :address_line1, "Address", class: "label" %>
+        <%= label form, :address_line1, gettext("Address"), class: "label" %>
         <%= text_input form, :address_line1, autocomplete: "off", class: "input" %>
         <%= error_tag form, :address_line1 %>
       </div>
 
       <div class="field flex-1">
-        <%= label form, :address_line2, "Address supplement", class: "label" %>
+        <%= label form, :address_line2, gettext("Address supplement"), class: "label" %>
         <%= text_input form, :address_line2, autocomplete: "off", class: "input" %>
         <%= error_tag form, :address_line2 %>
       </div>
@@ -127,19 +127,19 @@
 
     <div class="flex flex-wrap">
       <div class="field flex-1 sm:mr-2">
-        <%= label form, :address_postal_code, "Postcode", class: "label" %>
+        <%= label form, :address_postal_code, gettext("Postcode"), class: "label" %>
         <%= text_input form, :address_postal_code, autocomplete: "off", class: "input" %>
         <%= error_tag form, :address_postal_code %>
       </div>
 
       <div class="field flex-1 sm:mr-2">
-        <%= label form, :address_city, "City", class: "label" %>
+        <%= label form, :address_city, gettext("City"), class: "label" %>
         <%= text_input form, :address_city, autocomplete: "off", class: "input" %>
         <%= error_tag form, :address_city %>
       </div>
 
       <div class="field flex-1">
-        <%= label form, :address_country, "State/Country", class: "label" %>
+        <%= label form, :address_country, gettext("State/Country"), class: "label" %>
         <%= text_input form, :address_country, autocomplete: "off", class: "input" %>
         <%= error_tag form, :address_country %>
       </div>
@@ -147,7 +147,7 @@
   </div>
 
   <div class="card-actions">
-    <%= submit "Save contact", class: "btn btn-green", phx_disable_with: "Saving..." %>
-    <%= live_link "Cancel", class: "btn", to: Routes.live_path(@socket, PalapaWeb.ContactLive, @current_organization) %>
+    <%= submit gettext("Save contact"), class: "btn btn-green", phx_disable_with: gettext("Saving...") %>
+    <%= live_link gettext("Cancel"), class: "btn", to: Routes.live_path(@socket, PalapaWeb.ContactLive, @current_organization) %>
   </div>
 </form>

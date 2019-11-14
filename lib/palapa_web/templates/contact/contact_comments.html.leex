@@ -1,4 +1,4 @@
-<h2 class="text-gray-700 font-bold my-2 text-center">Add a comment about <%= full_name(@contact) %></h2>
+<h2 class="text-gray-700 font-bold my-2 text-center"><%= gettext("Add a comment about %{contact}", %{contact: full_name(@contact)}) %></h2>
 
 <%= form = form_for @contact_comment_changeset, "#", [id: "contact_comment_form", phx_submit: :create_contact_comment] %>
   <div phx-update="ignore">
@@ -6,7 +6,7 @@
   </div>
 
   <div class="card-actions">
-    <%= submit "Post this comment", class: "btn btn-green", phx_disable_with: "Saving..." %>
+    <%= submit gettext("Post this comment"), class: "btn btn-green", phx_disable_with: gettext("Saving...") %>
   </div>
 </form>
 

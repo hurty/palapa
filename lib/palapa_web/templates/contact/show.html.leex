@@ -33,14 +33,14 @@
     <div class="flex flex-col">
       <%= if @contact.email do %>
       <div class="flex text-gray-500 my-2">
-        <div class="w-1/5 text-right mr-8">Email</div>
+        <div class="w-1/5 text-right mr-8"><%= gettext("Email") %></div>
         <div class="text-gray-700"><%= link @contact.email, to: "mailto:#{@contact.email}" %></div>
       </div>
       <% end %>
 
       <%= if @contact.phone do %>
       <div class="flex text-gray-500 my-2">
-        <div class="w-1/5 text-right mr-8">Phone</div>
+        <div class="w-1/5 text-right mr-8"><%= gettext("Phone") %></div>
         <div class="text-gray-700"><%= link @contact.phone, to: "tel:#{@contact.phone}" %></div>
       </div>
       <% end %>
@@ -49,7 +49,7 @@
     <div class="mt-8">
       <%= if @contact.address_line1 do %>
       <div class="flex text-gray-500">
-        <div class="w-1/5 text-right mr-8">Address</div>
+        <div class="w-1/5 text-right mr-8"><%= gettext("Address") %></div>
         <div class="text-gray-700"><%= @contact.address_line1 %></div>
       </div>
       <% end %>
@@ -63,21 +63,21 @@
 
       <%= if @contact.address_postal_code do %>
       <div class="flex text-gray-500">
-        <div class="w-1/5 text-right mr-8">Postcode</div>
+        <div class="w-1/5 text-right mr-8"><%= gettext("Postcode") %></div>
         <div class="text-gray-700"><%= @contact.address_postal_code %></div>
       </div>
       <% end %>
 
       <%= if @contact.address_city do %>
       <div class="flex text-gray-500">
-        <div class="w-1/5 text-right mr-8">City</div>
+        <div class="w-1/5 text-right mr-8"><%= gettext("City") %></div>
         <div class="text-gray-700"><%= @contact.address_city %></div>
       </div>
       <% end %>
 
       <%= if @contact.address_country do %>
       <div class="flex text-gray-500">
-        <div class="w-1/5 text-right mr-8">Country</div>
+        <div class="w-1/5 text-right mr-8"><%= gettext("Country") %></div>
         <div class="text-gray-700"><%= @contact.address_country %></div>
       </div>
       <% end %>
@@ -88,7 +88,7 @@
   <%= if @contact.is_company && Enum.any?(@contact.employees) do %>
     <div class="flex flex-col my-4 bg-gray-100 border-gray-200">
       <div class="flex text-gray-600 my-2">
-        <div class="w-1/3 text-right mr-8">Related contacts</div>
+        <div class="w-1/3 text-right mr-8"><%= gettext("Related contacts") %></div>
         <ul class="scrollable-details w-full">
           <%= for employee <- @contact.employees do %>
             <li>

@@ -5,7 +5,7 @@ data-payment-success-redirect-url="<%= Routes.dashboard_url(@conn, :index, @curr
 data-payment-error-redirect-url="<%= Routes.payment_method_url(@conn, :edit, @current_organization) %>"
 data-payment-refresh-subscription-url="<%= Routes.subscription_url(@conn, :refresh, @current_organization) %>">
   <div class="card p-8">
-    <h2 class="card-header">Processing payment</h2>
+    <h2 class="card-header"><%= gettext("Processing payment") %></h2>
     <div class="card-header-separator"></div>
 
 		<div data-target="payment.waitMessage">
@@ -15,15 +15,15 @@ data-payment-refresh-subscription-url="<%= Routes.subscription_url(@conn, :refre
 				<div class="bounce3"></div>
 			</div>
 
-			<h2 class="text-center" >Please wait for the 3D-Secure identification</h2>
+			<h2 class="text-center" ><%= gettext("Please wait for the 3D-Secure identification") %></h2>
 		</div>
 
 		<div data-target="payment.successMessage" class="hidden text-center text-green-600 rounded-full bg-green-200 py-2">
-			Authentication succeeded, redirecting...
+			<%= gettext("Authentication succeeded, redirecting...") %>
 		</div>
 
 		<div data-target="payment.errorMessage" class="hidden text-center text-red-600 rounded-full bg-red-200 py-2">
-			Authentication failed, redirecting...
+			<%= gettext("Authentication failed, redirecting...") %>
 		</div>
 	</div>
 </div>

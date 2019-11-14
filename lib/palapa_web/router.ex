@@ -184,10 +184,10 @@ defmodule PalapaWeb.Router do
 
     scope "/" do
       pipe_through([:contact_navigation])
-      live "/contacts", ContactLive, session: [:account_id]
-      live "/contacts/new", ContactLive.New, session: [:account_id]
-      live "/contacts/:id", ContactLive, session: [:account_id]
-      live "/contacts/:id/edit", ContactLive.Edit, session: [:account_id]
+      live "/contacts", ContactLive, session: [:account_id, :locale]
+      live "/contacts/new", ContactLive.New, session: [:account_id, :locale]
+      live "/contacts/:id", ContactLive, session: [:account_id, :locale]
+      live "/contacts/:id/edit", ContactLive.Edit, session: [:account_id, :locale]
     end
 
     # --- MEMBERS

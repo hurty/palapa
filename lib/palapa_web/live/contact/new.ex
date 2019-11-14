@@ -11,7 +11,9 @@ defmodule PalapaWeb.ContactLive.New do
     Phoenix.View.render(PalapaWeb.ContactView, "new.html", assigns)
   end
 
-  def mount(%{account_id: account_id}, socket) do
+  def mount(%{account_id: account_id, locale: locale}, socket) do
+    Gettext.put_locale(locale)
+
     socket =
       socket
       |> assign(:current_account, Accounts.get!(account_id))

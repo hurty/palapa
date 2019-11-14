@@ -8,7 +8,8 @@ defmodule PalapaWeb.Locale do
   def call(conn, _options) do
     user_locale = determine_user_locale(conn)
     Gettext.put_locale(PalapaWeb.Gettext, user_locale)
-    assign(conn, :locale, user_locale)
+
+    put_session(conn, :locale, user_locale)
   end
 
   def determine_user_locale(conn) do

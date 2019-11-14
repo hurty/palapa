@@ -1,11 +1,11 @@
 <div class="mx-auto my-8"> 
   <div class="card p-8">
-    <h2 class="card-header">Update the payment method</h2>
+    <h2 class="card-header"><%= gettext("Update the payment method") %></h2>
     <div class="card-header-separator"></div>
 
     <p class="bg-red-200 p-1 rounded">
-      We encountered some problems while processing the payment of your invoice for the workspace <strong><%= @current_organization.name %></strong>.
-      Please update your payment method to continue.
+      <%= gettext("We encountered some problems while processing the payment of your invoice for the workspace %{workspace}.", %{workspace: @current_organization.name}) %>
+      <%= gettext("Please update your payment method to continue.") %>
     </p>
 
     <%= render "form.html", Map.merge(assigns, %{form_path: Routes.payment_method_path(@conn, :update, @current_organization)}) %>

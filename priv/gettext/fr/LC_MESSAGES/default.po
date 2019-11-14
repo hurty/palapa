@@ -116,11 +116,14 @@ msgstr "Informations de facturation"
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:36
+#: lib/palapa_web/templates/contact/form.html.leex:136
+#: lib/palapa_web/templates/contact/show.html.leex:73
 msgid "City"
 msgstr "Ville"
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:50
+#: lib/palapa_web/templates/contact/show.html.leex:80
 msgid "Country"
 msgstr "Pays"
 
@@ -173,6 +176,8 @@ msgstr "Paiement"
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:30
+#: lib/palapa_web/templates/contact/form.html.leex:130
+#: lib/palapa_web/templates/contact/show.html.leex:66
 msgid "Postcode"
 msgstr "Code postal"
 
@@ -268,6 +273,7 @@ msgstr "Changez votre mot de passe"
 
 #, elixir-format
 #: lib/palapa_web/templates/account/edit.html.eex:61
+#: lib/palapa_web/templates/billing/payment_method/form.html.eex:9
 msgid "Check the errors below:"
 msgstr "Corrigez les erreurs ci-dessous"
 
@@ -278,6 +284,8 @@ msgstr "Confirmez le nouveau mot de passe"
 
 #, elixir-format
 #: lib/palapa_web/templates/account/edit.html.eex:19
+#: lib/palapa_web/templates/contact/form.html.leex:76
+#: lib/palapa_web/templates/contact/show.html.leex:36
 msgid "Email"
 msgstr "Email"
 
@@ -325,3 +333,258 @@ msgstr "Votre mot de passe actuel"
 #: lib/palapa_web/templates/account/edit.html.eex:32
 msgid "Automatic"
 msgstr "Automatique"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/new.html.leex:10
+msgid ">New contact"
+msgstr "Nouveau contact"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/comment_form.html.leex:17
+#: lib/palapa_web/templates/contact/contact_comments.html.leex:1
+msgid "Add a comment about %{contact}"
+msgstr "Ajouter un commentaire à propos de %{contact}"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:104
+msgid "Additional information"
+msgstr "Informations complémentaires"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:112
+#: lib/palapa_web/templates/contact/form.html.leex:116
+#: lib/palapa_web/templates/contact/show.html.leex:52
+msgid "Address"
+msgstr "Adresse"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:122
+msgid "Address supplement"
+msgstr "Complément d'adresse"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/payment/new.html.eex:26
+msgid "Authentication failed, redirecting..."
+msgstr "L'authentification a échoué, redirection..."
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/payment/new.html.eex:22
+msgid "Authentication succeeded, redirecting..."
+msgstr "L'authentification a réussi, redirection..."
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/new.html.leex:5
+msgid "Back to contacts"
+msgstr "Retour aux contacts"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/delete_modal.html.eex:19
+#: lib/palapa_web/templates/contact/form.html.leex:151
+msgid "Cancel"
+msgstr "Annuler"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:47
+msgid "Company"
+msgstr "Entreprise"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:13
+#: lib/palapa_web/templates/contact/form.html.leex:52
+msgid "Company name"
+msgstr "Nom de l'entreprise"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:72
+msgid "Contact details"
+msgstr "Informations sur le contact"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/index.html.leex:8
+#: lib/palapa_web/templates/contact/index_blankslate.html.eex:4
+msgid "Contacts"
+msgstr "Contacts"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/index.html.leex:79
+#: lib/palapa_web/templates/contact/index_blankslate.html.eex:12
+msgid "Create your first contact"
+msgstr "Créez votre premier contact"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/comment_content.html.leex:28
+msgid "Delete comment"
+msgstr "Supprimer le commentaire"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/delete_modal.html.eex:6
+msgid "Delete the contact"
+msgstr "Supprimer le contact"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/contact_actions.html.leex:14
+msgid "Delete this contact"
+msgstr "Supprimer ce contact"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/comment_content.html.leex:24
+msgid "Edit comment"
+msgstr "Modifier le commentaire"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/edit.html.leex:4
+msgid "Edit contact"
+msgstr "Modifier le contact"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/contact_actions.html.leex:10
+msgid "Edit this contact"
+msgstr "Modifier ce contact"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:23
+msgid "First name"
+msgstr "Prénom"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:29
+msgid "Last name"
+msgstr "Nom"
+
+#, elixir-format
+#:
+#: lib/palapa_web/templates/billing/billing_error/waiting_for_payment.html.eex:16
+msgid "Manage billing"
+msgstr "Gérer la facturation"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:82
+msgid "Mobile phone"
+msgstr "Téléphone portable"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/index.html.leex:12
+msgid "New contact"
+msgstr "Nouveau contact"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/index.html.leex:61
+msgid "No contacts found"
+msgstr "Aucun contact correspondant trouvé"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/show.html.leex:43
+msgid "Phone"
+msgstr "Téléphone"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/payment_method/edit.html.eex:8
+msgid "Please update your payment method to continue."
+msgstr "Merci de mettre à jour votre moyen de paiement pour continuer."
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/payment/new.html.eex:18
+msgid "Please wait for the 3D-Secure identification"
+msgstr "Merci de patienter pour l'authentification avec 3D-Secure"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/contact_comments.html.leex:9
+msgid "Post this comment"
+msgstr "Poster ce commentaire"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/payment/new.html.eex:8
+msgid "Processing payment"
+msgstr "Paiement en cours"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/show.html.leex:91
+msgid "Related contacts"
+msgstr "Contacts associés"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:150
+msgid "Save contact"
+msgstr "Enregistrer le contact"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/contact_comments.html.leex:9
+#: lib/palapa_web/templates/contact/form.html.leex:150
+msgid "Saving..."
+msgstr "Enregistrement..."
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/index.html.leex:21
+msgid "Search contacts"
+msgstr "Rechercher des contacts"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:96
+msgid "Social networks / Chat"
+msgstr "Réseaux sociaux / Chat"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:142
+msgid "State/Country"
+msgstr "Etat/Pays"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:5
+msgid "This contact is a company/organization"
+msgstr "Ce contact est une entreprise/organisation"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:38
+msgid "Title / Position"
+msgstr "Titre / Rôle"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/payment_method/form.html.eex:25
+msgid "Update card"
+msgstr "Mettre à jour la carte"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/comment_form.html.leex:22
+msgid "Update comment"
+msgstr "Mettre à jour le commentaire"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/payment_method/edit.html.eex:3
+msgid "Update the payment method"
+msgstr "Mettre à jour le moyen de paiement"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:31
+msgid "Upgrade your account"
+msgstr "Mettre votre compte à niveau"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:90
+msgid "Work"
+msgstr "Bureau"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/delete_modal.html.eex:17
+msgid "Yes, delete this contact"
+msgstr "Oui, supprimer ce contact"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/delete_modal.html.eex:12
+msgid "You are about to delete %{contact}. Are you sure?"
+msgstr "Vous êtes sur le point de supprimer %{contact}. Etes-vous sûr?"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/index.html.leex:74
+#: lib/palapa_web/templates/contact/index_blankslate.html.eex:7
+msgid "You don't have any contact"
+msgstr "Vous n'avez aucun contact"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:65
+msgid "or add a new one"
+msgstr "ou ajoutez-en une"
+
+#, elixir-format, fuzzy
+#: lib/palapa_web/templates/billing/payment_method/edit.html.eex:7
+msgid "We encountered some problems while processing the payment of your invoice for the workspace %{workspace}."
+msgstr "Nous avons rencontré des problèmes pendant le paiement de la facture pour l'espace de travail %{workspace}."

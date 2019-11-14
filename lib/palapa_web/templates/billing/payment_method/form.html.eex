@@ -6,7 +6,7 @@
   "data-action": "payment-method#handleCardSetup"
   ], fn _form -> %>
   <%= if @customer_changeset.action do %>
-    <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
+    <p class="db fw6 lh-copy f6  text-red-400 font-bold"><%= gettext("Check the errors below:") %></p>
   <% end %>
 
   <div class="field">
@@ -22,6 +22,6 @@
   </div>
 
   <div class="card-actions">
-    <button class="btn btn-green" data-target="payment-method.saveButton" data-secret="<%= @setup_intent.client_secret %>">Update card</button>
+    <button class="btn btn-green" data-target="payment-method.saveButton" data-secret="<%= @setup_intent.client_secret %>"><%= gettext("Update card") %></button>
   </div>
 <% end %>

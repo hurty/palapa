@@ -21,11 +21,11 @@
           <nav class="flex flex-col">
             <%= if permit? Palapa.Contacts.Policy, :edit_comment, @current_member, @comment do %>
               <a phx-click="edit_contact_comment" phx-value-comment_id="<%= @comment.id %>" class="popover__link">
-                <i class="fas fa-pen"></i>&nbsp;Edit comment
+                <i class="fas fa-pen"></i>&nbsp;<%= gettext("Edit comment") %>
               </a>
             <% end %>
             <a phx-click="delete_contact_comment" phx-value-comment_id="<%= @comment.id %>" class="popover__link">
-              <i class="fas fa-trash text-red-400"></i>&nbsp;Delete comment
+              <i class="fas fa-trash text-red-400"></i>&nbsp;<%= gettext("Delete comment") %>
             </a>
           </nav>
         </div>

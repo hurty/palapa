@@ -73,7 +73,7 @@
   grid-area: header;
   z-index: 999;
   @apply border-b border-gray-100;
-  background-color: #fff;
+  background-color: #fafafa;
   height: auto;
 }
 
