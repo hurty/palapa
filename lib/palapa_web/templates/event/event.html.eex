@@ -1,7 +1,7 @@
 <li class="event">
-  <div class="mr-3"><%= Helpers.avatar(@event.author.account, :small) %></div>
+  <div class="w-16 mx-2"><%= Helpers.avatar(@event.author.account, :small) %></div>
 
-  <div class="mt-2 w-full">
+  <div class="w-full mt-2">
     <div>
       <span class="event-summary mr-2"><%= event_summary(@conn, @event) %></span>
       <span class="text-xs text-gray-600 whitespace-no-wrap"><%= Helpers.auto_format_datetime(@event.inserted_at, @current_account) %></span>
