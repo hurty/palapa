@@ -10,7 +10,7 @@
   </head>
 
   <body>
-    <div class="float-right m-4"><%= link("Log out", to: Routes.session_path(@conn, :delete), class: "btn", data: [controller: "link", action: "link#delete"]) %></div>
+    <div class="float-right m-4"><%= link(gettext("Log out"), to: Routes.session_path(@conn, :delete), class: "btn", data: [controller: "link", action: "link#delete"]) %></div>
     <div class="sm:max-w-2xl mx-auto">
       <div class="flex justify-center mb-8 pt-4">
         <%= Helpers.avatar(@current_account, :sm) %> 
@@ -19,8 +19,8 @@
 
       <nav class="my-4">
         <div class="-mb-px flex justify-center">
-          <%= link "Your workspaces", to: Routes.organization_path(@conn, :index), class: Helpers.auto_active_tab(@navigation, "workspaces") %>
-          <%= link "Account settings", to: Routes.account_path(@conn, :edit), class: Helpers.auto_active_tab(@navigation, "account") %>
+          <%= link gettext("Your workspaces"), to: Routes.organization_path(@conn, :index), class: Helpers.auto_active_tab(@navigation, "workspaces") %>
+          <%= link gettext("Account settings"), to: Routes.account_path(@conn, :edit), class: Helpers.auto_active_tab(@navigation, "account") %>
         </div>
       </nav>
       

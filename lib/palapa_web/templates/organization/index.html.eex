@@ -11,7 +11,7 @@
   <%= link to: Routes.organization_path(@conn, :new), class: "flex-none m-2 p-4 font-bold text-gray-800 text-center bg-gray-200 hover:bg-gray-300 rounded" do %>
     <div class="flex">
       <i class="self-center fas fa-plus-circle text-2xl text-green-400 mr-2"></i>
-      <span>New Workspace</span>
+      <span><%= gettext("New workspace") %></span>
     </div>
   <% end %>
 </div>

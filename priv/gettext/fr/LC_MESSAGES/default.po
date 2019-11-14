@@ -12,11 +12,316 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
+#: lib/palapa_web/templates/message/_message.html.eex:24
+#: lib/palapa_web/templates/message_comment/_comments_count.html.eex:3
+msgid "%{count} comment"
+msgid_plural "%{count} comments"
+msgstr[0] "%{count} commentaire"
+msgstr[1] "%{count} commentaires"
+
+#, elixir-format
+#: lib/palapa_web/templates/member/index.html.eex:7
+msgid "%{count} member"
+msgid_plural "%{count} members"
+msgstr[0] "%{count} membre"
+msgstr[1] "%{count} membres"
+
+#, elixir-format
+#: lib/palapa_web/templates/member/index.html.eex:8
+msgid "%{count} team"
+msgid_plural "%{count} teams"
+msgstr[0] "%{count} équipe"
+msgstr[1] "%{count} équipes"
+
+#, elixir-format
+#: lib/palapa_web/views/event_view.ex:80
+msgid "%{author} added %{contact_link} as a new contact"
+msgstr "%{author} a ajouté %{contact_link} comme nouveau contact"
+
+#, elixir-format
+#: lib/palapa_web/views/event_view.ex:23
+msgid "%{author} commented on message %{message_link}"
+msgstr "%{author} a laissé un commentaire sur %{message_link}"
+
+#, elixir-format
+#: lib/palapa_web/views/event_view.ex:35
+msgid "%{author} created a new document"
+msgstr "%{author} a créé un nouveau document"
+
+#, elixir-format
+#: lib/palapa_web/views/event_view.ex:40
+msgid "%{author} created a new page in %{document_link}"
+msgstr "%{author} a créé une nouvelle page dans %{document_link}"
+
+#, elixir-format
+#: lib/palapa_web/views/event_view.ex:9
+msgid "%{author} created the workspace %{organization}"
+msgstr "%{author} a créé l'espace de travail %{organization}"
+
+#, elixir-format
+#: lib/palapa_web/views/event_view.ex:98
+msgid "%{author} posted a new comment on %{contact_link}"
+msgstr "%{author} a posté un nouveau commentaire sur %{contact_link}"
+
+#, elixir-format
+#: lib/palapa_web/views/event_view.ex:18
+msgid "%{author} posted a new message"
+msgstr "%{author} a posté un nouveau message"
+
+#, elixir-format
+#: lib/palapa_web/views/event_view.ex:54
+msgid "%{author} posted a new suggestion on page %{page_link}"
+msgstr "%{author} a posté une nouvelle suggestion sur la page %{page_link}"
+
+#, elixir-format
+#: lib/palapa_web/views/event_view.ex:66
+msgid "%{comment_author} commented on %{suggestion_author}'s suggestion on page %{page_link}"
+msgstr "%{comment_author} a commenté la suggestion de %{suggestion_author} sur la page %{page_link}"
+
+#, elixir-format
+#: lib/palapa_web/views/event_view.ex:15
+msgid "%{member} joined the workspace"
+msgstr "%{member} a rejoint l'espace de travail"
+
+#, elixir-format
+#:
+#: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:5
+msgid "%{number_of_days} days left on your trial period."
+msgstr "Il reste %{number_of_days} jours sur votre période d'essai"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:20
+msgid "100 GB storage included"
+msgstr "100Go de stockage inclus"
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/account.html.eex:23
+msgid "Account settings"
+msgstr "Paramètres"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:23
+msgid "Billing address"
+msgstr "Adresse de facturation"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:17
+msgid "Billing email address"
+msgstr "Email pour la facture"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:4
+msgid "Billing information"
+msgstr "Informations de facturation"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:36
+msgid "City"
+msgstr "Ville"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:50
+msgid "Country"
+msgstr "Pays"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/form.html.eex:18
+msgid "Credit card"
+msgstr "Carte bancaire"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/payment_method/form.html.eex:14
+msgid "Credit card*"
+msgstr "Carte bancaire*"
+
+#, elixir-format
+#:
+#: lib/palapa_web/templates/billing/billing_error/waiting_for_payment.html.eex:12
+msgid "Don't hesitate to ask support if you need help or have questions."
+msgstr "N'hésitez pas à contacter l'équipe de support si vous avez la moindre question."
+
+#, elixir-format
+#:
+#: lib/palapa_web/templates/billing/billing_error/waiting_for_payment.html.eex:11
+msgid "Don't worry, all the data associated with this workspace is safe."
+msgstr "Pas de panique, toutes les données de votre espace de travail sont toujours là."
+
+#, elixir-format
 #: lib/palapa_web/templates/dashboard/index.html.eex:3
-msgid "Last activity"
+msgid "Latest activity"
 msgstr "Dernière activité"
 
 #, elixir-format
-#: lib/palapa_web/templates/dashboard/index.html.eex:11
-msgid "%{author} %{action} %{target} "
-msgstr ""
+#: lib/palapa_web/templates/layout/account.html.eex:13
+msgid "Log out"
+msgstr "Se déconnecter"
+
+#, elixir-format
+#: lib/palapa_web/templates/organization/index.html.eex:14
+msgid "New workspace"
+msgstr "Créer un espace"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:26
+msgid "Only %{price_per_member_per_month}€/member/month"
+msgstr "Seulement %{price_per_member_per_month}€/membre/mois"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/form.html.eex:14
+msgid "Payment"
+msgstr "Paiement"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:30
+msgid "Postcode"
+msgstr "Code postal"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:21
+msgid "Premium email support"
+msgstr "Support premium par email"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:44
+msgid "State"
+msgstr "Région"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:12
+msgid "Switch to a paid plan to continue and get:"
+msgstr "Passer à la version payante pour continuer avec en plus :"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/billing_error/waiting_for_payment.html.eex:4
+msgid "The workspace \"%{organization_name}\" has been frozen."
+msgstr "L'accès à l'espace de travail \"%{organization_name}\" a été suspendu."
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:18
+msgid "Unlimited members"
+msgstr "Nombre illimités de membres"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:19
+msgid "Unlimited teams"
+msgstr "Nombre illimités d'équipes"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:57
+msgid "VAT number (if your company is in the European Union)"
+msgstr "N° de TVA (si votre entreprise fait parie de l'Union Européenne)"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/billing_error/waiting_for_payment.html.eex:9
+msgid "We didn't receive any payment for the current period. An owner of the workspace must update the billing information in order to restore access to the workspace."
+msgstr "Nous n'avons pas reçu de paiement pour la période en cours. Un propriétaire de l'espace de travail doit mettre à jour les informations de facturation pour restaurer l'accès à l'espace."
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:13
+msgid "Workspace name"
+msgstr "Nom de l'espace de travail"
+
+#, elixir-format
+#: lib/palapa_web/controllers/settings/workspace/workspace_controller.ex:44
+msgid "Workspace settings could not be saved"
+msgstr "Les paramètres de l'espace de travail n'ont pas pu être enregistrés"
+
+#, elixir-format
+#: lib/palapa_web/controllers/settings/workspace/workspace_controller.ex:39
+msgid "Workspace settings have been saved"
+msgstr "Les paramètres de l'espace de travail ont été enregistrés"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:8
+msgid "Your %{trial_duration_days} days trial period for the workspace \"%{organization_name}\" has ended."
+msgstr "Votre période d'essai de %{trial_duration_days} est terminée pour l'espace  \"%{organization_name}\"."
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:11
+msgid "Your name or company name"
+msgstr "Votre nom ou le nom de votre entreprise"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:4
+msgid "Your trial period has ended"
+msgstr "Votre période d'essai est terminée"
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/account.html.eex:22
+msgid "Your workspaces"
+msgstr "Vos espaces de travail"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:85
+msgid "Change password"
+msgstr "Changer de mot de passe"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:25
+msgid "Change picture"
+msgstr "Changer de photo"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:56
+msgid "Change your password"
+msgstr "Changez votre mot de passe"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:61
+msgid "Check the errors below:"
+msgstr "Corrigez les erreurs ci-dessous"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:77
+msgid "Confirm the new password"
+msgstr "Confirmez le nouveau mot de passe"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:19
+msgid "Email"
+msgstr "Email"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:13
+msgid "Full name"
+msgstr "Nom complet"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:31
+msgid "Language"
+msgstr "Langue"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:71
+msgid "New password"
+msgstr "Nouveau mot de passe"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:49
+msgid "Save my account settings"
+msgstr "Enregistrer mes paramètres"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:44
+msgid "Send a daily recap by email with the latest activity on your workspaces"
+msgstr "M'envoyer par email un récapitulatif quotidien avec l'activité de mes espaces de travail"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:37
+msgid "Timezone"
+msgstr "Fuseau horaire"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:4
+msgid "Your account"
+msgstr "Votre compte"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:65
+msgid "Your current password"
+msgstr "Votre mot de passe actuel"
+
+#, elixir-format
+#: lib/palapa_web/templates/account/edit.html.eex:32
+msgid "Automatic"
+msgstr "Automatique"
