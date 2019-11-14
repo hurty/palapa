@@ -28,6 +28,8 @@ config :palapa,
   email_support: "support@palapa.io",
   email_transactionnal: {"Palapa", "do-not-reply@palapa.io"}
 
+config :palapa, PalapaWeb.Gettext, locales: ["en", "fr"], default_locale: "en"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

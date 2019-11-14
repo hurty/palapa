@@ -11,6 +11,7 @@ defmodule PalapaWeb.Router do
 
     # Sets current_account
     plug(PalapaWeb.Authentication)
+    plug(PalapaWeb.Locale)
   end
 
   pipeline :authentication do

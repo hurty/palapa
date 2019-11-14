@@ -16,6 +16,7 @@ defmodule Palapa.Accounts.Account do
     field(:password_reset_hash, :string)
     field(:password_reset_at, :utc_datetime)
     field(:send_daily_recap, :boolean)
+    field(:locale, :string)
     timestamps()
 
     has_many(:members, Organizations.Member)
@@ -26,12 +27,13 @@ defmodule Palapa.Accounts.Account do
   @doc false
   def changeset(account, attrs) do
     account
-    |> cast(attrs, [:email, :name, :password, :timezone, :send_daily_recap])
+    |> cast(attrs, [:email, :name, :password, :timezone, :send_daily_recap, :locale])
     |> put_uuid()
     |> put_password_hash
     |> cast_attachments(attrs, [:avatar])
     |> validate_required([:email, :name, :password_hash])
     |> validate_timezone()
+    |> validate_locale()
     |> unique_constraint(:email, name: "accounts_email_index")
   end
 
@@ -61,6 +63,16 @@ defmodule Palapa.Accounts.Account do
       tz && !Tzdata.zone_exists?(tz) -> add_error(changeset, :timezone, "Timezone is invalid.")
       is_nil(tz) -> force_change(changeset, :timezone, "UTC")
       true -> changeset
+    end
+  end
+
+  def validate_locale(changeset) do
+    locale = get_field(changeset, :locale)
+
+    if locale && locale not in Gettext.known_locales(PalapaWeb.Gettext) do
+      add_error(changeset, :locale, "This locale is not supported")
+    else
+      changeset
     end
   end
 
