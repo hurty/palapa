@@ -193,12 +193,7 @@ defmodule PalapaWeb.Router do
 
     resources "/members", MemberController, only: [:index, :show] do
       resources("/teams", TeamMemberController, only: [:edit, :update], singleton: true)
-      resources("/personal_informations", PersonalInformationController, only: [:create])
     end
-
-    resources("/personal_informations", PersonalInformationController,
-      only: [:edit, :update, :delete]
-    )
 
     resources("/invitations", InvitationController, only: [:new, :create, :delete]) do
       post("/renewal", InvitationController, :renew, as: :renew)

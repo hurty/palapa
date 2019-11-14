@@ -18,10 +18,15 @@ defmodule PalapaWeb.MemberProfileLive.PersonalInformation do
 
   def handle_event("edit", _, socket) do
     changeset =
-      if socket.assigns.action_type == :create do
-        Organizations.new_personal_information(socket.assigns.current_member)
-      else
-        Organizations.change_personal_information(socket.assigns.info)
+      case socket.assigns.connect_params do
+        %{"stashed_form" => encoded} ->
+          attrs = Plug.Conn.Query.decode(encoded)["personal_information"]
+
+          Organizations.change_personal_information(%PersonalInformation{}, attrs)
+          |> Map.put(:action, :insert)
+
+        _ ->
+          Organizations.change_personal_information(%PersonalInformation{})
       end
 
     people_list =
@@ -54,11 +59,7 @@ defmodule PalapaWeb.MemberProfileLive.PersonalInformation do
 
   def handle_event("validate", %{"personal_information" => attrs}, socket) do
     changeset =
-      Organizations.new_personal_information(
-        %PersonalInformation{},
-        socket.assigns.current_member,
-        attrs
-      )
+      Organizations.change_personal_information(%PersonalInformation{}, attrs)
       |> Map.put(:action, :insert)
 
     {:noreply, assign(socket, personal_information_changeset: changeset)}

@@ -3,8 +3,8 @@ defmodule Palapa.Organizations.PersonalInformation do
 
   alias Palapa.Organizations.Member
   alias Palapa.Teams.Team
-  alias Palapa.Attachments
-  alias Palapa.Attachments.Attachment
+  # alias Palapa.Attachments
+  # alias Palapa.Attachments.Attachment
 
   schema "personal_informations" do
     belongs_to(:member, Member)
@@ -13,7 +13,7 @@ defmodule Palapa.Organizations.PersonalInformation do
     field(:private, :boolean, default: false)
     timestamps()
 
-    has_many(:attachments, Attachment, on_replace: :delete)
+    # has_many(:attachments, Attachment, on_replace: :delete)
 
     many_to_many(:teams, Team,
       join_through: "personal_information_visibilities",
@@ -30,23 +30,14 @@ defmodule Palapa.Organizations.PersonalInformation do
     field(:visibilities, {:array, :string}, virtual: true)
   end
 
-  def changeset(%__MODULE__{} = personal_information, %Member{} = member, attrs) do
+  def changeset(%__MODULE__{} = personal_information, attrs) do
     personal_information
     |> cast(attrs, [:label, :value, :private, :visibilities])
-    |> put_assoc(:member, member)
-    |> put_attachments(attrs)
-    |> put_visibilities(attrs)
-    |> validate_required([:member, :label])
-    |> put_conditional_validations
-  end
-
-  def update_changeset(%__MODULE__{} = personal_information, attrs) do
-    personal_information
-    |> cast(attrs, [:label, :value, :private, :visibilities])
-    |> put_attachments(attrs)
+    # |> put_attachments(attrs)
     |> put_visibilities(attrs)
     |> validate_required([:label])
-    |> put_conditional_validations
+
+    # |> put_conditional_validations
   end
 
   def put_conditional_validations(changeset) do
@@ -90,13 +81,13 @@ defmodule Palapa.Organizations.PersonalInformation do
     end
   end
 
-  defp put_attachments(changeset, attrs) do
-    if is_list(attrs["attachments"]) do
-      attachments = Attachments.list_attachments_from_signed_ids(attrs["attachments"])
+  # defp put_attachments(changeset, attrs) do
+  #   if is_list(attrs["attachments"]) do
+  #     attachments = Attachments.list_attachments_from_signed_ids(attrs["attachments"])
 
-      put_assoc(changeset, :attachments, attachments)
-    else
-      changeset
-    end
-  end
+  #     put_assoc(changeset, :attachments, attachments)
+  #   else
+  #     changeset
+  #   end
+  # end
 end

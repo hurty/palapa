@@ -186,20 +186,13 @@ defmodule Palapa.Organizations do
     |> Repo.update()
   end
 
-  def new_personal_information(
-        %PersonalInformation{} = personal_information \\ %PersonalInformation{},
-        %Member{} = member,
-        attrs \\ %{}
-      ) do
-    PersonalInformation.changeset(personal_information, member, attrs)
-  end
-
-  def change_personal_information(personal_information, attrs \\ %{}) do
-    PersonalInformation.update_changeset(personal_information, attrs)
+  def change_personal_information(%PersonalInformation{} = personal_information, attrs \\ %{}) do
+    PersonalInformation.changeset(personal_information, attrs)
   end
 
   def create_personal_information(%Member{} = member, attrs) do
-    PersonalInformation.changeset(%PersonalInformation{}, member, attrs)
+    PersonalInformation.changeset(%PersonalInformation{}, attrs)
+    |> put_assoc(:member, member)
     |> Repo.insert()
   end
 
@@ -255,7 +248,7 @@ defmodule Palapa.Organizations do
       viewer_id
     ])
     |> Repo.load_raw(PersonalInformation)
-    |> Repo.preload([:attachments, :teams, :members])
+    |> Repo.preload([:teams, :members])
     |> Enum.sort(fn info1, info2 -> Timex.before?(info1.inserted_at, info2.inserted_at) end)
   end
 
@@ -266,7 +259,7 @@ defmodule Palapa.Organizations do
   end
 
   def update_personal_information(personal_information, attrs) do
-    PersonalInformation.update_changeset(personal_information, attrs)
+    PersonalInformation.changeset(personal_information, attrs)
     |> Repo.update()
   end
 

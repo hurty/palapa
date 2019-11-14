@@ -23,6 +23,7 @@ defmodule PalapaWeb.MemberProfileLive do
 
     {:ok,
      assign(socket, %{
+       connect_params: get_connect_params(socket),
        profile_title_edit_mode: false,
        current_organization: current_organization,
        member: member,
