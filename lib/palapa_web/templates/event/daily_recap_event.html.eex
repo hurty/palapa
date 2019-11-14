@@ -1,5 +1,5 @@
-<div style="margin-top: 15px;">
-  <div style="color:hsl(210,80%,60%);font-size:17px;line-height:22.5px;text-decoration:nonefont-weight:bold;margin-bottom:10px;"><%= event_summary(@conn, @event) %></div>
+<div style="margin-top: 40px;">
+  <div style="color:#4799EB;font-size:17px;line-height:22.5px;text-decoration:nonefont-weight:bold;margin-bottom:10px;"><%= event_summary(@conn, @event) %></div>
 
   <%= if event_target_title(@conn, @event) || event_target_excerpt(@conn, @event) do %>
     <div style="background-color:#F7FAFC;color:#718096;border-radius:3px;padding:3px;">
