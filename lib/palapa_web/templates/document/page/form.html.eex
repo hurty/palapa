@@ -1,16 +1,16 @@
 <%= form_for @changeset, @action, fn form -> %>
   <%= if @changeset.action do %>
-    <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
+    <p class="db fw6 lh-copy f6  text-red-400 font-bold"><%= gettext("Check the errors below:") %></p>
   <% end %>
 
   <div class="my-4">
     <div class="field bg-gray-200 p-2 rounded">
-      <%= label form, :section_id, "Parent section", class: "label" %>
+      <%= label form, :section_id, gettext("Parent section"), class: "label" %>
       <%= select form, :section_id, PalapaWeb.Document.SectionView.list_sections_for_select(@document), class: "font-bold" %>
     </div>
 
     <div class="field">
-      <%= text_input form, :title, placeholder: "Page title", autocomplete: "off",
+      <%= text_input form, :title, placeholder: gettext("Page title"), autocomplete: "off",
       "data-controller": "focus", 
         "data-target": "document.pageTitleInput",
         class: "input p-2 sm:p-4 w-full font-bold sm:text-xl" %>
@@ -18,11 +18,11 @@
     </div>
   
     <div class="field">
-      <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: "Page content here...") %>
+      <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: gettext("Page content here...")) %>
     </div>
   </div>
 
   <div class="card-actions sticky bottom-0 bg-white">
-    <%= submit "Save page", class: "btn btn-green" %>
+    <%= submit gettext("Save page"), class: "btn btn-green" %>
   </div>  
 <% end %>

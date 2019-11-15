@@ -9,8 +9,8 @@
     <%= render "restore.html", assigns %>
 
     <section class="blankslate border-4 border-dotted p-8">
-      <p class="py-2">This document is empty</p>
-      <p class="py-2"><%= link "Add a new page", to: Routes.document_page_path(@conn, :new, @current_organization, @document), class: "btn" %></p>
+      <p class="py-2"><%= gettext("This document is empty") %></p>
+      <p class="py-2"><%= link gettext("Add a new page"), to: Routes.document_page_path(@conn, :new, @current_organization, @document), class: "btn" %></p>
     </section>
   </div>
 </div>

@@ -115,7 +115,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:36
-#: lib/palapa_web/templates/contact/form.html.leex:136
+#: lib/palapa_web/templates/contact/form.html.leex:137
 #: lib/palapa_web/templates/contact/show.html.leex:73
 msgid "City"
 msgstr ""
@@ -175,7 +175,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:30
-#: lib/palapa_web/templates/contact/form.html.leex:130
+#: lib/palapa_web/templates/contact/form.html.leex:131
 #: lib/palapa_web/templates/contact/show.html.leex:66
 msgid "Postcode"
 msgstr ""
@@ -273,6 +273,9 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/account/edit.html.eex:61
 #: lib/palapa_web/templates/billing/payment_method/form.html.eex:9
+#: lib/palapa_web/templates/document/document/form.html.eex:2
+#: lib/palapa_web/templates/document/document/new.html.eex:9
+#: lib/palapa_web/templates/document/page/form.html.eex:3
 msgid "Check the errors below:"
 msgstr ""
 
@@ -283,7 +286,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/account/edit.html.eex:19
-#: lib/palapa_web/templates/contact/form.html.leex:76
+#: lib/palapa_web/templates/contact/form.html.leex:77
 #: lib/palapa_web/templates/contact/show.html.leex:36
 msgid "Email"
 msgstr ""
@@ -345,19 +348,19 @@ msgid "Add a comment about %{contact}"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/form.html.leex:104
+#: lib/palapa_web/templates/contact/form.html.leex:105
 msgid "Additional information"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/form.html.leex:112
-#: lib/palapa_web/templates/contact/form.html.leex:116
+#: lib/palapa_web/templates/contact/form.html.leex:113
+#: lib/palapa_web/templates/contact/form.html.leex:117
 #: lib/palapa_web/templates/contact/show.html.leex:52
 msgid "Address"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/form.html.leex:122
+#: lib/palapa_web/templates/contact/form.html.leex:123
 msgid "Address supplement"
 msgstr ""
 
@@ -378,7 +381,14 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/contact/delete_modal.html.eex:19
-#: lib/palapa_web/templates/contact/form.html.leex:151
+#: lib/palapa_web/templates/contact/form.html.leex:152
+#: lib/palapa_web/templates/document/document/edit.html.eex:12
+#: lib/palapa_web/templates/document/document/new.html.eex:34
+#: lib/palapa_web/templates/document/document/table_of_contents.html.eex:51
+#: lib/palapa_web/templates/document/section/toc_section.html.eex:69
+#: lib/palapa_web/templates/document/suggestion/edit.html.eex:9
+#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:64
+#: lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:9
 msgid "Cancel"
 msgstr ""
 
@@ -394,7 +404,7 @@ msgid "Company name"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/form.html.leex:72
+#: lib/palapa_web/templates/contact/form.html.leex:73
 msgid "Contact details"
 msgstr ""
 
@@ -412,6 +422,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/contact/comment_content.html.leex:28
+#: lib/palapa_web/templates/document/suggestion_comment/suggestion_comment.html.eex:39
 msgid "Delete comment"
 msgstr ""
 
@@ -427,6 +438,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/contact/comment_content.html.leex:24
+#: lib/palapa_web/templates/document/suggestion_comment/suggestion_comment.html.eex:29
 msgid "Edit comment"
 msgstr ""
 
@@ -457,7 +469,7 @@ msgid "Manage billing"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/form.html.leex:82
+#: lib/palapa_web/templates/contact/form.html.leex:83
 msgid "Mobile phone"
 msgstr ""
 
@@ -502,13 +514,13 @@ msgid "Related contacts"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/form.html.leex:150
+#: lib/palapa_web/templates/contact/form.html.leex:151
 msgid "Save contact"
 msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/contact/contact_comments.html.leex:9
-#: lib/palapa_web/templates/contact/form.html.leex:150
+#: lib/palapa_web/templates/contact/form.html.leex:151
 msgid "Saving..."
 msgstr ""
 
@@ -518,12 +530,12 @@ msgid "Search contacts"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/form.html.leex:96
+#: lib/palapa_web/templates/contact/form.html.leex:97
 msgid "Social networks / Chat"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/form.html.leex:142
+#: lib/palapa_web/templates/contact/form.html.leex:143
 msgid "State/Country"
 msgstr ""
 
@@ -558,7 +570,7 @@ msgid "Upgrade your account"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/form.html.leex:90
+#: lib/palapa_web/templates/contact/form.html.leex:91
 msgid "Work"
 msgstr ""
 
@@ -579,11 +591,423 @@ msgid "You don't have any contact"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/form.html.leex:65
+#: lib/palapa_web/templates/contact/form.html.leex:66
 msgid "or add a new one"
 msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/payment_method/edit.html.eex:7
 msgid "We encountered some problems while processing the payment of your invoice for the workspace %{workspace}."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:55
+msgid "... or choose an existing company"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/actions.html.eex:5
+#: lib/palapa_web/templates/document/suggestion_comment/suggestion_comment.html.eex:20
+msgid "Actions on this comment"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/page/toc_page.html.eex:16
+msgid "Actions on this page"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/show.html.eex:13
+msgid "Add a new page"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/table_of_contents.html.eex:50
+msgid "Add section"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:22
+#: lib/palapa_web/templates/document/document/index.html.eex:30
+msgid "All teams"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/section/toc_section.html.eex:46
+msgid "Are you sure you want to delete this section and all its pages?"
+msgstr ""
+
+#, elixir-format
+#:
+#: lib/palapa_web/templates/document/suggestion_comment/suggestion_comment.html.eex:36
+msgid "Are your sure you want to delete this comment?"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/page/page_actions.html.eex:15
+msgid "Are your sure you want to delete this page?"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/actions.html.eex:21
+msgid "Are your sure you want to delete this suggestion?"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/section/toc_section.html.eex:64
+msgid "Can't be blank"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:51
+msgid "Close suggestion"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:34
+msgid "Closed by %{author} (%{time})"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/index.html.eex:12
+msgid "Closed suggestions"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/public_sharing.html.eex:4
+msgid "Copied to clipboard!"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/public_sharing.html.eex:5
+msgid "Copy secret link"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/section/toc_section.html.eex:36
+msgid "Create a page in this section"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/new.html.eex:33
+msgid "Create this document"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/actions.html.eex:24
+msgid "Delete suggestion"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/document_actions.html.eex:25
+msgid "Delete this document"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/page/page_actions.html.eex:16
+#: lib/palapa_web/templates/document/page/toc_page.html.eex:27
+msgid "Delete this page"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/section/toc_section.html.eex:48
+msgid "Delete this section"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/document_actions.html.eex:16
+msgid "Disable public sharing"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:87
+#: lib/palapa_web/templates/document/document/index.html.eex:91
+msgid "Document"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:6
+msgid "Documents"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/page/toc_page.html.eex:33
+#: lib/palapa_web/templates/document/section/toc_section.html.eex:54
+msgid "Drag to reorder"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/edit.html.eex:4
+msgid "Edit document"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/page/edit.html.eex:12
+#: lib/palapa_web/templates/document/page/show.html.eex:39
+msgid "Edit page"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/actions.html.eex:14
+msgid "Edit suggestion"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/document_actions.html.eex:11
+msgid "Edit this document"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/page/page_actions.html.eex:11
+#: lib/palapa_web/templates/document/page/toc_page.html.eex:23
+msgid "Edit this page"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/form.html.eex:14
+#: lib/palapa_web/templates/document/document/new.html.eex:25
+msgid "Everyone in %{workspace}"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:79
+msgid "Last modified"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:10
+#: lib/palapa_web/templates/document/document/new.html.eex:4
+msgid "New document"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/table_of_contents.html.eex:33
+#: lib/palapa_web/templates/document/page/new.html.eex:11
+msgid "New page"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/table_of_contents.html.eex:39
+msgid "New section"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:125
+msgid "No documents here."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/index.html.eex:8
+msgid "Open suggestions"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/page/form.html.eex:21
+msgid "Page content here..."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/page/form.html.eex:13
+msgid "Page title"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/page/form.html.eex:8
+msgid "Parent section"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/public_sharing.html.eex:7
+msgid "People using the secret link will be able to see this document even if they do not have a Palapa account."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/form.html.eex:8
+msgid "Post suggestion"
+msgstr ""
+
+#, elixir-format
+#:
+#: lib/palapa_web/templates/document/suggestion_comment/suggestion_comment.html.eex:12
+msgid "Posted %{time}"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/public_sharing.html.eex:3
+msgid "Public sharing is enabled"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:141
+msgid "Recent documents"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/section/toc_section.html.eex:40
+msgid "Rename this section"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:49
+msgid "Reopen suggestion"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:47
+msgid "Reply"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:58
+msgid "Reset filters"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/restore.html.eex:4
+msgid "Restore?"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/edit.html.eex:8
+#: lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:8
+msgid "Save"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:51
+msgid "Search"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:50
+msgid "Search in documents"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/table_of_contents.html.eex:46
+#: lib/palapa_web/templates/document/section/toc_section.html.eex:63
+msgid "Section name"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:59
+msgid "Select a existing company"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:63
+msgid "Send"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/document_actions.html.eex:20
+msgid "Share with a secret link"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:97
+msgid "Shared with everyone"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:95
+#: lib/palapa_web/templates/document/document/index.html.eex:97
+msgid "Show all team documents"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:68
+msgid "Sort by"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:74
+msgid "Sort by title"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/form.html.eex:15
+msgid "Suggest an improvement"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/restore.html.eex:3
+msgid "This document has been put in the trash. "
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/show.html.eex:12
+msgid "This document is empty"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/page/show.html.eex:38
+msgid "This page is empty"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:73
+msgid "Title"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/form.html.eex:6
+#: lib/palapa_web/templates/document/document/new.html.eex:13
+msgid "Title..."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/table_of_contents.html.eex:13
+msgid "Toggle table of contents"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/edit.html.eex:11
+msgid "Update this document"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:133
+msgid "View documents in the trash"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/form.html.eex:12
+msgid "Who can see this document?"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:4
+msgid "Your comment here"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/form.html.eex:5
+#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:58
+msgid "Your comment here..."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/edit.html.eex:4
+msgid "Your suggestion..."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/public_sharing.html.eex:7
+msgid "Disable"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/page/form.html.eex:26
+msgid "Save page"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/page/show.html.eex:19
+msgid "%{author} edited %{time_ago}"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:80
+msgid "Sort by date"
 msgstr ""

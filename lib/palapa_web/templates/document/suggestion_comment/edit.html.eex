@@ -1,11 +1,11 @@
 <%= form_for @changeset, Routes.suggestion_comment_url(@conn, :update, @current_organization, @suggestion_comment), 
   [data: [target: "document-suggestion-comment.editForm", action: "document-suggestion-comment#update"]], fn form -> %>
   <div class="mb-1">
-    <%= Helpers.rich_text_editor form, :content, @current_organization, placeholder: "Your comment here", content_data_target: "document-suggestion-comment.commentContentInput" %>
+    <%= Helpers.rich_text_editor form, :content, @current_organization, placeholder: gettext("Your comment here"), content_data_target: "document-suggestion-comment.commentContentInput" %>
   </div>
 
   <div class="flex justify-end">
-    <button type="submit" class="btn btn-green-500 mr-1">Save</button>
-    <button data-action="document-suggestion-comment#cancelEdit" class="btn">Cancel</button>
+    <button type="submit" class="btn btn-green-500 mr-1"><%= gettext("Save") %></button>
+    <button data-action="document-suggestion-comment#cancelEdit" class="btn"><%= gettext("Cancel") %></button>
   </div>
 <% end %>

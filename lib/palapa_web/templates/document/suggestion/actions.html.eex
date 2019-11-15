@@ -2,7 +2,7 @@
   <div data-controller="popover" data-action="mousedown@window->popover#hide">
     <button data-target="popover.button" data-action="popover#toggle" 
       class="card-actions-button card-actions-button--sm"
-      title="Actions on this comment">
+      title="<%= gettext("Actions on this comment") %>">
       <i class="fas fa-ellipsis-h"></i>
     </button>
     
@@ -11,17 +11,17 @@
       <%= if permit?(Palapa.Documents.Policy, :update_suggestion, @conn.assigns.current_member, @suggestion) do %>
         <%= link to: Routes.suggestion_path(@conn, :edit, @conn.assigns.current_organization, @suggestion), class: "popover__link", 
         data: [action: "document-suggestion#edit"] do %>
-          <i class="fas fa-pen"></i>&nbsp;Edit suggestion
+          <i class="fas fa-pen"></i>&nbsp;<%= gettext("Edit suggestion") %>
         <% end %>
       <% end %>
       
         <%= link to: Routes.suggestion_path(@conn, :delete, @conn.assigns.current_organization, @suggestion), class: "popover__link", 
         data: [
           action: "document-suggestion#delete",
-          confirm: "Are your sure you want to delete this suggestion?"
+          confirm: gettext("Are your sure you want to delete this suggestion?")
         ] 
         do %>
-          <i class="fas fa-trash text-red"></i>&nbsp;Delete suggestion
+          <i class="fas fa-trash text-red"></i>&nbsp;<%= gettext("Delete suggestion") %>
         <% end %>
       </nav>
     </div>

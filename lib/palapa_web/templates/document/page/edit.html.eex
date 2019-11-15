@@ -9,7 +9,7 @@
     
     <div class="rounded sm:shadow bg-white sm:p-8">
       <h2 class="card-header">
-        Edit page
+        <%= gettext("Edit page") %>
       </h2>
       
       <div class="card-header-separator"></div>

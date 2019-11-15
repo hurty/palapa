@@ -3,11 +3,11 @@
     <div class="card">
 
         <div class="flex flex-wrap items-center justify-between p-4">
-          <h2 class="card-header">Documents</h2>
+          <h2 class="card-header"><%= gettext("Documents") %></h2>
 
           <div class="my-2 sm:m-0">
             <%= link(to: Routes.document_path(@conn, :new, @current_organization), class: "btn text-sm") do %>
-              <i class="fas fa-plus-circle text-green-500 mr-2"></i>New document
+              <i class="fas fa-plus-circle text-green-500 mr-2"></i><%= gettext("New document") %>
             <% end %>
           </div>
         </div>
@@ -19,7 +19,7 @@
                 <%= if @selected_team do %> 
                   <span class="text-blue-500 font-bold"><%= Helpers.truncate_string(@selected_team.name, 40) %></span>
                 <% else %>
-                  <span class="font-bold">All teams</span>
+                  <span class="font-bold"><%= gettext("All teams") %></span>
                 <% end %>
                 <i class="fas fa-angle-down ml-2"></i>
               </button>
@@ -27,7 +27,7 @@
               <div data-target="popover.content" class="popover hidden">
                 <div data-target="popover.arrow" class="popover__arrow"></div>
                 <div class="flex flex-col">
-                  <%= link("All teams", to: Routes.document_path(@conn, :index, @current_organization, Map.delete(@conn.params, "team_id")), class: "selector-item truncate selector-item-default") %>
+                  <%= link(gettext("All teams"), to: Routes.document_path(@conn, :index, @current_organization, Map.delete(@conn.params, "team_id")), class: "selector-item truncate selector-item-default") %>
                   <%= for team <- @teams do %>
                     <% item_class = "selector-item" <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
                     <%= link(Helpers.truncate_string(team.name, 40), to: Routes.document_path(@conn, :index, @current_organization.id, Map.put(@conn.params, "team_id", team.id)), class: item_class, title: team.name) %>
@@ -47,15 +47,15 @@
                 <%= hidden_input form, :sort_by, value: @conn.params["sort_by"] %>
               <% end %>
 
-              <%= text_input form, "search", value: @conn.params["search"], autocomplete: "off", class: "input", placeholder: "Search in documents" %>
-              <%= submit "Search", class: "btn" %>
+              <%= text_input form, "search", value: @conn.params["search"], autocomplete: "off", class: "input", placeholder: gettext("Search in documents") %>
+              <%= submit gettext("Search"), class: "btn" %>
             <% end %>
           </div>
         </div>
         
         <%= if search_filters_applied?(@conn) do %>
           <%= link to: Routes.document_path(@conn, :index, @current_organization) do %>
-            <div class="py-1 bg-blue-100 text-center text-sm text-blue-600 font-bold hover:underline">Reset filters</div>
+            <div class="py-1 bg-blue-100 text-center text-sm text-blue-600 font-bold hover:underline"><%= gettext("Reset filters") %></div>
           <% end %>
         <% end %>
 
@@ -65,36 +65,36 @@
 
             <div class="flex items-center justify-between py-2 border-b border-gray-200 p-4">
               <div class="sm:w-8">
-                <span class="sm:hidden font-bold text-xs uppercase">Sort by</span>
+                <span class="sm:hidden font-bold text-xs uppercase"><%= gettext("Sort by") %></span>
               </div>
 
               <div class="sm:flex-1">
                 <%= if @conn.params["sort_by"] == "title" do %><span class="text-blue">•</span><% end %>
-                <%= link "Title", to: Routes.document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "title")), 
-                  class: "uppercase text-xs text-blue-500 font-bold hover:underline", title: "Sort by title" %>
+                <%= link gettext("Title"), to: Routes.document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "title")), 
+                  class: "uppercase text-xs text-blue-500 font-bold hover:underline", title: gettext("Sort by title") %>
               </div>
               
               <div class="sm:flex-none">
                 <%= if @conn.params["sort_by"] == "updated_at" || is_nil(@conn.params["sort_by"]) do %><span class="text-blue">•</span><% end %>
-                <%= link "Last modified", to: Routes.document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "updated_at")), 
-                  class: "uppercase text-xs text-blue-500 font-bold hover:underline", title: "Sort by date" %>
+                <%= link gettext("Last modified"), to: Routes.document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "updated_at")), 
+                  class: "uppercase text-xs text-blue-500 font-bold hover:underline", title: gettext("Sort by date") %>
               </div>
             </div>         
 
           <%= for document <- @documents do %>
             <div class="flex flex-wrap py-2 border-b border-gray-200 p-4">
               <div class="sm:w-8">
-                <i class="hidden sm:block fas fa-file-alt text-gray-600 text-base" title="Document"></i> 
+                <i class="hidden sm:block fas fa-file-alt text-gray-600 text-base" title="<%= gettext("Document") %>"></i> 
               </div>
 
               <div class="w-full sm:flex-1">
-                <i class="sm:hidden fas fa-file-alt text-gray-600 text-base" title="Document"></i> 
+                <i class="sm:hidden fas fa-file-alt text-gray-600 text-base" title="<%= gettext("Document") %>"></i> 
                 <%= link Helpers.truncate_string(document.title, 150), to: Routes.document_path(@conn, :show, @current_organization, document), class: "text-base text-green-500 font-bold hover:underline text-sm" %>
                 <div class="font-bold mr-2 rounded my-1">
                 <%= if document.team do %>
-                  <%= link(document.team.name, to: Routes.document_path(@conn, :index, @current_organization, team_id: document.team_id), title: "Show all team documents", class: "tag tag-team text-xs") %></span>
+                  <%= link(document.team.name, to: Routes.document_path(@conn, :index, @current_organization, team_id: document.team_id), title: gettext("Show all team documents"), class: "tag tag-team text-xs") %></span>
                 <% else %>
-                  <%= link("Shared with everyone", to: Routes.document_path(@conn, :index, @current_organization), title: "Show all team documents", class: "text-gray-700 text-xs hover:underline") %>
+                  <%= link(gettext("Shared with everyone"), to: Routes.document_path(@conn, :index, @current_organization), title: gettext("Show all team documents"), class: "text-gray-700 text-xs hover:underline") %>
                 <% end %>
                 </div>
               </div>
@@ -122,7 +122,7 @@
         <% else %>
           <div class="blankslate">
             <i class="fas fa-file-alt text-6xl text-green-400"></i>
-            <div class="my-4">No documents here.</div>
+            <div class="my-4"><%= gettext("No documents here.") %></div>
           </div>
         <% end %>
 
@@ -130,7 +130,7 @@
         <div class="my-8 text-center">
           <%= link to: Routes.trash_path(@conn, :index, @current_organization), 
             class: "border py-2 px-4 rounded-full text-center bg-white hover:bg-gray-400 text-blue" do %>
-            <i class="fas fa-trash text-gray-700"></i> View documents in the trash
+            <i class="fas fa-trash text-gray-700 mr-2"></i><%= gettext("View documents in the trash") %>
           <% end %>
         </div>
   </div>
@@ -138,8 +138,7 @@
   <div class="page-sidebar">
     <%= if Enum.any?(@recent_documents) do %>
       <div class="card p-4">
-        <h3 class="text-gray-800 text-lg mb-4">Documents recently viewed</h3>
-        <div class="card-header-separator"></div>
+        <h3 class="text-blue-500 font-bold text-lg mb-4 border-b pb-4"><%= gettext("Recent documents") %></h3>
         <div class="flex flex-wrap">
           <%= for document <- @recent_documents do %>
             <div class="w-full my-1">

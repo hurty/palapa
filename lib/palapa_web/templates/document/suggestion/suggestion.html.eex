@@ -31,7 +31,7 @@ class="card sm:rounded-lg p-4 mb-8">
 
     <%= if @suggestion.closed_at do %>
       <div class="text-sm font-bold text-green-600 text-center bg-green-100 rounded-full p-1">
-        Closed by <%= @suggestion.closure_author.account.name %> (<%= Helpers.auto_format_datetime(@suggestion.closed_at, @current_account ) %>)
+        <%= gettext("Closed by %{author} (%{time})", %{author: @suggestion.closure_author.account.name, time: Helpers.auto_format_datetime(@suggestion.closed_at, @current_account)}) %>
       </div>
     <% end %>
   <div>
@@ -44,24 +44,24 @@ class="card sm:rounded-lg p-4 mb-8">
 
           <div data-target="document-suggestion.passiveFormItems">
             <div class="flex justify-end">
-              <button data-action="document-suggestion#showCommentForm" class="btn mr-1"><i class="fas fa-reply"></i> Reply</button>
+              <button data-action="document-suggestion#showCommentForm" class="btn mr-1"><i class="fas fa-reply mr-2"></i><%= gettext("Reply") %></button>
               <%= if @suggestion.closed_at do %>
-                <button data-action="document-suggestion#reopen" class="btn">Reopen suggestion</button>
+                <button data-action="document-suggestion#reopen" class="btn"><%= gettext("Reopen suggestion") %></button>
               <% else %>
-                <button data-action="document-suggestion#close" class="btn">Close suggestion</button>
+                <button data-action="document-suggestion#close" class="btn"><%= gettext("Close suggestion") %></button>
               <% end %>
             </div>
           </div>
           
           <div data-target="document-suggestion.activeFormItems" class="hidden">
             <div class="mb-1">
-              <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: "Your comment here...", 
+              <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: gettext("Your comment here..."), 
               editor_data_target: "document-suggestion.commentEditor", content_data_target: "document-suggestion.commentContentInput") %>
             </div>
 
             <div class="flex justify-end">
-              <button type="submit" class="btn btn-green-500 mr-1">Send</button>
-              <button data-action="document-suggestion#hideCommentForm" class="btn">Cancel</button>
+              <button type="submit" class="btn btn-green-500 mr-1"><%= gettext("Send") %></button>
+              <button data-action="document-suggestion#hideCommentForm" class="btn"><%= gettext("Cancel") %></button>
             </div>
           </div>  
         <% end %>

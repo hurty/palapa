@@ -33,25 +33,25 @@ class="document-section">
                   <div data-target="popover.arrow" class="popover__arrow"></div>
                   <nav class="flex flex-col">
                     <%= link to: Routes.document_page_path(@conn, :new, @current_organization, @document, section_id: @section.id), class: "popover__link" do %>
-                      <i class="fas fa-file-alt"></i>&nbsp;Create a page in this section
+                      <i class="fas fa-file-alt"></i>&nbsp;<%= gettext("Create a page in this section") %>
                     <% end %>
 
                     <%= link to: Routes.document_section_path(@conn, :update, @current_organization, @section), class: "popover__link", "data-action": "document-section#showRenameForm" do %>
-                      <i class="fas fa-pen"></i>&nbsp;Rename this section
+                      <i class="fas fa-pen"></i>&nbsp;<%= gettext("Rename this section") %>
                     <% end %>
 
                     <%= link to: Routes.document_section_path(@conn, :delete, @current_organization, @section), class: "popover__link",
                       data: [
                         action: "document-section#delete", 
-                        confirm: "Are you sure you want to delete this section and all its pages?"
+                        confirm: gettext("Are you sure you want to delete this section and all its pages?")
                       ] do %>
-                      <i class="fas fa-trash"></i>&nbsp;Delete this section
+                      <i class="fas fa-trash"></i>&nbsp;<%= gettext("Delete this section") %>
                     <% end %>
                   </nav>
                 </div>
             </div>
             
-            <div class="document-section-handle px-2 text-gray-600 hover:text-green-500" title="Drag to reorder">
+            <div class="document-section-handle px-2 text-gray-600 hover:text-green-500" title="<%= gettext("Drag to reorder") %>">
               <i class="fas fa-bars"></i>
             </div>
           </div>
@@ -60,13 +60,13 @@ class="document-section">
             ["data-target": "document-section.form", "data-action": "document-section#rename", 
             class: "hidden bg-white border shadow-lg p-2 rounded"], fn form -> %>
             <div class="field">
-              <%= text_input form, :title, value: @section.title, "data-target": "document-section.titleInput", class: "input", placeholder: "Section's name" %>
-              <span data-target="document-section.errorMessage" class="hidden error">Can't be blank</span>
+              <%= text_input form, :title, value: @section.title, "data-target": "document-section.titleInput", class: "input", placeholder: gettext("Section name") %>
+              <span data-target="document-section.errorMessage" class="hidden error"><%= gettext("Can't be blank") %></span>
             </div>
             
             <div class="py-2">
               <%= submit "Rename section", class: "btn btn-green" %>
-              <button data-action="document-section#cancelRename" class="btn">Cancel</button>
+              <button data-action="document-section#cancelRename" class="btn"><%= gettext("Cancel") %></button>
             </div>
           <% end %>
         <% end %> 

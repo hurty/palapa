@@ -10,7 +10,7 @@
       <h2 class="font-bold text-gray-800 text-base"><%= @document.title %></h2>
       
       <div class="sm:hidden py-2">
-        <a class="text-blue" data-action="document#toggleToc">Toggle table of contents</a>
+        <a class="text-blue" data-action="document#toggleToc"><%= gettext("Toggle table of contents") %></a>
       </div>
     </div>
     <%= render "document_actions.html", assigns %>
@@ -30,25 +30,25 @@
       <div class="flex justify-left p-4 border-t border-gray-200">
         <div>
           <%= link to: Routes.document_page_path(@conn, :new, @current_organization, @document), class: "text-xs btn" do %>
-            <i class="fas fa-file-alt"></i> New page
+            <i class="fas fa-file-alt mr-2"></i><%= gettext("New page") %>
           <% end %>
         </div>
 
         <div class="ml-2">
           <a data-target="document.newSectionButton" data-action="document#showNewSectionForm" class="text-xs btn">
-            <i class="fas fa-folder"></i> New section
+            <i class="fas fa-folder mr-2"></i><%= gettext("New section") %>
           </a>
 
           <%= form_for @section_changeset, Routes.document_section_path(@conn, :create, @current_organization, @document), 
             ["data-target": "document.newSectionForm", "data-action": "document#createSection", 
             class: "hidden bg-white border shadow-lg p-2 rounded"], fn form -> %>
             <div class="field">
-              <%= text_input form, :title, "data-target": "document.newSectionInput", class: "input", placeholder: "Section name", autocomplete: "off" %>
+              <%= text_input form, :title, "data-target": "document.newSectionInput", class: "input", placeholder: gettext("Section name"), autocomplete: "off" %>
             </div>
             
             <div class="py-2">
-              <%= submit "Add section", class: "btn btn-green" %>
-              <button data-action="document#hideNewSectionForm" class="btn">Cancel</button>
+              <%= submit gettext("Add section"), class: "btn btn-green" %>
+              <button data-action="document#hideNewSectionForm" class="btn"><%= gettext("Cancel") %></button>
             </div>
           <% end %>
         </div>

@@ -5,11 +5,11 @@
 
   <nav class="flex justify-center mb-4">
     <div data-target="document-suggestions.listTab" class="tab tab--active">
-      <a data-action="document-suggestions#toggleList" class="text-center block px-4 hover:cursor-pointer" href="#">Open suggestions</a>
+      <a data-action="document-suggestions#toggleList" class="text-center block px-4 hover:cursor-pointer" href="#"><%= gettext("Open suggestions") %></a>
     </div>
 
     <div data-target="document-suggestions.listTab" data-action="document-suggestions#toggleList" class="tab">
-      <a data-action="document-suggestions#toggleList" class="text-center block px-4 hover:cursor-pointer" href="#">Closed suggestions</a>
+      <a data-action="document-suggestions#toggleList" class="text-center block px-4 hover:cursor-pointer" href="#"><%= gettext("Closed suggestions") %></a>
     </div>
   </nav>
 

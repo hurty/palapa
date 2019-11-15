@@ -15,7 +15,12 @@
           <div class="flex py-2 text-gray-700 text-xs">
               <div class="flex">
                 <div class="self-center mr-1"><%= Helpers.avatar(@page.last_author.account, :xs) %></div>
-                <div class="self-center"><%= link @page.last_author.account.name, to: Routes.member_path(@conn, :show, @current_organization, @page.last_author), class: "hover:underline text-green-500" %> edited <%= Helpers.auto_format_datetime(@page.updated_at, @current_account) %> </div>
+                <div class="self-center">
+                  <%= gettext("%{author} edited %{time_ago}", %{
+                      author: safe_to_string(link(@page.last_author.account.name, to: Routes.member_path(@conn, :show, @current_organization, @page.last_author), class: "hover:underline text-green-500")), 
+                      time_ago: safe_to_string(Helpers.auto_format_datetime(@page.updated_at, @current_account))}
+                  ) |> raw() %>
+                </div>
               </div>
             
           </div>
@@ -30,8 +35,8 @@
           </section>
         <% else %>
           <section class="blankslate p-4">
-            <p class="py-2">This page is empty</p>
-            <p class="py-2"><%= link "Edit page", to: Routes.document_page_path(@conn, :edit, @current_organization, @page), class: "btn" %></p>
+            <p class="py-2"><%= gettext("This page is empty") %></p>
+            <p class="py-2"><%= link gettext("Edit page"), to: Routes.document_page_path(@conn, :edit, @current_organization, @page), class: "btn" %></p>
           </section>
         <% end %>
 

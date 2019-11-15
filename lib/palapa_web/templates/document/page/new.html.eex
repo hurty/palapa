@@ -8,7 +8,7 @@
     <%# ----- DOCS ----- %>
     
     <div class="rounded shadow bg-white p-8 ">
-      <h2 class="card-header">New page</h2>
+      <h2 class="card-header"><%= gettext("New page") %></h2>
       <div class="card-header-separator"></div>
       <%= render "form.html", Map.put(assigns, :action, Routes.document_page_path(@conn, :create, @current_organization, @document)) %>
     </div>    

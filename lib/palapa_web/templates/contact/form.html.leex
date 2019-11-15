@@ -52,17 +52,18 @@
             <%= text_input company, :last_name, class: "input", placeholder: gettext("Company name"), phx_hook: "AutoFocus" %>
             <%= error_tag company, :last_name %>
           <% end %>
-          <a href="#" phx-click="toggle_create_new_company" class="text-blue-500 text-sm ml-2">... or choose an existing company</a>
+          <a href="#" phx-click="toggle_create_new_company" class="text-blue-500 text-sm font-normal ml-2"><%= gettext("... or choose an existing company") %></a>
         <% else %>
           <div phx-update="ignore">
             <%= select form, :company_id, 
-                    List.insert_at(Enum.map(@companies, fn c -> {c.last_name, c.id} end), 0, {"Select a existing company", nil}), 
+                    List.insert_at(Enum.map(@companies, fn c -> {c.last_name, c.id} end), 0, {gettext("Select a existing company"), nil}), 
                     class: "input",
                     "data-controller": "choice"
                   %>
           </div>
+
           <%= error_tag form, :company_id %>
-          <a href="#" phx-click="toggle_create_new_company" class="text-blue-500 text-sm">... <%= gettext("or add a new one") %></a>
+          <a href="#" phx-click="toggle_create_new_company" class="text-blue-500 text-sm font-normal">... <%= gettext("or add a new one") %></a>
         <% end %>
       </div>
     <% end %>
