@@ -39,6 +39,7 @@ defmodule PalapaWeb.JoinController do
     else
       conn
       |> put_status(:forbidden)
+      |> assign(:email_support, Application.fetch_env!(:palapa, :email_support))
       |> render("invalid_invitation.html")
     end
   end

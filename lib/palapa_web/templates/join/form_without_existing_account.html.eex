@@ -1,52 +1,52 @@
 <div class="content page-layout">
   <div class="main-content my-8 sm:w-4/5 mx-auto">
     <div class="card p-1 sm:p-8">
-    
+
       <%= form_for @changeset, Routes.join_path(@conn, :create, @invitation.id, @invitation.token), [as: :join_form, multipart: true], fn f -> %>
         <h2 class="card-header">
-          Welcome!
+          <%= gettext("Welcome!") %>
         </h2>
 
         <div class="card-header-separator"></div>
 
-        <p>You are about to join <span class="text-blue-500 font-bold"><%= @invitation.organization.name %></span>!<br>
-          But first, let's create an account for you:
+        <p><%= gettext("You are about to join %{organization}", %{organization: ~s[<span class="text-blue-500 font-bold">#{@invitation.organization.name} </span>!]}) %> <br>
+          <%= gettext("But first, let's create an account for you:") %>
         </p>
 
         <%= if @changeset.action do %>
-          <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
+          <p class="db fw6 lh-copy f6  text-red-400 font-bold"><%= gettext("Check the errors below:") %></p>
         <% end %>
 
         <div class="py-2">
           <div class="field">
-            <%= label f, :name, "Your full name", class: "label" %>
+            <%= label f, :name, gettext("Your full name"), class: "label" %>
             <%= text_input f, :name, class: "input" %>
             <%= error_tag f, :name %>
           </div>
 
           <div class="field">
-            <%= label f, :password, "Choose a password", class: "label" %>
-            <%= password_input f, :password, placeholder: "8 characters minimum", class: "input", autocomplete: "new-password" %>
+            <%= label f, :password, gettext("Choose a password"), class: "label" %>
+            <%= password_input f, :password, placeholder: gettext("minimum 8 characters"), class: "input", autocomplete: "new-password" %>
             <%= error_tag f, :password %>
           </div>
-          
+
           <div class="field">
-            <%= label f, :avatar, "Upload your picture/avatar (you can also do this later)", class: "label" %>
+            <%= label f, :avatar, gettext("Upload your picture/avatar (you can also do this later)"), class: "label" %>
             <%= file_input f, :avatar, class: "input-file" %>
             <%= error_tag f, :avatar %>
           </div>
 
 
           <div class="field">
-            <%= label f, :title, "Your title (optional)", class: "label" %>
-            <%= text_input f, :title, placeholder: "Engineer, sales assistant, project manager ...", class: "input" %>
+            <%= label f, :title, gettext("Your title (optional)"), class: "label" %>
+            <%= text_input f, :title, placeholder: gettext("Engineer, sales assistant, project manager..."), class: "input" %>
             <%= error_tag f, :title %>
           </div>
 
           <%= hidden_input f, :timezone, "data-controller": "timezone" %>
 
           <div class="card-actions">
-            <%= submit class: "btn btn-green" do %>Let's go <i class="fas fa-arrow-right"></i><% end %>
+            <%= submit class: "btn btn-green" do %><%= gettext("Let's go") %> <i class="fas fa-arrow-right"></i><% end %>
           </div>
         </div>
       <% end %>

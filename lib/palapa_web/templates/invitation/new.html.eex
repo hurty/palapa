@@ -1,7 +1,7 @@
 <div class="content page-layout">
   <div class="main-content">
     <div class="card p-1 sm:p-8">
-      <h2 class="card-header">Invite people</h2>
+      <h2 class="card-header"><%= gettext("Invite people") %></h2>
       <div class="card-header-separator"></div>
 
       <%= render PalapaWeb.InvitationView, "_form.html", conn: @conn, prefill: nil %>
@@ -10,7 +10,7 @@
     <%= if Enum.any?(@invitations) do %>
       <div id="pending_invitations_container" class="card my-8">
         <div class="border-b border-gray-200 rounded-t">
-          <h3 class="p-4 text-blue">Pending invitations</h3>
+          <h2 class="card-header p-4"><%= gettext("Pending invitations") %></h2>
             <div id="pending_invitations_list">
               <%= for invitation <- @invitations do %>
                 <%= render "_invitation.html", Map.put(assigns, :invitation, invitation) %>

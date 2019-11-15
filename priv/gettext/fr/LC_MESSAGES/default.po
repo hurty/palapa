@@ -277,6 +277,8 @@ msgstr "Changez votre mot de passe"
 #: lib/palapa_web/templates/document/document/form.html.eex:2
 #: lib/palapa_web/templates/document/document/new.html.eex:9
 #: lib/palapa_web/templates/document/page/form.html.eex:3
+#: lib/palapa_web/templates/join/form_with_existing_account.html.eex:17
+#: lib/palapa_web/templates/join/form_without_existing_account.html.eex:17
 msgid "Check the errors below:"
 msgstr "Corrigez les erreurs ci-dessous"
 
@@ -390,6 +392,7 @@ msgstr "Retour aux contacts"
 #: lib/palapa_web/templates/document/suggestion/edit.html.eex:9
 #: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:64
 #: lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:9
+#: lib/palapa_web/templates/invitation/_invitation.html.eex:18
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -1008,7 +1011,154 @@ msgstr "Enregistrer la page"
 msgid "%{author} edited %{time_ago}"
 msgstr "%{author} a édité la page %{time_ago}"
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/palapa_web/templates/document/document/index.html.eex:80
 msgid "Sort by date"
 msgstr "Trier par date de modification"
+
+#, elixir-format
+#: lib/palapa_web/templates/invitation/create.html.eex:11
+msgid "%{count} invitation has been sent successfully!"
+msgid_plural "%{count} invitations have been sent successfully!"
+msgstr[0] "%{count} invitation a été envoyée avec succès !"
+msgstr[1] "%{count} invitations ont été envoyées avec succès !"
+
+#, elixir-format
+#: lib/palapa_web/templates/invitation/create.html.eex:20
+msgid "%{count} person is already member of your organization!"
+msgid_plural "%{count} people are already members of your organization!"
+msgstr[0] "%{count} personne est déjà membre de l'espace de travail"
+msgstr[1] "%{count} personnes sont déjà membre de l'espace de travail"
+
+#, elixir-format
+#: lib/palapa_web/templates/invitation/create.html.eex:29
+msgid "%{count} invitation couldn't be sent"
+msgid_plural "%{count} invitations couldn't be sent"
+msgstr[0] "%{count} invitation n'a pas pu être envoyée"
+msgstr[1] "%{count} invitations n'ont pas pu être envoyées"
+
+#, elixir-format
+#: lib/palapa_web/templates/invitation/_invitation.html.eex:24
+msgid "Are you sure you want to cancel this invitation?"
+msgstr "Etes-vous sûr de vouloir supprimer ce commentaire ?"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/invalid_invitation.html.eex:7
+msgid "Ask an administrator of your workspace to renew your invitation."
+msgstr "Demander a un administrateur de l'espace de travail de renouveler votre invitation"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/form_without_existing_account.html.eex:13
+msgid "But first, let's create an account for you:"
+msgstr "Mais prenons d'abord un instant pour créer votre compte :"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/form_with_existing_account.html.eex:13
+msgid "But first, let's set up your profile for this workspace:"
+msgstr "Mais prenons d'abord un instant pour compléter votre profil pour cet espace de travail :"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/form_without_existing_account.html.eex:28
+msgid "Choose a password"
+msgstr "Changer de mot de passe"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/form_with_existing_account.html.eex:23
+#: lib/palapa_web/templates/join/form_without_existing_account.html.eex:42
+msgid "Engineer, sales assistant, project manager..."
+msgstr "Ingénieur, commercial, chef de projet..."
+
+#, elixir-format
+#: lib/palapa_web/templates/invitation/_form.html.eex:2
+msgid "Enter one email address per line:"
+msgstr "Entrez une addresse email par ligne :"
+
+#, elixir-format
+#: lib/palapa_web/templates/invitation/create.html.eex:34
+msgid "Go back to invitations"
+msgstr "Retour aux invitations"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/invalid_invitation.html.eex:8
+msgid "If the problem persists, please contact the support team at %{email}"
+msgstr "Si le problème persiste merci de contacter l'équipe support à %{email}"
+
+#, elixir-format
+#: lib/palapa_web/templates/invitation/create.html.eex:5
+#: lib/palapa_web/templates/invitation/new.html.eex:4
+msgid "Invite people"
+msgstr "Inviter des personnes"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/form_with_existing_account.html.eex:28
+#: lib/palapa_web/templates/join/form_without_existing_account.html.eex:49
+msgid "Let's go"
+msgstr "C'est parti"
+
+#, elixir-format
+#: lib/palapa_web/templates/invitation/new.html.eex:13
+msgid "Pending invitations"
+msgstr "Invitations envoyées"
+
+#, elixir-format
+#: lib/palapa_web/templates/invitation/_invitation.html.eex:6
+msgid "Send again"
+msgstr "Renvoyer"
+
+#, elixir-format
+#: lib/palapa_web/templates/invitation/_form.html.eex:9
+msgid "Send invitations"
+msgstr "Envoyer les invitations"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/invalid_invitation.html.eex:6
+msgid "This invitation link is invalid or has expired"
+msgstr "L'invitation est invalide ou a expiré"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/form_without_existing_account.html.eex:34
+msgid "Upload your picture/avatar (you can also do this later)"
+msgstr "Selectionnez votre photo/avatar (vous pourrez le faire plus tard)"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/form_with_existing_account.html.eex:7
+#: lib/palapa_web/templates/join/form_without_existing_account.html.eex:7
+msgid "Welcome!"
+msgstr "Bienvenue !"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/form_with_existing_account.html.eex:12
+#: lib/palapa_web/templates/join/form_without_existing_account.html.eex:12
+msgid "You are about to join %{organization}"
+msgstr "Vous êtes sur le point de rejoindre %{organization}"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/form_without_existing_account.html.eex:22
+msgid "Your full name"
+msgstr "Votre nom complet"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/form_with_existing_account.html.eex:22
+#: lib/palapa_web/templates/join/form_without_existing_account.html.eex:41
+msgid "Your title (optional)"
+msgstr "Votre rôle / poste"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/form_without_existing_account.html.eex:29
+msgid "minimum 8 characters"
+msgstr "8 caractères minimum"
+
+#, elixir-format
+#: lib/palapa_web/templates/join/invalid_invitation.html.eex:3
+msgid "This invitation is invalid or has expired"
+msgstr "L'invitation est invalide ou a expiré"
+
+#, elixir-format
+#: lib/palapa_web/templates/invitation/create.html.eex:30
+msgid "Make sure addresses are correct and well formatted and try again."
+msgstr "Assurez-vous que les adresses sont correctes et bien formattées et réessayez."
+
+#, elixir-format, fuzzy
+#: lib/palapa_web/templates/invitation/_invitation.html.eex:3
+msgid "Sent"
+msgstr "Envoyée"

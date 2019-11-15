@@ -18,7 +18,8 @@ defmodule PalapaWeb.AccountController do
         conn
         |> assign_changesets(account)
         |> put_flash(:success, "Your account has been updated.")
-        # Force redirect to set the possibly new locale
+        # Force redirect to set the new locale
+        |> put_session(:locale, nil)
         |> redirect(to: Routes.account_path(conn, :edit))
 
       {:error, :account, account_changeset, _changes} ->

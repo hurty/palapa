@@ -1,10 +1,10 @@
 <html>
   <head>
-    <title>Invitation link is invalid or has expired</title>
+    <title><%= gettext("This invitation is invalid or has expired") %></title>
   </head>
   <body style="text-align: center; font-family: sans-serif;">
-    <h2>This invitation link is invalid or has expired</h2>
-    <p>Ask an administrator of your workspace to renew your invitation.</p>
-    <p>If the problem persists, please contact the support team at <a href="mailto:<%= Application.fetch_env!(:palapa, :email_support) %>"><%= Application.fetch_env!(:palapa, :email_support) %></a></p>
+    <h2><%= gettext("This invitation link is invalid or has expired") %></h2>
+    <p><%= gettext("Ask an administrator of your workspace to renew your invitation.") %></p>
+    <p><%= gettext("If the problem persists, please contact the support team at %{email}", %{email: ~s[<a href="mailto:#{@email_support}">#{@email_support}</a>]}) %></p>
   </body>
 </html>

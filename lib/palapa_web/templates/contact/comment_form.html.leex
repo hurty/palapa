@@ -6,7 +6,7 @@
 
     <div class="text-xs my-auto">
       <%= link @comment.author.account.name, to: Routes.member_path(@socket, :show, @current_organization, @comment.author.id), class: "text-gray-800 font-bold hover:underline" %>
-      <div class="text-gray-700 font-light"><%= Helpers.auto_format_datetime(@conn, @comment.inserted_at) %></div>
+      <div class="text-gray-700 font-light"><%= Helpers.auto_format_datetime(@socket, @comment.inserted_at) %></div>
     </div>
   </div>
 </div>
