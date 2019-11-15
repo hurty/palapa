@@ -24,7 +24,7 @@ defmodule PalapaWeb.Locale do
   end
 
   defp get_locale_from_account_preference(conn) do
-    conn.assigns.current_account.locale
+    conn.assigns.current_account && conn.assigns.current_account.locale
   end
 
   def supported_locale?(locale) do
