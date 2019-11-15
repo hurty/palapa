@@ -1,4 +1,4 @@
-<div id="document" class="left-sidebar-layout" 
+<div id="document" class="left-sidebar-layout"
   data-controller="document rich-text" data-document-url="<%= Routes.document_url(@conn, :show, @current_organization, @document) %>" data-document-current-page-id="<%= @page.id %>" data-document-current-section-id="<%= @page.section_id %>">
   <div class="page-sidebar">
     <%= render PalapaWeb.Document.DocumentView, "table_of_contents.html", assigns %>
@@ -17,12 +17,12 @@
                 <div class="self-center mr-1"><%= Helpers.avatar(@page.last_author.account, :xs) %></div>
                 <div class="self-center">
                   <%= gettext("%{author} edited %{time_ago}", %{
-                      author: safe_to_string(link(@page.last_author.account.name, to: Routes.member_path(@conn, :show, @current_organization, @page.last_author), class: "hover:underline text-green-500")), 
-                      time_ago: safe_to_string(Helpers.auto_format_datetime(@page.updated_at, @current_account))}
+                      author: safe_to_string(link(@page.last_author.account.name, to: Routes.member_path(@conn, :show, @current_organization, @page.last_author), class: "hover:underline text-green-500")),
+                      time_ago: safe_to_string(Helpers.auto_format_datetime(@conn, @page.updated_at))}
                   ) |> raw() %>
                 </div>
               </div>
-            
+
           </div>
         </div>
 
@@ -59,7 +59,7 @@
         </div>
         </div>
       </div>
-      
+
       <%= render PalapaWeb.Document.SuggestionView, "index.html", assigns %>
   </div>
 </div>

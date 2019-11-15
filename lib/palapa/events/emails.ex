@@ -43,12 +43,10 @@ defmodule Palapa.Events.Emails do
   end
 
   def email_content(account, organization, events_view) do
-    locale = Map.get(account, :locale) || "en"
-
     date =
       Timex.now()
       |> Timex.shift(hours: -24)
-      |> Timex.lformat!("{Mfull} {D}", locale)
+      |> Timex.format!("{Mfull} {D}")
 
     new_email()
     |> from(Application.fetch_env!(:palapa, :email_transactionnal))

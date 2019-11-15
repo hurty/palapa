@@ -6,7 +6,7 @@
 
       <div class="text-xs my-auto">
         <%= link @comment.creator.account.name, to: Routes.member_path(@conn, :show, @conn.assigns.current_organization, @comment.creator.id), class: "text-gray-800 font-bold hover:underline" %>
-        <div class="text-gray-700 font-light"><%= Helpers.auto_format_datetime(@comment.inserted_at, @current_account) %></div>
+        <div class="text-gray-700 font-light"><%= Helpers.auto_format_datetime(@conn, @comment.inserted_at) %></div>
       </div>
     </div>
 
@@ -15,12 +15,12 @@
         <button data-target="popover.button" data-action="popover#toggle" class="card-actions-button card-actions-button--sm">
           <i class="fas fa-ellipsis-h"></i>
         </button>
-        
+
         <div data-target="popover.content" class="popover hidden">
           <div data-target="popover.arrow" class="popover__arrow"></div>
           <nav class="flex flex-col">
             <%= if permit? Palapa.Messages.Policy, :edit_comment, @conn.assigns.current_member, @comment do %>
-              <%= link to: Routes.message_comment_path(@conn, :edit, @conn.assigns.current_organization, @comment), 
+              <%= link to: Routes.message_comment_path(@conn, :edit, @conn.assigns.current_organization, @comment),
               data: [action: "message-comment#editComment"], class: "popover__link" do %>
                 <i class="fas fa-pen"></i>&nbsp;Edit comment
               <% end %>

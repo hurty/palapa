@@ -8,16 +8,16 @@
       <h3><%= link @message.title, to: Routes.message_path(@conn, :show, @current_organization, @message), class: "text-green-500 text-sm sm:text-base hover:underline" %></h3>
       <%= link @message.creator.account.name, to: Routes.member_path(@conn, :show, @current_organization, @message.creator.id), class: "text-gray-700 font-bold hover:underline" %>
       <div class="text-xs text-gray-700 font-light">
-        Posted <%= Helpers.auto_format_datetime(@message.inserted_at, @current_account) %>
+        Posted <%= Helpers.auto_format_datetime(@conn, @message.inserted_at) %>
       </div>
-      
+
       <%= if @message.content do %>
         <div class="border rounded-full border-gray-400 w-1/6 my-4"></div>
-        <%= link to: Routes.message_path(@conn, :show, @current_organization, @message), class: "text-base text-blue-700 leading-normal mt-1" do %> 
+        <%= link to: Routes.message_path(@conn, :show, @current_organization, @message), class: "text-base text-blue-700 leading-normal mt-1" do %>
           <p><%= excerpt(@message.content) %></p>
         <% end %>
       <% end %>
-            
+
       <div class="my-2"><%= message_teams_tags(@message) %></div>
       <%= if @message.comments_count > 0 do %>
         <%= link to: Routes.message_path(@conn, :show, @current_organization, @message)<>"#comments", class: "text-xs text-gray-700 mt-2" do %>

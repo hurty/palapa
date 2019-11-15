@@ -1,11 +1,11 @@
 <div data-controller="invitation" class="p-4 flex flex-col sm:flex-row flex-wrap border-t text-sm">
   <div class="flex-1 py-2"><%= @invitation.email %></div>
-  <div class="py-2 pr-2">Sent <%= Helpers.auto_format_datetime(@invitation.inserted_at, @current_account) %></div>
+  <div class="py-2 pr-2">Sent <%= Helpers.auto_format_datetime(@conn, @invitation.inserted_at) %></div>
   <div class="flex">
     <%= if Application.get_env(:palapa, :env) == :dev || sent_a_minute_ago?(@invitation) do %>
-      <%= link "Send again", to: Routes.invitation_renew_path(@conn, :renew, @current_organization, @invitation), 
+      <%= link "Send again", to: Routes.invitation_renew_path(@conn, :renew, @current_organization, @invitation),
         method: "post",
-        class: "btn", 
+        class: "btn",
         tabindex: 1,
         data: [
           target: "invitation.renewButton",
@@ -14,13 +14,13 @@
         ]
       %>
     <% end %>
-    
-    <%= link "Cancel", to: Routes.invitation_path(@conn, :delete, @current_organization, @invitation), 
+
+    <%= link "Cancel", to: Routes.invitation_path(@conn, :delete, @current_organization, @invitation),
       class: "btn btnred-500ml-1",
       tabindex: 1,
       data: [
-        target: "invitation.cancelButton", 
-        action: "invitation#cancel", 
+        target: "invitation.cancelButton",
+        action: "invitation#cancel",
         confirm: "Are you sure you want to cancel this invitation?"
       ]
     %>

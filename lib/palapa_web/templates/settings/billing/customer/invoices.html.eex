@@ -12,11 +12,11 @@
           <td>PDF</td>
         </tr>
       </thead>
-      
+
       <tbody>
       <%= for invoice <- @invoices do %>
         <tr class="border-t">
-          <td class="py-4"><%= Helpers.format_date(invoice.created_at, @current_account) %></td>
+          <td class="py-4"><%= Helpers.format_date(@conn, invoice.created_at) %></td>
           <td><%= Helpers.format_money(invoice.total) %></td>
           <td><%= invoice.status %></td>
           <td><%= link "Download", to: invoice.pdf_url, class: "btn" %></td>

@@ -16,14 +16,14 @@
           <div data-controller="popover" data-action="mousedown@window->popover#hide">
             <%= if Enum.any?(@teams) do %>
               <button data-target="popover.button" data-action="popover#toggle" class="btn text-sm truncate my-2 sm:my-0" title="<%= if @selected_team, do: @selected_team.name %>">
-                <%= if @selected_team do %> 
+                <%= if @selected_team do %>
                   <span class="text-blue-500 font-bold"><%= Helpers.truncate_string(@selected_team.name, 40) %></span>
                 <% else %>
                   <span class="font-bold"><%= gettext("All teams") %></span>
                 <% end %>
                 <i class="fas fa-angle-down ml-2"></i>
               </button>
-              
+
               <div data-target="popover.content" class="popover hidden">
                 <div data-target="popover.arrow" class="popover__arrow"></div>
                 <div class="flex flex-col">
@@ -52,7 +52,7 @@
             <% end %>
           </div>
         </div>
-        
+
         <%= if search_filters_applied?(@conn) do %>
           <%= link to: Routes.document_path(@conn, :index, @current_organization) do %>
             <div class="py-1 bg-blue-100 text-center text-sm text-blue-600 font-bold hover:underline"><%= gettext("Reset filters") %></div>
@@ -70,25 +70,25 @@
 
               <div class="sm:flex-1">
                 <%= if @conn.params["sort_by"] == "title" do %><span class="text-blue">•</span><% end %>
-                <%= link gettext("Title"), to: Routes.document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "title")), 
+                <%= link gettext("Title"), to: Routes.document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "title")),
                   class: "uppercase text-xs text-blue-500 font-bold hover:underline", title: gettext("Sort by title") %>
               </div>
-              
+
               <div class="sm:flex-none">
                 <%= if @conn.params["sort_by"] == "updated_at" || is_nil(@conn.params["sort_by"]) do %><span class="text-blue">•</span><% end %>
-                <%= link gettext("Last modified"), to: Routes.document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "updated_at")), 
+                <%= link gettext("Last modified"), to: Routes.document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "updated_at")),
                   class: "uppercase text-xs text-blue-500 font-bold hover:underline", title: gettext("Sort by date") %>
               </div>
-            </div>         
+            </div>
 
           <%= for document <- @documents do %>
             <div class="flex flex-wrap py-2 border-b border-gray-200 p-4">
               <div class="sm:w-8">
-                <i class="hidden sm:block fas fa-file-alt text-gray-600 text-base" title="<%= gettext("Document") %>"></i> 
+                <i class="hidden sm:block fas fa-file-alt text-gray-600 text-base" title="<%= gettext("Document") %>"></i>
               </div>
 
               <div class="w-full sm:flex-1">
-                <i class="sm:hidden fas fa-file-alt text-gray-600 text-base" title="<%= gettext("Document") %>"></i> 
+                <i class="sm:hidden fas fa-file-alt text-gray-600 text-base" title="<%= gettext("Document") %>"></i>
                 <%= link Helpers.truncate_string(document.title, 150), to: Routes.document_path(@conn, :show, @current_organization, document), class: "text-base text-green-500 font-bold hover:underline text-sm" %>
                 <div class="font-bold mr-2 rounded my-1">
                 <%= if document.team do %>
@@ -98,9 +98,9 @@
                 <% end %>
                 </div>
               </div>
-              
+
               <div class="sm:flex-none">
-                <div class="text-xs sm:text-sm text-gray-700"><span class="sm:hidden">Modified </span><%= Helpers.format_date(document.updated_at, @current_account) %>
+                <div class="text-xs sm:text-sm text-gray-700"><span class="sm:hidden">Modified </span><%= Helpers.format_date(@conn, document.updated_at) %>
                   <div class="flex mt-2">
                     <%= Helpers.avatar(document.last_author.account, :xs) %>
                     <span class="text-xs mx-2 text-gray-800">
@@ -114,7 +114,7 @@
 
           <%= if @documents.total_pages > 1 do %>
             <div class="text-center py-2">
-              <%= pagination_links @documents, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>    
+              <%= pagination_links @documents, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
             </div>
           <% end %>
         </div>
@@ -128,7 +128,7 @@
 
     </div>
         <div class="my-8 text-center">
-          <%= link to: Routes.trash_path(@conn, :index, @current_organization), 
+          <%= link to: Routes.trash_path(@conn, :index, @current_organization),
             class: "border py-2 px-4 rounded-full text-center bg-white hover:bg-gray-400 text-blue" do %>
             <i class="fas fa-trash text-gray-700 mr-2"></i><%= gettext("View documents in the trash") %>
           <% end %>
@@ -142,7 +142,7 @@
         <div class="flex flex-wrap">
           <%= for document <- @recent_documents do %>
             <div class="w-full my-1">
-              <i class="fas fa-file-alt text-gray-600 text-sm mr-2"></i> 
+              <i class="fas fa-file-alt text-gray-600 text-sm mr-2"></i>
               <%= link Helpers.truncate_string(document.title), to: Routes.document_path(@conn, :show, @current_organization, document), class: "text-sm font-bold text-green-500 hover:underline" %>
             </div>
           <% end %>

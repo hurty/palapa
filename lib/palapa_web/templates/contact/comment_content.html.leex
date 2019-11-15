@@ -6,7 +6,7 @@
 
       <div class="text-xs my-auto">
         <%= link @comment.author.account.name, to: Routes.member_path(@socket, :show, @current_organization, @comment.author.id), class: "text-gray-800 font-bold hover:underline" %>
-        <div class="text-gray-700 font-light"><%= Helpers.auto_format_datetime(@comment.inserted_at, @current_account) %></div>
+        <div class="text-gray-700 font-light"><%= Helpers.auto_format_datetime(@conn, @comment.inserted_at) %></div>
       </div>
     </div>
 
@@ -15,7 +15,7 @@
         <button data-target="popover.button" data-action="popover#toggle" class="card-actions-button card-actions-button--sm">
           <i class="fas fa-ellipsis-h"></i>
         </button>
-        
+
         <div data-target="popover.content" class="popover hidden">
           <div data-target="popover.arrow" class="popover__arrow"></div>
           <nav class="flex flex-col">

@@ -3,44 +3,46 @@ defmodule PalapaWeb.Helpers do
   alias PalapaWeb.Router.Helpers, as: Routes
   alias PalapaWeb.Endpoint
 
-  def auto_format_datetime(datetime, _account) when is_nil(datetime), do: nil
+  def get_timezone(conn) do
+    Map.get(conn.assigns.current_account, :timezone) || "UTC"
+  end
 
-  def auto_format_datetime(datetime, account) do
+  def get_locale() do
+    Gettext.get_locale(PalapaWeb.Gettext)
+  end
+
+  def auto_format_datetime(_conn, datetime) when is_nil(datetime), do: nil
+
+  def auto_format_datetime(conn, datetime) do
     more_than_a_week_old? =
       DateTime.utc_now()
       |> Timex.shift(days: -7)
       |> Timex.beginning_of_day()
       |> Timex.after?(datetime)
 
-    timezone = Map.get(account, :timezone) || "UTC"
-    locale = Map.get(account, :locale) || "en"
     short_format = "{WDshort} {D} {Mfull} {YYYY}"
     complete_format = "{WDshort} {D} {Mfull} {YYYY}, {h24}:{m} UTC{Z:}"
 
-    datetime = datetime |> Timex.Timezone.convert(timezone)
+    datetime = datetime |> Timex.Timezone.convert(get_timezone(conn))
 
     short_datetime =
       if(
         more_than_a_week_old?,
-        do: Timex.lformat!(datetime, short_format, locale),
-        else: Timex.from_now(datetime)
+        do: Timex.lformat!(datetime, short_format, get_locale()),
+        else: Timex.from_now(datetime, get_locale())
       )
 
-    complete_datetime = datetime |> Timex.lformat!(complete_format, locale)
+    complete_datetime = datetime |> Timex.lformat!(complete_format, get_locale())
 
     content_tag(:span, short_datetime, title: complete_datetime)
   end
 
-  def format_date(datetime, _account) when is_nil(datetime), do: nil
+  def format_date(_conn, datetime) when is_nil(datetime), do: nil
 
-  def format_date(datetime, account) do
-    timezone = Map.get(account, :timezone) || "UTC"
-    locale = Map.get(account, :locale) || "en"
+  def format_date(conn, datetime) do
     short_format = "{Mfull} {D}, {YYYY}"
-
-    datetime = datetime |> Timex.Timezone.convert(timezone)
-
-    Timex.lformat!(datetime, short_format, locale)
+    datetime = datetime |> Timex.Timezone.convert(get_timezone(conn))
+    Timex.lformat!(datetime, short_format, get_locale())
   end
 
   def members_for_autocomplete(organization) do
@@ -125,13 +127,12 @@ defmodule PalapaWeb.Helpers do
 
   def account_time(account) do
     timezone = Map.get(account, :timezone) || "UTC"
-    locale = Map.get(account, :locale) || "en"
     format = "{h24}:{m}"
 
     datetime =
       DateTime.utc_now()
       |> Timex.Timezone.convert(timezone)
-      |> Timex.lformat!(format, locale)
+      |> Timex.lformat!(format, get_locale())
 
     content_tag(:time, datetime)
   end

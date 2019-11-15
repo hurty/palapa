@@ -1011,4 +1011,4 @@ msgstr "%{author} a édité la page %{time_ago}"
 #, elixir-format, fuzzy
 #: lib/palapa_web/templates/document/document/index.html.eex:80
 msgid "Sort by date"
-msgstr "Trier par titre"
+msgstr "Trier par date de modification"
