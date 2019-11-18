@@ -98,7 +98,7 @@ msgstr "100Go de stockage inclus"
 #: lib/palapa_web/templates/layout/_private_navigation.html.eex:62
 #: lib/palapa_web/templates/layout/account.html.eex:23
 msgid "Account settings"
-msgstr "Paramètres"
+msgstr "Paramètres du compte"
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:23
@@ -1202,7 +1202,7 @@ msgstr "Messages"
 #, elixir-format, fuzzy
 #: lib/palapa_web/templates/layout/_private_navigation.html.eex:61
 msgid "My profile on %{workspace}"
-msgstr "Tout le monde dans %{workspace}"
+msgstr "Mon profil dans %{workspace}"
 
 #, elixir-format, fuzzy
 #: lib/palapa_web/templates/layout/_private_navigation.html.eex:31
