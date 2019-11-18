@@ -1,6 +1,6 @@
-<div id="document" class="content left-sidebar-layout" 
+<div id="document" class="content left-sidebar-layout"
   data-controller="document" data-document-url="<%= Routes.document_url(@conn, :show, @document.organization_id  , @document) %>">
-  
+
   <div class="page-sidebar">
     <%= render "table_of_contents.html", assigns %>
 
@@ -11,6 +11,6 @@
 
   <div class="main-content ml-4">
     <section class="blankslate p-8 border-4 border-dotted">
-      <p class="py-2">This document is empty</p>
+      <p class="py-2"><%= gettext("This document is empty") %></p>
     </section>
 </div>

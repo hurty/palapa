@@ -6,7 +6,7 @@
 
     <div class="flex-1">
       <div class="text-green-500 font-bold text-sm"><%= Helpers.truncate_string(@search_result.member.account.name) %></div>
-      <div class="text-xs text-gray-600 font-bold">Member</div>
+      <div class="text-xs text-gray-600 font-bold"><%= gettext("Member") %></div>
     </div>
   </div>
 <% end  %>

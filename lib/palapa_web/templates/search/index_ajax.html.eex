@@ -1,6 +1,6 @@
 <%= if Enum.any?(@search_results) do %>
   <ul class="">
-    <%= for search_result <- @search_results do %>            
+    <%= for search_result <- @search_results do %>
       <li class="py-4 border-b border-gray-100 rounded" data-target="search.result">
         <%= render search_result_template_path(search_result), Map.put(assigns, :search_result, search_result) %>
       </li>
@@ -9,7 +9,7 @@
     <li class="mt-2 text-center btn bg-gray-400 rounded" data-target="search.result">
       <%= link "See all the results", to: Routes.search_path(@conn, :index, @current_organization, query: @conn.params["query"]), class: "text-gray-800 font-bold" %>
     </li>
-  </ul>  
+  </ul>
 <% else %>
-  <div class="text-center text-sm text-gray-500 font-bold w-64">No results</div>
+  <div class="text-center text-sm text-gray-500 font-bold w-64"><%= gettext("No results") %></div>
 <% end %>

@@ -1,40 +1,40 @@
 <form phx-change="update_administrators">
   <table class="mx-auto my-4 w-full">
     <tr class="border-b font-bold bg-gray-100 rounded text-sm">
-      <th class="py-2 text-left">Name</th>
-      <th class="py-2">Administrator?</th>
-      <th class="py-2">Delete member</th>
+      <th class="py-2 text-left"><%= gettext("Name") %></th>
+      <th class="py-2"><%= gettext("Administrator?") %></th>
+      <th class="py-2"><%= gettext("Delete member") %></th>
     </tr>
-    
+
     <%= for member <- @members do %>
       <tr class="border-b text-center">
         <td class="flex items-center py-4"><%= member.account.name %></td>
         <td>
-          <input 
+          <input
             type="checkbox"
-            name="administrators[]" 
-            title="Administrator?" 
-            value="<%= member.id %>" 
-            <%= if member.role == :owner do %>checked<% end %> 
+            name="administrators[]"
+            title="Administrator?"
+            value="<%= member.id %>"
+            <%= if member.role == :owner do %>checked<% end %>
             <%= if @current_member.id == member.id do %>disabled<% end %>
           >
         </td>
-        
+
         <td>
           <%= if @current_member.id != member.id do %>
             <%= if @confirm_delete_member_id == member.id do %>
               <div class="py-2 bg-red-100">
-                <p class="py-2 text-red-600">Are you sure?</p>
+                <p class="py-2 text-red-600"><%= gettext("Are you sure?") %></p>
                 <button phx-click="confirm_delete_member" phx-value-member_id="<%= member.id %>" class="btn btn-red">Yes, delete this member</button>
-                <button phx-click="cancel_delete_member" class="btn">Cancel</button>
+                <button phx-click="cancel_delete_member" class="btn"><%= gettext("Cancel") %></button>
               </div>
             <% else %>
               <button phx-click="delete_member" phx-value-member_id="<%= member.id %>" class="btn text-red">
-                Delete
+                <%= gettext("Delete") %>
               </button>
             <% end %>
           <% else %>
-            <p class="text-gray-500 italic">Cannot delete yourself</p>
+            <p class="text-gray-500 italic"><%= gettext("Cannot delete yourself") %></p>
           <% end %>
         </td>
       </tr>

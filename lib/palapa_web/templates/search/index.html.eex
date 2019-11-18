@@ -2,12 +2,12 @@
   <div class="main-content">
     <div class="card">
       <div class="card-toolbar font-bold text-sm">
-        <i class="fas fa-search"></i> Search results for "<%= @conn.params["query"] %>" 
+        <i class="fas fa-search mr-2"></i><%= gettext("Search results for \"%{search_term}\"", %{search_term: @conn.params["query"]}) %>
         <span class="font-normal">(<%= @search_results.total_entries %> results)</span>
       </div>
 
       <ul class=" px-4">
-        <%= for search_result <- @search_results do %>            
+        <%= for search_result <- @search_results do %>
           <li class="py-4 border-b border-gray-100">
             <%= render search_result_template_path(search_result), Map.put(assigns, :search_result, search_result) %>
           </li>

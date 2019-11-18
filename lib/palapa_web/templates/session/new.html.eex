@@ -1,28 +1,28 @@
 <div class="flex justify-center">
   <div class="w-full max-w-sm">
     <div class="card p-8">
-      <h2 class="card-header">Login</h2>
-      
+      <h2 class="card-header"><%= gettext("Sign in") %></h2>
+
       <div class="card-header-separator"></div>
 
       <%= form_for @conn, Routes.session_path(@conn, :create), [as: :session], fn f -> %>
         <div class="field">
-          <%= label f, :email, "Email address", class: "label" %>
+          <%= label f, :email, gettext("Email address"), class: "label" %>
           <%= email_input f, :email, class: "input", tabindex: 1 %>
         </div>
 
         <div class="field">
-          <%= label f, :password, "Password", class: "label" %>
+          <%= label f, :password, gettext("Password"), class: "label" %>
           <%= password_input f, :password, class: "input", tabindex: 2 %>
         </div>
 
         <div class="card-actions">
-          <%= submit "Log in", class: "btn btn-green", tabindex: 3 %>
+          <%= submit gettext("Sign in"), class: "btn btn-green", tabindex: 3 %>
         </div>
       <% end %>
 
       <div class="text-center mt-4">
-      <%= link "I have forgotten my password", to: Routes.password_reset_path(@conn, :new), class: "text-gray-600 hover:underline" %>
+      <%= link gettext("I have forgotten my password"), to: Routes.password_reset_path(@conn, :new), class: "text-gray-600 hover:underline" %>
       </div>
     </div>
   </div>

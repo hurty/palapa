@@ -5,7 +5,7 @@
 
   <div class="main-content">
     <div class="card p-4">
-      <h2 class="text-gray-800 text-2xl font-bold">Workspace settings</h2>
+      <h2 class="text-gray-800 text-2xl font-bold"><%= gettext("Workspace settings") %></h2>
       <div class="card-header-separator"></div>
 
       <%= form_for @organization_changeset, Routes.settings_workspace_path(@conn, :update, @current_organization), fn form -> %>
@@ -16,21 +16,21 @@
         </div>
 
         <div class="card-actions">
-          <%= submit "Save", class: "btn btn-green" %>
+          <%= submit gettext("Save"), class: "btn btn-green" %>
         </div>
       <% end %>
     </div>
 
     <%= if permit?(Palapa.Organizations.Policy, :delete_organization, @current_member, @current_organization) do %>
       <div class="card p-4 mt-8">
-        <h2 class="text-gray-800 text-2xl font-bold">Delete the workspace</h2>
+        <h2 class="text-gray-800 text-2xl font-bold"><%= gettext("Delete the workspace") %></h2>
         <div class="card-header-separator"></div>
 
-        <p class="my-2 text-sm">Deleting the workspace will permanently erase all content (messages, documents, contacts, member profiles) after a period of 15 days. You will no longer receive new invoices for this workspace.</p>
+        <p class="my-2 text-sm"><%= gettext("Deleting the workspace will permanently erase all content (messages, documents, contacts, member profiles) after a period of 15 days. You will no longer receive new invoices for this workspace.") %></p>
 
         <div class="mt-4">
           <button class="btn btn-red" data-micromodal-trigger="modal-1">
-            <i class="fas fa-exclamation-triangle mr-2"></i>Delete the workspace
+            <i class="fas fa-exclamation-triangle mr-2"></i><%= gettext("Delete the workspace") %>
           </button>
         </div>
       </div>
@@ -44,20 +44,20 @@
       <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
         <header class="modal__header">
           <h2 class="modal__title" id="modal-1-title">
-            Delete the workspace
+            <%= gettext("Delete the workspace") %>
           </h2>
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
-        
+
         <main class="modal__content" id="modal-1-content">
-          <p>You are about to delete the workspace and all its content. Are you sure?</p>
+          <p><%= gettext("You are about to delete the workspace and all its content. Are you sure?") %></p>
         </main>
 
         <footer class="modal__footer">
           <%= link(to: Routes.organization_path(@conn, :delete, @current_organization), data: [controller: "link", action: "link#delete"], class: "btn btn-red mr-2") do %>
-            <i class="fas fa-exclamation-triangle mr-2"></i>Yes, delete this workspace
+            <i class="fas fa-exclamation-triangle mr-2"></i><%= gettext("Yes, delete this workspace") %>
           <% end %>
-          <button class="btn" data-micromodal-close aria-label="Close this dialog window">Cancel</button>
+          <button class="btn" data-micromodal-close aria-label="Close this dialog window"><%= gettext("Cancel") %></button>
         </footer>
       </div>
     </div>

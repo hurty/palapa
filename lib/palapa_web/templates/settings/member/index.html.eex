@@ -5,12 +5,12 @@
 
   <div class="main-content">
     <div class="card p-4">
-      <h2 class="text-gray-800 text-2xl font-bold">Workspace members</h2>
+      <h2 class="text-gray-800 text-2xl font-bold"><%= gettext("Workspace members") %></h2>
       <div class="card-header-separator"></div>
 
       <%= if permit? Palapa.Invitations.Policy, :create, @current_member do %>
         <%= link(to: Routes.invitation_path(@conn, :new, @current_organization), class: "btn") do %>
-          <i class="fas fa-user-plus text-green-500 mr-2"></i>Invite people
+          <i class="fas fa-user-plus text-green-500 mr-2"></i><%= gettext("Invite people") %>
         <% end %>
       <% end %>
 

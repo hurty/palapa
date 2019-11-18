@@ -1,4 +1,4 @@
-<h2 class="text-gray-800 text-2xl font-bold">Billing overview</h2>
+<h2 class="text-gray-800 text-2xl font-bold"><%= gettext("Billing overview") %></h2>
 <div class="card-header-separator"></div>
 
 <%= if Palapa.Billing.get_billing_status(@current_organization) == :trialing do %>
@@ -8,10 +8,10 @@
   <%= if @customer do %>
     <div class="flex flex-wrap">
       <div class="flex-1 bg-gray-100 rounded-lg p-4 m-2">
-        <h3 class="text-green-500">Billing information</h3>
+        <h3 class="text-green-500"><%= gettext("Billing information") %></h3>
 
         <div class="my-2 leading-tight">
-          <span class="font-bold">Invoices will be sent to:</span> <span class=""><%= @customer.billing_email %></span><br>
+          <span class="font-bold"><%= gettext("Invoices will be sent to:") %></span> <span class=""><%= @customer.billing_email %></span><br>
           <div class="my-2">
             <%= @customer.billing_name %><br>
             <%= @customer.billing_address %><br>
@@ -19,27 +19,27 @@
             <%= @customer.billing_country %><br>
           </div>
         </div>
-        
+
         <div class="my-2">
-          <%= if @customer.vat_number do %>VAT number: <%= @customer.vat_number %><% end %>
+          <%= if @customer.vat_number do %><%= gettext("VAT number:") %> <%= @customer.vat_number %><% end %>
         </div>
 
         <div class="my-4">
-          <%= link "Update billing information", to: Routes.settings_customer_path(@conn, :edit, @current_organization), class: "btn" %>
+          <%= link gettext("Update billing information"), to: Routes.settings_customer_path(@conn, :edit, @current_organization), class: "btn" %>
         </div>
       </div>
 
       <div class="bg-gray-100 rounded-lg p-4 m-2">
-        <h3 class="text-green-500">Payment method</h3>
-        
+        <h3 class="text-green-500"><%= gettext("Payment method") %></h3>
+
         <div class="my-2">
           <i class="fas fa-credit-card"></i> <%= String.capitalize @customer.card_brand %>
           **** **** **** <%= @customer.card_last_4 %> <br>
-          Expires <%= @customer.card_expiration_month %> / <%= @customer.card_expiration_year %>
+          <%= gettext("Expires") %> <%= @customer.card_expiration_month %> / <%= @customer.card_expiration_year %>
         </div>
-        
+
         <div class="my-4">
-          <%= link "Update payment method", to: Routes.settings_payment_method_path(@conn, :edit, @current_organization), class: "btn" %>
+          <%= link gettext("Update payment method"), to: Routes.settings_payment_method_path(@conn, :edit, @current_organization), class: "btn" %>
         </div>
       </div>
     </div>

@@ -2,12 +2,12 @@
   <div class="flex justify-between p-1 sm:p-4 border-b border-gray-200">
     <div>
       <h2 class="font-bold text-gray-800 text-base"><%= @document.title %></h2>
-      <h5 class="font-bold text-gray-600 text-xs">Table of contents</h5>
+      <h5 class="font-bold text-gray-600 text-xs"><%= gettext("Table of contents") %></h5>
       <div class="sm:hidden py-2">
-        <a class="text-blue" data-action="document#toggleToc">Toggle table of contents</a>
+        <a class="text-blue" data-action="document#toggleToc"><%= gettext("Toggle table of contents") %></a>
       </div>
     </div>
-    
+
   </div>
 
   <div class="hidden sm:block" data-target="document.toc">

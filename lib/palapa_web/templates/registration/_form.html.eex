@@ -1,43 +1,43 @@
 <%= form_for @changeset, Routes.registration_path(@conn, :create), [as: :registration], fn f -> %>
   <h2 class="card-header">
-    Create a new workspace
+    <%= gettext("Create a new workspace") %>
   </h2>
 
   <div class="card-header-separator"></div>
 
   <%= if @changeset.action do %>
-    <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
+    <p class="db fw6 lh-copy f6  text-red-400 font-bold"><%= gettext("Check the errors below:") %></p>
   <% end %>
 
   <div class="field">
-    <%= label f, :organization_name, "Workspace name", class: "label" %>
+    <%= label f, :organization_name, gettext("Workspace name"), class: "label" %>
     <%= error_tag f, :organization_name %>
-    <%= text_input f, :organization_name, placeholder: "Usually, your company or organization name", class: "input", tabindex: 1 %>
+    <%= text_input f, :organization_name, placeholder: gettext("Usually your company or organization name"), class: "input", tabindex: 1 %>
   </div>
 
   <div class="field">
-    <%= label f, :name, "Your full name", class: "label" %>
+    <%= label f, :name, gettext("Your full name"), class: "label" %>
     <%= error_tag f, :name %>
     <%= text_input f, :name, placeholder: "Richard Hendricks", class: "input", tabindex: 1 %>
   </div>
 
   <div class="field">
-    <%= label f, :email, "Your Email address", class: "label" %>
+    <%= label f, :email, gettext("Your email address"), class: "label" %>
     <%= error_tag f, :email %>
     <%= email_input f, :email, placeholder: "richard@piedpiper.com", class: "input", tabindex: 1 %>
   </div>
 
   <div class="field">
-    <%= label f, :password, "Choose a password", class: "label" %>
+    <%= label f, :password, gettext("Choose a password"), class: "label" %>
     <%= error_tag f, :password %>
-    <%= password_input f, :password, placeholder: "8 characters minimum", class: "input", autocomplete: "new-password", tabindex: 1 %>
+    <%= password_input f, :password, placeholder: gettext("8 characters minimum"), class: "input", autocomplete: "new-password", tabindex: 1 %>
   </div>
 
   <%= hidden_input f, :timezone, "data-controller": "timezone" %>
 
   <div class="card-actions">
-    <%= submit "Create a new account", class: "btn btn-green", tabindex: 1 %>
+    <%= submit gettext("Create a new account"), class: "btn btn-green", tabindex: 1 %>
   </div>
 
-  <div class="card-footer">You already have an account? &nbsp; <%= link("Log in!", to: Routes.session_path(@conn, :new), class: "text-green-500", tabindex: 1) %></div>
+  <div class="card-footer"><%= gettext("You already have an account?") %> &nbsp; <%= link(gettext("Log in!"), to: Routes.session_path(@conn, :new), class: "text-green-500", tabindex: 1) %></div>
 <% end %>

@@ -7,7 +7,7 @@
   <div class="flex-1">
     <div class="text-green-500 font-bold text-sm"><%= Helpers.truncate_string(@search_result.message.title) %></div>
     <div>
-      <span class="text-xs text-gray-600 font-bold">Message</span>
+      <span class="text-xs text-gray-600 font-bold"><%= gettext("Message") %></span>
     </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 <%= link to: Routes.document_page_path(@conn, :show, @current_organization, @search_result.page) do %>
 <div class="flex px-2">
   <div class="w-8">
-    <i class="fas fa-file-alt text-gray-600 text-sm"></i> 
+    <i class="fas fa-file-alt text-gray-600 text-sm"></i>
   </div>
 
   <div class="flex-1">
@@ -12,9 +12,9 @@
         <%= Helpers.truncate_string(@search_result.page.document.title) %>
       </div>
     <% end %>
-    
+
     <div>
-      <span class="text-xs text-gray-600 font-bold">Document page</span>
+      <span class="text-xs text-gray-600 font-bold"><%= gettext("Document page") %></span>
     </div>
   </div>
 </div>

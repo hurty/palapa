@@ -1,10 +1,10 @@
 <div class="content page-layout">
   <div class="main-content card p-4">
-    <h2 class="card-header">Update the payment method</h2>
+    <h2 class="card-header"><%= gettext("Update the payment method") %></h2>
     <div class="card-header-separator"></div>
-    
-    <%= render PalapaWeb.Billing.PaymentMethodView, "form.html", 
+
+    <%= render PalapaWeb.Billing.PaymentMethodView, "form.html",
       Map.merge(assigns, %{form_path: Routes.settings_payment_method_path(@conn, :update, @current_organization)}) %>
-  
+
   </div>
 </div>

@@ -112,6 +112,7 @@ msgstr "Email pour la facture"
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:4
+#: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:11
 msgid "Billing information"
 msgstr "Informations de facturation"
 
@@ -220,6 +221,7 @@ msgid "We didn't receive any payment for the current period. An owner of the wor
 msgstr "Nous n'avons pas reçu de paiement pour la période en cours. Un propriétaire de l'espace de travail doit mettre à jour les informations de facturation pour restaurer l'accès à l'espace."
 
 #, elixir-format
+#: lib/palapa_web/templates/registration/_form.html.eex:13
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:13
 msgid "Workspace name"
 msgstr "Nom de l'espace de travail"
@@ -277,6 +279,7 @@ msgstr "Changez votre mot de passe"
 #: lib/palapa_web/templates/document/document/new.html.eex:9 lib/palapa_web/templates/document/page/form.html.eex:3
 #: lib/palapa_web/templates/join/form_with_existing_account.html.eex:17 lib/palapa_web/templates/join/form_without_existing_account.html.eex:17
 #: lib/palapa_web/templates/organization/new.html.eex:10 lib/palapa_web/templates/password_reset/edit.html.eex:9
+#: lib/palapa_web/templates/registration/_form.html.eex:9 lib/palapa_web/templates/settings/billing/customer/edit.html.eex:5
 msgid "Check the errors below:"
 msgstr "Corrigez les erreurs ci-dessous"
 
@@ -383,7 +386,8 @@ msgstr "Retour aux contacts"
 #: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:63 lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:9
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:18 lib/palapa_web/templates/member/_personal_information_form.html.leex:37
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:40 lib/palapa_web/templates/message/new.html.eex:18
-#: lib/palapa_web/templates/organization/new.html.eex:22
+#: lib/palapa_web/templates/organization/new.html.eex:22 lib/palapa_web/templates/settings/member/members.html.leex:29
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:60
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -557,11 +561,13 @@ msgstr "Mettre à jour le commentaire"
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/payment_method/edit.html.eex:3
+#: lib/palapa_web/templates/settings/billing/payment_method/edit.html.eex:3
 msgid "Update the payment method"
 msgstr "Mettre à jour le moyen de paiement"
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:31
+#: lib/palapa_web/templates/settings/billing/customer/new.html.eex:3
 msgid "Upgrade your account"
 msgstr "Mettre votre compte à niveau"
 
@@ -716,7 +722,7 @@ msgstr "Désactiver le partage public"
 
 #, elixir-format
 #: lib/palapa_web/templates/document/document/index.html.eex:87
-#: lib/palapa_web/templates/document/document/index.html.eex:91
+#: lib/palapa_web/templates/document/document/index.html.eex:91 lib/palapa_web/templates/search/search_result_document.html.eex:10
 msgid "Document"
 msgstr "Document"
 
@@ -864,7 +870,8 @@ msgstr "Restaurer ?"
 
 #, elixir-format
 #: lib/palapa_web/templates/document/suggestion/edit.html.eex:8
-#: lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:8
+#: lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:8 lib/palapa_web/templates/settings/billing/customer/edit.html.eex:11
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:19
 msgid "Save"
 msgstr "Sauvegarder"
 
@@ -932,11 +939,13 @@ msgstr "Ce document a été mis dans la corbeille."
 
 #, elixir-format
 #: lib/palapa_web/templates/document/document/show.html.eex:12
+#: lib/palapa_web/templates/public/document/show.html.eex:14
 msgid "This document is empty"
 msgstr "Ce document est vide"
 
 #, elixir-format
 #: lib/palapa_web/templates/document/page/show.html.eex:38
+#: lib/palapa_web/templates/public/page/show.html.eex:27
 msgid "This page is empty"
 msgstr "Cette page est vide"
 
@@ -954,6 +963,7 @@ msgstr "Titre..."
 
 #, elixir-format
 #: lib/palapa_web/templates/document/document/table_of_contents.html.eex:13
+#: lib/palapa_web/templates/public/document/table_of_contents.html.eex:7
 msgid "Toggle table of contents"
 msgstr "Montrer/cacher la table des matières"
 
@@ -1051,6 +1061,7 @@ msgstr "Mais prenons d'abord un instant pour compléter votre profil pour cet es
 
 #, elixir-format
 #: lib/palapa_web/templates/join/form_without_existing_account.html.eex:28
+#: lib/palapa_web/templates/registration/_form.html.eex:31
 msgid "Choose a password"
 msgstr "Choisissez un mot de passe"
 
@@ -1077,7 +1088,7 @@ msgstr "Si le problème persiste merci de contacter l'équipe support à %{email
 
 #, elixir-format
 #: lib/palapa_web/templates/invitation/create.html.eex:5
-#: lib/palapa_web/templates/invitation/new.html.eex:4
+#: lib/palapa_web/templates/invitation/new.html.eex:4 lib/palapa_web/templates/settings/member/index.html.eex:13
 msgid "Invite people"
 msgstr "Inviter des personnes"
 
@@ -1126,6 +1137,7 @@ msgstr "Vous êtes sur le point de rejoindre %{organization}"
 
 #, elixir-format
 #: lib/palapa_web/templates/join/form_without_existing_account.html.eex:22
+#: lib/palapa_web/templates/registration/_form.html.eex:19
 msgid "Your full name"
 msgstr "Votre nom complet"
 
@@ -1220,11 +1232,13 @@ msgstr "Recherche..."
 
 #, elixir-format
 #: lib/palapa_web/templates/layout/_sidebar.html.eex:49
+#: lib/palapa_web/templates/settings/settings/settings_navigation.html.eex:2
 msgid "Settings"
 msgstr "Paramètres"
 
 #, elixir-format
 #: lib/palapa_web/templates/layout/_public_navigation.html.eex:24
+#: lib/palapa_web/templates/session/new.html.eex:4 lib/palapa_web/templates/session/new.html.eex:20
 msgid "Sign in"
 msgstr "Se connecter"
 
@@ -1266,6 +1280,7 @@ msgstr "Créer une équipe"
 
 #, elixir-format
 #: lib/palapa_web/templates/member/_personal_information.html.leex:35
+#: lib/palapa_web/templates/settings/member/members.html.leex:33
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -1393,7 +1408,7 @@ msgstr "Vous n'avez partagé aucune information personnelle pour l'instant."
 #, elixir-format
 #: lib/palapa_web/templates/member/index.html.eex:14
 msgid "Invite people to the workspace"
-msgstr "Inviter des personnes à rejoindre l'espace"
+msgstr "Inviter des personnes"
 
 #, elixir-format
 #: lib/palapa_web/templates/member/_member_profile.html.leex:44
@@ -1478,8 +1493,9 @@ msgstr "Un email a été envoyé à %{email}."
 msgid "Check your inbox and click the given link to reset your password."
 msgstr "Consultez votre boite de réception et suivez les instructions pour réinitialiser votre mot de passe."
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/palapa_web/templates/organization/new.html.eex:4
+#: lib/palapa_web/templates/registration/_form.html.eex:3
 msgid "Create a new workspace"
 msgstr "Créer un espace de travail"
 
@@ -1490,6 +1506,7 @@ msgstr "Entrez l'adresse email associée à votre compte Palapa. Nous vous enver
 
 #, elixir-format
 #: lib/palapa_web/templates/organization/new.html.eex:15
+#: lib/palapa_web/templates/settings/member/members.html.leex:4
 msgid "Name"
 msgstr "Nom"
 
@@ -1499,7 +1516,7 @@ msgstr "Nom"
 msgid "Password reset"
 msgstr "Réinitialisation du mot de passe"
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/palapa_web/templates/password_reset/new.html.eex:17
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
@@ -1516,6 +1533,7 @@ msgstr "Vous n'êtes membre d'aucun espace de travail"
 
 #, elixir-format
 #: lib/palapa_web/templates/password_reset/new.html.eex:12
+#: lib/palapa_web/templates/registration/_form.html.eex:25
 msgid "Your email address"
 msgstr "Votre adresse email"
 
@@ -1523,3 +1541,229 @@ msgstr "Votre adresse email"
 #: lib/palapa_web/templates/password_reset/invalid_token.html.eex:10
 msgid "new reset link"
 msgstr "nouveau lien de réinitialisation"
+
+#, elixir-format
+#: lib/palapa_web/templates/registration/_form.html.eex:33
+msgid "8 characters minimum"
+msgstr "8 caractères minimum"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/members.html.leex:5
+msgid "Administrator?"
+msgstr "Administrateur ?"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/invoices.html.eex:10
+msgid "Amount"
+msgstr "Montant"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/members.html.leex:27
+msgid "Are you sure?"
+msgstr "Etes-vous sûr ?"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/settings/settings_navigation.html.eex:14
+msgid "Billing"
+msgstr "Facturation"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:1
+msgid "Billing overview"
+msgstr "Résumé de la facturation"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/members.html.leex:37
+msgid "Cannot delete yourself"
+msgstr "Vous ne pouvez pas vous supprimer"
+
+#, elixir-format
+#: lib/palapa_web/templates/search/search_result_contact.html.eex:13
+msgid "Contact"
+msgstr "Contact"
+
+#, elixir-format
+#: lib/palapa_web/templates/registration/_form.html.eex:39
+msgid "Create a new account"
+msgstr "Créer un nouveau compte"
+
+#, elixir-format
+#: lib/palapa_web/templates/public/page/show.html.eex:6
+msgid "Created with Palapa"
+msgstr "Créé avec Palapa"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/invoices.html.eex:9
+msgid "Date"
+msgstr "Date"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/members.html.leex:6
+msgid "Delete member"
+msgstr "Supprimer le membre"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:26
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:33 lib/palapa_web/templates/settings/workspace/show.html.eex:47
+msgid "Delete the workspace"
+msgstr "Supprimer l'espace de travail"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:29
+msgid "Deleting the workspace will permanently erase all content (messages, documents, contacts, member profiles) after a period of 15 days. You will no longer receive new invoices for this workspace."
+msgstr "Supprimer votre espace de travail supprimera tout son contenu de manière permanente (messages, documents, contacts, profils de membres...) après une période de 15 jours. Vous ne recevrez plus de facture pour cet espace de travail."
+
+#, elixir-format
+#: lib/palapa_web/templates/search/search_result_page.html.eex:17
+msgid "Document page"
+msgstr "Page de document"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/invoices.html.eex:22
+msgid "Download"
+msgstr "Télécharger"
+
+#, elixir-format
+#: lib/palapa_web/templates/session/new.html.eex:10
+msgid "Email address"
+msgstr "Adresse email"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:38
+msgid "Expires"
+msgstr "Expire"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/storage.html.eex:1
+msgid "File storage"
+msgstr "Stockage de fichiers"
+
+#, elixir-format
+#: lib/palapa_web/templates/session/new.html.eex:25
+msgid "I have forgotten my password"
+msgstr "J'ai oublié mon mot de passe"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/invoices.html.eex:3
+msgid "Invoices"
+msgstr "Factures"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:14
+msgid "Invoices will be sent to:"
+msgstr "Les factures seront envoyées à"
+
+#, elixir-format
+#: lib/palapa_web/templates/registration/_form.html.eex:42
+msgid "Log in!"
+msgstr "Se connecter !"
+
+#, elixir-format
+#: lib/palapa_web/templates/search/search_result_member.html.eex:9
+msgid "Member"
+msgstr "Membre"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/settings/settings_navigation.html.eex:9
+msgid "Members"
+msgstr "Membres"
+
+#, elixir-format
+#: lib/palapa_web/templates/search/search_result_message.html.eex:10
+msgid "Message"
+msgstr "Message"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/storage.html.eex:6
+msgid "More storage options coming soon!"
+msgstr "Plus d'offres de stockage arrivent bientôt !"
+
+#, elixir-format
+#: lib/palapa_web/templates/search/index_ajax.html.eex:14
+msgid "No results"
+msgstr "Aucun résultat"
+
+#, elixir-format
+#: lib/palapa_web/templates/session/new.html.eex:15
+msgid "Password"
+msgstr "Mot de passe"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:33
+msgid "Payment method"
+msgstr "Méthode de paiement"
+
+#, elixir-format
+#: lib/palapa_web/templates/search/index.html.eex:5
+msgid "Search results for \"%{search_term}\""
+msgstr "Résultats de recherche pour \"%{search_term}\""
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/invoices.html.eex:11
+msgid "Status"
+msgstr "Statut"
+
+#, elixir-format
+#: lib/palapa_web/templates/public/document/table_of_contents.html.eex:5
+msgid "Table of contents"
+msgstr "Tables des matières"
+
+#, elixir-format
+#: lib/palapa_web/templates/search/search_result_team.html.eex:10
+msgid "Team"
+msgstr "Equipe"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/storage.html.eex:4
+msgid "Total storage used by attachments:"
+msgstr "Stockage total utilisé par les pièces jointes"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:28
+msgid "Update billing information"
+msgstr "Mettre à jour les informations de facturation"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:42
+msgid "Update payment method"
+msgstr "Mettre à jour le moyen de paiement"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:24
+msgid "VAT number:"
+msgstr "Numéro de TVA"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/settings/settings_navigation.html.eex:5
+msgid "Workspace"
+msgstr "Espace de travail"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/index.html.eex:8
+msgid "Workspace members"
+msgstr "Membres de l'espace"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:8
+msgid "Workspace settings"
+msgstr "Paramètres de l'espace"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:58
+msgid "Yes, delete this workspace"
+msgstr "Oui, supprimer cet espace"
+
+#, elixir-format
+#: lib/palapa_web/templates/registration/_form.html.eex:42
+msgid "You already have an account?"
+msgstr "Vous avez déjà un compte ?"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:53
+msgid "You are about to delete the workspace and all its content. Are you sure?"
+msgstr "Vous êtes sur le point de supprimer cet espace de travail et tout son contenu. Etes-vous sûr?"
+
+#, elixir-format
+#: lib/palapa_web/templates/registration/_form.html.eex:15
+msgid "Usually your company or organization name"
+msgstr "Habituellement le nom de votre entreprise"

@@ -1,9 +1,9 @@
-<div id="document" class="left-sidebar-layout" data-controller="document rich-text"> 
+<div id="document" class="left-sidebar-layout" data-controller="document rich-text">
   <div class="page-sidebar">
     <%= render PalapaWeb.Public.DocumentView, "table_of_contents.html", assigns %>
 
     <div class="text-center mt-8">
-      <%= link "Created with Palapa", to: Routes.home_url(@conn, :index), target: "_blank", class: "text-gray-500 hover:underline text-sm" %>
+      <%= link gettext("Created with Palapa"), to: Routes.home_url(@conn, :index), target: "_blank", class: "text-gray-500 hover:underline text-sm" %>
     </div>
   </div>
 
@@ -24,7 +24,7 @@
           </section>
         <% else %>
           <section class="blankslate p-4">
-            <p class="py-2">This page is empty</p>
+            <p class="py-2"><%= gettext("This page is empty") %></p>
           </section>
         <% end %>
 
@@ -47,6 +47,6 @@
         </div>
         </div>
       </div>
-      
+
   </div>
 </div>

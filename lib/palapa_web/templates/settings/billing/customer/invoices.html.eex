@@ -1,14 +1,14 @@
 <%= if Enum.any?(@invoices) do %>
   <div class="card p-4 mt-8">
-    <h2 class="text-gray-800">Invoices</h2>
+    <h2 class="text-gray-800"><%= gettext("Invoices") %></h2>
     <div class="card-header-separator"></div>
 
     <table class="w-full text-left">
       <thead class="font-bold">
         <tr>
-          <td>Date</td>
-          <td>Amount</td>
-          <td>Status</td>
+          <td><%= gettext("Date") %></td>
+          <td><%= gettext("Amount") %></td>
+          <td><%= gettext("Status") %></td>
           <td>PDF</td>
         </tr>
       </thead>
@@ -19,7 +19,7 @@
           <td class="py-4"><%= Helpers.format_date(@conn, invoice.created_at) %></td>
           <td><%= Helpers.format_money(invoice.total) %></td>
           <td><%= invoice.status %></td>
-          <td><%= link "Download", to: invoice.pdf_url, class: "btn" %></td>
+          <td><%= link gettext("Download"), to: invoice.pdf_url, class: "btn" %></td>
         </tr>
       <% end %>
       </tbody>
