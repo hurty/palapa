@@ -31,7 +31,7 @@ class="card sm:rounded-lg p-4 mb-8">
 
     <%= if @suggestion.closed_at do %>
       <div class="text-sm font-bold text-green-600 text-center bg-green-100 rounded-full p-1">
-        <%= gettext("Closed by %{author} (%{time})", %{author: @suggestion.closure_author.account.name, time: Helpers.auto_format_datetime(@conn, @suggestion.closed_at)}) %>
+        <%= raw gettext("Closed by %{author} (%{time})", %{author: @suggestion.closure_author.account.name, time: safe_to_string(Helpers.auto_format_datetime(@conn, @suggestion.closed_at))}) %>
       </div>
     <% end %>
   <div>

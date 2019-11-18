@@ -19,8 +19,8 @@ button:focus {
 }
 
 .label {
-  @apply inline-block mb-2;
-  @apply text-blue-900 text-xs tracking-wider leading-none font-normal;
+  @apply inline-block mt-2 mb-2;
+  @apply text-gray-700 font-bold text-sm leading-none;
 }
 
 .input {

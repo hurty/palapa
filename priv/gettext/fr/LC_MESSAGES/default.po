@@ -341,7 +341,7 @@ msgstr "Automatique"
 
 #, elixir-format
 #: lib/palapa_web/templates/contact/new.html.leex:10
-msgid ">New contact"
+msgid "New contact"
 msgstr "Nouveau contact"
 
 #, elixir-format
@@ -476,11 +476,6 @@ msgstr "Gérer la facturation"
 #: lib/palapa_web/templates/contact/form.html.leex:83
 msgid "Mobile phone"
 msgstr "Téléphone portable"
-
-#, elixir-format
-#: lib/palapa_web/templates/contact/index.html.leex:12
-msgid "New contact"
-msgstr "Nouveau contact"
 
 #, elixir-format
 #: lib/palapa_web/templates/contact/index.html.leex:61
@@ -738,7 +733,7 @@ msgstr "Documents"
 #: lib/palapa_web/templates/document/page/toc_page.html.eex:33
 #: lib/palapa_web/templates/document/section/toc_section.html.eex:54
 msgid "Drag to reorder"
-msgstr "Glissez-deposez pour réordonner"
+msgstr "Glissez-déposez pour réordonner"
 
 #, elixir-format
 #: lib/palapa_web/templates/document/document/edit.html.eex:4
@@ -1060,7 +1055,7 @@ msgstr "Mais prenons d'abord un instant pour compléter votre profil pour cet es
 #, elixir-format
 #: lib/palapa_web/templates/join/form_without_existing_account.html.eex:28
 msgid "Choose a password"
-msgstr "Changer de mot de passe"
+msgstr "Choisissez un mot de passe"
 
 #, elixir-format
 #: lib/palapa_web/templates/join/form_with_existing_account.html.eex:23

@@ -9,7 +9,7 @@
 
         <div class="text-xs my-auto ml-2">
           <%= link @suggestion_comment.author.account.name, to: Routes.member_path(@conn, :show, @conn.assigns.current_organization, @suggestion_comment.author.id), class: "text-gray-800 font-bold hover:underline" %>
-          <div class="text-gray-700 font-light"><%= gettext("Posted %{time}", %{time: Helpers.auto_format_datetime(@conn, @suggestion_comment.inserted_at)}) %></div>
+          <div class="text-gray-700 font-light"><%= raw gettext("Posted %{time}", %{time: safe_to_string(Helpers.auto_format_datetime(@conn, @suggestion_comment.inserted_at))}) %></div>
         </div>
       </div>
 
