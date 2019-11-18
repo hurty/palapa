@@ -3,11 +3,11 @@
     <%= Helpers.avatar(@member.account, :md) %>
 
     <h2 class="text-green-500 text-center text-2xl font-bold capitalize mb-2"><%= @member.account.name %></h2>
-    
+
     <div class="text-center text-gray-700">
       <%= if @profile_title_edit_mode do %>
         <%= form = form_for(@profile_changeset, "#", [phx_submit: "update_member_title"]) %>
-          <%= text_input form, :title, placeholder: "Title, position, role...", autocomplete: "off", phx_hook: "AutoFocus", class: "input" %>
+          <%= text_input form, :title, placeholder: gettext("Title, position, role..."), autocomplete: "off", phx_hook: "AutoFocus", class: "input" %>
           <%= error_tag form, :title %>
           <%= submit "OK", class: "btn btn-green ml-2" %>
         </form>
@@ -20,7 +20,7 @@
               <i>title</i>
             <% end %>
           <% end %>
-          
+
           <%= if @member.id == @current_member.id do %>
             <span phx-click="edit_member_title" class="cursor-pointer"><i class="fas fa-pencil-alt"></i></span>
           <% end %>
@@ -28,7 +28,7 @@
       <% end %>
     </div>
 
-    <div class="mt-4 text-center text-gray-700 text-xs"> 
+    <div class="mt-4 text-center text-gray-700 text-xs">
       <div>
         <i class="fas fa-envelope mr-1"></i><%= link @member.account.email, to: "mailto:#{@member.account.email}" %>
       </div>
@@ -41,7 +41,7 @@
 
       <%= if @member.role in [:owner, :admin] do %>
         <div class="text-center my-6">
-          <span class="border-2 text-sm text-gray-700 border-green-500 rounded-full px-4 py-2">This member is <%= @member.role %></span>
+          <span class="border-2 text-sm text-gray-700 border-green-500 rounded-full px-4 py-2"><%= gettext("This member is %{role}", %{role: @member.role}) %></span>
         </div>
       <% end %>
 

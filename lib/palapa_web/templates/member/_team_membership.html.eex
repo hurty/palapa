@@ -1,5 +1,0 @@
-<%= if @selected_team do %>
-  <p>
-
-  </p>
-<% end %>

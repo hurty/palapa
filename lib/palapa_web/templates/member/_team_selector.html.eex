@@ -1,20 +1,20 @@
 <%= if Enum.any?(@teams) do %>
   <div data-controller="popover" data-action="mousedown@window->popover#hide" class="flex flex-wrap justify-center items-center">
-    <div class="font-bold underline mr-4">Select a team: </div>
+    <div class="font-bold underline mr-4"><%= gettext("Select a team:") %></div>
     <button data-action="popover#toggle" data-target="popover.button" class="btn">
-        <%= if @selected_team do %> 
+        <%= if @selected_team do %>
           <span class="" title="<%= @selected_team.name %>"><%= @selected_team.name %></span>
         <% else %>
-          <span class="" title="Everyone in the organization">Everyone in the organization</span>
+          <span class="" title="<%= gettext("Everyone in the organization") %>"><%= gettext("Everyone in the organization") %></span>
         <% end %>
         <i class="fas fa-angle-down"></i>
     </button>
 
-      
+
     <div data-target="popover.content" class="popover hidden">
       <div data-target="popover.arrow" class="popover__arrow"></div>
       <div class="flex flex-col">
-        <%= link("Everyone in the organization", to: Routes.member_path(@conn, :index, @current_organization), class: "selector-item truncate") %>
+        <%= link(gettext("Everyone in the organization"), to: Routes.member_path(@conn, :index, @current_organization), class: "selector-item truncate") %>
         <%= for team <- @teams do %>
           <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
           <%= link(to: Routes.member_path(@conn, :index, @current_organization, team_id: team.id), class: item_class, title: team.name) do %>

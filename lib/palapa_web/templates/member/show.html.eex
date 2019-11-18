@@ -4,10 +4,10 @@
 
       <div class="card-toolbar flex flex-wrap justify-center sm:justify-between">
         <%= link(to: Routes.member_path(@conn, :index, @current_organization), class: "my-auto text-gray-900 font-bold uppercase text-sm p-2") do %>
-          <i class="fa fa-chevron-circle-left"></i> Back to your organization
+          <i class="fa fa-chevron-circle-left mr-2"></i><%= gettext("Back to your organization") %>
         <% end %>
 
-        <%= link("Manage my account", to: Routes.account_path(@conn, :edit), class: "btn") %>
+        <%= link(gettext("Manage my account"), to: Routes.account_path(@conn, :edit), class: "btn") %>
       </div>
 
       <div>
@@ -15,7 +15,7 @@
             member_id: @member.id,
             current_member_id: @current_member.id,
             current_organization_id: @current_organization.id
-          }) 
+          })
         %>
       </div>
     </div>

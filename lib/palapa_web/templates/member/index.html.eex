@@ -11,13 +11,13 @@
         <div class="flex-1 flex flex-wrap justify-end">
           <%= if permit? Palapa.Invitations.Policy, :create, @current_member do %>
             <%= link(to: Routes.invitation_path(@conn, :new, @current_organization), class: "btn m-1") do %>
-              <i class="fas fa-user-plus text-gray-600 mr-2"></i>Invite people
+              <i class="fas fa-user-plus text-gray-600 mr-2"></i><%= gettext("Invite people to the workspace") %>
             <% end %>
           <% end %>
 
           <%= if permit? Palapa.Teams.Policy, :create, @current_member do %>
             <%= link(to: Routes.team_path(@conn, :new, @current_organization), class: "btn m-1") do %>
-              <i class="fas fa-users text-gray-600 mr-2"></i>Create a team
+              <i class="fas fa-users text-gray-600 mr-2"></i><%= gettext("Create a team") %>
             <% end %>
           <% end %>
         </div>
@@ -30,13 +30,13 @@
         <div class="members-grid my-8">
 
           <%= if Enum.any?(@members) do %>
-            <%= for member <- @members do %> 
+            <%= for member <- @members do %>
               <%= render @view_module, "_member.html", %{conn: @conn, member: member} %>
             <% end %>
           <% else %>
             <%= render "_blankslate.html" %>
           <% end %>
-        </div>  
+        </div>
       </div>
     </div>
   </div>

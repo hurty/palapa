@@ -19,6 +19,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
+#: lib/palapa_web/templates/member/_team_info.html.eex:14
 #: lib/palapa_web/templates/member/index.html.eex:7
 msgid "%{count} member"
 msgid_plural "%{count} members"
@@ -389,6 +390,8 @@ msgstr ""
 #: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:63
 #: lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:9
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:18
+#: lib/palapa_web/templates/member/_personal_information_form.html.leex:37
+#: lib/palapa_web/templates/member/_personal_information_form.html.leex:40
 msgid "Cancel"
 msgstr ""
 
@@ -1247,4 +1250,161 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/layout/_sidebar.html.eex:42
 msgid "Teams"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_personal_information_form.html.leex:39
+msgid "Add information"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_team_info.html.eex:21
+msgid "Are you sure you want to leave this team?"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/show.html.eex:7
+msgid "Back to your organization"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/index.html.eex:20
+msgid "Create a team"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_personal_information.html.leex:35
+msgid "Delete"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_personal_information.html.leex:30
+msgid "Edit"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_team_info.html.eex:39
+msgid "Edit team"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_team_selector.html.eex:8
+#: lib/palapa_web/templates/member/_team_selector.html.eex:8
+#: lib/palapa_web/templates/member/_team_selector.html.eex:17
+msgid "Everyone in the organization"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_personal_information_form.html.leex:4
+msgid "Information label"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_personal_information_form.html.leex:7
+msgid "Information value"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_team_info.html.eex:29
+msgid "Join"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_team_info.html.eex:22
+msgid "Leave"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/show.html.eex:10
+msgid "Manage my account"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_team_info.html.eex:32
+msgid "Only an admin can invite you"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_personal_informations_list.html.leex:4
+msgid "Personal information shared within %{workspace}"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_team_info.html.eex:7
+msgid "Private team"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_team_info.html.eex:9
+msgid "Public team"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_personal_information.html.leex:15
+msgid "Restricted"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_team_selector.html.eex:3
+msgid "Select a team:"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_personal_information_form.html.leex:23
+msgid "Select people and/or teams"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_blankslate.html.eex:3
+msgid "There is no member in this team yet."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_personal_informations_list.html.leex:9
+msgid "This member hasn't shared any personal information with you."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_member_profile.html.leex:10
+msgid "Title, position, role..."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_personal_information_form.html.leex:36
+msgid "Update information"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_personal_information_form.html.leex:30
+msgid "Visible only to me"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_personal_information_form.html.leex:13
+msgid "Visible only to me and..."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_team_info.html.eex:19
+msgid "You are a member of this team"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_team_info.html.eex:26
+msgid "You are not member of this team"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_personal_informations_list.html.leex:7
+msgid "You have not shared any information yet."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/index.html.eex:14
+msgid "Invite people to the workspace"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_member_profile.html.leex:44
+msgid "This member is %{role}"
 msgstr ""

@@ -1,8 +1,8 @@
 <%= if @info && !@personal_information_changeset do %>
 <div class="flex flex-col text-sm my-3 py-1 bg-gray-100 rounded-lg">
-  
+
   <div data-target="personal-information.formContainer"></div>
-      
+
   <div data-target="personal-information.content">
     <div class="flex justify-between items-center rounded-t px-2 text-gray-700 text-sm">
       <div class="font-bold text-blue-800">
@@ -12,7 +12,7 @@
       <div class="flex justify-between items-center">
         <%= if @info.private do %>
           <div class="mx-2" title="<%= PalapaWeb.PersonalInformationView.visibility_text(@info) %>">
-            <i class="fas fa-lock text-gray-500 mr-1"></i> <span class="text-xs">Restricted</span>
+            <i class="fas fa-lock text-gray-500 mr-1"></i> <span class="text-xs"><%= gettext("Restricted") %></span>
           </div>
         <% end %>
 
@@ -27,12 +27,12 @@
               <nav class="flex flex-col">
                 <%= if permit?(Palapa.Organizations.Policy, :update_personal_information, @current_member, @info) do %>
                   <%= link to: "#", phx_click: "edit", class: "popover__link" do %>
-                    <i class="fas fa-pen"></i>&nbsp;Edit
+                    <i class="fas fa-pen"></i>&nbsp;<%= gettext("Edit") %>
                   <% end %>
                 <% end %>
 
                 <%= link to: "#", phx_click: "delete", class: "popover__link" do %>
-                  <i class="fas fa-trash text-red-400"></i>&nbsp;Delete
+                  <i class="fas fa-trash text-red-400"></i>&nbsp;<%= gettext("Delete") %>
                 <% end %>
               </nav>
             </div>
@@ -40,7 +40,7 @@
         <% end %>
       </div>
     </div>
-    
+
     <div data-controller="clipboard">
       <div class="flex justify-between p-2 text-sm">
         <div>
@@ -50,7 +50,7 @@
         </div>
 
         <div data-target="clipboard.popperContent" class="js-clipboard-popper-content hidden mx-1 p-1 bg-green-500 text-xs text-white rounded">Copied to clipboard!</div>
-        <button class="text-xs text-gray-500 hover:text-gray-800 whitespace-no-wrap" title="Copy to clipboard" 
+        <button class="text-xs text-gray-500 hover:text-gray-800 whitespace-no-wrap" title="Copy to clipboard"
         data-action="clipboard#copy" data-target="clipboard.copyButton">
           <i class="fas fa-copy"></i> Copy
         </button>

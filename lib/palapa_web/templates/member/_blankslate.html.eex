@@ -1,4 +1,4 @@
 <div class="text-center mx-auto">
   <div class="blankslate">
-  <i class="text-gray-500 fa fa-child"></i>&nbsp;There is no member in this team yet.</div>
+  <i class="text-gray-500 fa fa-child"></i>&nbsp;<%= gettext("There is no member in this team yet.") %></div>
 </div>
