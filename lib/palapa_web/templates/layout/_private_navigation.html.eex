@@ -12,23 +12,23 @@
 
       <div class="hidden sm:inline-block" data-controller="popover" data-action="mousedown@window->popover#hide">
         <button data-target="popover.button" data-action="popover#toggle" class="btn rounded-full">
-          <i class="fas fa-plus-circle text-green-500 mr-2"></i>Create<i class="fas fa-angle-down ml-2"></i>
+          <i class="fas fa-plus-circle text-green-500 mr-2"></i><%= gettext("Create") %><i class="fas fa-angle-down ml-2"></i>
         </button>
-        
+
         <div data-target="popover.content" class="popover hidden">
           <div data-target="popover.arrow" class="popover__arrow"></div>
           <nav class="flex flex-col">
             <%= link to: Routes.message_path(@conn, :new, @current_organization), class: "popover__link" do %>
-              <i class="fas fa-comment mr-2"></i>New message
+              <i class="fas fa-comment mr-2"></i><%= gettext("New message") %>
             <% end %>
 
             <%= link to: Routes.document_path(@conn, :new, @current_organization), class: "popover__link" do %>
-              <i class="fas fa-file-alt mr-2"></i>New document
+              <i class="fas fa-file-alt mr-2"></i><%= gettext("New document") %>
             <% end %>
 
 
             <%= link to: Routes.live_path(@conn, PalapaWeb.ContactLive.New, @current_organization), class: "popover__link" do %>
-              <i class="fas fa-address-book mr-2"></i>New Contact
+              <i class="fas fa-address-book mr-2"></i><%= gettext("New Contact") %>
             <% end %>
           </nav>
         </div>
@@ -39,13 +39,13 @@
           <%= form_for @conn, Routes.search_path(@conn, :index, @current_organization), [method: :get, "data-target": "search.form"], fn _form -> %>
             <div class="search-bar bg-white">
               <span class="fa fa-search mr-2"></span>
-              <input type="text" name="query" data-target="search.queryInput" data-action="input->search#triggerSearch keydown->search#triggerKeyNavigation" autocomplete="off" placeholder="Search anything" />
+              <input type="text" name="query" data-target="search.queryInput" data-action="input->search#triggerSearch keydown->search#triggerKeyNavigation" autocomplete="off" placeholder="<%= gettext("Search anything") %>" />
             </div>
 
           <% end %>
 
           <div data-target="search.searchDialog" class="search__results-container hidden">
-            <div data-target="search.searchingIndicator" class="text-gray-500 text-sm text-center">Searching...</div>
+            <div data-target="search.searchingIndicator" class="text-gray-500 text-sm text-center"><%= gettext("Searching...") %></div>
             <div data-target="search.resultsContainer"></div>
           </div>
         </div>
@@ -58,12 +58,12 @@
             <div class="text-lg text-blue-500 font-bold mb-2 py-1"><%= @current_account.name %></div>
 
             <ul class="mb-2">
-              <li><%= link("My profile on #{@current_organization.name}", to: Routes.member_path(@conn, :show, @current_organization, @current_member), class: "text-gray-800 hover:underline") %></li>
-              <li><%= link("Account settings", to: Routes.account_path(@conn, :edit), target: "_blank", class: "text-gray-800 hover:underline") %></li>
+              <li><%= link(gettext("My profile on %{workspace}", %{workspace: @current_organization.name}), to: Routes.member_path(@conn, :show, @current_organization, @current_member), class: "text-gray-800 hover:underline") %></li>
+              <li><%= link(gettext("Account settings"), to: Routes.account_path(@conn, :edit), target: "_blank", class: "text-gray-800 hover:underline") %></li>
             </ul>
             <ul class="mb-4">
-              <li><%= link("Switch workspace", to: Routes.organization_path(@conn, :index), class: "mt-4 font-bold text-green-500 hover:underline") %></li>
-              <li class="mt-4"><%= link("Log out", to: Routes.session_path(@conn, :delete), class: "btn font-bold text-red-400 hover:underline", data: [controller: "link", action: "link#delete"]) %></li>
+              <li><%= link(gettext("Switch workspace"), to: Routes.organization_path(@conn, :index), class: "mt-4 font-bold text-green-500 hover:underline") %></li>
+              <li class="mt-4"><%= link(gettext("Log out"), to: Routes.session_path(@conn, :delete), class: "btn font-bold text-red-400 hover:underline", data: [controller: "link", action: "link#delete"]) %></li>
             </ul>
           </div>
         </div>

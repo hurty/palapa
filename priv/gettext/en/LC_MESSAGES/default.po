@@ -95,6 +95,7 @@ msgid "100 GB storage included"
 msgstr ""
 
 #, elixir-format
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:62
 #: lib/palapa_web/templates/layout/account.html.eex:23
 msgid "Account settings"
 msgstr ""
@@ -155,6 +156,7 @@ msgid "Latest activity"
 msgstr ""
 
 #, elixir-format
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:66
 #: lib/palapa_web/templates/layout/account.html.eex:13
 msgid "Log out"
 msgstr ""
@@ -340,11 +342,6 @@ msgid "Automatic"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/new.html.leex:10
-msgid ">New contact"
-msgstr ""
-
-#, elixir-format
 #: lib/palapa_web/templates/contact/comment_form.html.leex:17
 #: lib/palapa_web/templates/contact/contact_comments.html.leex:1
 msgid "Add a comment about %{contact}"
@@ -390,7 +387,7 @@ msgstr ""
 #: lib/palapa_web/templates/document/document/table_of_contents.html.eex:51
 #: lib/palapa_web/templates/document/section/toc_section.html.eex:69
 #: lib/palapa_web/templates/document/suggestion/edit.html.eex:9
-#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:64
+#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:63
 #: lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:9
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:18
 msgid "Cancel"
@@ -415,6 +412,7 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/contact/index.html.leex:8
 #: lib/palapa_web/templates/contact/index_blankslate.html.eex:4
+#: lib/palapa_web/templates/layout/_sidebar.html.eex:36
 msgid "Contacts"
 msgstr ""
 
@@ -479,6 +477,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/contact/index.html.leex:12
+#: lib/palapa_web/templates/contact/new.html.leex:10
 msgid "New contact"
 msgstr ""
 
@@ -663,7 +662,7 @@ msgid "Can't be blank"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:51
+#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:50
 msgid "Close suggestion"
 msgstr ""
 
@@ -731,6 +730,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/document/document/index.html.eex:6
+#: lib/palapa_web/templates/layout/_sidebar.html.eex:30
 msgid "Documents"
 msgstr ""
 
@@ -781,6 +781,7 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/document/document/index.html.eex:10
 #: lib/palapa_web/templates/document/document/new.html.eex:4
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:26
 msgid "New document"
 msgstr ""
 
@@ -852,12 +853,12 @@ msgid "Rename this section"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:49
+#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:48
 msgid "Reopen suggestion"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:47
+#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:46
 msgid "Reply"
 msgstr ""
 
@@ -899,7 +900,7 @@ msgid "Select a existing company"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:63
+#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:62
 msgid "Send"
 msgstr ""
 
@@ -987,7 +988,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/document/suggestion/form.html.eex:5
-#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:58
+#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:57
 msgid "Your comment here..."
 msgstr ""
 
@@ -1158,7 +1159,93 @@ msgstr ""
 msgid "Make sure addresses are correct and well formatted and try again."
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:3
 msgid "Sent"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/palapa_web/templates/billing/subscription/new.html.eex:4
+msgid "Billing information for %{workspace}"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/_sidebar.html.eex:4
+msgid "Close menu"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:15
+msgid "Create"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/_public_navigation.html.eex:20
+msgid "Create workspace"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/_sidebar.html.eex:18
+msgid "Dashboard"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/_public_navigation.html.eex:11
+msgid "Menu"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/_sidebar.html.eex:24
+msgid "Messages"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:61
+msgid "My profile on %{workspace}"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:31
+msgid "New Contact"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:22
+msgid "New message"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:42
+msgid "Search anything"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:48
+msgid "Searching..."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/_sidebar.html.eex:49
+msgid "Settings"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/_public_navigation.html.eex:24
+msgid "Sign in"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/_public_navigation.html.eex:22
+msgid "Sign out"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:65
+#: lib/palapa_web/templates/layout/_sidebar.html.eex:10
+msgid "Switch workspace"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/_sidebar.html.eex:42
+msgid "Teams"
 msgstr ""

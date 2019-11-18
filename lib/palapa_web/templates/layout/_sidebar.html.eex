@@ -1,52 +1,52 @@
 <div class="sidebar">
   <div id="toggle-mobile-menu" class="mb-8" data-controller="navigation">
     <button data-action="navigation#toggleMobileMenu" class="flex items-center mx-auto px-3 py-2 border-2 rounded text-green-500 border-green-500 hover:text-green-600 hover:border-green-600">
-      <i class="fas fa-times mr-2"></i>Close menu
+      <i class="fas fa-times mr-2"></i><%= gettext("Close menu") %>
     </button>
   </div>
 
-  <%= link to: Routes.organization_path(@conn, :index), 
+  <%= link to: Routes.organization_path(@conn, :index),
     class: "-m-4 mb-4 bg-gray-500 rounded-r-lg p-2 text-center font-bold text-gray-800 text-xs border-t border-b border-r border-gray-800 hover:bg-gray-100" do %>
-    <i class="fas fa-exchange-alt mr-2"></i> Switch workspace
+    <i class="fas fa-exchange-alt mr-2"></i><%= gettext("Switch workspace") %>
   <% end %>
 
   <%= link(@current_organization.name, to: Routes.dashboard_path(@conn, :index, @current_organization), class: "text-lg font-bold px-2 mt-8 block text-white tracking-wider") %>
-  
+
   <ul class="header-links">
-    <li class="header-link <%= if @navigation == "dashboard" do %>header-link--active<% end %>"> 
+    <li class="header-link <%= if @navigation == "dashboard" do %>header-link--active<% end %>">
       <%= link(to: Routes.dashboard_path(@conn, :index, @current_organization), class: "block") do %>
-        <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+        <i class="fas fa-bullhorn mr-2"></i><%= gettext("Dashboard") %>
       <% end %>
     </li>
 
-    <li class="header-link <%= if @navigation == "message" do %>header-link--active<% end %>"> 
+    <li class="header-link <%= if @navigation == "message" do %>header-link--active<% end %>">
       <%= link(to: Routes.message_path(@conn, :index, @current_organization), class: "block") do %>
-        <i class="fas fa-comment mr-2"></i>Messages
+        <i class="fas fa-comment mr-2"></i><%= gettext("Messages") %>
       <% end %>
     </li>
 
     <li class="header-link  <%= if @navigation == "documents" do %>header-link--active<% end %>">
       <%= link(to: Routes.document_path(@conn, :index, @current_organization), class: "block") do %>
-        <i class="fas fa-file-alt mr-2"></i>Documents
+        <i class="fas fa-file-alt mr-2"></i><%= gettext("Documents") %>
       <% end %>
     </li>
 
     <li class="header-link  <%= if @navigation == "contacts" do %>header-link--active<% end %>">
       <%= link(to: Routes.live_path(@conn, PalapaWeb.ContactLive, @current_organization), class: "block") do %>
-        <i class="fas fa-address-book mr-2"></i>Contacts
+        <i class="fas fa-address-book mr-2"></i><%= gettext("Contacts") %>
       <% end %>
     </li>
 
     <li class="header-link  <%= if @navigation == "members" do %>header-link--active<% end %>">
       <%= link(to: Routes.member_path(@conn, :index, @current_organization), class: "block") do %>
-        <i class="fas fa-users mr-2"></i>Teams
+        <i class="fas fa-users mr-2"></i><%= gettext("Teams") %>
       <% end %>
     </li>
 
     <%= if permit?(Palapa.Organizations.Policy, :update_organization, @current_member) do %>
       <li class="header-link  <%= if @navigation == "settings" do %>header-link--active<% end %>">
         <%= link(to: Routes.settings_workspace_path(@conn, :show, @current_organization), class: "block") do %>
-          <i class="fas fa-cog mr-2"></i>Settings
+          <i class="fas fa-cog mr-2"></i><%= gettext("Settings") %>
         <% end %>
       </li>
     <% end %>
