@@ -1243,9 +1243,9 @@ msgstr "Se déconnecter"
 #: lib/palapa_web/templates/layout/_private_navigation.html.eex:65
 #: lib/palapa_web/templates/layout/_sidebar.html.eex:10
 msgid "Switch workspace"
-msgstr "Créer un espace"
+msgstr "Changer d'espace"
 
 #, elixir-format
 #: lib/palapa_web/templates/layout/_sidebar.html.eex:42
 msgid "Teams"
-msgstr "Equipes"
+msgstr "Équipes"
