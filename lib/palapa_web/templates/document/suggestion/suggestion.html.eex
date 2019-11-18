@@ -36,35 +36,33 @@ class="card sm:rounded-lg p-4 mb-8">
     <% end %>
   <div>
 
-  <%= if permit?(Palapa.Documents.Policy, :update_suggestion, @current_member, @suggestion) do %>
     <div data-target="document-suggestion.actions" class="p-1 pt-2 rounded mt-4 border-gray-200">
 
-      <%= form_for @conn, Routes.suggestion_comment_url(@conn, :create, @current_organization, @suggestion),
-        [as: :suggestion_comment, "data-target": "document-suggestion.commentForm", "data-action": "document-suggestion#postComment"], fn form -> %>
+    <%= form_for @conn, Routes.suggestion_comment_url(@conn, :create, @current_organization, @suggestion),
+      [as: :suggestion_comment, "data-target": "document-suggestion.commentForm", "data-action": "document-suggestion#postComment"], fn form -> %>
 
-          <div data-target="document-suggestion.passiveFormItems">
-            <div class="flex justify-end">
-              <button data-action="document-suggestion#showCommentForm" class="btn mr-1"><i class="fas fa-reply mr-2"></i><%= gettext("Reply") %></button>
-              <%= if @suggestion.closed_at do %>
-                <button data-action="document-suggestion#reopen" class="btn"><%= gettext("Reopen suggestion") %></button>
-              <% else %>
-                <button data-action="document-suggestion#close" class="btn"><%= gettext("Close suggestion") %></button>
-              <% end %>
-            </div>
+        <div data-target="document-suggestion.passiveFormItems">
+          <div class="flex justify-end">
+            <button data-action="document-suggestion#showCommentForm" class="btn mr-1"><i class="fas fa-reply mr-2"></i><%= gettext("Reply") %></button>
+            <%= if @suggestion.closed_at do %>
+              <button data-action="document-suggestion#reopen" class="btn"><%= gettext("Reopen suggestion") %></button>
+            <% else %>
+              <button data-action="document-suggestion#close" class="btn"><%= gettext("Close suggestion") %></button>
+            <% end %>
+          </div>
+        </div>
+
+        <div data-target="document-suggestion.activeFormItems" class="hidden">
+          <div class="mb-1">
+            <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: gettext("Your comment here..."),
+            editor_data_target: "document-suggestion.commentEditor", content_data_target: "document-suggestion.commentContentInput") %>
           </div>
 
-          <div data-target="document-suggestion.activeFormItems" class="hidden">
-            <div class="mb-1">
-              <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: gettext("Your comment here..."),
-              editor_data_target: "document-suggestion.commentEditor", content_data_target: "document-suggestion.commentContentInput") %>
-            </div>
-
-            <div class="flex justify-end">
-              <button type="submit" class="btn btn-green-500 mr-1"><%= gettext("Send") %></button>
-              <button data-action="document-suggestion#hideCommentForm" class="btn"><%= gettext("Cancel") %></button>
-            </div>
+          <div class="flex justify-end">
+            <button type="submit" class="btn btn-green-500 mr-1"><%= gettext("Send") %></button>
+            <button data-action="document-suggestion#hideCommentForm" class="btn"><%= gettext("Cancel") %></button>
           </div>
-        <% end %>
+        </div>
     </div>
   <% end %>
 </li>
