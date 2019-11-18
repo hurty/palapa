@@ -8,17 +8,17 @@
 
       <article class="p-4 sm:p-12">
         <h1 class="text-green-500 text-base sm:text-2xl"><%= @message.title %></h1>
-        
+
         <%= unless message_blank?(@message) do %>
           <div class="separator"></div>
         <% end %>
-        
-        <section data-controller="rich-text">      
+
+        <section data-controller="rich-text">
           <%= Palapa.RichText.Helpers.rich_text(@message.content) %>
         </section>
       </article>
     </div>
-    
+
     <div id="message-comments" class="mx-auto sm:w-5/6">
       <div id="message-comments-count", data-target="message.commentsCount">
         <%= render PalapaWeb.MessageCommentView, "_comments_count.html", comments_count: @message.comments_count %>
@@ -29,16 +29,16 @@
       </ul>
 
       <div class="card-actions" data-target="message.leaveComment">
-        <%= submit "Leave a comment", class: "btn", "data-action": "message#showCommentForm" %>
+        <%= submit gettext("Leave a comment"), class: "btn", "data-action": "message#showCommentForm" %>
       </div>
 
-      <%= form_for @new_message_comment, Routes.message_message_comment_path(@conn, :create, @current_organization, @message), 
-        ["data-target": "message.commentForm", "data-action": "message#submitComment", class: "hidden"], fn form -> %> 
+      <%= form_for @new_message_comment, Routes.message_message_comment_path(@conn, :create, @current_organization, @message),
+        ["data-target": "message.commentForm", "data-action": "message#submitComment", class: "hidden"], fn form -> %>
 
-        <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: "Your message here...", content_data_target: "message.commentContent", editor_data_target: "message.editor") %>
+        <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: gettext("Your message here..."), content_data_target: "message.commentContent", editor_data_target: "message.editor") %>
 
         <div class="card-actions">
-          <%= submit "Post this comment", class: "btn btn-green" %>
+          <%= submit gettext("Post this comment"), class: "btn btn-green" %>
         </div>
       <% end %>
     </div>

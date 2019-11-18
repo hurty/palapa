@@ -1,9 +1,9 @@
-<%= form_for @changeset, Routes.message_comment_path(@conn, :update, @current_organization, @comment), 
-  ["data-target": "message-comment.commentForm", "data-action": "message-comment#updateComment"], fn form -> %> 
+<%= form_for @changeset, Routes.message_comment_path(@conn, :update, @current_organization, @comment),
+  ["data-target": "message-comment.commentForm", "data-action": "message-comment#updateComment"], fn form -> %>
 
-  <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: "Your message here...", editor_data_target: "message-comment.editor", content_data_target: "message-comment.hiddenInput") %>
+  <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: gettext("Your message here..."), editor_data_target: "message-comment.editor", content_data_target: "message-comment.hiddenInput") %>
 
   <div class="card-actions">
-    <%= submit "Save comment", class: "btn btn-green" %>
+    <%= submit gettext("Save comment"), class: "btn btn-green" %>
   </div>
 <% end %>

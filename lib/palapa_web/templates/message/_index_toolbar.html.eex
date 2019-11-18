@@ -1,18 +1,18 @@
 <%= if Enum.any?(@teams) do %>
   <div data-controller="popover" data-action="mousedown@window->popover#hide" class="messages__team-filter">
       <button data-target="popover.button" data-action="popover#toggle" class="btn text-sm truncate" title="<%= if @selected_team, do: @selected_team.name %>">
-        <%= if @selected_team do %> 
+        <%= if @selected_team do %>
           <span><%= Helpers.truncate_string(@selected_team.name, 40) %></span>
         <% else %>
-          <span>All messages</span>
+          <span><%= gettext("All messages") %></span>
         <% end %>
         <i class="fas fa-angle-down"></i>
       </button>
-      
+
       <div data-target="popover.content" class="popover hidden">
         <div data-target="popover.arrow" class="popover__arrow"></div>
         <div class="flex flex-col">
-          <%= link("All messages", to: Routes.message_path(@conn, :index, @current_organization), class: "selector-item truncate selector-item-default") %>
+          <%= link(gettext("All messages"), to: Routes.message_path(@conn, :index, @current_organization), class: "selector-item truncate selector-item-default") %>
           <%= for team <- @teams do %>
             <% item_class = "selector-item truncate " <> if(assigns["selected_team"] == team, do: "selector-item--selected", else: "") %>
             <%= link(Helpers.truncate_string(team.name, 40), to: Routes.message_path(@conn, :index, @current_organization.id, team_id: team.id), class: item_class, title: team.name) %>
@@ -21,9 +21,9 @@
       </div>
   </div>
 <% else %>
-  <h2 class="card-header">Messages</h2>
+  <h2 class="card-header"><%= gettext("Messages") %></h2>
 <% end %>
 
 <%= link(to: Routes.message_path(@conn, :new, @current_organization), class: "messages__new-message-button btn text-sm") do %>
-  <i class="fas fa-plus-circle text-green-500 mr-2"></i>New message
+  <i class="fas fa-plus-circle text-green-500 mr-2"></i><%= gettext("New message") %>
 <% end %>

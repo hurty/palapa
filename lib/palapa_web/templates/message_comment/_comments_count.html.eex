@@ -2,6 +2,6 @@
 <%= if @comments_count > 0 do %>
    <%= ngettext("%{count} comment", "%{count} comments", @comments_count) %>
 <% else %>
-   No comment yet
+   <%= gettext("No comment yet") %>
 <% end %>
 </h3>

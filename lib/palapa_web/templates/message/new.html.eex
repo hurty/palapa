@@ -1,21 +1,21 @@
 <div class="content page-layout">
   <div class="main-content" data-controller="message">
     <div class="card p-1 sm:p-8">
-      <h2 class="card-header">New message</h2>
+      <h2 class="card-header"><%= gettext("New message") %></h2>
       <div class="card-header-separator"></div>
 
       <%= form_for @message_changeset, Routes.message_path(@conn, :create, @current_organization), fn form -> %>
         <%= render "_form.html",
             conn: @conn,
-            message_changeset: @message_changeset, 
+            message_changeset: @message_changeset,
             form: form,
-            current_organization: @current_organization, 
-            teams: @teams 
-          %>    
-          
+            current_organization: @current_organization,
+            teams: @teams
+          %>
+
         <div class="card-actions">
-          <%= submit "Post this message", class: "btn btn-green" %>
-          <%= link "Cancel", to: Routes.message_path(@conn, :index, @current_organization), class: "btn" %>
+          <%= submit gettext("Post this message"), class: "btn btn-green" %>
+          <%= link gettext("Cancel"), to: Routes.message_path(@conn, :index, @current_organization), class: "btn" %>
         </div>
       <% end %>
     </div>
