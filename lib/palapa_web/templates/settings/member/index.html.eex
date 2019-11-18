@@ -15,6 +15,7 @@
       <% end %>
 
       <%= Phoenix.LiveView.live_render(@conn, PalapaWeb.Settings.MemberLive, session: %{
+        locale: Plug.Conn.get_session(@conn, :locale),
         current_organization_id: @current_organization.id,
         current_member_id: @current_member.id
       }) %>

@@ -8,9 +8,15 @@ defmodule PalapaWeb.Settings.MemberLive do
   end
 
   def mount(
-        %{current_organization_id: current_organization_id, current_member_id: current_member_id},
+        %{
+          locale: locale,
+          current_organization_id: current_organization_id,
+          current_member_id: current_member_id
+        },
         socket
       ) do
+    Gettext.put_locale(locale)
+
     socket =
       socket
       |> assign_new(:current_organization, fn -> Organizations.get!(current_organization_id) end)

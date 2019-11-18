@@ -2,11 +2,11 @@
   <div class="bg-gray-100 rounded-lg p-2 my-2">
 
     <h2 class="card-header text-green-500"><%= gettext("Billing information") %></h2>
-    
+
     <div class="my-2">
-    <p class="text-sm font-bold text-gray-600">These informations will appear on your invoices</p>
+    <p class="text-sm font-bold text-gray-600"><%= gettext("These informations will appear on your invoices") %></p>
     </div>
-    
+
     <div class="field">
       <%= label @form, :billing_name, gettext("Your name or company name"), class: "label required" %>
       <%= text_input @form, :billing_name, class: "input" %>
@@ -45,7 +45,7 @@
         <%= text_input @form, :billing_state, class: "input" %>
         <%= error_tag @form, :billing_state %>
       </div>
-      
+
       <div class="flex-1 field ml-2">
         <%= label @form, :billing_country, gettext("Country"), class: "label required" %>
         <%= select @form, :billing_country, Helpers.countries_list(), "data-controller": "choice", class: "input" %>

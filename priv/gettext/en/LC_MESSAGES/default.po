@@ -1767,3 +1767,8 @@ msgstr ""
 #: lib/palapa_web/templates/registration/_form.html.eex:15
 msgid "Usually your company or organization name"
 msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:7
+msgid "These informations will appear on your invoices"
+msgstr ""

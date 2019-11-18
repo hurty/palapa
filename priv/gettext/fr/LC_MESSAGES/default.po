@@ -1767,3 +1767,8 @@ msgstr "Vous êtes sur le point de supprimer cet espace de travail et tout son c
 #: lib/palapa_web/templates/registration/_form.html.eex:15
 msgid "Usually your company or organization name"
 msgstr "Habituellement le nom de votre entreprise"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:7
+msgid "These informations will appear on your invoices"
+msgstr "Ces informations apparaîtront sur vos factures"
