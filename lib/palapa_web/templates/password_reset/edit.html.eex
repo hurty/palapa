@@ -1,31 +1,31 @@
 <div class="flex justify-center">
   <div class="w-full max-w-sm">
     <div class="card p-8">
-      <h2 class="card-header">Change your password</h2>
+      <h2 class="card-header"><%= gettext("Change your password") %></h2>
       <div class="card-header-separator"></div>
 
       <%= form_for @password_changeset, Routes.password_reset_path(@conn, :update), [as: :password], fn form -> %>
         <%= if @password_changeset.action do %>
-          <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
+          <p class="db fw6 lh-copy f6  text-red-400 font-bold"><%= gettext("Check the errors below:") %></p>
         <% end %>
 
         <div class="field">
-          <%= label form, :password, "New password", class: "label" %>
+          <%= label form, :password, gettext("New password"), class: "label" %>
           <%= password_input form, :password, class: "input", autocomplete: "off" %>
           <%= error_tag form, :password %>
         </div>
 
         <div class="field">
-          <%= label form, :password_confirmation, "Confirm the new password", class: "label" %>
+          <%= label form, :password_confirmation, gettext("Confirm the new password"), class: "label" %>
           <%= password_input form, :password_confirmation, class: "input", autocomplete: "off" %>
           <%= error_tag form, :password_confirmation %>
         </div>
 
         <%= hidden_input form, :email, value: @account.email %>
         <%= hidden_input form, :password_reset_token, value: @password_reset_token %>
-        
+
         <div class="card-actions">
-          <%= submit "Change password", class: "btn btn-green"%>
+          <%= submit gettext("Change password"), class: "btn btn-green"%>
         </div>
       <% end %>
     </div>

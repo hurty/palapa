@@ -255,6 +255,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/account/edit.html.eex:85
+#: lib/palapa_web/templates/password_reset/edit.html.eex:28
 msgid "Change password"
 msgstr ""
 
@@ -265,6 +266,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/account/edit.html.eex:56
+#: lib/palapa_web/templates/password_reset/edit.html.eex:4
 msgid "Change your password"
 msgstr ""
 
@@ -273,11 +275,13 @@ msgstr ""
 #: lib/palapa_web/templates/billing/payment_method/form.html.eex:9 lib/palapa_web/templates/document/document/form.html.eex:2
 #: lib/palapa_web/templates/document/document/new.html.eex:9 lib/palapa_web/templates/document/page/form.html.eex:3
 #: lib/palapa_web/templates/join/form_with_existing_account.html.eex:17 lib/palapa_web/templates/join/form_without_existing_account.html.eex:17
+#: lib/palapa_web/templates/organization/new.html.eex:10 lib/palapa_web/templates/password_reset/edit.html.eex:9
 msgid "Check the errors below:"
 msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/account/edit.html.eex:77
+#: lib/palapa_web/templates/password_reset/edit.html.eex:19
 msgid "Confirm the new password"
 msgstr ""
 
@@ -299,6 +303,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/account/edit.html.eex:71
+#: lib/palapa_web/templates/password_reset/edit.html.eex:13
 msgid "New password"
 msgstr ""
 
@@ -377,6 +382,7 @@ msgstr ""
 #: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:63 lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:9
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:18 lib/palapa_web/templates/member/_personal_information_form.html.leex:37
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:40 lib/palapa_web/templates/message/new.html.eex:18
+#: lib/palapa_web/templates/organization/new.html.eex:22
 msgid "Cancel"
 msgstr ""
 
@@ -1165,6 +1171,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/layout/_public_navigation.html.eex:20
+#: lib/palapa_web/templates/organization/new.html.eex:21
 msgid "Create workspace"
 msgstr ""
 
@@ -1458,4 +1465,60 @@ msgstr ""
 #: lib/palapa_web/templates/message/_form.html.eex:8
 #: lib/palapa_web/templates/message/show.html.eex:38 lib/palapa_web/templates/message_comment/_form.html.eex:4
 msgid "Your message here..."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/password_reset/create.html.eex:8
+msgid "An email has been sent to %{email}."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/password_reset/create.html.eex:8
+msgid "Check your inbox and click the given link to reset your password."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/organization/new.html.eex:4
+msgid "Create a new workspace"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/password_reset/new.html.eex:9
+msgid "Enter the email address associated with your Palapa account. We will send you an email with reset instructions."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/organization/new.html.eex:15
+msgid "Name"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/password_reset/create.html.eex:4
+#: lib/palapa_web/templates/password_reset/invalid_token.html.eex:4 lib/palapa_web/templates/password_reset/new.html.eex:4
+msgid "Password reset"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/password_reset/new.html.eex:17
+msgid "Reset password"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/password_reset/invalid_token.html.eex:9
+msgid "This reset token is invalid or expired. If you've asked for a password reset more than an hour ago, please ask for a %{reset_link}"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/organization/index.html.eex:2
+msgid "You are not a member of any workspace"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/password_reset/new.html.eex:12
+msgid "Your email address"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/password_reset/invalid_token.html.eex:10
+msgid "new reset link"
 msgstr ""

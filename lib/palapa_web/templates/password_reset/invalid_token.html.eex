@@ -1,12 +1,15 @@
 <div class="flex justify-center">
   <div class="w-full max-w-sm">
     <div class="card p-8">
-      <h2 class="card-header">Password reset</h2>
-      
+      <h2 class="card-header"><%= gettext("Password reset") %></h2>
+
       <div class="card-header-separator"></div>
 
-      <p>This reset token is invalid or expired. If you've asked for a password reset more than an hour ago, please ask for a 
-      <%= link "new reset link", to: Routes.password_reset_path(@conn, :new), class: "text-blue-500 hover:underline" %></p>
+      <p>
+        <%= raw gettext("This reset token is invalid or expired. If you've asked for a password reset more than an hour ago, please ask for a %{reset_link}",
+        %{reset_link: safe_to_string(link(gettext("new reset link"),
+          to: Routes.password_reset_path(@conn, :new), class: "text-blue-500 hover:underline"))}) %>
+      </p>
     </div>
   </div>
 </div>
