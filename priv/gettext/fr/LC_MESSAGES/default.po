@@ -1035,7 +1035,7 @@ msgstr[1] "%{count} invitations n'ont pas pu être envoyées"
 #, elixir-format
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:24
 msgid "Are you sure you want to cancel this invitation?"
-msgstr "Etes-vous sûr de vouloir supprimer ce commentaire ?"
+msgstr "Etes-vous sûr de vouloir supprimer cette invitation ?"
 
 #, elixir-format
 #: lib/palapa_web/templates/join/invalid_invitation.html.eex:7

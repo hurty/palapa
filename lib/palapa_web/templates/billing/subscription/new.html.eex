@@ -1,11 +1,11 @@
-<div class="mx-auto my-8"> 
+<div class="mx-auto my-8">
   <div class="card p-8">
     <h2 class="card-header">
-      Billing information <%= @current_organization.name %>
+      <%= gettext("Billing information for %{workspace}", %{workspace: @current_organization.name}) %>
     </h2>
 
     <div class="card-header-separator"></div>
 
     <%= render "form.html", Map.merge(assigns, %{form_path: Routes.subscription_path(@conn, :create, @current_organization)}) %>
-  </div>  
+  </div>
 </div>

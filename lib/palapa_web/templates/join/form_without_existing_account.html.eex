@@ -9,7 +9,7 @@
 
         <div class="card-header-separator"></div>
 
-        <p><%= gettext("You are about to join %{organization}", %{organization: ~s[<span class="text-blue-500 font-bold">#{@invitation.organization.name} </span>!]}) %> <br>
+        <p><%= raw gettext("You are about to join %{organization}", %{organization: ~s[<span class="text-blue-500 font-bold">#{@invitation.organization.name} </span>!]}) %> <br>
           <%= gettext("But first, let's create an account for you:") %>
         </p>
 
