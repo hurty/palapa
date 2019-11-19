@@ -15,6 +15,12 @@ defmodule PalapaWeb.MessageController do
   end
 
   def index(conn, params) do
+    events =
+      Palapa.Events.last_50_events_without_new_messages(
+        current_organization(conn),
+        current_member(conn)
+      )
+
     selected_team =
       if params["team_id"] do
         Teams.where_organization(current_organization(conn))
@@ -31,6 +37,7 @@ defmodule PalapaWeb.MessageController do
     conn
     |> render(
       "index.html",
+      events: events,
       messages: messages,
       teams: teams,
       selected_team: selected_team

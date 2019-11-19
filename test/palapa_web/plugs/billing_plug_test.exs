@@ -23,7 +23,7 @@ defmodule PalapaWeb.BillingPlugTest do
       conn: conn,
       organization: organization
     } do
-      conn = get(conn, Routes.dashboard_path(conn, :index, organization))
+      conn = get(conn, Routes.message_path(conn, :index, organization))
       assert Billing.get_billing_status(organization) == :trialing
       assert html_response(conn, 200) =~ "Dashboard"
     end
@@ -41,7 +41,7 @@ defmodule PalapaWeb.BillingPlugTest do
       conn =
         conn
         |> assign(:current_organization, organization)
-        |> get(Routes.dashboard_path(conn, :index, organization))
+        |> get(Routes.message_path(conn, :index, organization))
 
       assert redirected_to(conn, 302) =~
                Routes.billing_error_path(conn, :show, organization)
@@ -60,7 +60,7 @@ defmodule PalapaWeb.BillingPlugTest do
       |> Ecto.Changeset.change(%{status: :active})
       |> Repo.update!()
 
-      conn = get(conn, Routes.dashboard_path(conn, :index, workspace.organization))
+      conn = get(conn, Routes.message_path(conn, :index, workspace.organization))
 
       assert html_response(conn, 200) =~ "Dashboard"
     end
@@ -70,7 +70,7 @@ defmodule PalapaWeb.BillingPlugTest do
       |> Ecto.Changeset.change(%{status: :past_due})
       |> Repo.update!()
 
-      conn = get(conn, Routes.dashboard_path(conn, :index, workspace.organization))
+      conn = get(conn, Routes.message_path(conn, :index, workspace.organization))
 
       assert redirected_to(conn, 302) =~
                Routes.billing_error_path(conn, :show, workspace.organization)
@@ -81,7 +81,7 @@ defmodule PalapaWeb.BillingPlugTest do
       |> Ecto.Changeset.change(%{status: :canceled})
       |> Repo.update!()
 
-      conn = get(conn, Routes.dashboard_path(conn, :index, workspace.organization))
+      conn = get(conn, Routes.message_path(conn, :index, workspace.organization))
 
       error_path = Routes.billing_error_path(conn, :show, workspace.organization)
       assert redirected_to(conn, 302) =~ error_path

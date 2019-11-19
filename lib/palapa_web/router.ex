@@ -113,7 +113,7 @@ defmodule PalapaWeb.Router do
   scope("/organizations/:organization_id", PalapaWeb) do
     pipe_through([:browser, :authentication, :organization_context, :billing])
 
-    get("/", DashboardController, :index)
+    get("/", MessageController, :index)
 
     get("/sessions/switch_organization", SessionController, :switch_organization)
 

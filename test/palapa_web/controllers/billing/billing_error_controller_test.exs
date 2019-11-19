@@ -41,7 +41,7 @@ defmodule PalapaWeb.Billing.BillingErrorControllerTest do
       conn = get(conn, Routes.billing_error_path(conn, :show, workspace.organization))
 
       assert redirected_to(conn, 302) =~
-               Routes.dashboard_path(conn, :index, workspace.organization)
+               Routes.message_path(conn, :index, workspace.organization)
     end
 
     test "end of trial", %{conn: conn, workspace: workspace} do
@@ -68,7 +68,7 @@ defmodule PalapaWeb.Billing.BillingErrorControllerTest do
       conn = get(conn, Routes.billing_error_path(conn, :show, workspace.organization))
 
       assert redirected_to(conn, 302) =~
-               Routes.dashboard_path(conn, :index, workspace.organization)
+               Routes.message_path(conn, :index, workspace.organization)
     end
 
     test "past due subscription", %{conn: conn, workspace: workspace} do

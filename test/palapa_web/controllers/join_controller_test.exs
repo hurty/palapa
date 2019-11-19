@@ -70,7 +70,7 @@ defmodule PalapaWeb.JoinControllerTest do
 
       # the user is redirected to dashboard
       assert redirected_to(conn, 302) =~
-               Routes.dashboard_path(conn, :index, invitation.organization_id)
+               Routes.message_path(conn, :index, invitation.organization_id)
 
       # the user gets logged in correctly
       assert conn.assigns.current_account.email == "dinesh@piedpiper.com"
@@ -112,7 +112,7 @@ defmodule PalapaWeb.JoinControllerTest do
 
       # the user is redirected to dashboard
       assert redirected_to(conn, 302) =~
-               Routes.dashboard_path(conn, :index, invitation.organization_id)
+               Routes.message_path(conn, :index, invitation.organization_id)
 
       # the user gets logged in correctly
       assert conn.assigns.current_account.email == "dinesh@piedpiper.com"
@@ -151,7 +151,7 @@ defmodule PalapaWeb.JoinControllerTest do
 
       # the user is redirected to dashboard
       assert redirected_to(conn, 302) =~
-               Routes.dashboard_path(conn, :index, invitation.organization_id)
+               Routes.message_path(conn, :index, invitation.organization_id)
 
       # the user gets logged in correctly
       assert conn.assigns.current_account.email == "bertram.gilfoyle@piedpiper.com"

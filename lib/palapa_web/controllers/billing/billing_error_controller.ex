@@ -17,7 +17,7 @@ defmodule PalapaWeb.Billing.BillingErrorController do
         |> redirect(to: Routes.payment_method_path(conn, :edit, current_organization(conn)))
 
       status when status in [:active, :trialing] ->
-        redirect(conn, to: Routes.dashboard_path(conn, :index, current_organization(conn)))
+        redirect(conn, to: Routes.message_path(conn, :index, current_organization(conn)))
 
       :trial_has_ended ->
         render(conn, "trial_has_ended.html")

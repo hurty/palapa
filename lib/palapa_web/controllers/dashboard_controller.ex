@@ -10,14 +10,18 @@ defmodule PalapaWeb.DashboardController do
   def put_common_breadcrumbs(conn, _params) do
     conn
     |> put_breadcrumb(
-      "Dashboard",
-      Routes.dashboard_path(conn, :index, current_organization(conn))
+      gettext("What's up?"),
+      Routes.message_path(conn, :index, current_organization(conn))
     )
   end
 
   def index(conn, params) do
     with :ok <- permit(Dashboard.Policy, :index_dashboard, current_member(conn)) do
-      events = Palapa.Events.last_50_events(current_organization(conn), current_member(conn))
+      events =
+        Palapa.Events.last_50_events_without_new_messages(
+          current_organization(conn),
+          current_member(conn)
+        )
 
       selected_team =
         if params["team_id"] do

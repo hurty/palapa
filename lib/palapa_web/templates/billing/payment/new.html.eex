@@ -1,7 +1,7 @@
-<div class="mx-auto my-8" data-controller="payment" 
-data-payment-api-key="<%= Application.get_env(:stripity_stripe, :publishable_api_key) %>" 
+<div class="mx-auto my-8" data-controller="payment"
+data-payment-api-key="<%= Application.get_env(:stripity_stripe, :publishable_api_key) %>"
 data-payment-client-secret="<%= @payment_intent.client_secret %>"
-data-payment-success-redirect-url="<%= Routes.dashboard_url(@conn, :index, @current_organization) %>"
+data-payment-success-redirect-url="<%= Routes.message_url(@conn, :index, @current_organization) %>"
 data-payment-error-redirect-url="<%= Routes.payment_method_url(@conn, :edit, @current_organization) %>"
 data-payment-refresh-subscription-url="<%= Routes.subscription_url(@conn, :refresh, @current_organization) %>">
   <div class="card p-8">

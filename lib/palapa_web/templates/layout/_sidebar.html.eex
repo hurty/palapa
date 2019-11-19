@@ -10,18 +10,12 @@
     <i class="fas fa-exchange-alt mr-2"></i><%= gettext("Switch workspace") %>
   <% end %>
 
-  <%= link(@current_organization.name, to: Routes.dashboard_path(@conn, :index, @current_organization), class: "text-lg font-bold px-2 mt-8 block text-white tracking-wider") %>
+  <%= link(@current_organization.name, to: Routes.message_path(@conn, :index, @current_organization), class: "text-lg font-bold px-2 mt-8 block text-white tracking-wider") %>
 
   <ul class="header-links">
-    <li class="header-link <%= if @navigation == "dashboard" do %>header-link--active<% end %>">
-      <%= link(to: Routes.dashboard_path(@conn, :index, @current_organization), class: "block") do %>
-        <i class="fas fa-bullhorn mr-2"></i><%= gettext("Dashboard") %>
-      <% end %>
-    </li>
-
     <li class="header-link <%= if @navigation == "message" do %>header-link--active<% end %>">
       <%= link(to: Routes.message_path(@conn, :index, @current_organization), class: "block") do %>
-        <i class="fas fa-comment mr-2"></i><%= gettext("Messages") %>
+        <i class="fas fa-bullhorn mr-2"></i><%= gettext("What's up?") %>
       <% end %>
     </li>
 

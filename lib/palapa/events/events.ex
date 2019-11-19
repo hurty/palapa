@@ -34,9 +34,10 @@ defmodule Palapa.Events do
     |> Repo.all()
   end
 
-  def last_50_events(organization, member) do
+  def last_50_events_without_new_messages(organization, member) do
     from(e in base_list_events_query(organization, member),
-      order_by: [desc: :inserted_at]
+      order_by: [desc: :inserted_at],
+      where: e.action != "new_message"
     )
     |> Repo.all()
   end

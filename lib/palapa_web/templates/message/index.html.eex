@@ -1,5 +1,18 @@
-<div class="content page-layout">
+<div class="content large-page-layout">
   <div class="main-content">
-    <%= render "_messages.html", assigns %>
+    <div class="flex flex-wrap">
+      <div class="sm:w-1/2">
+        <h2 class="card-header text-center text-blue-500 mb-4"><%= gettext "What's up?" %></h2>
+        <%= render PalapaWeb.MessageView, "_messages.html", assigns %>
+      </div>
+
+      <div class="sm:w-1/2 pl-4 mt-16">
+        <h2 class="card-header text-center text-sm pb-2 border-b text-gray-700"><%= gettext "Latest activity" %></h2>
+
+        <ul class="">
+          <%= render_many @events, PalapaWeb.EventView, "event.html", assigns %>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

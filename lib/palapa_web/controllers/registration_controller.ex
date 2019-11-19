@@ -14,7 +14,7 @@ defmodule PalapaWeb.RegistrationController do
         conn
         |> PalapaWeb.Authentication.start_session(result.account)
         |> redirect(
-          to: Routes.dashboard_path(conn, :index, result.organization_membership.organization)
+          to: Routes.message_path(conn, :index, result.organization_membership.organization)
         )
 
       {:error, :account_already_exists, _, _} ->

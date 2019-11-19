@@ -16,7 +16,7 @@ defmodule PalapaWeb.Billing.PaymentController do
 
     case Billing.Invoices.pay_invoice(current_subscription.stripe_latest_invoice_id) do
       {:ok, _} ->
-        redirect(conn, to: Routes.dashboard_url(conn, :index, current_organization(conn)))
+        redirect(conn, to: Routes.message_url(conn, :index, current_organization(conn)))
 
       # Needs to display the 3DSecure challenge
       {:error, %Stripe.Error{extra: %{card_code: :invoice_payment_intent_requires_action}}} ->

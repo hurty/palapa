@@ -116,7 +116,7 @@ defmodule PalapaWeb.AuthenticationTest do
     test "gets redirected when a workspace is not active", %{conn: conn, workspace: workspace} do
       Palapa.Organizations.delete(workspace.organization, workspace.richard)
 
-      conn = get(conn, Routes.dashboard_path(conn, :index, workspace.organization))
+      conn = get(conn, Routes.message_path(conn, :index, workspace.organization))
 
       assert redirected_to(conn, 302) =~ Routes.organization_path(conn, :index)
     end

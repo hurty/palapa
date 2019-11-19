@@ -20,7 +20,7 @@
           <%= render_many @events, PalapaWeb.EventView, "daily_recap_event.html", conn: PalapaWeb.Endpoint, current_account: @account %>
         </div>
 
-        <p style="text-align:center;"><%= link "See more activity", to: Routes.dashboard_url(PalapaWeb.Endpoint, :index, @organization) %></p>
+        <p style="text-align:center;"><%= link "See more activity", to: Routes.message_url(PalapaWeb.Endpoint, :index, @organization) %></p>
       </div>
 
       <td style="padding:38px 18px">
