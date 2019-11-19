@@ -13,7 +13,7 @@ defmodule PalapaWeb.Billing.BillingErrorController do
 
       :incomplete ->
         conn
-        |> put_flash(:error, "You need to update your payment details to continue")
+        |> put_flash(:error, gettext("You need to update your payment details to continue"))
         |> redirect(to: Routes.payment_method_path(conn, :edit, current_organization(conn)))
 
       status when status in [:active, :trialing] ->

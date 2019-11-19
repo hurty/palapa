@@ -46,10 +46,10 @@ defmodule PalapaWeb.Billing.StripeWebhookController do
 
     case Billing.Invoices.create_invoice(customer, invoice_attrs) do
       {:ok, invoice} ->
-        send_resp(conn, :ok, "Created invoice #{invoice.id}")
+        send_resp(conn, :ok, gettext("Created invoice %{invoice_id}", %{invoice_id: invoice.id}))
 
       {:error, _changeset} ->
-        send_resp(conn, :bad_request, "Error while creating invoice")
+        send_resp(conn, :bad_request, gettext("Error while creating invoice"))
     end
   end
 
@@ -59,10 +59,17 @@ defmodule PalapaWeb.Billing.StripeWebhookController do
 
     case Billing.Invoices.update_invoice(invoice, %{status: stripe_invoice.status}) do
       {:ok, invoice} ->
-        send_resp(conn, :ok, "Updated invoice status #{invoice.id} #{invoice.status}")
+        send_resp(
+          conn,
+          :ok,
+          gettext("Updated invoice status %{invoice_id} %{invoice_status}", %{
+            invoice_id: invoice.id,
+            invoice_status: invoice.status
+          })
+        )
 
       {:error, _changeset} ->
-        send_resp(conn, :bad_request, "Error while updating invoice status")
+        send_resp(conn, :bad_request, gettext("Error while updating invoice status"))
     end
   end
 
@@ -75,10 +82,16 @@ defmodule PalapaWeb.Billing.StripeWebhookController do
            stripe_latest_invoice_id: stripe_subscription.latest_invoice
          }) do
       {:ok, subscription} ->
-        send_resp(conn, :ok, "Updated subscription status : #{subscription.status}")
+        send_resp(
+          conn,
+          :ok,
+          gettext("Updated subscription status : %{subscription_status}", %{
+            subscription_status: subscription.status
+          })
+        )
 
       {:error, _changeset} ->
-        send_resp(conn, :bad_request, "Error while updating subscription status")
+        send_resp(conn, :bad_request, gettext("Error while updating subscription status"))
     end
   end
 end

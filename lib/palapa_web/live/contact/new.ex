@@ -76,7 +76,7 @@ defmodule PalapaWeb.ContactLive.New do
          ) do
       {:ok, %{contact: contact}} ->
         socket
-        |> put_flash(:success, "The contact has been created")
+        |> put_flash(:success, gettext("The contact has been created"))
         |> redirect(
           to:
             Routes.live_path(

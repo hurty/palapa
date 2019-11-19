@@ -28,14 +28,17 @@ defmodule PalapaWeb.TeamController do
       case Teams.create(current_organization(conn), team_params) do
         {:ok, team} ->
           conn
-          |> put_flash(:success, "The team #{team.name} has been created!")
+          |> put_flash(
+            :success,
+            gettext("The team %{team} has been created!", %{team: team.name})
+          )
           |> redirect(
             to: Routes.member_path(conn, :index, current_organization(conn), team_id: team.id)
           )
 
         {:error, team_changeset} ->
           conn
-          |> put_flash(:error, "The team can't be created")
+          |> put_flash(:error, gettext("The team can't be created"))
           |> render("new.html", team_changeset: team_changeset)
       end
     end

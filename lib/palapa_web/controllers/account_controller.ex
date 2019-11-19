@@ -17,7 +17,7 @@ defmodule PalapaWeb.AccountController do
       {:ok, %{account: account}} ->
         conn
         |> assign_changesets(account)
-        |> put_flash(:success, "Your account has been updated.")
+        |> put_flash(:success, gettext("Your account has been updated."))
         # Force redirect to set the new locale
         |> put_session(:locale, nil)
         |> redirect(to: Routes.account_path(conn, :edit))
@@ -26,7 +26,7 @@ defmodule PalapaWeb.AccountController do
         conn
         |> assign(:account_changeset, account_changeset)
         |> assign(:password_changeset, Accounts.change_password(current_account(conn)))
-        |> put_flash(:error, "Your account could not be updated")
+        |> put_flash(:error, gettext("Your account could not be updated"))
         |> render("edit.html")
     end
   end
@@ -36,14 +36,17 @@ defmodule PalapaWeb.AccountController do
       {:ok, account} ->
         conn
         |> assign_changesets(account)
-        |> put_flash(:success, "Your password has been updated.")
+        |> put_flash(:success, gettext("Your password has been updated."))
         |> render("edit.html")
 
       {:error, password_changeset} ->
         conn
         |> assign(:account_changeset, Accounts.change_account(current_account(conn)))
         |> assign(:password_changeset, password_changeset)
-        |> put_flash(:error, "Your password could not be updated. Please check errors below.")
+        |> put_flash(
+          :error,
+          gettext("Your password could not be updated. Please check errors below.")
+        )
         |> render("edit.html")
     end
   end

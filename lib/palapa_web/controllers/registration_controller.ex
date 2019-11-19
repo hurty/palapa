@@ -21,7 +21,9 @@ defmodule PalapaWeb.RegistrationController do
         conn
         |> put_flash(
           :error,
-          "It seems you already have a Palapa account. Please sign in first to create a new workspace"
+          gettext(
+            "It seems you already have a Palapa account. Please sign in first to create a new workspace"
+          )
         )
         |> redirect(to: Routes.session_path(conn, :new))
 

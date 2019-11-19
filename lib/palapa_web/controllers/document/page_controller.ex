@@ -169,7 +169,12 @@ defmodule PalapaWeb.Document.PageController do
           current_page_id
         end
 
-      conn = put_flash(conn, :success, "The page \"#{page.title}\" has been deleted.")
+      conn =
+        put_flash(
+          conn,
+          :success,
+          gettext("The page \"%{page_title}\" has been deleted.", %{page_title: page.title})
+        )
 
       if redirect_page do
         redirect(conn,

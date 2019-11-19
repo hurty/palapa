@@ -71,7 +71,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
           conn
           |> put_flash(
             :error,
-            "The billing service is unreachable. Please try again or ask support"
+            gettext("The billing service is unreachable. Please try again or ask support")
           )
           |> redirect(to: Routes.settings_customer_path(conn, :new, current_organization(conn)))
       end
@@ -96,7 +96,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
         conn
         |> put_flash(
           :error,
-          "This workspace does not have a paid subscription / billing information"
+          gettext("This workspace does not have a paid subscription / billing information")
         )
         |> redirect(to: Routes.settings_customer_path(conn, :show, current_organization(conn)))
       end
@@ -110,12 +110,12 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
       case Billing.Customers.update_customer(customer, customer_attrs) do
         {:ok, _customer} ->
           conn
-          |> put_flash(:success, "Billing information has been updated successfully")
+          |> put_flash(:success, gettext("Billing information has been updated successfully"))
           |> redirect(to: Routes.settings_customer_path(conn, :show, current_organization(conn)))
 
         {:error, customer_changeset} ->
           conn
-          |> put_flash(:error, "Billing information couldn't be updated")
+          |> put_flash(:error, gettext("Billing information couldn't be updated"))
           |> render("edit.html", customer_changeset: customer_changeset)
       end
     end

@@ -61,12 +61,12 @@ defmodule PalapaWeb.MessageController do
       case Messages.create(current_member(conn), message_params, message_teams) do
         {:ok, message} ->
           conn
-          |> put_flash(:success, "Your message has been posted")
+          |> put_flash(:success, gettext("Your message has been posted"))
           |> redirect(to: Routes.message_path(conn, :show, current_organization(conn), message))
 
         {:error, message_changeset} ->
           conn
-          |> put_flash(:error, "Your message can't be posted")
+          |> put_flash(:error, gettext("Your message can't be posted"))
           |> render("new.html", message_changeset: message_changeset, teams: teams)
       end
     end
@@ -125,14 +125,14 @@ defmodule PalapaWeb.MessageController do
       case Messages.update(message, message_params, message_teams) do
         {:ok, _struct} ->
           conn
-          |> put_flash(:success, "The message has been updated")
+          |> put_flash(:success, gettext("The message has been updated"))
           |> redirect(to: Routes.message_path(conn, :show, current_organization(conn), message))
 
         {:error, message_changeset} ->
           teams = Teams.list_for_member(current_member(conn))
 
           conn
-          |> put_flash(:error, "Your message can't be posted")
+          |> put_flash(:error, gettext("Your message can't be posted"))
           |> render(
             "edit.html",
             message: message,
@@ -152,7 +152,7 @@ defmodule PalapaWeb.MessageController do
       Messages.delete!(message)
 
       conn
-      |> put_flash(:success, "The message has been deleted")
+      |> put_flash(:success, gettext("The message has been deleted"))
       |> redirect(to: Routes.message_path(conn, :index, current_organization(conn)))
     end
   end

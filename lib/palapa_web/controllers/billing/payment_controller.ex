@@ -27,7 +27,9 @@ defmodule PalapaWeb.Billing.PaymentController do
         conn
         |> put_flash(
           :error,
-          "An unexpected error occured : #{message}. The payment has been cancelled."
+          gettext("An unexpected error occured : %{message}. The payment has been cancelled.", %{
+            message: message
+          })
         )
         |> redirect(to: Routes.organization_path(conn, :index))
     end

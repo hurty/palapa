@@ -17,7 +17,7 @@ defmodule PalapaWeb.SessionController do
 
       {:error, _reason, conn} ->
         conn
-        |> put_flash(:error, "Invalid email/password combination")
+        |> put_flash(:error, gettext("Invalid email/password combination"))
         |> render("new.html")
     end
   end

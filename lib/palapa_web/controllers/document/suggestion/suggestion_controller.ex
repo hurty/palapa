@@ -34,7 +34,7 @@ defmodule PalapaWeb.Document.SuggestionController do
         render(conn, "suggestion.html", layout: false, suggestion: suggestion, page: page)
 
       {:error, _changeset} ->
-        send_resp(conn, 400, "An unexpected error occured while posting the suggestion")
+        send_resp(conn, 400, gettext("An unexpected error occured while posting the suggestion"))
     end
   end
 
@@ -88,7 +88,11 @@ defmodule PalapaWeb.Document.SuggestionController do
           send_resp(conn, 204, "")
 
         {:error, _changeset} ->
-          send_resp(conn, 400, "An unexpected error occured while deleting the suggestion")
+          send_resp(
+            conn,
+            400,
+            gettext("An unexpected error occured while deleting the suggestion")
+          )
       end
     end
   end

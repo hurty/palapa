@@ -29,7 +29,12 @@ defmodule PalapaWeb.Document.DocumentTrashController do
     Documents.restore_document!(document)
 
     conn
-    |> put_flash(:success, "The document #{document.title} has been restored.")
+    |> put_flash(
+      :success,
+      gettext("The document %{document_title} has been restored.", %{
+        document_title: document.title
+      })
+    )
     |> redirect(to: Routes.document_path(conn, :show, current_organization(conn), document))
   end
 

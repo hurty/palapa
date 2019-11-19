@@ -42,7 +42,7 @@ defmodule PalapaWeb.Billing.PaymentMethodController do
 
         {:error, :customer, changeset, _changes} ->
           conn
-          |> put_flash(:error, "An error occurred while updating your payment method")
+          |> put_flash(:error, gettext("An error occurred while updating your payment method"))
           |> render("edit.html", customer_changeset: changeset)
       end
     end

@@ -34,12 +34,15 @@ defmodule PalapaWeb.OrganizationController do
       case Organizations.delete(org, current_member(conn)) do
         {:ok, _organization} ->
           conn
-          |> put_flash(:success, "The workspace #{org.name} has been deleted")
+          |> put_flash(
+            :success,
+            gettext("The workspace %{workspace} has been deleted", %{workspace: org.name})
+          )
           |> redirect(to: Routes.organization_path(conn, :index))
 
         {:error, _changeset} ->
           conn
-          |> put_flash(:error, "An error occurred while deleting the workspace")
+          |> put_flash(:error, gettext("An error occurred while deleting the workspace"))
           |> redirect(to: Routes.settings_workspace_path(conn, :edit, org))
       end
     end

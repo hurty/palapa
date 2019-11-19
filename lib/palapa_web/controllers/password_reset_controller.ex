@@ -23,7 +23,7 @@ defmodule PalapaWeb.PasswordResetController do
       render(conn, "create.html", email: email)
     else
       conn
-      |> put_flash(:error, "Please enter a valid email address")
+      |> put_flash(:error, gettext("Please enter a valid email address"))
       |> render("new.html")
     end
   end
@@ -39,7 +39,7 @@ defmodule PalapaWeb.PasswordResetController do
       )
     else
       conn
-      |> put_flash(:error, "Invalid token")
+      |> put_flash(:error, gettext("Invalid token"))
       |> render("invalid_token.html")
     end
   end
@@ -57,7 +57,7 @@ defmodule PalapaWeb.PasswordResetController do
 
         {:error, changeset} ->
           conn
-          |> put_flash(:error, "Cannot update the password")
+          |> put_flash(:error, gettext("Cannot update the password"))
           |> render("edit.html",
             account: account,
             password_reset_token: password_attrs["password_reset_token"],

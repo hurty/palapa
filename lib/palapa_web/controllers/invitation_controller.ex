@@ -51,9 +51,9 @@ defmodule PalapaWeb.InvitationController do
       else
         conn =
           if Enum.any?(emails) do
-            put_flash(conn, :success, "Invitations have been sent")
+            put_flash(conn, :success, gettext("Invitations have been sent"))
           else
-            put_flash(conn, :error, "You must enter at least one email address")
+            put_flash(conn, :error, gettext("You must enter at least one email address"))
           end
 
         conn
@@ -78,7 +78,12 @@ defmodule PalapaWeb.InvitationController do
          {:ok, new_invitation} <-
            Invitations.create_or_renew(invitation.email, current_member(conn)) do
       conn
-      |> put_flash(:success, "#{new_invitation.email} has been sent a new invitation")
+      |> put_flash(
+        :success,
+        gettext("%{email} has been sent a new invitation", %{
+          email: new_invitation.email
+        })
+      )
       |> redirect(
         to:
           Routes.invitation_path(conn, :new, current_organization(conn), %{

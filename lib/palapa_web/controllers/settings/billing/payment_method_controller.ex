@@ -46,7 +46,7 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
       case Billing.Customers.update_customer_payment_method(customer, payment_method_id) do
         {:ok, _result} ->
           conn
-          |> put_flash(:success, "Your payment method has been updated")
+          |> put_flash(:success, gettext("Your payment method has been updated"))
           |> redirect(to: Routes.settings_customer_path(conn, :show, current_organization(conn)))
 
         {:error, :stripe_payment_method, %Stripe.Error{} = stripe_error, _} ->
@@ -59,7 +59,7 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
 
         {:error, :customer, changeset, _changes} ->
           conn
-          |> put_flash(:error, "An error occurred while updating your payment method")
+          |> put_flash(:error, gettext("An error occurred while updating your payment method"))
           |> render("edit.html",
             customer_changeset: changeset,
             setup_intent: setup_intent()

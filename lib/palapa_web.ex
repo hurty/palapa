@@ -37,6 +37,7 @@ defmodule PalapaWeb do
     quote do
       use Phoenix.LiveView
       import Bodyguard
+      import PalapaWeb.Gettext
     end
   end
 
@@ -44,6 +45,7 @@ defmodule PalapaWeb do
     quote do
       use Phoenix.LiveComponent
       import Bodyguard
+      import PalapaWeb.Gettext
     end
   end
 

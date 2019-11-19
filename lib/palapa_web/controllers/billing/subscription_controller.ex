@@ -33,7 +33,7 @@ defmodule PalapaWeb.Billing.SubscriptionController do
 
         {:error, :changeset_validation, customer_changeset, _changes_so_far} ->
           conn
-          |> put_flash(:error, "Please check your subscription information")
+          |> put_flash(:error, gettext("Please check your subscription information"))
           |> render("new.html",
             customer_changeset: customer_changeset
           )
@@ -54,7 +54,9 @@ defmodule PalapaWeb.Billing.SubscriptionController do
           conn
           |> put_flash(
             :error,
-            "The billing service could not process your request. Please try again or ask support"
+            gettext(
+              "The billing service could not process your request. Please try again or ask support"
+            )
           )
           |> redirect(to: Routes.organization_path(conn, :index))
       end
@@ -67,10 +69,14 @@ defmodule PalapaWeb.Billing.SubscriptionController do
     |> Billing.Subscriptions.refresh_local_subscription_status()
     |> case do
       {:ok, _subscription} ->
-        resp(conn, 200, "subscription status has been refreshed ")
+        resp(conn, 200, gettext("subscription status has been refreshed "))
 
       {:error, error} ->
-        Logger.error("subscription could not be refreshed: #{inspect(error)}")
+        Logger.error(
+          gettext("subscription could not be refreshed: %{error}", %{
+            error: inspect(error)
+          })
+        )
     end
   end
 end

@@ -10,7 +10,10 @@ defmodule PalapaWeb.TeamMembershipController do
     with :ok <- permit(Teams.Policy, :join, current_member(conn), team),
          {:ok, _team} = Teams.add_member(team, current_member(conn)) do
       conn
-      |> put_flash(:success, "You have joined the team \"#{team.name}\"")
+      |> put_flash(
+        :success,
+        gettext("You have joined the team \"%{team}\"", %{team: team.name})
+      )
       |> redirect(
         to: Routes.member_path(conn, :index, current_organization(conn), %{"team_id" => team.id})
       )
@@ -23,7 +26,10 @@ defmodule PalapaWeb.TeamMembershipController do
     with :ok <- permit(Teams.Policy, :leave, current_member(conn), team),
          {:ok, _team} = Teams.remove_member(team, current_member(conn)) do
       conn
-      |> put_flash(:success, "You have left the team \"#{team.name}\"")
+      |> put_flash(
+        :success,
+        gettext("You have left the team \"%{team}\"", %{team: team.name})
+      )
       |> redirect(
         to: Routes.member_path(conn, :index, current_organization(conn), %{"team_id" => team.id})
       )

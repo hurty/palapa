@@ -13,7 +13,7 @@ defmodule PalapaWeb.Document.SuggestionClosureController do
         send_resp(conn, 204, "")
 
       {:error, _changeset} ->
-        send_resp(conn, 400, "An unexpected error occured while closing the suggestion")
+        send_resp(conn, 400, gettext("An unexpected error occured while closing the suggestion"))
     end
   end
 
@@ -27,7 +27,11 @@ defmodule PalapaWeb.Document.SuggestionClosureController do
         send_resp(conn, 204, "")
 
       {:error, _changeset} ->
-        send_resp(conn, 400, "An unexpected error occured while reopening the suggestion")
+        send_resp(
+          conn,
+          400,
+          gettext("An unexpected error occured while reopening the suggestion")
+        )
     end
   end
 end

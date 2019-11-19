@@ -166,7 +166,7 @@ defmodule PalapaWeb.ContactLive do
     Contacts.delete_contact(socket.assigns.contact)
 
     socket
-    |> put_flash(:success, "The contact has been deleted")
+    |> put_flash(:success, gettext("The contact has been deleted"))
     |> live_redirect(
       to: Routes.live_path(socket, __MODULE__, socket.assigns.current_organization)
     )

@@ -2,6 +2,7 @@ defmodule PalapaWeb.Authentication do
   import Plug.Conn
   import Phoenix.Controller
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
+  import PalapaWeb.Gettext
   alias PalapaWeb.Router
   alias Palapa.Accounts
   alias Palapa.Organizations
@@ -21,7 +22,7 @@ defmodule PalapaWeb.Authentication do
       rescue
         _ ->
           conn
-          |> put_flash(:error, "You have been logged out")
+          |> put_flash(:error, gettext("You have been logged out"))
           |> logout
       end
     end
@@ -36,7 +37,12 @@ defmodule PalapaWeb.Authentication do
 
     if Organizations.soft_deleted?(organization) do
       conn
-      |> put_flash(:error, "The workspace #{organization.name} has been deleted")
+      |> put_flash(
+        :error,
+        gettext("The workspace %{workspace} has been deleted", %{
+          workspace: organization.name
+        })
+      )
       |> redirect(to: Router.Helpers.organization_path(conn, :index))
       |> halt()
     else
@@ -53,7 +59,7 @@ defmodule PalapaWeb.Authentication do
       conn
     else
       conn
-      |> put_flash(:error, "You must be logged in to access that page")
+      |> put_flash(:error, gettext("You must be logged in to access that page"))
       |> redirect(to: Router.Helpers.home_path(conn, :index))
       |> halt()
     end
