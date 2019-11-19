@@ -149,7 +149,7 @@ msgid "Don't worry, all the data associated with this workspace is safe."
 msgstr "Pas de panique, toutes les données de votre espace de travail sont toujours là."
 
 #, elixir-format
-#: lib/palapa_web/templates/dashboard/index.html.eex:3
+#: lib/palapa_web/templates/dashboard/index.html.eex:11
 msgid "Latest activity"
 msgstr "Dernière activité"
 
@@ -1860,29 +1860,9 @@ msgid "Create this team"
 msgstr "Créer cette équipe"
 
 #, elixir-format
-#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:49
-msgid "Created invoice %{invoice_id}"
-msgstr "La facture %{invoice_id} a été créée"
-
-#, elixir-format
 #: lib/palapa_web/templates/trash/document.html.eex:13
 msgid "Deleted %{time} by %{author}"
 msgstr "Supprimé le %{time} par %{author}"
-
-#, elixir-format
-#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:52
-msgid "Error while creating invoice"
-msgstr "Une erreur s'est produite lors de la création de la facture"
-
-#, elixir-format
-#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:72
-msgid "Error while updating invoice status"
-msgstr "Une erreur s'est produite lors de la mise à jour du statut de facture"
-
-#, elixir-format
-#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:94
-msgid "Error while updating subscription status"
-msgstr "Une erreur s'est produite lors de la mise à jour de la souscription"
 
 #, elixir-format
 #: lib/palapa_web/views/error_view.ex:5
@@ -2155,3 +2135,8 @@ msgstr "La souscription n'a pas pu être mis à jour : %{error}"
 #: lib/palapa_web/controllers/billing/subscription_controller.ex:72
 msgid "subscription status has been refreshed "
 msgstr "Le statut de la souscription a été mis à jour"
+
+#, elixir-format
+#: lib/palapa_web/templates/dashboard/index.html.eex:6
+msgid "Last messages"
+msgstr "Derniers messages"

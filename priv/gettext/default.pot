@@ -148,7 +148,7 @@ msgid "Don't worry, all the data associated with this workspace is safe."
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/dashboard/index.html.eex:3
+#: lib/palapa_web/templates/dashboard/index.html.eex:11
 msgid "Latest activity"
 msgstr ""
 
@@ -1859,28 +1859,8 @@ msgid "Create this team"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:49
-msgid "Created invoice %{invoice_id}"
-msgstr ""
-
-#, elixir-format
 #: lib/palapa_web/templates/trash/document.html.eex:13
 msgid "Deleted %{time} by %{author}"
-msgstr ""
-
-#, elixir-format
-#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:52
-msgid "Error while creating invoice"
-msgstr ""
-
-#, elixir-format
-#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:72
-msgid "Error while updating invoice status"
-msgstr ""
-
-#, elixir-format
-#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:94
-msgid "Error while updating subscription status"
 msgstr ""
 
 #, elixir-format
@@ -2075,16 +2055,6 @@ msgid "Update teams"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:65
-msgid "Updated invoice status %{invoice_id} %{invoice_status}"
-msgstr ""
-
-#, elixir-format
-#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:88
-msgid "Updated subscription status : %{subscription_status}"
-msgstr ""
-
-#, elixir-format
 #: lib/palapa_web/plugs/authentication.ex:25
 msgid "You have been logged out"
 msgstr ""
@@ -2163,4 +2133,9 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/controllers/billing/subscription_controller.ex:72
 msgid "subscription status has been refreshed "
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/dashboard/index.html.eex:6
+msgid "Last messages"
 msgstr ""
