@@ -7,7 +7,7 @@
 }
 
 .event-summary {
-  @apply text-base font-bold text-gray-700;
+  @apply text-sm text-gray-700;
 
   a {
     @apply text-green-600 font-bold;
@@ -25,5 +25,5 @@
 }
 
 .event-details {
-  @apply p-2 my-2 text-sm rounded-lg bg-gray-300 rounded-lg;
+  @apply p-2 my-2 text-sm rounded-lg bg-gray-200 rounded-lg;
 }

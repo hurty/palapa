@@ -1,9 +1,20 @@
-<div class="content page-layout">
-  <div class="main-content"> 
-    <h2 class="card-header text-center"><%= gettext "Latest activity" %></h2>
+<div class="content large-page-layout">
+  <div class="main-content">
 
-    <ul class="">
-      <%= render_many @events, PalapaWeb.EventView, "event.html", assigns %>
-    </ul>
+    <div class="flex flex-wrap">
+      <div class="sm:w-1/2">
+        <h2 class="card-header text-center text-blue-500 mb-4"><%= gettext "Last messages" %></h2>
+        <%= render PalapaWeb.MessageView, "_messages.html", assigns %>
+      </div>
+
+      <div class="sm:w-1/2 pl-4">
+        <h2 class="card-header text-center text-blue-500"><%= gettext "Latest activity" %></h2>
+
+        <ul class="">
+          <%= render_many @events, PalapaWeb.EventView, "event.html", assigns %>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </div>

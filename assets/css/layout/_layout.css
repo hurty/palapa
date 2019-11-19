@@ -126,7 +126,7 @@
 @screen sm {
   .large-page-layout {
     display: grid;
-    grid-template-columns: 1fr minmax(700px, 6fr) 1fr;
+    grid-template-columns: 1fr minmax(800px, 11fr) 1fr;
     grid-template-areas: ". main-content .";
   }
 }

@@ -1424,7 +1424,7 @@ msgstr "Ce membre est %{role}"
 #: lib/palapa_web/templates/message/_index_toolbar.html.eex:7
 #: lib/palapa_web/templates/message/_index_toolbar.html.eex:15
 msgid "All messages"
-msgstr "Messages"
+msgstr "Tous les messages"
 
 #, elixir-format
 #: lib/palapa_web/templates/message_comment/_comment_content.html.eex:29
