@@ -74,16 +74,23 @@ defmodule PalapaWeb.PersonalInformationView do
 
     cond do
       nb_teams > 0 && nb_members > 0 ->
-        "This information is only visible to you, #{nb_teams} team(s) and #{nb_members} other member(s)"
+        gettext(
+          "This information is only visible to you, %{nb_teams} team(s) and %{nb_members} other member(s)",
+          %{nb_teams: nb_teams, nb_members: nb_members}
+        )
 
       nb_teams > 0 && nb_members == 0 ->
-        "This information is only visible to you and #{nb_teams} team(s)"
+        gettext("This information is only visible to you and %{nb_teams} team(s)", %{
+          nb_teams: nb_teams
+        })
 
       nb_teams == 0 && nb_members > 0 ->
-        "This information is only visible to you and #{nb_members} other member(s)"
+        gettext("This information is only visible to you and %{nb_members} other member(s)", %{
+          nb_members: nb_members
+        })
 
       true ->
-        "This information is only visible to you"
+        gettext("This information is only visible to you")
     end
   end
 end

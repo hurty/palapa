@@ -2,15 +2,15 @@ defmodule PalapaWeb.ErrorView do
   use PalapaWeb, :view
 
   def render("403.html", _assigns) do
-    "Forbidden"
+    gettext("Forbidden")
   end
 
   def render("404.html", _assigns) do
-    "Page not found"
+    gettext("Page not found")
   end
 
   def render("500.html", _assigns) do
-    "Internal server error"
+    gettext("Internal server error")
   end
 
   # In case no render clause matches or no

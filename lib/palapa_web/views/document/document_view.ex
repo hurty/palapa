@@ -8,9 +8,12 @@ defmodule PalapaWeb.Document.DocumentView do
   def flash_for_deleted_document(conn, document) do
     content_tag(:span) do
       [
-        "The document '#{Helpers.truncate_string(document.title)}' has been deleted. ",
-        link("Undo",
-          to: Routes.document_trash_path(conn, :delete, conn.assigns.current_organization, document),
+        gettext("The document %{document_title} has been deleted. ", %{
+          document_title: Helpers.truncate_string(document.title)
+        }),
+        link(gettext("Undo"),
+          to:
+            Routes.document_trash_path(conn, :delete, conn.assigns.current_organization, document),
           data: [controller: "link", action: "link#delete"],
           class: "text-green-800 hover:underline"
         )
