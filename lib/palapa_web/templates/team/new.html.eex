@@ -1,15 +1,15 @@
 <div class="content page-layout">
 <div class="main-content">
   <div class="card p-1 sm:p-8">
-    <h2 class="card-header">New team</h2>
+    <h2 class="card-header"><%= gettext("New team") %></h2>
     <div class="card-header-separator"></div>
 
     <%= form_for @team_changeset, Routes.team_path(@conn, :create, @current_organization), [], fn form -> %>
       <%= render "_form.html", form: form, team_changeset: @team_changeset, current_organization: @current_organization, selected_members: [] %>
 
       <div class="card-actions">
-        <%= submit "Create this team", class: "btn btn-green" %>
-        <%= link "Cancel", to: Routes.member_path(@conn, :index, @current_organization), class: "btn" %>
+        <%= submit gettext("Create this team"), class: "btn btn-green" %>
+        <%= link gettext("Cancel"), to: Routes.member_path(@conn, :index, @current_organization), class: "btn" %>
       </div>
     <% end %>
   </div>

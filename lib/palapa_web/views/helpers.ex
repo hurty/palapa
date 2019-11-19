@@ -23,7 +23,12 @@ defmodule PalapaWeb.Helpers do
     short_format = "{WDshort} {D} {Mfull} {YYYY}"
     complete_format = "{WDshort} {D} {Mfull} {YYYY}, {h24}:{m} UTC{Z:}"
 
-    datetime = datetime |> Timex.Timezone.convert(get_timezone(conn))
+    datetime =
+      if conn do
+        datetime |> Timex.Timezone.convert(get_timezone(conn))
+      else
+        datetime
+      end
 
     short_datetime =
       if(

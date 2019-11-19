@@ -1,13 +1,13 @@
 <div class="content page-layout">
-  <div class="main-content"> 
+  <div class="main-content">
     <div class="card">
-      <h1 class="card-header border-b p-4">Trash</h1>
+      <h1 class="card-header border-b p-4"><%= gettext("Trash") %></h1>
 
       <div class="p-4">
-        <p class="bg-gray-200 rounded-full textred-500px-1 py-2 text-center my-4">Items in the trash will be definitely deleted after 30 days.</p>
-        <h2 class="text-xl font-bold">Documents</h2>
+        <p class="bg-gray-200 rounded-full textred-500px-1 py-2 text-center my-4"><%= gettext("Items in the trash will be definitely deleted after 30 days.") %></p>
+        <h2 class="text-xl font-bold"><%= gettext("Documents") %></h2>
         <div class="card-header-separator"></div>
-        
+
         <%= if Enum.any?(@documents) do %>
 
           <%= for document <- @documents do %>
@@ -16,11 +16,11 @@
 
           <%= if @documents.total_pages > 1 do %>
             <div class="text-center py-2">
-              <%= pagination_links @documents, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>    
+              <%= pagination_links @documents, previous: ~E(<i class="fas fa-angle-left"></i>), next: ~E(<i class="fas fa-angle-right"></i>), first: ~E(<i class="fas fa-angle-double-left"></i>), last: ~E(<i class="fas fa-angle-double-right"></i>) %>
             </div>
           <% end %>
         <% else %>
-          The documents trash is empty.
+          <%= gettext("The documents trash is empty.") %>
         <% end %>
       </div>
     </div>
