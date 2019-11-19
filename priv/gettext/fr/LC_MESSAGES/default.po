@@ -280,6 +280,7 @@ msgstr "Changez votre mot de passe"
 #: lib/palapa_web/templates/join/form_with_existing_account.html.eex:17 lib/palapa_web/templates/join/form_without_existing_account.html.eex:17
 #: lib/palapa_web/templates/organization/new.html.eex:10 lib/palapa_web/templates/password_reset/edit.html.eex:9
 #: lib/palapa_web/templates/registration/_form.html.eex:9 lib/palapa_web/templates/settings/billing/customer/edit.html.eex:5
+#: lib/palapa_web/templates/team/_form.html.eex:2
 msgid "Check the errors below:"
 msgstr "Corrigez les erreurs ci-dessous"
 
@@ -387,7 +388,8 @@ msgstr "Retour aux contacts"
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:18 lib/palapa_web/templates/member/_personal_information_form.html.leex:37
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:40 lib/palapa_web/templates/message/new.html.eex:18
 #: lib/palapa_web/templates/organization/new.html.eex:22 lib/palapa_web/templates/settings/member/members.html.leex:29
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:60
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:60 lib/palapa_web/templates/team/edit.html.eex:12
+#: lib/palapa_web/templates/team/new.html.eex:12
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -728,7 +730,7 @@ msgstr "Document"
 
 #, elixir-format
 #: lib/palapa_web/templates/document/document/index.html.eex:6
-#: lib/palapa_web/templates/layout/_sidebar.html.eex:30
+#: lib/palapa_web/templates/layout/_sidebar.html.eex:30 lib/palapa_web/templates/trash/index.html.eex:8
 msgid "Documents"
 msgstr "Documents"
 
@@ -871,7 +873,7 @@ msgstr "Restaurer ?"
 #, elixir-format
 #: lib/palapa_web/templates/document/suggestion/edit.html.eex:8
 #: lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:8 lib/palapa_web/templates/settings/billing/customer/edit.html.eex:11
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:19
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:19 lib/palapa_web/templates/team/edit.html.eex:11
 msgid "Save"
 msgstr "Sauvegarder"
 
@@ -908,6 +910,7 @@ msgstr "Partager avec un lien secret"
 
 #, elixir-format
 #: lib/palapa_web/templates/document/document/index.html.eex:97
+#: lib/palapa_web/templates/trash/document.html.eex:9
 msgid "Shared with everyone"
 msgstr "Partagé avec tous les membres"
 
@@ -1255,6 +1258,7 @@ msgstr "Changer d'espace"
 
 #, elixir-format
 #: lib/palapa_web/templates/layout/_sidebar.html.eex:42
+#: lib/palapa_web/templates/team_member/edit.html.eex:3
 msgid "Teams"
 msgstr "Équipes"
 
@@ -1291,6 +1295,7 @@ msgstr "Modifier"
 
 #, elixir-format
 #: lib/palapa_web/templates/member/_team_info.html.eex:39
+#: lib/palapa_web/templates/team/edit.html.eex:4
 msgid "Edit team"
 msgstr "Modifier l'équipe"
 
@@ -1772,3 +1777,381 @@ msgstr "Habituellement le nom de votre entreprise"
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:7
 msgid "These informations will appear on your invoices"
 msgstr "Ces informations apparaîtront sur vos factures"
+
+#, elixir-format
+#: lib/palapa_web/controllers/invitation_controller.ex:83
+msgid "%{email} has been sent a new invitation"
+msgstr "Un email d'invitation a été envoyé à %{email}"
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/document_public_link_controller.ex:12
+msgid "A secret link has been created for this document"
+msgstr "Un lien secret a été créé pour ce document"
+
+#, elixir-format
+#: lib/palapa_web/controllers/profile_controller.ex:18
+msgid "An error occured while updating your profile."
+msgstr "Une erreur s'est produite lors de la mise à jour de votre profil."
+
+#, elixir-format
+#: lib/palapa_web/controllers/organization_controller.ex:45
+msgid "An error occurred while deleting the workspace"
+msgstr "Une erreur s'est produite pendant la suppression de l'espace de travail"
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/payment_method_controller.ex:45
+#: lib/palapa_web/controllers/settings/billing/payment_method_controller.ex:62
+msgid "An error occurred while updating your payment method"
+msgstr "Une erreur s'est produite lors de la mise à jour de votre moyen de paiement"
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/payment_controller.ex:30
+msgid "An unexpected error occured : %{message}. The payment has been cancelled."
+msgstr "Une erreur inattendue s'est produite : %{message}. Le paiement a été annulé."
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/suggestion/suggestion_closure_controller.ex:16
+msgid "An unexpected error occured while closing the suggestion"
+msgstr "Une erreur inattendue s'est produite lors de l'archivage de la suggestion"
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/suggestion/suggestion_controller.ex:94
+msgid "An unexpected error occured while deleting the suggestion"
+msgstr "Une erreur inattendue s'est produite lors de la suppression de la suggestion"
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/suggestion/suggestion_comment_controller.ex:101
+msgid "An unexpected error occured while deleting the suggestion comment"
+msgstr "Une erreur inattendue s'est produite pendant la suppression du commentaire"
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/suggestion/suggestion_controller.ex:37
+msgid "An unexpected error occured while posting the suggestion"
+msgstr "Une erreur inattendue s'est produite lors de l'enregistrement de la suggestion"
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/suggestion/suggestion_comment_controller.ex:31
+msgid "An unexpected error occured while posting the suggestion comment"
+msgstr "Une erreur inattendue s'est produite lors de l'enregistrement du commentaire"
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/suggestion/suggestion_closure_controller.ex:33
+msgid "An unexpected error occured while reopening the suggestion"
+msgstr "Une erreur inattendue s'est produite lors de la réouverture de la suggestion"
+
+#, elixir-format
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:118
+msgid "Billing information couldn't be updated"
+msgstr "Les informations de facturation n'ont pas pu être mises à jour"
+
+#, elixir-format
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:113
+msgid "Billing information has been updated successfully"
+msgstr "Les informations de facturation ont été mises à jour"
+
+#, elixir-format
+#: lib/palapa_web/controllers/password_reset_controller.ex:60
+msgid "Cannot update the password"
+msgstr "Impossible de mettre à jour le mot de passe"
+
+#, elixir-format
+#: lib/palapa_web/templates/team/new.html.eex:11
+msgid "Create this team"
+msgstr "Créer cette équipe"
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:49
+msgid "Created invoice %{invoice_id}"
+msgstr "La facture %{invoice_id} a été créée"
+
+#, elixir-format
+#: lib/palapa_web/templates/trash/document.html.eex:13
+msgid "Deleted %{time} by %{author}"
+msgstr "Supprimé le %{time} par %{author}"
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:52
+msgid "Error while creating invoice"
+msgstr "Une erreur s'est produite lors de la création de la facture"
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:72
+msgid "Error while updating invoice status"
+msgstr "Une erreur s'est produite lors de la mise à jour du statut de facture"
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:94
+msgid "Error while updating subscription status"
+msgstr "Une erreur s'est produite lors de la mise à jour de la souscription"
+
+#, elixir-format
+#: lib/palapa_web/views/error_view.ex:5
+msgid "Forbidden"
+msgstr "Interdit"
+
+#, elixir-format
+#: lib/palapa_web/views/error_view.ex:13
+msgid "Internal server error"
+msgstr "Erreur interne du serveur"
+
+#, elixir-format
+#: lib/palapa_web/controllers/session_controller.ex:20
+msgid "Invalid email/password combination"
+msgstr "Combinaison email/mot de passe incorrecte"
+
+#, elixir-format
+#: lib/palapa_web/controllers/password_reset_controller.ex:42
+msgid "Invalid token"
+msgstr "Jeton invalide"
+
+#, elixir-format
+#: lib/palapa_web/controllers/invitation_controller.ex:54
+msgid "Invitations have been sent"
+msgstr "Les invitations ont été envoyées"
+
+#, elixir-format
+#: lib/palapa_web/controllers/registration_controller.ex:24
+msgid "It seems you already have a Palapa account. Please sign in first to create a new workspace"
+msgstr "Il semble que vous avez déjà un compte Palapa"
+
+#, elixir-format
+#: lib/palapa_web/templates/trash/index.html.eex:7
+msgid "Items in the trash will be definitely deleted after 30 days."
+msgstr "Les éléments dans la corbeille seront supprimés après 30 jours."
+
+#, elixir-format
+#: lib/palapa_web/templates/team/new.html.eex:4
+msgid "New team"
+msgstr "Nouvelle équipe"
+
+#, elixir-format
+#: lib/palapa_web/views/error_view.ex:9
+msgid "Page not found"
+msgstr "Page introuvable"
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/subscription_controller.ex:36
+msgid "Please check your subscription information"
+msgstr "Merci de vérifier vos informations de souscription"
+
+#, elixir-format
+#: lib/palapa_web/controllers/password_reset_controller.ex:26
+msgid "Please enter a valid email address"
+msgstr "Merci d'entrer une adresse email valide"
+
+#, elixir-format
+#: lib/palapa_web/templates/trash/document.html.eex:22
+msgid "Restore"
+msgstr "Restaurer"
+
+#, elixir-format
+#: lib/palapa_web/templates/team/_form.html.eex:15
+msgid "Select members"
+msgstr "Sélectionner des membres"
+
+#, elixir-format
+#: lib/palapa_web/templates/team/_form.html.eex:12
+msgid "Team members"
+msgstr "Membres de l'équipe"
+
+#, elixir-format
+#: lib/palapa_web/templates/team/_form.html.eex:6
+msgid "Team name"
+msgstr "Nom de l'équipe"
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/subscription_controller.ex:57
+msgid "The billing service could not process your request. Please try again or ask support"
+msgstr "Le service de facturation"
+
+#, elixir-format
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:74
+msgid "The billing service is unreachable. Please try again or ask support"
+msgstr "Le service de facturation est indisponible. Merci de réessayer ou de demander de l'aide au support"
+
+#, elixir-format
+#: lib/palapa_web/live/contact/new.ex:79
+msgid "The contact has been created"
+msgstr "Le contact a été créé"
+
+#, elixir-format
+#: lib/palapa_web/live/contact/contact_live.ex:169
+msgid "The contact has been deleted"
+msgstr "Le contact a été supprimé"
+
+#, elixir-format
+#: lib/palapa_web/views/document/document_view.ex:11
+msgid "The document %{document_title} has been deleted. "
+msgstr "Le document %{document_title} a été supprimé"
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/document_trash_controller.ex:34
+msgid "The document %{document_title} has been restored."
+msgstr "Le document %{document_title} a été restauré"
+
+#, elixir-format
+#: lib/palapa_web/templates/trash/index.html.eex:23
+msgid "The documents trash is empty."
+msgstr "La corbeille à documents est vide"
+
+#, elixir-format
+#: lib/palapa_web/controllers/message_controller.ex:155
+msgid "The message has been deleted"
+msgstr "Le message a été supprimé"
+
+#, elixir-format
+#: lib/palapa_web/controllers/message_controller.ex:128
+msgid "The message has been updated"
+msgstr "Le message a été mis à jour"
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/page_controller.ex:176
+msgid "The page \"%{page_title}\" has been deleted."
+msgstr "La page \"%{page_title}\" a été supprimée."
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/document_public_link_controller.ex:21
+msgid "The secret link for this document has been deleted"
+msgstr "Le lien secret a été désactivé pour ce document"
+
+#, elixir-format
+#: lib/palapa_web/controllers/team_controller.ex:33
+msgid "The team %{team} has been created!"
+msgstr "L'équipe %{team} a été créée !"
+
+#, elixir-format
+#: lib/palapa_web/controllers/team_controller.ex:41
+msgid "The team can't be created"
+msgstr "L'équipe ne peut être créée"
+
+#, elixir-format
+#: lib/palapa_web/controllers/organization_controller.ex:39
+#: lib/palapa_web/plugs/authentication.ex:42
+msgid "The workspace %{workspace} has been deleted"
+msgstr "L'espace de travail %{workspace} a été supprimé"
+
+#, elixir-format
+#: lib/palapa_web/views/personal_information_view.ex:93
+msgid "This information is only visible to you"
+msgstr "Cette information n'est visible que de vous"
+
+#, elixir-format
+#: lib/palapa_web/views/personal_information_view.ex:88
+msgid "This information is only visible to you and %{nb_members} other member(s)"
+msgstr "Cette information n'est visible que de vous et de %{nb_members) autre membre(s)"
+
+#, elixir-format
+#: lib/palapa_web/views/personal_information_view.ex:83
+msgid "This information is only visible to you and %{nb_teams} team(s)"
+msgstr "Cette information n'est visible que de vous et de %{nb_teams} équipe(s)"
+
+#, elixir-format
+#: lib/palapa_web/views/personal_information_view.ex:77
+msgid "This information is only visible to you, %{nb_teams} team(s) and %{nb_members} other member(s)"
+msgstr "Cette information n'est visible que de vous, de %{nb_teams} équipe(s) et de %{nb_members} autres membre(s)"
+
+#, elixir-format
+#: lib/palapa_web/templates/team/_form.html.eex:23
+msgid "This team is private (only admins can add members)"
+msgstr "Cette équipe est privée (seuls les administrateurs peuvent ajouter des membres)"
+
+#, elixir-format
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:99
+msgid "This workspace does not have a paid subscription / billing information"
+msgstr "Cet espace de travail n'a pas de souscription payante / information de facturation"
+
+#, elixir-format
+#: lib/palapa_web/templates/trash/index.html.eex:4
+msgid "Trash"
+msgstr "Corbeille"
+
+#, elixir-format
+#: lib/palapa_web/views/document/document_view.ex:14
+msgid "Undo"
+msgstr "Annuler"
+
+#, elixir-format
+#: lib/palapa_web/templates/team_member/edit.html.eex:14
+msgid "Update teams"
+msgstr "Mettre à jour les équipes"
+
+#, elixir-format
+#: lib/palapa_web/plugs/authentication.ex:25
+msgid "You have been logged out"
+msgstr "Vous avez été déconnecté"
+
+#, elixir-format
+#: lib/palapa_web/controllers/team_membership_controller.ex:15
+msgid "You have joined the team \"%{team}\""
+msgstr "Vous avez rejoint l'équipe \"%{team}\""
+
+#, elixir-format
+#: lib/palapa_web/controllers/team_membership_controller.ex:31
+msgid "You have left the team \"%{team}\""
+msgstr "Vous avez quitté l'équipe \"%{team}\""
+
+#, elixir-format
+#: lib/palapa_web/plugs/authentication.ex:62
+msgid "You must be logged in to access that page"
+msgstr "Vous devez être connecté pour accéder à cette page"
+
+#, elixir-format
+#: lib/palapa_web/controllers/invitation_controller.ex:56
+msgid "You must enter at least one email address"
+msgstr "Vous devez entrer au moins une adresse email"
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/billing_error_controller.ex:16
+msgid "You need to update your payment details to continue"
+msgstr "Vous devez mettre à jour votre moyen de paiement pour continuer"
+
+#, elixir-format
+#: lib/palapa_web/controllers/account_controller.ex:29
+msgid "Your account could not be updated"
+msgstr "Votre compte n'a pas pu être mis à jour"
+
+#, elixir-format
+#: lib/palapa_web/controllers/account_controller.ex:20
+msgid "Your account has been updated."
+msgstr "Votre compte a été mis à jour."
+
+#, elixir-format
+#: lib/palapa_web/controllers/message_controller.ex:69
+#: lib/palapa_web/controllers/message_controller.ex:135
+msgid "Your message can't be posted"
+msgstr "Le message n'a pas pu être posté"
+
+#, elixir-format
+#: lib/palapa_web/controllers/message_controller.ex:64
+msgid "Your message has been posted"
+msgstr "Le message a été posté"
+
+#, elixir-format
+#: lib/palapa_web/controllers/account_controller.ex:48
+msgid "Your password could not be updated. Please check errors below."
+msgstr "Votre mot de passe n'a pas pu être mis à jour. Merci de corriger les erreurs ci-dessous."
+
+#, elixir-format
+#: lib/palapa_web/controllers/account_controller.ex:39
+msgid "Your password has been updated."
+msgstr "Votre mot de passe a été mis à jour"
+
+#, elixir-format
+#: lib/palapa_web/controllers/settings/billing/payment_method_controller.ex:49
+msgid "Your payment method has been updated"
+msgstr "Votre moyen de paiement a été mis à jour"
+
+#, elixir-format
+#: lib/palapa_web/controllers/profile_controller.ex:14
+msgid "Your profile has been updated."
+msgstr "Votre profil a été mis à jour."
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/subscription_controller.ex:76
+msgid "subscription could not be refreshed: %{error}"
+msgstr "La souscription n'a pas pu être mis à jour : %{error}"
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/subscription_controller.ex:72
+msgid "subscription status has been refreshed "
+msgstr "Le statut de la souscription a été mis à jour"

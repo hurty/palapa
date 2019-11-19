@@ -280,6 +280,7 @@ msgstr ""
 #: lib/palapa_web/templates/join/form_with_existing_account.html.eex:17 lib/palapa_web/templates/join/form_without_existing_account.html.eex:17
 #: lib/palapa_web/templates/organization/new.html.eex:10 lib/palapa_web/templates/password_reset/edit.html.eex:9
 #: lib/palapa_web/templates/registration/_form.html.eex:9 lib/palapa_web/templates/settings/billing/customer/edit.html.eex:5
+#: lib/palapa_web/templates/team/_form.html.eex:2
 msgid "Check the errors below:"
 msgstr ""
 
@@ -387,7 +388,8 @@ msgstr ""
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:18 lib/palapa_web/templates/member/_personal_information_form.html.leex:37
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:40 lib/palapa_web/templates/message/new.html.eex:18
 #: lib/palapa_web/templates/organization/new.html.eex:22 lib/palapa_web/templates/settings/member/members.html.leex:29
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:60
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:60 lib/palapa_web/templates/team/edit.html.eex:12
+#: lib/palapa_web/templates/team/new.html.eex:12
 msgid "Cancel"
 msgstr ""
 
@@ -728,7 +730,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/document/document/index.html.eex:6
-#: lib/palapa_web/templates/layout/_sidebar.html.eex:30
+#: lib/palapa_web/templates/layout/_sidebar.html.eex:30 lib/palapa_web/templates/trash/index.html.eex:8
 msgid "Documents"
 msgstr ""
 
@@ -871,7 +873,7 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/document/suggestion/edit.html.eex:8
 #: lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:8 lib/palapa_web/templates/settings/billing/customer/edit.html.eex:11
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:19
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:19 lib/palapa_web/templates/team/edit.html.eex:11
 msgid "Save"
 msgstr ""
 
@@ -908,6 +910,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/document/document/index.html.eex:97
+#: lib/palapa_web/templates/trash/document.html.eex:9
 msgid "Shared with everyone"
 msgstr ""
 
@@ -1255,6 +1258,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/layout/_sidebar.html.eex:42
+#: lib/palapa_web/templates/team_member/edit.html.eex:3
 msgid "Teams"
 msgstr ""
 
@@ -1291,6 +1295,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/member/_team_info.html.eex:39
+#: lib/palapa_web/templates/team/edit.html.eex:4
 msgid "Edit team"
 msgstr ""
 
@@ -1771,4 +1776,392 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:7
 msgid "These informations will appear on your invoices"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/invitation_controller.ex:83
+msgid "%{email} has been sent a new invitation"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/document_public_link_controller.ex:12
+msgid "A secret link has been created for this document"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/profile_controller.ex:18
+msgid "An error occured while updating your profile."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/organization_controller.ex:45
+msgid "An error occurred while deleting the workspace"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/payment_method_controller.ex:45
+#: lib/palapa_web/controllers/settings/billing/payment_method_controller.ex:62
+msgid "An error occurred while updating your payment method"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/payment_controller.ex:30
+msgid "An unexpected error occured : %{message}. The payment has been cancelled."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/suggestion/suggestion_closure_controller.ex:16
+msgid "An unexpected error occured while closing the suggestion"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/suggestion/suggestion_controller.ex:94
+msgid "An unexpected error occured while deleting the suggestion"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/suggestion/suggestion_comment_controller.ex:101
+msgid "An unexpected error occured while deleting the suggestion comment"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/suggestion/suggestion_controller.ex:37
+msgid "An unexpected error occured while posting the suggestion"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/suggestion/suggestion_comment_controller.ex:31
+msgid "An unexpected error occured while posting the suggestion comment"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/suggestion/suggestion_closure_controller.ex:33
+msgid "An unexpected error occured while reopening the suggestion"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:118
+msgid "Billing information couldn't be updated"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:113
+msgid "Billing information has been updated successfully"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/password_reset_controller.ex:60
+msgid "Cannot update the password"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team/new.html.eex:11
+msgid "Create this team"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:49
+msgid "Created invoice %{invoice_id}"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/trash/document.html.eex:13
+msgid "Deleted %{time} by %{author}"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:52
+msgid "Error while creating invoice"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:72
+msgid "Error while updating invoice status"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:94
+msgid "Error while updating subscription status"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/views/error_view.ex:5
+msgid "Forbidden"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/views/error_view.ex:13
+msgid "Internal server error"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/session_controller.ex:20
+msgid "Invalid email/password combination"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/password_reset_controller.ex:42
+msgid "Invalid token"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/invitation_controller.ex:54
+msgid "Invitations have been sent"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/registration_controller.ex:24
+msgid "It seems you already have a Palapa account. Please sign in first to create a new workspace"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/trash/index.html.eex:7
+msgid "Items in the trash will be definitely deleted after 30 days."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team/new.html.eex:4
+msgid "New team"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/views/error_view.ex:9
+msgid "Page not found"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/subscription_controller.ex:36
+msgid "Please check your subscription information"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/password_reset_controller.ex:26
+msgid "Please enter a valid email address"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/trash/document.html.eex:22
+msgid "Restore"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team/_form.html.eex:15
+msgid "Select members"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team/_form.html.eex:12
+msgid "Team members"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team/_form.html.eex:6
+msgid "Team name"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/subscription_controller.ex:57
+msgid "The billing service could not process your request. Please try again or ask support"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:74
+msgid "The billing service is unreachable. Please try again or ask support"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/live/contact/new.ex:79
+msgid "The contact has been created"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/live/contact/contact_live.ex:169
+msgid "The contact has been deleted"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/views/document/document_view.ex:11
+msgid "The document %{document_title} has been deleted. "
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/document_trash_controller.ex:34
+msgid "The document %{document_title} has been restored."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/trash/index.html.eex:23
+msgid "The documents trash is empty."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/message_controller.ex:155
+msgid "The message has been deleted"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/message_controller.ex:128
+msgid "The message has been updated"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/page_controller.ex:176
+msgid "The page \"%{page_title}\" has been deleted."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/document/document_public_link_controller.ex:21
+msgid "The secret link for this document has been deleted"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/team_controller.ex:33
+msgid "The team %{team} has been created!"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/team_controller.ex:41
+msgid "The team can't be created"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/organization_controller.ex:39
+#: lib/palapa_web/plugs/authentication.ex:42
+msgid "The workspace %{workspace} has been deleted"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/views/personal_information_view.ex:93
+msgid "This information is only visible to you"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/views/personal_information_view.ex:88
+msgid "This information is only visible to you and %{nb_members} other member(s)"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/views/personal_information_view.ex:83
+msgid "This information is only visible to you and %{nb_teams} team(s)"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/views/personal_information_view.ex:77
+msgid "This information is only visible to you, %{nb_teams} team(s) and %{nb_members} other member(s)"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team/_form.html.eex:23
+msgid "This team is private (only admins can add members)"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:99
+msgid "This workspace does not have a paid subscription / billing information"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/trash/index.html.eex:4
+msgid "Trash"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/views/document/document_view.ex:14
+msgid "Undo"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team_member/edit.html.eex:14
+msgid "Update teams"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:65
+msgid "Updated invoice status %{invoice_id} %{invoice_status}"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/stripe_webhook_controller.ex:88
+msgid "Updated subscription status : %{subscription_status}"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/plugs/authentication.ex:25
+msgid "You have been logged out"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/team_membership_controller.ex:15
+msgid "You have joined the team \"%{team}\""
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/team_membership_controller.ex:31
+msgid "You have left the team \"%{team}\""
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/plugs/authentication.ex:62
+msgid "You must be logged in to access that page"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/invitation_controller.ex:56
+msgid "You must enter at least one email address"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/billing_error_controller.ex:16
+msgid "You need to update your payment details to continue"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/account_controller.ex:29
+msgid "Your account could not be updated"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/account_controller.ex:20
+msgid "Your account has been updated."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/message_controller.ex:69
+#: lib/palapa_web/controllers/message_controller.ex:135
+msgid "Your message can't be posted"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/message_controller.ex:64
+msgid "Your message has been posted"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/account_controller.ex:48
+msgid "Your password could not be updated. Please check errors below."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/account_controller.ex:39
+msgid "Your password has been updated."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/settings/billing/payment_method_controller.ex:49
+msgid "Your payment method has been updated"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/profile_controller.ex:14
+msgid "Your profile has been updated."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/subscription_controller.ex:76
+msgid "subscription could not be refreshed: %{error}"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/billing/subscription_controller.ex:72
+msgid "subscription status has been refreshed "
 msgstr ""
