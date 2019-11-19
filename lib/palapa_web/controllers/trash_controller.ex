@@ -8,7 +8,10 @@ defmodule PalapaWeb.TrashController do
 
   def put_common_breadcrumbs(conn, _params) do
     conn
-    |> put_breadcrumb("Trash", Routes.trash_path(conn, :index, current_organization(conn)))
+    |> put_breadcrumb(
+      gettext("Trash"),
+      Routes.trash_path(conn, :index, current_organization(conn))
+    )
   end
 
   def index(conn, params) do

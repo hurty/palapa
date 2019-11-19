@@ -9,7 +9,7 @@ defmodule PalapaWeb.MemberController do
   def put_common_breadcrumbs(conn, _params) do
     conn
     |> put_breadcrumb(
-      "Your organization",
+      gettext("Teams"),
       Routes.member_path(conn, :index, current_organization(conn))
     )
   end

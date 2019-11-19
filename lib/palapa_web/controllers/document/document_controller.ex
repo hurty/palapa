@@ -13,7 +13,10 @@ defmodule PalapaWeb.Document.DocumentController do
 
   def put_common_breadcrumbs(conn, _params) do
     conn
-    |> put_breadcrumb("Documents", Routes.document_path(conn, :index, current_organization(conn)))
+    |> put_breadcrumb(
+      gettext("Documents"),
+      Routes.document_path(conn, :index, current_organization(conn))
+    )
   end
 
   def index(conn, params) do
@@ -51,7 +54,7 @@ defmodule PalapaWeb.Document.DocumentController do
 
     conn
     |> put_breadcrumb(
-      "New document",
+      gettext("New document"),
       Routes.document_path(conn, :new, current_organization(conn))
     )
     |> render("new.html", changeset: changeset, teams: teams)
@@ -110,7 +113,7 @@ defmodule PalapaWeb.Document.DocumentController do
     conn
     |> BaseController.put_document_breadcrumbs(document)
     |> put_breadcrumb(
-      "Edit",
+      gettext("Edit"),
       Routes.document_path(conn, :edit, current_organization(conn), document)
     )
     |> render("edit.html", document: document, changeset: changeset, teams: teams)

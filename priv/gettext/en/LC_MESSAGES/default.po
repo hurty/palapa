@@ -410,8 +410,9 @@ msgid "Contact details"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/index.html.leex:8
-#: lib/palapa_web/templates/contact/index_blankslate.html.eex:4 lib/palapa_web/templates/layout/_sidebar.html.eex:36
+#: lib/palapa_web/plugs/contact_navigation.ex:15
+#: lib/palapa_web/templates/contact/index.html.leex:8 lib/palapa_web/templates/contact/index_blankslate.html.eex:4
+#: lib/palapa_web/templates/layout/_sidebar.html.eex:30
 msgid "Contacts"
 msgstr ""
 
@@ -729,8 +730,10 @@ msgid "Document"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/document/index.html.eex:6
-#: lib/palapa_web/templates/layout/_sidebar.html.eex:30 lib/palapa_web/templates/trash/index.html.eex:8
+#: lib/palapa_web/controllers/document/document_controller.ex:17
+#: lib/palapa_web/controllers/document/document_trash_controller.ex:14 lib/palapa_web/controllers/document/page_controller.ex:14
+#: lib/palapa_web/templates/document/document/index.html.eex:6 lib/palapa_web/templates/layout/_sidebar.html.eex:24
+#: lib/palapa_web/templates/trash/index.html.eex:8
 msgid "Documents"
 msgstr ""
 
@@ -779,8 +782,9 @@ msgid "Last modified"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/document/index.html.eex:10
-#: lib/palapa_web/templates/document/document/new.html.eex:4 lib/palapa_web/templates/layout/_private_navigation.html.eex:26
+#: lib/palapa_web/controllers/document/document_controller.ex:57
+#: lib/palapa_web/templates/document/document/index.html.eex:10 lib/palapa_web/templates/document/document/new.html.eex:4
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:26
 msgid "New document"
 msgstr ""
 
@@ -878,6 +882,7 @@ msgid "Save"
 msgstr ""
 
 #, elixir-format
+#: lib/palapa_web/controllers/search_controller.ex:10
 #: lib/palapa_web/templates/document/document/index.html.eex:51
 msgid "Search"
 msgstr ""
@@ -1192,17 +1197,11 @@ msgid "Create workspace"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_sidebar.html.eex:18
-msgid "Dashboard"
-msgstr ""
-
-#, elixir-format
 #: lib/palapa_web/templates/layout/_public_navigation.html.eex:11
 msgid "Menu"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_sidebar.html.eex:24
 #: lib/palapa_web/templates/message/_index_toolbar.html.eex:24
 msgid "Messages"
 msgstr ""
@@ -1218,8 +1217,9 @@ msgid "New Contact"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_private_navigation.html.eex:22
-#: lib/palapa_web/templates/message/_index_toolbar.html.eex:28 lib/palapa_web/templates/message/new.html.eex:4
+#: lib/palapa_web/controllers/message_controller.ex:56
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:22 lib/palapa_web/templates/message/_index_toolbar.html.eex:28
+#: lib/palapa_web/templates/message/new.html.eex:4
 msgid "New message"
 msgstr ""
 
@@ -1234,7 +1234,9 @@ msgid "Searching..."
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_sidebar.html.eex:49
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:25
+#: lib/palapa_web/controllers/settings/billing/payment_method_controller.ex:18 lib/palapa_web/controllers/settings/member/member_controller.ex:21
+#: lib/palapa_web/controllers/settings/workspace/workspace_controller.ex:23 lib/palapa_web/templates/layout/_sidebar.html.eex:43
 #: lib/palapa_web/templates/settings/settings/settings_navigation.html.eex:2
 msgid "Settings"
 msgstr ""
@@ -1257,7 +1259,8 @@ msgid "Switch workspace"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_sidebar.html.eex:42
+#: lib/palapa_web/controllers/member_controller.ex:12
+#: lib/palapa_web/controllers/team_controller.ex:15 lib/palapa_web/templates/layout/_sidebar.html.eex:36
 #: lib/palapa_web/templates/team_member/edit.html.eex:3
 msgid "Teams"
 msgstr ""
@@ -1289,7 +1292,8 @@ msgid "Delete"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/member/_personal_information.html.leex:30
+#: lib/palapa_web/controllers/document/document_controller.ex:116
+#: lib/palapa_web/controllers/team_controller.ex:65 lib/palapa_web/templates/member/_personal_information.html.leex:30
 msgid "Edit"
 msgstr ""
 
@@ -1568,7 +1572,8 @@ msgid "Are you sure?"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/settings/settings_navigation.html.eex:14
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:29
+#: lib/palapa_web/controllers/settings/billing/payment_method_controller.ex:22 lib/palapa_web/templates/settings/settings/settings_navigation.html.eex:14
 msgid "Billing"
 msgstr ""
 
@@ -1694,6 +1699,7 @@ msgid "Password"
 msgstr ""
 
 #, elixir-format
+#: lib/palapa_web/controllers/settings/billing/payment_method_controller.ex:26
 #: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:33
 msgid "Payment method"
 msgstr ""
@@ -1900,6 +1906,7 @@ msgid "Items in the trash will be definitely deleted after 30 days."
 msgstr ""
 
 #, elixir-format
+#: lib/palapa_web/controllers/team_controller.ex:19
 #: lib/palapa_web/templates/team/new.html.eex:4
 msgid "New team"
 msgstr ""
@@ -1965,7 +1972,7 @@ msgid "The document %{document_title} has been deleted. "
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/document/document_trash_controller.ex:34
+#: lib/palapa_web/controllers/document/document_trash_controller.ex:37
 msgid "The document %{document_title} has been restored."
 msgstr ""
 
@@ -1975,17 +1982,17 @@ msgid "The documents trash is empty."
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/message_controller.ex:155
+#: lib/palapa_web/controllers/message_controller.ex:168
 msgid "The message has been deleted"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/message_controller.ex:128
+#: lib/palapa_web/controllers/message_controller.ex:141
 msgid "The message has been updated"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/document/page_controller.ex:176
+#: lib/palapa_web/controllers/document/page_controller.ex:179
 msgid "The page \"%{page_title}\" has been deleted."
 msgstr ""
 
@@ -2041,6 +2048,7 @@ msgid "This workspace does not have a paid subscription / billing information"
 msgstr ""
 
 #, elixir-format
+#: lib/palapa_web/controllers/trash_controller.ex:12
 #: lib/palapa_web/templates/trash/index.html.eex:4
 msgid "Trash"
 msgstr ""
@@ -2096,13 +2104,13 @@ msgid "Your account has been updated."
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/message_controller.ex:69
-#: lib/palapa_web/controllers/message_controller.ex:135
+#: lib/palapa_web/controllers/message_controller.ex:82
+#: lib/palapa_web/controllers/message_controller.ex:148
 msgid "Your message can't be posted"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/message_controller.ex:64
+#: lib/palapa_web/controllers/message_controller.ex:77
 msgid "Your message has been posted"
 msgstr ""
 
@@ -2139,4 +2147,21 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/dashboard/index.html.eex:6
 msgid "Last messages"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/dashboard_controller.ex:13
+#: lib/palapa_web/controllers/message_controller.ex:15 lib/palapa_web/templates/layout/_sidebar.html.eex:18
+#: lib/palapa_web/templates/message/index.html.eex:5
+msgid "What's up?"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/team_controller.ex:57
+msgid "Your organization"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/message/index.html.eex:10
+msgid "Other activity"
 msgstr ""

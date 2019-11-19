@@ -7,7 +7,7 @@
       </div>
 
       <div class="sm:w-1/2 pl-4 mt-16">
-        <h2 class="card-header text-center text-sm pb-2 border-b text-gray-700"><%= gettext "Latest activity" %></h2>
+        <h2 class="card-header text-center text-sm pb-2 border-b text-gray-700"><%= gettext "Other activity" %></h2>
 
         <ul class="">
           <%= render_many @events, PalapaWeb.EventView, "event.html", assigns %>

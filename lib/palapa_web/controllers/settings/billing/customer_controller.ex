@@ -22,11 +22,11 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
   def put_common_breadcrumbs(conn, _params) do
     conn
     |> put_breadcrumb(
-      "Settings",
+      gettext("Settings"),
       Routes.settings_workspace_path(conn, :show, current_organization(conn))
     )
     |> put_breadcrumb(
-      "Billing",
+      gettext("Billing"),
       Routes.settings_customer_path(conn, :show, current_organization(conn))
     )
   end

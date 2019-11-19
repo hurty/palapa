@@ -18,7 +18,7 @@ defmodule PalapaWeb.Settings.MemberController do
   def put_common_breadcrumbs(conn, _params) do
     conn
     |> put_breadcrumb(
-      "Settings",
+      gettext("Settings"),
       Routes.settings_workspace_path(conn, :show, current_organization(conn))
     )
   end

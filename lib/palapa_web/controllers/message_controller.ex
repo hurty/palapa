@@ -11,7 +11,10 @@ defmodule PalapaWeb.MessageController do
 
   def put_common_breadcrumbs(conn, _params) do
     conn
-    |> put_breadcrumb("Messages", Routes.message_path(conn, :index, current_organization(conn)))
+    |> put_breadcrumb(
+      gettext("What's up?"),
+      Routes.message_path(conn, :index, current_organization(conn))
+    )
   end
 
   def index(conn, params) do
@@ -49,7 +52,10 @@ defmodule PalapaWeb.MessageController do
     teams = Teams.list_for_member(current_member(conn))
 
     conn
-    |> put_breadcrumb("New message", Routes.message_path(conn, :new, current_organization(conn)))
+    |> put_breadcrumb(
+      gettext("New message"),
+      Routes.message_path(conn, :new, current_organization(conn))
+    )
     |> render("new.html", message_changeset: message_changeset, teams: teams)
   end
 

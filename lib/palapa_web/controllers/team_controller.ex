@@ -12,11 +12,11 @@ defmodule PalapaWeb.TeamController do
 
       conn
       |> put_breadcrumb(
-        "Your organization",
+        gettext("Teams"),
         Routes.member_path(conn, :index, current_organization(conn))
       )
       |> put_breadcrumb(
-        "New team",
+        gettext("New team"),
         Routes.team_path(conn, :new, current_organization(conn))
       )
       |> render("new.html", team_changeset: team_changeset)
@@ -54,14 +54,17 @@ defmodule PalapaWeb.TeamController do
 
       conn
       |> put_breadcrumb(
-        "Your organization",
+        gettext("Your organization"),
         Routes.member_path(conn, :index, current_organization(conn))
       )
       |> put_breadcrumb(
         team.name,
         Routes.member_path(conn, :index, current_organization(conn), team_id: team.id)
       )
-      |> put_breadcrumb("Edit", Routes.team_path(conn, :edit, current_organization(conn), team))
+      |> put_breadcrumb(
+        gettext("Edit"),
+        Routes.team_path(conn, :edit, current_organization(conn), team)
+      )
       |> render("edit.html", team: team, team_changeset: team_changeset)
     end
   end

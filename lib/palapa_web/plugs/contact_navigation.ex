@@ -1,6 +1,7 @@
 defmodule PalapaWeb.ContactNavigation do
   import Plug.Conn
   import PalapaWeb.Breadcrumbs
+  import PalapaWeb.Gettext
   alias PalapaWeb.Router.Helpers, as: Routes
 
   def init(options) do
@@ -11,7 +12,7 @@ defmodule PalapaWeb.ContactNavigation do
     conn
     |> assign(:navigation, "contacts")
     |> put_breadcrumb(
-      "Contacts",
+      gettext("Contacts"),
       Routes.live_path(conn, PalapaWeb.ContactLive, conn.assigns.current_organization)
     )
   end

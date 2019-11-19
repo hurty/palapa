@@ -10,7 +10,10 @@ defmodule PalapaWeb.Document.PageController do
 
   def put_common_breadcrumbs(conn, _params) do
     conn
-    |> put_breadcrumb("Documents", Routes.document_path(conn, :index, current_organization(conn)))
+    |> put_breadcrumb(
+      gettext("Documents"),
+      Routes.document_path(conn, :index, current_organization(conn))
+    )
   end
 
   def new(conn, params) do

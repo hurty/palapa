@@ -15,15 +15,15 @@ defmodule PalapaWeb.Settings.Billing.PaymentMethodController do
   def put_common_breadcrumbs(conn, _params) do
     conn
     |> put_breadcrumb(
-      "Settings",
+      gettext("Settings"),
       Routes.settings_workspace_path(conn, :show, current_organization(conn))
     )
     |> put_breadcrumb(
-      "Billing",
+      gettext("Billing"),
       Routes.settings_customer_path(conn, :show, current_organization(conn))
     )
     |> put_breadcrumb(
-      "Payment method",
+      gettext("Payment method"),
       Routes.settings_payment_method_path(conn, :edit, current_organization(conn))
     )
   end
