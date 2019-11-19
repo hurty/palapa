@@ -37,10 +37,10 @@
     @apply p-4 my-2 bg-gray-100 rounded;
     font-family: monospace;
     white-space: pre;
-    overflow-x: auto;
     display: inline-block;
-    width: 100%;
     vertical-align: top;
+    overflow-x: auto;
+    width: 100%;
   }
 
   ul {

@@ -175,6 +175,7 @@
 
 .main-content {
   grid-area: main-content;
+  min-width: 0;
 }
 
 .page-sidebar {
