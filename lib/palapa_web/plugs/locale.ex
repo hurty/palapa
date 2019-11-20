@@ -5,12 +5,27 @@ defmodule PalapaWeb.Locale do
     options
   end
 
+  # If the user has an account and a language preference
+  def call(%{assigns: %{current_account: %{locale: locale}}} = conn, _opts)
+      when is_binary(locale) do
+    Gettext.put_locale(PalapaWeb.Gettext, locale)
+    conn
+  end
+
+  # If the user has an account but no preference set
+  def call(%{assigns: %{current_account: %{locale: locale} = current_account}} = conn, _options)
+      when is_nil(locale) do
+    determined_locale = get_locale_from_headers(conn)
+    Palapa.Accounts.update_account(current_account, %{locale: determined_locale})
+    Gettext.put_locale(PalapaWeb.Gettext, determined_locale)
+    conn
+  end
+
+  # If the user is not logged in
   def call(conn, _options) do
     session_locale = get_session(conn, :locale)
-    user_locale = session_locale || determine_user_locale(conn)
-
+    user_locale = session_locale || get_locale_from_headers(conn)
     Gettext.put_locale(PalapaWeb.Gettext, user_locale)
-    Gettext.put_locale(Timex.Gettext, user_locale)
 
     if session_locale do
       conn
@@ -19,18 +34,10 @@ defmodule PalapaWeb.Locale do
     end
   end
 
-  def determine_user_locale(conn) do
-    get_locale_from_account_preference(conn) || get_locale_from_headers(conn)
-  end
-
   defp get_locale_from_headers(conn) do
     conn
     |> extract_accept_language
     |> Enum.find("en", fn accepted_locale -> supported_locale?(accepted_locale) end)
-  end
-
-  defp get_locale_from_account_preference(conn) do
-    conn.assigns.current_account && conn.assigns.current_account.locale
   end
 
   def supported_locale?(locale) do

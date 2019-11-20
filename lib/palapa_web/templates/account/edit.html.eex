@@ -20,7 +20,7 @@
           <%= text_input form, :email, class: "input", autocomplete: "off" %>
           <%= error_tag form, :email %>
         </div>
-        
+
         <div class="field">
           <%= label form, :avatar, gettext("Change picture"), class: "label" %>
           <%= file_input form, :avatar, class: "input", autocomplete: "off" %>
@@ -29,7 +29,7 @@
 
         <div class="field">
           <%= label form, :locale, gettext("Language"), class: "label" %>
-          <%= select form, :locale, [{gettext("Automatic"), nil}, {"English", "en"}, {"Français", "fr"}], class: "input" %>
+          <%= select form, :locale, [{"English", "en"}, {"Français", "fr"}], class: "input" %>
           <%= error_tag form, :locale %>
         </div>
 
@@ -80,7 +80,7 @@
         </div>
 
         <%= hidden_input form, :email, value: @current_account.email %>
-        
+
         <div class="card-actions">
           <%= submit gettext("Change password"), class: "btn btn-green"%>
         </div>
