@@ -1261,6 +1261,7 @@ msgid "Teams"
 msgstr "Équipes"
 
 #, elixir-format
+#: lib/palapa_web/templates/member/_personal_information.html.leex:69
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:39
 msgid "Add information"
 msgstr "Ajouter une information personnelle"
@@ -1515,8 +1516,9 @@ msgid "Name"
 msgstr "Nom"
 
 #, elixir-format
-#: lib/palapa_web/templates/password_reset/create.html.eex:4
-#: lib/palapa_web/templates/password_reset/invalid_token.html.eex:4 lib/palapa_web/templates/password_reset/new.html.eex:4
+#: lib/palapa/accounts/emails.ex:23
+#: lib/palapa_web/templates/password_reset/create.html.eex:4 lib/palapa_web/templates/password_reset/invalid_token.html.eex:4
+#: lib/palapa_web/templates/password_reset/new.html.eex:4
 msgid "Password reset"
 msgstr "Réinitialisation du mot de passe"
 
@@ -2170,3 +2172,58 @@ msgstr "OK"
 #: lib/palapa_web/templates/member/_member_profile.html.leex:20
 msgid "title"
 msgstr "Rôle"
+
+#, elixir-format
+#: lib/palapa_web/templates/event/daily_recap_events.html.eex:31
+msgid "Change your Palapa %{settings_link} if you don't want to receive this daily recap anymore."
+msgstr "Changez vos %{settings_link} Palapa si vous ne désirez plus recevoir de récapitulatif quotidien."
+
+#, elixir-format
+#: lib/palapa_web/templates/event/daily_recap_events.html.eex:16
+msgid "Daily recap for %{organization}"
+msgstr "Récap quotidien pour %{organization}"
+
+#, elixir-format
+#: lib/palapa_web/templates/event/daily_recap_events.html.eex:17
+msgid "Here's the latest activity for the workspace"
+msgstr "Voici l'activité récente sur l'espace de travail"
+
+#, elixir-format
+#: lib/palapa_web/templates/event/daily_recap_events.html.eex:23
+msgid "See more activity"
+msgstr "Voir plus d'activité récente"
+
+#, elixir-format
+#: lib/palapa_web/templates/event/daily_recap_events.html.eex:31
+msgid "account settings"
+msgstr "paramètres de compte"
+
+#, elixir-format
+#: lib/palapa/events/emails.ex:62
+msgid "%{organization} daily recap for %{date}"
+msgstr "Récap quotidien pour %{organization} %{date}"
+
+#, elixir-format
+#: lib/palapa/invitations/emails.ex:58 lib/palapa/invitations/emails.ex:58
+msgid "Click the following link to get started:"
+msgstr "Cliquez sur le lien suivant et laissez-vous guider :"
+
+#, elixir-format
+#: lib/palapa/accounts/emails.ex:25 lib/palapa/accounts/emails.ex:25
+msgid "Click the following link to reset your password:"
+msgstr "Cliquez sur le lien suivant pour réinitialiser votre mot de passe :"
+
+#, elixir-format
+#: lib/palapa/accounts/emails.ex:28 lib/palapa/accounts/emails.ex:28
+msgid "If you didn't request to reset your password, please ignore this email."
+msgstr "Si ce n'est pas vous qui avez demandé à réinitialiser votre mot de passe, vous pouvez ignorer cet email."
+
+#, elixir-format, fuzzy
+#: lib/palapa/invitations/emails.ex:51 lib/palapa/invitations/emails.ex:51
+msgid "%{creator} invited you to join the workspace \"%{workspace}\" on the Palapa application."
+msgstr "%{creator} vous a invité à rejoindre l'espace de travail \"%{workspace}\" sur Palapa."
+
+#, elixir-format, fuzzy
+#: lib/palapa/invitations/emails.ex:45
+msgid "You have been invited to join \"%{workspace}\""
+msgstr "Vous êtes invité à rejoindre \"%{workspace}\""

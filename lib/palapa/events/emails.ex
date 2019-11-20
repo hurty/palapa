@@ -1,16 +1,20 @@
 defmodule Palapa.Events.Emails do
   import Bamboo.Email
-
+  import PalapaWeb.Gettext
   alias Palapa.Events
   alias Palapa.Accounts.Account
   alias Palapa.Organizations
 
   def daily_emails(%Account{} = account) do
-    organizations = Organizations.list_organizations(account)
+    locale = account.locale || "en"
 
-    organizations
-    |> Enum.map(fn org -> email_for_organization(account, org) end)
-    |> Enum.reject(&is_nil/1)
+    Gettext.with_locale(PalapaWeb.Gettext, locale, fn ->
+      organizations = Organizations.list_organizations(account)
+
+      organizations
+      |> Enum.map(fn org -> email_for_organization(account, org) end)
+      |> Enum.reject(&is_nil/1)
+    end)
   end
 
   def email_for_organization(account, organization) do
@@ -54,7 +58,12 @@ defmodule Palapa.Events.Emails do
     # References header with a unique id _tries_ to avoids clients like Gmail from grouping emails in a thread.
     |> put_header("References", ["#{Ecto.UUID.generate()}@palapa.io"])
     # Having the date in the topic also prevent grouping in thread
-    |> subject("#{organization.name} daily recap for #{date}")
+    |> subject(
+      gettext("%{organization} daily recap for %{date}", %{
+        organization: organization.name,
+        date: date
+      })
+    )
     |> html_body(events_view)
   end
 end

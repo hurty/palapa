@@ -47,8 +47,11 @@ defmodule Palapa.Events do
     emails =
       if account.send_daily_recap do
         emails = Palapa.Events.Emails.daily_emails(account)
+
         Enum.each(emails, fn email -> Palapa.Mailer.deliver_now(email) end)
+
         emails
+        |> IO.inspect()
       else
         []
       end

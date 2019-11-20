@@ -1,5 +1,6 @@
 defmodule Palapa.Invitations.Emails do
   import Bamboo.Email
+  import PalapaWeb.Gettext
 
   # Usage
   #
@@ -35,15 +36,29 @@ defmodule Palapa.Invitations.Emails do
     join_link =
       PalapaWeb.Router.Helpers.join_url(PalapaWeb.Endpoint, :new, invitation.id, invitation.token)
 
-    base_email()
-    |> to(invitation.email)
-    |> subject("You have been invited to join #{invitation.organization.name}")
-    |> html_body("""
-    <p>#{invitation.creator.account.name} invited you to join the workspace '#{
-      invitation.organization.name
-    }' on the Palapa application.<br><br>Click the following link to get started: <a href="#{
-      join_link
-    }">#{join_link}</a></p>
-    """)
+    locale = invitation.creator.account.locale || "en"
+
+    Gettext.with_locale(PalapaWeb.Gettext, locale, fn ->
+      base_email()
+      |> to(invitation.email)
+      |> subject(
+        gettext("You have been invited to join \"%{workspace}\"", %{
+          workspace: invitation.organization.name
+        })
+      )
+      |> html_body("""
+      <p>#{
+        gettext(
+          "%{creator} invited you to join the workspace \"%{workspace}\" on the Palapa application.",
+          %{
+            creator: invitation.creator.account.name,
+            workspace: invitation.organization.name
+          }
+        )
+      } <br><br>#{gettext("Click the following link to get started:")} <a href="#{join_link}">#{
+        join_link
+      }</a></p>
+      """)
+    end)
   end
 end

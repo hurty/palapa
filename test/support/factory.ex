@@ -305,7 +305,8 @@ defmodule Palapa.Factory do
       name: "Richard Hendricks",
       email: "richard.hendricks@piedpiper.com",
       password_hash: @password_hash,
-      send_daily_recap: true
+      send_daily_recap: true,
+      locale: "en"
     }
   end
 
@@ -314,7 +315,8 @@ defmodule Palapa.Factory do
       name: "Jared Dunn",
       email: "jared.dunn@piedpiper.com",
       password_hash: @password_hash,
-      send_daily_recap: true
+      send_daily_recap: true,
+      locale: "en"
     }
   end
 
@@ -323,7 +325,8 @@ defmodule Palapa.Factory do
       name: "Bertram Gilfoyle",
       email: "bertram.gilfoyle@piedpiper.com",
       password_hash: @password_hash,
-      send_daily_recap: true
+      send_daily_recap: true,
+      locale: "en"
     }
   end
 
@@ -332,7 +335,8 @@ defmodule Palapa.Factory do
       name: "Dinesh Chugtai",
       email: "dinesh.chugtai@piedpiper.com",
       password_hash: @password_hash,
-      send_daily_recap: true
+      send_daily_recap: true,
+      locale: "en"
     }
   end
 
@@ -341,7 +345,8 @@ defmodule Palapa.Factory do
       name: "Monica Hall",
       email: "monica.hall@piedpiper.com",
       password_hash: @password_hash,
-      send_daily_recap: true
+      send_daily_recap: true,
+      locale: "en"
     }
   end
 
@@ -350,7 +355,8 @@ defmodule Palapa.Factory do
       name: "Laurie Bream",
       email: "laurie.bream@piedpiper.com",
       password_hash: @password_hash,
-      send_daily_recap: true
+      send_daily_recap: true,
+      locale: "en"
     }
   end
 
@@ -359,7 +365,8 @@ defmodule Palapa.Factory do
       name: "Big Head",
       email: "nelson.bighetti@piedpiper.com",
       password_hash: @password_hash,
-      send_daily_recap: true
+      send_daily_recap: true,
+      locale: "en"
     }
   end
 
@@ -368,7 +375,8 @@ defmodule Palapa.Factory do
       name: "Erlich Bachman",
       email: "erlich.bachman@piedpiper.com",
       password_hash: @password_hash,
-      send_daily_recap: true
+      send_daily_recap: true,
+      locale: "en"
     }
   end
 
@@ -377,7 +385,8 @@ defmodule Palapa.Factory do
       name: "Ron LaFlamme",
       email: "ron.laflamme@laflamme-lawyers.com",
       password_hash: @password_hash,
-      send_daily_recap: true
+      send_daily_recap: true,
+      locale: "en"
     }
   end
 
@@ -386,7 +395,8 @@ defmodule Palapa.Factory do
       name: "Gavin Belson",
       email: "gavin.belson@hooli.com",
       password_hash: @password_hash,
-      send_daily_recap: true
+      send_daily_recap: true,
+      locale: "en"
     }
   end
 
