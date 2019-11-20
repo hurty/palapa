@@ -46,7 +46,14 @@ defmodule PalapaWeb.Helpers do
 
   def format_date(conn, datetime) do
     short_format = "{Mfull} {D}, {YYYY}"
-    datetime = datetime |> Timex.Timezone.convert(get_timezone(conn))
+
+    datetime =
+      if conn do
+        datetime |> Timex.Timezone.convert(get_timezone(conn))
+      else
+        datetime
+      end
+
     Timex.lformat!(datetime, short_format, get_locale())
   end
 

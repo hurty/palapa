@@ -8,6 +8,7 @@ defmodule Palapa.Events do
   alias Palapa.Messages
   alias Palapa.Documents
   alias Palapa.Contacts
+  alias Palapa.Accounts.Account
 
   defenum(EventActionEnum, :event_action, ~w(
     new_organization
@@ -42,6 +43,41 @@ defmodule Palapa.Events do
     |> Repo.all()
   end
 
+  def send_daily_recaps(%Account{} = account) do
+    emails =
+      if account.send_daily_recap do
+        emails = Palapa.Events.Emails.daily_emails(account)
+        Enum.each(emails, fn email -> Palapa.Mailer.deliver_now(email) end)
+        emails
+      else
+        []
+      end
+
+    {:ok, emails}
+  end
+
+  def schedule_daily_email(account) do
+    now = Timex.now(account.timezone)
+
+    schedule_at =
+      if now.hour < 7 do
+        # Today at 8
+        now |> Timex.set(hour: 8)
+      else
+        # Tomorrow at 8
+        now
+        |> Timex.shift(days: 1)
+        |> Timex.beginning_of_day()
+        |> Timex.set(hour: 8)
+      end
+
+    schedule_at_utc = Timex.Timezone.convert(schedule_at, "UTC")
+
+    %{"type" => "daily_email", "account_id" => account.id}
+    |> Palapa.JobQueue.new(schedule: schedule_at_utc)
+    |> Palapa.Repo.insert()
+  end
+
   defp base_list_events_query(organization, member) do
     from(events in subquery(all_events_query(member)),
       where: events.organization_id == ^organization.id,
@@ -62,7 +98,7 @@ defmodule Palapa.Events do
     )
   end
 
-  def all_events_query(member) do
+  defp all_events_query(member) do
     from(messages_events_query(member),
       union: ^documents_events_query(member),
       union: ^organization_events_query(),
@@ -70,14 +106,14 @@ defmodule Palapa.Events do
     )
   end
 
-  def organization_events_query() do
+  defp organization_events_query() do
     from(events in Event,
       where: events.action == ^:new_organization,
       or_where: events.action == ^:new_member
     )
   end
 
-  def messages_events_query(member) do
+  defp messages_events_query(member) do
     from(events in Event,
       join: messages in subquery(Messages.visible_to(member)),
       on: events.message_id == messages.id

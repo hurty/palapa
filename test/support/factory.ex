@@ -304,7 +304,8 @@ defmodule Palapa.Factory do
     %Account{
       name: "Richard Hendricks",
       email: "richard.hendricks@piedpiper.com",
-      password_hash: @password_hash
+      password_hash: @password_hash,
+      send_daily_recap: true
     }
   end
 
@@ -312,7 +313,8 @@ defmodule Palapa.Factory do
     %Account{
       name: "Jared Dunn",
       email: "jared.dunn@piedpiper.com",
-      password_hash: @password_hash
+      password_hash: @password_hash,
+      send_daily_recap: true
     }
   end
 
@@ -320,7 +322,8 @@ defmodule Palapa.Factory do
     %Account{
       name: "Bertram Gilfoyle",
       email: "bertram.gilfoyle@piedpiper.com",
-      password_hash: @password_hash
+      password_hash: @password_hash,
+      send_daily_recap: true
     }
   end
 
@@ -328,7 +331,8 @@ defmodule Palapa.Factory do
     %Account{
       name: "Dinesh Chugtai",
       email: "dinesh.chugtai@piedpiper.com",
-      password_hash: @password_hash
+      password_hash: @password_hash,
+      send_daily_recap: true
     }
   end
 
@@ -336,7 +340,8 @@ defmodule Palapa.Factory do
     %Account{
       name: "Monica Hall",
       email: "monica.hall@piedpiper.com",
-      password_hash: @password_hash
+      password_hash: @password_hash,
+      send_daily_recap: true
     }
   end
 
@@ -344,7 +349,8 @@ defmodule Palapa.Factory do
     %Account{
       name: "Laurie Bream",
       email: "laurie.bream@piedpiper.com",
-      password_hash: @password_hash
+      password_hash: @password_hash,
+      send_daily_recap: true
     }
   end
 
@@ -352,7 +358,8 @@ defmodule Palapa.Factory do
     %Account{
       name: "Big Head",
       email: "nelson.bighetti@piedpiper.com",
-      password_hash: @password_hash
+      password_hash: @password_hash,
+      send_daily_recap: true
     }
   end
 
@@ -360,7 +367,8 @@ defmodule Palapa.Factory do
     %Account{
       name: "Erlich Bachman",
       email: "erlich.bachman@piedpiper.com",
-      password_hash: @password_hash
+      password_hash: @password_hash,
+      send_daily_recap: true
     }
   end
 
@@ -368,7 +376,8 @@ defmodule Palapa.Factory do
     %Account{
       name: "Ron LaFlamme",
       email: "ron.laflamme@laflamme-lawyers.com",
-      password_hash: @password_hash
+      password_hash: @password_hash,
+      send_daily_recap: true
     }
   end
 
@@ -376,7 +385,8 @@ defmodule Palapa.Factory do
     %Account{
       name: "Gavin Belson",
       email: "gavin.belson@hooli.com",
-      password_hash: @password_hash
+      password_hash: @password_hash,
+      send_daily_recap: true
     }
   end
 

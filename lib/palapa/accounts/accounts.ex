@@ -100,26 +100,4 @@ defmodule Palapa.Accounts do
     |> where(account_id: ^account.id, organization_id: ^organization.id)
     |> Repo.one()
   end
-
-  def schedule_daily_email(account) do
-    now = Timex.now(account.timezone)
-
-    schedule_at =
-      if now.hour < 7 do
-        # Today at 8
-        now |> Timex.set(hour: 8)
-      else
-        # Tomorrow at 8
-        now
-        |> Timex.shift(days: 1)
-        |> Timex.beginning_of_day()
-        |> Timex.set(hour: 8)
-      end
-
-    schedule_at_utc = Timex.Timezone.convert(schedule_at, "UTC")
-
-    %{"type" => "daily_email", "account_id" => account.id}
-    |> Palapa.JobQueue.new(schedule: schedule_at_utc)
-    |> Palapa.Repo.insert()
-  end
 end

@@ -4,7 +4,7 @@ defmodule Palapa.JobQueue do
   alias Palapa.Repo
   alias Palapa.Organizations
   alias Palapa.Billing
-  alias Palapa.Accounts
+  alias Palapa.Events
 
   alias Ecto.Multi
 
@@ -18,15 +18,10 @@ defmodule Palapa.JobQueue do
       true ->
         multi
         |> Ecto.Multi.run(:send_daily_email, fn _repo, _changes ->
-          if account.send_daily_recap do
-            Palapa.Events.Emails.daily_emails(account)
-            |> Enum.each(fn email -> Palapa.Mailer.deliver_now(email) end)
-          end
-
-          {:ok, nil}
+          Events.send_daily_recaps(account)
         end)
         |> Ecto.Multi.run(:schedule_next_daily_email, fn _repo, _changes ->
-          Accounts.schedule_daily_email(account)
+          Events.schedule_daily_email(account)
         end)
         |> Repo.transaction()
     end

@@ -3,6 +3,7 @@ defmodule Palapa.Accounts.Registrations do
   alias Palapa.Accounts.Registration
   alias Palapa.Accounts
   alias Palapa.Organizations
+  alias Palapa.Events
 
   @doc """
   Creates a new organization and a new user account in this organization.
@@ -43,7 +44,7 @@ defmodule Palapa.Accounts.Registrations do
       Organizations.create(organization_attrs, account)
     end)
     |> Ecto.Multi.run(:daily_email, fn _, %{account: account} ->
-      Accounts.schedule_daily_email(account)
+      Events.schedule_daily_email(account)
     end)
     |> Repo.transaction()
   end

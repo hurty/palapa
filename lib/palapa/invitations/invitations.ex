@@ -6,6 +6,7 @@ defmodule Palapa.Invitations do
   alias Palapa.Organizations
   alias Palapa.Organizations.Organization
   alias Palapa.Accounts
+  alias Palapa.Events
   alias Palapa.Events.Event
 
   @expiration_days 30
@@ -205,7 +206,7 @@ defmodule Palapa.Invitations do
       })
     end)
     |> Ecto.Multi.run(:daily_email, fn _, %{account: account} ->
-      Accounts.schedule_daily_email(account)
+      Events.schedule_daily_email(account)
     end)
     |> Ecto.Multi.insert(:event, fn %{member: member} ->
       %Event{
