@@ -2,6 +2,7 @@ defmodule PalapaWeb.Settings.MemberLive do
   use PalapaWeb, :live_view
 
   alias Palapa.Organizations
+  alias Palapa.Accounts
 
   def render(assigns) do
     Phoenix.View.render(PalapaWeb.Settings.MemberView, "members.html", assigns)
@@ -9,13 +10,14 @@ defmodule PalapaWeb.Settings.MemberLive do
 
   def mount(
         %{
-          locale: locale,
+          account_id: account_id,
           current_organization_id: current_organization_id,
           current_member_id: current_member_id
         },
         socket
       ) do
-    Gettext.put_locale(locale)
+    account = Accounts.get!(account_id)
+    Gettext.put_locale(account.locale)
 
     socket =
       socket
