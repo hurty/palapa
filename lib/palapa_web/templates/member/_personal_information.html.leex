@@ -66,7 +66,7 @@
     <%= render "_personal_information_form.html", assigns %>
   <% else %>
     <button phx-click="edit" class="w-full p-2 mt-2 btn">
-      <i class="fas fa-plus-circle"></i>&nbsp;Add information
+      <i class="fas fa-plus-circle mr-2"></i><%= gettext("Add information") %>
     </button>
   <% end %>
 

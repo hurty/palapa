@@ -338,11 +338,6 @@ msgid "Your current password"
 msgstr "Votre mot de passe actuel"
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:32
-msgid "Automatic"
-msgstr "Automatique"
-
-#, elixir-format
 #: lib/palapa_web/templates/contact/comment_form.html.leex:17
 #: lib/palapa_web/templates/contact/contact_comments.html.leex:1
 msgid "Add a comment about %{contact}"
@@ -1957,7 +1952,7 @@ msgid "The billing service is unreachable. Please try again or ask support"
 msgstr "Le service de facturation est indisponible. Merci de réessayer ou de demander de l'aide au support"
 
 #, elixir-format
-#: lib/palapa_web/live/contact/new.ex:79
+#: lib/palapa_web/live/contact/new.ex:76
 msgid "The contact has been created"
 msgstr "Le contact a été créé"
 
@@ -2165,3 +2160,13 @@ msgstr "Votre espace de travail"
 #: lib/palapa_web/templates/message/index.html.eex:10
 msgid "Other activity"
 msgstr "Autre activité"
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_member_profile.html.leex:12
+msgid "OK"
+msgstr "OK"
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_member_profile.html.leex:20
+msgid "title"
+msgstr "Rôle"

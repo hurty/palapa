@@ -12,6 +12,7 @@
 
       <div>
         <%= Phoenix.LiveView.live_render(@conn, PalapaWeb.MemberProfileLive, session: %{
+            account_id: @current_account.id,
             member_id: @member.id,
             current_member_id: @current_member.id,
             current_organization_id: @current_organization.id

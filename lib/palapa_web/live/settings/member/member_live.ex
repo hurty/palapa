@@ -17,7 +17,7 @@ defmodule PalapaWeb.Settings.MemberLive do
         socket
       ) do
     account = Accounts.get!(account_id)
-    Gettext.put_locale(account.locale)
+    Gettext.put_locale(PalapaWeb.Gettext, account.locale)
 
     socket =
       socket
