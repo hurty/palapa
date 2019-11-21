@@ -25,17 +25,8 @@ defmodule Palapa.Messages.Message do
 
   def changeset(%Message{} = message, attrs) do
     message
-    |> cast(attrs, [:title, :content, :published_to_everyone, :publish_teams_ids, :inserted_at])
+    |> cast(attrs, [:title, :content, :published_to_everyone, :inserted_at])
     |> RichText.Changeset.put_rich_text_attachments(:content, :attachments, :message)
-    |> put_teams(attrs)
     |> validate_required(:title)
-  end
-
-  defp put_teams(changeset, attrs) do
-    if attrs["teams"] do
-      put_assoc(changeset, :teams, attrs["teams"])
-    else
-      changeset
-    end
   end
 end

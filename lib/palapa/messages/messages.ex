@@ -1,5 +1,7 @@
 defmodule Palapa.Messages do
   use Palapa.Context
+  import Palapa.Gettext
+
   alias Palapa.Messages.Message
   alias Palapa.Messages.MessageComment
   alias Palapa.Teams.Team
@@ -213,12 +215,24 @@ defmodule Palapa.Messages do
   end
 
   defp put_teams(changeset, teams) do
-    if teams && Enum.any?(teams) do
-      changeset
-      |> put_change(:published_to_everyone, false)
-      |> put_assoc(:teams, teams)
-    else
-      changeset
+    published_to_everyone = get_field(changeset, :published_to_everyone)
+
+    cond do
+      !published_to_everyone && teams == [] ->
+        add_error(
+          changeset,
+          :published_to_everyone,
+          gettext("Choose at least one team")
+        )
+
+      !published_to_everyone && teams && Enum.any?(teams) ->
+        put_assoc(changeset, :teams, teams)
+
+      published_to_everyone ->
+        put_assoc(changeset, :teams, [])
+
+      true ->
+        changeset
     end
   end
 end

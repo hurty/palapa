@@ -67,7 +67,7 @@ defmodule PalapaWeb.MessageController do
       conn =
         put_breadcrumb(
           conn,
-          "New messages",
+          gettext("New message"),
           Routes.message_path(conn, :new, current_organization(conn))
         )
 
