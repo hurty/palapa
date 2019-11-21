@@ -35,9 +35,9 @@ defmodule PalapaWeb.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(PalapaWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(Palapa.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(PalapaWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(Palapa.Gettext, "errors", msg, opts)
     end
   end
 end

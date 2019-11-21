@@ -17,6 +17,7 @@
     <div class="flex my-2">
       <%= radio_button @form, :published_to_everyone, false, class: "self-center", "data-action": "team-sharing#publishToSpecificTeams", "data-target": "team-sharing.publishToSpecificTeams" %>
       <%= label @form, :published_to_everyone_false, gettext("Publish to specific teams"), class: "ml-2 cursor-pointer" %>
+      <div><%= error_tag @form, :published_to_everyone %></div>
     </div>
 
     <div class="ml-4 hidden" data-target="team-sharing.teamsList">

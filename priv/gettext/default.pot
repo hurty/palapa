@@ -1212,8 +1212,8 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/controllers/message_controller.ex:56
-#: lib/palapa_web/templates/layout/_private_navigation.html.eex:22 lib/palapa_web/templates/message/_index_toolbar.html.eex:28
-#: lib/palapa_web/templates/message/new.html.eex:4
+#: lib/palapa_web/controllers/message_controller.ex:70 lib/palapa_web/templates/layout/_private_navigation.html.eex:22
+#: lib/palapa_web/templates/message/_index_toolbar.html.eex:28 lib/palapa_web/templates/message/new.html.eex:4
 msgid "New message"
 msgstr ""
 
@@ -2225,4 +2225,9 @@ msgstr ""
 #, elixir-format
 #: lib/palapa/invitations/emails.ex:45
 msgid "You have been invited to join \"%{workspace}\""
+msgstr ""
+
+#, elixir-format
+#: lib/palapa/messages/messages.ex:225
+msgid "Choose at least one team"
 msgstr ""

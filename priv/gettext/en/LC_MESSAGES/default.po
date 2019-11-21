@@ -1213,8 +1213,8 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/controllers/message_controller.ex:56
-#: lib/palapa_web/templates/layout/_private_navigation.html.eex:22 lib/palapa_web/templates/message/_index_toolbar.html.eex:28
-#: lib/palapa_web/templates/message/new.html.eex:4
+#: lib/palapa_web/controllers/message_controller.ex:70 lib/palapa_web/templates/layout/_private_navigation.html.eex:22
+#: lib/palapa_web/templates/message/_index_toolbar.html.eex:28 lib/palapa_web/templates/message/new.html.eex:4
 msgid "New message"
 msgstr ""
 
@@ -2218,12 +2218,17 @@ msgstr ""
 msgid "If you didn't request to reset your password, please ignore this email."
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/palapa/invitations/emails.ex:51 lib/palapa/invitations/emails.ex:51
 msgid "%{creator} invited you to join the workspace \"%{workspace}\" on the Palapa application."
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/palapa/invitations/emails.ex:45
 msgid "You have been invited to join \"%{workspace}\""
+msgstr ""
+
+#, elixir-format
+#: lib/palapa/messages/messages.ex:225
+msgid "Choose at least one team"
 msgstr ""

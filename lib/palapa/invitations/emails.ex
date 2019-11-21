@@ -1,6 +1,6 @@
 defmodule Palapa.Invitations.Emails do
   import Bamboo.Email
-  import PalapaWeb.Gettext
+  import Palapa.Gettext
 
   # Usage
   #
@@ -38,7 +38,7 @@ defmodule Palapa.Invitations.Emails do
 
     locale = invitation.creator.account.locale || "en"
 
-    Gettext.with_locale(PalapaWeb.Gettext, locale, fn ->
+    Gettext.with_locale(Palapa.Gettext, locale, fn ->
       base_email()
       |> to(invitation.email)
       |> subject(

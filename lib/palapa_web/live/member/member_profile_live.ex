@@ -18,7 +18,7 @@ defmodule PalapaWeb.MemberProfileLive do
         socket
       ) do
     account = Accounts.get!(account_id)
-    Gettext.put_locale(PalapaWeb.Gettext, account.locale)
+    Gettext.put_locale(Palapa.Gettext, account.locale)
     member = Organizations.get_member!(member_id)
     current_member = Organizations.get_member!(current_member_id)
     current_organization = Organizations.get!(current_organization_id)

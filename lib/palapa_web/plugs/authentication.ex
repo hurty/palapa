@@ -2,7 +2,7 @@ defmodule PalapaWeb.Authentication do
   import Plug.Conn
   import Phoenix.Controller
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
-  import PalapaWeb.Gettext
+  import Palapa.Gettext
   alias PalapaWeb.Router
   alias Palapa.Accounts
   alias Palapa.Organizations

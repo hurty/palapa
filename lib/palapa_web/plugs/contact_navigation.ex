@@ -1,7 +1,7 @@
 defmodule PalapaWeb.ContactNavigation do
   import Plug.Conn
   import PalapaWeb.Breadcrumbs
-  import PalapaWeb.Gettext
+  import Palapa.Gettext
   alias PalapaWeb.Router.Helpers, as: Routes
 
   def init(options) do

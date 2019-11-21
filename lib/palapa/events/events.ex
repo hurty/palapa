@@ -51,7 +51,6 @@ defmodule Palapa.Events do
         Enum.each(emails, fn email -> Palapa.Mailer.deliver_now(email) end)
 
         emails
-        |> IO.inspect()
       else
         []
       end

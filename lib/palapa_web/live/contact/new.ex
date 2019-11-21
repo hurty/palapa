@@ -13,7 +13,7 @@ defmodule PalapaWeb.ContactLive.New do
 
   def mount(%{account_id: account_id}, socket) do
     account = Accounts.get!(account_id)
-    Gettext.put_locale(PalapaWeb.Gettext, account.locale)
+    Gettext.put_locale(Palapa.Gettext, account.locale)
 
     {:ok, assign(socket, :current_account, account)}
   end

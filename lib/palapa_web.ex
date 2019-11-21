@@ -21,7 +21,7 @@ defmodule PalapaWeb do
     quote do
       use Phoenix.Controller, namespace: PalapaWeb
       import Plug.Conn
-      import PalapaWeb.Gettext
+      import Palapa.Gettext
       import PalapaWeb.Current
       import PalapaWeb.Breadcrumbs
       import Bodyguard
@@ -37,7 +37,7 @@ defmodule PalapaWeb do
     quote do
       use Phoenix.LiveView
       import Bodyguard
-      import PalapaWeb.Gettext
+      import Palapa.Gettext
     end
   end
 
@@ -45,7 +45,7 @@ defmodule PalapaWeb do
     quote do
       use Phoenix.LiveComponent
       import Bodyguard
-      import PalapaWeb.Gettext
+      import Palapa.Gettext
     end
   end
 
@@ -62,7 +62,7 @@ defmodule PalapaWeb do
       use Phoenix.HTML
 
       import PalapaWeb.ErrorHelpers
-      import PalapaWeb.Gettext
+      import Palapa.Gettext
       import Scrivener.HTML
       import Bodyguard
 
@@ -99,7 +99,7 @@ defmodule PalapaWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import PalapaWeb.Gettext
+      import Palapa.Gettext
     end
   end
 

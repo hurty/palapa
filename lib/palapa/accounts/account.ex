@@ -69,7 +69,7 @@ defmodule Palapa.Accounts.Account do
   def validate_locale(changeset) do
     locale = get_field(changeset, :locale)
 
-    if locale && locale not in Gettext.known_locales(PalapaWeb.Gettext) do
+    if locale && locale not in Gettext.known_locales(Palapa.Gettext) do
       add_error(changeset, :locale, "This locale is not supported")
     else
       changeset

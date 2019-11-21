@@ -8,7 +8,7 @@ defmodule PalapaWeb.Helpers do
   end
 
   def get_locale() do
-    Gettext.get_locale(PalapaWeb.Gettext)
+    Gettext.get_locale(Palapa.Gettext)
   end
 
   def auto_format_datetime(_conn, datetime) when is_nil(datetime), do: nil

@@ -28,7 +28,7 @@ config :palapa,
   email_support: "support@palapa.io",
   email_transactionnal: {"Palapa", "do-not-reply@palapa.io"}
 
-config :palapa, PalapaWeb.Gettext, locales: ["en", "fr"], default_locale: "en"
+config :palapa, Palapa.Gettext, locales: ["en", "fr"], default_locale: "en"
 
 # Configures Elixir's Logger
 config :logger, :console,

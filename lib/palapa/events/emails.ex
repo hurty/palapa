@@ -1,6 +1,6 @@
 defmodule Palapa.Events.Emails do
   import Bamboo.Email
-  import PalapaWeb.Gettext
+  import Palapa.Gettext
   alias Palapa.Events
   alias Palapa.Accounts.Account
   alias Palapa.Organizations
@@ -8,7 +8,7 @@ defmodule Palapa.Events.Emails do
   def daily_emails(%Account{} = account) do
     locale = account.locale || "en"
 
-    Gettext.with_locale(PalapaWeb.Gettext, locale, fn ->
+    Gettext.with_locale(Palapa.Gettext, locale, fn ->
       organizations = Organizations.list_organizations(account)
 
       organizations

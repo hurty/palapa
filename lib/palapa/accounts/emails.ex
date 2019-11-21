@@ -1,6 +1,6 @@
 defmodule Palapa.Accounts.Emails do
   import Bamboo.Email
-  import PalapaWeb.Gettext
+  import Palapa.Gettext
 
   def base_email() do
     new_email()
@@ -10,7 +10,7 @@ defmodule Palapa.Accounts.Emails do
   def password_reset(account, password_reset_token) do
     locale = account.locale || "en"
 
-    Gettext.with_locale(PalapaWeb.Gettext, locale, fn ->
+    Gettext.with_locale(Palapa.Gettext, locale, fn ->
       reset_link =
         PalapaWeb.Router.Helpers.password_reset_url(
           PalapaWeb.Endpoint,

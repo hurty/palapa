@@ -8,7 +8,7 @@ defmodule PalapaWeb.Locale do
   # If the user has an account and a language preference
   def call(%{assigns: %{current_account: %{locale: locale}}} = conn, _opts)
       when is_binary(locale) do
-    Gettext.put_locale(PalapaWeb.Gettext, locale)
+    Gettext.put_locale(Palapa.Gettext, locale)
     conn
   end
 
@@ -17,7 +17,7 @@ defmodule PalapaWeb.Locale do
       when is_nil(locale) do
     determined_locale = get_locale_from_headers(conn)
     Palapa.Accounts.update_account(current_account, %{locale: determined_locale})
-    Gettext.put_locale(PalapaWeb.Gettext, determined_locale)
+    Gettext.put_locale(Palapa.Gettext, determined_locale)
     conn
   end
 
@@ -25,7 +25,7 @@ defmodule PalapaWeb.Locale do
   def call(conn, _options) do
     session_locale = get_session(conn, :locale)
     user_locale = session_locale || get_locale_from_headers(conn)
-    Gettext.put_locale(PalapaWeb.Gettext, user_locale)
+    Gettext.put_locale(Palapa.Gettext, user_locale)
 
     if session_locale do
       conn
@@ -41,7 +41,7 @@ defmodule PalapaWeb.Locale do
   end
 
   def supported_locale?(locale) do
-    Enum.member?(Gettext.known_locales(PalapaWeb.Gettext), locale)
+    Enum.member?(Gettext.known_locales(Palapa.Gettext), locale)
   end
 
   # Extracted from https://github.com/smeevil/set_locale
