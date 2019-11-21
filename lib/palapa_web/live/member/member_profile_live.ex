@@ -41,7 +41,7 @@ defmodule PalapaWeb.MemberProfileLive do
 
     {:noreply,
      assign(socket,
-       edit_mode: true,
+       profile_title_edit_mode: true,
        profile_changeset: profile_changeset
      )}
   end
@@ -49,7 +49,7 @@ defmodule PalapaWeb.MemberProfileLive do
   def handle_event("update_member_title", %{"member" => member_attrs}, socket) do
     case Organizations.update_member_profile(socket.assigns.member, member_attrs) do
       {:ok, member} ->
-        {:noreply, assign(socket, member: member, edit_mode: false)}
+        {:noreply, assign(socket, member: member, profile_title_edit_mode: false)}
 
       {:error, profile_changeset} ->
         {:noreply,
