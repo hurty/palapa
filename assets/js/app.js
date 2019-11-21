@@ -63,6 +63,7 @@ liveSocket.connect();
 import "./handlers/external_links_handler";
 
 // Load all Stimulus controllers
+// import "@stimulus/polyfills";
 import { Application } from "stimulus";
 import { definitionsFromContext } from "stimulus/webpack-helpers";
 const application = Application.start();

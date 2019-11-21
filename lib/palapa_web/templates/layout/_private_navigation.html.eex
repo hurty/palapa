@@ -1,7 +1,7 @@
 <header class="header">
-  <nav data-controller="navigation" class="flex items-center justify-center lg:justify-between p-1">
-    <button data-action="navigation#toggleMobileMenu" class="lg:hidden px-2 py-1 hover:bg-green-600 my-1 font-bold rounded bg-green-500 text-white">
-    <i class="fas fa-bars"></i>
+  <nav data-controller="navigation" class="flex items-center justify-between lg:justify-between p-1">
+    <button data-action="navigation#toggleMobileMenu" class="lg:hidden px-2 py-1 hover:bg-green-300 border my-1 font-bold rounded">
+      <i class="fas fa-bars text-green-500"></i><span class="ml-2 hidden sm:inline-block">Menu</span>
     </button>
 
     <div class="hidden lg:block">
