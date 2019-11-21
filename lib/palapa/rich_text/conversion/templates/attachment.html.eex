@@ -5,9 +5,9 @@
     <% end %>
 
     <figcaption class="text-sm text-center">
-      <span class="font-bold mr-2"><%= @embedded_attachment.caption %></span> 
-      <span class="mr-2"><%= link "See full size", to: attachment_url(@embedded_attachment, :original), target: "_blank" %></span>
-      <span><%= link "Download", to: attachment_url(@embedded_attachment, :original, "attachment") %></span>
+      <span class="font-bold mr-2"><%= @embedded_attachment.caption %></span>
+      <span class="mr-2"><%= link gettext("See full size"), to: attachment_url(@embedded_attachment, :original), target: "_blank" %></span>
+      <span><%= link gettext("Download"), to: attachment_url(@embedded_attachment, :original, "attachment") %></span>
     </figcaption>
   <% else %>
     <%= link to: attachment_url(@embedded_attachment, :original, "attachment"), class: "p-2 border rounded" do %>

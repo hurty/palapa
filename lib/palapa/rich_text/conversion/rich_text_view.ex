@@ -1,7 +1,7 @@
 defmodule Palapa.RichText.RichTextView do
   use Phoenix.View, root: "lib/palapa/rich_text/conversion/templates", path: ""
   use Phoenix.HTML
-
+  import Palapa.Gettext
   alias Palapa.RichText.EmbeddedAttachment
 
   defdelegate image?(embedded_attachment), to: Palapa.Attachments

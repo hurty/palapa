@@ -1186,14 +1186,9 @@ msgid "Create"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_public_navigation.html.eex:20
+#: lib/palapa_web/templates/layout/_public_navigation.html.eex:16
 #: lib/palapa_web/templates/organization/new.html.eex:21
 msgid "Create workspace"
-msgstr ""
-
-#, elixir-format
-#: lib/palapa_web/templates/layout/_public_navigation.html.eex:11
-msgid "Menu"
 msgstr ""
 
 #, elixir-format
@@ -1237,13 +1232,13 @@ msgid "Settings"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_public_navigation.html.eex:24
+#: lib/palapa_web/templates/layout/_public_navigation.html.eex:20
 #: lib/palapa_web/templates/session/new.html.eex:4 lib/palapa_web/templates/session/new.html.eex:20
 msgid "Sign in"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_public_navigation.html.eex:22
+#: lib/palapa_web/templates/layout/_public_navigation.html.eex:18
 msgid "Sign out"
 msgstr ""
 
@@ -1626,6 +1621,7 @@ msgid "Document page"
 msgstr ""
 
 #, elixir-format
+#: lib/palapa/rich_text/conversion/templates/attachment.html.eex:10
 #: lib/palapa_web/templates/settings/billing/customer/invoices.html.eex:22
 msgid "Download"
 msgstr ""
@@ -2231,4 +2227,9 @@ msgstr ""
 #, elixir-format
 #: lib/palapa/messages/messages.ex:225
 msgid "Choose at least one team"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa/rich_text/conversion/templates/attachment.html.eex:9
+msgid "See full size"
 msgstr ""
