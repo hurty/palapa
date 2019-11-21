@@ -26,7 +26,11 @@ defmodule PalapaWeb.MemberProfileLive.PersonalInformation do
           |> Map.put(:action, :insert)
 
         _ ->
-          Organizations.change_personal_information(%PersonalInformation{})
+          if socket.assigns.info do
+            Organizations.change_personal_information(socket.assigns.info)
+          else
+            Organizations.change_personal_information(%PersonalInformation{})
+          end
       end
 
     people_list =
