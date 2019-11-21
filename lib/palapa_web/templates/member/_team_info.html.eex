@@ -18,13 +18,13 @@
         <%= if Palapa.Teams.member?(@selected_team, @current_member) do %>
           <%= gettext("You are a member of this team") %>
           <%= link to: Routes.team_team_membership_path(@conn, :delete, @current_organization, @selected_team),
-            class: "tag text-xs", data: [controller: "link", action: "link#delete", confirm: gettext("Are you sure you want to leave this team?")] do %>
-            <i class="text-gray-900 fas fa-sign-out-alt mr-2"></i><%= gettext("Leave") %>
+            class: "ml-2 p-1 border rounded bg-white hover:bg-gray-100 text-xs", data: [controller: "link", action: "link#delete", confirm: gettext("Are you sure you want to leave this team?")] do %>
+            <i class="text-red-500 fas fa-sign-out-alt mr-2"></i><%= gettext("Leave") %>
           <% end %>
         <% else %>
           <%= if permit? Palapa.Teams.Policy, :join, @current_member, @selected_team do %>
             <%= gettext("You are not member of this team") %>
-            <%= link to: Routes.team_team_membership_path(@conn, :create, @current_organization, @selected_team), class: "tag text-xs whitespace-no-wrap",
+            <%= link to: Routes.team_team_membership_path(@conn, :create, @current_organization, @selected_team), class: "ml-2 border rounded bg-white hover:bg-gray-100 p-1 text-xs whitespace-no-wrap",
             data: [controller: "link", action: "link#post"] do %>
               <i class="text-green-500 fas fa-sign-in-alt mr-2"></i><%= gettext("Join") %>
             <% end %>
