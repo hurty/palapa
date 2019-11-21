@@ -17,7 +17,7 @@
       <button type="button" class="trix-button trix-button--icon trix-button--icon-increase-nesting-level" data-trix-action="increaseNestingLevel" title="Increase Level" tabindex="-1" disabled="">Increase Level</button>
     </span>
 
-    <div class="hidden sm:block">
+    <div class="hidden lg:block">
       <span class="trix-button-group trix-button-group--history-tools" data-trix-button-group="history-tools">
         <button type="button" class="trix-button trix-button--icon trix-button--icon-undo" data-trix-action="undo" data-trix-key="z" title="Undo" tabindex="-1" disabled="">Undo</button>
         <button type="button" class="trix-button trix-button--icon trix-button--icon-redo" data-trix-action="redo" data-trix-key="shift+z" title="Redo" tabindex="-1" disabled="">Redo</button>

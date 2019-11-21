@@ -1,4 +1,4 @@
-<div data-controller="invitation" class="p-4 flex flex-col sm:flex-row flex-wrap border-t text-sm">
+<div data-controller="invitation" class="p-4 flex flex-col lg:flex-row flex-wrap border-t text-sm">
   <div class="flex-1 py-2"><%= @invitation.email %></div>
   <div class="py-2 pr-2"><%= gettext("Sent") %> <%= Helpers.auto_format_datetime(@conn, @invitation.inserted_at) %></div>
   <div class="flex">

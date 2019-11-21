@@ -3,17 +3,17 @@
     <%= render PalapaWeb.Document.DocumentView, "table_of_contents.html", assigns %>
   </div>
 
-  <div class="main-content p-1 sm:p-0">
-    
+  <div class="main-content p-1 lg:p-0">
+
     <%# ----- DOCS ----- %>
-    
-    <div class="rounded sm:shadow bg-white sm:p-8">
+
+    <div class="rounded lg:shadow bg-white lg:p-8">
       <h2 class="card-header">
         <%= gettext("Edit page") %>
       </h2>
-      
+
       <div class="card-header-separator"></div>
       <%= render "form.html", Map.put(assigns, :action, Routes.document_page_path(@conn, :update, @current_organization, @page)) %>
-    </div>    
+    </div>
   </div>
 </div>

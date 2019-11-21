@@ -1,13 +1,13 @@
 <div class="content page-layout">
   <div class="main-content" data-controller="message">
-    <div class="card p-1 sm:p-8">
+    <div class="card p-1 lg:p-8">
       <h2 class="card-header"><%= gettext("The workspace \"%{organization_name}\" has been frozen.", organization_name: @current_organization.name) %></h2>
       <div class="card-header-separator"></div>
 
         <section>
           <p>
             <%= gettext("We didn't receive any payment for the current period. An owner of the workspace must update the billing information in order to restore access to the workspace.") %>
-            
+
             <%= gettext("Don't worry, all the data associated with this workspace is safe.") %>
             <%= gettext("Don't hesitate to ask support if you need help or have questions.") %>
           </p>

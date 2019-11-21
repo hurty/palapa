@@ -1,16 +1,16 @@
-<div class="card text-gray-700 bg-gray-100 sm:bg-white rounded text-sm">
-  <div class="flex justify-between p-1 sm:p-4 border-b border-gray-200">
+<div class="card text-gray-700 bg-gray-100 lg:bg-white rounded text-sm">
+  <div class="flex justify-between p-1 lg:p-4 border-b border-gray-200">
     <div>
       <h2 class="font-bold text-gray-800 text-base"><%= @document.title %></h2>
       <h5 class="font-bold text-gray-600 text-xs"><%= gettext("Table of contents") %></h5>
-      <div class="sm:hidden py-2">
+      <div class="lg:hidden py-2">
         <a class="text-blue" data-action="document#toggleToc"><%= gettext("Toggle table of contents") %></a>
       </div>
     </div>
 
   </div>
 
-  <div class="hidden sm:block" data-target="document.toc">
+  <div class="hidden lg:block" data-target="document.toc">
     <div>
       <ul data-target="document.sectionsContainer" class="">
         <%= for section <- @document.sections do %>

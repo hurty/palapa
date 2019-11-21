@@ -1,4 +1,4 @@
-<div class="sm:max-w-md mx-auto my-8">
+<div class="lg:max-w-md mx-auto my-8">
   <div class="card p-8">
     <h2 class="card-header">
       <%= gettext("Create a new workspace") %>

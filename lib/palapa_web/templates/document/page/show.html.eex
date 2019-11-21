@@ -4,14 +4,14 @@
     <%= render PalapaWeb.Document.DocumentView, "table_of_contents.html", assigns %>
   </div>
 
-  <div class="main-content p-1 sm:p-0">
+  <div class="main-content p-1 lg:p-0">
     <%= render PalapaWeb.Document.DocumentView, "restore.html", assigns %>
 
     <%# ----- DOCS ----- %>
     <div class="card">
-      <div class="flex justify-between border-b border-gray-200 p-1 sm:p-8">
+      <div class="flex justify-between border-b border-gray-200 p-1 lg:p-8">
         <div>
-          <h1 class="text-green-500 text-lg sm:text-2xl"><%= @page.title %></h1>
+          <h1 class="text-green-500 text-lg lg:text-2xl"><%= @page.title %></h1>
           <div class="flex py-2 text-gray-700 text-xs">
               <div class="flex">
                 <div class="self-center mr-1"><%= Helpers.avatar(@page.last_author.account, :xs) %></div>
@@ -30,7 +30,7 @@
       </div>
       <div>
         <%= if @page.content do %>
-          <section class="sm:p-8">
+          <section class="lg:p-8">
             <%= Palapa.RichText.Helpers.rich_text(@page.content) %>
           </section>
         <% else %>
@@ -40,7 +40,7 @@
           </section>
         <% end %>
 
-        <div class="border-t border-gray-200 flex justify-between sm:p-4 mt-8">
+        <div class="border-t border-gray-200 flex justify-between lg:p-4 mt-8">
           <div class="w-1/2">
             <%= if @previous_page do %>
               <%= link to: Routes.document_page_path(@conn, :show, @current_organization, @previous_page), class: "text-green-500 hover:underline" do %>

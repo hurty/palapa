@@ -5,7 +5,7 @@
         <div class="flex flex-wrap items-center justify-between p-4">
           <h2 class="card-header"><%= gettext("Documents") %></h2>
 
-          <div class="my-2 sm:m-0">
+          <div class="my-2 lg:m-0">
             <%= link(to: Routes.document_path(@conn, :new, @current_organization), class: "btn text-sm") do %>
               <i class="fas fa-plus-circle text-green-500 mr-2"></i><%= gettext("New document") %>
             <% end %>
@@ -15,7 +15,7 @@
         <div class="flex flex-wrap justify-between items-center px-4 py-2 bg-gray-100 border-b-2 border-gray-200">
           <div data-controller="popover" data-action="mousedown@window->popover#hide">
             <%= if Enum.any?(@teams) do %>
-              <button data-target="popover.button" data-action="popover#toggle" class="btn text-sm truncate my-2 sm:my-0" title="<%= if @selected_team, do: @selected_team.name %>">
+              <button data-target="popover.button" data-action="popover#toggle" class="btn text-sm truncate my-2 lg:my-0" title="<%= if @selected_team, do: @selected_team.name %>">
                 <%= if @selected_team do %>
                   <span class="text-blue-500 font-bold"><%= Helpers.truncate_string(@selected_team.name, 40) %></span>
                 <% else %>
@@ -64,17 +64,17 @@
           <div class="py-4">
 
             <div class="flex items-center justify-between py-2 border-b border-gray-200 p-4">
-              <div class="sm:w-8">
-                <span class="sm:hidden font-bold text-xs uppercase"><%= gettext("Sort by") %></span>
+              <div class="lg:w-8">
+                <span class="lg:hidden font-bold text-xs uppercase"><%= gettext("Sort by") %></span>
               </div>
 
-              <div class="sm:flex-1">
+              <div class="lg:flex-1">
                 <%= if @conn.params["sort_by"] == "title" do %><span class="text-blue">•</span><% end %>
                 <%= link gettext("Title"), to: Routes.document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "title")),
                   class: "uppercase text-xs text-blue-500 font-bold hover:underline", title: gettext("Sort by title") %>
               </div>
 
-              <div class="sm:flex-none">
+              <div class="lg:flex-none">
                 <%= if @conn.params["sort_by"] == "updated_at" || is_nil(@conn.params["sort_by"]) do %><span class="text-blue">•</span><% end %>
                 <%= link gettext("Last modified"), to: Routes.document_path(@conn, :index, @current_organization, Map.put(@conn.params, "sort_by", "updated_at")),
                   class: "uppercase text-xs text-blue-500 font-bold hover:underline", title: gettext("Sort by date") %>
@@ -83,12 +83,12 @@
 
           <%= for document <- @documents do %>
             <div class="flex flex-wrap py-2 border-b border-gray-200 p-4">
-              <div class="sm:w-8">
-                <i class="hidden sm:block fas fa-file-alt text-gray-600 text-base" title="<%= gettext("Document") %>"></i>
+              <div class="lg:w-8">
+                <i class="hidden lg:block fas fa-file-alt text-gray-600 text-base" title="<%= gettext("Document") %>"></i>
               </div>
 
-              <div class="w-full sm:flex-1">
-                <i class="sm:hidden fas fa-file-alt text-gray-600 text-base" title="<%= gettext("Document") %>"></i>
+              <div class="w-full lg:flex-1">
+                <i class="lg:hidden fas fa-file-alt text-gray-600 text-base" title="<%= gettext("Document") %>"></i>
                 <%= link Helpers.truncate_string(document.title, 150), to: Routes.document_path(@conn, :show, @current_organization, document), class: "text-base text-green-500 font-bold hover:underline text-sm" %>
                 <div class="font-bold mr-2 rounded my-1">
                 <%= if document.team do %>
@@ -99,8 +99,8 @@
                 </div>
               </div>
 
-              <div class="sm:flex-none">
-                <div class="text-xs sm:text-sm text-gray-700"><span class="sm:hidden">Modified </span><%= Helpers.format_date(@conn, document.updated_at) %>
+              <div class="lg:flex-none">
+                <div class="text-xs lg:text-sm text-gray-700"><span class="lg:hidden">Modified </span><%= Helpers.format_date(@conn, document.updated_at) %>
                   <div class="flex mt-2">
                     <%= Helpers.avatar(document.last_author.account, :xs) %>
                     <span class="text-xs mx-2 text-gray-800">

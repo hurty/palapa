@@ -13,7 +13,7 @@
   }
 }
 
-@screen sm {
+@screen lg {
   .layout {
     display: grid;
     min-height: 100vh;
@@ -67,6 +67,7 @@
     "flash"
     "content"
     "footer";
+  padding: 5px;
 }
 
 .header {

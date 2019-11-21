@@ -1,12 +1,12 @@
 <div class="content large-page-layout">
   <div class="main-content">
     <div class="flex flex-wrap">
-      <div class="sm:w-1/2">
+      <div class="lg:w-1/2">
         <h2 class="card-header text-center text-blue-500 mb-4"><%= gettext "What's up?" %></h2>
         <%= render PalapaWeb.MessageView, "_messages.html", assigns %>
       </div>
 
-      <div class="sm:w-1/2 pl-4 mt-16">
+      <div class="lg:w-1/2 pl-4 mt-16">
         <h2 class="card-header text-center text-sm pb-2 border-b text-gray-700"><%= gettext "Other activity" %></h2>
 
         <ul class="">

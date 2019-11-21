@@ -1,6 +1,6 @@
 <header class="header">
   <nav data-controller="navigation" class="flex items-center justify-center lg:justify-between p-1">
-    <button data-action="navigation#toggleMobileMenu" class="sm:hidden px-2 py-1 hover:bg-green-600 my-1 font-bold rounded bg-green-500 text-white">
+    <button data-action="navigation#toggleMobileMenu" class="lg:hidden px-2 py-1 hover:bg-green-600 my-1 font-bold rounded bg-green-500 text-white">
     <i class="fas fa-bars"></i>
     </button>
 
@@ -10,7 +10,7 @@
 
     <div class="flex items-center">
 
-      <div class="hidden sm:inline-block" data-controller="popover" data-action="mousedown@window->popover#hide">
+      <div class="hidden lg:inline-block" data-controller="popover" data-action="mousedown@window->popover#hide">
         <button data-target="popover.button" data-action="popover#toggle" class="btn rounded-full">
           <i class="fas fa-plus-circle text-green-500 mr-2"></i><%= gettext("Create") %><i class="fas fa-angle-down ml-2"></i>
         </button>
@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <div id="global-search" class="flex-shrink mx-1 sm:mx-4" data-controller="search" data-search-index="0" data-search-active="false">
+      <div id="global-search" class="flex-shrink mx-1 lg:mx-4" data-controller="search" data-search-index="0" data-search-active="false">
         <div data-action="click@window->search#escapeSearchDialog">
           <%= form_for @conn, Routes.search_path(@conn, :index, @current_organization), [method: :get, "data-target": "search.form"], fn _form -> %>
             <div class="search-bar bg-white">
@@ -51,7 +51,7 @@
         </div>
       </div>
 
-      <div class="sm:mx-4">
+      <div class="lg:mx-4">
         <a href="#" data-action="navigation#showSwitcher" title="Signed id as <%= @current_account.name %>"><%= Helpers.avatar(@current_account, :sm) %></a>
         <div data-target="navigation.switcher" class="hidden absolute right-0 border-2 z-100 py-4 px-8 bg-white shadow-lg rounded">
           <div class="relative">

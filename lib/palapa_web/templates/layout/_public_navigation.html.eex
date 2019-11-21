@@ -1,22 +1,18 @@
 <nav class="flex items-center justify-between flex-wrap p-6">
-  <div class="flex items-center flex-shrink-0 text-white mr-6">
+  <div class="flex items-center flex-shrink-0 text-white mr-6 mb-4">
     <span class="font-semibold text-xl tracking-tighter">
       <%= link(to: Routes.home_path(@conn, :index)) do %>
         <img src="<%= Routes.static_path(@conn, "/images/logo_palapa-x2.png") %>" alt="Palapa">
       <% end %>
     </span>
   </div>
-  <div class="block sm:hidden">
-    <button class="flex items-center px-3 py-2 border rounded text-blue-200 border-blue-400 hover:text-white hover:border-white">
-      <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title><%= gettext("Menu") %></title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-    </button>
-  </div>
-  <div class="w-full block flex-grow sm:flex sm:items-center sm:w-auto">
-    <div class="text-sm sm:flex-grow">
+
+  <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+    <div class="text-sm lg:flex-grow">
 
     </div>
 
-    <div>
+    <div class="flex flex-wrap">
       <%= link(gettext("Create workspace"), to: Routes.registration_path(@conn, :new), class: "btn mr-2") %>
       <%= if @conn.assigns[:current_account] do %>
         <%= link(gettext("Sign out"), to: Routes.session_path(@conn, :delete), data: [controller: "link", action: "link#delete"], class: "btn ") %>

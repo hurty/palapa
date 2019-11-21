@@ -1,8 +1,8 @@
-<div class="bg-white border rounded" 
-  data-controller="editor" 
-  data-editor-autocomplete-index="0" 
+<div class="bg-white border rounded"
+  data-controller="editor"
+  data-editor-autocomplete-index="0"
   data-editor-attachments-url="<%= @attachments_url %>">
-  
+
   <trix-toolbar id="<%= @toolbar_id %>" data-controller="sticky">
     <div class="trix-button-row">
       <span class="trix-button-group trix-button-group--text-tools" data-trix-button-group="text-tools">
@@ -42,7 +42,7 @@
     </div>
   </trix-toolbar>
 
-  <trix-editor class="rich-text-content sm:p-4" toolbar="<%= @toolbar_id %>" input="<%= @content_input_id %>" placeholder="<%= @placeholder %>" data-target="<%= @editor_data_target %>">
+  <trix-editor class="rich-text-content lg:p-4" toolbar="<%= @toolbar_id %>" input="<%= @content_input_id %>" placeholder="<%= @placeholder %>" data-target="<%= @editor_data_target %>">
   </trix-editor>
   <%= PalapaWeb.ErrorHelpers.error_tag @form, :content %>
   <%= hidden_input @form, :content, value: @content_input_value, id: @content_input_id, "data-target": @content_data_target %>

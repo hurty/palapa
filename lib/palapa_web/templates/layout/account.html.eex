@@ -11,9 +11,9 @@
 
   <body>
     <div class="float-right m-4"><%= link(gettext("Log out"), to: Routes.session_path(@conn, :delete), class: "btn", data: [controller: "link", action: "link#delete"]) %></div>
-    <div class="sm:max-w-2xl mx-auto">
+    <div class="lg:max-w-2xl mx-auto">
       <div class="flex justify-center mb-8 pt-4">
-        <%= Helpers.avatar(@current_account, :sm) %> 
+        <%= Helpers.avatar(@current_account, :sm) %>
         <span class="ml-2 self-center text-gray-800 font-bold"><%= @current_account.name %></span>
       </div>
 
@@ -23,7 +23,7 @@
           <%= link gettext("Account settings"), to: Routes.account_path(@conn, :edit), class: Helpers.auto_active_tab(@navigation, "account") %>
         </div>
       </nav>
-      
+
       <main role="main">
         <%= render PalapaWeb.LayoutView, "_flash_notice.html", assigns %>
         <%= render @view_module, @view_template, assigns %>

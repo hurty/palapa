@@ -7,19 +7,19 @@
     </div>
   </div>
 
-  <div class="main-content p-1 sm:p-0">
+  <div class="main-content p-1 lg:p-0">
 
     <%# ----- DOCS ----- %>
     <div class="card">
-      <div class="flex justify-between border-b border-gray-200 p-1 sm:p-4">
+      <div class="flex justify-between border-b border-gray-200 p-1 lg:p-4">
         <div>
-          <h1 class="text-gray-800 text-2xl sm:text-2xl"><%= @document.title %></h1>
-          <h2 class="text-green-500 text-lg sm:text-2xl"><%= @page.title %></h2>
+          <h1 class="text-gray-800 text-2xl lg:text-2xl"><%= @document.title %></h1>
+          <h2 class="text-green-500 text-lg lg:text-2xl"><%= @page.title %></h2>
         </div>
       </div>
       <div>
         <%= if @page.content do %>
-          <section class="sm:p-4">
+          <section class="lg:p-4">
             <%= Palapa.RichText.Helpers.rich_text @page.content %>
           </section>
         <% else %>
@@ -28,7 +28,7 @@
           </section>
         <% end %>
 
-        <div class="border-t border-gray-200 flex justify-between sm:p-4 mt-8">
+        <div class="border-t border-gray-200 flex justify-between lg:p-4 mt-8">
           <div class="w-1/2">
             <%= if @previous_page do %>
               <%= link to: Routes.public_document_page_path(@conn, :show, @document.public_token, @previous_page), class: "text-green-500 hover:underline" do %>

@@ -1,5 +1,5 @@
-<div class="card text-gray-700 bg-gray-100 sm:bg-white rounded text-sm">
-  <div class="flex justify-between p-1 sm:p-4 border-b border-gray-200">
+<div class="card text-gray-700 bg-gray-100 lg:bg-white rounded text-sm">
+  <div class="flex justify-between p-1 lg:p-4 border-b border-gray-200">
     <div>
       <%= if @document.team do %>
         <div class="text-xs font-bold mb-2">
@@ -8,16 +8,16 @@
       <% end %>
 
       <h2 class="font-bold text-gray-800 text-base"><%= @document.title %></h2>
-      
-      <div class="sm:hidden py-2">
+
+      <div class="lg:hidden py-2">
         <a class="text-blue" data-action="document#toggleToc"><%= gettext("Toggle table of contents") %></a>
       </div>
     </div>
     <%= render "document_actions.html", assigns %>
-    
+
   </div>
 
-  <div class="hidden sm:block" data-target="document.toc">
+  <div class="hidden lg:block" data-target="document.toc">
     <div>
       <ul data-target="document.sectionsContainer" class="">
         <%= for section <- @document.sections do %>
@@ -39,13 +39,13 @@
             <i class="fas fa-folder mr-2"></i><%= gettext("New section") %>
           </a>
 
-          <%= form_for @section_changeset, Routes.document_section_path(@conn, :create, @current_organization, @document), 
-            ["data-target": "document.newSectionForm", "data-action": "document#createSection", 
+          <%= form_for @section_changeset, Routes.document_section_path(@conn, :create, @current_organization, @document),
+            ["data-target": "document.newSectionForm", "data-action": "document#createSection",
             class: "hidden bg-white border shadow-lg p-2 rounded"], fn form -> %>
             <div class="field">
               <%= text_input form, :title, "data-target": "document.newSectionInput", class: "input", placeholder: gettext("Section name"), autocomplete: "off" %>
             </div>
-            
+
             <div class="py-2">
               <%= submit gettext("Add section"), class: "btn btn-green" %>
               <button data-action="document#hideNewSectionForm" class="btn"><%= gettext("Cancel") %></button>

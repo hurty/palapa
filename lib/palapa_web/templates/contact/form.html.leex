@@ -4,7 +4,7 @@
       <%= checkbox form, :is_company %>
       <%= label form, :is_company, gettext("This contact is a company/organization"), class: "label" %>
     </div>
-    
+
     <%# Keep == true in order to discard "false" strings %>
     <%= if input_value(form, :is_company) == true do %>
 
@@ -19,7 +19,7 @@
     <% else %>
 
       <div class="flex flex-wrap">
-        <div class="field flex-1 sm:mr-2">
+        <div class="field flex-1 lg:mr-2">
           <%= label form, :first_name, gettext("First name"), class: "label" %>
           <%= text_input form, :first_name, autocomplete: "off", "phx-hook": "AutoFocus", class: "input" %>
           <%= error_tag form, :first_name %>
@@ -31,10 +31,10 @@
           <%= error_tag form, :last_name %>
         </div>
       </div>
-    
+
 
       <div class="flex flex-wrap">
-        <div class="field flex-1 sm:mr-2">
+        <div class="field flex-1 lg:mr-2">
           <%= label form, :title, gettext("Title / Position"), class: "label" %>
           <%= text_input form, :title, autocomplete: "off", class: "input" %>
           <%= error_tag form, :title %>
@@ -55,8 +55,8 @@
           <a href="#" phx-click="toggle_create_new_company" class="text-blue-500 text-sm font-normal ml-2"><%= gettext("... or choose an existing company") %></a>
         <% else %>
           <div phx-update="ignore">
-            <%= select form, :company_id, 
-                    List.insert_at(Enum.map(@companies, fn c -> {c.last_name, c.id} end), 0, {gettext("Select a existing company"), nil}), 
+            <%= select form, :company_id,
+                    List.insert_at(Enum.map(@companies, fn c -> {c.last_name, c.id} end), 0, {gettext("Select a existing company"), nil}),
                     class: "input",
                     "data-controller": "choice"
                   %>
@@ -71,9 +71,9 @@
 
   <div class="p-2 rounded mt-4 bg-gray-100">
     <h3 class="card-header text-sm text-blue-500"><%= gettext("Contact details") %></h3>
-    
+
     <div class="flex flex-wrap">
-      <div class="field flex-1 sm:mr-2">
+      <div class="field flex-1 lg:mr-2">
         <%= label form, :email, gettext("Email"), class: "label" %>
         <%= email_input form, :email, autocomplete: "off", class: "input" %>
         <%= error_tag form, :email %>
@@ -87,7 +87,7 @@
     </div>
 
     <div class="flex flex-wrap">
-      <div class="field flex-1 sm:mr-2">
+      <div class="field flex-1 lg:mr-2">
         <%= label form, :work, gettext("Work"), class: "label" %>
         <%= telephone_input form, :work, autocomplete: "off", class: "input" %>
         <%= error_tag form, :work %>
@@ -113,7 +113,7 @@
     <h3 class="card-header text-sm text-blue-500"><%= gettext("Address") %></h3>
 
     <div class="flex flex-wrap">
-      <div class="field flex-1 sm:mr-2">
+      <div class="field flex-1 lg:mr-2">
         <%= label form, :address_line1, gettext("Address"), class: "label" %>
         <%= text_input form, :address_line1, autocomplete: "off", class: "input" %>
         <%= error_tag form, :address_line1 %>
@@ -127,13 +127,13 @@
     </div>
 
     <div class="flex flex-wrap">
-      <div class="field flex-1 sm:mr-2">
+      <div class="field flex-1 lg:mr-2">
         <%= label form, :address_postal_code, gettext("Postcode"), class: "label" %>
         <%= text_input form, :address_postal_code, autocomplete: "off", class: "input" %>
         <%= error_tag form, :address_postal_code %>
       </div>
 
-      <div class="field flex-1 sm:mr-2">
+      <div class="field flex-1 lg:mr-2">
         <%= label form, :address_city, gettext("City"), class: "label" %>
         <%= text_input form, :address_city, autocomplete: "off", class: "input" %>
         <%= error_tag form, :address_city %>

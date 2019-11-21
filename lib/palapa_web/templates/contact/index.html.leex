@@ -1,13 +1,13 @@
 <%= if @all_contacts_count == 0 do %>
   <%= render "index_blankslate.html", assigns %>
 <% else %>
-  <div class="content left-sidebar-layout sm:max-w-5xl mx-auto">
+  <div class="content left-sidebar-layout lg:max-w-5xl mx-auto">
     <div class="page-sidebar">
       <div class="card">
         <div class="flex flex-wrap items-center justify-between p-4 border-b">
           <h2 class="card-header"><%= gettext("Contacts") %></h2>
 
-          <div class="my-2 sm:m-0">
+          <div class="my-2 lg:m-0">
             <%= live_link to: Routes.live_path(@socket, PalapaWeb.ContactLive, @current_organization, "new"), class: "btn" do %>
               <i class="text-green-500 fas fa-plus-circle mr-2"></i><%= gettext("New contact") %>
             <% end %>
@@ -74,7 +74,7 @@
             <div class="my-8"><%= gettext("You don't have any contact") %></div>
           </div>
           <div class="text-center mb-8">
-            <div class="my-2 sm:m-0">
+            <div class="my-2 lg:m-0">
               <%= live_link to: Routes.live_path(@socket, PalapaWeb.ContactLive, @current_organization, "new"), class: "btn" do %>
                 <i class="text-green-500 fas fa-plus-circle mr-2"></i><%= gettext("Create your first contact") %>
               <% end %>

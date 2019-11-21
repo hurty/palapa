@@ -1,16 +1,16 @@
 <div class="content page-layout">
   <div class="main-content">
-    <div class="card p-1 sm:p-8">
+    <div class="card p-1 lg:p-8">
       <h2 class="card-header"><%= gettext("New document") %></h2>
       <div class="card-header-separator"></div>
-      
+
       <%= form_for @changeset, Routes.document_path(@conn, :create, @current_organization), fn form -> %>
         <%= if @changeset.action do %>
           <p class="db fw6 lh-copy f6  text-red-400 font-bold"><%= gettext("Check the errors below:") %></p>
         <% end %>
 
         <div class="field">
-          <%= text_input form, :title, placeholder: gettext("Title..."), "data-controller": "focus", autocomplete: "off", class: "input p-2 sm:p-4 w-full font-bold sm:text-xl" %>
+          <%= text_input form, :title, placeholder: gettext("Title..."), "data-controller": "focus", autocomplete: "off", class: "input p-2 lg:p-4 w-full font-bold lg:text-xl" %>
           <%= error_tag form, :title %>
         </div>
 
@@ -21,13 +21,13 @@
         <%= if Enum.any?(@teams) do %>
           <div class="field">
             <%= label form, :team_id, "Who can see this document?", class: "label" %>
-            <%= select form, :team_id, 
-              List.insert_at(Enum.map(@teams, fn team -> {team.name, team.id} end), 0, {gettext("Everyone in %{workspace}", %{workspace: @current_organization.name}), nil}), 
+            <%= select form, :team_id,
+              List.insert_at(Enum.map(@teams, fn team -> {team.name, team.id} end), 0, {gettext("Everyone in %{workspace}", %{workspace: @current_organization.name}), nil}),
               class: "bg-gray-100",
               "data-controller": "choice"
             %>
-          </div>            
-        <% end %>    
+          </div>
+        <% end %>
 
         <div class="card-actions">
           <%= submit gettext("Create this document"), class: "btn btn-green" %>

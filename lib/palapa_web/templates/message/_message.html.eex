@@ -1,11 +1,11 @@
-<li class="border-b p-2 py-4 sm:p-8">
+<li class="border-b p-2 py-4 lg:p-8">
   <div class="flex">
     <div class="w-16 mx-2">
       <%= Helpers.avatar(@message.creator.account, :small) %>
     </div>
 
     <div class="w-3/4 text-xs text-gray-700 my-auto">
-      <h3><%= link @message.title, to: Routes.message_path(@conn, :show, @current_organization, @message), class: "text-green-500 text-sm sm:text-base hover:underline" %></h3>
+      <h3><%= link @message.title, to: Routes.message_path(@conn, :show, @current_organization, @message), class: "text-green-500 text-sm lg:text-base hover:underline" %></h3>
       <%= link @message.creator.account.name, to: Routes.member_path(@conn, :show, @current_organization, @message.creator.id), class: "text-gray-700 font-bold hover:underline" %>
       <div class="text-xs text-gray-700 font-light">
         Posted <%= Helpers.auto_format_datetime(@conn, @message.inserted_at) %>

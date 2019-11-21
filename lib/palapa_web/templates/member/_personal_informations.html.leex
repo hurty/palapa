@@ -1,13 +1,13 @@
-<div class="sm:max-w-xl mx-auto flex-1 p-2 sm:p-4">
+<div class="lg:max-w-xl mx-auto flex-1 p-2 lg:p-4">
   <div class="mx-auto">
     <%= render "_personal_informations_list.html", assigns %>
 
     <%= if permit?(Palapa.Organizations.Policy, :create_personal_information, @current_member, @member) do %>
-      <%= live_component @socket, PalapaWeb.MemberProfileLive.PersonalInformation, 
+      <%= live_component @socket, PalapaWeb.MemberProfileLive.PersonalInformation,
       id: :new,
       info: nil,
-      current_member: @current_member, 
-      current_organization: @current_organization, 
+      current_member: @current_member,
+      current_organization: @current_organization,
       personal_information_changeset: nil,
       action_type: :create,
       connect_params: @connect_params %>

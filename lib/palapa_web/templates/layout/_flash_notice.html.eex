@@ -2,16 +2,16 @@
   <div data-controller="flash">
     <%= if get_flash(@conn, :success) do %>
       <div class="text-center">
-        <div class="p-2 bg-green-400 items-center text-white leading-none sm:rounded-full flex sm:inline-flex" role="alert">
-          <span class="font-semibold mr-2 text-left flex-auto"><i class="fas fa-check-circle"></i> 
-          <%= get_flash(@conn, :success) %></span> 
+        <div class="p-2 bg-green-400 items-center text-white leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+          <span class="font-semibold mr-2 text-left flex-auto"><i class="fas fa-check-circle"></i>
+          <%= get_flash(@conn, :success) %></span>
         </div>
       </div>
     <% end %>
 
     <%= if get_flash(@conn, :info) do %>
       <div class="text-center">
-        <div class="p-2 bg-blue-600 items-center text-blue-100 leading-none sm:rounded-full flex sm:inline-flex" role="alert">
+        <div class="p-2 bg-blue-600 items-center text-blue-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
           <span class="flex rounded-full bg-blue-500 uppercase px-2 py-1 text-xs font-bold mr-3">Info</span>
           <span class="font-semibold mr-2 text-left flex-auto"><%= get_flash(@conn, :info) %></span>
         </div>
@@ -20,9 +20,9 @@
 
     <%= if get_flash(@conn, :error) do %>
       <div class="text-center">
-        <div class="p-2 bg-red-400 items-center text-white leading-none sm:rounded-full flex sm:inline-flex" role="alert">
-          <span class="font-semibold mr-2 text-left flex-auto"><i class="fas fa-exclamation-circle"></i> 
-          <%= get_flash(@conn, :error) %></span> 
+        <div class="p-2 bg-red-400 items-center text-white leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+          <span class="font-semibold mr-2 text-left flex-auto"><i class="fas fa-exclamation-circle"></i>
+          <%= get_flash(@conn, :error) %></span>
         </div>
       </div>
     <% end %>

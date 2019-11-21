@@ -1,7 +1,7 @@
 <li id="<%= @suggestion.id %>" data-controller="document-suggestion rich-text"
 data-document-suggestion-close-url="<%= Routes.suggestion_closure_url(@conn, :create, @current_organization, @suggestion) %>"
 data-document-suggestion-comment-url="<%= Routes.suggestion_comment_url(@conn, :create, @current_organization, @suggestion) %>"
-class="card sm:rounded-lg p-4 mb-8">
+class="card lg:rounded-lg p-4 mb-8">
 
   <div>
     <div class="flex justify-between mb-4">

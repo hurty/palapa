@@ -6,8 +6,8 @@
       </div>
 
 
-      <article class="p-4 sm:p-12">
-        <h1 class="text-green-500 text-base sm:text-2xl"><%= @message.title %></h1>
+      <article class="p-4 lg:p-12">
+        <h1 class="text-green-500 text-base lg:text-2xl"><%= @message.title %></h1>
 
         <%= unless message_blank?(@message) do %>
           <div class="separator"></div>
@@ -19,7 +19,7 @@
       </article>
     </div>
 
-    <div id="message-comments" class="mx-auto sm:w-5/6">
+    <div id="message-comments" class="mx-auto lg:w-5/6">
       <div id="message-comments-count", data-target="message.commentsCount">
         <%= render PalapaWeb.MessageCommentView, "_comments_count.html", comments_count: @message.comments_count %>
       </div>
