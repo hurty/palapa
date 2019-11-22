@@ -19,7 +19,7 @@ defmodule Palapa.Accounts.Account do
     field(:locale, :string)
     timestamps()
 
-    has_many(:members, Organizations.Member)
+    has_many(:members, Organizations.Member, where: [deleted_at: nil])
     has_many(:organizations, through: [:members, :organization])
     has_many(:created_organizations, Organization, foreign_key: :creator_account_id)
   end

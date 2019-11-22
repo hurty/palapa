@@ -87,7 +87,7 @@ defmodule Palapa.Accounts do
     |> Repo.all()
   end
 
-  def organization_for_account(account, organization_id) do
+  def organization_visible_for_account(account, organization_id) do
     account
     |> Ecto.assoc(:organizations)
     |> where(id: ^organization_id)

@@ -20,10 +20,6 @@ defmodule Palapa.Organizations do
     end
   end
 
-  def with_member_active(queryable \\ Member) do
-    from(m in queryable, where: is_nil(m.deleted_at))
-  end
-
   ### Actions
 
   def list_organizations(%Account{} = account) do
@@ -111,7 +107,7 @@ defmodule Palapa.Organizations do
     queryable
     |> Ecto.assoc(:members)
     |> with_member_name(name_pattern)
-    |> with_member_active()
+    |> active()
     |> join(:inner, [m], a in assoc(m, :account))
     |> preload(:account)
     |> order_by([_, a], a.name)

@@ -29,29 +29,41 @@
     </div>
 
     <div class="mt-4 text-center text-gray-700 text-xs">
-      <div>
-        <i class="fas fa-envelope mr-1"></i><%= link @member.account.email, to: "mailto:#{@member.account.email}" %>
-      </div>
-
-      <%= if @member.account.timezone do %>
+      <%= unless @member.deleted_at do %>
         <div>
-          <i class="fas fa-clock mr-1"></i><%= Helpers.account_time(@member.account) %> (<%= @member.account.timezone %>)
+          <i class="fas fa-envelope mr-1"></i><%= link @member.account.email, to: "mailto:#{@member.account.email}" %>
         </div>
-      <% end %>
 
-      <%= if @member.role in [:owner, :admin] do %>
-        <div class="text-center my-6">
-          <span class="border-2 text-sm text-gray-700 border-green-500 rounded-full px-4 py-2"><%= gettext("This member is %{role}", %{role: @member.role}) %></span>
-        </div>
-      <% end %>
-
-      <div class="mt-4 text-center">
-        <%= for team <- @member.teams do %>
-          <%= Helpers.team_tag(team) %>
+        <%= if @member.account.timezone do %>
+          <div>
+            <i class="fas fa-clock mr-1"></i><%= Helpers.account_time(@member.account) %> (<%= @member.account.timezone %>)
+          </div>
         <% end %>
-      </div>
+      <% end %>
+
+      <%= if @member.deleted_at do %>
+        <div class="text-center my-6">
+          <span class="border-2 text-sm text-red-700 border-red-500 bg-gray-100 rounded-full px-4 py-2"><%= gettext("This person is no longer a member of %{workspace}", %{workspace: @current_organization.name}) %></span>
+        </div>
+      <% else %>
+        <%= if @member.role in [:owner, :admin] do %>
+          <div class="text-center my-6">
+            <span class="border-2 text-sm text-gray-700 border-green-500 rounded-full px-4 py-2"><%= gettext("This member is %{role}", %{role: @member.role}) %></span>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= unless @member.deleted_at do %>
+        <div class="mt-4 text-center">
+          <%= for team <- @member.teams do %>
+            <%= Helpers.team_tag(team) %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
 
-<%= render "_personal_informations.html", assigns %>
+<%= unless @member.deleted_at do %>
+  <%= render "_personal_informations.html", assigns %>
+<% end %>

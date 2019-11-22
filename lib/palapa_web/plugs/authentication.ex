@@ -30,10 +30,10 @@ defmodule PalapaWeb.Authentication do
 
   def put_organization_context(conn, _options) do
     account = conn.assigns[:current_account]
-    organization_id = conn.params["organization_id"]
+    organization = Organizations.get!(conn.params["organization_id"])
+    member = Organizations.get_member_from_account(organization, account)
 
-    organization =
-      account && organization_id && Accounts.organization_for_account(account, organization_id)
+    Bodyguard.permit!(Organizations.Policy, :access_organization, member, organization)
 
     if Organizations.soft_deleted?(organization) do
       conn

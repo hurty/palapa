@@ -120,5 +120,16 @@ defmodule PalapaWeb.AuthenticationTest do
 
       assert redirected_to(conn, 302) =~ Routes.organization_path(conn, :index)
     end
+
+    test "gets Forbidden when a user is no longer a member of a workspace", %{
+      conn: conn,
+      workspace: workspace
+    } do
+      Palapa.Organizations.delete_member(workspace.richard)
+
+      assert_raise Bodyguard.NotAuthorizedError, fn ->
+        get(conn, Routes.message_path(conn, :index, workspace.organization))
+      end
+    end
   end
 end

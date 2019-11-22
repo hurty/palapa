@@ -2233,3 +2233,8 @@ msgstr "Choisissez au moins une équipe"
 #: lib/palapa/rich_text/conversion/templates/attachment.html.eex:9
 msgid "See full size"
 msgstr "Afficher l'originale"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/members.html.leex:28
+msgid "Yes, delete this member"
+msgstr "Oui, supprimer ce membre"

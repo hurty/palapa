@@ -1,6 +1,12 @@
 defmodule Palapa.Organizations.Policy do
   use Palapa.Policy
+
+  alias Palapa.Organizations
   alias Palapa.Organizations.PersonalInformation
+
+  def authorize(:access_organization, %Member{} = member, organization) do
+    member.organization_id == organization.id && Organizations.active?(member)
+  end
 
   def authorize(:update_organization, %Member{} = member, _) do
     member.role in [:owner, :admin]
