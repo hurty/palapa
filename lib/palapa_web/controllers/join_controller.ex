@@ -19,6 +19,12 @@ defmodule PalapaWeb.JoinController do
           |> PalapaWeb.Authentication.start_session(account)
           |> redirect(to: Routes.message_path(conn, :index, member.organization_id))
 
+        :reactivated_member ->
+          conn
+          |> put_flash(:success, gettext("Welcome back!"))
+          |> PalapaWeb.Authentication.start_session(account)
+          |> redirect(to: Routes.message_path(conn, :index, member.organization_id))
+
         :existing_account ->
           changeset =
             Invitations.JoinForm.changeset_for_existing_account(%Invitations.JoinForm{}, %{})

@@ -176,5 +176,36 @@ defmodule PalapaWeb.JoinControllerTest do
 
       assert html_response(conn, 200) =~ "blank"
     end
+
+    test "join but was previously a member (soft-deleted)", %{
+      conn: conn,
+      workspace: workspace
+    } do
+      {:ok, invitation} =
+        Invitations.create_or_renew("bertram.gilfoyle@piedpiper.com", workspace.richard)
+
+      count_accounts_before = Repo.count("accounts")
+      count_members_before = Repo.count("members")
+
+      conn = get(conn, Routes.join_path(conn, :new, invitation.id, invitation.token))
+
+      # No new account created
+      count_accounts_after = Repo.count("accounts")
+      assert count_accounts_after == count_accounts_before
+
+      # No new member created
+      count_members_after = Repo.count("members")
+      assert count_members_after == count_members_before
+
+      # the user is redirected to What's Up?
+      assert redirected_to(conn, 302) =~
+               Routes.message_path(conn, :index, invitation.organization_id)
+
+      # the user gets logged in correctly
+      assert conn.assigns.current_account.email == "bertram.gilfoyle@piedpiper.com"
+
+      # invitation has been deleted
+      assert is_nil(Repo.reload(invitation))
+    end
   end
 end

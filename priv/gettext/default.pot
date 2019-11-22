@@ -1410,7 +1410,7 @@ msgid "Invite people to the workspace"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/member/_member_profile.html.leex:44
+#: lib/palapa_web/templates/member/_member_profile.html.leex:51
 msgid "This member is %{role}"
 msgstr ""
 
@@ -2236,4 +2236,14 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/settings/member/members.html.leex:28
 msgid "Yes, delete this member"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/member/_member_profile.html.leex:46
+msgid "This person is no longer a member of %{workspace}"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/join_controller.ex:24
+msgid "Welcome back!"
 msgstr ""

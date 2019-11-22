@@ -155,8 +155,21 @@ defmodule Palapa.Invitations do
       end
 
     cond do
-      account && member ->
-        delete(invitation) && {:already_member, account, member}
+      account && member && Palapa.Organizations.active?(member) ->
+        delete(invitation)
+        {:already_member, account, member}
+
+      account && member && Palapa.Organizations.soft_deleted?(member) ->
+        Ecto.Multi.new()
+        |> Ecto.Multi.run(:delete_invitation, fn _, _ ->
+          delete(invitation)
+        end)
+        |> Ecto.Multi.run(:reactivate_member, fn _, _ ->
+          Palapa.Organizations.reactivate(member)
+        end)
+        |> Repo.transaction()
+
+        {:reactivated_member, account, member}
 
       account && !member ->
         {:existing_account, account, member}
@@ -171,6 +184,9 @@ defmodule Palapa.Invitations do
 
     case status do
       :already_member ->
+        {:ok, %{account: account, member: member}}
+
+      :reactivated_member ->
         {:ok, %{account: account, member: member}}
 
       :existing_account ->

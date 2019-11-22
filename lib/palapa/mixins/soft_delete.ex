@@ -9,6 +9,12 @@ defmodule Palapa.SoftDelete do
         |> Palapa.Repo.update()
       end
 
+      def reactivate(resource) do
+        resource
+        |> Ecto.Changeset.change(%{deleted_at: nil})
+        |> Palapa.Repo.update()
+      end
+
       def active?(resource) do
         is_nil(resource.deleted_at)
       end
