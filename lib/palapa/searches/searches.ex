@@ -4,6 +4,7 @@ defmodule Palapa.Searches do
   alias Palapa.Searches.Search
   alias Palapa.Messages
   alias Palapa.Documents
+  alias Palapa.Documents.Document
   alias Palapa.Contacts
   import EctoEnum
 
@@ -171,8 +172,9 @@ defmodule Palapa.Searches do
   defp pages_query(member, search_string) do
     from(searches in matching_searches_query(search_string),
       join: pages in ^subquery(Documents.pages_visible_to(member)),
-      join: documents in ^subquery(Documents.documents_visible_to(member)),
       on: searches.page_id == pages.id,
+      join: documents in Document,
+      on: pages.document_id == documents.id,
       where: is_nil(pages.deleted_at),
       where: is_nil(documents.deleted_at),
       select_merge: %{

@@ -11,8 +11,8 @@
 
       <div class="text-blue-500 text-xs font-normal">
         <%= raw gettext("Deleted %{time} by %{author}", %{
-          time: Helpers.auto_format_datetime(@conn, @document.deleted_at),
-          author: link(@document.deletion_author.account.name, to: safe_to_string(Routes.member_path(@conn, :show, @current_organization, @document.deletion_author)), class: "text-blue-500 hover:underline")
+          time: safe_to_string(Helpers.auto_format_datetime(@conn, @document.deleted_at)),
+          author: safe_to_string(link(@document.deletion_author.account.name, to: Routes.member_path(@conn, :show, @current_organization, @document.deletion_author), class: "text-blue-500 hover:underline"))
         }) %>
       </div>
     </div>
