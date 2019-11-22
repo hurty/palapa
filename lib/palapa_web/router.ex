@@ -114,11 +114,7 @@ defmodule PalapaWeb.Router do
     pipe_through([:browser, :authentication, :organization_context, :billing])
 
     get("/", MessageController, :index)
-
-    get("/sessions/switch_organization", SessionController, :switch_organization)
-
     get("/search", SearchController, :index)
-
     resources("/attachments", AttachmentController, only: [:create, :show])
     resources("/trash", TrashController, only: [:index])
 
