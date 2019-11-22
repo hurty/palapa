@@ -20,11 +20,13 @@ defmodule PalapaWeb.AccountControllerTest do
           "account" => %{
             "name" => "John",
             "email" => "john@isp.com",
-            "timezone" => "Europe/Paris"
+            "timezone" => "Europe/Paris",
+            "locale" => "fr"
           }
         })
 
-      assert html_response(conn, 200) =~ "Your account has been updated"
+      assert redirected_to(conn, 302) =~ Routes.account_path(conn, :edit)
+      assert get_flash(conn, :success) == "Your account has been updated."
     end
 
     test "cannot change account settings without an email", %{conn: conn} do

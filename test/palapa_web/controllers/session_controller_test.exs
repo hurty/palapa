@@ -9,7 +9,7 @@ defmodule PalapaWeb.SessionControllerTest do
 
     test "visitors can see the login form", %{conn: conn} do
       conn = get(conn, Routes.session_path(conn, :new))
-      assert html_response(conn, 200) =~ "Log in"
+      assert html_response(conn, 200) =~ "Sign in"
     end
 
     test "a member logins successfully", %{conn: conn} do
@@ -39,7 +39,7 @@ defmodule PalapaWeb.SessionControllerTest do
           }
         })
 
-      assert html_response(conn, 200) =~ "Log in"
+      assert html_response(conn, 200) =~ "Sign in"
       assert get_flash(conn, :error) == "Invalid email/password combination"
       refute conn.assigns.current_account
     end
@@ -55,7 +55,7 @@ defmodule PalapaWeb.SessionControllerTest do
           }
         })
 
-      assert html_response(conn, 200) =~ "Log in"
+      assert html_response(conn, 200) =~ "Sign in"
       assert get_flash(conn, :error) == "Invalid email/password combination"
       refute conn.assigns.current_account
     end

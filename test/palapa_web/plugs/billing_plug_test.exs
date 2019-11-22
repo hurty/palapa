@@ -25,7 +25,7 @@ defmodule PalapaWeb.BillingPlugTest do
     } do
       conn = get(conn, Routes.message_path(conn, :index, organization))
       assert Billing.get_billing_status(organization) == :trialing
-      assert html_response(conn, 200) =~ "Dashboard"
+      assert html_response(conn, 200) =~ "What&#39;s up?"
     end
 
     test "blocks the user when the trial has ended", %{conn: conn, organization: organization} do
@@ -62,7 +62,7 @@ defmodule PalapaWeb.BillingPlugTest do
 
       conn = get(conn, Routes.message_path(conn, :index, workspace.organization))
 
-      assert html_response(conn, 200) =~ "Dashboard"
+      assert html_response(conn, 200) =~ "What&#39;s up?"
     end
 
     test "blocks the user when the payment is past due", %{conn: conn, workspace: workspace} do

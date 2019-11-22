@@ -64,7 +64,14 @@ defmodule PalapaWeb.MessageControllerTest do
       conn: conn,
       workspace: workspace
     } do
-      path = Routes.message_path(conn, :show, workspace.organization, workspace.messages.public_message)
+      path =
+        Routes.message_path(
+          conn,
+          :show,
+          workspace.organization,
+          workspace.messages.public_message
+        )
+
       conn = get(conn, path)
 
       assert html_response(conn, 200) =~ "I have a great announcement to make to everyone"
@@ -75,7 +82,12 @@ defmodule PalapaWeb.MessageControllerTest do
       workspace: workspace
     } do
       path =
-        Routes.message_path(conn, :edit, workspace.organization, workspace.messages.management_message)
+        Routes.message_path(
+          conn,
+          :edit,
+          workspace.organization,
+          workspace.messages.management_message
+        )
 
       assert_error_sent(:not_found, fn ->
         get(conn, path)
@@ -86,7 +98,9 @@ defmodule PalapaWeb.MessageControllerTest do
       conn: conn,
       workspace: workspace
     } do
-      path = Routes.message_path(conn, :edit, workspace.organization, workspace.messages.tech_message)
+      path =
+        Routes.message_path(conn, :edit, workspace.organization, workspace.messages.tech_message)
+
       conn = get(conn, path)
       assert html_response(conn, 200)
     end
@@ -95,7 +109,14 @@ defmodule PalapaWeb.MessageControllerTest do
       conn: conn,
       workspace: workspace
     } do
-      path = Routes.message_path(conn, :edit, workspace.organization, workspace.messages.public_message)
+      path =
+        Routes.message_path(
+          conn,
+          :edit,
+          workspace.organization,
+          workspace.messages.public_message
+        )
+
       conn = get(conn, path)
 
       assert html_response(conn, :forbidden)
@@ -105,14 +126,16 @@ defmodule PalapaWeb.MessageControllerTest do
       conn: conn,
       workspace: workspace
     } do
-      path = Routes.message_path(conn, :update, workspace.organization, workspace.messages.tech_message)
+      path =
+        Routes.message_path(
+          conn,
+          :update,
+          workspace.organization,
+          workspace.messages.tech_message
+        )
+
       conn = patch(conn, path, %{"message" => %{"title" => "Updated title"}})
-      updated_message = Repo.reload(workspace.messages.tech_message)
-
-      assert redirected_to(conn, 302) =~
-               Routes.message_path(conn, :show, workspace.organization, updated_message)
-
-      assert updated_message.title == "Updated title"
+      assert html_response(conn, 200) =~ "Updated title"
     end
 
     test "a regular member cannot update a message if he is not the creator", %{
@@ -120,7 +143,12 @@ defmodule PalapaWeb.MessageControllerTest do
       workspace: workspace
     } do
       path =
-        Routes.message_path(conn, :update, workspace.organization, workspace.messages.public_message)
+        Routes.message_path(
+          conn,
+          :update,
+          workspace.organization,
+          workspace.messages.public_message
+        )
 
       conn = patch(conn, path, %{"message" => %{"title" => "Updated title"}})
 
@@ -128,7 +156,14 @@ defmodule PalapaWeb.MessageControllerTest do
     end
 
     test "a regular member can delete his own message", %{conn: conn, workspace: workspace} do
-      path = Routes.message_path(conn, :delete, workspace.organization, workspace.messages.tech_message)
+      path =
+        Routes.message_path(
+          conn,
+          :delete,
+          workspace.organization,
+          workspace.messages.tech_message
+        )
+
       conn = delete(conn, path)
 
       assert Messages.deleted?(Repo.reload(workspace.messages.tech_message))
@@ -140,7 +175,12 @@ defmodule PalapaWeb.MessageControllerTest do
       workspace: workspace
     } do
       path =
-        Routes.message_path(conn, :delete, workspace.organization, workspace.messages.public_message)
+        Routes.message_path(
+          conn,
+          :delete,
+          workspace.organization,
+          workspace.messages.public_message
+        )
 
       conn = delete(conn, path)
 
@@ -174,7 +214,14 @@ defmodule PalapaWeb.MessageControllerTest do
     end
 
     test "the owner can delete any message", %{conn: conn, workspace: workspace} do
-      path = Routes.message_path(conn, :delete, workspace.organization, workspace.messages.tech_message)
+      path =
+        Routes.message_path(
+          conn,
+          :delete,
+          workspace.organization,
+          workspace.messages.tech_message
+        )
+
       conn = delete(conn, path)
 
       assert Messages.deleted?(Repo.reload(workspace.messages.tech_message))
@@ -207,7 +254,14 @@ defmodule PalapaWeb.MessageControllerTest do
     end
 
     test "an admin can delete any message", %{conn: conn, workspace: workspace} do
-      path = Routes.message_path(conn, :delete, workspace.organization, workspace.messages.tech_message)
+      path =
+        Routes.message_path(
+          conn,
+          :delete,
+          workspace.organization,
+          workspace.messages.tech_message
+        )
+
       conn = delete(conn, path)
 
       assert Messages.deleted?(Repo.reload(workspace.messages.tech_message))

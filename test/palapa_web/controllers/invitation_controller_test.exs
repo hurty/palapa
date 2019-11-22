@@ -71,7 +71,7 @@ defmodule PalapaWeb.InvitationControllerTest do
 
       count_invitations_after = Repo.count("invitations")
 
-      assert html_response(conn, 200) =~ "1 invitation(s) couldn't be sent"
+      assert html_response(conn, 200) =~ "Make sure addresses are correct"
       assert_in_delta(count_invitations_before, count_invitations_after, 1)
     end
 
