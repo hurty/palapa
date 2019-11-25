@@ -103,6 +103,15 @@ defmodule Palapa.Organizations do
     |> Repo.all()
   end
 
+  def list_owners(organization) do
+    organization
+    |> Ecto.assoc(:members)
+    |> where([m], m.role == "owner")
+    |> join(:inner, [m], a in assoc(m, :account))
+    |> order_by([_, a], a.name)
+    |> Repo.all()
+  end
+
   def list_members(queryable \\ Organization, name_pattern \\ nil) do
     queryable
     |> Ecto.assoc(:members)

@@ -8,6 +8,11 @@ defmodule Palapa.Organizations.Policy do
     member.organization_id == organization.id && Organizations.active?(member)
   end
 
+  def authorize(:leave_organization, %Member{} = member, organization) do
+    owners_ids = Organizations.list_owners(organization) |> Enum.map(& &1.id)
+    member.id not in owners_ids || Enum.count(owners_ids) > 1
+  end
+
   def authorize(:update_organization, %Member{} = member, _) do
     member.role in [:owner, :admin]
   end

@@ -383,7 +383,7 @@ msgstr "Retour aux contacts"
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:18 lib/palapa_web/templates/member/_personal_information_form.html.leex:37
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:40 lib/palapa_web/templates/message/new.html.eex:18
 #: lib/palapa_web/templates/organization/new.html.eex:22 lib/palapa_web/templates/settings/member/members.html.leex:29
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:77 lib/palapa_web/templates/settings/workspace/show.html.eex:103
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:79 lib/palapa_web/templates/settings/workspace/show.html.eex:105
 #: lib/palapa_web/templates/team/edit.html.eex:12 lib/palapa_web/templates/team/new.html.eex:12
 msgid "Cancel"
 msgstr "Annuler"
@@ -1225,7 +1225,7 @@ msgstr "Recherche..."
 
 #, elixir-format
 #: lib/palapa_web/controllers/settings/billing/customer_controller.ex:25
-#: lib/palapa_web/controllers/settings/billing/payment_method_controller.ex:18 lib/palapa_web/controllers/settings/member/member_controller.ex:21
+#: lib/palapa_web/controllers/settings/billing/payment_method_controller.ex:18 lib/palapa_web/controllers/settings/member/member_controller.ex:22
 #: lib/palapa_web/controllers/settings/workspace/workspace_controller.ex:23 lib/palapa_web/templates/layout/_sidebar.html.eex:43
 #: lib/palapa_web/templates/settings/settings/settings_navigation.html.eex:2
 msgid "Settings"
@@ -1605,8 +1605,8 @@ msgid "Delete member"
 msgstr "Supprimer le membre"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:41
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:48 lib/palapa_web/templates/settings/workspace/show.html.eex:90
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:43
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:50 lib/palapa_web/templates/settings/workspace/show.html.eex:92
 msgid "Delete the workspace"
 msgstr "Supprimer l'espace de travail"
 
@@ -1748,7 +1748,7 @@ msgid "Workspace settings"
 msgstr "Paramètres de l'espace"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:101
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:103
 msgid "Yes, delete this workspace"
 msgstr "Oui, supprimer cet espace"
 
@@ -1758,7 +1758,7 @@ msgid "You already have an account?"
 msgstr "Vous avez déjà un compte ?"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:96
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:98
 msgid "You are about to delete the workspace and all its content. Are you sure?"
 msgstr "Vous êtes sur le point de supprimer cet espace de travail et tout son contenu. Etes-vous sûr?"
 
@@ -2245,15 +2245,15 @@ msgid "Welcome back!"
 msgstr "C'est un plaisir de vous revoir !"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:44
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:46
 msgid "Deleting the workspace will permanently erase all content (messages, documents, contacts, member profiles) after a period of 15 days. You won't be billed again for this workspace."
-msgstr ""
+msgstr "Supprimer l'espace de travail supprimera de manière permanente tout ses contenus (messages, documents, contacts, profils de membres) après une période de 15 jours. Vous ne serez plus facturé pour cet espace."
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:26
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:33 lib/palapa_web/templates/settings/workspace/show.html.eex:64
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:25
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:33 lib/palapa_web/templates/settings/workspace/show.html.eex:66
 msgid "Leave the workspace"
-msgstr "Quitter l'espace"
+msgstr "Quitter l'espace de travail"
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/form.html.eex:11
@@ -2266,19 +2266,14 @@ msgid "Submit"
 msgstr "Valider"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:75
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:77
 msgid "Yes, leave this workspace"
-msgstr ""
+msgstr "Oui, quitter cet espace"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:70
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:72
 msgid "You are about to leave the workspace. Are you sure?"
-msgstr ""
-
-#, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:29
-msgid "You won't be able to access the workspace again unless someone re-invite you. However, all the content you have created in the workspace won't be deleted"
-msgstr ""
+msgstr "Vous êtes sur le point de quitter l'espace de travail. Etes-vous sûr ?"
 
 #, elixir-format
 #: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:47
@@ -2290,3 +2285,13 @@ msgstr "Votre période d'essai est terminée !"
 #: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:48
 msgid "Upgrade to a paid account now"
 msgstr "Passez à la version payante"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:29
+msgid "You won't be able to access the workspace again unless someone re-invite you. However, all the content you have created in the workspace won't be deleted."
+msgstr "Vous ne serez plus en mesure d'accéder à l'espace de travail, à moins que quelqu'un ne vous réinvite. Cependant, tout le contenu que vous avez créé dans l'espace de travail ne sera pas supprimé."
+
+#, elixir-format
+#: lib/palapa_web/controllers/settings/member/member_controller.ex:44
+msgid "You have left %{workspace}"
+msgstr "Vous avez quitté %{workspace}"
