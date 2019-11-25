@@ -3,7 +3,7 @@
 
 <%= if Palapa.Billing.get_billing_status(@current_organization) == :trialing do %>
   <div class="text-green-500 text-xl my-4"><%= gettext("%{number_of_days} days left on your trial period.", %{number_of_days: Palapa.Billing.trial_remaining_days(@current_organization)}) %></div>
-  <%= link "Upgrade to a paid account now", to: Routes.settings_customer_path(@conn, :new, @current_organization), class: "btn" %>
+  <%= link gettext("Upgrade to a paid account now"), to: Routes.settings_customer_path(@conn, :new, @current_organization), class: "btn btn-green" %>
 <% else %>
   <%= if @customer do %>
     <div class="flex flex-wrap">
@@ -43,5 +43,8 @@
         </div>
       </div>
     </div>
+    <% else %>
+    <p class="text-red-500 font-bold my-2"><i class="fas fa-exclamation-triangle mr-2"></i><%= gettext("Your trial has expired!") %></p>
+    <%= link gettext("Upgrade to a paid account now"), to: Routes.settings_customer_path(@conn, :new, @current_organization), class: "btn btn-green" %>
   <% end %>
 <% end %>

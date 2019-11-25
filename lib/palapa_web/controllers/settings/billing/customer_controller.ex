@@ -48,7 +48,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
 
       conn
       |> put_breadcrumb(
-        "Upgrade your account",
+        gettext("Upgrade your account"),
         Routes.settings_customer_path(conn, :new, current_organization(conn))
       )
       |> render("new.html", customer_changeset: customer_changeset)

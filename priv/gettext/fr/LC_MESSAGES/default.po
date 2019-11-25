@@ -193,7 +193,7 @@ msgstr "Région"
 #, elixir-format
 #: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:12
 msgid "Switch to a paid plan to continue and get:"
-msgstr "Passer à la version payante pour continuer avec en plus :"
+msgstr "Passez à la version payante pour continuer :"
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/billing_error/waiting_for_payment.html.eex:4
@@ -203,12 +203,12 @@ msgstr "L'accès à l'espace de travail \"%{organization_name}\" a été suspend
 #, elixir-format
 #: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:18
 msgid "Unlimited members"
-msgstr "Nombre illimités de membres"
+msgstr "Nombre illimité de membres"
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:19
 msgid "Unlimited teams"
-msgstr "Nombre illimités d'équipes"
+msgstr "Nombre illimité d'équipes"
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:57
@@ -239,7 +239,7 @@ msgstr "Les paramètres de l'espace de travail ont été enregistrés"
 #, elixir-format
 #: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:8
 msgid "Your %{trial_duration_days} days trial period for the workspace \"%{organization_name}\" has ended."
-msgstr "Votre période d'essai de %{trial_duration_days} est terminée pour l'espace  \"%{organization_name}\"."
+msgstr "Votre période d'essai de %{trial_duration_days} jours est terminée pour l'espace  \"%{organization_name}\"."
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:11
@@ -275,12 +275,12 @@ msgstr "Changez votre mot de passe"
 
 #, elixir-format
 #: lib/palapa_web/templates/account/edit.html.eex:61
-#: lib/palapa_web/templates/billing/payment_method/form.html.eex:9 lib/palapa_web/templates/document/document/form.html.eex:2
-#: lib/palapa_web/templates/document/document/new.html.eex:9 lib/palapa_web/templates/document/page/form.html.eex:3
-#: lib/palapa_web/templates/join/form_with_existing_account.html.eex:17 lib/palapa_web/templates/join/form_without_existing_account.html.eex:17
-#: lib/palapa_web/templates/organization/new.html.eex:10 lib/palapa_web/templates/password_reset/edit.html.eex:9
-#: lib/palapa_web/templates/registration/_form.html.eex:9 lib/palapa_web/templates/settings/billing/customer/edit.html.eex:5
-#: lib/palapa_web/templates/team/_form.html.eex:2
+#: lib/palapa_web/templates/billing/payment_method/form.html.eex:9 lib/palapa_web/templates/billing/subscription/form.html.eex:8
+#: lib/palapa_web/templates/document/document/form.html.eex:2 lib/palapa_web/templates/document/document/new.html.eex:9
+#: lib/palapa_web/templates/document/page/form.html.eex:3 lib/palapa_web/templates/join/form_with_existing_account.html.eex:17
+#: lib/palapa_web/templates/join/form_without_existing_account.html.eex:17 lib/palapa_web/templates/organization/new.html.eex:10
+#: lib/palapa_web/templates/password_reset/edit.html.eex:9 lib/palapa_web/templates/registration/_form.html.eex:9
+#: lib/palapa_web/templates/settings/billing/customer/edit.html.eex:5 lib/palapa_web/templates/team/_form.html.eex:2
 msgid "Check the errors below:"
 msgstr "Corrigez les erreurs ci-dessous"
 
@@ -383,8 +383,8 @@ msgstr "Retour aux contacts"
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:18 lib/palapa_web/templates/member/_personal_information_form.html.leex:37
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:40 lib/palapa_web/templates/message/new.html.eex:18
 #: lib/palapa_web/templates/organization/new.html.eex:22 lib/palapa_web/templates/settings/member/members.html.leex:29
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:60 lib/palapa_web/templates/team/edit.html.eex:12
-#: lib/palapa_web/templates/team/new.html.eex:12
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:77 lib/palapa_web/templates/settings/workspace/show.html.eex:103
+#: lib/palapa_web/templates/team/edit.html.eex:12 lib/palapa_web/templates/team/new.html.eex:12
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -564,8 +564,8 @@ msgid "Update the payment method"
 msgstr "Mettre à jour le moyen de paiement"
 
 #, elixir-format
-#: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:31
-#: lib/palapa_web/templates/settings/billing/customer/new.html.eex:3
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:51
+#: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:31 lib/palapa_web/templates/settings/billing/customer/new.html.eex:3
 msgid "Upgrade your account"
 msgstr "Mettre votre compte à niveau"
 
@@ -1605,15 +1605,10 @@ msgid "Delete member"
 msgstr "Supprimer le membre"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:26
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:33 lib/palapa_web/templates/settings/workspace/show.html.eex:47
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:41
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:48 lib/palapa_web/templates/settings/workspace/show.html.eex:90
 msgid "Delete the workspace"
 msgstr "Supprimer l'espace de travail"
-
-#, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:29
-msgid "Deleting the workspace will permanently erase all content (messages, documents, contacts, member profiles) after a period of 15 days. You will no longer receive new invoices for this workspace."
-msgstr "Supprimer votre espace de travail supprimera tout son contenu de manière permanente (messages, documents, contacts, profils de membres...) après une période de 15 jours. Vous ne recevrez plus de facture pour cet espace de travail."
 
 #, elixir-format
 #: lib/palapa_web/templates/search/search_result_page.html.eex:17
@@ -1753,7 +1748,7 @@ msgid "Workspace settings"
 msgstr "Paramètres de l'espace"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:58
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:101
 msgid "Yes, delete this workspace"
 msgstr "Oui, supprimer cet espace"
 
@@ -1763,7 +1758,7 @@ msgid "You already have an account?"
 msgstr "Vous avez déjà un compte ?"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:53
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:96
 msgid "You are about to delete the workspace and all its content. Are you sure?"
 msgstr "Vous êtes sur le point de supprimer cet espace de travail et tout son contenu. Etes-vous sûr?"
 
@@ -2248,3 +2243,50 @@ msgstr "Cette personne n'est plus membre de %{workspace}"
 #: lib/palapa_web/controllers/join_controller.ex:24
 msgid "Welcome back!"
 msgstr "C'est un plaisir de vous revoir !"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:44
+msgid "Deleting the workspace will permanently erase all content (messages, documents, contacts, member profiles) after a period of 15 days. You won't be billed again for this workspace."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:26
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:33 lib/palapa_web/templates/settings/workspace/show.html.eex:64
+msgid "Leave the workspace"
+msgstr "Quitter l'espace"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/form.html.eex:11
+msgid "Required fields"
+msgstr "Champs obligatoires"
+
+#, elixir-format
+#: lib/palapa_web/templates/billing/subscription/form.html.eex:32
+msgid "Submit"
+msgstr "Valider"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:75
+msgid "Yes, leave this workspace"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:70
+msgid "You are about to leave the workspace. Are you sure?"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:29
+msgid "You won't be able to access the workspace again unless someone re-invite you. However, all the content you have created in the workspace won't be deleted"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:47
+msgid "Your trial has expired!"
+msgstr "Votre période d'essai est terminée !"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:6
+#: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:48
+msgid "Upgrade to a paid account now"
+msgstr "Passez à la version payante"
