@@ -1,3 +1,9 @@
+<div class="h-12 my-4">
+<%= if @live_notice do %>
+  <div data-controller="flash" class="rounded bg-green-300 p-2 text-gray-900"><%= @live_notice %></div>
+<% end %>
+</div>
+
 <form phx-change="update_administrators">
   <table class="mx-auto my-4 w-full">
     <tr class="border-b font-bold bg-gray-100 rounded text-sm">

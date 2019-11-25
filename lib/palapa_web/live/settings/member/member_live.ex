@@ -23,7 +23,8 @@ defmodule PalapaWeb.Settings.MemberLive do
       socket
       |> assign_new(:current_organization, fn -> Organizations.get!(current_organization_id) end)
       |> assign_new(:current_member, fn -> Organizations.get_member!(current_member_id) end)
-      |> assign_new(:confirm_delete_member_id, fn -> nil end)
+      |> assign(:confirm_delete_member_id, nil)
+      |> assign(:live_notice, nil)
 
     members = Organizations.list_members(socket.assigns.current_organization)
 
@@ -35,8 +36,23 @@ defmodule PalapaWeb.Settings.MemberLive do
       [socket.assigns.current_member.id | Map.get(params, "administrators", [])]
       |> Enum.uniq()
 
-    Organizations.update_administrators(socket.assigns.current_organization, administrators_ids)
-    {:noreply, socket}
+    case Organizations.update_administrators(
+           socket.assigns.current_organization,
+           administrators_ids
+         ) do
+      {:ok, _result} ->
+        members = Organizations.list_members(socket.assigns.current_organization)
+
+        socket =
+          socket
+          |> assign(:members, members)
+          |> assign(:live_notice, "The list of admins has been updated!")
+
+        {:noreply, socket}
+
+      _ ->
+        {:noreply, socket}
+    end
   end
 
   def handle_event("delete_member", %{"member_id" => member_id}, socket) do
@@ -50,7 +66,13 @@ defmodule PalapaWeb.Settings.MemberLive do
            permit(Organizations.Policy, :delete_member, socket.assigns.current_member, member),
          Organizations.delete_member(member) do
       updated_members_list = Organizations.list_members(socket.assigns.current_organization)
-      {:noreply, assign(socket, :members, updated_members_list)}
+
+      socket =
+        socket
+        |> assign(:live_notice, nil)
+        |> assign(:members, updated_members_list)
+
+      {:noreply, socket}
     end
   end
 
