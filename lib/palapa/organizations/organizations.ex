@@ -23,7 +23,7 @@ defmodule Palapa.Organizations do
   ### Actions
 
   def list_organizations(%Account{} = account) do
-    Ecto.assoc(account, :organizations)
+    Ecto.assoc(account, [:active_members, :organization])
     |> active()
     |> order_by([o], o.name)
     |> Repo.all()
