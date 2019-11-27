@@ -186,6 +186,12 @@ defmodule Palapa.Organizations do
     |> Repo.transaction()
   end
 
+  def update_member_role(%Member{} = member, role) do
+    member
+    |> change(%{role: role})
+    |> Repo.update()
+  end
+
   def update_member_profile(%Member{} = member, attrs) do
     Member.update_profile_changeset(member, attrs)
     |> Repo.update()

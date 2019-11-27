@@ -1,49 +1,55 @@
-<div class="h-12 my-4">
-<%= if @live_notice do %>
-  <div data-controller="flash" class="rounded bg-green-300 p-2 text-gray-900"><%= @live_notice %></div>
-<% end %>
-</div>
+<table class="mx-auto my-4 w-full">
+  <tr class="border-b font-bold bg-gray-100 rounded text-sm">
+    <th class="py-2 text-left"><%= gettext("Name") %></th>
+    <th class="py-2"><%= gettext("Role") %></th>
+    <th class="py-2"><%= gettext("Delete member") %></th>
+  </tr>
 
-<form phx-change="update_administrators">
-  <table class="mx-auto my-4 w-full">
-    <tr class="border-b font-bold bg-gray-100 rounded text-sm">
-      <th class="py-2 text-left"><%= gettext("Name") %></th>
-      <th class="py-2"><%= gettext("Administrator?") %></th>
-      <th class="py-2"><%= gettext("Delete member") %></th>
-    </tr>
+  <%= for member <- @members do %>
+    <tr class="border-b text-center">
+      <td class="flex items-center py-4"><%= member.account.name %>
+        <%= if @updated_member_id == member.id do %><span class="ml-2 p-1 rounded bg-green-500 text-white">Updated!</span><% end %>
+      </td>
+      <td>
+        <form phx-change="update_member">
+          <input name="member_id" type="hidden" value="<%= member.id %>"></input>
+          <select name="role" <%= if @current_member.id == member.id do %>disabled<% end %>>
+            <option value="member"
+              <%= if member.role == :member do %> selected <% end %>
+              <%= unless permit?(Palapa.Organizations.Policy, :update_role, @current_member, %{member: member, role: "member"}) do %>disabled<% end %>
+            ><%= gettext("Member") %>
+            </option>
 
-    <%= for member <- @members do %>
-      <tr class="border-b text-center">
-        <td class="flex items-center py-4"><%= member.account.name %></td>
-        <td>
-          <input
-            type="checkbox"
-            name="administrators[]"
-            title="Administrator?"
-            value="<%= member.id %>"
-            <%= if member.role == :owner do %>checked<% end %>
-            <%= if @current_member.id == member.id do %>disabled<% end %>
-          >
-        </td>
+            <option value="admin"
+              <%= if member.role == :admin do %> selected <% end %>
+              <%= unless permit?(Palapa.Organizations.Policy, :update_role, @current_member, %{member: member, role: "admin"}) do %>disabled<% end %>
+            ><%= gettext("Admin") %></option>
 
-        <td>
-          <%= if @current_member.id != member.id do %>
-            <%= if @confirm_delete_member_id == member.id do %>
-              <div class="py-2 bg-red-100">
-                <p class="py-2 text-red-600"><%= gettext("Are you sure?") %></p>
-                <button phx-click="confirm_delete_member" phx-value-member_id="<%= member.id %>" class="btn btn-red"><%= gettext("Yes, delete this member") %></button>
-                <button phx-click="cancel_delete_member" class="btn"><%= gettext("Cancel") %></button>
-              </div>
-            <% else %>
-              <button phx-click="delete_member" phx-value-member_id="<%= member.id %>" class="btn text-red">
-                <%= gettext("Delete") %>
-              </button>
-            <% end %>
+            <option value="owner"
+              <%= if member.role == :owner do %> selected <% end %>
+              <%= unless permit?(Palapa.Organizations.Policy, :update_role, @current_member, %{member: member, role: "owner"}) do %>disabled<% end %>
+            ><%= gettext("Owner") %></option>
+          </select>
+        </form>
+      </td>
+
+      <td>
+        <%= if @current_member.id != member.id do %>
+          <%= if @confirm_delete_member_id == member.id do %>
+            <div class="py-2 bg-red-100">
+              <p class="py-2 text-red-600"><%= gettext("Are you sure?") %></p>
+              <button phx-click="confirm_delete_member" phx-value-member_id="<%= member.id %>" class="btn btn-red"><%= gettext("Yes, delete this member") %></button>
+              <button phx-click="cancel_delete_member" class="btn"><%= gettext("Cancel") %></button>
+            </div>
           <% else %>
-            <p class="text-gray-500 italic"><%= gettext("Cannot delete yourself") %></p>
+            <button phx-click="delete_member" phx-value-member_id="<%= member.id %>" class="btn text-red">
+              <%= gettext("Delete") %>
+            </button>
           <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-</form>
+        <% else %>
+          <p class="text-gray-500 italic">-</p>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

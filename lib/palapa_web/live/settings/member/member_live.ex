@@ -24,29 +24,29 @@ defmodule PalapaWeb.Settings.MemberLive do
       |> assign_new(:current_organization, fn -> Organizations.get!(current_organization_id) end)
       |> assign_new(:current_member, fn -> Organizations.get_member!(current_member_id) end)
       |> assign(:confirm_delete_member_id, nil)
-      |> assign(:live_notice, nil)
+      |> assign(:updated_member_id, nil)
 
     members = Organizations.list_members(socket.assigns.current_organization)
 
     {:ok, assign(socket, members: members)}
   end
 
-  def handle_event("update_administrators", params, socket) do
-    administrators_ids =
-      [socket.assigns.current_member.id | Map.get(params, "administrators", [])]
-      |> Enum.uniq()
+  def handle_event("update_member", %{"member_id" => member_id, "role" => role}, socket) do
+    member = Organizations.get_member!(member_id)
 
-    case Organizations.update_administrators(
-           socket.assigns.current_organization,
-           administrators_ids
-         ) do
-      {:ok, _result} ->
+    permit!(Organizations.Policy, :update_role, socket.assigns.current_member, %{
+      member: member,
+      role: role
+    })
+
+    case Organizations.update_member_role(member, role) do
+      {:ok, _member} ->
         members = Organizations.list_members(socket.assigns.current_organization)
 
         socket =
           socket
           |> assign(:members, members)
-          |> assign(:live_notice, "The list of admins has been updated!")
+          |> assign(:updated_member_id, member.id)
 
         {:noreply, socket}
 

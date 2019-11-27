@@ -381,7 +381,7 @@ msgstr ""
 #: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:63 lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:9
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:18 lib/palapa_web/templates/member/_personal_information_form.html.leex:37
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:40 lib/palapa_web/templates/message/new.html.eex:18
-#: lib/palapa_web/templates/organization/new.html.eex:22 lib/palapa_web/templates/settings/member/members.html.leex:29
+#: lib/palapa_web/templates/organization/new.html.eex:22 lib/palapa_web/templates/settings/member/members.html.leex:42
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:79 lib/palapa_web/templates/settings/workspace/show.html.eex:105
 #: lib/palapa_web/templates/team/edit.html.eex:12 lib/palapa_web/templates/team/new.html.eex:12
 msgid "Cancel"
@@ -1277,7 +1277,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/member/_personal_information.html.leex:35
-#: lib/palapa_web/templates/settings/member/members.html.leex:33
+#: lib/palapa_web/templates/settings/member/members.html.leex:46
 msgid "Delete"
 msgstr ""
 
@@ -1505,7 +1505,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/organization/new.html.eex:15
-#: lib/palapa_web/templates/settings/member/members.html.leex:4
+#: lib/palapa_web/templates/settings/member/members.html.leex:3
 msgid "Name"
 msgstr ""
 
@@ -1548,17 +1548,12 @@ msgid "8 characters minimum"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/member/members.html.leex:5
-msgid "Administrator?"
-msgstr ""
-
-#, elixir-format
 #: lib/palapa_web/templates/settings/billing/customer/invoices.html.eex:10
 msgid "Amount"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/member/members.html.leex:27
+#: lib/palapa_web/templates/settings/member/members.html.leex:40
 msgid "Are you sure?"
 msgstr ""
 
@@ -1571,11 +1566,6 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:1
 msgid "Billing overview"
-msgstr ""
-
-#, elixir-format
-#: lib/palapa_web/templates/settings/member/members.html.leex:37
-msgid "Cannot delete yourself"
 msgstr ""
 
 #, elixir-format
@@ -1599,7 +1589,7 @@ msgid "Date"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/member/members.html.leex:6
+#: lib/palapa_web/templates/settings/member/members.html.leex:5
 msgid "Delete member"
 msgstr ""
 
@@ -1657,6 +1647,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/search/search_result_member.html.eex:9
+#: lib/palapa_web/templates/settings/member/members.html.leex:20
 msgid "Member"
 msgstr ""
 
@@ -2229,7 +2220,7 @@ msgid "See full size"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/member/members.html.leex:28
+#: lib/palapa_web/templates/settings/member/members.html.leex:41
 msgid "Yes, delete this member"
 msgstr ""
 
@@ -2293,4 +2284,39 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/controllers/settings/member/member_controller.ex:44
 msgid "You have left %{workspace}"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/members.html.leex:26
+msgid "Admin"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/index.html.eex:18
+msgid "Administrators:"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/members.html.leex:31
+msgid "Owner"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/index.html.eex:19
+msgid "Owners:"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/members.html.leex:4
+msgid "Role"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/index.html.eex:19
+msgid "They can do everything Administrators can, plus: update billing information, change plan, export the workspace data and delete the workspace. A workspace has at least one Owner."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/index.html.eex:18
+msgid "They can invite people to join the workspace, remove people from the workspace, manage teams and delete any content."
 msgstr ""

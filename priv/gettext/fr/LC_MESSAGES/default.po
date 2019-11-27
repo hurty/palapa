@@ -382,7 +382,7 @@ msgstr "Retour aux contacts"
 #: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:63 lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:9
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:18 lib/palapa_web/templates/member/_personal_information_form.html.leex:37
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:40 lib/palapa_web/templates/message/new.html.eex:18
-#: lib/palapa_web/templates/organization/new.html.eex:22 lib/palapa_web/templates/settings/member/members.html.leex:29
+#: lib/palapa_web/templates/organization/new.html.eex:22 lib/palapa_web/templates/settings/member/members.html.leex:42
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:79 lib/palapa_web/templates/settings/workspace/show.html.eex:105
 #: lib/palapa_web/templates/team/edit.html.eex:12 lib/palapa_web/templates/team/new.html.eex:12
 msgid "Cancel"
@@ -1278,7 +1278,7 @@ msgstr "Créer une équipe"
 
 #, elixir-format
 #: lib/palapa_web/templates/member/_personal_information.html.leex:35
-#: lib/palapa_web/templates/settings/member/members.html.leex:33
+#: lib/palapa_web/templates/settings/member/members.html.leex:46
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -1506,7 +1506,7 @@ msgstr "Entrez l'adresse email associée à votre compte Palapa. Nous vous enver
 
 #, elixir-format
 #: lib/palapa_web/templates/organization/new.html.eex:15
-#: lib/palapa_web/templates/settings/member/members.html.leex:4
+#: lib/palapa_web/templates/settings/member/members.html.leex:3
 msgid "Name"
 msgstr "Nom"
 
@@ -1549,17 +1549,12 @@ msgid "8 characters minimum"
 msgstr "8 caractères minimum"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/member/members.html.leex:5
-msgid "Administrator?"
-msgstr "Administrateur ?"
-
-#, elixir-format
 #: lib/palapa_web/templates/settings/billing/customer/invoices.html.eex:10
 msgid "Amount"
 msgstr "Montant"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/member/members.html.leex:27
+#: lib/palapa_web/templates/settings/member/members.html.leex:40
 msgid "Are you sure?"
 msgstr "Etes-vous sûr ?"
 
@@ -1573,11 +1568,6 @@ msgstr "Facturation"
 #: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:1
 msgid "Billing overview"
 msgstr "Résumé de la facturation"
-
-#, elixir-format
-#: lib/palapa_web/templates/settings/member/members.html.leex:37
-msgid "Cannot delete yourself"
-msgstr "Vous ne pouvez pas vous supprimer"
 
 #, elixir-format
 #: lib/palapa_web/templates/search/search_result_contact.html.eex:13
@@ -1600,7 +1590,7 @@ msgid "Date"
 msgstr "Date"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/member/members.html.leex:6
+#: lib/palapa_web/templates/settings/member/members.html.leex:5
 msgid "Delete member"
 msgstr "Supprimer le membre"
 
@@ -1658,6 +1648,7 @@ msgstr "Se connecter !"
 
 #, elixir-format
 #: lib/palapa_web/templates/search/search_result_member.html.eex:9
+#: lib/palapa_web/templates/settings/member/members.html.leex:20
 msgid "Member"
 msgstr "Membre"
 
@@ -1740,7 +1731,7 @@ msgstr "Espace de travail"
 #, elixir-format
 #: lib/palapa_web/templates/settings/member/index.html.eex:8
 msgid "Workspace members"
-msgstr "Membres de l'espace"
+msgstr "Membres de l'espace de travail"
 
 #, elixir-format
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:8
@@ -2230,7 +2221,7 @@ msgid "See full size"
 msgstr "Afficher l'originale"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/member/members.html.leex:28
+#: lib/palapa_web/templates/settings/member/members.html.leex:41
 msgid "Yes, delete this member"
 msgstr "Oui, supprimer ce membre"
 
@@ -2295,3 +2286,38 @@ msgstr "Vous ne serez plus en mesure d'accéder à l'espace de travail, à moins
 #: lib/palapa_web/controllers/settings/member/member_controller.ex:44
 msgid "You have left %{workspace}"
 msgstr "Vous avez quitté %{workspace}"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/members.html.leex:26
+msgid "Admin"
+msgstr "Administrateur"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/index.html.eex:18
+msgid "Administrators:"
+msgstr "Administrateurs :"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/members.html.leex:31
+msgid "Owner"
+msgstr "Propriétaire"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/index.html.eex:19
+msgid "Owners:"
+msgstr "Propriétaires :"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/members.html.leex:4
+msgid "Role"
+msgstr "Rôle"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/index.html.eex:19
+msgid "They can do everything Administrators can, plus: update billing information, change plan, export the workspace data and delete the workspace. A workspace has at least one Owner."
+msgstr "Ils ont les mêmes droits que les Administrateurs, avec en plus le droit de modifier les informations de facturation, de changer d'offre, d'exporter les données de l'espace de travail et de supprimer l'espace de travail. Un espace de travail a au moins un propriétaire."
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/member/index.html.eex:18
+msgid "They can invite people to join the workspace, remove people from the workspace, manage teams and delete any content."
+msgstr "Ils peuvent inviter des personnes à rejoindre l'espace de travail, supprimer des membres, gérer les équipes et supprimer n'importe quel contenu."

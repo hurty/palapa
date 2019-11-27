@@ -14,6 +14,11 @@
         <% end %>
       <% end %>
 
+      <div class="my-4 text-sm">
+        <p class="my-2"><span class="font-bold"><%= gettext("Administrators:") %></span> <%= gettext("They can invite people to join the workspace, remove people from the workspace, manage teams and delete any content.") %></p>
+        <p class="my-2"><span class="font-bold"><%= gettext("Owners:") %></span> <%= gettext("They can do everything Administrators can, plus: update billing information, change plan, export the workspace data and delete the workspace. A workspace has at least one Owner.") %></p>
+      </div>
+
       <%= Phoenix.LiveView.live_render(@conn, PalapaWeb.Settings.MemberLive, session: %{
         account_id: @current_account.id,
         current_organization_id: @current_organization.id,

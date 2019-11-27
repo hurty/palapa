@@ -27,7 +27,23 @@ defmodule Palapa.Organizations.Policy do
   # Anybody can see another user in the same organization
   def authorize(:show_member, %Member{}, _), do: true
 
-  def authorize(:edit_member, %Member{}, _), do: true
+  def authorize(:edit_member, %Member{} = author, member) do
+    author.id == member.id
+  end
+
+  def authorize(:update_role, %Member{} = author, %{member: member, role: "member"}) do
+    author.role == :owner ||
+      (author.role == :admin && member.role in [:member, :admin] && member.id != author.id)
+  end
+
+  def authorize(:update_role, %Member{} = author, %{member: member, role: "admin"}) do
+    author.role == :owner ||
+      (author.role == :admin && member.role in [:member, :admin] && member.id != author.id)
+  end
+
+  def authorize(:update_role, %Member{} = author, %{member: member, role: "owner"}) do
+    author.role == :owner && member.id != author.id
+  end
 
   def authorize(:delete_member, %Member{} = member, %Member{} = target_member) do
     member.role in [:admin, :owner] && member.id != target_member.id
