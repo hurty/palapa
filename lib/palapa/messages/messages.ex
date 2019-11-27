@@ -100,6 +100,7 @@ defmodule Palapa.Messages do
       |> put_change(:organization, creator.organization)
       |> put_change(:creator, creator)
       |> put_teams(teams)
+      |> IO.inspect()
 
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:message, message_changeset)
@@ -215,9 +216,13 @@ defmodule Palapa.Messages do
   end
 
   defp put_teams(changeset, teams) do
-    published_to_everyone = get_field(changeset, :published_to_everyone)
+    published_to_everyone =
+      get_field(changeset, :published_to_everyone) |> IO.inspect(label: "PTE")
 
     cond do
+      is_nil(published_to_everyone) ->
+        changeset
+
       !published_to_everyone && teams == [] ->
         add_error(
           changeset,
