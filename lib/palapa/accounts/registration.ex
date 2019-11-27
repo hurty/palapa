@@ -17,6 +17,7 @@ defmodule Palapa.Accounts.Registration do
     |> validate_timezone
     |> update_change(:name, &String.trim(&1))
     |> update_change(:email, &String.trim(&1))
+    |> update_change(:email, &String.downcase(&1))
     |> update_change(:organization_name, &String.trim(&1))
   end
 

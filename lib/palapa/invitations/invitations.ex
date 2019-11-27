@@ -69,6 +69,7 @@ defmodule Palapa.Invitations do
       |> String.split("\n")
       |> Enum.reject(fn string -> string =~ ~r/^\W*$/ end)
       |> Enum.map(&String.trim(&1))
+      |> Enum.map(&String.downcase(&1))
       |> Enum.uniq()
 
     malformed = Enum.reject(emails, fn string -> string =~ ~r/\w+@\w+/ end)
