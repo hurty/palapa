@@ -64,6 +64,7 @@
   </div>
 </div>
 
-<%= unless @member.deleted_at do %>
+<%# https://github.com/phoenixframework/phoenix_live_view/issues/505 %>
+<%#= if !@member.deleted_at do %>
   <%= render "_personal_informations.html", assigns %>
-<% end %>
+<%# end %>
