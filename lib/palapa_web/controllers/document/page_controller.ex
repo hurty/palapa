@@ -35,7 +35,7 @@ defmodule PalapaWeb.Document.PageController do
       conn
       |> BaseController.put_document_breadcrumbs(document)
       |> put_breadcrumb(
-        "New page",
+        gettext("New page"),
         Routes.document_page_path(conn, :new, current_organization(conn), document)
       )
       |> render("new.html",
@@ -62,7 +62,7 @@ defmodule PalapaWeb.Document.PageController do
           conn
           |> BaseController.put_document_breadcrumbs(document)
           |> put_breadcrumb(
-            "New page",
+            gettext("New page"),
             Routes.document_page_path(conn, :new, current_organization(conn), document)
           )
           |> assign(:section_changeset, Documents.change_section())
@@ -102,7 +102,7 @@ defmodule PalapaWeb.Document.PageController do
       conn
       |> BaseController.put_page_breadcrumbs(page)
       |> put_breadcrumb(
-        "Edit",
+        gettext("Edit"),
         Routes.document_page_path(conn, :edit, current_organization(conn), page)
       )
       |> render("edit.html",
@@ -129,7 +129,7 @@ defmodule PalapaWeb.Document.PageController do
           conn
           |> BaseController.put_page_breadcrumbs(page)
           |> put_breadcrumb(
-            "Edit",
+            gettext("Edit"),
             Routes.document_page_path(conn, :edit, current_organization(conn), page)
           )
           |> assign(:section_changeset, Documents.change_section())

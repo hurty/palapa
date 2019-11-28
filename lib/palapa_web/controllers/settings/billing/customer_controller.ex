@@ -83,7 +83,7 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
       conn =
         conn
         |> put_breadcrumb(
-          "Update billing information",
+          gettext("Update billing information"),
           Routes.settings_customer_path(conn, :edit, current_organization(conn))
         )
 

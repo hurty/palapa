@@ -779,13 +779,14 @@ msgstr "Dernière modification"
 
 #, elixir-format
 #: lib/palapa_web/controllers/document/document_controller.ex:57
-#: lib/palapa_web/templates/document/document/index.html.eex:10 lib/palapa_web/templates/document/document/new.html.eex:4
-#: lib/palapa_web/templates/layout/_private_navigation.html.eex:26
+#: lib/palapa_web/controllers/document/document_controller.ex:78 lib/palapa_web/templates/document/document/index.html.eex:10
+#: lib/palapa_web/templates/document/document/new.html.eex:4 lib/palapa_web/templates/layout/_private_navigation.html.eex:26
 msgid "New document"
 msgstr "Nouveau document"
 
 #, elixir-format
-#: lib/palapa_web/templates/document/document/table_of_contents.html.eex:33
+#: lib/palapa_web/controllers/document/page_controller.ex:38
+#: lib/palapa_web/controllers/document/page_controller.ex:65 lib/palapa_web/templates/document/document/table_of_contents.html.eex:33
 #: lib/palapa_web/templates/document/page/new.html.eex:11
 msgid "New page"
 msgstr "Nouvelle page"
@@ -1086,7 +1087,8 @@ msgid "If the problem persists, please contact the support team at %{email}"
 msgstr "Si le problème persiste merci de contacter l'équipe support à %{email}"
 
 #, elixir-format
-#: lib/palapa_web/templates/invitation/create.html.eex:5
+#: lib/palapa_web/controllers/invitation_controller.ex:23
+#: lib/palapa_web/controllers/invitation_controller.ex:42 lib/palapa_web/templates/invitation/create.html.eex:5
 #: lib/palapa_web/templates/invitation/new.html.eex:4 lib/palapa_web/templates/settings/member/index.html.eex:13
 msgid "Invite people"
 msgstr "Inviter des personnes"
@@ -1280,6 +1282,8 @@ msgstr "Supprimer"
 
 #, elixir-format
 #: lib/palapa_web/controllers/document/document_controller.ex:116
+#: lib/palapa_web/controllers/document/document_controller.ex:138 lib/palapa_web/controllers/document/page_controller.ex:105
+#: lib/palapa_web/controllers/document/page_controller.ex:132 lib/palapa_web/controllers/message_controller.ex:121
 #: lib/palapa_web/controllers/team_controller.ex:65 lib/palapa_web/templates/member/_personal_information.html.leex:30
 msgid "Edit"
 msgstr "Modifier"
@@ -1705,6 +1709,7 @@ msgid "Total storage used by attachments:"
 msgstr "Stockage total utilisé par les pièces jointes"
 
 #, elixir-format
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:86
 #: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:28
 msgid "Update billing information"
 msgstr "Mettre à jour les informations de facturation"
@@ -2132,11 +2137,6 @@ msgid "What's up?"
 msgstr "Quoi de neuf ?"
 
 #, elixir-format
-#: lib/palapa_web/controllers/team_controller.ex:57
-msgid "Your organization"
-msgstr "Votre espace de travail"
-
-#, elixir-format
 #: lib/palapa_web/templates/message/index.html.eex:10
 msgid "Other activity"
 msgstr "Autre activité"
@@ -2387,3 +2387,9 @@ msgstr "Oui, supprimer cette équipe"
 #: lib/palapa_web/templates/team/edit.html.eex:40
 msgid "You are about to delete the team %{team}. Are you sure?"
 msgstr "Vous êtes sur le point de supprimer l'équipe %{team}. Etes-vous sûr ?"
+
+#, elixir-format
+#: lib/palapa_web/controllers/invitation_controller.ex:12
+#: lib/palapa_web/controllers/team_controller.ex:57
+msgid "Your workspace"
+msgstr "Votre espace de travail"

@@ -118,7 +118,7 @@ defmodule PalapaWeb.MessageController do
         Routes.message_path(conn, :show, current_organization(conn), message)
       )
       |> put_breadcrumb(
-        "Edit",
+        gettext("Edit"),
         Routes.message_path(conn, :edit, current_organization(conn), message)
       )
       |> render(

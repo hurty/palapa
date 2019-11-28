@@ -9,7 +9,7 @@ defmodule PalapaWeb.InvitationController do
   def put_common_breadcrumbs(conn, _params) do
     put_breadcrumb(
       conn,
-      "Your organization",
+      gettext("Your workspace"),
       Routes.member_path(conn, :index, current_organization(conn))
     )
   end
@@ -20,7 +20,7 @@ defmodule PalapaWeb.InvitationController do
 
       conn
       |> put_breadcrumb(
-        "Invite people",
+        gettext("Invite people"),
         Routes.invitation_path(conn, :new, current_organization(conn))
       )
       |> render("new.html", invitations: invitations)
@@ -39,7 +39,7 @@ defmodule PalapaWeb.InvitationController do
       if Enum.any?(malformed) || Enum.any?(already_member) do
         conn
         |> put_breadcrumb(
-          "Invite people",
+          gettext("Invite people"),
           Routes.invitation_path(conn, :new, current_organization(conn))
         )
         |> render(

@@ -54,7 +54,7 @@ defmodule PalapaWeb.TeamController do
 
       conn
       |> put_breadcrumb(
-        gettext("Your organization"),
+        gettext("Your workspace"),
         Routes.member_path(conn, :index, current_organization(conn))
       )
       |> put_breadcrumb(
