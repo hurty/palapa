@@ -17,15 +17,16 @@ defmodule PalapaWeb.Endpoint do
     Plug.Static,
     at: "/",
     from: :palapa,
-    gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    gzip: true,
+    only:
+      ~w(css fonts images js favicon.ico android-chrome-512x512.png favicon-16x16.png favicon-32x32.png apple-touch-icon.png android-chrome-192x192.png robots.txt)
   )
 
   plug(
     Plug.Static,
     at: "/uploads",
     from: Path.expand("./uploads"),
-    gzip: false
+    gzip: true
   )
 
   # Code reloading can be explicitly enabled under the

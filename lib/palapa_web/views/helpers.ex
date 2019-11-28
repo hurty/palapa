@@ -3,7 +3,7 @@ defmodule PalapaWeb.Helpers do
   alias PalapaWeb.Router.Helpers, as: Routes
   alias PalapaWeb.Endpoint
 
-  def get_page_title(%{assigns: %{breadcrumbs: breadcrumbs}} = conn) when is_list(breadcrumbs) do
+  def get_page_title(%{assigns: %{breadcrumbs: breadcrumbs}}) when is_list(breadcrumbs) do
     title =
       List.last(breadcrumbs)
       |> Access.get(:title)
