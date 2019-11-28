@@ -6,6 +6,7 @@ defmodule Palapa.Organizations.PersonalInformation do
   # alias Palapa.Attachments
   # alias Palapa.Attachments.Attachment
 
+  @derive {Jason.Encoder, only: [:label, :value]}
   schema "personal_informations" do
     belongs_to(:member, Member)
     field(:label, :string)

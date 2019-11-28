@@ -6,6 +6,8 @@ defmodule Palapa.Messages.MessageComment do
   alias Palapa.Attachments.Attachment
   alias Palapa.RichText
 
+  @derive {Jason.Encoder, only: [:creator_id, :inserted_at, :content, :attachments]}
+
   schema "message_comments" do
     field(:content, RichText.Type)
     timestamps()

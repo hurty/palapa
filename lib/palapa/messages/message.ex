@@ -6,6 +6,17 @@ defmodule Palapa.Messages.Message do
   alias Palapa.Attachments.Attachment
   alias Palapa.RichText
 
+  @derive {Jason.Encoder,
+           only: [
+             :creator_id,
+             :title,
+             :content,
+             :inserted_at,
+             :published_to_everyone,
+             :comments,
+             :attachments
+           ]}
+
   schema "messages" do
     belongs_to(:organization, Organizations.Organization)
     belongs_to(:creator, Organizations.Member)

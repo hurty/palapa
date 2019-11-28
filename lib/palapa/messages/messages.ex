@@ -100,7 +100,6 @@ defmodule Palapa.Messages do
       |> put_change(:organization, creator.organization)
       |> put_change(:creator, creator)
       |> put_teams(teams)
-      |> IO.inspect()
 
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:message, message_changeset)

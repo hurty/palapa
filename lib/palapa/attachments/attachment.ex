@@ -4,6 +4,8 @@ defmodule Palapa.Attachments.Attachment do
   alias Palapa.Organizations.{Organization}
   alias Palapa.Attachments.{Attachment, AttachableTypeEnum}
 
+  @derive {Jason.Encoder, only: [:id, :inserted_at, :filename, :content_type, :byte_size]}
+
   schema "attachments" do
     belongs_to(:organization, Organization)
     field(:filename, :string)

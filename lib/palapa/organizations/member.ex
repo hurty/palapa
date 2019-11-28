@@ -6,6 +6,15 @@ defmodule Palapa.Organizations.Member do
   alias Palapa.Invitations
   alias Palapa.Teams.{Team, TeamMember}
 
+  @derive {Jason.Encoder,
+           only: [
+             :id,
+             :account,
+             :role,
+             :title,
+             :personal_informations
+           ]}
+
   schema "members" do
     belongs_to(:organization, Organization)
     belongs_to(:account, Account)

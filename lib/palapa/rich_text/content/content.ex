@@ -11,3 +11,10 @@ defimpl String.Chars, for: Palapa.RichText.Content do
     Palapa.RichText.to_html(content)
   end
 end
+
+defimpl Jason.Encoder, for: Palapa.RichText.Content do
+  def encode(content, opts) do
+    Palapa.RichText.to_html(content)
+    |> Jason.Encode.string(opts)
+  end
+end

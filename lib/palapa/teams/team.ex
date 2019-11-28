@@ -34,3 +34,11 @@ defmodule Palapa.Teams.Team do
     |> foreign_key_constraint(:organization_id)
   end
 end
+
+defimpl Jason.Encoder, for: Palapa.Teams.Team do
+  def encode(team, opts) do
+    members_ids = Enum.map(team.members, & &1.id)
+    team = Map.put(team, :members_ids, members_ids)
+    Jason.Encode.map(Map.take(team, [:id, :name, :private, :members_ids]), opts)
+  end
+end

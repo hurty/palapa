@@ -9,6 +9,7 @@
   "bcrypt_elixir": {:hex, :bcrypt_elixir, "1.1.1", "6b5560e47a02196ce5f0ab3f1d8265db79a23868c137e973b27afef928ed8006", [:make, :mix], [{:elixir_make, "~> 0.4", [hex: :elixir_make, repo: "hexpm", optional: false]}], "hexpm"},
   "benchee": {:hex, :benchee, "1.0.1", "66b211f9bfd84bd97e6d1beaddf8fc2312aaabe192f776e8931cb0c16f53a521", [:mix], [{:deep_merge, "~> 1.0", [hex: :deep_merge, repo: "hexpm", optional: false]}], "hexpm"},
   "bodyguard": {:hex, :bodyguard, "2.4.0", "b41eeee4de613c466298edb07ae845f65d529141a68153b9bf5332e99b630c1d", [:mix], [{:plug, "~> 1.0", [hex: :plug, repo: "hexpm", optional: false]}], "hexpm"},
+  "briefly": {:git, "https://github.com/CargoSense/briefly.git", "2526e9674a4e6996137e066a1295ea60962712b8", [ref: "2526e9674a4e6996137e066a1295ea60962712b8"]},
   "certifi": {:hex, :certifi, "2.5.1", "867ce347f7c7d78563450a18a6a28a8090331e77fa02380b4a21962a65d36ee5", [:rebar3], [{:parse_trans, "~>3.3", [hex: :parse_trans, repo: "hexpm", optional: false]}], "hexpm"},
   "combine": {:hex, :combine, "0.10.0", "eff8224eeb56498a2af13011d142c5e7997a80c8f5b97c499f84c841032e429f", [:mix], [], "hexpm"},
   "comeonin": {:hex, :comeonin, "4.1.2", "3eb5620fd8e35508991664b4c2b04dd41e52f1620b36957be837c1d7784b7592", [:mix], [{:argon2_elixir, "~> 1.2", [hex: :argon2_elixir, repo: "hexpm", optional: true]}, {:bcrypt_elixir, "~> 0.12.1 or ~> 1.0", [hex: :bcrypt_elixir, repo: "hexpm", optional: true]}, {:pbkdf2_elixir, "~> 0.12", [hex: :pbkdf2_elixir, repo: "hexpm", optional: true]}], "hexpm"},

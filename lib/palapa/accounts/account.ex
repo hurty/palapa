@@ -5,6 +5,8 @@ defmodule Palapa.Accounts.Account do
   alias Palapa.Organizations
   alias Palapa.Organizations.Organization
 
+  @derive {Jason.Encoder, only: [:id, :email, :name]}
+
   schema "accounts" do
     field(:email, :string)
     field(:name, :string)

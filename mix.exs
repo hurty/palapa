@@ -77,7 +77,10 @@ defmodule Palapa.Mixfile do
       {:ecto_job, "~> 3.0"},
       {:money, "~> 1.4"},
       {:countries, "~> 1.5"},
-      {:benchee, "~> 1.0", only: :dev}
+      {:benchee, "~> 1.0", only: :dev},
+      {:briefly,
+       git: "https://github.com/CargoSense/briefly.git",
+       ref: "2526e9674a4e6996137e066a1295ea60962712b8"}
     ]
   end
 
