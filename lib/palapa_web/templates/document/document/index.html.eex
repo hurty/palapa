@@ -47,7 +47,7 @@
                 <%= hidden_input form, :sort_by, value: @conn.params["sort_by"] %>
               <% end %>
 
-              <%= text_input form, "search", value: @conn.params["search"], autocomplete: "off", class: "input", placeholder: gettext("Search in documents") %>
+              <%= text_input form, "search", value: @conn.params["search"], autocomplete: "off", class: "input rounded-full p-2 mr-2 w-64", placeholder: gettext("Search in documents") %>
               <%= submit gettext("Search"), class: "btn" %>
             <% end %>
           </div>
@@ -55,7 +55,7 @@
 
         <%= if search_filters_applied?(@conn) do %>
           <%= link to: Routes.document_path(@conn, :index, @current_organization) do %>
-            <div class="py-1 bg-blue-100 text-center text-sm text-blue-600 font-bold hover:underline"><%= gettext("Reset filters") %></div>
+            <div class="py-1 bg-blue-100 text-center text-sm text-blue-600 font-bold hover:underline"><i class="fas fa-times-circle mr-2"></i><%= gettext("Reset filters") %></div>
           <% end %>
         <% end %>
 
@@ -83,28 +83,28 @@
 
           <%= for document <- @documents do %>
             <div class="flex flex-wrap py-2 border-b border-gray-200 p-4">
-              <div class="lg:w-8">
+              <div class="lg:w-8 self-center">
                 <i class="hidden lg:block fas fa-file-alt text-gray-600 text-base" title="<%= gettext("Document") %>"></i>
               </div>
 
-              <div class="w-full lg:flex-1">
+              <div class="w-full lg:flex-1 self-center">
                 <i class="lg:hidden fas fa-file-alt text-gray-600 text-base" title="<%= gettext("Document") %>"></i>
                 <%= link Helpers.truncate_string(document.title, 150), to: Routes.document_path(@conn, :show, @current_organization, document), class: "text-base text-green-500 font-bold hover:underline text-sm" %>
                 <div class="font-bold mr-2 rounded my-1">
-                <%= if document.team do %>
-                  <%= link(document.team.name, to: Routes.document_path(@conn, :index, @current_organization, team_id: document.team_id), title: gettext("Show all team documents"), class: "tag tag-team text-xs") %></span>
-                <% else %>
-                  <%= link(gettext("Shared with everyone"), to: Routes.document_path(@conn, :index, @current_organization), title: gettext("Show all team documents"), class: "text-gray-700 text-xs hover:underline") %>
-                <% end %>
+                  <%= if document.team do %>
+                    <%= link(document.team.name, to: Routes.document_path(@conn, :index, @current_organization, team_id: document.team_id), title: gettext("Show all team documents"), class: "tag tag-team text-xs") %></span>
+                  <% else %>
+                    <%= link(gettext("Shared with everyone"), to: Routes.document_path(@conn, :index, @current_organization), title: gettext("Show all team documents"), class: "text-gray-700 text-xs hover:underline") %>
+                  <% end %>
                 </div>
               </div>
 
-              <div class="lg:flex-none">
-                <div class="text-xs lg:text-sm text-gray-700"><span class="lg:hidden">Modified </span><%= Helpers.format_date(@conn, document.updated_at) %>
+              <div class="lg:flex-none self-center">
                   <div class="flex mt-2">
                     <%= Helpers.avatar(document.last_author.account, :xs) %>
                     <span class="text-xs mx-2 text-gray-800">
                       <%= link document.last_author.account.name, to: Routes.member_path(@conn, :show, @current_organization, document.last_author), class: "text-gray-800 font-bold hover:underline" %>
+                      <div class="text-xs text-gray-700"><span class="lg:hidden">Modified </span><%= Helpers.format_date(@conn, document.updated_at) %>
                     </span>
                   </div>
                 </div>
