@@ -1,5 +1,6 @@
 defmodule Palapa.Teams do
   use Palapa.Context
+  use Palapa.SoftDelete
 
   alias Palapa.Teams.{Team, TeamMember}
   alias Palapa.Organizations.{Organization, Member}
@@ -8,6 +9,7 @@ defmodule Palapa.Teams do
 
   def visible_to(member) do
     Ecto.assoc(member, :teams)
+    |> active()
   end
 
   def where_organization(queryable \\ Team, organization)
@@ -43,6 +45,7 @@ defmodule Palapa.Teams do
   def list(queryable \\ Team) do
     queryable
     |> order_by(:name)
+    |> active()
     |> Repo.all()
   end
 

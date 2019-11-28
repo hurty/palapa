@@ -1,6 +1,6 @@
 <div class="content page-layout">
   <div class="main-content">
-    <div class="card p-1 lg:p-8">
+    <div class="card p-1 md:p-8">
       <h2 class="card-header"><%= gettext("Edit team") %></h2>
       <div class="card-header-separator"></div>
 
@@ -12,6 +12,40 @@
           <%= link gettext("Cancel"), to: Routes.member_path(@conn, :index, @current_organization, team_id: @team.id), class: "btn" %>
         </div>
       <% end %>
+    </div>
+
+    <div class="card p-1 md:p-8 mt-8">
+      <h2 class="card-header"><%= gettext("Delete team") %></h2>
+      <div class="card-header-separator"></div>
+        <p class="text-red-500"><i class="fas fa-exclamation-triangle text-red-500 mr-2"></i><b><%= gettext("Warning:") %></b> <%= gettext("The messages and documents that are only visible to this team will be deleted.") %></p>
+        <br><p><i class="fas fa-question-circle text-blue-500 mr-2"></i><%= gettext("If you want to keep some messages or documents, make sure to make them visible to another team or to everyone in your workspace before deleting the team.") %></p>
+        <div class="card-actions">
+          <%= submit gettext("Delete this team"), "data-micromodal-trigger": "modal-delete-team", class: "btn btn-red" %>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal micromodal-slide" id="modal-delete-team" aria-hidden="true">
+  <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+    <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="delete-team-title">
+      <header class="modal__header">
+        <h2 class="modal__title" id="delete-team-title">
+          <%= gettext("Delete the team") %>
+        </h2>
+        <button class="modal__close" aria-label="<%= gettext("Close modal") %>" data-micromodal-close></button>
+      </header>
+
+      <main class="modal__content" id="delete-team-content">
+        <p><%= gettext("You are about to delete the team %{team}. Are you sure?", %{team: @team.name}) %></p>
+      </main>
+
+      <footer class="modal__footer">
+        <%= link to: Routes.team_path(@conn, :delete, @current_organization, @team), data: [controller: "link", action: "link#delete"], class: "btn btn-red mr-2" do %>
+          <i class="fas fa-exclamation-triangle mr-2"></i><%= gettext("Yes, delete this team") %>
+        <% end %>
+        <button class="btn" data-micromodal-close aria-label="<%= gettext("Close this dialog window") %>"><%= gettext("Cancel") %></button>
+      </footer>
     </div>
   </div>
 </div>

@@ -90,4 +90,27 @@ defmodule PalapaWeb.TeamController do
       end
     end
   end
+
+  def delete(conn, %{"id" => id}) do
+    team =
+      Teams.where_organization(current_organization(conn))
+      |> Teams.get!(id)
+
+    with :ok <- permit(Teams.Policy, :delete, current_member(conn), team) do
+      case Teams.soft_delete(team) do
+        {:ok, _} ->
+          conn
+          |> put_flash(:success, gettext("The team %{team} has been deleted", %{team: team.name}))
+          |> redirect(to: Routes.member_path(conn, :index, current_organization(conn)))
+
+        {:error, _} ->
+          conn
+          |> put_flash(
+            :error,
+            gettext("Unexpected error: the team %{team} couldn't be deleted", %{team: team.name})
+          )
+          |> redirect(to: Routes.team_path(conn, :edit, current_organization(conn), team))
+      end
+    end
+  end
 end

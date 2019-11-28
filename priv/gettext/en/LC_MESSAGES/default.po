@@ -384,7 +384,8 @@ msgstr ""
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:40 lib/palapa_web/templates/message/new.html.eex:18
 #: lib/palapa_web/templates/organization/new.html.eex:22 lib/palapa_web/templates/settings/member/members.html.leex:42
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:79 lib/palapa_web/templates/settings/workspace/show.html.eex:105
-#: lib/palapa_web/templates/team/edit.html.eex:12 lib/palapa_web/templates/team/new.html.eex:12
+#: lib/palapa_web/templates/team/edit.html.eex:12 lib/palapa_web/templates/team/edit.html.eex:47
+#: lib/palapa_web/templates/team/new.html.eex:12
 msgid "Cancel"
 msgstr ""
 
@@ -978,11 +979,6 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/document/document/index.html.eex:133
 msgid "View documents in the trash"
-msgstr ""
-
-#, elixir-format
-#: lib/palapa_web/templates/document/document/form.html.eex:12
-msgid "Who can see this document?"
 msgstr ""
 
 #, elixir-format
@@ -2211,7 +2207,7 @@ msgid "You have been invited to join \"%{workspace}\""
 msgstr ""
 
 #, elixir-format
-#: lib/palapa/messages/messages.ex:225
+#: lib/palapa/messages/messages.ex:229
 msgid "Choose at least one team"
 msgstr ""
 
@@ -2320,4 +2316,74 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/settings/member/index.html.eex:18
 msgid "They can invite people to join the workspace, remove people from the workspace, manage teams and delete any content."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/delete_modal.html.eex:8
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:68 lib/palapa_web/templates/settings/workspace/show.html.eex:94
+#: lib/palapa_web/templates/team/edit.html.eex:36
+msgid "Close modal"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/delete_modal.html.eex:19
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:79 lib/palapa_web/templates/settings/workspace/show.html.eex:105
+#: lib/palapa_web/templates/team/edit.html.eex:47
+msgid "Close this dialog window"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:18
+msgid "Delete team"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:34
+msgid "Delete the team"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:23
+msgid "Delete this team"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:21
+msgid "If you want to keep some messages or documents, make sure to make them visible to another team or to everyone in your workspace before deleting the team."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:20
+msgid "The messages and documents that are only visible to this team will be deleted."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/team_controller.ex:103
+msgid "The team %{team} has been deleted"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/team_controller.ex:110
+msgid "Unexpected error: the team %{team} couldn't be deleted"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:20
+msgid "Warning:"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/form.html.eex:12
+#: lib/palapa_web/templates/document/document/new.html.eex:23
+msgid "Which team can see this document?"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:45
+msgid "Yes, delete this team"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:40
+msgid "You are about to delete the team %{team}. Are you sure?"
 msgstr ""

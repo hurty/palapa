@@ -13,6 +13,10 @@ defmodule Palapa.Teams.Policy do
     role in [:owner, :admin]
   end
 
+  def authorize(:delete, %Member{role: role}, _params) do
+    role in [:owner, :admin]
+  end
+
   def authorize(:edit_member_teams, %Member{role: role}, _params) do
     role in [:owner, :admin]
   end

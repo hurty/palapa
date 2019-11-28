@@ -65,7 +65,7 @@
           <h2 class="modal__title" id="modal-leave-title">
             <%= gettext("Leave the workspace") %>
           </h2>
-          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+          <button class="modal__close" aria-label="<%= gettext("Close modal") %>" data-micromodal-close></button>
         </header>
 
         <main class="modal__content" id="modal-leave-content">
@@ -76,7 +76,7 @@
           <%= link(to: Routes.settings_member_path(@conn, :delete, @current_organization, @current_member), data: [controller: "link", action: "link#delete"], class: "btn btn-red mr-2") do %>
             <i class="fas fa-exclamation-triangle mr-2"></i><%= gettext("Yes, leave this workspace") %>
           <% end %>
-          <button class="btn" data-micromodal-close aria-label="Close this dialog window"><%= gettext("Cancel") %></button>
+          <button class="btn" data-micromodal-close aria-label="<%= gettext("Close this dialog window") %>"><%= gettext("Cancel") %></button>
         </footer>
       </div>
     </div>
@@ -91,7 +91,7 @@
           <h2 class="modal__title" id="modal-delete-title">
             <%= gettext("Delete the workspace") %>
           </h2>
-          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+          <button class="modal__close" aria-label="<%= gettext("Close modal") %>" data-micromodal-close></button>
         </header>
 
         <main class="modal__content" id="modal-delete-content">
@@ -102,7 +102,7 @@
           <%= link(to: Routes.organization_path(@conn, :delete, @current_organization), data: [controller: "link", action: "link#delete"], class: "btn btn-red mr-2") do %>
             <i class="fas fa-exclamation-triangle mr-2"></i><%= gettext("Yes, delete this workspace") %>
           <% end %>
-          <button class="btn" data-micromodal-close aria-label="Close this dialog window"><%= gettext("Cancel") %></button>
+          <button class="btn" data-micromodal-close aria-label="<%= gettext("Close this dialog window") %>"><%= gettext("Cancel") %></button>
         </footer>
       </div>
     </div>

@@ -4,8 +4,10 @@ defmodule Palapa.SoftDelete do
       import Ecto.Query
 
       def soft_delete(resource) do
+        deleted_at = DateTime.utc_now() |> DateTime.truncate(:second)
+
         resource
-        |> Ecto.Changeset.change(%{deleted_at: DateTime.utc_now()})
+        |> Ecto.Changeset.change(%{deleted_at: deleted_at})
         |> Palapa.Repo.update()
       end
 

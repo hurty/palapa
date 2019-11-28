@@ -8,6 +8,7 @@ defmodule Palapa.Teams.Team do
   schema "teams" do
     field(:name, :string)
     field(:private, :boolean)
+    field(:deleted_at, :utc_datetime)
     timestamps()
 
     belongs_to(:organization, Organizations.Organization)

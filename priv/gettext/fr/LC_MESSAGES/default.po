@@ -384,7 +384,8 @@ msgstr "Retour aux contacts"
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:40 lib/palapa_web/templates/message/new.html.eex:18
 #: lib/palapa_web/templates/organization/new.html.eex:22 lib/palapa_web/templates/settings/member/members.html.leex:42
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:79 lib/palapa_web/templates/settings/workspace/show.html.eex:105
-#: lib/palapa_web/templates/team/edit.html.eex:12 lib/palapa_web/templates/team/new.html.eex:12
+#: lib/palapa_web/templates/team/edit.html.eex:12 lib/palapa_web/templates/team/edit.html.eex:47
+#: lib/palapa_web/templates/team/new.html.eex:12
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -979,11 +980,6 @@ msgstr "Mettre à jour le commentaire"
 #: lib/palapa_web/templates/document/document/index.html.eex:133
 msgid "View documents in the trash"
 msgstr "Voir les documents dans la corbeille"
-
-#, elixir-format
-#: lib/palapa_web/templates/document/document/form.html.eex:12
-msgid "Who can see this document?"
-msgstr "Qui peut voir ce document ?"
 
 #, elixir-format
 #: lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:4
@@ -2211,7 +2207,7 @@ msgid "You have been invited to join \"%{workspace}\""
 msgstr "Vous êtes invité à rejoindre \"%{workspace}\""
 
 #, elixir-format
-#: lib/palapa/messages/messages.ex:225
+#: lib/palapa/messages/messages.ex:229
 msgid "Choose at least one team"
 msgstr "Choisissez au moins une équipe"
 
@@ -2321,3 +2317,73 @@ msgstr "Ils ont les mêmes droits que les Administrateurs, avec en plus le droit
 #: lib/palapa_web/templates/settings/member/index.html.eex:18
 msgid "They can invite people to join the workspace, remove people from the workspace, manage teams and delete any content."
 msgstr "Ils peuvent inviter des personnes à rejoindre l'espace de travail, supprimer des membres, gérer les équipes et supprimer n'importe quel contenu."
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/delete_modal.html.eex:8
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:68 lib/palapa_web/templates/settings/workspace/show.html.eex:94
+#: lib/palapa_web/templates/team/edit.html.eex:36
+msgid "Close modal"
+msgstr "Fermer la boîte de dialogue"
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/delete_modal.html.eex:19
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:79 lib/palapa_web/templates/settings/workspace/show.html.eex:105
+#: lib/palapa_web/templates/team/edit.html.eex:47
+msgid "Close this dialog window"
+msgstr "Fermer cette boîte de dialogue"
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:18
+msgid "Delete team"
+msgstr "Supprimer l'équipe"
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:34
+msgid "Delete the team"
+msgstr "Supprimer l'équipe"
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:23
+msgid "Delete this team"
+msgstr "Supprimer cette équipe"
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:21
+msgid "If you want to keep some messages or documents, make sure to make them visible to another team or to everyone in your workspace before deleting the team."
+msgstr "Si vous souhaitez conserver certains messages ou documents, assurez-vous de les rendre visible à d'autres équipes ou bien à tous les membres avant de supprimer l'équipe."
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:20
+msgid "The messages and documents that are only visible to this team will be deleted."
+msgstr "Les messages et les documents qui ne sont visibles que de cette équipe seront supprimés."
+
+#, elixir-format
+#: lib/palapa_web/controllers/team_controller.ex:103
+msgid "The team %{team} has been deleted"
+msgstr "L'équipe %{team} a été supprimée"
+
+#, elixir-format
+#: lib/palapa_web/controllers/team_controller.ex:110
+msgid "Unexpected error: the team %{team} couldn't be deleted"
+msgstr "Erreur inattendue : l'équipe %{team} n'a pas pu être supprimée"
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:20
+msgid "Warning:"
+msgstr "Attention :"
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/form.html.eex:12
+#: lib/palapa_web/templates/document/document/new.html.eex:23
+msgid "Which team can see this document?"
+msgstr "Quelle équipe peut voir ce document ?"
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:45
+msgid "Yes, delete this team"
+msgstr "Oui, supprimer cette équipe"
+
+#, elixir-format
+#: lib/palapa_web/templates/team/edit.html.eex:40
+msgid "You are about to delete the team %{team}. Are you sure?"
+msgstr "Vous êtes sur le point de supprimer l'équipe %{team}. Etes-vous sûr ?"

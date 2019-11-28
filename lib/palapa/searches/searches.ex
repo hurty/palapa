@@ -113,7 +113,7 @@ defmodule Palapa.Searches do
 
   defp teams_query(member, search_string) do
     from(searches in matching_searches_query(search_string),
-      join: teams in ^subquery(Teams.where_organization(member.organization_id)),
+      join: teams in ^subquery(Teams.visible_to(member)),
       on: searches.team_id == teams.id,
       select_merge: %{
         rank:

@@ -5,9 +5,9 @@
         <h2 class="modal__title" id="delete-contact-title">
           <%= gettext("Delete the contact") %>
         </h2>
-        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+        <button class="modal__close" aria-label="<%= gettext("Close modal") %>" data-micromodal-close></button>
       </header>
-      
+
       <main class="modal__content" id="delete-contact-content">
         <p><%= gettext("You are about to delete %{contact}. Are you sure?", %{contact: full_name(@contact)}) %></p>
       </main>
@@ -16,7 +16,7 @@
         <%= link to: "#", phx_click: "delete_contact", class: "btn btn-red mr-2" do %>
           <i class="fas fa-exclamation-triangle mr-2"></i><%= gettext("Yes, delete this contact") %>
         <% end %>
-        <button class="btn" data-micromodal-close aria-label="Close this dialog window"><%= gettext("Cancel") %></button>
+        <button class="btn" data-micromodal-close aria-label="<%= gettext("Close this dialog window") %>"><%= gettext("Cancel") %></button>
       </footer>
     </div>
   </div>

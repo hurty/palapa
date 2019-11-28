@@ -16,7 +16,7 @@ defmodule PalapaWeb.MemberController do
 
   def index(conn, %{"team_id" => team_id}) do
     with :ok <- permit(Organizations.Policy, :list_members, current_member(conn)) do
-      selected_team = Teams.get!(team_id)
+      selected_team = Teams.visible_to(current_member(conn)) |> Teams.get!(team_id)
       members = Teams.list_members(selected_team)
       teams = Teams.where_organization(current_organization(conn)) |> Teams.list()
       organization_members_count = current_organization(conn) |> Organizations.members_count()
