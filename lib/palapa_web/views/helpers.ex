@@ -3,6 +3,18 @@ defmodule PalapaWeb.Helpers do
   alias PalapaWeb.Router.Helpers, as: Routes
   alias PalapaWeb.Endpoint
 
+  def get_page_title(%{assigns: %{breadcrumbs: breadcrumbs}} = conn) when is_list(breadcrumbs) do
+    title =
+      List.last(breadcrumbs)
+      |> Access.get(:title)
+
+    "#{title} | Palapa"
+  end
+
+  def get_page_title(_conn) do
+    "Palapa"
+  end
+
   def get_timezone(conn) do
     Map.get(conn.assigns.current_account, :timezone) || "UTC"
   end

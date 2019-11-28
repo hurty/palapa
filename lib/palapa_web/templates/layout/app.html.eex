@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <%= csrf_meta_tag() %>
-    <title>Palapa</title>
+    <title><%= Helpers.get_page_title(@conn) %></title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>">
     <script defer src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
