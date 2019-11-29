@@ -9,5 +9,9 @@ defmodule Palapa.Contacts.Policy do
     comment.author.id == member.id || member.role in [:admin, :owner]
   end
 
+  def authorize(:export_contacts, _member, _) do
+    true
+  end
+
   def authorize(_, _, _), do: false
 end

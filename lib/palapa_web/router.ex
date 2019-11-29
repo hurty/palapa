@@ -180,6 +180,7 @@ defmodule PalapaWeb.Router do
 
     scope "/" do
       pipe_through([:contact_navigation])
+      get("/contacts/export", ContactExportController, :index)
       live "/contacts", ContactLive, session: [:account_id]
       live "/contacts/new", ContactLive.New, session: [:account_id]
       live "/contacts/:id", ContactLive, session: [:account_id]

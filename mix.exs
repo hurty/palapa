@@ -80,7 +80,8 @@ defmodule Palapa.Mixfile do
       {:benchee, "~> 1.0", only: :dev},
       {:briefly,
        git: "https://github.com/CargoSense/briefly.git",
-       ref: "2526e9674a4e6996137e066a1295ea60962712b8"}
+       ref: "2526e9674a4e6996137e066a1295ea60962712b8"},
+      {:nimble_csv, "~> 0.6"}
     ]
   end
 

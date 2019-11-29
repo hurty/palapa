@@ -7,14 +7,30 @@
         <div class="flex flex-wrap items-center justify-between p-4 border-b">
           <h2 class="card-header"><%= gettext("Contacts") %></h2>
 
-          <div class="my-2 lg:m-0">
+          <div data-controller="popover" data-action="mousedown@window->popover#hide">
+            <button data-target="popover.button" data-action="popover#toggle" class="card-actions-button">
+              <i class="fas fa-ellipsis-h"></i>
+            </button>
+
+            <div data-target="popover.content" class="popover hidden">
+              <div data-target="popover.arrow" class="popover__arrow"></div>
+              <nav class="flex flex-col">
+                <%= link to: Routes.contact_export_path(@socket, :index, @current_organization), class: "popover__link" do %>
+                  <i class="fas fa-pen"></i>&nbsp;<%= gettext("Export all contacts (CSV)") %>
+                <% end %>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="card-content">
+          <div class="my-2 py-4 lg:m-0 px-4 border-b bg-gray-100">
             <%= live_link to: Routes.live_path(@socket, PalapaWeb.ContactLive, @current_organization, "new"), class: "btn" do %>
               <i class="text-green-500 fas fa-plus-circle mr-2"></i><%= gettext("New contact") %>
             <% end %>
           </div>
-        </div>
 
-        <div class="card-content">
           <form id="contacts_list" phx-change="search_contacts" phx-submit="search_contacts" class="my-4 px-4">
             <div class="search-bar max-w-sm" phx-update="ignore">
               <i class="fa fa-search mr-2"></i>
