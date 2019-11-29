@@ -382,7 +382,7 @@ msgstr ""
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:18 lib/palapa_web/templates/member/_personal_information_form.html.leex:37
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:40 lib/palapa_web/templates/message/new.html.eex:18
 #: lib/palapa_web/templates/organization/new.html.eex:22 lib/palapa_web/templates/settings/member/members.html.leex:42
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:79 lib/palapa_web/templates/settings/workspace/show.html.eex:105
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:87 lib/palapa_web/templates/settings/workspace/show.html.eex:113
 #: lib/palapa_web/templates/team/edit.html.eex:12 lib/palapa_web/templates/team/edit.html.eex:47
 #: lib/palapa_web/templates/team/new.html.eex:12
 msgid "Cancel"
@@ -1595,7 +1595,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:43
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:50 lib/palapa_web/templates/settings/workspace/show.html.eex:92
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:50 lib/palapa_web/templates/settings/workspace/show.html.eex:100
 msgid "Delete the workspace"
 msgstr ""
 
@@ -1739,7 +1739,7 @@ msgid "Workspace settings"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:103
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:111
 msgid "Yes, delete this workspace"
 msgstr ""
 
@@ -1749,7 +1749,7 @@ msgid "You already have an account?"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:98
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:106
 msgid "You are about to delete the workspace and all its content. Are you sure?"
 msgstr ""
 
@@ -2237,7 +2237,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:25
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:33 lib/palapa_web/templates/settings/workspace/show.html.eex:66
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:33 lib/palapa_web/templates/settings/workspace/show.html.eex:74
 msgid "Leave the workspace"
 msgstr ""
 
@@ -2252,12 +2252,12 @@ msgid "Submit"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:77
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:85
 msgid "Yes, leave this workspace"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:72
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:80
 msgid "You are about to leave the workspace. Are you sure?"
 msgstr ""
 
@@ -2319,14 +2319,14 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/contact/delete_modal.html.eex:8
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:68 lib/palapa_web/templates/settings/workspace/show.html.eex:94
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:76 lib/palapa_web/templates/settings/workspace/show.html.eex:102
 #: lib/palapa_web/templates/team/edit.html.eex:36
 msgid "Close modal"
 msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/contact/delete_modal.html.eex:19
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:79 lib/palapa_web/templates/settings/workspace/show.html.eex:105
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:87 lib/palapa_web/templates/settings/workspace/show.html.eex:113
 #: lib/palapa_web/templates/team/edit.html.eex:47
 msgid "Close this dialog window"
 msgstr ""
@@ -2391,4 +2391,14 @@ msgstr ""
 #: lib/palapa_web/controllers/invitation_controller.ex:12
 #: lib/palapa_web/controllers/team_controller.ex:57
 msgid "Your workspace"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:58
+msgid "Export workspace data"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:60
+msgid "We can export all your workspace data in the JSON format. This process is not fully automatic yet, please write to %{email} in order to request your archive."
 msgstr ""

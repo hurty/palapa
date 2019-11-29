@@ -21,6 +21,10 @@ defmodule Palapa.Organizations.Policy do
     member.role == :owner
   end
 
+  def authorize(:export_data, %Member{} = member, _) do
+    member.role == :owner
+  end
+
   # Anybody can see the list of members within an organization
   def authorize(:list_members, %Member{}, _), do: true
 

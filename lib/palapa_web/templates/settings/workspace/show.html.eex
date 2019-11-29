@@ -53,6 +53,14 @@
       </div>
     <% end %>
 
+    <%= if permit?(Palapa.Organizations.Policy, :export_data, @current_member) do %>
+      <div class="card p-4 mt-8">
+        <h2 class="text-gray-800 text-2xl font-bold"><%= gettext("Export workspace data") %></h2>
+        <div class="card-header-separator"></div>
+        <p><%= raw gettext("We can export all your workspace data in the JSON format. This process is not fully automatic yet, please write to %{email} in order to request your archive.", %{email: safe_to_string(link Application.get_env(:palapa, :email_support), to: "mailto:#{Application.get_env(:palapa, :email_support)}", class: "hover:underline")}) %></p>
+      </div>
+    <% end %>
+
   </div>
 </div>
 

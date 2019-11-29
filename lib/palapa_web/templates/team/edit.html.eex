@@ -17,11 +17,11 @@
     <div class="card p-1 md:p-8 mt-8">
       <h2 class="card-header"><%= gettext("Delete team") %></h2>
       <div class="card-header-separator"></div>
-        <p class="text-red-500"><i class="fas fa-exclamation-triangle text-red-500 mr-2"></i><b><%= gettext("Warning:") %></b> <%= gettext("The messages and documents that are only visible to this team will be deleted.") %></p>
-        <br><p><i class="fas fa-question-circle text-blue-500 mr-2"></i><%= gettext("If you want to keep some messages or documents, make sure to make them visible to another team or to everyone in your workspace before deleting the team.") %></p>
-        <div class="card-actions">
-          <%= submit gettext("Delete this team"), "data-micromodal-trigger": "modal-delete-team", class: "btn btn-red" %>
-        </div>
+      <p class="text-red-500"><i class="fas fa-exclamation-triangle text-red-500 mr-2"></i><b><%= gettext("Warning:") %></b> <%= gettext("The messages and documents that are only visible to this team will be deleted.") %></p>
+      <br><p><i class="fas fa-question-circle text-blue-500 mr-2"></i><%= gettext("If you want to keep some messages or documents, make sure to make them visible to another team or to everyone in your workspace before deleting the team.") %></p>
+      <div class="card-actions">
+        <%= submit gettext("Delete this team"), "data-micromodal-trigger": "modal-delete-team", class: "btn btn-red" %>
+      </div>
     </div>
   </div>
 </div>

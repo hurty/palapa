@@ -383,7 +383,7 @@ msgstr "Retour aux contacts"
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:18 lib/palapa_web/templates/member/_personal_information_form.html.leex:37
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:40 lib/palapa_web/templates/message/new.html.eex:18
 #: lib/palapa_web/templates/organization/new.html.eex:22 lib/palapa_web/templates/settings/member/members.html.leex:42
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:79 lib/palapa_web/templates/settings/workspace/show.html.eex:105
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:87 lib/palapa_web/templates/settings/workspace/show.html.eex:113
 #: lib/palapa_web/templates/team/edit.html.eex:12 lib/palapa_web/templates/team/edit.html.eex:47
 #: lib/palapa_web/templates/team/new.html.eex:12
 msgid "Cancel"
@@ -546,7 +546,7 @@ msgstr "Ce contact est une entreprise/organisation"
 #, elixir-format
 #: lib/palapa_web/templates/contact/form.html.leex:38
 msgid "Title / Position"
-msgstr "Titre / Rôle"
+msgstr "Fonction / Rôle"
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/payment_method/form.html.eex:25
@@ -1373,7 +1373,7 @@ msgstr "Ce membre n'a partagé aucun information personnelle avec vous."
 #, elixir-format
 #: lib/palapa_web/templates/member/_member_profile.html.leex:10
 msgid "Title, position, role..."
-msgstr "Poste, rôle, titre..."
+msgstr "Poste, fonction..."
 
 #, elixir-format
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:36
@@ -1596,7 +1596,7 @@ msgstr "Supprimer le membre"
 
 #, elixir-format
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:43
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:50 lib/palapa_web/templates/settings/workspace/show.html.eex:92
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:50 lib/palapa_web/templates/settings/workspace/show.html.eex:100
 msgid "Delete the workspace"
 msgstr "Supprimer l'espace de travail"
 
@@ -1740,7 +1740,7 @@ msgid "Workspace settings"
 msgstr "Paramètres de l'espace"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:103
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:111
 msgid "Yes, delete this workspace"
 msgstr "Oui, supprimer cet espace"
 
@@ -1750,7 +1750,7 @@ msgid "You already have an account?"
 msgstr "Vous avez déjà un compte ?"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:98
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:106
 msgid "You are about to delete the workspace and all its content. Are you sure?"
 msgstr "Vous êtes sur le point de supprimer cet espace de travail et tout son contenu. Etes-vous sûr?"
 
@@ -2238,7 +2238,7 @@ msgstr "Supprimer l'espace de travail supprimera de manière permanente tout ses
 
 #, elixir-format
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:25
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:33 lib/palapa_web/templates/settings/workspace/show.html.eex:66
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:33 lib/palapa_web/templates/settings/workspace/show.html.eex:74
 msgid "Leave the workspace"
 msgstr "Quitter l'espace de travail"
 
@@ -2253,12 +2253,12 @@ msgid "Submit"
 msgstr "Valider"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:77
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:85
 msgid "Yes, leave this workspace"
 msgstr "Oui, quitter cet espace"
 
 #, elixir-format
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:72
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:80
 msgid "You are about to leave the workspace. Are you sure?"
 msgstr "Vous êtes sur le point de quitter l'espace de travail. Etes-vous sûr ?"
 
@@ -2320,14 +2320,14 @@ msgstr "Ils peuvent inviter des personnes à rejoindre l'espace de travail, supp
 
 #, elixir-format
 #: lib/palapa_web/templates/contact/delete_modal.html.eex:8
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:68 lib/palapa_web/templates/settings/workspace/show.html.eex:94
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:76 lib/palapa_web/templates/settings/workspace/show.html.eex:102
 #: lib/palapa_web/templates/team/edit.html.eex:36
 msgid "Close modal"
 msgstr "Fermer la boîte de dialogue"
 
 #, elixir-format
 #: lib/palapa_web/templates/contact/delete_modal.html.eex:19
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:79 lib/palapa_web/templates/settings/workspace/show.html.eex:105
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:87 lib/palapa_web/templates/settings/workspace/show.html.eex:113
 #: lib/palapa_web/templates/team/edit.html.eex:47
 msgid "Close this dialog window"
 msgstr "Fermer cette boîte de dialogue"
@@ -2393,3 +2393,13 @@ msgstr "Vous êtes sur le point de supprimer l'équipe %{team}. Etes-vous sûr ?
 #: lib/palapa_web/controllers/team_controller.ex:57
 msgid "Your workspace"
 msgstr "Votre espace de travail"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:58
+msgid "Export workspace data"
+msgstr "Exporter les données"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:60
+msgid "We can export all your workspace data in the JSON format. This process is not fully automatic yet, please write to %{email} in order to request your archive."
+msgstr "Nous pouvons exporter toutes les données de votre espace de travail au format JSON. Ce processus n'est pour l'instant pas entièrement automatisé, merci de nous écrire à %{email} pour demander votre archive."
