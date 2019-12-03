@@ -48,12 +48,12 @@
 
 <div class="texture-pattern">
 
-  <h2 class="text-center text-2xl md:text-4xl text-black py-8">Get everyone on the same page</h2>
+  <h2 class="text-center text-lg md:text-4xl text-black py-8">Get everyone on the same page</h2>
 
 </div>
 
     <!---------------------------- MESSAGES --------------------------------->
-  <section class="flex flex-wrap mt-8 md:w-2/3 mx-auto my-8">
+  <section class="flex flex-wrap sm:p-8 max-w-6xl mx-auto">
     <div class="md:w-1/2 mx-auto sm:p-8 p-4">
       <div class="flex">
         <div data-feather="message-square" class="mr-2 text-green" style="width: 50px; height: 50px"></div>
@@ -82,11 +82,9 @@
       </div>
     </div>
 
-    <div class="flex-initial bg-white p-2 mt-8 -ml-2 rounded">
+    <div class="md:w-1/2 bg-white p-2 mt-8 -ml-2 rounded">
       <img src="<%= Routes.static_path(@conn, "/images/message.png") %>" alt="profile" class="shadow">
     </div>
-
-
   </section>
 
     <!---------------------------- DOCUMENTS --------------------------------->
