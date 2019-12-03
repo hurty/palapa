@@ -1,0 +1,15 @@
+<%= form_for @changeset, Routes.beta_subscription_path(@conn, :create),
+  [
+  class: "border border-grey-lighter max-w-md mx-auto text-center bg-gray-100 text-xs rounded-lg p-2 md:p-4 my-8"],
+  fn f -> %>
+
+  <div class="mx-auto items-center justify-center">
+    <div class="m-1 py-2">
+      <%= email_input f, :email, class: "mx-2 border rounded-lg md:text-lg p-2 w-64", placeholder: "Your email address" %>
+      <div class="text-sm text-red-500"><%= error_tag f, :email %></div>
+      <%= hidden_input f, :beta, value: true %>
+    </div>
+    <div class="m-1"><button type="submit" class="p-3 shadow bg-green-500 rounded-lg text-white font-bold text-sm">Join!</button></div>
+    <div class="text-xs py-2 w-2/3 mx-auto">You should receive your invitation within a few days.</div>
+  </div>
+<% end %>

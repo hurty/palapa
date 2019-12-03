@@ -1,0 +1,19 @@
+<%= form_for @changeset, Routes.beta_subscription_path(@conn, :create),
+  [
+  class: "border border-grey-lighter max-w-md mx-auto text-center bg-gray-100 text-xs rounded-lg p-2 md:p-4 my-8"],
+  fn f -> %>
+  <div class="text-lg text-indigo-800 font-bold">Palapa is coming soon!</div>
+
+  <div class="p-2 text-base md:text-sm font-bold text-black ">
+    Subscribe to the mailing list to be notified when Palapa goes live.
+  </div>
+
+  <div class="mx-auto items-center justify-center">
+    <div class="m-1 py-2">
+      <%= email_input f, :email, class: "mx-2 border rounded-lg md:text-lg p-2 w-64", placeholder: "Your email address" %>
+      <div class="text-sm text-red-500"><%= error_tag f, :email %></div>
+    </div>
+    <div class="m-1"><button type="submit" class="p-3 shadow bg-green-500 rounded-lg text-white font-bold text-sm">Notify me!</button></div>
+    <div class="text-xs py-2 w-2/3 mx-auto">Don't worry, you can unsubscribe easily at any time by clicking the link provided in every email we send.</div>
+  </div>
+<% end %>

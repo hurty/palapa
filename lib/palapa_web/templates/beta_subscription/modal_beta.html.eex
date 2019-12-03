@@ -1,0 +1,18 @@
+<div class="modal micromodal-slide" id="modal-beta" aria-hidden="true">
+  <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+    <div class="modal__container" role="dialog" aria-modal="true">
+      <header class="modal__header">
+        <h2 class="modal__title text-green-500 mx-auto">
+          Join the Beta!
+        </h2>
+        <button class="modal__close" data-micromodal-close></button>
+      </header>
+
+      <main class="modal__content">
+        <section>
+          <%= render("form_beta.html", assigns) %>
+        </section>
+      </main>
+    </div>
+  </div>
+</div>

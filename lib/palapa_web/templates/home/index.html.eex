@@ -1,1 +1,344 @@
-<h2 class="text-center font-bold text-xl">This is Palapa Beta !</h2>
+<section class="gradient-dark mb-8" oldstyle="background: #14223e;">
+  <div class="mx-auto md:max-w-6xl">
+    <div class="text-left mx-auto">
+      <div class="md:flex md:flex-wrap md:justify-center items-center">
+        <div class="md:w-6/12 p-4 sm:p-8">
+          <div class="mb-8">
+              <div class="text-lg">
+                <img src="<%= Routes.static_path(@conn, "/images/logo_palapa-x2.png") %>" alt="Palapa">
+              </div>
+          </div>
+
+          <div class="flex items-center">
+
+            <div>
+              <h2 class="font-extrabold rounded-full text-gray-200 text-4xl">Give your team a home</h2>
+            </div>
+          </div>
+          <p class="md:text-xl text-gray-200">Many applications do only one thing. Palapa makes it easy to build a simple intranet by keeping your <strong>discussions</strong>, <strong>documentation</strong> and <strong>contacts</strong> in one place.
+
+            <div class="text-left mt-16">
+              <a data-micromodal-trigger="modal-subscription" class="btn text-gray-100 bg-green-500" href="#">
+                Notify me when Palapa goes live
+              </a>
+            </div>
+
+            <div class="text-left mt-8">
+              <a data-micromodal-trigger="modal-beta" class="btn text-gray-100 bg-blue-500" href="#">
+                Join the beta
+              </a>
+            </div>
+            <%= render(PalapaWeb.BetaSubscriptionView, "modal_beta.html", assigns) %>
+            <%= render(PalapaWeb.BetaSubscriptionView, "modal_subscription.html", assigns) %>
+        </div>
+
+
+        <div class="hidden md:block md:w-6/12">
+          <img src="<%= Routes.static_path(@conn, "/images/cosmo_palapa.png") %>" class="rounded-full shadow-lg border-8 border-blue-900" alt="Palapa">
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </section>
+
+
+
+<div class="bg-white text-lg py-2">
+
+<div class="texture-pattern">
+
+  <h2 class="text-center text-lg sm:text-4xl text-black py-8">Get everyone on the same page</h2>
+
+</div>
+
+    <!---------------------------- MESSAGES --------------------------------->
+  <section class="flex mt-8 md:w-2/3 mx-auto my-8">
+    <div class="w-1/2 mx-auto sm:p-8 p-4">
+      <div class="flex">
+        <div data-feather="message-square" class="mr-2 text-green" style="width: 50px; height: 50px"></div>
+        <div class="self-center">
+          <h2 class="bg-indigo-800 font-bold text-2xl text-white font-extra-bold rounded-full px-4">Messages</h2>
+        </div>
+      </div>
+
+      <div class="text-left">
+        <p class="font-bold">What's up folks?</p>
+        <p>
+          The Message Board is the homepage of your organization. You can use it as an internal
+          blog or as a newsroom where
+          people can share
+          ideas, make announcements,
+          post pictures, link interesting articles or ask questions.
+        </p>
+
+        <p>
+          Messages can be published to your entire company or just to specific teams.
+        </p>
+
+        <div class="text-center max-w-sm mx-auto">
+          <img src="<%= Routes.static_path(@conn, "/images/teams.png") %>" alt="teams" class="border border-gray-200 rounded-lg">
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-initial bg-white p-2 mt-8 -ml-2 rounded">
+      <img src="<%= Routes.static_path(@conn, "/images/message.png") %>" alt="profile" class="shadow">
+    </div>
+
+
+  </section>
+
+    <!---------------------------- DOCUMENTS --------------------------------->
+
+    <section class="sm:p-8 text-green-darker texture-pattern">
+      <div class="text-left max-w-6xl mx-auto py-16">
+        <div class="flex flex-wrap items-center justify-between">
+          <div class="flex-inital md:w-2/5 p-8">
+            <div class="flex items-center">
+              <div data-feather="file" class="mr-2" style="width: 50px; height: 50px"></div>
+              <div class="self-center">
+                <h2 class="bg-indigo-800 font-bold text-2xl text-white font-extra-bold rounded-full px-4">Documents</h2>
+              </div>
+            </div>
+
+            <p class="font-bold">The knowledge base you keep referring to.</p>
+
+            <p>
+              Build up a cohesive knowledge base with Documents.
+              Store product specifications, technical documentation or make a nice employee handbook!</p>
+
+            <p>
+              Attach images, files and give some structure by splitting pages into sections.
+            </p>
+
+            <p>Palapa's Documents makes your content easy to navigate and easy to read on a
+              screen.</p>
+          </div>
+
+          <div class="flex-initial md:w-3/5 shadow-lg rounded p-2 bg-white">
+            <img src="<%= Routes.static_path(@conn, "/images/document.png") %>" alt="teams" class="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!---------------------------- PROFILES / CONTACT --------------------------------->
+
+    <section class="sm:p-8 max-w-6xl mx-auto">
+      <div class="flex flex-wrap justify-between items-center">
+        <div class="flex-initial md:w-2/3 p-8 items">
+          <div class="flex items-center">
+            <div data-feather="users" class="mr-2 text-green" style="width: 50px; height: 50px"></div>
+            <div class="self-center">
+              <h2 class="bg-indigo-800 font-bold text-2xl text-white rounded-full px-4">Contacts</h2>
+            </div>
+          </div>
+
+          <p>
+            Contacts often get scattered in multiple places, whether it's in everyone's personal phone or in a messy spreadsheet.
+          </p>
+
+          <p>
+            With Palapa you can store all your <strong>external contacts</strong> like customers, partners or suppliers. You can add notes to each contact to track your progress with them.
+          </p>
+
+          <p>
+            Every member of the workspace can also share personal informations on their
+            <strong>profile page</strong>. If they want to share sensitive information, they can decide who can see them.
+          </p>
+        </div>
+
+        <div class="p-4">
+          <img src="<%= Routes.static_path(@conn, "/images/contacts.png") %>" alt="teams">
+        </div>
+      </div>
+
+          <!---------------------------- UPCOMING --------------------------------->
+
+    <div class="mx-auto max-w-sm text-sm">
+
+        <div class="border-b bg-gray-100 rounded-lg p-4 md:p-8 rounded-lg text-blue-800">
+          <div class="flex items-center">
+            <div data-feather="calendar" class="mr-2 text-green" style="width: 50px; height: 50px"></div>
+            <div>
+              <h2 class="text-lg md:text-xl">Calendar</h2>
+              <h3 class="text-green-500 text-sm">Coming soon!</h3>
+            </div>
+          </div>
+
+          <p>
+            Never forget the company upcoming events!
+          </p>
+        </div>
+
+
+        <div class="mt-4 border-b bg-gray-100 rounded-lg p-4 md:p-8 rounded-lg text-blue-800">
+          <div class="flex items-center">
+            <div data-feather="check-circle" class="mr-2 text-green" style="width: 50px; height: 50px"></div>
+            <div>
+              <h2 class="text-lg md:text-xl">Reminders</h2>
+              <h3 class="text-green-500 text-sm">Coming soon!</h3>
+            </div>
+          </div>
+
+          <p>Everyday small requests often get lost. Assign tasks to your colleagues and Palapa will makes sure they don't forget you.</p>
+
+        </div>
+    </div>
+    </section>
+
+
+    <!---------------------------- TIDY / NOTIFICATIONS --------------------------------->
+    <section class="mt-12 text-left mx-auto max-w-3xl">
+      <div class="flex flex-wrap justify-between items-top">
+        <div class="md:w-1/2 flex-initial p-4 md:p-8 rounded-lg">
+          <div class="flex items-center">
+            <div data-feather="sun" class="mr-2 text-indigo" style="width: 50px; height: 50px"></div>
+            <div>
+              <h2 class="text-lg md:text-xl text-indigo">Focus</h2>
+            </div>
+          </div>
+
+          <p>
+            Chat applications are great when you need quick feedback.
+            They're not so great though when it's your only tool to communicate. People constantly get interrupted
+            and the fear of missing out is building up.
+          </p>
+
+          <p>
+            Palapa guides you towards a simple and structured way to share
+            knowledge and offers more options to work asynchronously.
+          </p>
+
+          <p>
+            That's less streams of chat lines without context, less notifications. Less stress too.
+          </p>
+        </div>
+
+        <div class="md:w-1/2 flex-initial p-4 md:p-8 bg-yellow-100 rounded-lg">
+          <div class="flex items-center">
+            <div data-feather="bell-off" class="mr-2 text-indigo" style="width: 50px; height: 50px"></div>
+            <div>
+              <h2 class="text-lg md:text-xl text-indigo">Avoid death by notifications</h2>
+            </div>
+          </div>
+
+          <p>Our brains are constantly overloaded by useless notifications about tiny details. It's getting hard to
+            find flow when everything is popping up</p>
+
+          <p>We don't want Palapa to become your next addiction. You have work to do. We don't want to keep you in
+            the dark either. That's why we send you a <strong>daily recap by email</strong> with only the important
+            information.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="md:w-4/5 mx-auto ">
+      <%= render "pricing.html", assigns %>
+    </section>
+
+    <!---------------------------- THE BASICS --------------------------------->
+
+    <div class="flex flex-wrap md:w-4/5 mx-auto">
+    <div class="md:w-1/2">
+      <div class="p-8 text-2xl md:text-3xl font-bold text-green-500 text-center mt-8">
+        <div class="inline" data-feather="feather" style="width: 100px; height: 100px"></div>
+        <h3>The basics, as they should be.</h3>
+      </div>
+
+      <ul class="list-reset md:text-xl text-green-800 text-center">
+        <li class="">
+          The basics in the same app.
+        </li>
+
+        <li class="">
+          Clear and intuitive UI.
+        </li>
+
+        <li class="">
+          Simple authorization system organized around teams.
+        </li>
+
+        <li class="">
+          Blazing fast.
+        </li>
+
+        <li class="">
+          Simple pricing.
+        </li>
+
+        <li class="">
+          Nothing to install. Nothing to update, Nothing to backup. We take care of everything.
+        </li>
+
+        <li class="">
+          14 days free trial.
+        </li>
+
+        <li class="">
+          Pay every month. Cancel anytime.
+        </li>
+      </ul>
+    </div>
+
+    <div class="md:w-1/2">
+      <div class="p-8 text-2xl md:text-3xl font-bold text-red-500 mt-8 text-center">
+        <div class="inline" data-feather="x" style="width: 100px; height: 100px"></div>
+        <h3>No fluff. No trick.</h3>
+      </div>
+
+      <ul class="list-reset md:text-xl text-red-800 text-center ">
+        <li class="">
+          <strike>Notifications everytime someone moves the finger.</strike>
+        </li>
+
+        <li class="">
+          <strike>Meaningless graphs and metrics.</strike>
+        </li>
+
+        <li class="">
+          <strike>"Like" buttons, rankings and winners' podium.</strike>
+        </li>
+
+        <li class="">
+          <strike>Hidden fees.</strike>
+        </li>
+
+        <li class="">
+          <strike>Long term contract.</strike>
+        </li>
+
+        <li class="">
+          <strike>Selling your data to third parties.</strike>
+        </li>
+
+        <li class="">
+          <strike>Obscure cancellation process.</strike>
+        </li>
+      </ul>
+    </div>
+
+    </div>
+  </div>
+
+  <section class="text-center">
+    <img
+      src="<%= Routes.static_path(@conn, "/images/europe.svg") %>"
+      alt="Europe"
+      class="inline"
+      width="50px" />
+    <h3 class="text-blue text-xl">Hosted in Europe</h3>
+    <h3 class="text-indigo-800 text-xl">Email support in English and French</h3>
+  </section>
+
+  <section id="subscribe">
+    <%= render(PalapaWeb.BetaSubscriptionView, "form.html", assigns) %>
+  </section>
+
+  <div class="text-center text-sm my-8">
+    <div class="pt-2">© 2019 Palapa, all right reserved.</div>
+    <div class="pt-2">Cosmonaut illustration <a href="http://www.freepik.com" class="text-gray-800">designed by Freepik</a></div>
+    <%= link "Legal notice and privacy policy", to: Routes.home_path(@conn, :legal), class: "text-gray-800" %>
+  </div>
+</div>

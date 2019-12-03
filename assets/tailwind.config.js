@@ -91,18 +91,18 @@ module.exports = {
         700: "#2b6cb0",
         800: "#2c5282",
         900: "#2a4365"
-      }
-      // indigo: {
-      //   100: "#ebf4ff",
-      //   200: "#c3dafe",
-      //   300: "#a3bffa",
-      //   400: "#7f9cf5",
-      //   500: "#667eea",
-      //   600: "#5a67d8",
-      //   700: "#4c51bf",
-      //   800: "#434190",
-      //   900: "#3c366b"
-      // },
+      },
+      indigo: {
+        100: "#ebf4ff",
+        200: "#c3dafe",
+        300: "#a3bffa",
+        400: "#7f9cf5",
+        500: "#667eea",
+        600: "#5a67d8",
+        700: "#4c51bf",
+        800: "#434190",
+        900: "#3c366b"
+      },
       // purple: {
       //   100: "#faf5ff",
       //   200: "#e9d8fd",
@@ -110,8 +110,8 @@ module.exports = {
       //   400: "#b794f4",
       //   500: "#9f7aea",
       //   600: "#805ad5",
-      //   700: "#6b46c1",
-      //   800: "#553c9a",
+      // 700: "#6b46c1",
+      // 800: "#553c9a",
       //   900: "#44337a"
       // },
       // pink: {
@@ -183,14 +183,10 @@ module.exports = {
       "8": "8px"
     },
     boxShadow: {
-      default:
-        "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
-      md:
-        "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-      lg:
-        "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-      xl:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      default: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
+      md: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+      lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+      xl: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
       "2xl": "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
       inner: "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)",
       outline: "0 0 0 3px rgba(66, 153, 225, 0.5)",
@@ -302,7 +298,9 @@ module.exports = {
       disc: "disc",
       decimal: "decimal"
     },
-    margin: (theme, { negative }) => ({
+    margin: (theme, {
+      negative
+    }) => ({
       auto: "auto",
       ...theme("spacing"),
       ...negative(theme("spacing"))

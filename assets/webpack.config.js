@@ -11,15 +11,16 @@ module.exports = (env, options) => ({
     minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({})]
   },
   entry: {
-    "./js/app.js": ["./js/app.js"].concat(glob.sync("./vendor/**/*.js"))
+    "app": ["./js/app.js"].concat(glob.sync("./vendor/**/*.js")),
+    "app_front": "./js/app_front.js"
+
   },
   output: {
-    filename: "app.js",
+    filename: '[name].js',
     path: path.resolve(__dirname, "../priv/static/js")
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
@@ -33,7 +34,13 @@ module.exports = (env, options) => ({
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: "../css/app.css" }),
-    new CopyWebpackPlugin([{ from: "static/", to: "../" }])
+    new MiniCssExtractPlugin({
+      filename: '../css/[name].css',
+      chunkFilename: "../css/[name].css"
+    }),
+    new CopyWebpackPlugin([{
+      from: "static/",
+      to: "../"
+    }])
   ]
 });

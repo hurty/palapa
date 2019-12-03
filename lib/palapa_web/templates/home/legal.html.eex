@@ -1,0 +1,39 @@
+<div class="p-8 max-w-lg mx-auto">
+  <h1>Mentions légales</h1>
+
+  <p>Pierre Hurtevent est le gérant et directeur de publication du site palapa.io.</p>
+  <p>SIRET 81272682600017</p>
+
+  <h2>Contact</h2>
+
+  <div>
+  Palapa
+  <br>28 rue Saint-Antoine
+  <br>44000 Nantes
+  </div>
+
+  <br>
+  Email : pierre@palapa.io
+  <br>
+  Téléphone : +33 2 40 48 74 50
+
+  <h2>Hebergement</h2>
+
+  Le site palapa.io est hébergé par <a href="https://www.clever-cloud.com">Clever Cloud</a> dans un centre de données situé en France.
+
+  <h1>Politique de confidentialité</h1>
+
+  <h2>Cookies et données collectées</h1>
+
+  <p>
+  Palapa.io utilise le service <a href="https://analytics.google.com">Google Analytics</a> pour mesurer
+  son audience et dépose à cette fin des cookies sur votre ordinateur.
+  </p>
+
+  <p>L'unique donnée personnelle collectée par le site palapa.io est l'adresse email des utilisateurs souhaitant s'inscrire explicitement à la liste de diffusion.</p>
+  <p>Ces données sont utilisées pour prévenir du lancement du service Palapa.io quand ce dernier sera prêt.</p>
+  <p>Pierre Hurtevent est le seul destinataire de ces données. Il s’engage à ne pas conserver les données au-delà de la durée strictement nécessaire aux finalités poursuivies.</p>
+  <p>Tout personne s'étant inscrite à la liste de diffusion peut à tout moment se désinscrire soit par simple demande à l'email de contact, soit en cliquant sur le lien de désinscription présent dans chaque email envoyé.</p>
+
+  <%= link "Retour à l'accueil", to: Routes.home_path(@conn, :index) %>
+</div>

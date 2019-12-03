@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta name="description" content="Palapa is your team headquarters. Get multiple collaborative tools such as a Message Board, a Knowledge Base, and a Contact Book in the same application. Each one remaining super simple to use with only the essential features.">
+    <meta name="author" content="Palapa">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
+
+    <%# Google analytics %>
+    <%= if Application.get_env(:palapa_teaser, :env) == :prod do %>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126862170-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-126862170-1');
+      </script>
+    <% end %>
+
+    <title>Palapa, your team headquarters</title>
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app_front.css") %>">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+  </head>
+
+  <body class="leading-normal text-gray-900">
+    <%= render @view_module, @view_template, assigns %>
+    <script src="<%= Routes.static_path(@conn, "/js/app_front.js") %>"></script>
+  </body>
+</html>

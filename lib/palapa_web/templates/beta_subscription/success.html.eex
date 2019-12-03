@@ -1,0 +1,12 @@
+<div class="my-12 max-w-md mx-auto text-center">
+  <img src="<%= Routes.static_path(@conn, "/images/logo_palapa-x2.png") %>" alt="Palapa" class="inline">
+
+  <h2 class="text-green-500">Thanks for subscribing!</h2>
+  <%= if @beta do %>
+    <p>You should receive your invitation at <strong><%= @email %></strong> very soon.</p>
+  <% else %>
+    <p>We will notify you at <strong><%= @email %></strong> when Palapa goes live.</p>
+  <% end %>
+
+  <%= link "Back to the homepage", to: Routes.home_path(@conn, :index), class: "underline text-blue-500" %>
+</div>

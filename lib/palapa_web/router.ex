@@ -18,6 +18,10 @@ defmodule PalapaWeb.Router do
     plug(:enforce_authentication)
   end
 
+  pipeline :disable_feature do
+    plug(PalapaWeb.DisableFeature)
+  end
+
   pipeline :billing do
     plug(:enforce_billing)
   end
@@ -44,8 +48,14 @@ defmodule PalapaWeb.Router do
     pipe_through(:browser)
 
     get("/", HomeController, :index)
+    get("/legal", HomeController, :legal)
+    resources("/beta_subscriptions", BetaSubscriptionController, only: [:index, :create])
 
-    resources("/registrations", RegistrationController, only: [:new, :create])
+    scope "/" do
+      pipe_through(:disable_feature)
+      resources("/registrations", RegistrationController, only: [:new, :create])
+    end
+
     resources("/sessions", SessionController, only: [:new, :create, :delete], singleton: true)
 
     resources("/password_reset", PasswordResetController,
@@ -59,6 +69,7 @@ defmodule PalapaWeb.Router do
     post("/stripe_webhooks", Billing.StripeWebhookController, :create)
   end
 
+  # Documents public sharing
   scope(path: "/public", as: :public, alias: PalapaWeb.Public) do
     pipe_through(:browser)
 
