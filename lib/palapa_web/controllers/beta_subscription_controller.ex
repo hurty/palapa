@@ -6,16 +6,21 @@ defmodule PalapaWeb.BetaSubscriptionController do
   plug(:put_layout, "home.html")
 
   def create(conn, %{"subscription" => subscription}) do
-    case(
-      Subscription.changeset(%Subscription{}, subscription)
-      |> Repo.insert(on_conflict: :replace_all, conflict_target: :email)
-    ) do
+    changeset = Subscription.changeset(%Subscription{}, subscription)
+    beta = Ecto.Changeset.get_field(changeset, :beta)
+
+    status =
+      if beta do
+        Repo.insert(changeset, on_conflict: :replace_all, conflict_target: :email)
+      else
+        Repo.insert(changeset, on_conflict: :nothing)
+      end
+
+    case status do
       {:ok, subscription} ->
         render(conn, "success.html", email: subscription.email, beta: subscription.beta)
 
       {:error, changeset} ->
-        beta = Ecto.Changeset.get_field(changeset, :beta)
-
         if beta do
           render(conn, "form_beta.html", changeset: changeset)
         else
