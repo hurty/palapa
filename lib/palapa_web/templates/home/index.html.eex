@@ -1,5 +1,10 @@
 <section class="gradient-dark mb-8" oldstyle="background: #14223e;">
+  <div class="float-right p-4">
+  <%= link(gettext("Sign in"), to: Routes.session_path(@conn, :new), class: "btn text-gray-100 bg-green-500") %>
+  </div>
+
   <div class="mx-auto md:max-w-6xl">
+
     <div class="text-left mx-auto">
       <div class="md:flex md:flex-wrap md:justify-center items-center">
         <div class="md:w-6/12 p-4 sm:p-8">
