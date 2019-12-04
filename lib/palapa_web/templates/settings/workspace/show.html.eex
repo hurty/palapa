@@ -34,7 +34,7 @@
             </button>
           </div>
         <% else %>
-        <p>You cannot leave the workspace if you are the only "Owner" of the workspace.</p>
+        <p><%= gettext("You cannot leave the workspace if you are the only owner of the workspace.") %></p>
         <% end %>
       </div>
 

@@ -382,7 +382,7 @@ msgstr "Retour aux contacts"
 #: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:63 lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:9
 #: lib/palapa_web/templates/invitation/_invitation.html.eex:18 lib/palapa_web/templates/member/_personal_information_form.html.leex:37
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:40 lib/palapa_web/templates/message/new.html.eex:18
-#: lib/palapa_web/templates/organization/new.html.eex:22 lib/palapa_web/templates/settings/member/members.html.leex:42
+#: lib/palapa_web/templates/organization/new.html.eex:23 lib/palapa_web/templates/settings/member/members.html.leex:42
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:87 lib/palapa_web/templates/settings/workspace/show.html.eex:113
 #: lib/palapa_web/templates/team/edit.html.eex:12 lib/palapa_web/templates/team/edit.html.eex:47
 #: lib/palapa_web/templates/team/new.html.eex:12
@@ -413,7 +413,7 @@ msgid "Contacts"
 msgstr "Contacts"
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/index.html.leex:79
+#: lib/palapa_web/templates/contact/index.html.leex:95
 #: lib/palapa_web/templates/contact/index_blankslate.html.eex:12
 msgid "Create your first contact"
 msgstr "Créez votre premier contact"
@@ -471,13 +471,13 @@ msgid "Mobile phone"
 msgstr "Téléphone portable"
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/index.html.leex:12
+#: lib/palapa_web/templates/contact/index.html.leex:30
 #: lib/palapa_web/templates/contact/new.html.leex:10
 msgid "New contact"
 msgstr "Nouveau contact"
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/index.html.leex:61
+#: lib/palapa_web/templates/contact/index.html.leex:77
 msgid "No contacts found"
 msgstr "Aucun contact correspondant trouvé"
 
@@ -524,7 +524,7 @@ msgid "Saving..."
 msgstr "Enregistrement..."
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/index.html.leex:21
+#: lib/palapa_web/templates/contact/index.html.leex:37
 msgid "Search contacts"
 msgstr "Rechercher des contacts"
 
@@ -586,7 +586,7 @@ msgid "You are about to delete %{contact}. Are you sure?"
 msgstr "Vous êtes sur le point de supprimer %{contact}. Etes-vous sûr?"
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/index.html.leex:74
+#: lib/palapa_web/templates/contact/index.html.leex:90
 #: lib/palapa_web/templates/contact/index_blankslate.html.eex:7
 msgid "You don't have any contact"
 msgstr "Vous n'avez aucun contact"
@@ -1185,7 +1185,7 @@ msgstr "Créer"
 
 #, elixir-format
 #: lib/palapa_web/templates/layout/_public_navigation.html.eex:16
-#: lib/palapa_web/templates/organization/new.html.eex:21
+#: lib/palapa_web/templates/organization/new.html.eex:22
 msgid "Create workspace"
 msgstr "Créer un espace de travail"
 
@@ -1575,7 +1575,7 @@ msgid "Contact"
 msgstr "Contact"
 
 #, elixir-format
-#: lib/palapa_web/templates/registration/_form.html.eex:39
+#: lib/palapa_web/templates/registration/_form.html.eex:40
 msgid "Create a new account"
 msgstr "Créer un nouveau compte"
 
@@ -1642,7 +1642,7 @@ msgid "Invoices will be sent to:"
 msgstr "Les factures seront envoyées à"
 
 #, elixir-format
-#: lib/palapa_web/templates/registration/_form.html.eex:42
+#: lib/palapa_web/templates/registration/_form.html.eex:43
 msgid "Log in!"
 msgstr "Se connecter !"
 
@@ -1745,7 +1745,7 @@ msgid "Yes, delete this workspace"
 msgstr "Oui, supprimer cet espace"
 
 #, elixir-format
-#: lib/palapa_web/templates/registration/_form.html.eex:42
+#: lib/palapa_web/templates/registration/_form.html.eex:43
 msgid "You already have an account?"
 msgstr "Vous avez déjà un compte ?"
 
@@ -1876,7 +1876,7 @@ msgid "Invitations have been sent"
 msgstr "Les invitations ont été envoyées"
 
 #, elixir-format
-#: lib/palapa_web/controllers/registration_controller.ex:24
+#: lib/palapa_web/controllers/registration_controller.ex:42
 msgid "It seems you already have a Palapa account. Please sign in first to create a new workspace"
 msgstr "Il semble que vous avez déjà un compte Palapa"
 
@@ -2207,7 +2207,7 @@ msgid "You have been invited to join \"%{workspace}\""
 msgstr "Vous êtes invité à rejoindre \"%{workspace}\""
 
 #, elixir-format
-#: lib/palapa/messages/messages.ex:229
+#: lib/palapa/messages/messages.ex:228
 msgid "Choose at least one team"
 msgstr "Choisissez au moins une équipe"
 
@@ -2403,3 +2403,13 @@ msgstr "Exporter les données"
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:60
 msgid "We can export all your workspace data in the JSON format. This process is not fully automatic yet, please write to %{email} in order to request your archive."
 msgstr "Nous pouvons exporter toutes les données de votre espace de travail au format JSON. Ce processus n'est pour l'instant pas entièrement automatisé, merci de nous écrire à %{email} pour demander votre archive."
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/index.html.leex:19
+msgid "Export all contacts (CSV)"
+msgstr "Exporter tous les contacts (CSV)"
+
+#, elixir-format
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:37
+msgid "You cannot leave the workspace if you are the only owner of the workspace."
+msgstr "Vous ne pouvez pas quitter l'espace de travail si vous en êtes le seul propriétaire."

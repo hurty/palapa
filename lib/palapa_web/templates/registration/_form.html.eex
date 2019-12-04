@@ -34,6 +34,7 @@
   </div>
 
   <%= hidden_input f, :timezone, "data-controller": "timezone" %>
+  <%= hidden_input f, :invitation, value: @beta_subscription.invitation %>
 
   <div class="card-actions">
     <%= submit gettext("Create a new account"), class: "btn btn-green", tabindex: 1 %>

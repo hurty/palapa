@@ -1,4 +1,4 @@
-defmodule Palapa.Invitations.InvitationsTest do
+defmodule Palapa.ExporterTest do
   use Palapa.DataCase
   alias Palapa.Exporter
   import Palapa.Factory

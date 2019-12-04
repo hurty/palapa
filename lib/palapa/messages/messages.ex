@@ -215,8 +215,7 @@ defmodule Palapa.Messages do
   end
 
   defp put_teams(changeset, teams) do
-    published_to_everyone =
-      get_field(changeset, :published_to_everyone) |> IO.inspect(label: "PTE")
+    published_to_everyone = get_field(changeset, :published_to_everyone)
 
     cond do
       is_nil(published_to_everyone) ->

@@ -1,16 +1,41 @@
 defmodule PalapaWeb.RegistrationController do
   use PalapaWeb, :controller
   alias Palapa.Accounts.{Registrations, Registration}
+  alias Palapa.Repo
 
   plug(:put_layout, "public.html")
 
-  def new(conn, _params) do
-    render(conn, "new.html", changeset: Registrations.change(%Registration{}))
+  # TODO: remove invitation after beta phase
+  def new(conn, %{"invitation" => invitation}) do
+    beta_subscription =
+      Palapa.Beta.Subscription
+      |> Repo.get_by!(invitation: invitation, used: false)
+
+    render(conn, "new.html",
+      changeset: Registrations.change(%Registration{}),
+      beta_subscription: beta_subscription
+    )
   end
 
+  # TODO: Throw away after beta phase
+  def new(conn, _params) do
+    conn
+    |> resp(
+      403,
+      "Sorry, multiple workspaces creation is disabled during the Beta phase. Please use your invitation link to create your workspace."
+    )
+  end
+
+  # TODO: remove invitation after beta phase
   def create(conn, %{"registration" => registration_params}) do
+    beta_subscription =
+      Palapa.Beta.Subscription
+      |> Repo.get_by!(invitation: registration_params["invitation"], used: false)
+
     case Registrations.create(registration_params) do
       {:ok, result} ->
+        beta_subscription |> Ecto.Changeset.change(%{used: true}) |> Repo.update()
+
         conn
         |> PalapaWeb.Authentication.start_session(result.account)
         |> redirect(
@@ -28,7 +53,10 @@ defmodule PalapaWeb.RegistrationController do
         |> redirect(to: Routes.session_path(conn, :new))
 
       {:error, _failed_operation, changeset, _changes_so_far} ->
-        render(conn, "new.html", changeset: %{changeset | action: :insert})
+        render(conn, "new.html",
+          changeset: %{changeset | action: :insert},
+          beta_subscription: beta_subscription
+        )
     end
   end
 end

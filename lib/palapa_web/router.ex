@@ -50,12 +50,7 @@ defmodule PalapaWeb.Router do
     get("/", HomeController, :index)
     get("/legal", HomeController, :legal)
     resources("/beta_subscriptions", BetaSubscriptionController, only: [:index, :create])
-
-    scope "/" do
-      pipe_through(:disable_feature)
-      resources("/registrations", RegistrationController, only: [:new, :create])
-    end
-
+    resources("/registrations", RegistrationController, only: [:new, :create])
     resources("/sessions", SessionController, only: [:new, :create, :delete], singleton: true)
 
     resources("/password_reset", PasswordResetController,
