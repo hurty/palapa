@@ -56,5 +56,12 @@ defmodule Palapa.RichText.TrixScrubber do
     "data-trix-attributes"
   ])
 
+  Meta.allow_tag_with_these_attributes("embedded-attachment", [
+    "content_type",
+    "width",
+    "height",
+    "url"
+  ])
+
   Meta.strip_everything_not_covered()
 end

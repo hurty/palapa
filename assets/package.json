@@ -19,7 +19,7 @@
     "popper.js": "^1.14",
     "stimulus": "^1.1.1",
     "@stimulus/polyfills": "1.1.1",
-    "trix": "^1.2.0"
+    "trix": "^1.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.7",

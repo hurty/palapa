@@ -75,6 +75,7 @@
   grid-area: header;
   background-color: #fafafa;
   height: auto;
+  z-index: 100;
 }
 
 /* Don't make the header sticky on small screens */
@@ -83,6 +84,7 @@
     position: sticky;
     position: -webkit-sticky;
     top: 0;
+    z-index: 100;
   }
 }
 

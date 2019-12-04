@@ -18,7 +18,10 @@ defmodule PalapaWeb.OrganizationController do
   end
 
   def create(conn, %{"organization" => attrs}) do
-    case Organizations.create(attrs, current_account(conn)) do
+    # Needed to know in which language we have to generate the welcome message
+    locale = get_session(conn, :locale)
+
+    case Organizations.create(attrs, current_account(conn), locale) do
       {:ok, %{organization: organization}} ->
         redirect(conn, to: Routes.subscription_path(conn, :new, organization))
 

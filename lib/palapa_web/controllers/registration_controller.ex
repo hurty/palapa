@@ -32,7 +32,9 @@ defmodule PalapaWeb.RegistrationController do
       Palapa.Beta.Subscription
       |> Repo.get_by!(invitation: registration_params["invitation"], used: false)
 
-    case Registrations.create(registration_params) do
+    locale = get_session(conn, :locale)
+
+    case Registrations.create(registration_params, locale) do
       {:ok, result} ->
         beta_subscription |> Ecto.Changeset.change(%{used: true}) |> Repo.update()
 

@@ -37,7 +37,7 @@ defmodule Palapa.Organizations do
     Repo.get!(Organization, id)
   end
 
-  def create(organization_attrs, creator_account) do
+  def create(organization_attrs, creator_account, locale) do
     Ecto.Multi.new()
     |> Ecto.Multi.run(:organization, fn repo, _changes ->
       %Organization{}
@@ -58,6 +58,9 @@ defmodule Palapa.Organizations do
         organization: organization,
         author: member
       }
+    end)
+    |> Ecto.Multi.run(:welcome_message, fn _repo, %{organization: organization} ->
+      Palapa.PublicSeeds.seed(organization, locale)
     end)
     |> Repo.transaction()
   end

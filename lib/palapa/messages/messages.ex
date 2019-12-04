@@ -122,6 +122,24 @@ defmodule Palapa.Messages do
     end
   end
 
+  def create_system_message(organization, attrs) do
+    message_changeset =
+      %Message{}
+      |> Message.changeset(attrs)
+      |> put_change(:organization_id, organization.id)
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:message, message_changeset)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{message: message}} ->
+        {:ok, message}
+
+      {:error, _action, changeset, _changes} ->
+        {:error, changeset}
+    end
+  end
+
   def change(%Message{} = message) do
     message
     |> Repo.preload([:attachments])

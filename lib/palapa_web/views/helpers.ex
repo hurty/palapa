@@ -100,30 +100,45 @@ defmodule PalapaWeb.Helpers do
     end
   end
 
-  def avatar(account, size \\ :sm) do
-    url = Palapa.Avatar.url({account.avatar, account}, :thumb, signed: true)
+  def avatar(account, size \\ :sm)
 
-    classes =
-      case size do
-        :md -> "avatar avatar--md"
-        :sm -> "avatar avatar--sm"
-        :xs -> "avatar avatar--xs"
-        _ -> "avatar avatar--sm"
-      end
+  def avatar(account_name, size) when is_binary(account_name) do
+    avatar_initials = initials(account_name)
+    bg_color = avatar_color(account_name)
+
+    content_tag(:span, avatar_initials,
+      class: avatar_classes(size),
+      style: "background-color: #{bg_color};",
+      title: account_name,
+      alt: account_name
+    )
+  end
+
+  def avatar(account, size) do
+    url = Palapa.Avatar.url({account.avatar, account}, :thumb, signed: true)
 
     title = account.name
     avatar_initials = initials(account.name)
     bg_color = avatar_color(account.name)
 
     if url do
-      content_tag(:image, nil, class: classes, src: url)
+      content_tag(:image, nil, class: avatar_classes(size), src: url)
     else
       content_tag(:span, avatar_initials,
-        class: classes,
+        class: avatar_classes(size),
         style: "background-color: #{bg_color};",
         title: title,
         alt: title
       )
+    end
+  end
+
+  defp avatar_classes(size) do
+    case size do
+      :md -> "avatar avatar--md"
+      :sm -> "avatar avatar--sm"
+      :xs -> "avatar avatar--xs"
+      _ -> "avatar avatar--sm"
     end
   end
 

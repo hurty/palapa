@@ -14,7 +14,7 @@ defmodule Palapa.Accounts.Registrations do
     - password
     - organization_name
   """
-  def create(attrs \\ %{}) do
+  def create(attrs, locale) do
     changeset = Registration.changeset(%Registration{}, attrs)
     account_attrs = Map.take(changeset.changes, [:email, :name, :password, :timezone])
 
@@ -41,7 +41,7 @@ defmodule Palapa.Accounts.Registrations do
       Accounts.create(account_attrs)
     end)
     |> Ecto.Multi.run(:organization_membership, fn _repo, %{account: account} ->
-      Organizations.create(organization_attrs, account)
+      Organizations.create(organization_attrs, account, locale)
     end)
     |> Ecto.Multi.run(:daily_email, fn _, %{account: account} ->
       Events.schedule_daily_email(account)

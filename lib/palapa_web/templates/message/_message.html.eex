@@ -1,20 +1,31 @@
 <li class="border-b p-2 py-4 lg:p-8">
   <div class="flex">
     <div class="w-16 mx-2">
-      <%= Helpers.avatar(@message.creator.account, :small) %>
+      <%= if @message.creator do %>
+        <%= Helpers.avatar(@message.creator.account, :small) %>
+      <% else %>
+        <%= Helpers.avatar("Palapa", :small) %>
+      <% end %>
     </div>
 
     <div class="w-3/4 text-xs text-gray-700 my-auto">
       <h3><%= link @message.title, to: Routes.message_path(@conn, :show, @current_organization, @message), class: "text-green-500 text-sm lg:text-base hover:underline" %></h3>
-      <%= link @message.creator.account.name, to: Routes.member_path(@conn, :show, @current_organization, @message.creator.id), class: "text-gray-700 font-bold hover:underline" %>
+
+      <%# Messages without creator are automated messages created by the system %>
+      <%= if @message.creator do %>
+        <%= link @message.creator.account.name, to: Routes.member_path(@conn, :show, @current_organization, @message.creator.id), class: "text-gray-700 font-bold hover:underline" %>
+      <% else %>
+        <h3 class="text-gray-700 font-bold">Palapa</h3>
+      <% end %>
+
       <div class="text-xs text-gray-700 font-light">
-        Posted <%= Helpers.auto_format_datetime(@conn, @message.inserted_at) %>
+        <%= raw gettext("Posted %{time}", %{time: safe_to_string(Helpers.auto_format_datetime(@conn, @message.inserted_at))}) %>
       </div>
 
       <%= if @message.content do %>
         <div class="border rounded-full border-gray-400 w-1/6 my-4"></div>
-        <%= link to: Routes.message_path(@conn, :show, @current_organization, @message), class: "text-base text-blue-700 leading-normal mt-1" do %>
-          <p><%= excerpt(@message.content) %></p>
+        <%= link to: Routes.message_path(@conn, :show, @current_organization, @message), class: "text-sm text-blue-700 leading-normal mt-1" do %>
+          <p><%=raw excerpt(@message.content) %></p>
         <% end %>
       <% end %>
 

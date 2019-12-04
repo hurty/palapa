@@ -3,7 +3,7 @@ defmodule PalapaWeb.MessageView do
 
   alias Palapa.RichText
 
-  @excerpt_length 700
+  @excerpt_length 400
 
   def excerpt(content) when is_nil(content), do: nil
 
