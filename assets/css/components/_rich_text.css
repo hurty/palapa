@@ -4,16 +4,16 @@
 
   h1 {
     @apply text-xl font-bold;
-    @apply mt-8;
+    @apply mt-2;
   }
 
   h2 {
     @apply text-lg font-bold;
-    @apply mt-4;
+    @apply mt-2;
   }
 
-  p {
-    @apply my-1;
+  div {
+    @apply my-2;
   }
 
   a {
