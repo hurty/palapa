@@ -84,7 +84,7 @@ defmodule Palapa.Teams do
 
     %Team{organization_id: organization.id}
     |> Team.create_changeset(attrs)
-    |> put_assoc(:members, team_members)
+    |> Team.put_members(team_members)
     |> Repo.insert()
   end
 
@@ -94,7 +94,7 @@ defmodule Palapa.Teams do
 
     team
     |> Team.changeset(attrs)
-    |> put_assoc(:members, team_members)
+    |> Team.put_members(team_members)
     |> Repo.update()
   end
 

@@ -1,5 +1,6 @@
 defmodule Palapa.Teams.Team do
   use Palapa.Schema
+  import Palapa.Gettext
 
   alias Palapa.Organizations
   alias Palapa.Teams.{Team, TeamMember}
@@ -23,7 +24,7 @@ defmodule Palapa.Teams.Team do
     |> unsafe_validate_unique(
       [:name, :organization_id],
       Palapa.Repo,
-      message: "This team already exists"
+      message: gettext("This team already exists")
     )
   end
 
@@ -33,6 +34,14 @@ defmodule Palapa.Teams.Team do
     |> cast(attrs, [:organization_id])
     |> validate_required([:organization_id])
     |> foreign_key_constraint(:organization_id)
+  end
+
+  def put_members(changeset, members) do
+    if Enum.empty?(members) do
+      add_error(changeset, :members, gettext("Choose at least one member"))
+    else
+      put_assoc(changeset, :members, members)
+    end
   end
 end
 

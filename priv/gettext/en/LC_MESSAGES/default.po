@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/palapa_web/templates/message/_message.html.eex:24
+#: lib/palapa_web/templates/message/_message.html.eex:35
 #: lib/palapa_web/templates/message_comment/_comments_count.html.eex:3
 msgid "%{count} comment"
 msgid_plural "%{count} comments"
@@ -832,7 +832,8 @@ msgid "Post suggestion"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/suggestion_comment/suggestion_comment.html.eex:12
+#: lib/palapa_web/templates/document/suggestion_comment/suggestion_comment.html.eex:12 lib/palapa_web/templates/message/_message.html.eex:22
+#: lib/palapa_web/templates/message/_show_toolbar.html.eex:16
 msgid "Posted %{time}"
 msgstr ""
 
@@ -1427,12 +1428,12 @@ msgid "Are you sure you want to delete this comment?"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/message/_show_toolbar.html.eex:31
+#: lib/palapa_web/templates/message/_show_toolbar.html.eex:39
 msgid "Delete message"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/message/_show_toolbar.html.eex:24
+#: lib/palapa_web/templates/message/_show_toolbar.html.eex:32
 #: lib/palapa_web/templates/message/edit.html.eex:4
 msgid "Edit message"
 msgstr ""
@@ -1780,7 +1781,7 @@ msgid "An error occured while updating your profile."
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/organization_controller.ex:45
+#: lib/palapa_web/controllers/organization_controller.ex:48
 msgid "An error occurred while deleting the workspace"
 msgstr ""
 
@@ -1876,7 +1877,7 @@ msgid "Invitations have been sent"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/registration_controller.ex:42
+#: lib/palapa_web/controllers/registration_controller.ex:51
 msgid "It seems you already have a Palapa account. Please sign in first to create a new workspace"
 msgstr ""
 
@@ -1992,7 +1993,7 @@ msgid "The team can't be created"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/organization_controller.ex:39
+#: lib/palapa_web/controllers/organization_controller.ex:42
 #: lib/palapa_web/plugs/authentication.ex:42
 msgid "The workspace %{workspace} has been deleted"
 msgstr ""
@@ -2207,7 +2208,7 @@ msgid "You have been invited to join \"%{workspace}\""
 msgstr ""
 
 #, elixir-format
-#: lib/palapa/messages/messages.ex:228
+#: lib/palapa/messages/messages.ex:246
 msgid "Choose at least one team"
 msgstr ""
 
@@ -2412,4 +2413,14 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:37
 msgid "You cannot leave the workspace if you are the only owner of the workspace."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa/teams/team.ex:40
+msgid "Choose at least one member"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa/teams/team.ex:26
+msgid "This team already exists"
 msgstr ""
