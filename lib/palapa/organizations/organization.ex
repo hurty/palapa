@@ -15,7 +15,7 @@ defmodule Palapa.Organizations.Organization do
     field(:name, :string)
     field(:default_timezone, :string)
     field(:allow_trial, :boolean)
-    field(:deleted_at, :utc_datetime_usec)
+    field(:deleted_at, :utc_datetime)
 
     belongs_to(:creator_account, Account)
     belongs_to(:customer, Customer)
