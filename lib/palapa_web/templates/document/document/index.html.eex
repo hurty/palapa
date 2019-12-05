@@ -104,7 +104,7 @@
                     <%= Helpers.avatar(document.last_author.account, :xs) %>
                     <span class="text-xs mx-2 text-gray-800">
                       <%= link document.last_author.account.name, to: Routes.member_path(@conn, :show, @current_organization, document.last_author), class: "text-gray-800 font-bold hover:underline" %>
-                      <div class="text-xs text-gray-700"><span class="lg:hidden">Modified </span><%= Helpers.format_date(@conn, document.updated_at) %>
+                      <div class="text-xs text-right text-gray-700"><span class="lg:hidden">Modified </span><%= Helpers.format_date(@conn, document.updated_at) %>
                     </span>
                   </div>
                 </div>
