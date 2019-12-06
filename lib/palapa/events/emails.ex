@@ -18,16 +18,29 @@ defmodule Palapa.Events.Emails do
   end
 
   def email_for_organization(account, organization) do
+    locale = Gettext.get_locale(Palapa.Gettext)
+
+    date_format =
+      case locale do
+        "en" -> "{Mfull} {D}"
+        _ -> "{D} {Mfull}"
+      end
+
+    formatted_date =
+      Timex.now(account.timezone)
+      |> Timex.shift(hours: -24)
+      |> Timex.lformat!(date_format, locale)
+
     events = organization_events(account, organization)
 
     if Enum.any?(events) do
       events_view =
         events
-        |> build_events_view(account, organization)
+        |> build_events_view(account, organization, formatted_date)
         |> Phoenix.HTML.html_escape()
         |> Phoenix.HTML.safe_to_string()
 
-      email_content(account, organization, events_view)
+      email_content(account, organization, formatted_date, events_view)
     else
       nil
     end
@@ -38,20 +51,16 @@ defmodule Palapa.Events.Emails do
     Events.last_24_hours_events(organization, member)
   end
 
-  def build_events_view(events, account, organization) do
+  def build_events_view(events, account, organization, formatted_date) do
     PalapaWeb.EventView.render("daily_recap_events.html",
       organization: organization,
       account: account,
-      events: events
+      events: events,
+      formatted_date: formatted_date
     )
   end
 
-  def email_content(account, organization, events_view) do
-    date =
-      Timex.now()
-      |> Timex.shift(hours: -24)
-      |> Timex.format!("{Mfull} {D}")
-
+  def email_content(account, organization, formatted_date, events_view) do
     new_email()
     |> from(Application.fetch_env!(:palapa, :email_transactionnal))
     |> to(account.email)
@@ -61,7 +70,7 @@ defmodule Palapa.Events.Emails do
     |> subject(
       gettext("%{organization} daily recap for %{date}", %{
         organization: organization.name,
-        date: date
+        date: formatted_date
       })
     )
     |> html_body(events_view)

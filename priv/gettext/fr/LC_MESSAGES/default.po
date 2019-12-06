@@ -2180,7 +2180,7 @@ msgstr "paramètres de compte"
 #, elixir-format
 #: lib/palapa/events/emails.ex:62
 msgid "%{organization} daily recap for %{date}"
-msgstr "Récap quotidien pour %{organization} %{date}"
+msgstr "%{organization}, récap du %{date}"
 
 #, elixir-format
 #: lib/palapa/invitations/emails.ex:58 lib/palapa/invitations/emails.ex:58
