@@ -1,5 +1,7 @@
 import BaseController from "./base_controller"
-import { LuminousGallery } from 'luminous-lightbox'
+import {
+  LuminousGallery
+} from 'luminous-lightbox'
 
 export default class extends BaseController {
   connect() {
@@ -11,6 +13,6 @@ export default class extends BaseController {
   }
 
   get imagesAttachmentsLinks() {
-    return this.element.querySelectorAll("a[class^='attachment-gallery-item']")
+    return this.element.querySelectorAll("a[class^='attachment-gallery-item'],a[class^='attachment-original-item']")
   }
 }

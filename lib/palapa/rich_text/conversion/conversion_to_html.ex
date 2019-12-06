@@ -24,7 +24,7 @@ defmodule Palapa.RichText.ConversionToHTML do
         end
 
       embedded_attachment_nodes =
-        struct(EmbeddedAttachment, attrs)
+        struct(EmbeddedAttachment, parse_values(attrs))
         |> to_attachment_template
         |> Floki.parse()
 
@@ -32,6 +32,26 @@ defmodule Palapa.RichText.ConversionToHTML do
     else
       {tag, attrs, rest}
     end
+  end
+
+  def parse_values(attrs) do
+    parse = fn value ->
+      IO.inspect(value, label: "value")
+
+      if value do
+        case Integer.parse(value) do
+          {parsed_value, _rest} -> parsed_value
+          :error -> nil
+        end
+      else
+        nil
+      end
+    end
+
+    attrs
+    |> Map.put(:width, parse.(attrs[:width]))
+    |> Map.put(:height, parse.(attrs[:height]))
+    |> Map.put(:filesize, parse.(attrs[:filesize]))
   end
 
   defp to_attachment_template(embedded_attachment) do

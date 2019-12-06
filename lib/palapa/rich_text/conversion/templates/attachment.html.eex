@@ -1,7 +1,7 @@
 <figure class="attachment text-center">
   <%= if image?(@embedded_attachment) do %>
-    <%= link to: attachment_url(@embedded_attachment, :gallery), class: "attachment-gallery-item" do %>
-      <img class="inline" src="<%= attachment_url(@embedded_attachment, :gallery) %>">
+    <%= link to: attachment_url(@embedded_attachment, :auto), class: "attachment-original-item" do %>
+      <img class="inline" src="<%= attachment_url(@embedded_attachment, :auto) %>">
     <% end %>
 
     <figcaption class="text-sm text-center">
