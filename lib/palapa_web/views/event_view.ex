@@ -147,7 +147,7 @@ defmodule PalapaWeb.EventView do
       :new_message ->
         message = event.message
 
-        link(PalapaWeb.MessageView.excerpt(message.content),
+        raw_link(PalapaWeb.MessageView.excerpt(message.content),
           to: Routes.message_url(conn, :show, message.organization_id, message.id)
         )
 
@@ -155,7 +155,7 @@ defmodule PalapaWeb.EventView do
         message_comment = event.message_comment
         message = event.message
 
-        link(PalapaWeb.MessageView.excerpt(message_comment.content),
+        raw_link(PalapaWeb.MessageView.excerpt(message_comment.content),
           to:
             Routes.message_url(conn, :show, message_comment.organization_id, message) <>
               "##{Helpers.dom_id(message_comment)}"
@@ -164,14 +164,14 @@ defmodule PalapaWeb.EventView do
       :new_document_page ->
         page = event.page
 
-        link(PalapaWeb.MessageView.excerpt(page.content),
+        raw_link(PalapaWeb.MessageView.excerpt(page.content),
           to: Routes.document_page_url(conn, :show, event.organization_id, page)
         )
 
       :new_document_suggestion ->
         suggestion = event.document_suggestion
 
-        link(PalapaWeb.MessageView.excerpt(suggestion.content),
+        raw_link(PalapaWeb.MessageView.excerpt(suggestion.content),
           to: Routes.document_page_url(conn, :show, event.organization_id, suggestion.page_id)
         )
 
@@ -179,19 +179,28 @@ defmodule PalapaWeb.EventView do
         page = event.page
         suggestion_comment = event.document_suggestion_comment
 
-        link(PalapaWeb.MessageView.excerpt(suggestion_comment.content),
+        raw_link(PalapaWeb.MessageView.excerpt(suggestion_comment.content),
           to: Routes.document_page_url(conn, :show, event.organization_id, page.id)
         )
 
       :new_contact_comment ->
-        link(PalapaWeb.MessageView.excerpt(event.contact_comment.content),
+        raw_link(PalapaWeb.MessageView.excerpt(event.contact_comment.content),
           to:
-            Routes.live_url(conn, PalapaWeb.ContactLive, event.organization_id, event.contact_id)
+            Routes.live_url(
+              conn,
+              PalapaWeb.ContactLive,
+              event.organization_id,
+              event.contact_id
+            )
         )
 
       _ ->
         nil
     end
+  end
+
+  defp raw_link(title, opts) do
+    link(raw(title), opts)
   end
 
   defp quoted_link(title, opts) do

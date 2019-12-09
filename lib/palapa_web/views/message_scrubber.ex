@@ -34,7 +34,8 @@ defmodule PalapaWeb.MessageScrubber do
     "span",
     "strong",
     "ul",
-    "u"
+    "u",
+    "br"
   ])
 
   Meta.strip_everything_not_covered()
