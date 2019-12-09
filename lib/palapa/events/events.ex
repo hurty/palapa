@@ -105,6 +105,7 @@ defmodule Palapa.Events do
       union: ^members_events_query(),
       union: ^messages_events_query(member),
       union: ^documents_events_query(member),
+      union: ^document_pages_events_query(member),
       union: ^contact_events_query(member)
     )
   end
@@ -130,10 +131,22 @@ defmodule Palapa.Events do
     )
   end
 
+  def document_pages_events_query(member) do
+    from(events in Event,
+      join:
+        documents in subquery(Documents.documents_visible_to(member) |> Documents.non_deleted()),
+      on: events.document_id == documents.id,
+      join: pages in subquery(Documents.non_deleted(Documents.Page)),
+      on: events.page_id == pages.id
+    )
+  end
+
   def documents_events_query(member) do
     from(events in Event,
-      join: documents in subquery(Documents.documents_visible_to(member)),
-      on: events.document_id == documents.id
+      join:
+        documents in subquery(Documents.documents_visible_to(member) |> Documents.non_deleted()),
+      on: events.document_id == documents.id,
+      where: events.action == ^:new_document
     )
   end
 
