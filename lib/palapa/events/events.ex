@@ -101,18 +101,26 @@ defmodule Palapa.Events do
   end
 
   defp all_events_query(member) do
-    from(messages_events_query(member),
+    from(organization_events_query(),
+      union: ^members_events_query(),
+      union: ^messages_events_query(member),
       union: ^documents_events_query(member),
-      union: ^organization_events_query(),
       union: ^contact_events_query(member)
     )
   end
 
   defp organization_events_query() do
     from(events in Event,
-      where: events.action == ^:new_organization,
-      or_where: events.action == ^:new_member
+      join: organizations in subquery(Organizations.Organization |> Organizations.active()),
+      where: events.action == ^:new_organization
     )
+  end
+
+  defp members_events_query() do
+    from events in Event,
+      join: members in subquery(Organizations.Member |> Organizations.active()),
+      on: events.author_id == members.id,
+      where: events.action == ^:new_member
   end
 
   defp messages_events_query(member) do
