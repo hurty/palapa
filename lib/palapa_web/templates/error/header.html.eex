@@ -1,0 +1,11 @@
+<div class="flex justify-between">
+  <div>
+    <%= link(to: Routes.home_path(@conn, :index)) do %>
+      <img src="<%= Routes.static_path(@conn, "/images/logo_palapa-x2.png") %>" alt="Palapa">
+    <% end %>
+  </div>
+
+  <div>
+    <h1 class="text-6xl font-bold text-gray-200"><%= @code %></h1>
+  </div>
+</div>

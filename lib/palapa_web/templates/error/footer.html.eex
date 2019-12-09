@@ -1,0 +1,4 @@
+    <hr class="my-8">
+
+    <p>You may want to head back to the <%= link("homepage", to: Routes.home_path(@conn, :index), class: "hover:underline text-blue-500") %>.<br>
+    If you think something is broken, <%= link "report a problem", to: "mailto:#{Application.get_env(:palapa, :email_support)}", class: "hover:underline text-blue-500" %>.</p>

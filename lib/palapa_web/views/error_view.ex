@@ -1,17 +1,17 @@
 defmodule PalapaWeb.ErrorView do
   use PalapaWeb, :view
 
-  def render("403.html", _assigns) do
-    gettext("Forbidden")
-  end
+  # def render("403.html", _assigns) do
+  #   gettext("Forbidden")
+  # end
 
-  def render("404.html", _assigns) do
-    gettext("Page not found")
-  end
+  # def render("404.html", _assigns) do
+  #   gettext("Page not found")
+  # end
 
-  def render("500.html", _assigns) do
-    gettext("Internal server error")
-  end
+  # def render("500.html", _assigns) do
+  #   gettext("Internal server error")
+  # end
 
   # In case no render clause matches or no
   # template is found, let's render it as 500

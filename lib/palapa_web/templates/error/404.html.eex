@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tag() %>
+    <title>Palapa</title>
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>">
+  </head>
+
+  <body class="max-w-3xl p-8 mx-auto">
+    <%= render "header.html", Map.put(assigns, :code, 404) %>
+
+    <h1 class="text-3xl font-bold text-gray-800">PAGE NOT FOUND</h1>
+    <h2 class="text-lg">The page you're looking for does not exist or has been deleted recently.</h2>
+    <h2 class="text-lg">Also, you may not have the necessary rights to view this content.</h2>
+
+    <%= render "footer.html", assigns %>
+  </body>
+</html>
