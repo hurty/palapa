@@ -35,7 +35,7 @@ defmodule PalapaWeb.AttachmentController do
 
     with :ok <- permit(Attachments.Policy, :show, current_member(conn), attachment) do
       conn
-      |> redirect(external: Attachments.url(attachment, version, params["content-disposition"]))
+      |> redirect(external: Attachments.url(attachment, version, params["content_disposition"]))
     end
   end
 end

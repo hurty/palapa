@@ -8,23 +8,20 @@ defmodule Palapa.RichText.RichTextView do
   def attachment_url(embedded_attachment, version \\ :original, content_disposition \\ "inline")
 
   def attachment_url(embedded_attachment, :auto, content_disposition) do
-    version =
-      if embedded_attachment.width < 800 do
-        :original
-      else
-        :gallery
-      end
-
+    version = if embedded_attachment.width < 800, do: :original, else: :gallery
     attachment_url(embedded_attachment, version, content_disposition)
   end
 
   def attachment_url(embedded_attachment, version, content_disposition) do
-    url = embedded_attachment.url
+    attachment = embedded_attachment.attachment
 
-    if url do
-      "#{url}?version=#{version}&content-disposition=#{content_disposition}"
-    else
-      ""
-    end
+    PalapaWeb.Router.Helpers.attachment_path(
+      PalapaWeb.Endpoint,
+      :show,
+      attachment.organization_id,
+      attachment,
+      version: version,
+      content_disposition: content_disposition
+    )
   end
 end

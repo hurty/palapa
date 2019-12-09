@@ -77,26 +77,7 @@ defmodule Palapa.RichText.ConversionFromTrix do
 
   def resolve_attachments(embedded_attachments) do
     Enum.reduce(embedded_attachments, [], fn embedded_attachment, acc ->
-      embedded_attachment =
-        if(EmbeddedAttachment.has_associated_attachment?(embedded_attachment)) do
-          case Palapa.Access.verify_signed_id(embedded_attachment.sgid) do
-            {:ok, id} ->
-              attachment = Palapa.Attachments.get(id)
-
-              if attachment do
-                Map.put(embedded_attachment, :attachment, attachment)
-              end
-
-            _ ->
-              Logger.warn(
-                "Couldn't resolve attachment with sgid #{embedded_attachment.sgid}. Skipping."
-              )
-          end
-        else
-          embedded_attachment
-        end
-
-      [embedded_attachment | acc]
+      [EmbeddedAttachment.resolve(embedded_attachment) | acc]
     end)
   end
 
