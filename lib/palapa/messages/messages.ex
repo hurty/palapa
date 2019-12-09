@@ -1,5 +1,7 @@
 defmodule Palapa.Messages do
   use Palapa.Context
+  use Palapa.SoftDelete
+
   import Palapa.Gettext
 
   alias Palapa.Messages.Message

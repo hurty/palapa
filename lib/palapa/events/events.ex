@@ -126,7 +126,7 @@ defmodule Palapa.Events do
 
   defp messages_events_query(member) do
     from(events in Event,
-      join: messages in subquery(Messages.visible_to(member)),
+      join: messages in subquery(Messages.visible_to(member) |> Messages.active()),
       on: events.message_id == messages.id
     )
   end
