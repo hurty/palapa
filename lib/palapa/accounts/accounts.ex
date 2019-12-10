@@ -81,6 +81,9 @@ defmodule Palapa.Accounts do
     Multi.new()
     |> Multi.run(:account, fn _repo, _ -> soft_delete(account) end)
     |> Multi.run(:anonymized_account, fn _repo, %{account: account} -> anonymize(account) end)
+    |> Multi.run(:delete_organizations, fn _repo, %{account: account} ->
+      Organizations.delete_organizations_with_only_owner(account)
+    end)
     |> Palapa.JobQueue.enqueue(:delete_avatar, %{type: "delete_avatar", account_id: account.id})
     |> Repo.transaction()
     |> case do

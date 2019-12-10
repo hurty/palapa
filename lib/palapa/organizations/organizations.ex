@@ -115,6 +115,36 @@ defmodule Palapa.Organizations do
     |> Repo.all()
   end
 
+  def active_organizations_having_owner(%Account{} = account) do
+    from(organizations in Ecto.assoc(account, :organizations),
+      where: is_nil(organizations.deleted_at),
+      join: members in assoc(organizations, :members),
+      where: members.role == "owner" and members.account_id == ^account.id
+    )
+  end
+
+  defp organizations_ids_with_only_one_owner() do
+    from(members in Member,
+      where: members.role == "owner",
+      group_by: members.organization_id,
+      having: count(members.role) == 1,
+      select: members.organization_id
+    )
+    |> Repo.all()
+  end
+
+  def organizations_to_delete_when_deleting_account(%Account{} = account) do
+    from(
+      organizations in active_organizations_having_owner(account),
+      where: organizations.id in ^organizations_ids_with_only_one_owner()
+    )
+  end
+
+  def delete_organizations_with_only_owner(%Account{} = account) do
+    organizations_to_delete_when_deleting_account(account)
+    |> Repo.delete_all()
+  end
+
   def list_members(queryable \\ Organization, name_pattern \\ nil) do
     queryable
     |> Ecto.assoc(:members)
