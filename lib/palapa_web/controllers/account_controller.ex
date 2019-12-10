@@ -51,6 +51,24 @@ defmodule PalapaWeb.AccountController do
     end
   end
 
+  def delete(conn, _params) do
+    case Accounts.delete(current_account(conn)) do
+      {:ok, _account} ->
+        conn
+        |> put_flash(:success, "Your account has been deleted.")
+        |> PalapaWeb.Authentication.logout()
+        |> redirect(to: Routes.home_path(conn, :index))
+
+      {:error, _changeset} ->
+        conn
+        |> put_flash(
+          :error,
+          gettext("An error occured while deleting your account. Please contact support.")
+        )
+        |> render("edit.html")
+    end
+  end
+
   defp assign_changesets(conn, account) do
     conn
     |> assign(:account_changeset, Accounts.change_account(account))

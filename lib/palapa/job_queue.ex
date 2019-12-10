@@ -57,4 +57,23 @@ defmodule Palapa.JobQueue do
       Billing.Subscriptions.cancel_subscription(organization)
     end
   end
+
+  def perform(%Multi{} = multi, %{
+        "type" => "delete_avatar",
+        "account_id" => account_id
+      }) do
+    account = Palapa.Accounts.get(account_id)
+
+    if !account do
+      Repo.transaction(multi)
+    else
+      Ecto.Multi.run(multi, :delete_avatar, fn _, _ ->
+        case Palapa.Avatar.delete({account.avatar, account}) do
+          :ok -> {:ok, nil}
+          other -> other
+        end
+      end)
+      |> Repo.transaction()
+    end
+  end
 end

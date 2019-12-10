@@ -1,5 +1,6 @@
 defmodule Palapa.Accounts do
   use Palapa.Context
+  use Palapa.SoftDelete
 
   alias Palapa.Accounts.Account
 
@@ -8,7 +9,7 @@ defmodule Palapa.Accounts do
   def get(account_id), do: Repo.get(Account, account_id)
   def get!(account_id), do: Repo.get!(Account, account_id)
 
-  def get_by(conditions), do: Repo.get_by(Account, conditions)
+  def get_by(queryable \\ Account, conditions), do: Repo.get_by(queryable, conditions)
 
   def exists?(email) when is_binary(email) do
     Account
@@ -76,8 +77,33 @@ defmodule Palapa.Accounts do
     |> Repo.one()
   end
 
-  def delete(user) do
-    Repo.delete(user)
+  def delete(account) do
+    Multi.new()
+    |> Multi.run(:account, fn _repo, _ -> soft_delete(account) end)
+    |> Multi.run(:anonymized_account, fn _repo, %{account: account} -> anonymize(account) end)
+    |> Palapa.JobQueue.enqueue(:delete_avatar, %{type: "delete_avatar", account_id: account.id})
+    |> Repo.transaction()
+    |> case do
+      {:ok, result} ->
+        {:ok, result.anonymized_account}
+
+      {:error, _, changeset, _changes} ->
+        {:error, changeset}
+    end
+  end
+
+  defp anonymize(account) do
+    account
+    |> change(%{name: initials(account.name), email: "#{account.id}@deleted"})
+    |> Repo.update()
+  end
+
+  def initials(name) do
+    name
+    |> String.split(~r/\s+/)
+    |> Enum.map(fn word -> String.at(word, 0) end)
+    |> Enum.join()
+    |> String.upcase()
   end
 
   def list_organizations(account) do

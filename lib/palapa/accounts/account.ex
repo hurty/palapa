@@ -19,6 +19,7 @@ defmodule Palapa.Accounts.Account do
     field(:password_reset_at, :utc_datetime)
     field(:send_daily_recap, :boolean)
     field(:locale, :string)
+    field(:deleted_at, :utc_datetime)
     timestamps()
 
     has_many(:members, Organizations.Member)

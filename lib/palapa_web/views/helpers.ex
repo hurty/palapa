@@ -157,11 +157,7 @@ defmodule PalapaWeb.Helpers do
   end
 
   defp initials(name) do
-    name
-    |> String.split(~r/\s+/)
-    |> Enum.map(fn word -> String.at(word, 0) end)
-    |> Enum.join()
-    |> String.upcase()
+    Palapa.Accounts.initials(name)
   end
 
   def account_time(account) do

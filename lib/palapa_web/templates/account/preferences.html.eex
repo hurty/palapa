@@ -1,0 +1,50 @@
+<div class="card p-1 lg:p-8">
+  <h2 class="card-header"><%= gettext("Your account") %></h2>
+  <div class="card-header-separator"></div>
+
+  <%= form_for @account_changeset, Routes.account_path(@conn, :update), [as: :account, multipart: true], fn form -> %>
+    <%= if @account_changeset.action do %>
+      <p class="db fw6 lh-copy f6  text-red-400 font-bold">Check the errors below :</p>
+    <% end %>
+
+    <div class="field">
+      <%= label form, :name, gettext("Full name"), class: "label" %>
+      <%= text_input form, :name, class: "input", autocomplete: "off" %>
+      <%= error_tag form, :name %>
+    </div>
+
+    <div class="field">
+      <%= label form, :email, gettext("Email"), class: "label" %>
+      <%= text_input form, :email, class: "input", autocomplete: "off" %>
+      <%= error_tag form, :email %>
+    </div>
+
+    <div class="field">
+      <%= label form, :avatar, gettext("Change picture"), class: "label" %>
+      <%= file_input form, :avatar, class: "input", autocomplete: "off" %>
+      <%= error_tag form, :avatar %>
+    </div>
+
+    <div class="field">
+      <%= label form, :locale, gettext("Language"), class: "label" %>
+      <%= select form, :locale, [{"English", "en"}, {"Français", "fr"}], class: "input" %>
+      <%= error_tag form, :locale %>
+    </div>
+
+    <div class="field">
+      <%= label form, :timezone, gettext("Timezone"), class: "label" %>
+      <%= select form, :timezone, Enum.map(Palapa.Accounts.Timezones.timezones_list, fn {name, zone} -> {name, zone} end), class: "input", "data-controller": "choice" %>
+      <%= error_tag form, :timezone %>
+    </div>
+
+    <div class="field-inline">
+      <%= checkbox form, :send_daily_recap, class: "input", autocomplete: "off" %>
+      <i class="fas fa-bell text-green-500 mr-2"></i><%= label form, :send_daily_recap, gettext("Send a daily recap by email with the latest activity on your workspaces"), class: "" %>
+      <%= error_tag form, :send_daily_recap %>
+    </div>
+
+    <div class="card-actions">
+      <%= submit gettext("Save my account settings"), class: "btn btn-green"%>
+    </div>
+  <% end %>
+</div>

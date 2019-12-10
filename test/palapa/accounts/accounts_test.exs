@@ -48,8 +48,11 @@ defmodule Palapa.AccountsTest do
 
   test "delete/1 deletes the account" do
     richard = insert!(:richard)
-    assert {:ok, %Account{}} = Accounts.delete(richard)
-    assert_raise Ecto.NoResultsError, fn -> Repo.get!(Account, richard.id) end
+    assert {:ok, %Account{} = account} = Accounts.delete(richard)
+    assert account.name == "RH"
+    assert account.email == "#{account.id}@deleted"
+    refute Accounts.active?(account)
+    refute account.avatar
   end
 
   test "change/1 returns a account changeset" do

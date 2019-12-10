@@ -66,7 +66,7 @@ defmodule PalapaWeb.Authentication do
   end
 
   def login_with_email_and_password(conn, email, password) do
-    account = Accounts.get_by(email: email)
+    account = Accounts.active(Accounts.Account) |> Accounts.get_by(email: email)
 
     if account && checkpw(password, account.password_hash) do
       {:ok, start_session(conn, account)}
