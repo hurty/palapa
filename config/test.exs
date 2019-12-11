@@ -40,3 +40,5 @@ config :waffle,
 
 config :goth,
   disabled: true
+
+config :palapa, Oban, queues: false, prune: :disabled

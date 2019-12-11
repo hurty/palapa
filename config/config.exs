@@ -42,15 +42,11 @@ config :palapa, Palapa.Mailer,
 config :waffle, storage: Waffle.Storage.Local
 config :scrivener_html, routes_helper: PalapaWeb.Router.Helpers
 
-# config :verk,
-#   queues: [default: 25, priority: 10],
-#   max_retry_count: 10,
-#   poll_interval: 5000,
-#   start_job_log_level: :info,
-#   done_job_log_level: :info,
-#   fail_job_log_level: :info,
-#   node_id: "1",
-#   redis_url: {:system, "REDIS_URL", "redis://127.0.0.1:6379"}
+config :palapa, Oban,
+  repo: Palapa.Repo,
+  # Prune jobs > 7 days
+  prune: {:maxage, 60 * 60 * 24 * 7},
+  queues: [default: 20, daily_recaps: 20]
 
 config :phoenix, :template_engines,
   eex: Appsignal.Phoenix.Template.EExEngine,

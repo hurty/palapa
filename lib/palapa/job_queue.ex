@@ -4,28 +4,28 @@ defmodule Palapa.JobQueue do
   alias Palapa.Repo
   alias Palapa.Organizations
   alias Palapa.Billing
-  alias Palapa.Events
+  # alias Palapa.Events
 
   alias Ecto.Multi
 
-  def perform(%Multi{} = multi, %{"type" => "daily_email", "account_id" => account_id}) do
-    account = Palapa.Accounts.get(account_id)
+  # def perform(%Multi{} = multi, %{"type" => "daily_email", "account_id" => account_id}) do
+  #   account = Palapa.Accounts.get(account_id)
 
-    cond do
-      !account ->
-        Repo.transaction(multi)
+  #   cond do
+  #     !account ->
+  #       Repo.transaction(multi)
 
-      true ->
-        multi
-        |> Ecto.Multi.run(:send_daily_email, fn _repo, _changes ->
-          Events.send_daily_recaps(account)
-        end)
-        |> Ecto.Multi.run(:schedule_next_daily_email, fn _repo, _changes ->
-          Events.schedule_daily_email(account)
-        end)
-        |> Repo.transaction()
-    end
-  end
+  #     true ->
+  #       multi
+  #       |> Ecto.Multi.run(:send_daily_email, fn _repo, _changes ->
+  #         Events.send_daily_recaps(account)
+  #       end)
+  #       |> Ecto.Multi.run(:schedule_next_daily_email, fn _repo, _changes ->
+  #         Events.schedule_daily_email(account)
+  #       end)
+  #       |> Repo.transaction()
+  #   end
+  # end
 
   def perform(%Multi{} = multi, %{
         "type" => "update_stripe_customer",
