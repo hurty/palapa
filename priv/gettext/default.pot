@@ -94,7 +94,6 @@ msgid "100 GB storage included"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_private_navigation.html.eex:62
 #: lib/palapa_web/templates/layout/account.html.eex:23
 msgid "Account settings"
 msgstr ""
@@ -149,6 +148,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/dashboard/index.html.eex:11
+#: lib/palapa_web/templates/message/index.html.eex:10
 msgid "Latest activity"
 msgstr ""
 
@@ -256,24 +256,24 @@ msgid "Your workspaces"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:85
+#: lib/palapa_web/templates/account/password_change.html.eex:31
 #: lib/palapa_web/templates/password_reset/edit.html.eex:28
 msgid "Change password"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:25
+#: lib/palapa_web/templates/account/preferences.html.eex:23
 msgid "Change picture"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:56
+#: lib/palapa_web/templates/account/password_change.html.eex:2
 #: lib/palapa_web/templates/password_reset/edit.html.eex:4
 msgid "Change your password"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:61
+#: lib/palapa_web/templates/account/password_change.html.eex:7
 #: lib/palapa_web/templates/billing/payment_method/form.html.eex:9 lib/palapa_web/templates/billing/subscription/form.html.eex:8
 #: lib/palapa_web/templates/document/document/form.html.eex:2 lib/palapa_web/templates/document/document/new.html.eex:9
 #: lib/palapa_web/templates/document/page/form.html.eex:3 lib/palapa_web/templates/join/form_with_existing_account.html.eex:17
@@ -284,55 +284,55 @@ msgid "Check the errors below:"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:77
+#: lib/palapa_web/templates/account/password_change.html.eex:23
 #: lib/palapa_web/templates/password_reset/edit.html.eex:19
 msgid "Confirm the new password"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:19
+#: lib/palapa_web/templates/account/preferences.html.eex:17
 #: lib/palapa_web/templates/contact/form.html.leex:77 lib/palapa_web/templates/contact/show.html.leex:36
 msgid "Email"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:13
+#: lib/palapa_web/templates/account/preferences.html.eex:11
 msgid "Full name"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:31
+#: lib/palapa_web/templates/account/preferences.html.eex:29
 msgid "Language"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:71
+#: lib/palapa_web/templates/account/password_change.html.eex:17
 #: lib/palapa_web/templates/password_reset/edit.html.eex:13
 msgid "New password"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:49
+#: lib/palapa_web/templates/account/preferences.html.eex:47
 msgid "Save my account settings"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:44
+#: lib/palapa_web/templates/account/preferences.html.eex:42
 msgid "Send a daily recap by email with the latest activity on your workspaces"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:37
+#: lib/palapa_web/templates/account/preferences.html.eex:35
 msgid "Timezone"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:4
+#: lib/palapa_web/templates/account/preferences.html.eex:2
 msgid "Your account"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/account/edit.html.eex:65
+#: lib/palapa_web/templates/account/password_change.html.eex:11
 msgid "Your current password"
 msgstr ""
 
@@ -374,17 +374,17 @@ msgid "Back to contacts"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/delete_modal.html.eex:19
-#: lib/palapa_web/templates/contact/form.html.leex:152 lib/palapa_web/templates/document/document/edit.html.eex:12
-#: lib/palapa_web/templates/document/document/new.html.eex:34 lib/palapa_web/templates/document/document/table_of_contents.html.eex:51
-#: lib/palapa_web/templates/document/section/toc_section.html.eex:69 lib/palapa_web/templates/document/suggestion/edit.html.eex:9
-#: lib/palapa_web/templates/document/suggestion/suggestion.html.eex:63 lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:9
-#: lib/palapa_web/templates/invitation/_invitation.html.eex:18 lib/palapa_web/templates/member/_personal_information_form.html.leex:37
-#: lib/palapa_web/templates/member/_personal_information_form.html.leex:40 lib/palapa_web/templates/message/new.html.eex:18
-#: lib/palapa_web/templates/organization/new.html.eex:23 lib/palapa_web/templates/settings/member/members.html.leex:42
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:87 lib/palapa_web/templates/settings/workspace/show.html.eex:113
-#: lib/palapa_web/templates/team/edit.html.eex:12 lib/palapa_web/templates/team/edit.html.eex:47
-#: lib/palapa_web/templates/team/new.html.eex:12
+#: lib/palapa_web/templates/account/delete_account.html.eex:33
+#: lib/palapa_web/templates/contact/delete_modal.html.eex:19 lib/palapa_web/templates/contact/form.html.leex:152
+#: lib/palapa_web/templates/document/document/edit.html.eex:12 lib/palapa_web/templates/document/document/new.html.eex:34
+#: lib/palapa_web/templates/document/document/table_of_contents.html.eex:51 lib/palapa_web/templates/document/section/toc_section.html.eex:69
+#: lib/palapa_web/templates/document/suggestion/edit.html.eex:9 lib/palapa_web/templates/document/suggestion/suggestion.html.eex:63
+#: lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:9 lib/palapa_web/templates/invitation/_invitation.html.eex:18
+#: lib/palapa_web/templates/member/_personal_information_form.html.leex:37 lib/palapa_web/templates/member/_personal_information_form.html.leex:40
+#: lib/palapa_web/templates/message/new.html.eex:18 lib/palapa_web/templates/organization/new.html.eex:23
+#: lib/palapa_web/templates/settings/member/members.html.leex:42 lib/palapa_web/templates/settings/workspace/show.html.eex:87
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:113 lib/palapa_web/templates/team/edit.html.eex:12
+#: lib/palapa_web/templates/team/edit.html.eex:47 lib/palapa_web/templates/team/new.html.eex:12
 msgid "Cancel"
 msgstr ""
 
@@ -1195,11 +1195,6 @@ msgid "Messages"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_private_navigation.html.eex:61
-msgid "My profile on %{workspace}"
-msgstr ""
-
-#, elixir-format
 #: lib/palapa_web/templates/layout/_private_navigation.html.eex:31
 msgid "New Contact"
 msgstr ""
@@ -1230,8 +1225,9 @@ msgid "Settings"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_public_navigation.html.eex:20
-#: lib/palapa_web/templates/session/new.html.eex:4 lib/palapa_web/templates/session/new.html.eex:20
+#: lib/palapa_web/templates/home/index.html.eex:3
+#: lib/palapa_web/templates/layout/_public_navigation.html.eex:20 lib/palapa_web/templates/session/new.html.eex:4
+#: lib/palapa_web/templates/session/new.html.eex:20
 msgid "Sign in"
 msgstr ""
 
@@ -1241,7 +1237,7 @@ msgid "Sign out"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_private_navigation.html.eex:65
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:63
 #: lib/palapa_web/templates/layout/_sidebar.html.eex:10
 msgid "Switch workspace"
 msgstr ""
@@ -1851,16 +1847,6 @@ msgid "Deleted %{time} by %{author}"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/views/error_view.ex:5
-msgid "Forbidden"
-msgstr ""
-
-#, elixir-format
-#: lib/palapa_web/views/error_view.ex:13
-msgid "Internal server error"
-msgstr ""
-
-#, elixir-format
 #: lib/palapa_web/controllers/session_controller.ex:20
 msgid "Invalid email/password combination"
 msgstr ""
@@ -1889,11 +1875,6 @@ msgstr ""
 #: lib/palapa_web/controllers/team_controller.ex:19
 #: lib/palapa_web/templates/team/new.html.eex:4
 msgid "New team"
-msgstr ""
-
-#, elixir-format
-#: lib/palapa_web/views/error_view.ex:9
-msgid "Page not found"
 msgstr ""
 
 #, elixir-format
@@ -2137,11 +2118,6 @@ msgid "What's up?"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/message/index.html.eex:10
-msgid "Other activity"
-msgstr ""
-
-#, elixir-format
 #: lib/palapa_web/templates/member/_member_profile.html.leex:12
 msgid "OK"
 msgstr ""
@@ -2154,11 +2130,6 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/event/daily_recap_events.html.eex:31
 msgid "Change your Palapa %{settings_link} if you don't want to receive this daily recap anymore."
-msgstr ""
-
-#, elixir-format
-#: lib/palapa_web/templates/event/daily_recap_events.html.eex:16
-msgid "Daily recap for %{organization}"
 msgstr ""
 
 #, elixir-format
@@ -2177,7 +2148,7 @@ msgid "account settings"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa/events/emails.ex:62
+#: lib/palapa/events/emails.ex:71
 msgid "%{organization} daily recap for %{date}"
 msgstr ""
 
@@ -2207,7 +2178,7 @@ msgid "You have been invited to join \"%{workspace}\""
 msgstr ""
 
 #, elixir-format
-#: lib/palapa/messages/messages.ex:246
+#: lib/palapa/messages/messages.ex:255
 msgid "Choose at least one team"
 msgstr ""
 
@@ -2319,16 +2290,16 @@ msgid "They can invite people to join the workspace, remove people from the work
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/delete_modal.html.eex:8
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:76 lib/palapa_web/templates/settings/workspace/show.html.eex:102
-#: lib/palapa_web/templates/team/edit.html.eex:36
+#: lib/palapa_web/templates/account/delete_account.html.eex:22
+#: lib/palapa_web/templates/contact/delete_modal.html.eex:8 lib/palapa_web/templates/settings/workspace/show.html.eex:76
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:102 lib/palapa_web/templates/team/edit.html.eex:36
 msgid "Close modal"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/delete_modal.html.eex:19
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:87 lib/palapa_web/templates/settings/workspace/show.html.eex:113
-#: lib/palapa_web/templates/team/edit.html.eex:47
+#: lib/palapa_web/templates/account/delete_account.html.eex:33
+#: lib/palapa_web/templates/contact/delete_modal.html.eex:19 lib/palapa_web/templates/settings/workspace/show.html.eex:87
+#: lib/palapa_web/templates/settings/workspace/show.html.eex:113 lib/palapa_web/templates/team/edit.html.eex:47
 msgid "Close this dialog window"
 msgstr ""
 
@@ -2415,11 +2386,57 @@ msgid "You cannot leave the workspace if you are the only owner of the workspace
 msgstr ""
 
 #, elixir-format
-#: lib/palapa/teams/team.ex:40
+#: lib/palapa/teams/team.ex:41
 msgid "Choose at least one member"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa/teams/team.ex:26
+#: lib/palapa/teams/team.ex:27
 msgid "This team already exists"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/account_controller.ex:66
+msgid "An error occured while deleting your account. Please contact support."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/account/delete_account.html.eex:2
+#: lib/palapa_web/templates/account/delete_account.html.eex:11 lib/palapa_web/templates/account/delete_account.html.eex:20
+msgid "Delete your account"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/account/delete_account.html.eex:6
+msgid "Deleting your account is non-reversible. All data associated with your account will be deleted permanently."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:61
+msgid "My profile"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/suggestion/list.html.eex:10
+msgid "No suggestions yet."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:62
+msgid "Preferences"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/account/delete_account.html.eex:7
+msgid "The workspaces for which you are the only owner will also be deleted. If you want this workspaces to be continued by other people, make sure you assign at least another owner before deleting your account."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/account/delete_account.html.eex:31
+msgid "Yes, delete my account"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/account/delete_account.html.eex:26
+msgid "You are about to delete your account. Are you sure?"
 msgstr ""

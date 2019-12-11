@@ -1,7 +1,11 @@
-<%= render_many @suggestions, PalapaWeb.Document.SuggestionView, "suggestion.html", as: :suggestion, 
-  conn: @conn, 
+<%= if Enum.any? @suggestions do %>
+<%= render_many @suggestions, PalapaWeb.Document.SuggestionView, "suggestion.html", as: :suggestion,
+  conn: @conn,
   current_organization: @current_organization,
   current_account: @current_account,
   current_member: @current_member,
-  page: @page 
+  page: @page
 %>
+<% else %>
+  <div class="text-center my-4 text-gray-400"><%= gettext("No suggestions yet.") %></div>
+<% end %>
