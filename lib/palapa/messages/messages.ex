@@ -87,9 +87,16 @@ defmodule Palapa.Messages do
   end
 
   def get!(queryable \\ Message, id) do
+    comments_query =
+      MessageComment
+      |> order_by(:inserted_at)
+      |> preload(creator: :account)
+      |> preload(:attachments)
+
     queryable
     |> non_deleted
-    |> preload([[creator: :account], :teams, [comments: [creator: :account]]])
+    |> preload([[creator: :account], :teams, :attachments])
+    |> preload(comments: ^comments_query)
     |> Repo.get!(id)
   end
 

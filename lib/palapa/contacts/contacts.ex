@@ -47,8 +47,11 @@ defmodule Palapa.Contacts do
   end
 
   def get_contact!(queryable \\ Contact, id) do
+    comments_query = ContactComment |> order_by(:inserted_at) |> preload(:attachments)
+
     queryable
     |> preload([:company, :comments, :employees])
+    |> preload(comments: ^comments_query)
     |> Repo.get!(id)
   end
 
