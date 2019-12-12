@@ -4,6 +4,13 @@ defmodule Palapa.Accounts do
 
   alias Palapa.Accounts.Account
 
+  # --- Scopes ---
+  def accounts_with_daily_recap_subscription() do
+    Account
+    |> active()
+    |> where(send_daily_recap: true)
+  end
+
   # --- Actions ---
 
   def get(account_id), do: Repo.get(Account, account_id)

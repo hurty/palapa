@@ -46,7 +46,10 @@ config :palapa, Oban,
   repo: Palapa.Repo,
   # Prune jobs > 7 days
   prune: {:maxage, 60 * 60 * 24 * 7},
-  queues: [default: 20, daily_recaps: 20]
+  queues: [default: 20, daily_recaps: 20],
+  crontab: [
+    {"0 * * * *", Palapa.Events.Workers.ScheduleDailyRecap, args: %{}}
+  ]
 
 config :phoenix, :template_engines,
   eex: Appsignal.Phoenix.Template.EExEngine,
