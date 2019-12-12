@@ -75,20 +75,22 @@ defmodule Palapa.Organizations do
     Organization.changeset(organization, %{})
   end
 
-  def delete(%Organization{} = organization, %Member{} = author) do
+  def delete(%Organization{} = organization, %Member{} = author \\ nil) do
     Multi.new()
     |> Multi.run(:organization, fn _, _ -> soft_delete(organization) end)
     |> Multi.insert(:event, fn %{organization: org} ->
-      %Event{
-        action: :delete_organization,
-        organization: org,
-        author: author
-      }
+      if author do
+        %Event{
+          action: :delete_organization,
+          organization: org,
+          author: author
+        }
+      end
     end)
-    |> Palapa.JobQueue.enqueue(:cancel_subscription_job, %{
-      type: "cancel_subscription",
-      organization_id: organization.id
-    })
+    |> Oban.insert(
+      :cancel_subscription,
+      Palapa.Billing.Workers.CancelSubscription.new(%{organization_id: organization.id})
+    )
     |> Repo.transaction()
   end
 
@@ -142,7 +144,7 @@ defmodule Palapa.Organizations do
 
   def delete_organizations_with_only_owner(%Account{} = account) do
     organizations_to_delete_when_deleting_account(account)
-    |> Repo.delete_all()
+    |> delete()
   end
 
   def list_members(queryable \\ Organization, name_pattern \\ nil) do

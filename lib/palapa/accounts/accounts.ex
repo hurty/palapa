@@ -91,7 +91,7 @@ defmodule Palapa.Accounts do
     |> Multi.run(:delete_organizations, fn _repo, %{account: account} ->
       Organizations.delete_organizations_with_only_owner(account)
     end)
-    |> Palapa.JobQueue.enqueue(:delete_avatar, %{type: "delete_avatar", account_id: account.id})
+    |> Oban.insert(:delete_avatar, Accounts.Workers.DeleteAvatar.new(%{account_id: account.id}))
     |> Repo.transaction()
     |> case do
       {:ok, result} ->

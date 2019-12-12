@@ -13,7 +13,6 @@ defmodule Palapa.Application do
       # Start the endpoint when the application starts
       supervisor(PalapaWeb.Endpoint, []),
       # Start the background jobs queue
-      {Palapa.JobQueue, repo: Palapa.Repo, max_demand: 100},
       {Oban, Application.get_env(:palapa, Oban)}
     ]
 
