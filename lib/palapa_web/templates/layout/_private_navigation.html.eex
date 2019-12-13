@@ -19,16 +19,21 @@
           <div data-target="popover.arrow" class="popover__arrow"></div>
           <nav class="flex flex-col">
             <%= link to: Routes.message_path(@conn, :new, @current_organization), class: "popover__link" do %>
-              <i class="fas fa-comment mr-2"></i><%= gettext("New message") %>
+              <i class="fas fa-comment mr-2"></i><%= gettext("Message") %>
             <% end %>
 
             <%= link to: Routes.document_path(@conn, :new, @current_organization), class: "popover__link" do %>
-              <i class="fas fa-file-alt mr-2"></i><%= gettext("New document") %>
+              <i class="fas fa-file-alt mr-2"></i><%= gettext("Document") %>
             <% end %>
 
-
             <%= link to: Routes.live_path(@conn, PalapaWeb.ContactLive.New, @current_organization), class: "popover__link" do %>
-              <i class="fas fa-address-book mr-2"></i><%= gettext("New Contact") %>
+              <i class="fas fa-address-book mr-2"></i><%= gettext("Contact") %>
+            <% end %>
+
+            <%= if permit?(Palapa.Teams.Policy, :create, @current_member) do %>
+              <%= link to: Routes.team_path(@conn, :new, @current_organization), class: "popover__link" do %>
+                <i class="fas fa-users mr-2"></i><%= gettext("Team") %>
+              <% end %>
             <% end %>
           </nav>
         </div>
