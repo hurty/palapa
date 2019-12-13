@@ -56,7 +56,6 @@ defmodule Palapa.Mixfile do
       {:comeonin, "~> 4.0"},
       {:countries, "~> 1.5"},
       {:ecto_enum, "~> 1.0"},
-      {:ecto_job, "~> 3.0"},
       {:ecto_sql, "~> 3.0"},
       {:ecto, "~> 3.0", override: true},
       {:floki, "~> 0.23"},
