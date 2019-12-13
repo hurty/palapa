@@ -33,7 +33,7 @@
 
     <div class="field">
       <%= label form, :timezone, gettext("Timezone"), class: "label" %>
-      <%= select form, :timezone, Enum.map(Palapa.Accounts.Timezones.timezones_list, fn {name, zone} -> {name, zone} end), class: "input", "data-controller": "choice" %>
+      <%= select form, :timezone, Enum.map(Palapa.Accounts.Timezones.timezones_list, fn zone -> {zone, zone} end), class: "input", "data-controller": "choice" %>
       <%= error_tag form, :timezone %>
     </div>
 
