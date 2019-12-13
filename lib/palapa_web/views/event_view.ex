@@ -199,6 +199,43 @@ defmodule PalapaWeb.EventView do
     end
   end
 
+  def event_icon(event) do
+    case event.action do
+      :new_organization ->
+        "fas fa-cog"
+
+      :new_member ->
+        "fas fa-user"
+
+      :new_message ->
+        "fas fa-comment"
+
+      :new_message_comment ->
+        "fas fa-comments"
+
+      :new_document ->
+        "fas fa-file-alt"
+
+      :new_document_page ->
+        "fas fa-file-alt"
+
+      :new_document_suggestion ->
+        "fas fa-file-alt"
+
+      :new_document_suggestion_comment ->
+        "fas fa-file-alt"
+
+      :new_contact ->
+        "fas fa-address-book"
+
+      :new_contact_comment ->
+        "fas fa-address-book"
+
+      _ ->
+        nil
+    end
+  end
+
   defp raw_link(title, opts) do
     link(raw(title), opts)
   end
