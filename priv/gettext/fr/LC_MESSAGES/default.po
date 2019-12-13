@@ -2206,7 +2206,7 @@ msgstr "C'est un plaisir de vous revoir !"
 #, elixir-format
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:46
 msgid "Deleting the workspace will permanently erase all content (messages, documents, contacts, member profiles) after a period of 15 days. You won't be billed again for this workspace."
-msgstr "Supprimer l'espace de travail supprimera de manière permanente tout ses contenus (messages, documents, contacts, profils de membres) après une période de 15 jours. Vous ne serez plus facturé pour cet espace."
+msgstr "Supprimer l'espace de travail supprimera de manière permanente tous ses contenus (messages, documents, contacts, profils de membres) après une période de 15 jours. Vous ne serez plus facturé pour cet espace."
 
 #, elixir-format
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:25
