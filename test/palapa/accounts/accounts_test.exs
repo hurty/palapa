@@ -2,6 +2,7 @@ defmodule Palapa.AccountsTest do
   use Palapa.DataCase
 
   import Palapa.Factory
+  alias Palapa.Organizations
   alias Palapa.Accounts
   alias Palapa.Accounts.Account
 
@@ -47,12 +48,13 @@ defmodule Palapa.AccountsTest do
   end
 
   test "delete/1 deletes the account" do
-    richard = insert!(:richard)
-    assert {:ok, %Account{} = account} = Accounts.delete(richard)
+    pied_piper = insert_pied_piper!()
+    assert {:ok, %Account{} = account} = Accounts.delete(pied_piper.richard.account)
     assert account.name == "RH"
     assert account.email == "#{account.id}@deleted"
     refute Accounts.active?(account)
     refute account.avatar
+    assert [] = Organizations.list_organizations(account)
   end
 
   test "change/1 returns a account changeset" do

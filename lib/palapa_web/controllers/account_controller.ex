@@ -61,6 +61,7 @@ defmodule PalapaWeb.AccountController do
 
       {:error, _changeset} ->
         conn
+        |> assign_changesets(current_account(conn))
         |> put_flash(
           :error,
           gettext("An error occured while deleting your account. Please contact support.")

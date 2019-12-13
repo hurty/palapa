@@ -13,9 +13,7 @@ defmodule Palapa.Application do
       # Start the endpoint when the application starts
       supervisor(PalapaWeb.Endpoint, []),
       # Start the background jobs queue
-      {Palapa.JobQueue, repo: Palapa.Repo, max_demand: 100}
-      # Start your own worker by calling: Palapa.Worker.start_link(arg1, arg2, arg3)
-      # worker(Palapa.Worker, [arg1, arg2, arg3]),
+      {Oban, Application.get_env(:palapa, Oban)}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

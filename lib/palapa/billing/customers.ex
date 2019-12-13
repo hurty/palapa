@@ -26,10 +26,10 @@ defmodule Palapa.Billing.Customers do
   def update_customer(customer, attrs) do
     Ecto.Multi.new()
     |> Ecto.Multi.update(:customer, Customer.update_changeset(customer, attrs))
-    |> Palapa.JobQueue.enqueue(:update_stripe_customer, %{
-      type: "update_stripe_customer",
-      customer_id: customer.id
-    })
+    |> Oban.insert(
+      :update_stripe_customer,
+      Billing.Workers.UpdateStripeCustomer.new(%{customer_id: customer.id})
+    )
     |> Repo.transaction()
   end
 

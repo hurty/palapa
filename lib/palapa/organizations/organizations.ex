@@ -75,23 +75,6 @@ defmodule Palapa.Organizations do
     Organization.changeset(organization, %{})
   end
 
-  def delete(%Organization{} = organization, %Member{} = author) do
-    Multi.new()
-    |> Multi.run(:organization, fn _, _ -> soft_delete(organization) end)
-    |> Multi.insert(:event, fn %{organization: org} ->
-      %Event{
-        action: :delete_organization,
-        organization: org,
-        author: author
-      }
-    end)
-    |> Palapa.JobQueue.enqueue(:cancel_subscription_job, %{
-      type: "cancel_subscription",
-      organization_id: organization.id
-    })
-    |> Repo.transaction()
-  end
-
   def update_billing(%Organization{} = organization, attrs) do
     Organization.billing_changeset(organization, attrs)
     |> Repo.update()
@@ -113,6 +96,73 @@ defmodule Palapa.Organizations do
     |> join(:inner, [m], a in assoc(m, :account))
     |> order_by([_, a], a.name)
     |> Repo.all()
+  end
+
+  def delete(%Organization{} = organization, author \\ nil) do
+    Multi.new()
+    |> Multi.run(:organization, fn _, _ -> soft_delete(organization) end)
+    |> Multi.run(:event, fn repo, %{organization: org} ->
+      if author do
+        %Event{
+          action: :delete_organization,
+          organization: org,
+          author: author
+        }
+        |> repo.insert()
+      else
+        {:ok, nil}
+      end
+    end)
+    |> Oban.insert(
+      :cancel_subscription,
+      Palapa.Billing.Workers.CancelSubscription.new(%{organization_id: organization.id})
+    )
+    |> Repo.transaction()
+  end
+
+  def active_organizations_having_owner(%Account{} = account) do
+    from(organizations in Ecto.assoc(account, :organizations),
+      where: is_nil(organizations.deleted_at),
+      join: members in assoc(organizations, :members),
+      where: members.role == "owner" and members.account_id == ^account.id
+    )
+  end
+
+  defp organizations_ids_with_only_one_owner() do
+    from(members in Member,
+      where: members.role == "owner",
+      group_by: members.organization_id,
+      having: count(members.role) == 1,
+      select: members.organization_id
+    )
+    |> Repo.all()
+  end
+
+  def organizations_to_delete_when_deleting_account(%Account{} = account) do
+    from(
+      organizations in active_organizations_having_owner(account),
+      where: organizations.id in ^organizations_ids_with_only_one_owner()
+    )
+  end
+
+  def delete_organizations_with_only_owner(%Account{} = account) do
+    organizations = organizations_to_delete_when_deleting_account(account) |> Repo.all()
+
+    Enum.each(organizations, fn org ->
+      Organizations.Workers.DeleteOrganization.new(%{organization_id: org.id})
+      |> Oban.insert()
+    end)
+
+    {:ok, organizations}
+  end
+
+  def delete_all_account_memberships(%Account{} = account) do
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
+
+    from(members in Member,
+      where: members.account_id == ^account.id
+    )
+    |> Repo.update_all(set: [deleted_at: now])
   end
 
   def list_members(queryable \\ Organization, name_pattern \\ nil) do
