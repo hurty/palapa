@@ -10,7 +10,7 @@
           <% end %>
         </div>
         <h2 class="<%= if @contact.is_company, do: "text-blue-500", else: "text-green-500" %> text-center text-2xl font-bold capitalize"><%= full_name(@contact) %></h2>
-        
+
         <div class="flex-1 flex self-center mx-4 flex-row-reverse">
           <%= render "contact_actions.html", assigns %>
         </div>
@@ -30,18 +30,25 @@
 
     </div>
 
-    <div class="flex flex-col">
+    <div class="flex flex-col mt-2">
       <%= if @contact.email do %>
-      <div class="flex text-gray-500 my-2">
+      <div class="flex text-gray-500">
         <div class="w-1/5 text-right mr-8"><%= gettext("Email") %></div>
         <div class="text-gray-700"><%= link @contact.email, to: "mailto:#{@contact.email}" %></div>
       </div>
       <% end %>
 
       <%= if @contact.phone do %>
-      <div class="flex text-gray-500 my-2">
+      <div class="flex text-gray-500">
         <div class="w-1/5 text-right mr-8"><%= gettext("Phone") %></div>
         <div class="text-gray-700"><%= link @contact.phone, to: "tel:#{@contact.phone}" %></div>
+      </div>
+      <% end %>
+
+      <%= if @contact.work do %>
+      <div class="flex text-gray-500">
+        <div class="w-1/5 text-right mr-8"><%= gettext("Work") %></div>
+        <div class="text-gray-700"><%= link @contact.work, to: "tel:#{@contact.work}" %></div>
       </div>
       <% end %>
     </div>

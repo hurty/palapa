@@ -1,5 +1,5 @@
 .avatar {
-  @apply inline flex justify-center items-center rounded-full text-white;
+  @apply flex justify-center items-center rounded-full text-white;
 }
 
 .avatar--md {
@@ -16,6 +16,7 @@
 
 .avatar--xs {
   @apply text-xs;
+
   height: 25px;
   width: 25px;
 }

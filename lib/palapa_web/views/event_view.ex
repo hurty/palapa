@@ -205,7 +205,7 @@ defmodule PalapaWeb.EventView do
         "fas fa-cog"
 
       :new_member ->
-        "fas fa-user"
+        "fas fa-user-alt"
 
       :new_message ->
         "fas fa-comment"
