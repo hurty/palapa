@@ -91,6 +91,10 @@ defmodule Palapa.Accounts do
     |> Multi.run(:delete_organizations, fn _repo, %{account: account} ->
       Organizations.delete_organizations_with_only_owner(account)
     end)
+    |> Multi.run(:delete_memberships, fn _repo, %{account: account} ->
+      nb_updated = Organizations.delete_all_account_memberships(account)
+      {:ok, nb_updated}
+    end)
     |> Oban.insert(:delete_avatar, Accounts.Workers.DeleteAvatar.new(%{account_id: account.id}))
     |> Repo.transaction()
     |> case do

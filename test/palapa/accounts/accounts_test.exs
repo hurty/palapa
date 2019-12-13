@@ -2,6 +2,7 @@ defmodule Palapa.AccountsTest do
   use Palapa.DataCase
 
   import Palapa.Factory
+  alias Palapa.Organizations
   alias Palapa.Accounts
   alias Palapa.Accounts.Account
 
@@ -53,10 +54,7 @@ defmodule Palapa.AccountsTest do
     assert account.email == "#{account.id}@deleted"
     refute Accounts.active?(account)
     refute account.avatar
-
-    assert_raise Ecto.NoResultError, fn ->
-      Palapa.Organizations.get!(pied_piper.organization.id)
-    end
+    assert [] = Organizations.list_organizations(account)
   end
 
   test "change/1 returns a account changeset" do

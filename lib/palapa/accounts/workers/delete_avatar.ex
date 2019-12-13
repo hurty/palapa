@@ -5,7 +5,7 @@ defmodule Palapa.Accounts.Workers.DeleteAvatar do
   def perform(%{"account_id" => account_id}, _job) do
     account = Palapa.Accounts.get(account_id)
 
-    if account do
+    if account && account.avatar do
       Palapa.Avatar.delete({account.avatar, account})
     end
   end
