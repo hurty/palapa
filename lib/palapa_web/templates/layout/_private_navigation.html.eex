@@ -64,7 +64,7 @@
 
             <ul class="mb-2">
               <li><%= link(gettext("My profile", %{workspace: @current_organization.name}), to: Routes.member_path(@conn, :show, @current_organization, @current_member), class: "text-blue-500 hover:underline") %></li>
-              <li><%= link(gettext("Preferences"), to: Routes.account_path(@conn, :edit), target: "_blank", class: "text-blue-500 hover:underline") %></li>
+              <li><%= link(gettext("Preferences"), to: Routes.account_path(@conn, :edit), class: "text-blue-500 hover:underline") %></li>
               <li><%= link(gettext("Switch workspace"), to: Routes.organization_path(@conn, :index), class: "text-blue-500 hover:underline") %></li>
             </ul>
             <ul class="mb-4">
