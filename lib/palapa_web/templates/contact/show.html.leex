@@ -51,6 +51,13 @@
         <div class="text-gray-700"><%= link @contact.work, to: "tel:#{@contact.work}" %></div>
       </div>
       <% end %>
+
+      <%= if @contact.chat do %>
+      <div class="flex text-gray-500">
+        <div class="w-1/5 text-right mr-8"><%= gettext("IM") %></div>
+        <div class="text-gray-700"><%= link @contact.chat, to: "tel:#{@contact.chat}" %></div>
+      </div>
+      <% end %>
     </div>
 
     <div class="mt-8">
@@ -90,7 +97,17 @@
       <% end %>
 
     </div>
+
+    <div class="mt-8">
+      <%= if @contact.additional_info do %>
+      <div class="flex text-gray-500" >
+        <div class="w-1/5 text-right mr-8"><%= gettext("Additional information") %></div>
+        <div class="text-gray-700 overflow-y-auto" style="max-height:250px;"><%= @contact.additional_info %></div>
+      </div>
+      <% end %>
+    </div>
   </div>
+
 
   <%= if @contact.is_company && Enum.any?(@contact.employees) do %>
     <div class="flex flex-col my-4 bg-gray-100 border-gray-200">

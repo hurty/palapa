@@ -116,13 +116,13 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:36
-#: lib/palapa_web/templates/contact/form.html.leex:137 lib/palapa_web/templates/contact/show.html.leex:73
+#: lib/palapa_web/templates/contact/form.html.leex:137 lib/palapa_web/templates/contact/show.html.leex:87
 msgid "City"
 msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:50
-#: lib/palapa_web/templates/contact/show.html.leex:80
+#: lib/palapa_web/templates/contact/show.html.leex:94
 msgid "Country"
 msgstr ""
 
@@ -153,7 +153,7 @@ msgid "Latest activity"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_private_navigation.html.eex:66
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:71
 #: lib/palapa_web/templates/layout/account.html.eex:13
 msgid "Log out"
 msgstr ""
@@ -175,7 +175,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:30
-#: lib/palapa_web/templates/contact/form.html.leex:131 lib/palapa_web/templates/contact/show.html.leex:66
+#: lib/palapa_web/templates/contact/form.html.leex:131 lib/palapa_web/templates/contact/show.html.leex:80
 msgid "Postcode"
 msgstr ""
 
@@ -344,12 +344,13 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/contact/form.html.leex:105
+#: lib/palapa_web/templates/contact/show.html.leex:104
 msgid "Additional information"
 msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/contact/form.html.leex:113
-#: lib/palapa_web/templates/contact/form.html.leex:117 lib/palapa_web/templates/contact/show.html.leex:52
+#: lib/palapa_web/templates/contact/form.html.leex:117 lib/palapa_web/templates/contact/show.html.leex:66
 msgid "Address"
 msgstr ""
 
@@ -507,7 +508,7 @@ msgid "Processing payment"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/contact/show.html.leex:91
+#: lib/palapa_web/templates/contact/show.html.leex:115
 msgid "Related contacts"
 msgstr ""
 
@@ -525,11 +526,6 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/contact/index.html.leex:37
 msgid "Search contacts"
-msgstr ""
-
-#, elixir-format
-#: lib/palapa_web/templates/contact/form.html.leex:97
-msgid "Social networks / Chat"
 msgstr ""
 
 #, elixir-format
@@ -571,6 +567,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/contact/form.html.leex:91
+#: lib/palapa_web/templates/contact/show.html.leex:50
 msgid "Work"
 msgstr ""
 
@@ -720,7 +717,8 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/document/document/index.html.eex:87
-#: lib/palapa_web/templates/document/document/index.html.eex:91 lib/palapa_web/templates/search/search_result_document.html.eex:10
+#: lib/palapa_web/templates/document/document/index.html.eex:91 lib/palapa_web/templates/layout/_private_navigation.html.eex:26
+#: lib/palapa_web/templates/search/search_result_document.html.eex:10
 msgid "Document"
 msgstr ""
 
@@ -779,7 +777,7 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/controllers/document/document_controller.ex:57
 #: lib/palapa_web/controllers/document/document_controller.ex:78 lib/palapa_web/templates/document/document/index.html.eex:10
-#: lib/palapa_web/templates/document/document/new.html.eex:4 lib/palapa_web/templates/layout/_private_navigation.html.eex:26
+#: lib/palapa_web/templates/document/document/new.html.eex:4
 msgid "New document"
 msgstr ""
 
@@ -1195,24 +1193,19 @@ msgid "Messages"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_private_navigation.html.eex:31
-msgid "New Contact"
-msgstr ""
-
-#, elixir-format
 #: lib/palapa_web/controllers/message_controller.ex:56
-#: lib/palapa_web/controllers/message_controller.ex:70 lib/palapa_web/templates/layout/_private_navigation.html.eex:22
-#: lib/palapa_web/templates/message/_index_toolbar.html.eex:28 lib/palapa_web/templates/message/new.html.eex:4
+#: lib/palapa_web/controllers/message_controller.ex:70 lib/palapa_web/templates/message/_index_toolbar.html.eex:28
+#: lib/palapa_web/templates/message/new.html.eex:4
 msgid "New message"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_private_navigation.html.eex:42
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:47
 msgid "Search anything"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_private_navigation.html.eex:48
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:53
 msgid "Searching..."
 msgstr ""
 
@@ -1237,7 +1230,7 @@ msgid "Sign out"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_private_navigation.html.eex:63
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:68
 #: lib/palapa_web/templates/layout/_sidebar.html.eex:10
 msgid "Switch workspace"
 msgstr ""
@@ -1566,6 +1559,7 @@ msgid "Billing overview"
 msgstr ""
 
 #, elixir-format
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:30
 #: lib/palapa_web/templates/search/search_result_contact.html.eex:13
 msgid "Contact"
 msgstr ""
@@ -1654,6 +1648,7 @@ msgid "Members"
 msgstr ""
 
 #, elixir-format
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:22
 #: lib/palapa_web/templates/search/search_result_message.html.eex:10
 msgid "Message"
 msgstr ""
@@ -1695,6 +1690,7 @@ msgid "Table of contents"
 msgstr ""
 
 #, elixir-format
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:35
 #: lib/palapa_web/templates/search/search_result_team.html.eex:10
 msgid "Team"
 msgstr ""
@@ -2396,7 +2392,7 @@ msgid "This team already exists"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/account_controller.ex:66
+#: lib/palapa_web/controllers/account_controller.ex:67
 msgid "An error occured while deleting your account. Please contact support."
 msgstr ""
 
@@ -2412,7 +2408,7 @@ msgid "Deleting your account is non-reversible. All data associated with your ac
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_private_navigation.html.eex:61
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:66
 msgid "My profile"
 msgstr ""
 
@@ -2422,7 +2418,7 @@ msgid "No suggestions yet."
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/layout/_private_navigation.html.eex:62
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:67
 msgid "Preferences"
 msgstr ""
 
@@ -2439,4 +2435,14 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/account/delete_account.html.eex:26
 msgid "You are about to delete your account. Are you sure?"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/show.html.leex:57
+msgid "IM"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/contact/form.html.leex:97
+msgid "Instant messaging"
 msgstr ""
