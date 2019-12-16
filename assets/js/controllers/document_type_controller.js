@@ -10,10 +10,6 @@ export default class extends BaseController {
     "linkInput"
   ];
 
-  connect() {
-    console.log("controller connected");
-  }
-
   setInternal(e) {
     e.preventDefault();
     this.hiddenTypeTarget.value = "internal";

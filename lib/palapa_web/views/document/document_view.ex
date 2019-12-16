@@ -36,4 +36,12 @@ defmodule PalapaWeb.Document.DocumentView do
       _ -> "fas fa-file-alt"
     end
   end
+
+  def form_template(document) do
+    case document.type do
+      :attachment -> "form_type_attachment.html"
+      :link -> "form_type_link.html"
+      _ -> "form.html"
+    end
+  end
 end

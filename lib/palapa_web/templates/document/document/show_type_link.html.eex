@@ -1,0 +1,53 @@
+<div id="document" class="page-layout">
+  <div class="main-content p-1 lg:p-0">
+    <%= render PalapaWeb.Document.DocumentView, "restore.html", assigns %>
+
+    <%# ----- DOCS ----- %>
+    <div class="card">
+      <div class="flex justify-between border-b border-gray-200 p-1 lg:p-8">
+        <div>
+          <h1 class="text-green-500 text-lg lg:text-2xl"><%= @document.title %></h1>
+          <div class="flex py-2 text-gray-700 text-xs">
+              <div class="flex">
+                <div class="self-center mr-1"><%= Helpers.avatar(@document.last_author.account, :xs) %></div>
+                <div class="self-center">
+                  <%= gettext("%{author} edited %{time_ago}", %{
+                      author: safe_to_string(link(@document.last_author.account.name, to: Routes.member_path(@conn, :show, @current_organization, @document.last_author), class: "hover:underline text-green-500")),
+                      time_ago: safe_to_string(Helpers.auto_format_datetime(@conn, @document.updated_at))}
+                  ) |> raw() %>
+                </div>
+              </div>
+
+          </div>
+        </div>
+
+
+        <div data-controller="popover" data-action="mousedown@window->popover#hide">
+          <%= if permit?(Palapa.Documents.Policy, :update_document, @current_member, @document) do %>
+            <button data-target="popover.button" data-action="popover#toggle" class="card-actions-button">
+              <i class="fas fa-ellipsis-h"></i>
+            </button>
+
+            <div data-target="popover.content" class="popover hidden">
+              <div data-target="popover.arrow" class="popover__arrow"></div>
+              <nav class="flex flex-col">
+                <%= link to: Routes.document_path(@conn, :edit, @current_organization, @document), class: "popover__link" do %>
+                  <i class="fas fa-pen"></i>&nbsp;<%= gettext("Edit this document/link") %>
+                <% end %>
+
+                <%= link to: Routes.document_trash_path(@conn, :create, @current_organization, @document), class: "popover__link",
+                 data: [controller: "link", action: "link#post", confirm: gettext("Are your sure you want to delete this document?")] do %>
+                  <i class="fas fa-trash text-red"></i>&nbsp;<%= gettext("Delete this document") %>
+                <% end %>
+              </nav>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div>
+        <section class="p-2 sm:p-8">
+          <a class="text-blue-500 text-lg" target="_blank" href="<%= @document.link %>"><i class="fas fa-external-link-alt mr-2"></i><%= @document.link %></a>
+        </section>
+      </div>
+  </div>
+</div>

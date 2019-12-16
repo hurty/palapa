@@ -141,7 +141,7 @@ defmodule Palapa.Documents do
 
     document =
       from(document in queryable,
-        preload: [:team, :last_author],
+        preload: [team: [], last_author: [:account]],
         preload: [sections: ^sections_query]
       )
       |> Repo.get!(id)

@@ -25,25 +25,28 @@ defmodule Palapa.Documents.Document do
     belongs_to(:deletion_author, Member, on_replace: :update)
   end
 
-  def changeset(document \\ %__MODULE__{}, attrs)
-
-  def changeset(document, %{"type" => "attachment"} = attrs) do
-    document
-    |> cast(attrs, [:type, :title, :attachment])
-    |> validate_required([:type, :title, :attachment])
-    |> cast_assoc(:attachment, with: &document_attachment_changeset/2)
-  end
-
-  def changeset(document, %{"type" => "link"} = attrs) do
-    document
-    |> cast(attrs, [:type, :title, :link])
-    |> validate_required([:type, :title, :link])
-  end
-
   def changeset(document, attrs) do
     document
-    |> cast(attrs, [:type, :title])
+    |> cast(attrs, [:type, :title, :link])
     |> validate_required([:type, :title])
+    |> validate_specific_type()
+  end
+
+  def validate_specific_type(changeset) do
+    type = get_field(changeset, :type)
+
+    case type do
+      :attachment ->
+        changeset
+        |> validate_required(:attachment)
+        |> cast_assoc(:attachment, with: &document_attachment_changeset/2)
+
+      :link ->
+        changeset |> validate_required(:link)
+
+      _ ->
+        changeset
+    end
   end
 
   defp document_attachment_changeset(attachment, attrs) do

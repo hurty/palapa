@@ -85,7 +85,18 @@ defmodule PalapaWeb.Document.DocumentController do
 
   def show(conn, %{"id" => id}) do
     document = BaseController.find_document!(conn, id)
+    show_doc_with_type(conn, document)
+  end
 
+  defp show_doc_with_type(conn, %Document{type: :attachment} = document) do
+    render(conn, "show_type_attachment.html", document: document)
+  end
+
+  defp show_doc_with_type(conn, %Document{type: :link} = document) do
+    render(conn, "show_type_link.html", document: document)
+  end
+
+  defp show_doc_with_type(conn, document) do
     first_page = Documents.get_first_page(document)
 
     if first_page do
