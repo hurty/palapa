@@ -7,7 +7,7 @@ defmodule Palapa.Documents.Document do
   alias Palapa.Attachments.Attachment
 
   schema "documents" do
-    field(:type, DocumentTypeEnum)
+    field(:type, DocumentTypeEnum, default: :internal)
     field(:title, :string)
     field(:link, :string)
     field(:deleted_at, :utc_datetime)

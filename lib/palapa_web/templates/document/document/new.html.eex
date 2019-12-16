@@ -25,7 +25,7 @@
             <div class="self-center"><%= gettext("Link") %></div>
           </button>
 
-          <%= hidden_input form, :type, value: "internal", data: [target: "document-type.hiddenType"] %>
+          <%= hidden_input form, :type, data: [target: "document-type.hiddenType"] %>
         </div>
 
         <div class="field">

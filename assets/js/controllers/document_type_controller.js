@@ -10,8 +10,25 @@ export default class extends BaseController {
     "linkInput"
   ];
 
+  connect() {
+    switch (this.hiddenTypeTarget.value) {
+      case 'attachment':
+        this.setAttachment()
+        break;
+
+      case 'link':
+        this.setLink()
+        break;
+
+      default:
+        this.setInternal()
+    }
+  }
+
   setInternal(e) {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     this.hiddenTypeTarget.value = "internal";
 
     this.linkButtonTarget.classList.remove("btn-switch--selected");
@@ -23,7 +40,9 @@ export default class extends BaseController {
   }
 
   setLink(e) {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     this.hiddenTypeTarget.value = "link";
 
     this.linkButtonTarget.classList.add("btn-switch--selected");
@@ -35,7 +54,9 @@ export default class extends BaseController {
   }
 
   setAttachment(e) {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     this.hiddenTypeTarget.value = "attachment";
 
     this.linkButtonTarget.classList.remove("btn-switch--selected");
