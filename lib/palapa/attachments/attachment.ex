@@ -20,6 +20,7 @@ defmodule Palapa.Attachments.Attachment do
     belongs_to(:personal_information, Palapa.Organizations.PersonalInformation)
     belongs_to(:message, Palapa.Messages.Message)
     belongs_to(:message_comment, Palapa.Messages.MessageComment)
+    belongs_to(:document, Palapa.Documents.Document)
     belongs_to(:page, Palapa.Documents.Page)
     belongs_to(:document_suggestion, Palapa.Documents.Suggestion)
     belongs_to(:document_suggestion_comment, Palapa.Documents.SuggestionComment)

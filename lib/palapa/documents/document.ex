@@ -3,14 +3,18 @@ defmodule Palapa.Documents.Document do
 
   alias Palapa.Organizations.{Organization, Member}
   alias Palapa.Teams.Team
-  alias Palapa.Documents.{Section, Page, DocumentAccess}
+  alias Palapa.Documents.{DocumentTypeEnum, Section, Page, DocumentAccess}
+  alias Palapa.Attachments.Attachment
 
   schema "documents" do
+    field(:type, DocumentTypeEnum)
     field(:title, :string)
+    field(:link, :string)
     field(:deleted_at, :utc_datetime)
     field(:public_token, :string)
     timestamps()
 
+    has_one(:attachment, Attachment, on_replace: :delete)
     belongs_to(:organization, Organization)
     belongs_to(:last_author, Member, on_replace: :update)
     belongs_to(:team, Team, on_replace: :update)
@@ -21,11 +25,30 @@ defmodule Palapa.Documents.Document do
     belongs_to(:deletion_author, Member, on_replace: :update)
   end
 
-  @doc false
-  def changeset(document \\ %__MODULE__{}, attrs) do
+  def changeset(document \\ %__MODULE__{}, attrs)
+
+  def changeset(document, %{"type" => "attachment"} = attrs) do
     document
-    |> cast(attrs, [:title])
-    |> validate_required([:title])
+    |> cast(attrs, [:type, :title, :attachment])
+    |> validate_required([:type, :title, :attachment])
+    |> cast_assoc(:attachment, with: &document_attachment_changeset/2)
+  end
+
+  def changeset(document, %{"type" => "link"} = attrs) do
+    document
+    |> cast(attrs, [:type, :title, :link])
+    |> validate_required([:type, :title, :link])
+  end
+
+  def changeset(document, attrs) do
+    document
+    |> cast(attrs, [:type, :title])
+    |> validate_required([:type, :title])
+  end
+
+  defp document_attachment_changeset(attachment, attrs) do
+    Attachment.changeset(attachment, attrs)
+    |> put_change(:attachable_type, :document)
   end
 
   def delete_changeset(%__MODULE__{} = document, %Member{} = deletion_author) do

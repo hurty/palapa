@@ -20,4 +20,20 @@ defmodule PalapaWeb.Document.DocumentView do
       ]
     end
   end
+
+  def document_type(document) do
+    case document.type do
+      :attachment -> gettext("Attachment")
+      :link -> gettext("Link")
+      _ -> gettext("Document")
+    end
+  end
+
+  def document_type_icon(document) do
+    case document.type do
+      :attachment -> "fas fa-paperclip"
+      :link -> "fas fa-link"
+      _ -> "fas fa-file-alt"
+    end
+  end
 end

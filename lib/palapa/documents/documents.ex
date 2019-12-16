@@ -1,10 +1,17 @@
 defmodule Palapa.Documents do
   use Palapa.Context
+  import EctoEnum
 
   alias Palapa.Documents.{Document, Section, Page, DocumentAccess}
   alias Palapa.Teams.Team
   alias Palapa.Position
   alias Palapa.Events.Event
+
+  defenum(DocumentTypeEnum, :type, ~w(
+    internal
+    attachment
+    link
+  )s)
 
   # --- Errors
 
@@ -94,7 +101,7 @@ defmodule Palapa.Documents do
   def list_documents(queryable \\ Document, page \\ 1) do
     queryable
     |> preload([:team, [last_author: :account]])
-    |> Repo.paginate(page: page, page_size: 5)
+    |> Repo.paginate(page: page, page_size: 15)
   end
 
   def recent_documents(member) do

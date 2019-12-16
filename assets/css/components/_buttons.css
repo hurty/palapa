@@ -97,3 +97,15 @@ button::-moz-focus-inner,
     @apply bg-blue-600;
   }
 }
+
+.btn-switch {
+  @apply flex border bg-gray-100 rounded-lg p-2 text-gray-500 text-center;
+
+  &:hover {
+    @apply cursor-pointer text-green-500;
+  }
+}
+
+.btn-switch--selected {
+  @apply shadow-inner text-green-500;
+}

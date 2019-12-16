@@ -84,12 +84,18 @@
           <%= for document <- @documents do %>
             <div class="flex flex-wrap py-2 border-b border-gray-200 p-4">
               <div class="lg:w-8 self-center">
-                <i class="hidden lg:block fas fa-file-alt text-gray-600 text-base" title="<%= gettext("Document") %>"></i>
+                <i class="hidden lg:block <%= document_type_icon(document) %> text-gray-600 text-base" title="<%= document_type(document) %>"></i>
               </div>
 
               <div class="w-full lg:flex-1 self-center">
-                <i class="lg:hidden fas fa-file-alt text-gray-600 text-base" title="<%= gettext("Document") %>"></i>
+                <i class="lg:hidden fas fa-file-alt text-gray-600 text-base" title="<%= document_type(document) %>"></i>
+
                 <%= link Helpers.truncate_string(document.title, 150), to: Routes.document_path(@conn, :show, @current_organization, document), class: "text-base text-green-500 font-bold hover:underline text-sm" %>
+
+                <%= if document.type == :link do %>
+                  <a href="<%= document.link %>" target="_blank" class="text-blue-500 text-xs ml-2"><i class="fas fa-external-link-alt mr-1"></i><%= gettext("Open") %></a>
+                <% end %>
+
                 <div class="font-bold mr-2 rounded my-1">
                   <%= if document.team do %>
                     <%= link(document.team.name, to: Routes.document_path(@conn, :index, @current_organization, team_id: document.team_id), title: gettext("Show all team documents"), class: "tag tag-team text-xs") %></span>

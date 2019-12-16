@@ -16,7 +16,8 @@ defmodule Palapa.Attachments do
     :page,
     :document_suggestion,
     :document_suggestion_comment,
-    :contact_comment
+    :contact_comment,
+    :document
   ])
 
   # --- Scopes
