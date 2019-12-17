@@ -276,7 +276,8 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/account/password_change.html.eex:7
 #: lib/palapa_web/templates/billing/payment_method/form.html.eex:9 lib/palapa_web/templates/billing/subscription/form.html.eex:8
-#: lib/palapa_web/templates/document/document/form.html.eex:2 lib/palapa_web/templates/document/document/new.html.eex:9
+#: lib/palapa_web/templates/document/document/form.html.eex:2 lib/palapa_web/templates/document/document/form_type_attachment.html.eex:2
+#: lib/palapa_web/templates/document/document/form_type_link.html.eex:2 lib/palapa_web/templates/document/document/new.html.eex:9
 #: lib/palapa_web/templates/document/page/form.html.eex:3 lib/palapa_web/templates/join/form_with_existing_account.html.eex:17
 #: lib/palapa_web/templates/join/form_without_existing_account.html.eex:17 lib/palapa_web/templates/organization/new.html.eex:10
 #: lib/palapa_web/templates/password_reset/edit.html.eex:9 lib/palapa_web/templates/registration/_form.html.eex:9
@@ -378,7 +379,7 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/account/delete_account.html.eex:33
 #: lib/palapa_web/templates/contact/delete_modal.html.eex:19 lib/palapa_web/templates/contact/form.html.leex:152
-#: lib/palapa_web/templates/document/document/edit.html.eex:12 lib/palapa_web/templates/document/document/new.html.eex:34
+#: lib/palapa_web/templates/document/document/edit.html.eex:12 lib/palapa_web/templates/document/document/new.html.eex:63
 #: lib/palapa_web/templates/document/document/table_of_contents.html.eex:51 lib/palapa_web/templates/document/section/toc_section.html.eex:69
 #: lib/palapa_web/templates/document/suggestion/edit.html.eex:9 lib/palapa_web/templates/document/suggestion/suggestion.html.eex:63
 #: lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:9 lib/palapa_web/templates/invitation/_invitation.html.eex:18
@@ -686,7 +687,7 @@ msgid "Create a page in this section"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/document/new.html.eex:33
+#: lib/palapa_web/templates/document/document/new.html.eex:62
 msgid "Create this document"
 msgstr ""
 
@@ -696,7 +697,8 @@ msgid "Delete suggestion"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/document/document_actions.html.eex:25
+#: lib/palapa_web/templates/document/document/document_actions.html.eex:26
+#: lib/palapa_web/templates/document/document/show_type_attachment.html.eex:40 lib/palapa_web/templates/document/document/show_type_link.html.eex:40
 msgid "Delete this document"
 msgstr ""
 
@@ -717,9 +719,9 @@ msgid "Disable public sharing"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/document/index.html.eex:87
-#: lib/palapa_web/templates/document/document/index.html.eex:91 lib/palapa_web/templates/layout/_private_navigation.html.eex:26
-#: lib/palapa_web/templates/search/search_result_document.html.eex:10
+#: lib/palapa_web/templates/document/document/new.html.eex:15
+#: lib/palapa_web/templates/layout/_private_navigation.html.eex:26 lib/palapa_web/templates/search/search_result_document.html.eex:10
+#: lib/palapa_web/views/document/document_view.ex:28
 msgid "Document"
 msgstr ""
 
@@ -766,7 +768,8 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/document/document/form.html.eex:14
-#: lib/palapa_web/templates/document/document/new.html.eex:25
+#: lib/palapa_web/templates/document/document/form_type_attachment.html.eex:19 lib/palapa_web/templates/document/document/form_type_link.html.eex:19
+#: lib/palapa_web/templates/document/document/new.html.eex:54
 msgid "Everyone in %{workspace}"
 msgstr ""
 
@@ -795,7 +798,7 @@ msgid "New section"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/document/index.html.eex:125
+#: lib/palapa_web/templates/document/document/index.html.eex:131
 msgid "No documents here."
 msgstr ""
 
@@ -841,7 +844,7 @@ msgid "Public sharing is enabled"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/document/index.html.eex:141
+#: lib/palapa_web/templates/document/document/index.html.eex:147
 msgid "Recent documents"
 msgstr ""
 
@@ -910,14 +913,14 @@ msgid "Share with a secret link"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/document/index.html.eex:97
+#: lib/palapa_web/templates/document/document/index.html.eex:103
 #: lib/palapa_web/templates/trash/document.html.eex:9
 msgid "Shared with everyone"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/document/index.html.eex:95
-#: lib/palapa_web/templates/document/document/index.html.eex:97
+#: lib/palapa_web/templates/document/document/index.html.eex:101
+#: lib/palapa_web/templates/document/document/index.html.eex:103
 msgid "Show all team documents"
 msgstr ""
 
@@ -961,7 +964,8 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/document/document/form.html.eex:6
-#: lib/palapa_web/templates/document/document/new.html.eex:13
+#: lib/palapa_web/templates/document/document/form_type_attachment.html.eex:6 lib/palapa_web/templates/document/document/form_type_link.html.eex:6
+#: lib/palapa_web/templates/document/document/new.html.eex:32
 msgid "Title..."
 msgstr ""
 
@@ -977,7 +981,7 @@ msgid "Update this document"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/document/index.html.eex:133
+#: lib/palapa_web/templates/document/document/index.html.eex:139
 msgid "View documents in the trash"
 msgstr ""
 
@@ -1008,7 +1012,8 @@ msgid "Save page"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/document/page/show.html.eex:19
+#: lib/palapa_web/templates/document/document/show_type_attachment.html.eex:14
+#: lib/palapa_web/templates/document/document/show_type_link.html.eex:14 lib/palapa_web/templates/document/page/show.html.eex:19
 msgid "%{author} edited %{time_ago}"
 msgstr ""
 
@@ -1271,8 +1276,8 @@ msgid "Delete"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/document/document_controller.ex:116
-#: lib/palapa_web/controllers/document/document_controller.ex:138 lib/palapa_web/controllers/document/page_controller.ex:105
+#: lib/palapa_web/controllers/document/document_controller.ex:127
+#: lib/palapa_web/controllers/document/document_controller.ex:149 lib/palapa_web/controllers/document/page_controller.ex:105
 #: lib/palapa_web/controllers/document/page_controller.ex:132 lib/palapa_web/controllers/message_controller.ex:121
 #: lib/palapa_web/controllers/team_controller.ex:65 lib/palapa_web/templates/member/_personal_information.html.leex:30
 msgid "Edit"
@@ -2342,7 +2347,8 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/document/document/form.html.eex:12
-#: lib/palapa_web/templates/document/document/new.html.eex:23
+#: lib/palapa_web/templates/document/document/form_type_attachment.html.eex:17 lib/palapa_web/templates/document/document/form_type_link.html.eex:17
+#: lib/palapa_web/templates/document/document/new.html.eex:52
 msgid "Which team can see this document?"
 msgstr ""
 
@@ -2446,4 +2452,46 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/contact/form.html.leex:97
 msgid "Instant messaging"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/show_type_attachment.html.eex:39
+#: lib/palapa_web/templates/document/document/show_type_link.html.eex:39
+msgid "Are your sure you want to delete this document?"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/views/document/document_view.ex:26
+msgid "Attachment"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/show_type_link.html.eex:35
+msgid "Edit this document/link"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/show_type_attachment.html.eex:35
+msgid "Edit this file"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/new.html.eex:25
+#: lib/palapa_web/views/document/document_view.ex:27
+msgid "Link"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/index.html.eex:96
+msgid "Open"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/new.html.eex:20
+msgid "Upload file"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/document/document/new.html.eex:37
+msgid "Content..."
 msgstr ""

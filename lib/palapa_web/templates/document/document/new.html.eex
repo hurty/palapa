@@ -34,7 +34,7 @@
         </div>
 
         <div data-target="document-type.richTextInput" class="field">
-          <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: "Content...") %>
+          <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: gettext("Content...")) %>
         </div>
 
         <div data-target="document-type.attachmentInput" class="hidden field">
