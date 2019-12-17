@@ -57,16 +57,17 @@ defmodule Palapa.Attachments do
   end
 
   def create(
-        %Organizations.Organization{} = organization,
         %Plug.Upload{} = file,
         %Member{} = creator
       ) do
     attrs = build_attachment_attrs(file)
 
+    creator = Repo.preload(creator, :organization)
+
     {:ok, attachment} =
       %Attachment{}
       |> Attachment.changeset(attrs)
-      |> put_assoc(:organization, organization)
+      |> put_assoc(:organization, creator.organization)
       |> put_assoc(:creator, creator)
       |> Repo.insert()
 
@@ -81,6 +82,7 @@ defmodule Palapa.Attachments do
 
   defp build_attachment_attrs(file) do
     file_stats = File.stat!(file.path)
+    IO.inspect(file, label: "file stats")
 
     checksum = Palapa.Access.file_checksum(file.path)
 

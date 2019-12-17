@@ -4,23 +4,23 @@
       <h2 class="card-header"><%= gettext("New document") %></h2>
       <div class="card-header-separator"></div>
 
-      <%= form_for @changeset, Routes.document_path(@conn, :create, @current_organization), [data: [controller: "document-type"]], fn form -> %>
+      <%= form_for @changeset, Routes.document_path(@conn, :create, @current_organization), [multipart: true, data: [controller: "document-type"]], fn form -> %>
         <%= if @changeset.action do %>
           <p class="db fw6 lh-copy f6  text-red-400 font-bold"><%= gettext("Check the errors below:") %></p>
         <% end %>
 
-        <div class="flex">
-          <button data-target="document-type.internalButton" data-action="document-type#setInternal" class="btn-switch">
+        <div class="flex justify-center">
+          <button data-target="document-type.internalButton" data-action="document-type#setInternal" class="tab">
             <i class="fa fa-file-alt text-3xl mr-2"></i>
             <div class="self-center"><%= gettext("Document") %></div>
           </button>
 
-          <button data-target="document-type.attachmentButton" data-action="document-type#setAttachment" class="ml-4 btn-switch">
+          <button data-target="document-type.attachmentButton" data-action="document-type#setAttachment" class="ml-4 tab">
             <i class="fa fa-paperclip text-3xl mr-2"></i>
             <div class="self-center"><%= gettext("Upload file") %></div>
           </button>
 
-          <button data-target="document-type.linkButton" data-action="document-type#setLink" class="ml-4 btn-switch">
+          <button data-target="document-type.linkButton" data-action="document-type#setLink" class="ml-4 tab">
             <i class="fa fa-link text-3xl mr-2"></i>
             <div class="self-center"><%= gettext("Link") %></div>
           </button>
@@ -29,12 +29,17 @@
         </div>
 
         <div class="field">
-          <%= text_input form, :title, placeholder: gettext("Title..."), "data-controller": "focus", autocomplete: "off", class: "input p-2 lg:p-4 w-full font-bold lg:text-xl" %>
+          <%= text_input form, :title, placeholder: gettext("Title..."), "data-controller": "focus", "data-target": "document-type.titleInput", autocomplete: "off", class: "input p-2 lg:p-4 w-full font-bold lg:text-xl" %>
           <%= error_tag form, :title %>
         </div>
 
         <div data-target="document-type.richTextInput" class="field">
           <%= Helpers.rich_text_editor(form, :content, @current_organization, placeholder: "Content...") %>
+        </div>
+
+        <div data-target="document-type.attachmentInput" class="hidden field">
+          <%= file_input form, :attachment, class: "input", autocomplete: "off" %>
+          <%= error_tag form, :attachment %>
         </div>
 
         <div data-target="document-type.linkInput" class="hidden field">

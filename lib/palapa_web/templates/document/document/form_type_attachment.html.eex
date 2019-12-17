@@ -1,0 +1,24 @@
+<%= if @changeset.action do %>
+  <p class="db fw6 lh-copy f6  text-red-400 font-bold"><%= gettext("Check the errors below:") %></p>
+<% end %>
+
+<div class="field">
+  <%= text_input @form, :title, placeholder: gettext("Title..."), "data-controller": "focus", autocomplete: "off", class: "input p-2 w-full font-bold lg:text-xl" %>
+  <%= error_tag @form, :title %>
+</div>
+
+<div class="field">
+  <%= file_input @form, :attachment, class: "input", autocomplete: "off" %>
+  <%= error_tag @form, :attachment %>
+</div>
+
+<%= if Enum.any?(@teams) do %>
+  <div class="field">
+    <%= label @form, :team_id, gettext("Which team can see this document?"), class: "label" %>
+    <%= select @form, :team_id,
+      List.insert_at(Enum.map(@teams, fn team -> {team.name, team.id} end), 0, {gettext("Everyone in %{workspace}", %{workspace: @current_organization.name}), nil}),
+      class: "bg-gray-100",
+      "data-controller": "choice"
+    %>
+  </div>
+<% end %>

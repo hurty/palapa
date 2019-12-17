@@ -4,7 +4,7 @@ defmodule PalapaWeb.AttachmentController do
   alias Palapa.Attachments
 
   def create(conn, %{"file" => file}) do
-    case Palapa.Attachments.create(current_organization(conn), file, current_member(conn)) do
+    case Palapa.Attachments.create(file, current_member(conn)) do
       {:ok, attachment} ->
         sgid = Palapa.Access.generate_signed_id(attachment.id)
 

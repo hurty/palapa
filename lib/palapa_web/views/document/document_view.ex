@@ -44,4 +44,29 @@ defmodule PalapaWeb.Document.DocumentView do
       _ -> "form.html"
     end
   end
+
+  def file_icon("application/pdf"), do: "fas fa-file-pdf"
+  def file_icon("application/zip"), do: "fas fa-file-archive"
+  def file_icon("application/vnd.ms-powerpoint"), do: "fas fa-file-powerpoint"
+
+  def file_icon("application/vnd.openxmlformats-officedocument.presentationml.presentation"),
+    do: "fas fa-file-powerpoint"
+
+  def file_icon("application/vnd.ms-excel"), do: "fas fa-file-excel"
+
+  def file_icon("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
+    do: "fas fa-file-excel"
+
+  def file_icon("application/msword"), do: "fas fa-file-word"
+
+  def file_icon("application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
+    do: "fas fa-file-word"
+
+  def file_icon(content_type) do
+    cond do
+      String.starts_with?(content_type, "audio") -> "fas fa-file-audio"
+      String.starts_with?(content_type, "image") -> "fas fa-file-image"
+      true -> "fas fa-file-download"
+    end
+  end
 end

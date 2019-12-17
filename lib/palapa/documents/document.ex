@@ -27,31 +27,27 @@ defmodule Palapa.Documents.Document do
 
   def changeset(document, attrs) do
     document
-    |> cast(attrs, [:type, :title, :link])
+    |> cast(attrs, [:type, :title])
     |> validate_required([:type, :title])
-    |> validate_specific_type()
+    |> validate_specific_type(attrs)
   end
 
-  def validate_specific_type(changeset) do
+  def validate_specific_type(changeset, attrs) do
     type = get_field(changeset, :type)
 
     case type do
       :attachment ->
         changeset
-        |> validate_required(:attachment)
-        |> cast_assoc(:attachment, with: &document_attachment_changeset/2)
+        |> validate_change(:attachment, fn attachment -> !is_nil(attachment) end)
 
       :link ->
-        changeset |> validate_required(:link)
+        changeset
+        |> cast(attrs, [:link])
+        |> validate_required(:link)
 
       _ ->
         changeset
     end
-  end
-
-  defp document_attachment_changeset(attachment, attrs) do
-    Attachment.changeset(attachment, attrs)
-    |> put_change(:attachable_type, :document)
   end
 
   def delete_changeset(%__MODULE__{} = document, %Member{} = deletion_author) do

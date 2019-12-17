@@ -244,4 +244,8 @@ defmodule PalapaWeb.Helpers do
         end
     end
   end
+
+  def image?(%Palapa.Attachments.Attachment{} = attachment) do
+    Palapa.Attachments.image?(attachment)
+  end
 end

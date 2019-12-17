@@ -4,7 +4,7 @@ defmodule Palapa.Attachments.Policy do
   alias Palapa.Attachments
   alias Palapa.Organizations.PersonalInformation
   alias Palapa.Messages.{Message, MessageComment}
-  alias Palapa.Documents.{Page, Suggestion, SuggestionComment}
+  alias Palapa.Documents.{Document, Page, Suggestion, SuggestionComment}
   alias Palapa.Contacts.ContactComment
 
   def authorize(:create, %Member{}, _) do
@@ -22,6 +22,9 @@ defmodule Palapa.Attachments.Policy do
 
         %MessageComment{} ->
           Palapa.Messages.Policy.authorize(:show_comment, member, attachable)
+
+        %Document{} ->
+          Palapa.Documents.Policy.authorize(:show_document, member, attachable)
 
         %Page{} ->
           document = Repo.get_assoc(attachable, :document)

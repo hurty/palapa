@@ -6,7 +6,9 @@ export default class extends BaseController {
     "internalButton",
     "linkButton",
     "attachmentButton",
+    "titleInput",
     "richTextInput",
+    "attachmentInput",
     "linkInput"
   ];
 
@@ -31,12 +33,15 @@ export default class extends BaseController {
     }
     this.hiddenTypeTarget.value = "internal";
 
-    this.linkButtonTarget.classList.remove("btn-switch--selected");
-    this.attachmentButtonTarget.classList.remove("btn-switch--selected");
-    this.internalButtonTarget.classList.add("btn-switch--selected");
+    this.linkButtonTarget.classList.remove("tab--active");
+    this.attachmentButtonTarget.classList.remove("tab--active");
+    this.internalButtonTarget.classList.add("tab--active");
 
     this.show(this.richTextInputTarget);
+    this.hide(this.attachmentInputTarget);
     this.hide(this.linkInputTarget);
+
+    this.focusWithCursorAtTheEnd(this.titleInputTarget)
   }
 
   setLink(e) {
@@ -45,12 +50,15 @@ export default class extends BaseController {
     }
     this.hiddenTypeTarget.value = "link";
 
-    this.linkButtonTarget.classList.add("btn-switch--selected");
-    this.attachmentButtonTarget.classList.remove("btn-switch--selected");
-    this.internalButtonTarget.classList.remove("btn-switch--selected");
+    this.linkButtonTarget.classList.add("tab--active");
+    this.attachmentButtonTarget.classList.remove("tab--active");
+    this.internalButtonTarget.classList.remove("tab--active");
 
     this.hide(this.richTextInputTarget);
+    this.hide(this.attachmentInputTarget);
     this.show(this.linkInputTarget);
+
+    this.focusWithCursorAtTheEnd(this.titleInputTarget)
   }
 
   setAttachment(e) {
@@ -59,8 +67,14 @@ export default class extends BaseController {
     }
     this.hiddenTypeTarget.value = "attachment";
 
-    this.linkButtonTarget.classList.remove("btn-switch--selected");
-    this.attachmentButtonTarget.classList.add("btn-switch--selected");
-    this.internalButtonTarget.classList.remove("btn-switch--selected");
+    this.linkButtonTarget.classList.remove("tab--active");
+    this.attachmentButtonTarget.classList.add("tab--active");
+    this.internalButtonTarget.classList.remove("tab--active");
+
+    this.hide(this.richTextInputTarget);
+    this.hide(this.linkInputTarget);
+    this.show(this.attachmentInputTarget);
+
+    this.focusWithCursorAtTheEnd(this.titleInputTarget)
   }
 }

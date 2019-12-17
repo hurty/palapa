@@ -3,7 +3,7 @@
     <div class="card p-1 lg:p-8">
       <h2 class="card-header"><%= gettext("Edit document") %></h2>
       <div class="card-header-separator"></div>
-        <%= form_for @changeset, Routes.document_path(@conn, :update, @current_organization, @document), fn form -> %>
+        <%= form_for @changeset, Routes.document_path(@conn, :update, @current_organization, @document), [multipart: true], fn form -> %>
 
           <%= render form_template(@document), Map.put(assigns, :form, form) %>
 

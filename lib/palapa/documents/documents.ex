@@ -141,8 +141,7 @@ defmodule Palapa.Documents do
 
     document =
       from(document in queryable,
-        preload: [team: [], last_author: [:account]],
-        preload: [sections: ^sections_query]
+        preload: [team: [], last_author: [:account], sections: ^sections_query, attachment: []]
       )
       |> Repo.get!(id)
 
@@ -187,6 +186,20 @@ defmodule Palapa.Documents do
       |> put_assoc(:team, team)
       |> put_assoc(:last_author, author)
 
+    type = get_field(document_changeset, :type)
+
+    create_document_with_type(type, author, document_changeset, attrs)
+    |> Repo.transaction()
+    |> case do
+      {:ok, result} ->
+        {:ok, result.document}
+
+      {:error, _step, changeset, _changes} ->
+        {:error, changeset}
+    end
+  end
+
+  defp create_document_with_type(:internal, author, document_changeset, attrs) do
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:document, document_changeset)
     |> Ecto.Multi.run(:first_section, fn _repo, changes ->
@@ -203,14 +216,38 @@ defmodule Palapa.Documents do
         document: document
       }
     end)
-    |> Repo.transaction()
-    |> case do
-      {:ok, result} ->
-        {:ok, result.document}
+  end
 
-      {:error, _step, changeset, _changes} ->
-        {:error, changeset}
-    end
+  defp create_document_with_type(:attachment, author, document_changeset, attrs) do
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:attachment, fn _repo, _changes ->
+      Palapa.Attachments.create(attrs["attachment"], author)
+    end)
+    |> Ecto.Multi.insert(:document, document_changeset)
+    |> Ecto.Multi.insert(:event, fn %{document: document} ->
+      %Event{
+        action: :new_document,
+        organization_id: author.organization_id,
+        author: author,
+        document: document
+      }
+    end)
+    |> Ecto.Multi.update(:associate_attachment, fn %{document: document, attachment: attachment} ->
+      change(attachment, attachable_type: "document", document_id: document.id)
+    end)
+  end
+
+  defp create_document_with_type(:link, author, document_changeset, _attrs) do
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:document, document_changeset)
+    |> Ecto.Multi.insert(:event, fn %{document: document} ->
+      %Event{
+        action: :new_document,
+        organization_id: author.organization_id,
+        author: author,
+        document: document
+      }
+    end)
   end
 
   def document_has_at_least_one_section?(document) do
@@ -224,10 +261,37 @@ defmodule Palapa.Documents do
   end
 
   def update_document(document, author, team, attrs) do
-    document
-    |> Document.changeset(attrs)
-    |> put_change(:last_author_id, author.id)
-    |> put_team(team)
+    document_changeset =
+      document
+      |> Document.changeset(attrs)
+      |> put_team(team)
+      |> put_assoc(:last_author, author)
+
+    type = get_field(document_changeset, :type)
+    update_document_with_type(type, author, document_changeset, attrs)
+  end
+
+  defp update_document_with_type(:attachment, author, document_changeset, attrs) do
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:attachment, fn _repo, _changes ->
+      Palapa.Attachments.create(attrs["attachment"], author)
+    end)
+    |> Ecto.Multi.update(:document, document_changeset)
+    |> Ecto.Multi.update(:associate_attachment, fn %{attachment: attachment, document: document} ->
+      change(attachment, attachable_type: "document", document_id: document.id)
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, result} ->
+        {:ok, result.document}
+
+      {:error, _step, changeset, _changes} ->
+        {:error, changeset}
+    end
+  end
+
+  defp update_document_with_type(_, _author, document_changeset, _attrs) do
+    document_changeset
     |> Repo.update()
   end
 
