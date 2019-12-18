@@ -37,11 +37,7 @@ defmodule Palapa.Teams.Team do
   end
 
   def put_members(changeset, members) do
-    if Enum.empty?(members) do
-      add_error(changeset, :members, gettext("Choose at least one member"))
-    else
-      put_assoc(changeset, :members, members)
-    end
+    put_assoc(changeset, :members, members)
   end
 end
 
