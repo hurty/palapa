@@ -54,6 +54,17 @@ config :palapa, PalapaWeb.Endpoint,
     ]
   ]
 
+# Configure your database
+config :palapa, Palapa.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "palapa_dev",
+  hostname: "localhost",
+  pool_size: 10
+
+config :palapa, stripe_plan_id: "plan_GNq1DwHyI2wvYc"
+
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 
@@ -63,15 +74,6 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
-
-# Configure your database
-config :palapa, Palapa.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "palapa_dev",
-  hostname: "localhost",
-  pool_size: 10
 
 config :stripity_stripe, api_key: "sk_test_oU4pHn8mHni24tRxngf5eRHy00Yg3UvggS"
 config :stripity_stripe, publishable_api_key: "pk_test_q0YfdqC7bsahlMzdz5BHcXXJ00973FKvkj"

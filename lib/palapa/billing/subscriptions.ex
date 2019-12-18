@@ -6,8 +6,6 @@ defmodule Palapa.Billing.Subscriptions do
   alias Palapa.Billing.Customers
   alias Ecto.Multi
 
-  @monthly_plan_id "plan_EuPumUi7Lb5R7w"
-
   # Returns a local %Billing.Subscription{}
   def get_subscription_by_stripe_id!(stripe_id) do
     Repo.get_by!(Subscription, stripe_subscription_id: stripe_id)
@@ -118,7 +116,8 @@ defmodule Palapa.Billing.Subscriptions do
   def cancel_stripe_subscription(nil), do: {:ok, nil}
 
   def create_stripe_subscription(stripe_customer) do
-    Billing.stripe_adapter().create_subscription(stripe_customer.id, @monthly_plan_id)
+    monthly_plan_id = Application.get_env(:palapa, :stripe_plan_id)
+    Billing.stripe_adapter().create_subscription(stripe_customer.id, monthly_plan_id)
   end
 
   def get_payment_method(payment_method_id) do
