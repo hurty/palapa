@@ -59,9 +59,10 @@ defmodule Palapa.OrganizationsTest do
     insert!(:subscription, organization: owner.organization)
 
     assert {:ok, result} = Organizations.delete(owner.organization, owner)
-    assert result.organization.deleted_at
-    assert result.cancel_subscription_job.state == "AVAILABLE"
-    assert result.cancel_subscription_job.params.type == "cancel_subscription"
-    assert result.cancel_subscription_job.params.organization_id == owner.organization_id
+
+    assert_enqueued(
+      worker: Palapa.Billing.Workers.CancelSubscription,
+      args: %{organization_id: owner.organization_id}
+    )
   end
 end

@@ -16,6 +16,7 @@ defmodule Palapa.DataCase do
 
   using do
     quote do
+      use Oban.Testing, repo: Palapa.Repo
       alias Palapa.Repo
 
       import Ecto

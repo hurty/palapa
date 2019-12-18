@@ -3,7 +3,6 @@ defmodule Palapa.OrganizationDeletionTest do
 
   import Palapa.Factory
   alias Palapa.Organizations
-  alias Palapa.Organizations.Organization
 
   setup do
     pied_piper = insert_pied_piper!()

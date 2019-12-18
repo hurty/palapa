@@ -48,7 +48,10 @@ defmodule Palapa.MessagesTest do
       organization: organization
     } do
       team = insert!(:team, organization: organization)
-      {:ok, updated_message} = Messages.update(message, %{title: "updated title"}, [team])
+
+      {:ok, updated_message} =
+        Messages.update(message, %{title: "updated title", published_to_everyone: false}, [team])
+
       assert "updated title" == updated_message.title
       assert [team] == updated_message.teams
     end

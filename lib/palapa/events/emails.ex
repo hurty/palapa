@@ -27,7 +27,7 @@ defmodule Palapa.Events.Emails do
       end
 
     formatted_date =
-      Timex.now(account.timezone)
+      Timex.now(account.timezone || "UTC")
       |> Timex.shift(hours: -24)
       |> Timex.lformat!(date_format, locale)
 

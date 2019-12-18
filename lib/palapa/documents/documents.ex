@@ -265,7 +265,7 @@ defmodule Palapa.Documents do
       document
       |> Document.changeset(attrs)
       |> put_team(team)
-      |> put_assoc(:last_author, author)
+      |> put_change(:last_author_id, author.id)
 
     type = get_field(document_changeset, :type)
     update_document_with_type(type, author, document_changeset, attrs)
