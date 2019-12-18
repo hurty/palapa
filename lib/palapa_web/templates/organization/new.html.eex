@@ -18,11 +18,9 @@
       </div>
 
       <div class="flex justify-between">
-      <%# TODO: Enable after Beta phase %>
-      <%= submit gettext("Create workspace"), class: "btn btn-green cursor-not-allowed", disabled: true %>
-      <%= link gettext("Cancel"), to: Routes.organization_path(@conn, :index), class: "btn self-center" %>
+        <%= submit gettext("Create workspace"), class: "btn btn-green" %>
+        <%= link gettext("Cancel"), to: Routes.organization_path(@conn, :index), class: "btn self-center" %>
       </div>
-      <div class="text-red-500">Disabled during Beta phase</div>
     <% end %>
   </div>
 </div>

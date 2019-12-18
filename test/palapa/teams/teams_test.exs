@@ -28,13 +28,15 @@ defmodule Palapa.TeamsTest do
 
   test "create_team/2 with valid data creates the team" do
     organization = insert!(:organization)
+    member = insert!(:member, organization: organization)
 
-    assert {:ok, %Team{}} = Teams.create(organization, %{name: "Sales"})
+    assert {:ok, %Team{}} =
+             Teams.create(organization, %{"name" => "Sales", "members" => [member.id]})
   end
 
   test "create_team/2 with invalid data returns error changeset" do
     organization = insert!(:organization)
-    assert {:error, %Ecto.Changeset{}} = Teams.create(organization, %{name: ""})
+    assert {:error, %Ecto.Changeset{}} = Teams.create(organization, %{"name" => ""})
   end
 
   test "change_team/1 returns a changeset" do

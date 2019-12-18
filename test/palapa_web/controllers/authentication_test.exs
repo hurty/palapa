@@ -35,7 +35,7 @@ defmodule PalapaWeb.AuthenticationTest do
     end
 
     test "start_session puts the user in the session", %{conn: conn} do
-      {:ok, %{account: account}} = Palapa.Accounts.Registrations.create(@registration)
+      {:ok, %{account: account}} = Palapa.Accounts.Registrations.create(@registration, "en")
 
       login_conn =
         conn
@@ -57,7 +57,7 @@ defmodule PalapaWeb.AuthenticationTest do
     end
 
     test "call/2 places the current account into assigns", %{conn: conn} do
-      {:ok, %{account: account}} = Palapa.Accounts.Registrations.create(@registration)
+      {:ok, %{account: account}} = Palapa.Accounts.Registrations.create(@registration, "en")
 
       conn =
         conn
@@ -73,7 +73,7 @@ defmodule PalapaWeb.AuthenticationTest do
     end
 
     test "login with valid email and password", %{conn: conn} do
-      {:ok, %{account: account}} = Palapa.Accounts.Registrations.create(@registration)
+      {:ok, %{account: account}} = Palapa.Accounts.Registrations.create(@registration, "en")
 
       {:ok, conn} =
         Authentication.login_with_email_and_password(
@@ -95,7 +95,7 @@ defmodule PalapaWeb.AuthenticationTest do
     end
 
     test "login with password mismatch", %{conn: conn} do
-      {:ok, _} = Palapa.Accounts.Registrations.create(@registration)
+      {:ok, _} = Palapa.Accounts.Registrations.create(@registration, "en")
 
       assert {:error, :unauthorized, _conn} =
                Authentication.login_with_email_and_password(

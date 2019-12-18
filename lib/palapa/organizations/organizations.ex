@@ -37,7 +37,7 @@ defmodule Palapa.Organizations do
     Repo.get!(Organization, id)
   end
 
-  def create(organization_attrs, creator_account, locale) do
+  def create(organization_attrs, creator_account, locale \\ "en") do
     Ecto.Multi.new()
     |> Ecto.Multi.run(:organization, fn repo, _changes ->
       %Organization{}

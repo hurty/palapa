@@ -24,7 +24,8 @@ defmodule PalapaWeb.TeamControllerTest do
       conn =
         post(conn, Routes.team_path(conn, :create, workspace.organization), %{
           "team" => %{
-            "name" => "Sales"
+            "name" => "Sales",
+            "members" => [workspace.richard.id]
           }
         })
 
@@ -50,7 +51,7 @@ defmodule PalapaWeb.TeamControllerTest do
         put(
           conn,
           Routes.team_path(conn, :update, workspace.organization, team, %{
-            "team" => %{"name" => "Sales Dpt"}
+            "team" => %{"name" => "Sales Dpt", "members" => [workspace.richard.id]}
           })
         )
 
@@ -77,7 +78,8 @@ defmodule PalapaWeb.TeamControllerTest do
       conn =
         post(conn, Routes.team_path(conn, :create, workspace.organization), %{
           "team" => %{
-            "name" => "Sales"
+            "name" => "Sales",
+            "members" => [workspace.richard.id]
           }
         })
 
@@ -88,14 +90,20 @@ defmodule PalapaWeb.TeamControllerTest do
     end
 
     test "admin can access the team edition form", %{conn: conn, workspace: workspace} do
-      {:ok, team} = Teams.create(workspace.organization, %{name: "Sales"})
+      {:ok, team} =
+        Teams.create(workspace.organization, %{name: "Sales", members: [workspace.richard]})
+
       conn = get(conn, Routes.team_path(conn, :edit, workspace.organization, team))
       assert html_response(conn, :ok)
     end
 
     test "admin can update a team", %{conn: conn, workspace: workspace} do
       {:ok, team} =
-        Teams.create(workspace.organization, %{name: "Sales", private: false, members: []})
+        Teams.create(workspace.organization, %{
+          name: "Sales",
+          private: false,
+          members: [workspace.richard]
+        })
 
       conn =
         put(
@@ -136,12 +144,17 @@ defmodule PalapaWeb.TeamControllerTest do
       conn: conn,
       workspace: workspace
     } do
-      insert!(:team, name: "Sales", organization: conn.assigns.current_organization)
+      insert!(:team,
+        name: "Sales",
+        organization: conn.assigns.current_organization,
+        members: [workspace.richard]
+      )
+
       count_before = Repo.count("teams")
 
       conn =
         post(conn, Routes.team_path(conn, :create, workspace.organization), %{
-          "team" => %{"name" => "Sales"}
+          "team" => %{"name" => "Sales", "members" => [workspace.richard.id]}
         })
 
       count_after = Repo.count("teams")
@@ -155,7 +168,7 @@ defmodule PalapaWeb.TeamControllerTest do
 
       conn =
         post(conn, Routes.team_path(conn, :create, workspace.organization), %{
-          "team" => %{"name" => ""}
+          "team" => %{"name" => "", "members" => [workspace.richard.id]}
         })
 
       count_after = Repo.count("teams")

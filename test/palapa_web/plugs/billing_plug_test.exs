@@ -8,12 +8,15 @@ defmodule PalapaWeb.BillingPlugTest do
   describe "without subscription" do
     setup do
       {:ok, %{account: account, organization_membership: membership}} =
-        Registrations.create(%{
-          email: "gavin.belson@hooli.com",
-          name: "Gavin Belson",
-          password: "password",
-          organization_name: "Hooli"
-        })
+        Registrations.create(
+          %{
+            email: "gavin.belson@hooli.com",
+            name: "Gavin Belson",
+            password: "password",
+            organization_name: "Hooli"
+          },
+          "en"
+        )
 
       conn = login(account)
       {:ok, conn: conn, organization: membership.organization}

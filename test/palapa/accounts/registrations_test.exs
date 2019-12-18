@@ -10,12 +10,15 @@ defmodule Palapa.RegistrationsTest do
               account: account,
               organization_membership: %{organization: organization, member: member, event: event}
             }} =
-             Registrations.create(%{
-               email: "richard.hendricks@piedpiper.com",
-               name: "Richard Hendricks",
-               password: "password",
-               organization_name: "Pied Piper"
-             })
+             Registrations.create(
+               %{
+                 email: "richard.hendricks@piedpiper.com",
+                 name: "Richard Hendricks",
+                 password: "password",
+                 organization_name: "Pied Piper"
+               },
+               "en"
+             )
 
     assert account.email == "richard.hendricks@piedpiper.com"
     assert account.name == "Richard Hendricks"
@@ -27,31 +30,40 @@ defmodule Palapa.RegistrationsTest do
 
   test "create/1 with invalid data returns an error and a changeset" do
     assert {:error, :registration, %Ecto.Changeset{}, _} =
-             Registrations.create(%{
-               email: ""
-             })
+             Registrations.create(
+               %{
+                 email: ""
+               },
+               "en"
+             )
   end
 
   test "create/1 with an email already used returns an error" do
     insert!(:owner)
 
     assert {:error, :account, %Ecto.Changeset{}, _} =
-             Registrations.create(%{
-               email: "richard.hendricks@piedpiper.com",
-               name: "Richard Hendricks",
-               password: "password",
-               organization_name: "Pied Piper"
-             })
+             Registrations.create(
+               %{
+                 email: "richard.hendricks@piedpiper.com",
+                 name: "Richard Hendricks",
+                 password: "password",
+                 organization_name: "Pied Piper"
+               },
+               "en"
+             )
   end
 
   test "create/1 with a password too short returns an error" do
     assert {:error, :registration, %Ecto.Changeset{}, _} =
-             Registrations.create(%{
-               email: "richard.hendricks@piedpiper.com",
-               name: "Richard Hendricks",
-               password: "short",
-               organization_name: "Pied Piper"
-             })
+             Registrations.create(
+               %{
+                 email: "richard.hendricks@piedpiper.com",
+                 name: "Richard Hendricks",
+                 password: "short",
+                 organization_name: "Pied Piper"
+               },
+               "en"
+             )
   end
 
   test "change/1 returns the changeset" do
