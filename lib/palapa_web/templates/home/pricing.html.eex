@@ -1,64 +1,31 @@
 <div class="text-center my-8">
-  <h1 class="text-green-500-500 text-5xl">Pricing</h1>
-  <div class="text-2xl text-gray-600">Get everybody on board. We grow with you.</div>
+  <h1 class="text-green-500-500 text-5xl">Simple pricing</h1>
+  <div class="text-2xl text-gray-600">Get everybody on board.</div>
 </div>
 
 <div class="flex flex-wrap justify-center pt-8">
-  <div class="md:w-1/4 flex flex-col justify-around border-2 border-gray-200 shadow-lg rounded-lg p-8 z-0 bg-white">
-    <div class="py-4 bg-gray-100 rounded-lg">
-      <h2 class="uppercase text-lg tracking-wide text-indigo-800 text-center font-normal">Starter</h2>
-      <h3 class="text-lg text-center text-gray-600">€19<span class="text-sm">/month</span></h3>
-    </div>
-    <ul class="list-inside px-4">
-      <li>
-        <div data-feather="check-circle" class="inline mr-2 text-green-500"></div>All features
-      </li>
-      <li>
-        <div data-feather="check-circle" class="inline mr-2 text-green-500"></div>10 members
-      </li>
-      <li>
-        <div data-feather="check-circle" class="inline mr-2 text-green-500"></div>5GB storage space
-      </li>
-    </ul>
-  </div>
-
   <div class="md:w-1/4 flex flex-col justify-around border-2 border-gray-200 shadow-lg rounded-lg p-4 -mt-4 -mb-4 -ml-4 -mr-4 z-50 bg-white">
-    <div class="py-4 bg-gray-100 rounded-lg">
-      <h2 class="uppercase text-lg tracking-wide text-indigo-800 text-center  font-normal">Expert</h2>
-      <h3 class="text-lg text-center text-gray-600">€49<span class="text-sm">/month</span></h3>
+    <div class="py-4 rounded-lg text-center text-blue-500">
+      <div class="text-5xl ">€29,99</div>
+      <div class="text-xl">per workspace per month</div>
     </div>
 
+    <div class="text-sm font-bold text-center">Each workspace has:</div>
     <ul class="list-reset flex flex-col justify-center px-4">
       <li>
         <div data-feather="check-circle" class="inline mr-2 text-green-500"></div>All features
       </li>
       <li>
-        <div data-feather="check-circle" class="inline mr-2 text-green-500"></div>50 members
+        <div data-feather="check-circle" class="inline mr-2 text-green-500"></div>Unlimited members
       </li>
       <li>
-        <div data-feather="check-circle" class="inline mr-2 text-green-500"></div>50GB storage space
-      </li>
-    </ul>
-  </div>
-
-  <div class="md:w-1/4 flex flex-col justify-around border-2 border-gray-200 shadow-lg rounded-lg p-8 z-0 bg-white">
-    <div class="py-4 bg-gray-100 rounded-lg">
-      <h2 class="uppercase text-lg tracking-wide text-indigo-800 text-center font-normal">Enterprise</h2>
-      <h3 class="text-lg text-center text-gray-600">€99<span class="text-sm">/month</span></h3>
-    </div>
-
-    <ul class="list-reset flex flex-col justify-center px-4 py-2">
-      <li>
-        <div data-feather="check-circle" class="inline mr-2 text-green-500"></div>All features
+        <div data-feather="check-circle" class="inline mr-2 text-green-500"></div>Unlimited teams
       </li>
       <li>
-        <div data-feather="check-circle" class="inline mr-2 text-green-500"></div>unlimited members
+        <div data-feather="check-circle" class="inline mr-2 text-green-500"></div>10GB storage space
       </li>
       <li>
-        <div data-feather="check-circle" class="inline mr-2 text-green-500"></div>100GB storage space
-      </li>
-      <li>
-        <div data-feather="check-circle" class="inline mr-2 text-green-500"></div>Premium support
+        <div data-feather="check-circle" class="inline mr-2 text-green-500"></div>Email support
       </li>
     </ul>
   </div>
