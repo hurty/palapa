@@ -26,7 +26,7 @@
               <input type="radio" data-target="new-organization.newInvoiceRadio" id="attach_existing_customer_false" name="organization[attach_existing_customer]" value="false" class="self-center"></input>
             </div>
             <label for="attach_existing_customer_false" class="ml-2 cursor-pointer">
-              <%= gettext("Create a separate invoice") %>
+              <%= gettext("Create a new customer / payment method") %>
             </label>
           </div>
 
@@ -48,7 +48,7 @@
         </div>
       <% end %>
 
-      <p class="font-bold text-sm my-4"><%= gettext("You will be billed €29,99/month for this new workspace.") %></p>
+      <p class="font-bold text-sm my-4"><%= gettext("You will be billed €49,99/month for this new workspace.") %></p>
       <div class="flex justify-between">
         <%= submit gettext("Create this workspace"), class: "btn btn-green" %>
         <%= link gettext("Cancel"), to: Routes.organization_path(@conn, :index), class: "btn self-center" %>

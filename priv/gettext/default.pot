@@ -220,8 +220,8 @@ msgid "We didn't receive any payment for the current period. An owner of the wor
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/registration/_form.html.eex:13
-#: lib/palapa_web/templates/settings/workspace/show.html.eex:13
+#: lib/palapa_web/templates/organization/new.html.eex:15
+#: lib/palapa_web/templates/registration/_form.html.eex:13 lib/palapa_web/templates/settings/workspace/show.html.eex:13
 msgid "Workspace name"
 msgstr ""
 
@@ -383,7 +383,7 @@ msgstr ""
 #: lib/palapa_web/templates/document/suggestion/edit.html.eex:9 lib/palapa_web/templates/document/suggestion/suggestion.html.eex:63
 #: lib/palapa_web/templates/document/suggestion_comment/edit.html.eex:9 lib/palapa_web/templates/invitation/_invitation.html.eex:18
 #: lib/palapa_web/templates/member/_personal_information_form.html.leex:37 lib/palapa_web/templates/member/_personal_information_form.html.leex:40
-#: lib/palapa_web/templates/message/new.html.eex:18 lib/palapa_web/templates/organization/new.html.eex:23
+#: lib/palapa_web/templates/message/new.html.eex:18 lib/palapa_web/templates/organization/new.html.eex:54
 #: lib/palapa_web/templates/settings/member/members.html.leex:42 lib/palapa_web/templates/settings/workspace/show.html.eex:87
 #: lib/palapa_web/templates/settings/workspace/show.html.eex:113 lib/palapa_web/templates/team/edit.html.eex:12
 #: lib/palapa_web/templates/team/edit.html.eex:47 lib/palapa_web/templates/team/new.html.eex:12
@@ -1188,7 +1188,6 @@ msgstr ""
 
 #, elixir-format
 #: lib/palapa_web/templates/layout/_public_navigation.html.eex:16
-#: lib/palapa_web/templates/organization/new.html.eex:22
 msgid "Create workspace"
 msgstr ""
 
@@ -1499,7 +1498,7 @@ msgid "Enter the email address associated with your Palapa account. We will send
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/organization/new.html.eex:15
+#: lib/palapa_web/templates/organization/new.html.eex:16
 #: lib/palapa_web/templates/settings/member/members.html.leex:3
 msgid "Name"
 msgstr ""
@@ -1570,7 +1569,7 @@ msgid "Contact"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/registration/_form.html.eex:40
+#: lib/palapa_web/templates/registration/_form.html.eex:39
 msgid "Create a new account"
 msgstr ""
 
@@ -1637,7 +1636,7 @@ msgid "Invoices will be sent to:"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/registration/_form.html.eex:43
+#: lib/palapa_web/templates/registration/_form.html.eex:42
 msgid "Log in!"
 msgstr ""
 
@@ -1742,7 +1741,7 @@ msgid "Yes, delete this workspace"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/templates/registration/_form.html.eex:43
+#: lib/palapa_web/templates/registration/_form.html.eex:42
 msgid "You already have an account?"
 msgstr ""
 
@@ -1777,7 +1776,7 @@ msgid "An error occured while updating your profile."
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/organization_controller.ex:48
+#: lib/palapa_web/controllers/organization_controller.ex:83
 msgid "An error occurred while deleting the workspace"
 msgstr ""
 
@@ -1788,7 +1787,7 @@ msgid "An error occurred while updating your payment method"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/billing/payment_controller.ex:30
+#: lib/palapa_web/controllers/billing/payment_controller.ex:33
 msgid "An unexpected error occured : %{message}. The payment has been cancelled."
 msgstr ""
 
@@ -1863,7 +1862,7 @@ msgid "Invitations have been sent"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/registration_controller.ex:51
+#: lib/palapa_web/controllers/registration_controller.ex:26
 msgid "It seems you already have a Palapa account. Please sign in first to create a new workspace"
 msgstr ""
 
@@ -1974,7 +1973,7 @@ msgid "The team can't be created"
 msgstr ""
 
 #, elixir-format
-#: lib/palapa_web/controllers/organization_controller.ex:42
+#: lib/palapa_web/controllers/organization_controller.ex:77
 #: lib/palapa_web/plugs/authentication.ex:42
 msgid "The workspace %{workspace} has been deleted"
 msgstr ""
@@ -2388,11 +2387,6 @@ msgid "You cannot leave the workspace if you are the only owner of the workspace
 msgstr ""
 
 #, elixir-format
-#: lib/palapa/teams/team.ex:41
-msgid "Choose at least one member"
-msgstr ""
-
-#, elixir-format
 #: lib/palapa/teams/team.ex:27
 msgid "This team already exists"
 msgstr ""
@@ -2493,4 +2487,29 @@ msgstr ""
 #, elixir-format
 #: lib/palapa_web/templates/document/document/new.html.eex:37
 msgid "Content..."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/controllers/organization_controller.ex:60
+msgid "An unexpected error occured while creating a new subscription. Please contact support."
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/organization/new.html.eex:38
+msgid "Attach this new workspace to an existing customer account:"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/organization/new.html.eex:29
+msgid "Create a new customer / payment method"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/organization/new.html.eex:53
+msgid "Create this workspace"
+msgstr ""
+
+#, elixir-format
+#: lib/palapa_web/templates/organization/new.html.eex:51
+msgid "You will be billed €49,99/month for this new workspace."
 msgstr ""

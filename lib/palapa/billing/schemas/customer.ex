@@ -1,11 +1,10 @@
 defmodule Palapa.Billing.Customer do
   use Palapa.Schema
 
-  alias Palapa.Organizations.Organization
-  alias Palapa.Billing.Invoice
+  alias Palapa.Billing.{Subscription, Invoice}
 
   schema "customers" do
-    has_one(:organization, Organization)
+    has_many(:subscriptions, Subscription)
     has_many(:invoices, Invoice)
     timestamps()
 
