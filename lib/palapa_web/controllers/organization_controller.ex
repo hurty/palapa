@@ -35,7 +35,11 @@ defmodule PalapaWeb.OrganizationController do
     try do
       case Organizations.create(attrs, current_account(conn), locale, customer) do
         {:ok, %{organization: organization}} ->
-          redirect(conn, to: Routes.subscription_path(conn, :new, organization))
+          if customer do
+            redirect(conn, to: Routes.message_path(conn, :index, organization))
+          else
+            redirect(conn, to: Routes.subscription_path(conn, :new, organization))
+          end
 
         {:error, :organization, changeset, _} ->
           conn
