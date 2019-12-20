@@ -36,7 +36,22 @@ defmodule Palapa.Billing.Subscriptions do
     end
   end
 
-  def create_subscription(organization, attrs) do
+  def create_subscription(%Organization{} = organization, %Customer{} = customer) do
+    Multi.new()
+    |> Multi.run(:stripe_subscription, fn _repo, _changes ->
+      create_stripe_subscription(customer.stripe_customer_id)
+    end)
+    |> Multi.run(:subscription, fn _repo, %{stripe_subscription: stripe_subscription} ->
+      create_subscription(organization, customer, %{
+        status: stripe_subscription["status"],
+        stripe_subscription_id: stripe_subscription["id"],
+        stripe_latest_invoice_id: get_in(stripe_subscription, ["latest_invoice", "id"])
+      })
+    end)
+    |> Repo.transaction()
+  end
+
+  def create_subscription(%Organization{} = organization, attrs) when is_map(attrs) do
     Multi.new()
     |> validate_changeset(attrs)
     |> create_stripe_resources(attrs)
@@ -80,7 +95,6 @@ defmodule Palapa.Billing.Subscriptions do
 
       %Customer{}
       |> Customer.changeset(attrs)
-      |> put_assoc(:organization, organization)
     end)
     |> Multi.run(:subscription, fn _repo,
                                    %{customer: customer, stripe_subscription: stripe_subscription} ->
@@ -95,7 +109,7 @@ defmodule Palapa.Billing.Subscriptions do
   def create_subscription(organization, customer, attrs) do
     %Subscription{}
     |> cast(attrs, [:status, :stripe_subscription_id, :stripe_latest_invoice_id])
-    |> put_assoc(:organization, organization)
+    |> put_assoc(:organizations, [organization])
     |> put_assoc(:customer, customer)
     |> Repo.insert()
   end
@@ -115,9 +129,14 @@ defmodule Palapa.Billing.Subscriptions do
 
   def cancel_stripe_subscription(nil), do: {:ok, nil}
 
-  def create_stripe_subscription(stripe_customer) do
+  def create_stripe_subscription(%Stripe.Customer{} = stripe_customer) do
     monthly_plan_id = Application.get_env(:palapa, :stripe_plan_id)
     Billing.stripe_adapter().create_subscription(stripe_customer.id, monthly_plan_id)
+  end
+
+  def create_stripe_subscription(stripe_customer_id) when is_binary(stripe_customer_id) do
+    monthly_plan_id = Application.get_env(:palapa, :stripe_plan_id)
+    Billing.stripe_adapter().create_subscription(stripe_customer_id, monthly_plan_id)
   end
 
   def get_payment_method(payment_method_id) do

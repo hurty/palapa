@@ -1,6 +1,7 @@
 defmodule Palapa.Billing do
   use Palapa.Context
   import EctoEnum
+
   alias Palapa.Billing
 
   @trial_duration_days 14
@@ -17,7 +18,7 @@ defmodule Palapa.Billing do
     :canceled
   ])
 
-  defmodule StripeSyncError do
+  defmodule BillingError do
     defexception [:message]
   end
 

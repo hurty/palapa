@@ -1,8 +1,10 @@
 defmodule PalapaWeb.OrganizationController do
+  require Logger
   use PalapaWeb, :controller
 
   alias Palapa.Organizations
   alias Palapa.Organizations.Organization
+  alias Palapa.Billing
 
   plug :put_layout, "account.html"
   plug :put_navigation, "workspaces"
@@ -13,20 +15,49 @@ defmodule PalapaWeb.OrganizationController do
   end
 
   def new(conn, _) do
-    changeset = Organizations.change(%Organization{})
-    render(conn, "new.html", changeset: changeset)
+    conn
+    |> set_changeset()
+    |> render("new.html")
   end
 
   def create(conn, %{"organization" => attrs}) do
     # Needed to know in which language we have to generate the welcome message
     locale = get_session(conn, :locale)
 
-    case Organizations.create(attrs, current_account(conn), locale) do
-      {:ok, %{organization: organization}} ->
-        redirect(conn, to: Routes.subscription_path(conn, :new, organization))
+    customer =
+      if(attrs["attach_existing_customer"] == "true") do
+        Billing.Customers.reusable_customer_accounts(current_account(conn))
+        |> Billing.Customers.get_customer(attrs["customer_id"])
+      else
+        nil
+      end
 
-      {:error, :organization, changeset, _} ->
-        render(conn, "new.html", changeset: changeset)
+    try do
+      case Organizations.create(attrs, current_account(conn), locale, customer) do
+        {:ok, %{organization: organization}} ->
+          redirect(conn, to: Routes.subscription_path(conn, :new, organization))
+
+        {:error, :organization, changeset, _} ->
+          conn
+          |> set_changeset()
+          |> render("new.html", changeset: changeset)
+
+        error ->
+          Logger.error("Subscription error")
+          raise(Billing.BillingError, error)
+      end
+    rescue
+      e ->
+        Appsignal.Transaction.set_error("Subscription error", e, __STACKTRACE__)
+
+        conn
+        |> put_flash(
+          :error,
+          gettext(
+            "An unexpected error occured while creating a new subscription. Please contact support."
+          )
+        )
+        |> redirect(to: Routes.organization_path(conn, :new))
     end
   end
 
@@ -49,5 +80,14 @@ defmodule PalapaWeb.OrganizationController do
           |> redirect(to: Routes.settings_workspace_path(conn, :edit, org))
       end
     end
+  end
+
+  defp set_changeset(conn) do
+    conn
+    |> assign(:changeset, Organizations.change(%Organization{}))
+    |> assign(
+      :customers,
+      Palapa.Billing.Customers.list_reusable_customer_accounts(current_account(conn))
+    )
   end
 end

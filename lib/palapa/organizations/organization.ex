@@ -7,7 +7,7 @@ defmodule Palapa.Organizations.Organization do
   alias Palapa.Invitations
   alias Palapa.Teams
   alias Palapa.Events.Event
-  alias Palapa.Billing.{Customer, Subscription}
+  alias Palapa.Billing.Subscription
 
   schema "organizations" do
     timestamps()
@@ -18,8 +18,8 @@ defmodule Palapa.Organizations.Organization do
     field(:deleted_at, :utc_datetime)
 
     belongs_to(:creator_account, Account)
-    belongs_to(:customer, Customer)
-    has_one(:subscription, Subscription)
+    belongs_to(:subscription, Subscription)
+    has_one(:customer, through: [:subscription, :customer])
     has_many(:invoices, through: [:customer, :invoices])
     has_many(:members, Member)
     has_many(:invitations, Invitations.Invitation)
@@ -32,10 +32,5 @@ defmodule Palapa.Organizations.Organization do
     organization
     |> cast(attrs, [:name, :default_timezone, :allow_trial])
     |> validate_required([:name])
-  end
-
-  def billing_changeset(organization, attrs) do
-    organization
-    |> cast(attrs, [:customer_id])
   end
 end

@@ -6,9 +6,10 @@ defmodule Palapa.Billing.Subscription do
 
   schema("subscriptions") do
     timestamps()
-
-    belongs_to(:organization, Organization)
     belongs_to(:customer, Customer)
+
+    # == Subscription Items in Stripe
+    has_many(:organizations, Organization)
 
     field(:status, SubscriptionStatusEnum)
     field(:stripe_subscription_id, :string)

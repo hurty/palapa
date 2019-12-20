@@ -37,7 +37,7 @@ defmodule Palapa.Organizations do
     Repo.get!(Organization, id)
   end
 
-  def create(organization_attrs, creator_account, locale \\ "en") do
+  def create(organization_attrs, creator_account, locale \\ "en", existing_customer \\ nil) do
     Ecto.Multi.new()
     |> Ecto.Multi.run(:organization, fn repo, _changes ->
       %Organization{}
@@ -62,6 +62,17 @@ defmodule Palapa.Organizations do
     |> Ecto.Multi.run(:welcome_message, fn _repo, %{organization: organization} ->
       Palapa.PublicSeeds.seed(organization, locale)
     end)
+    |> Ecto.Multi.run(:subscription, fn _repo, %{organization: organization} ->
+      if existing_customer do
+        case Palapa.Billing.Subscriptions.create_subscription(organization, existing_customer) do
+          {:ok, subscription} -> {:ok, subscription}
+          {:error, :stripe_subscription, error, _} -> {:error, error}
+          {:error, :subscription, changeset, _} -> {:error, changeset}
+        end
+      else
+        {:ok, nil}
+      end
+    end)
     |> Repo.transaction()
   end
 
@@ -73,11 +84,6 @@ defmodule Palapa.Organizations do
 
   def change(organization) do
     Organization.changeset(organization, %{})
-  end
-
-  def update_billing(%Organization{} = organization, attrs) do
-    Organization.billing_changeset(organization, attrs)
-    |> Repo.update()
   end
 
   def list_admins(organization) do

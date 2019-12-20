@@ -1,4 +1,4 @@
-<div class="lg:max-w-md mx-auto my-8">
+<div class="lg:max-w-lg mx-auto my-8">
   <div class="card p-8">
     <h2 class="card-header">
       <%= gettext("Create a new workspace") %>
@@ -10,15 +10,47 @@
       <p class="db fw6 lh-copy f6  text-red-400 font-bold"><%= gettext("Check the errors below:") %></p>
     <% end %>
 
-    <%= form_for @changeset, Routes.organization_path(@conn, :create), fn f -> %>
+    <%= form_for @changeset, Routes.organization_path(@conn, :create), [data: [controller: "new-organization", action: "change->new-organization#updateCustomerSelect"]], fn f -> %>
       <div class="field">
-        <%= label f, :name, gettext("Name"), class: "label" %>
-        <%= text_input f, :name, class: "input", tabindex: 1 %>
+        <%= label f, :name, gettext("Workspace name"), class: "label required" %>
+        <%= text_input f, :name, class: "input", tabindex: 1, placeholder: gettext("Name"), autocomplete: "off", "data-controller": "focus" %>
         <%= error_tag f, :name %>
       </div>
 
+      <%= if Enum.any?(@customers) do %>
+        <div class="field text-sm rounded p-2 bg-green-100">
+          <h2 class="text-blue-500 font-bold uppercase mb-4">Billing</h2>
+
+          <div class="flex mb-4">
+            <div class="self-center">
+              <input type="radio" data-target="new-organization.newInvoiceRadio" id="attach_existing_customer_false" name="organization[attach_existing_customer]" value="false" class="self-center"></input>
+            </div>
+            <label for="attach_existing_customer_false" class="ml-2 cursor-pointer">
+              <%= gettext("Create a separate invoice") %>
+            </label>
+          </div>
+
+          <div class="flex mb-2">
+            <div class="self-center">
+              <input type="radio" data-target="new-organization.existingInvoiceRadio" id="attach_existing_customer_true" name="organization[attach_existing_customer]" value="true" class="self-center"></input>
+              </div>
+            <label for="attach_existing_customer_true" class="ml-2 cursor-pointer">
+              <%= gettext("Attach this new workspace to an existing customer account:") %>
+            </label>
+          </div>
+
+          <select name="organization[customer_id]" data-target="new-organization.customerSelect">
+            <%= for customer <- @customers do %>
+              <option value="<%= customer.id %>"><%= customer.billing_name %> (<%= customer.card_brand %>...<%= customer.card_last_4 %>)</option>
+            <% end %>
+          </select>
+
+        </div>
+      <% end %>
+
+      <p class="font-bold text-sm my-4"><%= gettext("You will be billed €29,99/month for this new workspace.") %></p>
       <div class="flex justify-between">
-        <%= submit gettext("Create workspace"), class: "btn btn-green" %>
+        <%= submit gettext("Create this workspace"), class: "btn btn-green" %>
         <%= link gettext("Cancel"), to: Routes.organization_path(@conn, :index), class: "btn self-center" %>
       </div>
     <% end %>

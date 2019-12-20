@@ -2,8 +2,9 @@ defmodule Palapa.Billing.Customers do
   use Palapa.Context
 
   alias Palapa.Billing
-  alias Palapa.Billing.Customer
+  alias Palapa.Billing.{Customer, Subscription}
   alias Palapa.Organizations.Organization
+  alias Palapa.Accounts.Account
 
   # Local resources
 
@@ -11,8 +12,8 @@ defmodule Palapa.Billing.Customers do
     Repo.get_assoc(organization, :customer)
   end
 
-  def get_customer(id) when is_binary(id) do
-    Repo.get(Customer, id)
+  def get_customer(queryable \\ Customer, id) when is_binary(id) do
+    Repo.get(queryable, id)
   end
 
   def get_customer_by_stripe_id!(customer_id) do
@@ -58,6 +59,23 @@ defmodule Palapa.Billing.Customers do
       Customer.payment_method_changeset(customer, pm_attrs)
     end)
     |> Repo.transaction()
+  end
+
+  def reusable_customer_accounts(%Account{} = account) do
+    organizations = Organizations.active_organizations_having_owner(account)
+
+    from(customers in Customer,
+      inner_join: subscriptions in Subscription,
+      on: subscriptions.customer_id == customers.id,
+      where: subscriptions.status == "active",
+      inner_join: organizations in subquery(organizations),
+      distinct: true
+    )
+  end
+
+  def list_reusable_customer_accounts(%Account{} = account) do
+    reusable_customer_accounts(account)
+    |> Repo.all()
   end
 
   # Stripe resources
