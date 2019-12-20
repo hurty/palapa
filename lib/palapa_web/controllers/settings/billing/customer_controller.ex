@@ -43,7 +43,13 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
   end
 
   def new(conn, _) do
-    with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
+    with :ok <-
+           permit(
+             Billing.Policy,
+             :create_customer,
+             current_member(conn),
+             current_organization(conn)
+           ) do
       customer_changeset = Billing.Customers.change_customer(%Customer{})
 
       conn
@@ -56,7 +62,13 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
   end
 
   def create(conn, %{"customer" => customer_attrs}) do
-    with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
+    with :ok <-
+           permit(
+             Billing.Policy,
+             :create_customer,
+             current_member(conn),
+             current_organization(conn)
+           ) do
       case Billing.Subscriptions.create_subscription(
              current_organization(conn),
              customer_attrs
