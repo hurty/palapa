@@ -213,7 +213,7 @@ msgstr "Nombre illimité d'équipes"
 #, elixir-format
 #: lib/palapa_web/templates/billing/subscription/customer_fields.html.eex:57
 msgid "VAT number (if your company is in the European Union)"
-msgstr "N° de TVA (si votre entreprise fait parie de l'Union Européenne)"
+msgstr "N° de TVA (si votre entreprise fait partie de l'Union Européenne)"
 
 #, elixir-format
 #: lib/palapa_web/templates/billing/billing_error/waiting_for_payment.html.eex:9

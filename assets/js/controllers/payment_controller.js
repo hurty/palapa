@@ -23,7 +23,7 @@ export default class extends StripeController {
       .handleCardPayment(this.data.get("client-secret"), {
         setup_future_usage: "off_session"
       })
-      .then(function(result) {
+      .then(function (result) {
         if (result.error) {
           controller.handlePaymentError();
         } else {
@@ -50,7 +50,7 @@ export default class extends StripeController {
   // but this webhook can be late and we want our customer to be able to
   // use his workspace immediately after payment.
   refreshSubscriptionStatus() {
-    return PA.fetch(this.data.get("refresh-subscription-url"), {
+    return PA.fetchRequest(this.data.get("refresh-subscription-url"), {
       method: "post"
     });
   }
