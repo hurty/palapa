@@ -31,7 +31,7 @@ defmodule PalapaWeb.Document.PageControllerTest do
 
       conn = get(conn, Routes.document_page_path(conn, :new, org, document))
       assert html_response(conn, 200) =~ "New page"
-      assert html_response(conn, 200) =~ "Document pages"
+      assert html_response(conn, 200) =~ "Pages"
     end
 
     test "show page", %{conn: conn, org: org, document: document} do

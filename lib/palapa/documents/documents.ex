@@ -257,7 +257,7 @@ defmodule Palapa.Documents do
   end
 
   def create_first_section(document, author) do
-    create_section(document, author, %{title: "Document pages"})
+    create_section(document, author, %{title: "Pages"})
   end
 
   def update_document(document, author, team, attrs) do
