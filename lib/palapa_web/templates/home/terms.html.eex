@@ -1,0 +1,296 @@
+<div class="p-8 max-w-3xl mx-auto">
+
+<%= link "← Back to homepage", to: Routes.home_path(@conn, :index), class: "text-green-500 underline font-bold" %>
+
+<br><%= link "English version (Google Translate)", to: "https://translate.google.com/translate?sl=auto&tl=fr&u=https%3A%2F%2Fwww.palapa.io%2Fterms", class: "text-green-500 underline", target: "_blank" %>
+
+<div class="text-lg my-8">
+  <img src="<%= Routes.static_path(@conn, "/images/logo_palapa-x2.png") %>" alt="Palapa">
+</div>
+
+<h1>Conditions Générales de Vente</h1>
+
+<p>Les présentes Conditions Générales de Vente sont à jour au 19 novembre 2019.</p>
+
+<h2>DÉFINITIONS<h2>
+
+<p>Les présentes Conditions Générales de Vente (ci-après les « CGV ») sont proposées par Monsieur Pierre HURTEVENT (ci-après la « Société »), commerçant, inscrit au Registre du commerce et des sociétés de Nantes sous le numéro 812 726 826, dont le siège social est 28, rue Saint-Antoine 44000 Nantes.</p>
+
+<p>Son adresse de courrier électronique est support@palapa.io .</p>
+
+<p>La Société propose au client (ci-après  le « Client ») la fourniture d’un ou plusieurs packages de services comprenant des outils collaboratif pour les petites structures et qui prennent la forme d'une application web accessible par abonnement mensuel (ci-après les «  Services »).</p>
+
+
+<h2>APPLICATION ET OPPOSABILITÉ DES CGV</h2>
+
+<p>Les présentes CGV ont pour objet de définir l’ensemble des conditions dans lesquelles la Société commercialise sous forme d’abonnement les Services tels que proposés à la vente aux Clients.</p>
+
+<p>Elles s’appliquent donc à toute commande  de Services (ci-après la « Commande ») passée par le Client.</p>
+
+<p>Le Client déclare avoir pris connaissance et accepté les présentes CGV avant la passation de sa Commande.</p>
+
+<p>La validation de la Commande vaut donc acceptation de ces CGV. Celles-ci sont régulièrement mises à jour, les CGV applicables sont celles en vigueur à la date de passation de la Commande.</p>
+
+<p>Toute condition contraire posée par le Client serait donc, à défaut d’acceptation expresse, inopposable à la Société quel que soit le moment où elle aura pu être portée à sa connaissance.</p>
+
+<p>Le fait que la Société ne se prévale pas à un moment donné d’une quelconque disposition des présentes CGV, ne peut être interprété comme valant renonciation à se prévaloir ultérieurement d’une quelconque disposition desdites CGV.</p>
+
+
+
+<h2>COMMANDE DE SERVICES</h2>
+
+<p>Les Services proposés à la vente sont décrits et présentés avec la plus grande exactitude possible dans les brochures commerciales de la Société. Néanmoins, une variation minime dans l’offre du ou des Service(s) n’engage pas la responsabilité de la Société et n’affecte pas la validité de la vente.</p>
+
+<p>Le Client indique à la Société par tout moyen et notamment par échange d’emails, sans que cela soit limitatif, le ou les Services qu’il souhaite commander, et peut accéder à tout moment au récapitulatif de sa Commande sur demande auprès de la Société.</p>
+
+<p>Le récapitulatif de la Commande présente la liste du ou des Services que le Client a sélectionné(s), et comprend les éventuels frais annexes tels que ceux concernant </p>les espaces de stockage venant s’ajouter au prix du ou des Services de la Commande.</p>
+
+<p>Le Client a la possibilité de modifier sa Commande et de corriger d’éventuelles erreurs avant qu’il ne soit procédé à l’acceptation de sa Commande par la Société.</p>
+
+<p>Après avoir accédé au récapitulatif de sa Commande, le Client confirme l’acceptation de sa Commande par tout moyen.</p>
+
+<p>Après acceptation des CGV et validation de la Commande avec obligation de paiement, le contrat est valablement conclu entre la Société et le Client et les engage de manière irrévocable.</p>
+
+<p>La Société lui envoie alors une confirmation de Commande par email, reprenant les éléments du récapitulatif de sa Commande.</p>
+
+
+<h2>PRIX ET CONDITIONS DE PAIEMENT DE LA COMMANDE</h2>
+
+<p>Les prix des Services sont mentionnés au Client par la Société, en euros ou sous toute autre devise, le cas échéant.</p>
+
+<p>Le montant total est indiqué dans le récapitulatif de la Commande, avant que le Client n’accepte les présentes CGV, valide sa Commande, renseigne et valide ses coordonnées et procède au paiement.</p>
+
+<p>La Commande des Services est payable en euros ou dans la devise choisie par le Client et acceptée par la Société, le cas échéant.</p>
+
+<p>La Société se réserve le droit de suspendre ou d’annuler toute exécution d’une Commande, quels que soient sa nature et son niveau d’exécution, en cas de défaut de paiement ou de paiement partiel de toute somme qui serait due par le Client à la Société, en cas d’incident de paiement, ou en cas de fraude ou tentative de fraude relative à l’utilisation du site et au paiement d’une Commande.</p>
+
+<p>En cas de retard de paiement, des intérêts de retard seront dus de plein droit à date d’échéance de la facture, à un taux égal à 3 fois le taux d’intérêt légal, ainsi qu’une indemnité forfaitaire de 40 euros.</p>
+
+
+
+<h2>MISE A DISPOSITION DES SERVICES</h2>
+
+<p>Le ou les Services(s) proposé(s) par la Société peuvent être fournis en France métropolitaine.</p>
+
+<p>La Société s'engage à mettre à disposition des Clients les Services commandés immédiatement à compter de la réception de la Commande et du paiement correspondant.</p>
+
+<p>Le Client doit s’assurer que les informations communiquées visées dans les présentes CGV sont correctes, et qu’elles le restent jusqu’à complète founiture du ou des Service(s) commandé(s).</p>
+
+<p>Le Client s’engage donc à informer la Société de tout changement de coordonnées qui pourrait intervenir entre la Commande et la fourniture des Services, en envoyant, sans délai, un email à l’adresse email Service client. A défaut, en cas de retard et/ou d’erreur, le Client ne pourra en aucun cas engager la responsabilité de la Société en cas de défaut de fourniture du Service.</p>
+
+<p>La Société ne sera pas non plus responsable si la non réception des Services est due au fait d’un tiers en dehors de son intervention.</p>
+
+
+<h2>SERVICE CLIENT</h2>
+
+<p>Pour toute demande d’informations, de précisions ou pour toute réclamation, le Client doit contacter, en priorité, le Service Client de la Société, afin de permettre à ce dernier de tenter de trouver une solution au problème.</p>
+
+<p>Le Service Client de la Société est accessible pendant les heures de bureau en utilisant les coordonnées suivantes :</p>
+
+<p>
+email : support@palapa.io
+courrier : 28, rue Saint-Antoine 44000 Nantes, FRANCE
+</p>
+
+<h2>OBLIGATIONS DU CLIENT</h2>
+
+<p>Le Client s’engage à respecter les termes des présentes CGV.</p>
+
+<p>Le Client est parfaitement informé qu’il est soumis à une obligation de collaboration et coopération avec la Société, sans quoi la Société ne peut garantir qu’elle sera en mesure de fournir les Services de la façon la plus optimale possible.</p>
+
+<p>En outre, le Client s’engage à utiliser le Site et les Services de manière conforme aux instructions de la Société.</p>
+
+<p>Si, pour un quelconque motif, la Société considère que le Client ne respecte pas les présentes CGV, la Société peut à tout moment, et à son entière discrétion, supprimer son accès au Site ou aux Services et prendre toutes mesures incluant toute action judiciaire civile et pénale à son encontre.</p>
+
+
+<h2>RESPONSABILITÉ</h2>
+
+<p>La Société met en œuvre toutes les mesures propres à assurer au Client la fourniture, dans des conditions optimales, de Service(s) de qualité. Elle ne saurait cependant en aucun cas voir sa responsabilité engagée pour toute inexécution ou mauvaise exécution de tout ou partie des prestations prévues aux présentes, qui serait imputable soit au Client, soit au fait imprévisible et insurmontable d’un tiers étranger à la relation entre le Client et la Société, soit à un cas de force majeure. Plus généralement, si la responsabilité de la Société se trouvait engagée, elle ne pourrait en aucun cas accepter d’indemniser le Client pour des dommages indirects ou dont l’existence et/ou le quantum ne seraient pas établi par des preuves.</p>
+
+<p>La Société peut mettre à disposition des informations concernant des services fournis par des tiers qui ne sont pas contrôlés par la Société qui ne pourra être tenue pour responsable du fonctionnement, du contenu ou de tout élément présent ou obtenu par l’intermédiaire de ces tiers.</p>
+
+<p>La référence à toutes informations, articles ou services fournis par une tierce personne, ne peut et ne doit pas être interprétée comme un aval exprès ou tacite, par la Société, de ces sites et de ces éléments ni de leurs contenus.</p>
+
+<p>La Société n’est pas responsable de la disponibilité de ces services tiers et ne peut en contrôler le contenu ni valider la publicité, le ou les produit(s) et autres informations diffusées par ces tiers.</p>
+
+<p>Il est précisé que la Société n’est tenue qu’à une obligation de moyens dans le cadre de la fourniture des Services et qu’en aucun cas elle ne saurait garantir un quelconque résultat de quelque nature que ce soit à l’issue de la fourniture des Services.</p>
+
+<p>Il est expressément stipulé que la Société ne pourra en aucun cas être tenue responsable, de quelque manière que ce soit, pour le cas où le matériel informatique ou la messagerie électronique des Clients rejetterait, par exemple du fait d’un anti-spam, les courriers électroniques adressés par la Société, et notamment, sans que cette liste ne soit exhaustive, la copie du ticket de paiement, l’état récapitulatif de la Commande.</p>
+
+Le Client a pleinement conscience des dispositions du présent article et notamment des garanties et limitations de responsabilité susvisées, conditions essentielles sans lesquelles la Société n’aurait jamais contracté.
+
+
+<h2>GARANTIE LIMITEE</h2>
+
+<p>LE CLIENT RECONNAIT ET ACCEPTE QUE :<p>
+
+<p>SON UTILISATION DES SERVICES ET DU CONTENU EST A SES PROPRES RISQUES. LE SERVICE ET LE CONTENU SONT FOURNIS « EN L’ETAT » ET TELS QUE DISPONIBLES, SANS GARANTIE AUTRE QUE LA GARANTIE LEGALE DE QUELQUE NATURE QUE CE SOIT, EXPRESSE OU IMPLICITE, Y COMPRIS, ENTRE AUTRES, LES GARANTIES IMPLICITES DE QUALITE MARCHANDE, D’ADEQUATION A UN USAGE PARTICULIER OU DE NON-VIOLATION.</p>
+
+<p>DANS LA LIMITE DE LA LEGISLATION APPLICABLE, LA SOCIETE NE DONNE AUCUNE GARANTIE QUE</p>
+
+<p>(i) LE SERVICE CORRESPONDRA PARFAITEMENT AUX BESOINS DU CLIENT, ET QUE (II) TOUTES LES ERREURS DANS LE LOGICIEL SERONT CORRIGES, SOUS RESERVES QUE CES ERREURS N’EMPECHENT PAS LA BONNE EXECUTION DES PRESTATIONS PREVUES AUX PRESENTES.</p>
+
+<p>TOUT CONTENU ET TOUT MATERIEL TELECHARGE OU OBTENU AUTREMENT PAR L’UTILISATION DU SERVICE SE FAIT AUX RISQUES ET PERILS DU CLIENT ET LE CLIENT SERA TENU POUR SEUL RESPONSABLE POUR TOUT DOMMAGE A SON SYSTEME INFORMATIQUE OU PERTE DE DONNEES RESULTANT DU TELECHARGEMENT D’UN TEL MATERIEL. AUCUN AVIS NI AUCUNE INFORMATION, QU’ILS SOIENT ORAUX OU ECRITS, OBTENUS PAR LE CLIENT DE LA PART DU PRESTATAIRE OU PAR LE BIAIS DU SERVICE NE CONSTITUENT UNE GARANTIE NON EXPLICITEE DANS LES TERMES DES CGV.</p>
+
+<h2>DONNEÉS PERSONNELLES – COOKIES – SÉCURITÉ</h2>
+
+<p>Les Parties se conformeront en toutes circonstances aux dispositions de la loi Informatique et Libertés n° 78-17 du 6 janvier 1978 modifiée et s’emploieront à traiter les données personnelles avec diligence et de manière confidentielle.
+
+<p>Le Client, en sa qualité de responsable du traitement, pourra contrôler et auditer la Société ainsi que ses sous-traitants pour s’assurer que le traitement des données personnelles pour son compte se déroule en totale adéquation avec ladite loi et dans le respect de la présente convention.
+
+<p>La Société effectue toute opération de traitement uniquement sur instruction du Client et traite les données personnelles qui lui sont transmises conformément aux finalités décrites dans la présente convention.
+
+<p>Les données transmises par la Société, ou toute donnée collectée à l’occasion de l’exécution de la présente convention, ne seront pas conservées au-delà de la durée strictement nécessaire à leur finalité ou à la fin de l’exécution de la présente convention.
+
+<p>La Société cessera tout traitement des données personnelles transmises par le Client, ou générées ou récoltées à l’occasion de la présente convention,  et procédera à leur destruction sans possibilité de restauration sur simple demande du Client.
+
+<p>La Société s’engage à mettre en place les mesures techniques et organisationnelles appropriées pour protéger les données à caractère personnel contre toute atteinte et notamment leur destruction fortuite ou illicite, leur perte accidentelle, leur altération, leur divulgation ou contre tout accès non autorisé. Ces mesures assurent un niveau de sécurité adapté au risque lié au traitement et à la nature des données à protéger, et conformément à l’état de l’art.
+
+<p>Si un incident de sécurité impactant l’intégrité ou la confidentialité des données personnelles du Client, traitées par la Société, est porté à la connaissance de cette dernière, le Client devra impérativement en être informé afin que les mesures qui s’imposent soient adoptées sans délai.
+
+<p>Si la Société, pour les nécessités de la réalisation des prestations qui lui sont confiées au terme de la présente convention, envisage de transférer des informations à l’un de ses sous-traitants situés sur un territoire hors du territoire Français, il devra en informer le Client qui devra préalablement lui donner l’autorisation par écrit en cas de transfert hors du territoire de l’Union Européenne. Il en va de même pour les prestataires auxquels le sous-traitant de la Société pourrait faire appel. En tout état de cause, le Prestataire demeure responsable des défaillances imputables à ses sous-traitants.
+
+<p>Conformément aux dispositions de la loi Informatique et Libertés n° 78-17 du 6 janvier 1978 modifiée, chaque personne dont les données personnelles sont traitées par la Société bénéficie d'un droit d'accès, de rectification et d'opposition des données la concernant. Dans la mesure où une personne, dont les données personnelles sont traitées par la Société pour le compte du Client, exercerait les droits susmentionnés directement auprès de la Société, ce dernier en informerait le Client sans délai afin que les dispositions nécessaires soient immédiatement prises par le Client.
+
+<h3>Propriété et protection des fichiers</h3>
+
+<p>Le Client est seul propriétaire des fichiers de données personnelles transmis à la Société ou modifiés ou crées par le Prestataire dans le cadre de l’exécution du Contrat. Les Parties s’engagent à se conformer en toutes circonstances à la réglementation relative à la protection des données personnelles et notamment au RGPD.</p>
+
+<p>Le Client interdit à la Société de détourner, commercialiser ou communiquer tout ou partie de ce fichier comme de l’exploiter à d’autres fins que celles indiquées aux présentes.</p>
+
+<p>Dans la mesure où la Société irait au-delà des finalités de traitement définies par les présentes et utiliserait ces données pour d’autres finalités qu’elle aurait elle-même définies, celle-ci se trouverait alors en violation de la législation et se verrait dès lors qualifié de responsable de traitement, engageant ainsi sa propre responsabilité à l’égard des personnes concernées et ce en cette nouvelle qualité de responsable de traitement.</p>
+
+<h3>Sécurité du traitement</h3>
+
+<p>Le responsable du traitement et le sous-traitant prennent les mesures nécessaires pour garantir la sécurité du traitement.</p>
+
+<h3>Traitement et accès aux données</h3>
+
+<p>L’exécution des CGV impliquant traitement de - et/ou accès à des - données nominatives relevant de la responsabilité du Client (ci-après dénommées les « Données du Client »), les Parties conviennent des dispositions qui suivent.</p>
+
+<h3>Scope données / traitements</h3>
+
+<p>Les données nominatives concernées par l’exécution des CGV:</p>
+
+<p>(i) soit font l’objet d’un transfert vers la Société ;<p>
+<p>(ii) soit sont accessibles par la Société.</p>
+
+<p>Les traitements des Données du Client que la Société est chargée d’opérer en application des CGV sont ceux nécessaires à l’exécution des CGV.</p>
+
+<p>Le Client charge la Société, pour la durée du Contrat, de procéder exclusivement pour le compte du Client aux traitements tels que requis par les CGV.</p>
+
+<p>Les traitements ne confèrent ni n’induisent en aucune manière un droit quelconque pour le Prestataire d’utiliser pour son propre compte, à quelque finalité que ce soit, tout ou partie des Données du Client.</p>
+
+<h3>Obligations</h3>
+
+<p>La Société s’engage à ne traiter les Données du Client que conformément aux instructions du Client, aux dispositions du Contrat, à la réglementation.</p>
+
+<p>La Société garantit que ses mesures techniques et organisationnelles présentent le niveau de garantie nécessaire.</p>
+
+<p>La Société s’engage à prendre toutes les mesures afin de garantir un niveau de sécurité adapté au risque, à savoir, entre autres :</p>
+
+<ul>
+  <li>des moyens permettant de garantir la confidentialité, l’intégrité, la disponibilité et la résilience constantes des systèmes et des services de traitements,</li>
+  <li>des moyens permettant de rétablir la disponibilité des données à caractère personnel et l’accès à celles-ci dans les délais appropriés en cas d’incident physique ou technique,<li>
+  <li>une procédure visant à tester, analyser et évaluer régulièrement l’efficacité des mesures techniques et organisationnelles pour assurer la sécurité du traitement.</li>
+</ul>
+
+<p>La Société garantit que ses collaborateurs ont été sensibilisés, formés et organisés pour présenter les garanties suffisantes de sécurité et de confidentialité des données.</p>
+
+<p>La Société s’engage à aider le Client à :</p>
+
+<ul>
+<li>s’acquitter de son obligation de donner suite aux demandes dont les personnes concernées le saisissent en vue d’exercer leurs droits ;</li>
+<li>en cas de violation de données à caractère personnel, communiquer avec les personnes concernées.</li>
+</ul>
+
+<p>En cas de violation de données à caractère personnel, notamment en cas de destruction fortuite ou illicite, perte fortuite, altération, divulgation ou un accès non autorisé, le Prestataire s’engage à notifier dans les vingt-quatre heures (24h) à soixante-douze (72) heures au Client les informations suivantes :</p>
+
+<ul>
+  <li>une description de la nature de la violation pour la personne concernée,</li>
+  <li>le nom et les coordonnées du délégué à la protection des données,</li>
+  <li>les conséquences probables de la violation pour la personne concernée,</li>
+  <li>les mesures prises pour remédier et, le cas échéant, atténuer les conséquences de la violation.</li>
+</ul>
+
+<p>Si, au cours de l’exécution des CGV, la Société se trouve dans l’incapacité, pour quelque raison que ce soit, de se conformer à ses obligations, elle s’engage à en informer le Client dans les meilleurs délais, auquel cas ce dernier pourra suspendre ou résilier les CGV avec effet immédiat et sans indemnisation éventuelle pour sortie anticipée des CGV.</p>
+
+<p>La Société s’engage à communiquer au Client toute demande de divulgation des Données du Client ou d’accès à celles-ci, qui lui aurait été faite directement, quel que soit l’autorité ou la personne d’où elle émane et y compris lorsqu’elle émane d’une personne physique concernée.</p>
+
+<p>La Société s’engage à prendre en compte, dans un délai de cinq (5) jours ouvrés, toute demande légale de correction, rectification ou suppression des Données du Client et/ou traitements que lui adressera le Client.
+
+<p>Dans la mesure où l’exécution des CGV est concernée, la Société s’engage à respecter les instructions du Client dans sa mise en œuvre de la gestion :
+
+<ul>
+  <li>de l’archivage, papier ou électronique (document faisant preuve), notamment en matière de durée de conservation. La Société est organisée de manière à permettre une recherche, consultation et restitution aisées et rapides des documents archivés. En cas de dématérialisation des données, la Société s’engage à conserver les originaux « papier » servant à l’authentification des documents et de leur auteur. Un inventaire des dossiers archivés (papier et électronique) sera établi par la Société :</li>
+  <li>de l’effacement / le droit à l’oubli,</li>
+  <li>des droits d’accès / rectification / modification / opposition,</li>
+  <li>la portabilité.</li>
+</ul>
+
+<p>Si le Client est tenu responsable, envers un tiers ou toute autorité, de la violation des obligations légales et réglementaires ou des dispositions des CGV, alors que cette violation est imputable au fait ou manquement de la Société, cette dernière dédommagera le Client de l’entier préjudice subi, en ce compris tout coût, charge, dommage ou dépense encouru par le Client dans la limite du montant annuel payé par le Client.</p>
+
+<p>La Société est responsable envers le Client de tout manquement aux dispositions des CGV et devra indemniser ce dernier de tout préjudice direct qu’il subirait. La Société reconnaît que cette responsabilité ne peut faire obstacle à la responsabilité qu’elle peut encourir directement envers les personnes physiques concernées ou une autorité.</p>
+
+<p>A l’expiration des CGV, que celle-ci advienne au terme ou de manière anticipée pour quelque cause que ce soit, la Société s’engage à ce que, à la convenance du Client, les Données du Client concernées par les CGV et les Services, quel que soit le support sur le(s)quel(s) elles résident, soient en totalité restituées à celui-ci ainsi que toutes copies de celles-ci existant sous une forme utilisable par le Client.</p>
+
+<p>La Société, au cas où celle-ci désirerait confier tout ou partie des traitements et des données à caractère personnel objet du Contrat à un sous-traitant, devra au préalable en demander l’accord du Client. Ce transfert ne pourra intervenir qu’après accord écrit du Client.</p>
+
+<p>La Société est responsable envers le Client de la sécurité et de la confidentialité des données et traitements délégués au sous-traitant ; il exigera de ce dernier les mêmes engagements contractuels en la matière que ceux exigés par le Client envers lui.</p>
+
+<p>Au cas où la sous-traitance par la Société donnerait lieu à flux transfrontières de données dans des pays n’appartenant pas à l’Union Européenne ou qui n’accordent pas une protection adéquate ou suffisante au sens du RGPD, ce transfert ne pourra intervenir qu’après accord écrit du Client dans le strict respect de la règlementation et des dispositions des CGV. Dans ce cadre, les clauses nécessaires à insérer dans le Contrat, liant la Société à ce sous-traitant, sont celles décrites dans la Décision de la Commission Européenne du 5 février 2010 (N° 2010/87) relatives aux clauses contractuelles type pour le transfert de données à caractères personnel vers des sous-traitants établis dans des pays tiers en vertu de la directive 95/46/CE.</p>
+
+<p>La Société s’engage à tenir un registre des activités de traitement effectuées pour le compte du responsable de traitement, lequel devra contenir :</p>
+
+<ul>
+  <li>le nom et les coordonnées de la Société et du responsable du traitement pour lequel elle agit ;</li>
+  <li>les catégories de traitement effectuées pour le compte du Client ;</li>
+  <li>une description générale des mesures de sécurité permettant de garantir un niveau de sécurité adapté au risque résultant du traitement.</li>
+</ul>
+
+<h2>PROPRIÉTÉ INTELLECTUELLE</h2>
+
+<p>L’ensemble des éléments de la Société sont protégés par le droit d’auteur, le droit des marques, des dessins et modèles et/ou tous autres droits de propriété intellectuelle. Ces éléments sont la propriété exclusive de la Société. L’ensemble de ces droits est réservé pour le monde entier.</p>
+
+<p>Le nom et la marque PALAPA, les logotypes, les dessins et modèles, lettres stylisées, marques figuratives, et tous les signes utilisés de la Société sont et demeureront la propriété exclusive de la Société.</p>
+
+<p>Il est formellement interdit au Client de reproduire (à part pour son utilisation personnelle et non commerciale), publier, éditer, transmettre, distribuer, montrer, enlever, supprimer les éléments propriétaires de la Société.</p>
+
+<p>Toute utilisation par le Client des dénominations sociales, marques et signes distincts appartenant à la Société est strictement prohibée sauf en cas d’accord exprès et préalable de la Société.</p>
+
+
+<h2>DUREE</h2>
+
+<p>Les présentes CGV sont conclues pour la durée d’abonnement sélectionnée par le Client.</p>
+
+
+<h2>RESILIATION et SUSPENSION</h2>
+
+<h3>Résiliation des CGV</h3>
+
+<p>Chacune des Parties peut résilier les présentes CGV si l’autre ne parvient pas à remédier tout manquement aux présentes dans les dix (10) jours calendaires après réception de l’avis écrit de la violation par lettre recommandée avec accusé de réception.</p>
+
+<p>Nonobstant ce qui précède, la Société se réserve le droit de suspendre ou d’interrompre la fourniture des Services immédiatement si le Client ne parvient pas à répondre à toutes exigences de paiement.</p>
+
+<h3>Suspension des CGV.</h3>
+
+<p>Sans préjudice de ce qui précède, la Société pourra également suspendre la fourniture du Service en l’absence de paiement par le Client dès lors que la créance de la Société à cet égard sera considérée comme échue, liquide et exigible.</p>
+
+<p>Plus particulièrement, dans ce cadre, la Société adressera une lettre recommandée avec avis de réception au Client l’informant de la créance et l’invitant à régulariser sa situation dans un délai de sept (7) jours calendaires.</p>
+
+<p>En l’absence de paiement de la part du Client à l’issue de ce délai, la Société suspendra la fourniture du Service.</p>
+
+<p>Dès paiement du prix convenu, la Société rétablira la fourniture du Service dans un délai maximal de 24 heures.</p>
+
+<p>En tout état de cause, le paiement des sommes dues à la Société par le Client à la suite d’une suspension ne libère pas pour autant le Client du paiement d’éventuels dommages-intérêts qui seraient demandés par la Société.</p>
+
+
+<h2>LOI APPLICABLE ET ATTRIBUTION DE JURIDICTION</h2>
+
+<p>Les présentes CGV sont régies et interprétées de façon exclusive conformément au droit français, sans tenir compte des principes de conflits de lois.</p>
+
+<p>En cas de litige susceptible de survenir à l’occasion de l’interprétation et/ou de l’exécution des présentes ou en relation avec les présentes CGV, le Client peut décider de soumettre le litige avec la Société à une procédure de médiation conventionnelle ou tout autre mode alternatif de règlement des différends.</p>
+
+<p>En cas d’échec de cette procédure de médiation ou si le Client souhaite saisir une juridiction, le Tribunal de commerce de Nantes sera exclusivement compétent.</p>
+
+</div>

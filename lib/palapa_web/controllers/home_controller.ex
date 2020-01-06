@@ -16,4 +16,8 @@ defmodule PalapaWeb.HomeController do
   def legal(conn, _) do
     render(conn, "legal.html")
   end
+
+  def terms(conn, _) do
+    render(conn, "terms.html")
+  end
 end

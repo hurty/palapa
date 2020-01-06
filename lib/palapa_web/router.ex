@@ -49,6 +49,7 @@ defmodule PalapaWeb.Router do
 
     get("/", HomeController, :index)
     get("/legal", HomeController, :legal)
+    get("/terms", HomeController, :terms)
     resources("/beta_subscriptions", BetaSubscriptionController, only: [:index, :create])
     resources("/registrations", RegistrationController, only: [:new, :create])
     resources("/sessions", SessionController, only: [:new, :create, :delete], singleton: true)
