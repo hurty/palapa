@@ -32,7 +32,17 @@ li {
 }
 
 section {
-  margin-bottom: 100px;
+  margin-bottom: 75px;
+}
+
+.divider-bottom {
+  border-bottom-left-radius: 30% 10%;
+  border-bottom-right-radius: 30% 10%;
+}
+
+.divider-top {
+  border-top-left-radius: 30% 10%;
+  border-top-right-radius: 30% 10%;
 }
 
 .btn {
@@ -48,7 +58,7 @@ section {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  @apply text-gray-100 font-bold;
+  @apply font-bold;
 
   &:hover {
     background-position: -0.5em;

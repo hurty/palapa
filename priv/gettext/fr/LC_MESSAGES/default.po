@@ -1223,7 +1223,7 @@ msgid "Settings"
 msgstr "Paramètres"
 
 #, elixir-format
-#: lib/palapa_web/templates/home/index.html.eex:3
+#: lib/palapa_web/templates/home/index.html.eex:11
 #: lib/palapa_web/templates/layout/_public_navigation.html.eex:20 lib/palapa_web/templates/session/new.html.eex:4
 #: lib/palapa_web/templates/session/new.html.eex:20
 msgid "Sign in"
@@ -2524,3 +2524,8 @@ msgstr "En cochant cette case vous confirmez avoir lu, compris et que vous accep
 #: lib/palapa_web/templates/registration/_form.html.eex:38
 msgid "terms and conditions"
 msgstr "conditions générales de vente"
+
+#, elixir-format
+#: lib/palapa_web/templates/home/index.html.eex:10
+msgid "Create a workspace"
+msgstr ""

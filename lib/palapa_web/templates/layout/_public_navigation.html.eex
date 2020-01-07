@@ -13,7 +13,7 @@
     </div>
 
     <div class="flex flex-wrap">
-      <%= link(gettext("Create workspace"), to: Routes.registration_path(@conn, :new), class: "btn mr-2") %>
+      <%= link(gettext("Create workspace"), to: Routes.registration_path(@conn, :new), class: "btn btn-green mr-2") %>
       <%= if @conn.assigns[:current_account] do %>
         <%= link(gettext("Sign out"), to: Routes.session_path(@conn, :delete), data: [controller: "link", action: "link#delete"], class: "btn ") %>
       <% else %>

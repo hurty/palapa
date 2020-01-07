@@ -1,100 +1,88 @@
 <section class="gradient-dark mb-8" oldstyle="background: #14223e;">
-  <div class="float-right p-4">
-  <%= link(gettext("Sign in"), to: Routes.session_path(@conn, :new), class: "btn text-gray-100 bg-green-500") %>
+  <div class="flex flex-wrap justify-between p-4">
+    <div class="mb-8">
+        <div class="text-lg">
+          <%= link to: Routes.home_path(@conn, :index) do %>
+            <img src="<%= Routes.static_path(@conn, "/images/logo_palapa-x2.png") %>" alt="Palapa">
+          <% end %>
+        </div>
+    </div>
+
+    <div class="">
+      <%= link(gettext("Create a new workspace"), to: Routes.registration_path(@conn, :new), class: "btn text-gray-100 bg-green-500") %>
+      <%= link(gettext("Sign in"), to: Routes.session_path(@conn, :new), class: "text-blue-500 btn bg-white ml-2") %>
+    </div>
   </div>
 
-  <div class="mx-auto md:max-w-6xl">
+  <div class="mx-auto p-8">
 
     <div class="text-left mx-auto">
-      <div class="md:flex md:flex-wrap md:justify-center items-center">
-        <div class="md:w-6/12 p-4 sm:p-8">
-          <div class="mb-8">
-              <div class="text-lg">
-                <img src="<%= Routes.static_path(@conn, "/images/logo_palapa-x2.png") %>" alt="Palapa">
-              </div>
-          </div>
-
+      <div class="md:flex md:flex-wrap md:justify-center items-center md:max-w-5xl mx-auto">
+        <div class="md:w-6/12">
           <div class="flex items-center">
-
             <div>
-              <h2 class="font-extrabold rounded-full text-gray-200 text-4xl">Give your team a home</h2>
+              <h2 class="font-extrabold rounded-full text-gray-200 text-xl sm:text-6xl">Give your team a home</h2>
             </div>
           </div>
-          <p class="md:text-xl text-gray-200">Many applications do only one thing. Palapa makes it easy to build a simple intranet by keeping your <strong>discussions</strong>, <strong>documentation</strong> and <strong>contacts</strong> in one place.
 
-            <div class="text-left mt-16">
-              <a data-micromodal-trigger="modal-subscription" class="btn text-gray-100 bg-green-500" href="#">
-                Notify me when Palapa goes live
-              </a>
-            </div>
-
-            <div class="text-left mt-8">
-              <a data-micromodal-trigger="modal-beta" class="btn text-gray-100 bg-blue-500" href="#">
-                Join the beta
-              </a>
-            </div>
-            <%= render(PalapaWeb.BetaSubscriptionView, "modal_beta.html", assigns) %>
-            <%= render(PalapaWeb.BetaSubscriptionView, "modal_subscription.html", assigns) %>
+          <p class="md:text-xl text-gray-200">Many applications do only one thing. Palapa makes it easy to build a simple intranet by keeping your <strong>discussions</strong>, <strong>documentation</strong> and <strong>contacts</strong> in one place.</p>
         </div>
 
-
-        <div class="hidden md:block md:w-6/12">
+        <div class="hidden md:block md:w-6/12 p-4">
           <img src="<%= Routes.static_path(@conn, "/images/cosmo_palapa.png") %>" class="rounded-full shadow-lg border-8 border-blue-900" alt="Palapa">
         </div>
 
       </div>
     </div>
   </div>
-  </section>
+</section>
 
 
 
-<div class="bg-white text-lg py-2">
+<div class="text-lg py-2">
 
-<div class="texture-pattern">
-
-  <h2 class="text-center text-lg md:text-4xl text-black py-8">Get everyone on the same page</h2>
-
-</div>
+<h2 class="text-center text-lg md:text-4xl text-black py-8">Get everyone on the same page</h2>
 
     <!---------------------------- MESSAGES --------------------------------->
-  <section class="flex flex-wrap sm:p-8 max-w-6xl mx-auto">
-    <div class="md:w-1/2 mx-auto sm:p-8 p-4">
-      <div class="flex">
-        <div data-feather="message-square" class="mr-2 text-green" style="width: 50px; height: 50px"></div>
-        <div class="self-center">
-          <h2 class="bg-indigo-800 font-bold text-2xl text-white font-extra-bold rounded-full px-4">Messages</h2>
+  <section class="bg-gray-100 divider-top divider-bottom">
+    <div class="max-w-6xl flex flex-wrap sm:p-8 mx-auto">
+      <div class="md:w-1/2 mx-auto sm:p-8 p-4">
+        <div class="flex">
+          <div data-feather="message-square" class="mr-2 text-green" style="width: 50px; height: 50px"></div>
+          <div class="self-center">
+            <h2 class="bg-indigo-800 font-bold text-2xl text-white font-extra-bold rounded-full px-4">Messages</h2>
+          </div>
+        </div>
+
+        <div class="text-left">
+          <p class="font-bold">What's up folks?</p>
+          <p>
+            The Message Board is the homepage of your organization. You can use it as an internal
+            blog or as a newsroom where
+            people can share
+            ideas, make announcements,
+            post pictures, link interesting articles or ask questions.
+          </p>
+
+          <p>
+            Messages can be published to your entire company or just to specific teams.
+          </p>
+
+          <div class="text-center max-w-sm mx-auto">
+            <img src="<%= Routes.static_path(@conn, "/images/teams.png") %>" alt="teams" class="border border-gray-200 rounded-lg">
+          </div>
         </div>
       </div>
 
-      <div class="text-left">
-        <p class="font-bold">What's up folks?</p>
-        <p>
-          The Message Board is the homepage of your organization. You can use it as an internal
-          blog or as a newsroom where
-          people can share
-          ideas, make announcements,
-          post pictures, link interesting articles or ask questions.
-        </p>
-
-        <p>
-          Messages can be published to your entire company or just to specific teams.
-        </p>
-
-        <div class="text-center max-w-sm mx-auto">
-          <img src="<%= Routes.static_path(@conn, "/images/teams.png") %>" alt="teams" class="border border-gray-200 rounded-lg">
-        </div>
+      <div class="md:w-1/2 p-2 mt-8 -ml-2 rounded">
+        <img src="<%= Routes.static_path(@conn, "/images/message.png") %>" alt="profile" class="shadow">
       </div>
-    </div>
-
-    <div class="md:w-1/2 bg-white p-2 mt-8 -ml-2 rounded">
-      <img src="<%= Routes.static_path(@conn, "/images/message.png") %>" alt="profile" class="shadow">
     </div>
   </section>
 
     <!---------------------------- DOCUMENTS --------------------------------->
 
-    <section class="sm:p-8 text-green-darker texture-pattern">
+    <section class="sm:p-8 text-green-darker texture-pattern divider-top divider-bottom ">
       <div class="text-left max-w-6xl mx-auto py-16">
         <div class="flex flex-wrap items-center justify-between">
           <div class="flex-inital md:w-2/5 p-8">
@@ -128,7 +116,8 @@
 
     <!---------------------------- PROFILES / CONTACT --------------------------------->
 
-    <section class="sm:p-8 max-w-6xl mx-auto">
+    <section class="bg-gray-100 divider-top divider-bottom">
+    <div class="sm:p-8 max-w-5xl mx-auto">
       <div class="flex flex-wrap justify-between items-center">
         <div class="flex-initial md:w-2/3 p-8 items">
           <div class="flex items-center">
@@ -157,43 +146,44 @@
         </div>
       </div>
 
-          <!---------------------------- UPCOMING --------------------------------->
-
-    <div class="mx-auto max-w-sm text-sm">
-
-        <div class="border-b bg-gray-100 rounded-lg p-4 md:p-8 rounded-lg text-blue-800">
-          <div class="flex items-center">
-            <div data-feather="calendar" class="mr-2 text-green" style="width: 50px; height: 50px"></div>
-            <div>
-              <h2 class="text-lg md:text-xl">Calendar</h2>
-              <h3 class="text-green-500 text-sm">Coming soon!</h3>
-            </div>
-          </div>
-
-          <p>
-            Never forget the company upcoming events!
-          </p>
-        </div>
-
-
-        <div class="mt-4 border-b bg-gray-100 rounded-lg p-4 md:p-8 rounded-lg text-blue-800">
-          <div class="flex items-center">
-            <div data-feather="check-circle" class="mr-2 text-green" style="width: 50px; height: 50px"></div>
-            <div>
-              <h2 class="text-lg md:text-xl">Reminders</h2>
-              <h3 class="text-green-500 text-sm">Coming soon!</h3>
-            </div>
-          </div>
-
-          <p>Everyday small requests often get lost. Assign tasks to your colleagues and Palapa will makes sure they don't forget you.</p>
-
-        </div>
     </div>
     </section>
 
+      <!---------------------------- UPCOMING --------------------------------->
+
+      <div class="mx-auto max-w-sm text-sm">
+
+          <div class="border-b bg-gray-100 rounded-lg p-4 md:p-8 rounded-lg text-blue-800">
+            <div class="flex items-center">
+              <div data-feather="calendar" class="mr-2 text-green" style="width: 50px; height: 50px"></div>
+              <div>
+                <h2 class="text-lg md:text-xl">Calendar</h2>
+                <h3 class="text-green-500 text-sm">Coming soon!</h3>
+              </div>
+            </div>
+
+            <p>
+              Never forget the company upcoming events!
+            </p>
+          </div>
+
+
+          <div class="mt-4 border-b bg-gray-100 rounded-lg p-4 md:p-8 rounded-lg text-blue-800">
+            <div class="flex items-center">
+              <div data-feather="check-circle" class="mr-2 text-green" style="width: 50px; height: 50px"></div>
+              <div>
+                <h2 class="text-lg md:text-xl">Reminders</h2>
+                <h3 class="text-green-500 text-sm">Coming soon!</h3>
+              </div>
+            </div>
+
+            <p>Everyday small requests often get lost. Assign tasks to your colleagues and Palapa will makes sure they don't forget you.</p>
+
+          </div>
+      </div>
 
     <!---------------------------- TIDY / NOTIFICATIONS --------------------------------->
-    <section class="mt-12 text-left mx-auto max-w-3xl">
+    <section class="mt-12 text-left mx-auto max-w-4xl">
       <div class="flex flex-wrap justify-between items-top">
         <div class="md:w-1/2 flex-initial p-4 md:p-8 rounded-lg">
           <div class="flex items-center">
@@ -243,7 +233,7 @@
 
     <!---------------------------- THE BASICS --------------------------------->
 
-    <div class="flex flex-wrap md:w-4/5 mx-auto">
+    <div class="flex flex-wrap justify-center sm:max-w-6xl mx-auto">
     <div class="md:w-1/2">
       <div class="p-8 text-2xl md:text-3xl font-bold text-green-500 text-center mt-8">
         <div class="inline" data-feather="feather" style="width: 100px; height: 100px"></div>
@@ -286,7 +276,7 @@
     </div>
 
     <div class="md:w-1/2">
-      <div class="p-8 text-2xl md:text-3xl font-bold text-red-500 mt-8 text-center">
+      <div class="p-8 text-2xl md:text-3xl font-bold text-red-500 text-center mt-8">
         <div class="inline" data-feather="x" style="width: 100px; height: 100px"></div>
         <h3>No fluff. No trick.</h3>
       </div>
@@ -333,10 +323,6 @@
       width="50px" />
     <h3 class="text-blue text-xl">Hosted in Europe</h3>
     <h3 class="text-indigo-800 text-xl">Email support in English and French</h3>
-  </section>
-
-  <section id="subscribe">
-    <%= render(PalapaWeb.BetaSubscriptionView, "form.html", assigns) %>
   </section>
 
   <div class="text-center text-sm my-8">
