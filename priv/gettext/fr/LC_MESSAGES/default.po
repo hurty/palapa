@@ -562,7 +562,7 @@ msgid "Update the payment method"
 msgstr "Mettre à jour le moyen de paiement"
 
 #, elixir-format
-#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:51
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:57
 #: lib/palapa_web/templates/billing/billing_error/trial_has_ended.html.eex:31 lib/palapa_web/templates/settings/billing/customer/new.html.eex:3
 msgid "Upgrade your account"
 msgstr "Mettre votre compte à niveau"
@@ -1570,7 +1570,7 @@ msgid "Contact"
 msgstr "Contact"
 
 #, elixir-format
-#: lib/palapa_web/templates/registration/_form.html.eex:39
+#: lib/palapa_web/templates/registration/_form.html.eex:45
 msgid "Create a new account"
 msgstr "Créer un nouveau compte"
 
@@ -1637,7 +1637,7 @@ msgid "Invoices will be sent to:"
 msgstr "Les factures seront envoyées à"
 
 #, elixir-format
-#: lib/palapa_web/templates/registration/_form.html.eex:42
+#: lib/palapa_web/templates/registration/_form.html.eex:48
 msgid "Log in!"
 msgstr "Se connecter !"
 
@@ -1706,7 +1706,7 @@ msgid "Total storage used by attachments:"
 msgstr "Stockage total utilisé par les pièces jointes"
 
 #, elixir-format
-#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:86
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:98
 #: lib/palapa_web/templates/settings/billing/customer/billing_overview.html.eex:28
 msgid "Update billing information"
 msgstr "Mettre à jour les informations de facturation"
@@ -1742,7 +1742,7 @@ msgid "Yes, delete this workspace"
 msgstr "Oui, supprimer cet espace"
 
 #, elixir-format
-#: lib/palapa_web/templates/registration/_form.html.eex:42
+#: lib/palapa_web/templates/registration/_form.html.eex:48
 msgid "You already have an account?"
 msgstr "Vous avez déjà un compte ?"
 
@@ -1823,12 +1823,12 @@ msgid "An unexpected error occured while reopening the suggestion"
 msgstr "Une erreur inattendue s'est produite lors de la réouverture de la suggestion"
 
 #, elixir-format
-#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:118
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:130
 msgid "Billing information couldn't be updated"
 msgstr "Les informations de facturation n'ont pas pu être mises à jour"
 
 #, elixir-format
-#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:113
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:125
 msgid "Billing information has been updated successfully"
 msgstr "Les informations de facturation ont été mises à jour"
 
@@ -1914,7 +1914,7 @@ msgid "The billing service could not process your request. Please try again or a
 msgstr "Le service de facturation"
 
 #, elixir-format
-#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:74
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:86
 msgid "The billing service is unreachable. Please try again or ask support"
 msgstr "Le service de facturation est indisponible. Merci de réessayer ou de demander de l'aide au support"
 
@@ -2005,7 +2005,7 @@ msgid "This team is private (only admins can add members)"
 msgstr "Cette équipe est privée (seuls les administrateurs peuvent ajouter des membres)"
 
 #, elixir-format
-#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:99
+#: lib/palapa_web/controllers/settings/billing/customer_controller.ex:111
 msgid "This workspace does not have a paid subscription / billing information"
 msgstr "Cet espace de travail n'a pas de souscription payante / information de facturation"
 
@@ -2514,3 +2514,13 @@ msgstr "Créer cet espace"
 #: lib/palapa_web/templates/organization/new.html.eex:51
 msgid "You will be billed €49,99/month for this new workspace."
 msgstr "Vous serez facturé 49,99€ mensuellement pour cet espace de travail."
+
+#, elixir-format
+#: lib/palapa_web/templates/registration/_form.html.eex:38
+msgid "You confirm that you have read, understand and accept the"
+msgstr "En cochant cette case vous confirmez avoir lu, compris et que vous acceptez les"
+
+#, elixir-format
+#: lib/palapa_web/templates/registration/_form.html.eex:38
+msgid "terms and conditions"
+msgstr "conditions générales de vente"

@@ -33,6 +33,12 @@
     <%= password_input f, :password, placeholder: gettext("8 characters minimum"), class: "input", autocomplete: "new-password", tabindex: 1 %>
   </div>
 
+  <div class="text-sm">
+    <%= checkbox f, :accept_terms, class: "input" %>
+    <%= label f, :accept_terms, gettext("You confirm that you have read, understand and accept the") %> <%= link gettext("terms and conditions"), to: Routes.home_path(@conn, :terms), class: "text-green-500 underline", target: "_blank" %>
+    <%= error_tag f, :accept_terms %>
+  </div>
+
   <%= hidden_input f, :timezone, "data-controller": "timezone" %>
 
   <div class="card-actions">

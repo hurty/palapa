@@ -2,7 +2,7 @@
 
 <%= link "← Back to homepage", to: Routes.home_path(@conn, :index), class: "text-green-500 underline font-bold" %>
 
-<br><%= link "English version (Google Translate)", to: "https://translate.google.com/translate?sl=auto&tl=fr&u=https%3A%2F%2Fwww.palapa.io%2Fterms", class: "text-green-500 underline", target: "_blank" %>
+<br><%= link "🇬🇧 English version (Google Translate)", to: "https://translate.google.com/translate?sl=auto&tl=fr&u=https%3A%2F%2Fwww.palapa.io%2Fterms", class: "text-green-500 underline", target: "_blank" %>
 
 <div class="text-lg my-8">
   <img src="<%= Routes.static_path(@conn, "/images/logo_palapa-x2.png") %>" alt="Palapa">

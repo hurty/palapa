@@ -6,6 +6,7 @@ defmodule Palapa.Accounts.Registration do
     field(:organization_name)
     field(:email)
     field(:password)
+    field(:accept_terms)
     field(:timezone)
   end
 
@@ -14,7 +15,7 @@ defmodule Palapa.Accounts.Registration do
     |> cast(params, [:name, :organization_name, :email, :password, :timezone])
     |> validate_required([:name, :organization_name, :email, :password])
     |> validate_length(:password, min: 8, max: 100)
-    |> validate_timezone
+    |> validate_acceptance(:accept_terms)
     |> update_change(:name, &String.trim(&1))
     |> update_change(:email, &String.trim(&1))
     |> update_change(:email, &String.downcase(&1))
