@@ -9,8 +9,8 @@ defmodule Palapa.Billing do
 
   # These statuses will be set via Stripe webhooks
   # https://stripe.com/docs/billing/lifecycle#subscription-states
-  # The trial period is not handled by Stripe so there is no "trialing" status for subscriptions on palapa's side.
   defenum(SubscriptionStatusEnum, :subscription_status, [
+    :trialing,
     :incomplete,
     :incomplete_expired,
     :active,
@@ -71,8 +71,11 @@ defmodule Palapa.Billing do
   end
 
   def trial_remaining_days(organization) do
-    trial_end = Timex.shift(organization.inserted_at, days: @trial_duration_days)
-    Timex.diff(trial_end, Timex.now(), :days)
+    Timex.diff(trial_end(organization), Timex.now(), :days)
+  end
+
+  def trial_end(organization) do
+    Timex.shift(organization.inserted_at, days: @trial_duration_days)
   end
 
   def workspace_frozen?(organization) do

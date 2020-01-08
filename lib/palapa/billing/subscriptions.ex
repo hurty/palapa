@@ -39,7 +39,7 @@ defmodule Palapa.Billing.Subscriptions do
   def create_subscription(%Organization{} = organization, %Customer{} = customer) do
     Multi.new()
     |> Multi.run(:stripe_subscription, fn _repo, _changes ->
-      create_stripe_subscription(customer.stripe_customer_id)
+      create_stripe_subscription(customer.stripe_customer_id, trial_end(organization))
     end)
     |> Multi.run(:subscription, fn _repo, %{stripe_subscription: stripe_subscription} ->
       create_subscription(organization, customer, %{
@@ -54,30 +54,34 @@ defmodule Palapa.Billing.Subscriptions do
   def create_subscription(%Organization{} = organization, attrs) when is_map(attrs) do
     Multi.new()
     |> validate_changeset(attrs)
-    |> create_stripe_resources(attrs)
+    |> create_stripe_resources(organization, attrs)
     |> create_local_resources(organization, attrs)
     |> Repo.transaction()
+    |> IO.inspect()
+  end
+
+  defp trial_end(organization) do
+    if Billing.get_billing_status(organization) == :trialing do
+      Billing.trial_end(organization)
+    else
+      nil
+    end
   end
 
   defp validate_changeset(multi, attrs) do
     Multi.run(multi, :changeset_validation, fn _repo, _changes ->
-      changeset = Customer.changeset(%Customer{}, attrs)
-
-      if changeset.valid? do
-        {:ok, apply_changes(changeset)}
-      else
-        {:error, changeset}
-      end
+      Customer.changeset(%Customer{}, attrs)
+      |> apply_action(:insert)
     end)
   end
 
-  defp create_stripe_resources(multi, attrs) do
+  defp create_stripe_resources(multi, organization, attrs) do
     multi
     |> Multi.run(:stripe_customer, fn _repo, _changes ->
       Customers.create_stripe_customer(attrs)
     end)
     |> Multi.run(:stripe_subscription, fn _repo, %{stripe_customer: stripe_customer} ->
-      create_stripe_subscription(stripe_customer)
+      create_stripe_subscription(stripe_customer, trial_end(organization))
     end)
   end
 
@@ -129,14 +133,15 @@ defmodule Palapa.Billing.Subscriptions do
 
   def cancel_stripe_subscription(nil), do: {:ok, nil}
 
-  def create_stripe_subscription(%Stripe.Customer{} = stripe_customer) do
+  def create_stripe_subscription(%Stripe.Customer{} = stripe_customer, trial_end) do
     monthly_plan_id = Application.get_env(:palapa, :stripe_plan_id)
-    Billing.stripe_adapter().create_subscription(stripe_customer.id, monthly_plan_id)
+    Billing.stripe_adapter().create_subscription(stripe_customer.id, monthly_plan_id, trial_end)
   end
 
-  def create_stripe_subscription(stripe_customer_id) when is_binary(stripe_customer_id) do
+  def create_stripe_subscription(stripe_customer_id, trial_end)
+      when is_binary(stripe_customer_id) do
     monthly_plan_id = Application.get_env(:palapa, :stripe_plan_id)
-    Billing.stripe_adapter().create_subscription(stripe_customer_id, monthly_plan_id)
+    Billing.stripe_adapter().create_subscription(stripe_customer_id, monthly_plan_id, trial_end)
   end
 
   def get_payment_method(payment_method_id) do

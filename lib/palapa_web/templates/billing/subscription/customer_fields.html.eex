@@ -4,7 +4,7 @@
     <h2 class="card-header text-green-500"><%= gettext("Billing information") %></h2>
 
     <div class="my-2">
-    <p class="text-sm font-bold text-gray-600"><%= gettext("These informations will appear on your invoices") %></p>
+      <p class="text-sm font-bold text-gray-600"><%= gettext("These informations will appear on your invoices") %></p>
     </div>
 
     <div class="field">

@@ -79,7 +79,14 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
         {:error, :customer, customer_changeset, _changes_so_far} ->
           render(conn, "new.html", customer_changeset: customer_changeset)
 
-        {:error, :stripe_customer, _error, _changes} ->
+        {:error, :changeset_validation, customer_changeset, _changes_so_far} ->
+          conn
+          |> put_flash(:error, gettext("Please check your subscription information"))
+          |> render("new.html",
+            customer_changeset: customer_changeset
+          )
+
+        {:error, _, _error, _changes} ->
           conn
           |> put_flash(
             :error,

@@ -38,12 +38,13 @@ defmodule Palapa.Billing.StripityStripeAdapter do
   @doc """
   Link a customer to an already defined Stripe plan
   """
-  def create_subscription(stripe_customer_id, stripe_plan_id) do
+  def create_subscription(stripe_customer_id, stripe_plan_id, trial_end) do
     # "latest_invoice" attribute doesn't seem to be correctly
     # handled by StripityStripe for now. Fallback to manual here.
     body = %{
       enable_incomplete_payments: true,
       customer: stripe_customer_id,
+      trial_end: trial_end && Timex.to_unix(trial_end),
       items: [
         %{
           plan: stripe_plan_id

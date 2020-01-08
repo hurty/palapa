@@ -7,7 +7,6 @@ defmodule Palapa.Billing.Workers.UpdateStripeCustomer do
     customer = Billing.Customers.get_customer(customer_id)
 
     if customer do
-    else
       Billing.Customers.update_stripe_customer(customer)
     end
   end
