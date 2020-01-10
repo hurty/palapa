@@ -57,7 +57,6 @@ defmodule Palapa.Billing.Subscriptions do
     |> create_stripe_resources(organization, attrs)
     |> create_local_resources(organization, attrs)
     |> Repo.transaction()
-    |> IO.inspect()
   end
 
   defp trial_end(organization) do
@@ -88,7 +87,6 @@ defmodule Palapa.Billing.Subscriptions do
   def create_local_resources(multi, organization, attrs) do
     multi
     |> Multi.insert(:customer, fn %{stripe_customer: stripe_customer} ->
-      IO.inspect(stripe_customer)
       card = stripe_customer.invoice_settings.default_payment_method.card
 
       attrs =

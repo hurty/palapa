@@ -82,7 +82,6 @@ defmodule Palapa.Attachments do
 
   defp build_attachment_attrs(file) do
     file_stats = File.stat!(file.path)
-    IO.inspect(file, label: "file stats")
 
     checksum = Palapa.Access.file_checksum(file.path)
 

@@ -61,8 +61,6 @@ defmodule PalapaWeb.Router do
 
     get("/join/:invitation_id/:token", JoinController, :new)
     post("/join/:invitation_id/:token", JoinController, :create)
-
-    post("/stripe_webhooks", Billing.StripeWebhookController, :create)
   end
 
   # Documents public sharing
@@ -220,6 +218,11 @@ defmodule PalapaWeb.Router do
     # --- PROFILE
 
     resources("/profile", ProfileController, only: [:edit, :update])
+  end
+
+  scope "/", PalapaWeb do
+    pipe_through :api
+    post("/stripe_webhooks", Billing.StripeWebhookController, :create)
   end
 
   # scope "/api", PalapaWeb do
