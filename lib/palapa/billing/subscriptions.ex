@@ -88,13 +88,16 @@ defmodule Palapa.Billing.Subscriptions do
   def create_local_resources(multi, organization, attrs) do
     multi
     |> Multi.insert(:customer, fn %{stripe_customer: stripe_customer} ->
+      IO.inspect(stripe_customer)
+      card = stripe_customer.invoice_settings.default_payment_method.card
+
       attrs =
         Map.merge(attrs, %{
           "stripe_customer_id" => stripe_customer.id,
-          "card_brand" => stripe_customer.default_source.brand,
-          "card_last_4" => stripe_customer.default_source.last4,
-          "card_expiration_month" => stripe_customer.default_source.exp_month,
-          "card_expiration_year" => stripe_customer.default_source.exp_year
+          "card_brand" => card.brand,
+          "card_last_4" => card.last4,
+          "card_expiration_month" => card.exp_month,
+          "card_expiration_year" => card.exp_year
         })
 
       %Customer{}

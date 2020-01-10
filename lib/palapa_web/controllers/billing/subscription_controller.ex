@@ -11,14 +11,31 @@ defmodule PalapaWeb.Billing.SubscriptionController do
     user: {PalapaWeb.Current, :current_member},
     fallback: PalapaWeb.FallbackController
 
-  plug(:put_layout, :account)
-  plug(:put_navigation, "workspaces")
+  plug :put_layout, :account
+  plug :put_navigation, "workspaces"
+  plug :put_client_secret when action in [:new, :create]
+
+  defp put_client_secret(conn, _) do
+    case Billing.create_setup_intent() do
+      {:ok, setup_intent} ->
+        assign(conn, :client_secret, setup_intent.client_secret)
+
+      _ ->
+        conn
+        |> put_flash(
+          :error,
+          gettext(
+            "The billing service could not process your request. Please try again or ask support"
+          )
+        )
+        |> redirect(to: Routes.organization_path(conn, :index))
+        |> halt()
+    end
+  end
 
   def new(conn, _params) do
     with :ok <- permit(Billing.Policy, :update_billing, current_member(conn)) do
-      customer_changeset = Billing.Customers.change_customer(%Customer{})
-
-      render(conn, "new.html", customer_changeset: customer_changeset)
+      render(conn, "new.html", customer_changeset: Billing.Customers.change_customer(%Customer{}))
     end
   end
 
@@ -29,7 +46,9 @@ defmodule PalapaWeb.Billing.SubscriptionController do
              customer_attrs
            ) do
         {:ok, _result} ->
-          redirect(conn, to: Routes.payment_path(conn, :new, current_organization(conn)))
+          conn
+          |> put_flash(:success, gettext("Thanks for your subscription!"))
+          |> redirect(to: Routes.message_path(conn, :index, current_organization(conn)))
 
         {:error, :changeset_validation, customer_changeset, _changes_so_far} ->
           conn

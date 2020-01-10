@@ -26,7 +26,11 @@ export default class extends StripeController {
     const clientSecret = this.data.get("client-secret");
 
     this.stripe
-      .handleCardSetup(clientSecret, this.cardElement)
+      .confirmCardSetup(clientSecret, {
+        payment_method: {
+          card: this.cardElement
+        }
+      })
       .then(result => {
         if (result.error) {
           controller.handleSetupError(result.error);

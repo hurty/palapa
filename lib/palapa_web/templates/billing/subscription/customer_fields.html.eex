@@ -1,5 +1,5 @@
 <div>
-  <div class="bg-gray-100 rounded-lg p-2 my-2">
+  <div class="bg-gray-100 rounded-lg p-4 my-2">
 
     <h2 class="card-header text-green-500"><%= gettext("Billing information") %></h2>
 

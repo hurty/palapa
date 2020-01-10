@@ -1,8 +1,9 @@
 <%= form_for @customer_changeset, @form_path, [
   method: "post",
-  "data-controller": "card-token",
-  "data-action": "card-token#addCardToken",
-  "data-card-token-api-key": Application.get_env(:stripity_stripe, :publishable_api_key)
+  "data-controller": "payment-method",
+  "data-action": "payment-method#handleCardSetup",
+  "data-payment-method-api-key": Application.get_env(:stripity_stripe, :publishable_api_key),
+  "data-payment-method-client-secret": @client_secret
 ], fn form -> %>
   <%= if @customer_changeset.action do %>
     <p class="db fw6 lh-copy f6  text-red-400 font-bold"><%= gettext("Check the errors below:") %></p>
@@ -10,15 +11,15 @@
 
   <p class="text-xs text-blue-500"><span class="text-sm text-red-500">*</span><%= gettext("Required fields") %></p>
 
-  <div class="bg-gray-100 rounded-lg p-2 my-4">
-    <h3 class="text-green-500"><%= gettext("Payment") %></h3>
+  <div class="bg-gray-100 rounded-lg p-4 my-4">
+    <h3 class="card-header text-green-500"><%= gettext("Payment") %></h3>
 
     <div class="field">
       <label for="card-element" class="label required">
         <%= gettext("Credit card") %>
       </label>
 
-      <div id="card-element" data-target="card-token.cardContainer" class="border rounded p-4 bg-white">
+      <div id="card-element" data-target="payment-method.cardContainer" class="border rounded p-4 bg-white">
         <!-- A Stripe Element will be inserted here. -->
       </div>
 

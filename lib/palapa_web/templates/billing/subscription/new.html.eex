@@ -1,7 +1,7 @@
 <div class="mx-auto my-8">
   <div class="card p-8">
     <h2 class="card-header">
-      <%= gettext("Billing information for %{workspace}", %{workspace: @current_organization.name}) %>
+      <%= gettext("New subscription for %{workspace}", %{workspace: @current_organization.name}) %>
     </h2>
 
     <div class="card-header-separator"></div>

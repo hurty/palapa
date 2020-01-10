@@ -48,5 +48,5 @@
     </div>
   </div>
 <% else %>
-    <%= link gettext("Upgrade to a paid account now"), to: Routes.settings_customer_path(@conn, :new, @current_organization), class: "btn btn-green" %>
+    <%= link gettext("Upgrade to a paid account now"), to: Routes.subscription_path(@conn, :new, @current_organization), class: "btn btn-green" %>
 <% end %>

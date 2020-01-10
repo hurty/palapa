@@ -1,8 +1,0 @@
-<div class="content page-layout">
-  <div class="main-content card p-4">
-    <h2 class="card-header"><%= gettext("Upgrade your account") %></h2>
-    <div class="card-header-separator"></div>
-
-    <%= render(PalapaWeb.Billing.SubscriptionView, "form.html", Map.merge(assigns, %{form_path: Routes.settings_customer_path(@conn, :create, @current_organization)})) %>
-  </div>
-</div>

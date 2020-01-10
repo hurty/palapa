@@ -107,7 +107,11 @@ defmodule PalapaWeb.Router do
     scope "/settings", Settings, as: :settings do
       resources("/workspace", WorkspaceController, singleton: true)
       resources("/members", MemberController, only: [:index, :delete])
-      resources("/customer", Billing.CustomerController, singleton: true)
+
+      resources("/customer", Billing.CustomerController,
+        singleton: true,
+        only: [:show, :edit, :update]
+      )
 
       resources("/payment_method", Billing.PaymentMethodController,
         singleton: true,

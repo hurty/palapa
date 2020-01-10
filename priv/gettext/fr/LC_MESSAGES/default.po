@@ -1911,7 +1911,7 @@ msgstr "Nom de l'équipe"
 #, elixir-format
 #: lib/palapa_web/controllers/billing/subscription_controller.ex:57
 msgid "The billing service could not process your request. Please try again or ask support"
-msgstr "Le service de facturation"
+msgstr "Le service de facturation n'a pas pu traiter votre demande. Merci de réessayer plus tard ou de demander de l'aide à l'équipe support."
 
 #, elixir-format
 #: lib/palapa_web/controllers/settings/billing/customer_controller.ex:86

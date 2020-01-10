@@ -2,7 +2,6 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
   use PalapaWeb, :controller
 
   alias Palapa.Billing
-  alias Palapa.Billing.Customer
   alias Palapa.Attachments
 
   plug Bodyguard.Plug.Authorize,
@@ -39,61 +38,6 @@ defmodule PalapaWeb.Settings.Billing.CustomerController do
         storage_used_in_bytes: Attachments.storage_used(current_organization(conn)),
         storage_capacity: Attachments.storage_capacity(current_organization(conn))
       )
-    end
-  end
-
-  def new(conn, _) do
-    with :ok <-
-           permit(
-             Billing.Policy,
-             :create_customer,
-             current_member(conn),
-             current_organization(conn)
-           ) do
-      customer_changeset = Billing.Customers.change_customer(%Customer{})
-
-      conn
-      |> put_breadcrumb(
-        gettext("Upgrade your account"),
-        Routes.settings_customer_path(conn, :new, current_organization(conn))
-      )
-      |> render("new.html", customer_changeset: customer_changeset)
-    end
-  end
-
-  def create(conn, %{"customer" => customer_attrs}) do
-    with :ok <-
-           permit(
-             Billing.Policy,
-             :create_customer,
-             current_member(conn),
-             current_organization(conn)
-           ) do
-      case Billing.Subscriptions.create_subscription(
-             current_organization(conn),
-             customer_attrs
-           ) do
-        {:ok, _result} ->
-          redirect(conn, to: Routes.payment_path(conn, :new, current_organization(conn)))
-
-        {:error, :customer, customer_changeset, _changes_so_far} ->
-          render(conn, "new.html", customer_changeset: customer_changeset)
-
-        {:error, :changeset_validation, customer_changeset, _changes_so_far} ->
-          conn
-          |> put_flash(:error, gettext("Please check your subscription information"))
-          |> render("new.html",
-            customer_changeset: customer_changeset
-          )
-
-        {:error, _, _error, _changes} ->
-          conn
-          |> put_flash(
-            :error,
-            gettext("The billing service is unreachable. Please try again or ask support")
-          )
-          |> redirect(to: Routes.settings_customer_path(conn, :new, current_organization(conn)))
-      end
     end
   end
 

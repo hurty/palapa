@@ -30,5 +30,6 @@ defmodule Palapa.Billing.Invoices do
 
   def pay_invoice(stripe_invoice_id) when is_binary(stripe_invoice_id) do
     Billing.stripe_adapter().pay_invoice(stripe_invoice_id)
+    |> IO.inspect()
   end
 end

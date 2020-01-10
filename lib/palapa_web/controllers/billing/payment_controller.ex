@@ -14,7 +14,7 @@ defmodule PalapaWeb.Billing.PaymentController do
   def new(conn, _params) do
     current_subscription = Billing.Subscriptions.get_subscription(current_organization(conn))
 
-    if current_subscription.status == :active do
+    if current_subscription.status in [:active] do
       redirect(conn, to: Routes.message_path(conn, :index, current_organization(conn)))
     else
       case Billing.Invoices.pay_invoice(current_subscription.stripe_latest_invoice_id) do

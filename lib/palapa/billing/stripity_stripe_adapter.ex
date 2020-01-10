@@ -14,7 +14,7 @@ defmodule Palapa.Billing.StripityStripeAdapter do
 
     Stripe.Customer.create(
       %{
-        source: attrs["stripe_token_id"],
+        payment_method: attrs["payment_method_id"],
         email: attrs["billing_email"],
         name: attrs["billing_name"],
         address: %{
@@ -25,13 +25,14 @@ defmodule Palapa.Billing.StripityStripeAdapter do
           country: attrs["billing_country"]
         },
         invoice_settings: %{
+          default_payment_method: attrs["payment_method_id"],
           custom_fields: custom_fields
         },
         metadata: %{
           customer_id: attrs["id"]
         }
       },
-      expand: ["default_source"]
+      expand: ["invoice_settings.default_payment_method"]
     )
   end
 
@@ -44,13 +45,19 @@ defmodule Palapa.Billing.StripityStripeAdapter do
     body = %{
       enable_incomplete_payments: true,
       customer: stripe_customer_id,
-      trial_end: trial_end && Timex.to_unix(trial_end),
       items: [
         %{
           plan: stripe_plan_id
         }
       ]
     }
+
+    body =
+      if trial_end do
+        Map.put(body, :trial_end, Timex.to_unix(trial_end))
+      else
+        body
+      end
 
     Stripe.API.request(body, :post, "subscriptions", %{},
       expand: ["latest_invoice.payment_intent"]
