@@ -12,29 +12,29 @@
   <div class="field">
     <%= label f, :organization_name, gettext("Workspace name"), class: "label" %>
     <%= error_tag f, :organization_name %>
-    <%= text_input f, :organization_name, placeholder: gettext("Usually your company or organization name"), class: "input", tabindex: 1 %>
+    <%= text_input f, :organization_name, placeholder: gettext("Usually your company or organization name"), class: "input", tabindex: 0, autofocus: true %>
   </div>
 
   <div class="field">
     <%= label f, :name, gettext("Your full name"), class: "label" %>
     <%= error_tag f, :name %>
-    <%= text_input f, :name, placeholder: "Richard Hendricks", class: "input", tabindex: 1 %>
+    <%= text_input f, :name, placeholder: "Richard Hendricks", class: "input", tabindex: 0 %>
   </div>
 
   <div class="field">
     <%= label f, :email, gettext("Your email address"), class: "label" %>
     <%= error_tag f, :email %>
-    <%= email_input f, :email, placeholder: "richard@piedpiper.com", class: "input", tabindex: 1 %>
+    <%= email_input f, :email, placeholder: "richard@piedpiper.com", class: "input", tabindex: 0 %>
   </div>
 
   <div class="field">
     <%= label f, :password, gettext("Choose a password"), class: "label" %>
     <%= error_tag f, :password %>
-    <%= password_input f, :password, placeholder: gettext("8 characters minimum"), class: "input", autocomplete: "new-password", tabindex: 1 %>
+    <%= password_input f, :password, placeholder: gettext("8 characters minimum"), class: "input", autocomplete: "new-password", tabindex: 0 %>
   </div>
 
   <div class="text-sm">
-    <%= checkbox f, :accept_terms, class: "input" %>
+    <%= checkbox f, :accept_terms, class: "input", tabindex: 0 %>
     <%= label f, :accept_terms, gettext("You confirm that you have read, understand and accept the") %> <%= link gettext("terms and conditions"), to: Routes.home_path(@conn, :terms), class: "text-green-500 underline", target: "_blank" %>
     <%= error_tag f, :accept_terms %>
   </div>
@@ -42,8 +42,8 @@
   <%= hidden_input f, :timezone, "data-controller": "timezone" %>
 
   <div class="card-actions">
-    <%= submit gettext("Create a new account"), class: "btn btn-green", tabindex: 1 %>
+    <%= submit gettext("Create a new account"), class: "btn btn-green", tabindex: 0 %>
   </div>
 
-  <div class="card-footer"><%= gettext("You already have an account?") %> &nbsp; <%= link(gettext("Log in!"), to: Routes.session_path(@conn, :new), class: "text-green-500", tabindex: 1) %></div>
+  <div class="card-footer"><%= gettext("You already have an account?") %> &nbsp; <%= link(gettext("Log in!"), to: Routes.session_path(@conn, :new), class: "text-green-500") %></div>
 <% end %>

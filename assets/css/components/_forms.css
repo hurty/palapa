@@ -57,6 +57,10 @@ input[type="checkbox"]:disabled {
   cursor: not-allowed;
 }
 
+input[type="checkbox"]:focus {
+  @apply border border-green-200;
+}
+
 input[type="radio"] {
   -webkit-appearance: none;
   -moz-appearance: none;
