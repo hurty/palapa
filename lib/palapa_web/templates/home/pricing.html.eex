@@ -1,4 +1,4 @@
-<div class="text-center my-8">
+<div id="pricing" class="text-center mb-8">
   <h1 class="text-green-500-500 text-5xl">Simple pricing</h1>
   <div class="text-2xl text-gray-600">Get everybody on board.</div>
 </div>
