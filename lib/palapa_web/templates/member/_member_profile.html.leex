@@ -48,7 +48,7 @@
       <% else %>
         <%= if @member.role in [:owner, :admin] do %>
           <div class="text-center my-6">
-            <span class="border-2 text-sm text-gray-700 border-green-500 rounded-full px-4 py-2"><%= gettext("This member is %{role}", %{role: @member.role}) %></span>
+            <span class="border-2 text-sm text-gray-700 border-green-500 rounded-full px-4 py-2"><%= gettext("This member is %{role}", %{role: Gettext.dgettext(Palapa.Gettext, "enums", to_string(@member.role))}) %></span>
           </div>
         <% end %>
       <% end %>

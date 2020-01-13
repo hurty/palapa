@@ -18,7 +18,7 @@
         <tr class="border-t">
           <td class="py-4"><%= Helpers.format_date(@conn, invoice.created_at) %></td>
           <td><%= Helpers.format_money(invoice.total) %></td>
-          <td><%= invoice.status %></td>
+          <td><%= Gettext.dgettext(Palapa.Gettext, "enums", invoice.status) %></td>
           <td><%= link gettext("Download"), to: invoice.pdf_url, class: "btn" %></td>
         </tr>
       <% end %>

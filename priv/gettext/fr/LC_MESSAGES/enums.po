@@ -1,0 +1,27 @@
+#  Member roles
+
+msgid "member"
+msgstr "membre"
+
+msgid "admin"
+msgstr "admin"
+
+msgid "owner"
+msgstr "propriétaire"
+
+#  Invoice statuses
+
+msgid "paid"
+msgstr "payée"
+
+msgid "draft"
+msgstr "brouillong"
+
+msgid "open"
+msgstr "A régler"
+
+msgid "uncollectible"
+msgstr "irrécouvrable"
+
+msgid "void"
+msgstr "invalide"
