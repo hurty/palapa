@@ -34,9 +34,32 @@ defmodule Palapa.Attachments do
 
   def orphan(queryable \\ Attachment) do
     queryable
-    |> where([a], is_nil(a.message_id))
-    |> where([a], is_nil(a.message_comment_id))
-    |> where([a], is_nil(a.personal_information_id))
+    |> where(
+      [a],
+      is_nil(a.message_id) and
+        is_nil(a.message_comment_id) and
+        is_nil(a.personal_information_id) and
+        is_nil(a.page_id) and
+        is_nil(a.document_suggestion_id) and
+        is_nil(a.document_suggestion_comment_id) and
+        is_nil(a.contact_comment_id) and
+        is_nil(a.document_id)
+    )
+  end
+
+  def linked(queryable \\ Attachment) do
+    queryable
+    |> where(
+      [a],
+      not (is_nil(a.message_id) and
+             is_nil(a.message_comment_id) and
+             is_nil(a.personal_information_id) and
+             is_nil(a.page_id) and
+             is_nil(a.document_suggestion_id) and
+             is_nil(a.document_suggestion_comment_id) and
+             is_nil(a.contact_comment_id) and
+             is_nil(a.document_id))
+    )
   end
 
   # --- Actions
@@ -158,6 +181,7 @@ defmodule Palapa.Attachments do
     bytes =
       Attachment
       |> where_organization(organization)
+      |> linked()
       |> where([a], is_nil(a.deleted_at))
       |> select([a], sum(a.byte_size))
       |> Repo.one()
