@@ -17,19 +17,19 @@
 
   <div class="mx-auto sm:mt-12">
     <div class="text-left mx-auto">
-      <div class="flex flex-wrap md:justify-center items-center md:max-w-5xl mx-auto">
-        <div class="md:w-6/12">
+      <div class="flex flex-col md:justify-center items-center md:max-w-5xl mx-auto">
+        <div class="text-center">
           <div class="flex items-center">
             <div>
-              <h2 class="font-extrabold text-black text-2xl sm:text-6xl">Get everyone on the same page</h2>
+              <h2 class="font-extrabold text-black text-2xl sm:text-6xl text-gray-800">Get everyone on the same page</h2>
             </div>
           </div>
 
           <p class="sm:text-xl text-gray-600">Many applications do only one thing. Palapa makes it easy to build a simple intranet by keeping your <strong>discussions</strong>, <strong>documentation</strong> and <strong>contacts</strong> in one place.</p>
         </div>
 
-        <div class="md:w-6/12 md:p-4">
-          <img src="<%= Routes.static_path(@conn, "/images/teams.png") %>" alt="teams" class="border border-gray-200 rounded-lg">
+        <div class="">
+          <img src="<%= Routes.static_path(@conn, "/images/teams.png") %>" alt="teams" class="border border-gray-200 rounded-lg shadow-lg">
         </div>
 
       </div>
@@ -70,7 +70,7 @@
       </div>
 
       <div class="md:w-1/2 p-2 mt-8 -ml-2 rounded">
-        <img src="<%= Routes.static_path(@conn, "/images/message.png") %>" alt="profile" class="shadow">
+        <img src="<%= Routes.static_path(@conn, "/images/message.png") %>" alt="profile" class="shadow-lg">
       </div>
     </div>
   </section>
