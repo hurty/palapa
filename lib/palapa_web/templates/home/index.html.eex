@@ -322,7 +322,6 @@
 
   <div class="text-center text-sm my-8">
     <div class="pt-2">© 2019 Palapa, all right reserved.</div>
-    <div class="pt-2">Cosmonaut illustration <a href="http://www.freepik.com" class="text-gray-800">designed by Freepik</a></div>
     <%= link "Legal notice and privacy policy", to: Routes.home_path(@conn, :legal), class: "text-green-500" %><br>
     <%= link "Terms of use", to: Routes.home_path(@conn, :terms), class: "text-green-500" %>
   </div>
