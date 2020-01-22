@@ -10,8 +10,9 @@
 
     <div class="self-center flex flex-wrap md:text-xl mt-8 md:my-0">
       <a href="#pricing" class="self-center underline font-extrabold pr-4 my-2"><%= gettext("Pricing") %></a>
-      <%= link(gettext("Sign in"), to: Routes.session_path(@conn, :new), class: "self-center font-extrabold underline pr-4 my-2") %>
-      <%= link(gettext("Create a new workspace"), to: Routes.registration_path(@conn, :new), class: "self-center font-extrabold btn bg-green-500 text-white my-2") %>
+      <div class="self-center">Palapa is coming in early 2020</div>
+      <%#= link(gettext("Sign in"), to: Routes.session_path(@conn, :new), class: "self-center font-extrabold underline pr-4 my-2") %>
+      <%#= link(gettext("Create a new workspace"), to: Routes.registration_path(@conn, :new), class: "self-center font-extrabold btn bg-green-500 text-white my-2") %>
     </div>
   </div>
 
